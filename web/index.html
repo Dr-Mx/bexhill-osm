@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Show POIs from OSM in a map</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/leaflet.awesome-markers.css">
+    <link rel="stylesheet" href="assets/css/site.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.21.0/L.Control.Locate.ie.css' rel='stylesheet' />
+    <![endif]-->
+
+    <style>
+      body {
+          padding: 0;
+          margin: 0;
+      }
+
+      html, body, #map {
+          height: 100%;
+          font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <!-- Javascripts -->
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+    <script src="assets/js/leaflet.awesome-markers.js"></script>
+
+    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script src="assets/js/OverPassLayer.js"></script>
+    <script src="assets/js/leaflet-providers.js"></script>
+    <script src="assets/js/leaflet-hash.js"></script>
+    <script src="assets/js/site.js"></script>
+  </body>
+</html>
