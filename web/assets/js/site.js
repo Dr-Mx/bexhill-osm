@@ -1,3 +1,4 @@
+// https://github.com/Leaflet/Leaflet
 var map = new L.Map('map');
 map.setView([-27.4927, -58.8063], 12);
 
@@ -5,7 +6,12 @@ map.setView([-27.4927, -58.8063], 12);
 var hash = new L.Hash(map);
 
 // https://github.com/leaflet-extras/leaflet-providers
-L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
+L.tileLayer.provider(
+    'OpenStreetMap.Mapnik',
+    {
+	attribution: 'Data: <a href="http://www.overpass-api.de/">OverpassAPI</a>/ODbL OpenStreetMap'
+    }
+).addTo(map);
 
 // https://github.com/domoritz/leaflet-locatecontrol
 L.control.locate().addTo(map);
@@ -49,6 +55,13 @@ var icons = {
 	query: 'shop=^supermarket$',
 	iconName: 'calculator',
 	markerColor: 'blue'
+    },
+
+    viewpoint: {
+	name: 'Mirador',
+	query: 'tourism=^viewpoint$',
+	iconName: 'star',
+	markerColor: 'orange'
     },
 
     'camp_site': {
@@ -142,7 +155,7 @@ function show_settings() {
     for(icon in icons) {
 	query = icons[icon].query.split('=');
 	var checkbox = Mustache.render(
-	    '<input type="checkbox" checked="checked" data-key="{{key}}" data-value="{{value}}" onclick="setting_changed()"> {{name}}<br>',
+	    '<input type="checkbox" data-key="{{key}}" data-value="{{value}}" onclick="setting_changed()"> {{name}}<br>',
 	    {icon: icon, key: query[0], value: query[1], name: icons[icon].name}
 	);
 	$('#settings').append(checkbox);
