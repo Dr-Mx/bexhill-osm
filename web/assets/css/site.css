@@ -2,3 +2,16 @@
     font-size: 18px;
     margin-top: 8px;
 }
+
+
+#settings {
+    background-color: white;
+    border-radius: 5px;
+    bottom: 10px;
+    font-family: Helvetica,Arial,sans-serif;
+    left: 10px;
+    opacity: 0.8;
+    padding: 3px;
+    position: absolute;
+    z-index: 10;
+}
