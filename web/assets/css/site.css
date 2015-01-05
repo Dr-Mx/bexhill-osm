@@ -15,3 +15,7 @@
     position: absolute;
     z-index: 10;
 }
+
+.leaflet-control-loading {
+    background: url("../img/loading.gif");
+}

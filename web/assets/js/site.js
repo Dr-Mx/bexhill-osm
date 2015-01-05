@@ -2,6 +2,12 @@
 var map = new L.Map('map');
 map.setView([-27.4927, -58.8063], 12);
 
+// https://github.com/ebrelsford/Leaflet.loading
+var loadingControl = L.Control.loading({
+    separate: true
+});
+map.addControl(loadingControl);
+
 // https://github.com/mlevans/leaflet-hash
 var hash = new L.Hash(map);
 
