@@ -7,9 +7,9 @@
 #settings {
     background-color: white;
     border-radius: 5px;
-    bottom: 10px;
+    top: 10px;
     font-family: Helvetica,Arial,sans-serif;
-    left: 10px;
+    right: 10px;
     opacity: 0.8;
     padding: 3px;
     position: absolute;
