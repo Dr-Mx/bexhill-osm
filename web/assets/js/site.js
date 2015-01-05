@@ -8,6 +8,9 @@ var loadingControl = L.Control.loading({
 });
 map.addControl(loadingControl);
 
+// https://github.com/Turbo87/sidebar-v2/
+var sidebar = L.control.sidebar('sidebar').addTo(map);
+
 // https://github.com/mlevans/leaflet-hash
 var hash = new L.Hash(map);
 
@@ -24,7 +27,7 @@ L.control.locate().addTo(map);
 
 var icons = {
     bank: {
-	name: 'Banco',
+	name: 'Banco y Cajero',
 	query: "[amenity~'bank|atm']",
 	iconName: 'bank',
 	markerColor: 'cadetblue'
@@ -39,8 +42,8 @@ var icons = {
 
 
     clinic: {
-	name: 'Clínica',
-	query: '[amenity=clinic]',
+	name: 'Hospital y Clínica',
+	query: "[amenity~'clinic|hospital']",
 	iconName: 'hospital-o',
 	markerColor: 'red'
     },
@@ -106,11 +109,13 @@ function callback(data) {
 	var pos = new L.LatLng(e.lat, e.lon);
 
 	// TODO: improve this
-	var type;
+	var type = ''
 	if (e.tags.amenity) {
 	    if (e.tags.amenity == 'atm') type = 'bank';
-	    else type = e.tags.amenity;
+	    if (e.tags.amenity == 'hospital') type = 'clinic';
+	    if (type == '') type = e.tags.amenity;
 	}
+	console.debug(type);
 	if (e.tags.tourism) type = e.tags.tourism;
 	if (e.tags.shop) type = e.tags.shop;
 	var icon = icons[type];

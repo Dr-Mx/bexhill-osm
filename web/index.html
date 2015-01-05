@@ -9,35 +9,104 @@
     <meta property="og:url" content="http://pois.elblogdehumitos.com.ar/" />
     <meta property="og:image" content="http://pois.elblogdehumitos.com.ar/assets/img/preview.jpg" />
     <meta property="og:description" content="Encuentra los puntos de interés cerca de dónde estés." />
+    <link rel="shortcut icon" href="assets/img/favicon.ico"/>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
     <link rel="stylesheet" href="assets/css/Control.Loading.css" />
 
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="assets/css/site.css">
+    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
     
     <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
     <link href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css" rel="stylesheet" />
     <!--[if lt IE 9]>
 	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.21.0/L.Control.Locate.ie.css' rel='stylesheet' />
     <![endif]-->
-
-    <style>
-      body {
-          padding: 0;
-          margin: 0;
-      }
-
-      html, body, #map {
-          height: 100%;
-          font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
-      }
-    </style>
   </head>
 
   <body>
-    <div id="map"></div>
+    <div id="sidebar" class="sidebar collapsed">
+      <!-- Nav tabs -->
+      <ul class="sidebar-tabs" role="tablist">
+	<li><a href="#home" role="tab"><i class="fa fa-home"></i></a></li>
+	<li><a href="#faq" role="tab"><i class="fa fa-question"></i></a></li>
+	<li><a href="#about" role="tab"><i class="fa fa-user"></i></a></li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="sidebar-content active">
+	<div class="sidebar-pane" id="home">
+	  <h1>Puntos de Interés</h1>
+	  <p>Esta web permite visualizar diferentes <em>Puntos de
+	  Interés</em> sobre un mapa. Los diferentes tipos de puntos
+	  pueden ser seleccionados desde el globo que se encuentra
+	  arriba a la derecha, pudiendo seleccionar varios a la
+	  vez.</p>
+
+	  <img src="assets/img/help-select-pois.jpg">
+
+	  <p>Una vez seleccionados los puntos de interés, los mismos
+	  se mostrarán en el mapa luego de algunos segundos
+	  (dependiendo de la conexión a internet) con diferentes
+	  íconos y colores para una rápida visualización.</p>
+
+	  <img src="assets/img/help-show-pois.jpg">
+
+	  <p>A la izquierda están los controls para hacer agrandar y
+	  achicar el mapa (también funciona con la ruedita del mouse)</p>
+
+	  <img src="assets/img/help-controls.jpg">
+
+	  <p>Además hay un ícono con una "flechita" que sirve para
+	  centrar el mapa en la posición en la que te encuentras
+	  actualmente.</p>
+
+	  <img src="assets/img/help-my-position.jpg">
+
+	</div>
+	<div class="sidebar-pane" id="faq">
+	  <h1>FAQ <small>(preguntas frecuentes)</small></h1>
+	  <p>
+	    <ul>
+	      <div class="question">
+		<li><strong>¿Cómo sé si la <em>Estación de servicio</em> tiene GNC?</strong></li>
+		<p>Las estaciones de sevicio que cuentan con servicio
+		de GNC muestran la etiqueta <em>fuel:cng=yes</em> en
+		el globo que se muestra al hacer click sobre el
+		ícono</p>
+	      </div>
+	    </ul>
+	  </p>
+	</div>
+	<div class="sidebar-pane" id="about">
+	  <h1>Acerca de...</h1>
+	  <p>Este es un proyecto que empecé para facilitar el acceso a
+	  la información mientras viajo con mi
+	  proyecto <a href="http://elblogdehumitos.com.ar/pages/argentina-en-python/">Argentina
+	  en Python</a>, ya que cada vez que llego a una ciudad nueva
+	  necesito acceder a lugares como estaciones de servicio,
+	  hostels o campings, farmacias y demás lugares públicos.</p>
+
+	  <p>Por lo tanto, este sitio me ayuda a recopilar fácilmente
+	  la información disponible
+	  en <a href="http://osm.org">OSM</a> a través
+	  de <a href="http://wiki.openstreetmap.org/wiki/Overpass_API">OverpassAPI</a>
+	  y así tener una visión general de los POIs que existen en la
+	  ciudad a la que estoy llegando.</p>
+
+	  <p>El código del proyecto lo podés encontrar en
+	  github.com: <a href="https://github.com/humitos/osm-pois">aquí</a>. Por
+	  favor, si encuentras algún error repórtalo en
+	  los <a href="https://github.com/humitos/osm-pois/issues">issues</a>
+	  o crea un pull request.</p>
+
+	  <p style="text-align: right">humitos<br>-- <a href="http://elblogdehumitos.com.ar">http://elblogdehumitos.com.ar</a></p>
+	</div>
+      </div>
+    </div>
+
+    <div id="map" class="sidebar-map"></div>
 
     <div id="settings">
       <p><strong>POIs</strong> <small>(elige los que quieras visualizar en el mapa)</small></p>
@@ -45,7 +114,7 @@
 
     <!-- Javascripts -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-
+    <script src="assets/js/leaflet-sidebar.js"></script>
     <script src="assets/js/leaflet.awesome-markers.js"></script>
 
     <script src="assets/js/Control.Loading.js"></script>
