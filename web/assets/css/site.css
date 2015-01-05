@@ -13,6 +13,10 @@ html, body, #map {
     margin-top: 8px;
 }
 
+ul {
+    list-style: none;
+    padding: 0px;
+}
 
 #settings {
     background-color: white;
@@ -30,7 +34,7 @@ html, body, #map {
     background: url("../img/loading.gif");
 }
 
-.question > li {
+.item > li {
     font-size: 15px;
 }
 
