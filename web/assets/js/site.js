@@ -19,70 +19,71 @@ L.control.locate().addTo(map);
 var icons = {
     bank: {
 	name: 'Banco',
-	query: 'amenity=^bank$',
-	iconName: 'bank',
-	markerColor: 'cadetblue'
-    },
-    atm: {
-	name: 'Cajero Automático',
-	query: 'amenity=^atm$',
+	query: "[amenity~'bank|atm']",
 	iconName: 'bank',
 	markerColor: 'cadetblue'
     },
 
+    'car_repair': {
+	name: 'Gomería',
+	query: '[shop=car_repair][car_repair=wheel_repair]',
+	iconName: 'car',
+	markerColor: 'red'
+    },
+
+
     clinic: {
 	name: 'Clínica',
-	query: 'amenity=^clinic$',
+	query: '[amenity=clinic]',
 	iconName: 'hospital-o',
 	markerColor: 'red'
     },
     pharmacy: {
 	name: 'Farmacia',
-	query: 'amenity=^pharmacy$',
+	query: '[amenity=pharmacy]',
 	iconName: 'plus-square',
 	markerColor: 'green'
     },
 
     fuel: {
 	name: 'Estación de Servicio',
-	query: 'amenity=^fuel$',
+	query: '[amenity=fuel]',
 	iconName: 'car',
 	markerColor: 'orange'
     },
 
     supermarket: {
 	name: 'Supermercado',
-	query: 'shop=^supermarket$',
+	query: '[shop=supermarket]',
 	iconName: 'calculator',
 	markerColor: 'blue'
     },
 
     viewpoint: {
 	name: 'Mirador',
-	query: 'tourism=^viewpoint$',
+	query: '[tourism=viewpoint]',
 	iconName: 'star',
 	markerColor: 'orange'
     },
 
     'camp_site': {
 	name: 'Camping',
-	query: 'tourism=^camp_site$',
+	query: '[tourism=camp_site]',
 	iconName: 'fire',
 	markerColor: 'green'
     },
     hotel: {
 	name: 'Hotel',
-	query: 'tourism=^hotel$',
+	query: '[tourism=hotel]',
 	iconName: 'building',
 	markerColor: 'darkred'
     },
     hostel: {
 	name: 'Hostel',
-	query: 'tourism=^hostel$',
+	query: '[tourism=hostel]',
 	iconName: 'building',
 	markerColor: 'darkred'
     }
-
 }
 
 var iconLayer = new L.LayerGroup();
@@ -100,7 +101,10 @@ function callback(data) {
 
 	// TODO: improve this
 	var type;
-	if (e.tags.amenity) type = e.tags.amenity;
+	if (e.tags.amenity) {
+	    if (e.tags.amenity == 'atm') type = 'bank';
+	    else type = e.tags.amenity;
+	}
 	if (e.tags.tourism) type = e.tags.tourism;
 	if (e.tags.shop) type = e.tags.shop;
 	var icon = icons[type];
@@ -124,49 +128,47 @@ function callback(data) {
 }
 
 function build_overpass_query() {
-    keys = [];
-    values = [];
-    $('#settings input:checked').each(function(i, element) {
-	keys.push(element.dataset.key);
-	values.push(element.dataset.value);
-    });
-
-    keys = keys.join('|');
-    values = values.join('|')
-
     // TODO: when a building matches a POI it's not shown in the map
     // because we need to filter by "way" instead of "node". In case,
     // we filter by "way" we need to get the lat/lon of the centre
-    query = Mustache.render(
-	"node(BBOX)[~'{{keys}}'~'{{values}}'];out;",
-	{keys: keys, values: values}
-    );
+
+    query = '(';
+    $('#settings input:checked').each(function(i, element) {
+	// http://overpass-turbo.eu/s/6QW
+	query += "node(BBOX)";
+	query += icons[element.dataset.key].query;
+	query += ';';
+    });
+    query += ');out;';
+    console.debug(query);
 }
 
 function setting_changed() {
     // remove icons from current map
     iconLayer.clearLayers();
     build_overpass_query();
-    if(keys == '' || values == '') return
     show_overpass_layer();
 }
 
 function show_settings() {
     for(icon in icons) {
-	query = icons[icon].query.split('=');
 	var checkbox = Mustache.render(
-	    '<input type="checkbox" data-key="{{key}}" data-value="{{value}}" onclick="setting_changed()"> {{name}}<br>',
-	    {icon: icon, key: query[0], value: query[1], name: icons[icon].name}
+	    '<input type="checkbox" data-key="{{key}}" onclick="setting_changed()"> {{name}}<br>',
+	    {key: icon, name: icons[icon].name}
 	);
 	$('#settings').append(checkbox);
     }
 }
 show_settings();
 
-var query = [];
+var query = '';
 build_overpass_query();
 
 function show_overpass_layer() {
+    if(query == '' || query == '();out;') {
+	console.debug('There is nothing selected to filter by.');
+	return;
+    }
     var opl = new L.OverPassLayer({
 	query: query,
 	callback: callback,
