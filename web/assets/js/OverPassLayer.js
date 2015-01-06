@@ -203,6 +203,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
       console.log("load Pois");
       //console.log(this._map.getBounds());
       if (this._map.getZoom() >= this.options.minzoom) {
+	  $('#spinner').show();
           //var bboxList = new Array(this._map.getBounds());
           var bboxList = this._view2BBoxes(
                   this._map.getBounds()._southWest.lng,
@@ -226,6 +227,9 @@ L.OverPassLayer = L.FeatureGroup.extend({
               
               var queryWithMapCoordinates = this.options.query.replace(/(BBOX)/g, bbox.toOverpassBBoxString());
               var url =  this.options.endpoint + "interpreter?data=[out:json];" + queryWithMapCoordinates;
+
+	      // to show / hide the spinner
+	      spinner += 1;
 
               $.ajax({
                   url: url,

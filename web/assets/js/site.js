@@ -1,3 +1,6 @@
+// spinner
+var spinner = 0;
+
 // https://github.com/Leaflet/Leaflet
 var map = new L.Map('map');
 map.setView([-27.4927, -58.8063], 12);
@@ -55,7 +58,7 @@ var icons = {
 
     clinic: {
 	name: 'Hospital / Clínica',
-	query: "[amenity~'clinic|hospital']",
+	query: "[amenity~'^clinic$|hospital']",
 	iconName: 'hospital-o',
 	markerColor: 'red'
     },
@@ -112,6 +115,9 @@ map.addLayer(iconLayer);
 
 // https://github.com/kartenkarsten/leaflet-layer-overpass
 function callback(data) {
+    if (spinner > 0) spinner -= 1;
+    if (spinner == 0) $('#spinner').hide();
+
     for(i=0; i < data.elements.length; i++) {
 	e = data.elements[i];
 
