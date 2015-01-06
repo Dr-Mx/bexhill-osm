@@ -53,6 +53,7 @@ ul {
 
 .sidebar-tabs > li {
     font-size: 28pt !important;
+    padding-top: 5px;
 }
 
 .leaflet-control-minZoomIndecator {
