@@ -8,6 +8,10 @@ html, body, #map {
     font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 .awesome-marker i {
     font-size: 18px;
     margin-top: 8px;
