@@ -2,12 +2,6 @@
 var map = new L.Map('map');
 map.setView([-27.4927, -58.8063], 12);
 
-// https://github.com/ebrelsford/Leaflet.loading
-var loadingControl = L.Control.loading({
-    separate: true
-});
-map.addControl(loadingControl);
-
 // https://github.com/Turbo87/sidebar-v2/
 var sidebar = L.control.sidebar('sidebar').addTo(map);
 
@@ -23,11 +17,29 @@ L.tileLayer.provider(
 ).addTo(map);
 
 // https://github.com/domoritz/leaflet-locatecontrol
-L.control.locate().addTo(map);
+L.control.locate({
+    follow: false,
+    setView: true,
+    keepCurrentZoomLevel: true,
+    showPopup: false,
+    strings: {
+	title: 'Muéstrame donde estoy',
+	popup: 'Estás a {distance} metros aprox. de aquí',
+	outsideMapBoundsMsg: 'No es posible ubicar tu posición en el mapa'
+    },
+    onLocationError: function(err) {alert('Disculpa. Hubo un error al intentar localizar tu ubicación.');}
+}).addTo(map);
+
+// https://github.com/ebrelsford/Leaflet.loading
+var loadingControl = L.Control.loading({
+    separate: true
+});
+map.addControl(loadingControl);
+
 
 var icons = {
     bank: {
-	name: 'Banco y Cajero',
+	name: 'Banco / Cajero',
 	query: "[amenity~'bank|atm']",
 	iconName: 'bank',
 	markerColor: 'cadetblue'
@@ -42,7 +54,7 @@ var icons = {
 
 
     clinic: {
-	name: 'Hospital y Clínica',
+	name: 'Hospital / Clínica',
 	query: "[amenity~'clinic|hospital']",
 	iconName: 'hospital-o',
 	markerColor: 'red'
@@ -62,15 +74,15 @@ var icons = {
     },
 
     supermarket: {
-	name: 'Supermercado',
-	query: '[shop=supermarket]',
+	name: 'Supermercado / Despensa',
+	query: "[shop~'supermarket|convenience']",
 	iconName: 'calculator',
 	markerColor: 'blue'
     },
 
     viewpoint: {
-	name: 'Mirador',
-	query: '[tourism=viewpoint]',
+	name: 'Atractivo Turístico',
+	query: "[tourism~'viewpoint|museum|gallery|information|zoo']",
 	iconName: 'star',
 	markerColor: 'orange'
     },
@@ -116,8 +128,19 @@ function callback(data) {
 	    if (type == '') type = e.tags.amenity;
 	}
 	console.debug(type);
-	if (e.tags.tourism) type = e.tags.tourism;
-	if (e.tags.shop) type = e.tags.shop;
+	if (e.tags.tourism) {
+	    if (e.tags.tourism in {
+		'viewpoint': true,
+		'museum': true,
+		'information': true,
+		'gallery': true,
+		'zoo': true
+	    }) type = 'viewpoint';
+	}
+	if (e.tags.shop) {
+	    if (e.tags.shop == 'convenience') type = 'supermarket';
+	    if (type == '') type = e.tags.shop;
+	}
 	var icon = icons[type];
 
 	var markerIcon  = L.AwesomeMarkers.icon({
