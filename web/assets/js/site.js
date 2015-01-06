@@ -1,6 +1,9 @@
 // spinner
 var spinner = 0;
 
+// Don't scape HTML string in Mustache
+Mustache.escape = function (text) { return text; }
+
 // https://github.com/Leaflet/Leaflet
 var map = new L.Map('map');
 map.setView([-27.4927, -58.8063], 12);
@@ -30,7 +33,9 @@ L.control.locate({
 	popup: 'Estás a {distance} metros aprox. de aquí',
 	outsideMapBoundsMsg: 'No es posible ubicar tu posición en el mapa'
     },
-    onLocationError: function(err) {alert('Disculpa. Hubo un error al intentar localizar tu ubicación.');}
+    onLocationError: function(err) {
+	alert('Disculpa. Hubo un error al intentar localizar tu ubicación.');
+    }
 }).addTo(map);
 
 // https://github.com/ebrelsford/Leaflet.loading
@@ -39,13 +44,13 @@ var loadingControl = L.Control.loading({
 });
 map.addControl(loadingControl);
 
-
-var icons = {
+var pois = {
     bank: {
 	name: 'Banco / Cajero',
 	query: "[amenity~'bank|atm']",
 	iconName: 'bank',
-	markerColor: 'cadetblue'
+	markerColor: 'cadetblue',
+	tagParser: bank_parser
     },
 
     'car_repair': {
@@ -131,7 +136,7 @@ function callback(data) {
 	if (e.tags.amenity) {
 	    if (e.tags.amenity == 'atm') type = 'bank';
 	    if (e.tags.amenity == 'hospital') type = 'clinic';
-	    if (type == '') type = e.tags.amenity;
+	    if (type == '' && e.tags.amenity in pois) type = e.tags.amenity;
 	}
 	console.debug(type);
 	if (e.tags.tourism) {
@@ -145,23 +150,32 @@ function callback(data) {
 	}
 	if (e.tags.shop) {
 	    if (e.tags.shop == 'convenience') type = 'supermarket';
-	    if (type == '') type = e.tags.shop;
+	    if (type == '' && e.tags.shop in pois) type = e.tags.shop;
 	}
-	var icon = icons[type];
+	var poi = pois[type];
 
 	var markerIcon  = L.AwesomeMarkers.icon({
-	    icon: icon.iconName,
-	    markerColor: icon.markerColor,
+	    icon: poi.iconName,
+	    markerColor: poi.markerColor,
 	    prefix: 'fa'
 	});
 	var marker = L.marker(pos, {icon: markerIcon})
-	var markerPopup = '<h3>Etiquetas</h3>';
-	for(tag in e.tags) {
-	    markerPopup += Mustache.render(
-		'<strong>{{name}}:</strong> {{value}}<br>',
-		{name: tag, value: e.tags[tag]});
-	}
+	var markerPopup = '\
+            <ul class="nav nav-tabs" role="tablist" id="myTab">\
+              <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a></li>\
+              <li role="presentation"><a href="#raw" aria-controls="raw" role="tab" data-toggle="tab">Raw</a></li>\
+            </ul>';
 
+	if (poi.tagParser) {
+	    markerPopup += poi.tagParser(e);
+	}
+	else {
+	    for(tag in e.tags) {
+		markerPopup += Mustache.render(
+		    '<strong>{{name}}:</strong> {{value}}<br>',
+		    {name: tag, value: e.tags[tag]});
+	    }
+	}
 	marker.bindPopup(markerPopup)
 	marker.addTo(this.instance);
     }
@@ -176,7 +190,7 @@ function build_overpass_query() {
     $('#settings input:checked').each(function(i, element) {
 	// http://overpass-turbo.eu/s/6QW
 	query += "node(BBOX)";
-	query += icons[element.dataset.key].query;
+	query += pois[element.dataset.key].query;
 	query += ';';
     });
     query += ');out;';
@@ -191,10 +205,10 @@ function setting_changed() {
 }
 
 function show_settings() {
-    for(icon in icons) {
+    for(poi in pois) {
 	var checkbox = Mustache.render(
 	    '<input type="checkbox" data-key="{{key}}" onclick="setting_changed()"> {{name}}<br>',
-	    {key: icon, name: icons[icon].name}
+	    {key: poi, name: pois[poi].name}
 	);
 	$('#settings').append(checkbox);
     }
