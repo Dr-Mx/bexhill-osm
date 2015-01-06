@@ -21,7 +21,7 @@ ul {
 #settings {
     background-color: white;
     border-radius: 5px;
-    top: 10px;
+    top: 70px;
     font-family: Helvetica,Arial,sans-serif;
     right: 10px;
     opacity: 0.8;
@@ -50,3 +50,14 @@ ul {
 .sidebar-tabs > li {
     font-size: 28pt !important;
 }
+
+.leaflet-control-minZoomIndecator {
+    background-color: rgba(255, 0, 0, 0.5);
+    border-radius: 5px;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    color: white;
+    padding: 10px;
+    z-index: 10;
+}
+
