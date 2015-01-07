@@ -59,6 +59,13 @@ map.addControl(loadingControl);
 
 
 var icons = {
+    bar: {
+	name: 'Bar',
+	query: "[amenity=bar]",
+	iconName: 'glass',
+	markerColor: 'blue'
+    },
+
     bank: {
 	name: 'Banco / Cajero',
 	query: "[amenity~'bank|atm']",
