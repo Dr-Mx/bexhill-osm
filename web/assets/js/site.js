@@ -177,6 +177,8 @@ function callback(data) {
 	    }
 	}
 	marker.bindPopup(markerPopup)
+	// TODO: use marker.getPopup().update() to update the layout
+	// once the user clicks on "Raw"
 	marker.addTo(this.instance);
     }
 }
