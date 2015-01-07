@@ -82,6 +82,13 @@ function generic_tag_parser(element, tag, tagName) {
     return markerPopup;
 }
 
+var tabContentTmpl = '\
+      <div class="tab-content">\
+        <div role="tabpanel" class="tab-pane active" id="info">\
+    ';
+var titleTmpl = '<h4>{{title}}</h4>';
+
+
 function bank_parser(element) {
     tags = element.tags;
     titlePopup = '';
@@ -89,13 +96,11 @@ function bank_parser(element) {
     if (tags.amenity == 'bank') titlePopup = 'Banco';
     if (tags.amenity == 'atm') titlePopup = 'Cajero automático';
 
-    var markerPopup = '\
-      <div class="tab-content">\
-        <div role="tabpanel" class="tab-pane active" id="info">\
-    ';
+    var markerPopup = '';
+    markerPopup += tabContentTmpl;
 
     markerPopup += Mustache.render(
-	'<h4>{{title}}</h4>',
+	titleTmpl,
 	{title: titlePopup}
     );
 
@@ -113,3 +118,31 @@ function bank_parser(element) {
     return markerPopup;
 }
 
+function car_repair_parser(element) {
+    tags = element.tags;
+    titlePopup = '';
+
+    if (tags.shop == 'car_repair') {
+	titlePopup = 'Taller';
+	if (tags.car_repair == 'wheel_repair')
+	    titlePopup = 'Gomería';
+    }
+
+    var markerPopup = '';
+    markerPopup += tabContentTmpl;
+    markerPopup += Mustache.render(
+	titleTmpl,
+	{title: titlePopup}
+    );
+
+    markerPopup += generic_tag_parser(element, 'name', 'Nombre');
+    markerPopup += generic_tag_parser(element, 'phone', 'Teléfono');
+    markerPopup += address_parser(element);
+    markerPopup += website_parser(element);
+    markerPopup += '</div>';
+
+    markerPopup += develop_parser(element);
+    markerPopup += '</div>';
+
+    return markerPopup;
+}

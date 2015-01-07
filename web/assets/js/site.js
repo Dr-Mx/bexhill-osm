@@ -57,7 +57,8 @@ var pois = {
 	name: 'Gomería',
 	query: '[shop=car_repair][car_repair=wheel_repair]',
 	iconName: 'car',
-	markerColor: 'red'
+	markerColor: 'red',
+	tagParser: car_repair_parser
     },
 
 
