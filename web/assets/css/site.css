@@ -76,3 +76,7 @@ ul {
     margin-top: -50px;
     z-index: 10;
 }
+
+.permalink {
+    font-size: 14px;
+}

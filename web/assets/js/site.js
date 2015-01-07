@@ -26,6 +26,12 @@ var sidebar = L.control.sidebar('sidebar').addTo(map);
 // https://github.com/mlevans/leaflet-hash
 var hash = new L.Hash(map);
 
+// update the permalink when L.Hash changes the #hash
+window.onhashchange = function() {
+    update_permalink();
+    console.debug('hashchange');
+}
+
 // https://github.com/leaflet-extras/leaflet-providers
 L.tileLayer.provider(
     'OpenStreetMap.Mapnik',
@@ -207,6 +213,7 @@ function setting_changed() {
     iconLayer.clearLayers();
     build_overpass_query();
     show_overpass_layer();
+    update_permalink();
 }
 
 function show_settings() {
@@ -267,6 +274,12 @@ function get_permalink() {
     $('#settings input:checked').each(function(i, element) {
 	selectedPois.push(element.dataset.key);
     });
+
     uri.query({'pois': selectedPois});
     return uri.href();
+}
+
+function update_permalink() {
+    var link = get_permalink();
+    $('#permalink').attr('href', link);
 }
