@@ -3,7 +3,9 @@ var spinner = 0;
 
 // https://github.com/Leaflet/Leaflet
 var map = new L.Map('map');
-map.setView([-27.4927, -58.8063], 12);
+if (!map.restoreView()) {
+    map.setView([-27.4927, -58.8063], 12);
+}
 
 // https://github.com/Turbo87/sidebar-v2/
 var sidebar = L.control.sidebar('sidebar').addTo(map);
