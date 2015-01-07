@@ -3,9 +3,25 @@ var spinner = 0;
 
 // https://github.com/Leaflet/Leaflet
 var map = new L.Map('map');
+
+// https://github.com/makinacorpus/Leaflet.RestoreView
 if (!map.restoreView()) {
     map.setView([-27.4927, -58.8063], 12);
 }
+
+// https://github.com/perliedman/leaflet-control-geocoder
+var geocoder = L.Control.geocoder({
+    position: 'topleft',
+    placeholder: 'Buscar...',
+    errorMessage: 'Ningún resultado',
+    showResultIcons: true
+}).addTo(map);
+
+geocoder.markGeocode = function(result) {
+    this._map.fitBounds(result.bbox);
+    return this;
+};
+
 
 // https://github.com/Turbo87/sidebar-v2/
 var sidebar = L.control.sidebar('sidebar').addTo(map);
