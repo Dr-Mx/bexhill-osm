@@ -29,7 +29,6 @@ var hash = new L.Hash(map);
 // update the permalink when L.Hash changes the #hash
 window.onhashchange = function() {
     update_permalink();
-    console.debug('hashchange');
 }
 
 // https://github.com/leaflet-extras/leaflet-providers
@@ -193,10 +192,7 @@ function callback(data) {
 }
 
 function build_overpass_query() {
-    // TODO: when a building matches a POI it's not shown in the map
-    // because we need to filter by "way" instead of "node". In case,
-    // we filter by "way" we need to get the lat/lon of the centre
-
+    // FIXME: https://github.com/humitos/osm-pois/issues/5
     query = '(';
     $('#settings input:checked').each(function(i, element) {
 	// http://overpass-turbo.eu/s/6QW
@@ -205,7 +201,6 @@ function build_overpass_query() {
 	query += ';';
     });
     query += ');out;';
-    console.debug(query);
 }
 
 function setting_changed() {
@@ -265,8 +260,6 @@ function show_overpass_layer() {
 
     iconLayer.addLayer(opl);
 }
-show_overpass_layer();
-
 
 function get_permalink() {
     var uri = URI(window.location.href);
