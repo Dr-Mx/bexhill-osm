@@ -3,11 +3,8 @@ var spinner = 0;
 
 // https://github.com/Leaflet/Leaflet
 var map = new L.Map('map');
-
-// https://github.com/makinacorpus/Leaflet.RestoreView
-if (!map.restoreView()) {
-    map.setView([-27.4927, -58.8063], 12);
-}
+var iconLayer = new L.LayerGroup();
+map.addLayer(iconLayer);
 
 // https://github.com/perliedman/leaflet-control-geocoder
 var geocoder = L.Control.geocoder({
@@ -135,9 +132,6 @@ var icons = {
     }
 }
 
-var iconLayer = new L.LayerGroup();
-map.addLayer(iconLayer);
-
 // https://github.com/kartenkarsten/leaflet-layer-overpass
 function callback(data) {
     if (spinner > 0) spinner -= 1;
@@ -226,6 +220,28 @@ function show_settings() {
 }
 show_settings();
 
+var uri = URI(window.location.href);
+if (uri.hasQuery('pois')) {
+    var selectedPois = uri.search(true).pois;
+    if (!$.isArray(selectedPois)) {
+	poi = selectedPois.replace('/', '');
+	$('#settings input[data-key='+ poi + ']').attr('checked', true);
+    }
+    else {
+	for (i = 0; i < selectedPois.length; i++) {
+	    // the last poi has a "/" on it because leaflet-hash
+	    poi = selectedPois[i].replace('/', '');
+	    $('#settings input[data-key='+ poi + ']').attr('checked', true);
+	}	
+    }
+    setting_changed();
+}
+
+// https://github.com/makinacorpus/Leaflet.RestoreView
+if (!map.restoreView()) {
+    map.setView([-27.4927, -58.8063], 12);
+}
+
 var query = '';
 build_overpass_query();
 
@@ -243,3 +259,14 @@ function show_overpass_layer() {
     iconLayer.addLayer(opl);
 }
 show_overpass_layer();
+
+
+function get_permalink() {
+    var uri = URI(window.location.href);
+    var selectedPois = [];
+    $('#settings input:checked').each(function(i, element) {
+	selectedPois.push(element.dataset.key);
+    });
+    uri.query({'pois': selectedPois});
+    return uri.href();
+}
