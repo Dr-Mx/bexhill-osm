@@ -68,6 +68,20 @@ var icons = {
 	markerColor: 'blue'
     },
 
+    pub: {
+	name: 'Pub',
+	query: "[amenity=pub]",
+	iconName: 'glass',
+	markerColor: 'darkblue'
+    },
+
+    restaurant: {
+	name: 'Restaurante / Comida Rápida',
+	query: "[amenity~'restaurant|fast_food']",
+	iconName: 'birthday-cake',
+	markerColor: 'orange'
+    },
+
     bank: {
 	name: 'Banco / Cajero',
 	query: "[amenity~'bank|atm']",
