@@ -17,6 +17,11 @@ var RestoreViewMixin = {
         }
 
         var view = storage['mapView'];
+
+	var uri = URI(window.location.href);
+	if (uri.hasQuery('norestoreview')) continue;
+
+
         try {
             view = JSON.parse(view || '');
             this.setView(L.latLng(view.lat, view.lng), view.zoom, true);

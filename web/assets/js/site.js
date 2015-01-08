@@ -274,7 +274,7 @@ function get_permalink() {
 	selectedPois.push(element.dataset.key);
     });
 
-    uri.query({'pois': selectedPois});
+    uri.query({'pois': selectedPois, 'norestoreview': true});
     return uri.href();
 }
 
