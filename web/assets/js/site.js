@@ -157,7 +157,6 @@ function callback(data) {
 	    if (e.tags.amenity == 'hospital') type = 'clinic';
 	    if (type == '') type = e.tags.amenity;
 	}
-	console.debug(type);
 	if (e.tags.tourism) {
 	    if (e.tags.tourism in {
 		'viewpoint': true,
@@ -166,12 +165,19 @@ function callback(data) {
 		'gallery': true,
 		'zoo': true
 	    }) type = 'viewpoint';
+	    else type = e.tags.tourism;
 	}
 	if (e.tags.shop) {
 	    if (e.tags.shop == 'convenience') type = 'supermarket';
 	    if (type == '') type = e.tags.shop;
 	}
 	var icon = icons[type];
+
+	// skip this undefined icon
+	if (!icon) {
+	    console.info('Skipping undefined icon: "' + type + '"');
+	    continue;
+	}
 
 	var markerIcon  = L.AwesomeMarkers.icon({
 	    icon: icon.iconName,
