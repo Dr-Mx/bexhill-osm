@@ -78,7 +78,7 @@ var icons = {
     'car_repair': {
 	name: 'Gomería',
 	query: '[shop=car_repair][car_repair=wheel_repair]',
-	iconName: 'car',
+	iconName: 'wrench',
 	markerColor: 'red'
     },
 
@@ -133,7 +133,7 @@ var icons = {
 	name: 'Hostel',
 	query: '[tourism=hostel]',
 	iconName: 'building',
-	markerColor: 'darkred'
+	markerColor: 'green'
     }
 }
 
