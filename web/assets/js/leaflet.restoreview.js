@@ -19,7 +19,7 @@ var RestoreViewMixin = {
         var view = storage['mapView'];
 
 	var uri = URI(window.location.href);
-	if (uri.hasQuery('norestoreview')) return false;
+	if (uri.hasQuery('norestoreview')) return true;
 
 
         try {
