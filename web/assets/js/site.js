@@ -164,7 +164,9 @@ function callback(data) {
         if (e.id in this.instance._ids) return;
         this.instance._ids[e.id] = true;
 
-        var pos = new L.LatLng(e.lat, e.lon);
+        var pos = (e.type == 'node') ?
+            new L.LatLng(e.lat, e.lon) :
+            new L.LatLng(e.center.lat, e.center.lon);
 
         // TODO: improve this
         var type = ''
@@ -175,11 +177,11 @@ function callback(data) {
         }
         if (e.tags.tourism) {
             if (e.tags.tourism in {
-            'viewpoint': true,
-            'museum': true,
-            'information': true,
-            'gallery': true,
-            'zoo': true
+                'viewpoint': true,
+                'museum': true,
+                'information': true,
+                'gallery': true,
+                'zoo': true
             }) type = 'viewpoint';
             else type = e.tags.tourism;
         }
@@ -204,8 +206,9 @@ function callback(data) {
         var markerPopup = '<h3>Etiquetas</h3>';
         for(tag in e.tags) {
             markerPopup += Mustache.render(
-            '<strong>{{name}}:</strong> {{value}}<br>',
-            {name: tag, value: e.tags[tag]});
+                '<strong>{{name}}:</strong> {{value}}<br>',
+                {name: tag, value: e.tags[tag]}
+            );
         }
 
         marker.bindPopup(markerPopup)
@@ -214,15 +217,13 @@ function callback(data) {
 }
 
 function build_overpass_query() {
-    // FIXME: https://github.com/humitos/osm-pois/issues/5
     query = '(';
     $('#settings input:checked').each(function(i, element) {
-        // http://overpass-turbo.eu/s/6QW
-        query += "node(BBOX)";
-        query += icons[element.dataset.key].query;
-        query += ';';
+        query += 'node(BBOX)' + icons[element.dataset.key].query + ';';
+        query += 'way(BBOX)' + icons[element.dataset.key].query + ';';
+        query += 'relation(BBOX)' + icons[element.dataset.key].query + ';';
     });
-    query += ');out;';
+    query += ');out center;';
 }
 
 function setting_changed() {
@@ -270,7 +271,7 @@ var query = '';
 build_overpass_query();
 
 function show_overpass_layer() {
-    if(query == '' || query == '();out;') {
+    if (query == '' || query == '();out center;') {
         console.debug('There is nothing selected to filter by.');
         return;
     }
