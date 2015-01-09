@@ -35,7 +35,7 @@ window.onhashchange = function() {
 L.tileLayer.provider(
     'OpenStreetMap.Mapnik',
     {
-	attribution: 'Data: <a href="http://www.overpass-api.de/">OverpassAPI</a>/ODbL OpenStreetMap'
+        attribution: 'Data: <a href="http://www.overpass-api.de/">OverpassAPI</a>/ODbL OpenStreetMap'
     }
 ).addTo(map);
 
@@ -46,9 +46,9 @@ L.control.locate({
     keepCurrentZoomLevel: true,
     showPopup: false,
     strings: {
-	title: 'Muéstrame donde estoy',
-	popup: 'Estás a {distance} metros aprox. de aquí',
-	outsideMapBoundsMsg: 'No es posible ubicar tu posición en el mapa'
+        title: 'Muéstrame donde estoy',
+        popup: 'Estás a {distance} metros aprox. de aquí',
+        outsideMapBoundsMsg: 'No es posible ubicar tu posición en el mapa'
     },
     onLocationError: function(err) {alert('Disculpa. Hubo un error al intentar localizar tu ubicación.');}
 }).addTo(map);
@@ -62,92 +62,94 @@ map.addControl(loadingControl);
 
 var icons = {
     bar: {
-	name: 'Bar',
-	query: "[amenity=bar]",
-	iconName: 'glass',
-	markerColor: 'blue'
+        name: 'Bar',
+        query: "[amenity=bar]",
+        iconName: 'glass',
+        markerColor: 'blue'
     },
 
     pub: {
-	name: 'Pub',
-	query: "[amenity=pub]",
-	iconName: 'glass',
-	markerColor: 'darkblue'
+        name: 'Pub',
+        query: "[amenity=pub]",
+        iconName: 'glass',
+        markerColor: 'darkblue'
     },
 
     restaurant: {
-	name: 'Restaurante / Comida Rápida',
-	query: "[amenity~'restaurant|fast_food']",
-	iconName: 'birthday-cake',
-	markerColor: 'orange'
+        name: 'Restaurante / Comida Rápida',
+        query: "[amenity~'restaurant|fast_food']",
+        iconName: 'birthday-cake',
+        markerColor: 'orange'
     },
 
     bank: {
-	name: 'Banco / Cajero',
-	query: "[amenity~'bank|atm']",
-	iconName: 'bank',
-	markerColor: 'cadetblue'
+        name: 'Banco / Cajero',
+        query: "[amenity~'bank|atm']",
+        iconName: 'bank',
+        markerColor: 'cadetblue'
     },
 
     'car_repair': {
-	name: 'Gomería',
-	query: '[shop=car_repair][car_repair=wheel_repair]',
-	iconName: 'wrench',
-	markerColor: 'red'
+        name: 'Gomería',
+        query: '[shop=car_repair][car_repair=wheel_repair]',
+        iconName: 'wrench',
+        markerColor: 'red'
     },
-
 
     clinic: {
-	name: 'Hospital / Clínica',
-	query: "[amenity~'^clinic$|hospital']",
-	iconName: 'hospital-o',
-	markerColor: 'red'
+        name: 'Hospital / Clínica',
+        query: "[amenity~'^clinic$|hospital']",
+        iconName: 'hospital-o',
+        markerColor: 'red'
     },
+
     pharmacy: {
-	name: 'Farmacia',
-	query: '[amenity=pharmacy]',
-	iconName: 'plus-square',
-	markerColor: 'green'
+        name: 'Farmacia',
+        query: '[amenity=pharmacy]',
+        iconName: 'plus-square',
+        markerColor: 'green'
     },
 
     fuel: {
-	name: 'Estación de Servicio',
-	query: '[amenity=fuel]',
-	iconName: 'car',
-	markerColor: 'orange'
+        name: 'Estación de Servicio',
+        query: '[amenity=fuel]',
+        iconName: 'car',
+        markerColor: 'orange'
     },
 
     supermarket: {
-	name: 'Supermercado / Despensa',
-	query: "[shop~'supermarket|convenience']",
-	iconName: 'calculator',
-	markerColor: 'blue'
+        name: 'Supermercado / Despensa',
+        query: "[shop~'supermarket|convenience']",
+        iconName: 'calculator',
+        markerColor: 'blue'
     },
 
     viewpoint: {
-	name: 'Atractivo Turístico',
-	query: "[tourism~'viewpoint|museum|gallery|information|zoo']",
-	iconName: 'star',
-	markerColor: 'orange'
+        name: 'Atractivo Turístico',
+        query: "[tourism~'viewpoint|museum|gallery|information|zoo']",
+        iconName: 'star',
+        markerColor: 'orange'
     },
 
     'camp_site': {
-	name: 'Camping',
-	query: '[tourism=camp_site]',
-	iconName: 'fire',
-	markerColor: 'green'
+        name: 'Camping',
+        query: '[tourism=camp_site]',
+        iconName: 'fire',
+        markerColor: 'green'
     },
+
     hotel: {
-	name: 'Hotel',
-	query: '[tourism=hotel]',
-	iconName: 'building',
-	markerColor: 'darkred'
+        name: 'Hotel',
+        query: '[tourism=hotel]',
+        iconName: 'building',
+        markerColor: 'darkred'
     },
+
     hostel: {
-	name: 'Hostel',
-	query: '[tourism=hostel]',
-	iconName: 'building',
-	markerColor: 'green'
+        name: 'Hostel',
+        query: '[tourism=hostel]',
+        iconName: 'building',
+        markerColor: 'green'
     }
 }
 
@@ -157,57 +159,57 @@ function callback(data) {
     if (spinner == 0) $('#spinner').hide();
 
     for(i=0; i < data.elements.length; i++) {
-	e = data.elements[i];
+        e = data.elements[i];
 
-	if (e.id in this.instance._ids) return;
-	this.instance._ids[e.id] = true;
+        if (e.id in this.instance._ids) return;
+        this.instance._ids[e.id] = true;
 
-	var pos = new L.LatLng(e.lat, e.lon);
+        var pos = new L.LatLng(e.lat, e.lon);
 
-	// TODO: improve this
-	var type = ''
-	if (e.tags.amenity) {
-	    if (e.tags.amenity == 'atm') type = 'bank';
-	    if (e.tags.amenity == 'hospital') type = 'clinic';
-	    if (type == '') type = e.tags.amenity;
-	}
-	if (e.tags.tourism) {
-	    if (e.tags.tourism in {
-		'viewpoint': true,
-		'museum': true,
-		'information': true,
-		'gallery': true,
-		'zoo': true
-	    }) type = 'viewpoint';
-	    else type = e.tags.tourism;
-	}
-	if (e.tags.shop) {
-	    if (e.tags.shop == 'convenience') type = 'supermarket';
-	    if (type == '') type = e.tags.shop;
-	}
-	var icon = icons[type];
+        // TODO: improve this
+        var type = ''
+        if (e.tags.amenity) {
+            if (e.tags.amenity == 'atm') type = 'bank';
+            if (e.tags.amenity == 'hospital') type = 'clinic';
+            if (type == '') type = e.tags.amenity;
+        }
+        if (e.tags.tourism) {
+            if (e.tags.tourism in {
+            'viewpoint': true,
+            'museum': true,
+            'information': true,
+            'gallery': true,
+            'zoo': true
+            }) type = 'viewpoint';
+            else type = e.tags.tourism;
+        }
+        if (e.tags.shop) {
+            if (e.tags.shop == 'convenience') type = 'supermarket';
+            if (type == '') type = e.tags.shop;
+        }
+        var icon = icons[type];
 
-	// skip this undefined icon
-	if (!icon) {
-	    console.info('Skipping undefined icon: "' + type + '"');
-	    continue;
-	}
+        // skip this undefined icon
+        if (!icon) {
+            console.info('Skipping undefined icon: "' + type + '"');
+            continue;
+        }
 
-	var markerIcon  = L.AwesomeMarkers.icon({
-	    icon: icon.iconName,
-	    markerColor: icon.markerColor,
-	    prefix: 'fa'
-	});
-	var marker = L.marker(pos, {icon: markerIcon})
-	var markerPopup = '<h3>Etiquetas</h3>';
-	for(tag in e.tags) {
-	    markerPopup += Mustache.render(
-		'<strong>{{name}}:</strong> {{value}}<br>',
-		{name: tag, value: e.tags[tag]});
-	}
+        var markerIcon  = L.AwesomeMarkers.icon({
+            icon: icon.iconName,
+            markerColor: icon.markerColor,
+            prefix: 'fa'
+        });
+        var marker = L.marker(pos, {icon: markerIcon})
+        var markerPopup = '<h3>Etiquetas</h3>';
+        for(tag in e.tags) {
+            markerPopup += Mustache.render(
+            '<strong>{{name}}:</strong> {{value}}<br>',
+            {name: tag, value: e.tags[tag]});
+        }
 
-	marker.bindPopup(markerPopup)
-	marker.addTo(this.instance);
+        marker.bindPopup(markerPopup)
+        marker.addTo(this.instance);
     }
 }
 
@@ -215,10 +217,10 @@ function build_overpass_query() {
     // FIXME: https://github.com/humitos/osm-pois/issues/5
     query = '(';
     $('#settings input:checked').each(function(i, element) {
-	// http://overpass-turbo.eu/s/6QW
-	query += "node(BBOX)";
-	query += icons[element.dataset.key].query;
-	query += ';';
+        // http://overpass-turbo.eu/s/6QW
+        query += "node(BBOX)";
+        query += icons[element.dataset.key].query;
+        query += ';';
     });
     query += ');out;';
 }
@@ -233,11 +235,11 @@ function setting_changed() {
 
 function show_settings() {
     for(icon in icons) {
-	var checkbox = Mustache.render(
-	    '<input type="checkbox" data-key="{{key}}" onclick="setting_changed()"> {{name}}<br>',
-	    {key: icon, name: icons[icon].name}
-	);
-	$('#settings').append(checkbox);
+        var checkbox = Mustache.render(
+            '<input type="checkbox" data-key="{{key}}" onclick="setting_changed()"> {{name}}<br>',
+            {key: icon, name: icons[icon].name}
+        );
+        $('#settings').append(checkbox);
     }
 }
 show_settings();
@@ -246,15 +248,15 @@ var uri = URI(window.location.href);
 if (uri.hasQuery('pois')) {
     var selectedPois = uri.search(true).pois;
     if (!$.isArray(selectedPois)) {
-	poi = selectedPois.replace('/', '');
-	$('#settings input[data-key='+ poi + ']').attr('checked', true);
+        poi = selectedPois.replace('/', '');
+        $('#settings input[data-key='+ poi + ']').attr('checked', true);
     }
     else {
-	for (i = 0; i < selectedPois.length; i++) {
-	    // the last poi has a "/" on it because leaflet-hash
-	    poi = selectedPois[i].replace('/', '');
-	    $('#settings input[data-key='+ poi + ']').attr('checked', true);
-	}	
+        for (i = 0; i < selectedPois.length; i++) {
+            // the last poi has a "/" on it because leaflet-hash
+            poi = selectedPois[i].replace('/', '');
+            $('#settings input[data-key='+ poi + ']').attr('checked', true);
+        }
     }
     setting_changed();
 }
@@ -269,13 +271,13 @@ build_overpass_query();
 
 function show_overpass_layer() {
     if(query == '' || query == '();out;') {
-	console.debug('There is nothing selected to filter by.');
-	return;
+        console.debug('There is nothing selected to filter by.');
+        return;
     }
     var opl = new L.OverPassLayer({
-	query: query,
-	callback: callback,
-	minzoom: 14,
+        query: query,
+        callback: callback,
+        minzoom: 14
     });
 
     iconLayer.addLayer(opl);
@@ -285,7 +287,7 @@ function get_permalink() {
     var uri = URI(window.location.href);
     var selectedPois = [];
     $('#settings input:checked').each(function(i, element) {
-	selectedPois.push(element.dataset.key);
+        selectedPois.push(element.dataset.key);
     });
 
     uri.query({'pois': selectedPois, 'norestoreview': true});
