@@ -8,6 +8,8 @@ http://pois.elblogdehumitos.com.ar/master/
 
 **Date:** unreleased yet
 
+ - Added "Used tools" sidebar pane
+ - Use "Mapicons" from http://mapicons.nicolasmollet.com/ (#6)
  - Support ways and relations (#5) -thanks to @51114u9
  - Shows Pubs (amenity=pub) and Restaurants
    (amenity~'restaurant|fast_food')
