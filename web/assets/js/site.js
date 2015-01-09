@@ -64,92 +64,79 @@ var icons = {
     bar: {
         name: 'Bar',
         query: "[amenity=bar]",
-        iconName: 'glass',
-        markerColor: 'blue'
+        iconName: 'bar_coktail'
     },
 
     pub: {
         name: 'Pub',
         query: "[amenity=pub]",
-        iconName: 'glass',
-        markerColor: 'darkblue'
+        iconName: 'bar'
     },
 
     restaurant: {
         name: 'Restaurante / Comida Rápida',
         query: "[amenity~'restaurant|fast_food']",
-        iconName: 'birthday-cake',
-        markerColor: 'orange'
+        iconName: 'restaurant'
     },
 
     bank: {
         name: 'Banco / Cajero',
         query: "[amenity~'bank|atm']",
-        iconName: 'bank',
-        markerColor: 'cadetblue'
+        iconName: 'bank'
     },
 
     'car_repair': {
         name: 'Gomería',
         query: '[shop=car_repair][car_repair=wheel_repair]',
-        iconName: 'wrench',
-        markerColor: 'red'
+        iconName: 'tires'
     },
 
     clinic: {
         name: 'Hospital / Clínica',
         query: "[amenity~'^clinic$|hospital']",
-        iconName: 'hospital-o',
-        markerColor: 'red'
+        iconName: 'hospital-building'
     },
 
     pharmacy: {
         name: 'Farmacia',
         query: '[amenity=pharmacy]',
-        iconName: 'plus-square',
-        markerColor: 'green'
+        iconName: 'drugstore'
     },
 
     fuel: {
         name: 'Estación de Servicio',
         query: '[amenity=fuel]',
-        iconName: 'car',
-        markerColor: 'orange'
+        iconName: 'fillingstation'
     },
 
     supermarket: {
         name: 'Supermercado / Despensa',
         query: "[shop~'supermarket|convenience']",
-        iconName: 'calculator',
-        markerColor: 'blue'
+        iconName: 'supermarket'
     },
 
     viewpoint: {
         name: 'Atractivo Turístico',
         query: "[tourism~'viewpoint|museum|gallery|information|zoo']",
-        iconName: 'star',
-        markerColor: 'orange'
+        iconName: 'sight-2'
     },
 
     'camp_site': {
         name: 'Camping',
         query: '[tourism=camp_site]',
-        iconName: 'fire',
-        markerColor: 'green'
+        iconName: 'camping-2'
     },
 
     hotel: {
         name: 'Hotel',
         query: '[tourism=hotel]',
-        iconName: 'building',
-        markerColor: 'darkred'
+        iconName: 'hotel_0star'
     },
 
     hostel: {
         name: 'Hostel',
         query: '[tourism=hostel]',
-        iconName: 'building',
-        markerColor: 'green'
+        iconName: 'youthhostel'
     }
 }
 
@@ -173,6 +160,7 @@ function callback(data) {
         if (e.tags.amenity) {
             if (e.tags.amenity == 'atm') type = 'bank';
             if (e.tags.amenity == 'hospital') type = 'clinic';
+	    if (e.tags.amenity == 'fast_food') type = 'restaurant';
             if (type == '') type = e.tags.amenity;
         }
         if (e.tags.tourism) {
@@ -197,10 +185,11 @@ function callback(data) {
             continue;
         }
 
-        var markerIcon  = L.AwesomeMarkers.icon({
-            icon: icon.iconName,
-            markerColor: icon.markerColor,
-            prefix: 'fa'
+        var markerIcon  = L.icon({
+            iconUrl: 'assets/img/icons/' + icon.iconName + '.png',
+	    iconSize: [37, 37],
+	    iconAnchor: [18.5, 35],
+	    popupAnchor: [0, -27]
         });
         var marker = L.marker(pos, {icon: markerIcon})
         var markerPopup = '<h3>Etiquetas</h3>';
