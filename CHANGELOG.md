@@ -1,4 +1,4 @@
-# CHANGESET
+# CHANGELOG
 
 There is a *Live version!* for the `master` branch at:
 
