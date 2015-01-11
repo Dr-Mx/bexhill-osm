@@ -4,10 +4,15 @@ There is a *Live version!* for the `master` branch at:
 
 http://pois.elblogdehumitos.com.ar/master/
 
-## Version 0.2
+## Version 0.3
 
 **Date:** unreleased yet
 
+## Version 0.2
+
+**Date:** 01/11/2015
+
+ - uMap service linked in "Links"
  - Added "Used tools" sidebar pane
  - Use "Mapicons" from http://mapicons.nicolasmollet.com/ (#6)
  - Support ways and relations (#5) -thanks to @51114u9
