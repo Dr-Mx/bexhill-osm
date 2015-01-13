@@ -6,6 +6,51 @@ var map = new L.Map('map');
 var iconLayer = new L.LayerGroup();
 map.addLayer(iconLayer);
 
+var attribution = ' Data: <a href="http://www.overpass-api.de/" target="_blank">OverpassAPI</a>/ODbL OpenStreetMap';
+var tileLayerData = {
+    mapnik: {
+	name: 'Estándar',
+	url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    },
+    lyrk: {
+	name: 'Lyrk',
+	url: 'http://tiles.lyrk.org/ls/{z}/{x}/{y}?apikey=3d836013a4ab468f965bfd1328d89522',
+	attribution: 'Tiles by <a href="http://lyrk.de/">Lyrk</a>'
+    },
+    fr: {
+	name: 'OpenStreetMap France',
+	url: 'http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
+    },
+    mapquest: {
+	name: 'MapQuest Open',
+	url: 'http://otile.{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
+	attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> &mdash;',
+	subdomain: '1234'
+    },
+    hot: {
+	name: 'Humanitario',
+	url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+	attribution: 'Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a> &mdash;'
+    }
+};
+
+var tileLayers = {};
+for (tile in tileLayerData) {
+    var tileAttribution;
+    if (tileLayerData[tile].attribution) {
+	tileAttribution = tileLayerData[tile].attribution + attribution;
+    }
+    else tileAttribution = attribution;
+
+    tileLayers[tileLayerData[tile].name] = L.tileLayer(
+	tileLayerData[tile].url,
+	{attribution: tileAttribution}
+    )
+}
+
+tileLayers['Estándar'].addTo(map);
+L.control.layers(tileLayers).addTo(map);
+
 // https://github.com/perliedman/leaflet-control-geocoder
 var geocoder = L.Control.geocoder({
     position: 'topleft',
@@ -22,8 +67,10 @@ geocoder.markGeocode = function(result) {
 
 // https://github.com/Turbo87/sidebar-v2/
 var sidebar = L.control.sidebar('sidebar').addTo(map);
-// open #home sidebar-pane to show the available POIs
-sidebar.open('home');
+$(document).ready(function () {
+    // open #home sidebar-pane to show the available POIs
+    sidebar.open('home');
+});
 
 // https://github.com/mlevans/leaflet-hash
 var hash = new L.Hash(map);
@@ -33,13 +80,6 @@ window.onhashchange = function() {
     update_permalink();
 }
 
-// https://github.com/leaflet-extras/leaflet-providers
-L.tileLayer.provider(
-    'OpenStreetMap.Mapnik',
-    {
-	attribution: 'Data: <a href="http://www.overpass-api.de/">OverpassAPI</a>/ODbL OpenStreetMap'
-    }
-).addTo(map);
 
 // https://github.com/domoritz/leaflet-locatecontrol
 L.control.locate({

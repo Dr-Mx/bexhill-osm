@@ -8,6 +8,7 @@ http://pois.elblogdehumitos.com.ar/master/
 
 **Date:** unreleased yet
 
+ - More layers (HOT, MapQuest OSM, Lyrk, OSMFr) (#12)
  - Show POIs checkboxes inside the sidebar pane (#19)
  - Show POI icons in checkboxes (#16)
  - Split common POIs in different checkboxes
