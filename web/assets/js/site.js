@@ -187,7 +187,7 @@ function callback(data) {
 
         var markerIcon  = L.icon({
             iconUrl: 'assets/img/icons/' + icon.iconName + '.png',
-	    iconSize: [37, 37],
+	    iconSize: [32, 37],
 	    iconAnchor: [18.5, 35],
 	    popupAnchor: [0, -27]
         });
