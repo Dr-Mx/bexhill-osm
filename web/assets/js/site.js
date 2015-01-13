@@ -23,9 +23,9 @@ var tileLayerData = {
     },
     mapquest: {
 	name: 'MapQuest Open',
-	url: 'http://otile.{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
+	url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
 	attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> &mdash;',
-	subdomain: '1234'
+	subdomains: '1234'
     },
     hot: {
 	name: 'Humanitario',
@@ -37,6 +37,7 @@ var tileLayerData = {
 var tileLayers = {};
 for (tile in tileLayerData) {
     var tileAttribution;
+    var subdomains = tileLayerData[tile].subdomains ? tileLayerData[tile].subdomains : 'abc';
     if (tileLayerData[tile].attribution) {
 	tileAttribution = tileLayerData[tile].attribution + attribution;
     }
@@ -44,7 +45,7 @@ for (tile in tileLayerData) {
 
     tileLayers[tileLayerData[tile].name] = L.tileLayer(
 	tileLayerData[tile].url,
-	{attribution: tileAttribution}
+	{attribution: tileAttribution, subdomains: subdomains}
     )
 }
 
