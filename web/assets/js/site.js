@@ -281,7 +281,7 @@ function callback(data) {
 	    );
 	}
 
-	marker.bindPopup(markerPopup)
+	marker.bindPopup(markerPopup);
 	marker.addTo(this.instance);
     }
 }
