@@ -8,6 +8,12 @@ http://pois.elblogdehumitos.com.ar/master/
 
 **Date:** unreleased yet
 
+ - Show POIs checkboxes inside the sidebar pane (#19)
+ - Show POI icons in checkboxes (#16)
+ - Split common POIs in different checkboxes
+ - Help updated
+ - Close button added in sidebar panes
+
 ## Version 0.2
 
 **Date:** 01/11/2015

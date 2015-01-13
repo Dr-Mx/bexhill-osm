@@ -17,16 +17,28 @@ ul {
     padding: 0px;
 }
 
-#settings {
-    background-color: white;
-    border-radius: 5px;
-    top: 70px;
-    font-family: Helvetica,Arial,sans-serif;
-    right: 10px;
-    opacity: 0.8;
-    padding: 3px;
-    position: absolute;
-    z-index: 10;
+.poi-checkbox {
+    font-size: 15px;
+}
+
+.poi-checkbox > label > img {
+    float: left;
+}
+
+.poi-checkbox > label > input {
+    margin-top: 10px;
+}
+
+.poi-checkbox > label > span {
+    margin-left: 5px;
+}
+
+.close-button {
+    float: right;
+    margin-top: 23px;
+    margin-right: 15px;
+    font-size: 25px;
+    cursor: pointer;
 }
 
 .leaflet-control-loading {
@@ -74,4 +86,5 @@ ul {
 
 .permalink {
     font-size: 14px;
+    text-align: center;
 }

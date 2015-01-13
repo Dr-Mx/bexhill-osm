@@ -22,6 +22,8 @@ geocoder.markGeocode = function(result) {
 
 // https://github.com/Turbo87/sidebar-v2/
 var sidebar = L.control.sidebar('sidebar').addTo(map);
+// open #home sidebar-pane to show the available POIs
+sidebar.open('home');
 
 // https://github.com/mlevans/leaflet-hash
 var hash = new L.Hash(map);
@@ -35,7 +37,7 @@ window.onhashchange = function() {
 L.tileLayer.provider(
     'OpenStreetMap.Mapnik',
     {
-        attribution: 'Data: <a href="http://www.overpass-api.de/">OverpassAPI</a>/ODbL OpenStreetMap'
+	attribution: 'Data: <a href="http://www.overpass-api.de/">OverpassAPI</a>/ODbL OpenStreetMap'
     }
 ).addTo(map);
 
@@ -46,9 +48,9 @@ L.control.locate({
     keepCurrentZoomLevel: true,
     showPopup: false,
     strings: {
-        title: 'Muéstrame donde estoy',
-        popup: 'Estás a {distance} metros aprox. de aquí',
-        outsideMapBoundsMsg: 'No es posible ubicar tu posición en el mapa'
+	title: 'Muéstrame donde estoy',
+	popup: 'Estás a {distance} metros aprox. de aquí',
+	outsideMapBoundsMsg: 'No es posible ubicar tu posición en el mapa'
     },
     onLocationError: function(err) {alert('Disculpa. Hubo un error al intentar localizar tu ubicación.');}
 }).addTo(map);
@@ -62,81 +64,129 @@ map.addControl(loadingControl);
 
 var icons = {
     bar: {
-        name: 'Bar',
-        query: "[amenity=bar]",
-        iconName: 'bar_coktail'
+	name: 'Bar',
+	query: '[amenity=bar]',
+	iconName: 'bar_coktail'
     },
 
     pub: {
-        name: 'Pub',
-        query: "[amenity=pub]",
-        iconName: 'bar'
+	name: 'Pub',
+	query: '[amenity=pub]',
+	iconName: 'bar'
     },
 
     restaurant: {
-        name: 'Restaurante / Comida Rápida',
-        query: "[amenity~'restaurant|fast_food']",
-        iconName: 'restaurant'
+	name: 'Restaurante',
+	query: '[amenity=restaurant]',
+	iconName: 'restaurant'
+    },
+
+    fast_food: {
+	name: 'Comida Rápida',
+	query: '[amenity=fast_food]',
+	iconName: 'fastfood'
     },
 
     bank: {
-        name: 'Banco / Cajero',
-        query: "[amenity~'bank|atm']",
-        iconName: 'bank'
+	name: 'Banco',
+	query: '[amenity=bank]',
+	iconName: 'bank'
     },
 
-    'car_repair': {
-        name: 'Gomería',
-        query: '[shop=car_repair][car_repair=wheel_repair]',
-        iconName: 'tires'
-    },
-
-    clinic: {
-        name: 'Hospital / Clínica',
-        query: "[amenity~'^clinic$|hospital']",
-        iconName: 'hospital-building'
-    },
-
-    pharmacy: {
-        name: 'Farmacia',
-        query: '[amenity=pharmacy]',
-        iconName: 'drugstore'
+    atm: {
+	name: 'Cajero',
+	query: '[amenity=atm]',
+	iconName: 'atm-2'
     },
 
     fuel: {
-        name: 'Estación de Servicio',
-        query: '[amenity=fuel]',
-        iconName: 'fillingstation'
+	name: 'Estación de Servicio',
+	query: '[amenity=fuel]',
+	iconName: 'fillingstation'
+    },
+
+    wheel_repair: {
+	name: 'Gomería',
+	query: '[shop=car_repair][car_repair=wheel_repair]',
+	iconName: 'tires'
+    },
+
+    clinic: {
+	name: 'Clínica',
+	query: '[amenity=clinic]',
+	iconName: 'medicine'
+    },
+
+    hospital: {
+	name: 'Hospital',
+	query: '[amenity=hospital]',
+	iconName: 'hospital-building'
+    },
+
+    pharmacy: {
+	name: 'Farmacia',
+	query: '[amenity=pharmacy]',
+	iconName: 'drugstore'
     },
 
     supermarket: {
-        name: 'Supermercado / Despensa',
-        query: "[shop~'supermarket|convenience']",
-        iconName: 'supermarket'
+	name: 'Supermercado',
+	query: '[shop=supermarket]',
+	iconName: 'supermarket'
+    },
+
+    convenience: {
+	name: 'Despensa',
+	query: '[shop=convenience]',
+	iconName: 'conveniencestore'
+    },
+
+    gallery: {
+	name: 'Galería de Arte',
+	query: '[tourism=gallery]',
+	iconName: 'museum_art'
+    },
+
+    museum: {
+	name: 'Museo',
+	query: '[tourism=museum]',
+	iconName: 'museum_crafts'
     },
 
     viewpoint: {
-        name: 'Atractivo Turístico',
-        query: "[tourism~'viewpoint|museum|gallery|information|zoo']",
-        iconName: 'sight-2'
+	name: 'Mirador',
+	query: '[tourism=viewpoint]',
+	iconName: 'sight-2'
     },
 
     'camp_site': {
-        name: 'Camping',
-        query: '[tourism=camp_site]',
-        iconName: 'camping-2'
+	name: 'Camping',
+	query: '[tourism=camp_site]',
+	iconName: 'camping-2'
     },
 
     hotel: {
-        name: 'Hotel',
-        query: '[tourism=hotel]',
-        iconName: 'hotel_0star'
+	name: 'Hotel',
+	query: '[tourism=hotel]',
+	iconName: 'hotel_0star'
     },
 
     hostel: {
-        name: 'Hostel',
-        query: '[tourism=hostel]',
-        iconName: 'youthhostel'
+	name: 'Hostel',
+	query: '[tourism=hostel]',
+	iconName: 'youthhostel'
+    },
+
+    info_tourism: {
+	name: 'Información Turística',
+	query: '[tourism=information]',
+	iconName: 'information'
+    },
+
+    zoo: {
+	name: 'Zoológico',
+	query: '[tourism=zoo]',
+	iconName: 'zoo'
     }
 }
 
@@ -146,71 +196,61 @@ function callback(data) {
     if (spinner == 0) $('#spinner').hide();
 
     for(i=0; i < data.elements.length; i++) {
-        e = data.elements[i];
+	e = data.elements[i];
 
-        if (e.id in this.instance._ids) return;
-        this.instance._ids[e.id] = true;
+	if (e.id in this.instance._ids) return;
+	this.instance._ids[e.id] = true;
 
-        var pos = (e.type == 'node') ?
-            new L.LatLng(e.lat, e.lon) :
-            new L.LatLng(e.center.lat, e.center.lon);
+	var pos = (e.type == 'node') ?
+	    new L.LatLng(e.lat, e.lon) :
+	    new L.LatLng(e.center.lat, e.center.lon);
 
-        // TODO: improve this
-        var type = ''
-        if (e.tags.amenity) {
-            if (e.tags.amenity == 'atm') type = 'bank';
-            if (e.tags.amenity == 'hospital') type = 'clinic';
-	    if (e.tags.amenity == 'fast_food') type = 'restaurant';
-            if (type == '') type = e.tags.amenity;
-        }
-        if (e.tags.tourism) {
-            if (e.tags.tourism in {
-                'viewpoint': true,
-                'museum': true,
-                'information': true,
-                'gallery': true,
-                'zoo': true
-            }) type = 'viewpoint';
-            else type = e.tags.tourism;
-        }
-        if (e.tags.shop) {
-            if (e.tags.shop == 'convenience') type = 'supermarket';
-            if (type == '') type = e.tags.shop;
-        }
-        var icon = icons[type];
+	// TODO: improve this
+	var type = ''
+	if (e.tags.amenity) {
+	    if (type == '') type = e.tags.amenity;
+	}
+	if (e.tags.tourism) {
+	    if (type == '') type = e.tags.tourism;
+	}
+	if (e.tags.shop) {
+	    if (e.tags.car_repair == 'wheel_repair') type = 'wheel_repair';
+	    if (type == '') type = e.tags.shop;
+	}
+	var icon = icons[type];
 
-        // skip this undefined icon
-        if (!icon) {
-            console.info('Skipping undefined icon: "' + type + '"');
-            continue;
-        }
+	// skip this undefined icon
+	if (!icon) {
+	    console.info('Skipping undefined icon: "' + type + '"');
+	    continue;
+	}
 
-        var markerIcon  = L.icon({
-            iconUrl: 'assets/img/icons/' + icon.iconName + '.png',
+	var markerIcon  = L.icon({
+	    iconUrl: 'assets/img/icons/' + icon.iconName + '.png',
 	    iconSize: [32, 37],
 	    iconAnchor: [18.5, 35],
 	    popupAnchor: [0, -27]
-        });
-        var marker = L.marker(pos, {icon: markerIcon})
-        var markerPopup = '<h3>Etiquetas</h3>';
-        for(tag in e.tags) {
-            markerPopup += Mustache.render(
-                '<strong>{{name}}:</strong> {{value}}<br>',
-                {name: tag, value: e.tags[tag]}
-            );
-        }
+	});
+	var marker = L.marker(pos, {icon: markerIcon})
+	var markerPopup = '<h3>Etiquetas</h3>';
+	for(tag in e.tags) {
+	    markerPopup += Mustache.render(
+		'<strong>{{name}}:</strong> {{value}}<br>',
+		{name: tag, value: e.tags[tag]}
+	    );
+	}
 
-        marker.bindPopup(markerPopup)
-        marker.addTo(this.instance);
+	marker.bindPopup(markerPopup)
+	marker.addTo(this.instance);
     }
 }
 
 function build_overpass_query() {
     query = '(';
-    $('#settings input:checked').each(function(i, element) {
-        query += 'node(BBOX)' + icons[element.dataset.key].query + ';';
-        query += 'way(BBOX)' + icons[element.dataset.key].query + ';';
-        query += 'relation(BBOX)' + icons[element.dataset.key].query + ';';
+    $('#pois input:checked').each(function(i, element) {
+	query += 'node(BBOX)' + icons[element.dataset.key].query + ';';
+	query += 'way(BBOX)' + icons[element.dataset.key].query + ';';
+	query += 'relation(BBOX)' + icons[element.dataset.key].query + ';';
     });
     query += ');out center;';
 }
@@ -223,30 +263,46 @@ function setting_changed() {
     update_permalink();
 }
 
-function show_settings() {
-    for(icon in icons) {
-        var checkbox = Mustache.render(
-            '<input type="checkbox" data-key="{{key}}" onclick="setting_changed()"> {{name}}<br>',
-            {key: icon, name: icons[icon].name}
-        );
-        $('#settings').append(checkbox);
+function show_pois_checkboxes() {
+    // build the content for the "Home" sidebar pane
+    var i = 0;
+    var content = '';
+    content += '<table>';
+    for (icon in icons) {
+	if (i % 2 == 0) content += '<tr>';
+	content += '<td>';
+	var checkbox = Mustache.render(
+	    '<div class="poi-checkbox"> \
+		<label> \
+		    <img src="assets/img/icons/{{icon}}.png"></img> \
+		    <input type="checkbox" data-key="{{key}}" onclick="setting_changed()"><span>{{name}}</span> \
+		</label> \
+	    </div>',
+	    {key: icon, name: icons[icon].name, icon: icons[icon].iconName}
+	);
+	content += checkbox;
+	content += '</td>';
+	i++;
+	if (i % 2 == 0) content += '</tr>';
     }
+    content += '</table>';
+    $('#pois').append(content);
 }
-show_settings();
+show_pois_checkboxes();
 
 var uri = URI(window.location.href);
 if (uri.hasQuery('pois')) {
     var selectedPois = uri.search(true).pois;
     if (!$.isArray(selectedPois)) {
-        poi = selectedPois.replace('/', '');
-        $('#settings input[data-key='+ poi + ']').attr('checked', true);
+	poi = selectedPois.replace('/', '');
+	$('#pois input[data-key='+ poi + ']').attr('checked', true);
     }
     else {
-        for (i = 0; i < selectedPois.length; i++) {
-            // the last poi has a "/" on it because leaflet-hash
-            poi = selectedPois[i].replace('/', '');
-            $('#settings input[data-key='+ poi + ']').attr('checked', true);
-        }
+	for (i = 0; i < selectedPois.length; i++) {
+	    // the last poi has a "/" on it because leaflet-hash
+	    poi = selectedPois[i].replace('/', '');
+	    $('#pois input[data-key='+ poi + ']').attr('checked', true);
+	}
     }
     setting_changed();
 }
@@ -261,13 +317,13 @@ build_overpass_query();
 
 function show_overpass_layer() {
     if (query == '' || query == '();out center;') {
-        console.debug('There is nothing selected to filter by.');
-        return;
+	console.debug('There is nothing selected to filter by.');
+	return;
     }
     var opl = new L.OverPassLayer({
-        query: query,
-        callback: callback,
-        minzoom: 14
+	query: query,
+	callback: callback,
+	minzoom: 14
     });
 
     iconLayer.addLayer(opl);
@@ -276,8 +332,8 @@ function show_overpass_layer() {
 function get_permalink() {
     var uri = URI(window.location.href);
     var selectedPois = [];
-    $('#settings input:checked').each(function(i, element) {
-        selectedPois.push(element.dataset.key);
+    $('#pois input:checked').each(function(i, element) {
+	selectedPois.push(element.dataset.key);
     });
 
     uri.query({'pois': selectedPois, 'norestoreview': true});
