@@ -1,6 +1,6 @@
 L.Control.MinZoomIdenticator = L.Control.extend({
   options: {
-    position: 'bottomleft',
+    position: 'topright',
   },
 
   /**
@@ -51,12 +51,6 @@ L.Control.MinZoomIdenticator = L.Control.extend({
 
     var className = this.className;
     var container = this._container = L.DomUtil.create('div', className);
-    container.style.fontSize = "2em";
-    container.style.background = "#ffffff";
-    container.style.backgroundColor = "rgba(255,255,255,0.7)";
-    container.style.borderRadius = "10px";
-    container.style.padding = "1px 15px";
-    container.style.oppacity = "0.5";
     map.on('moveend', this._updateBox, this);
     this._updateBox(null);
 
@@ -82,7 +76,7 @@ L.Control.MinZoomIdenticator = L.Control.extend({
     if (minzoomlevel == -1) {
       this._container.innerHTML = "no layer assigned";
     }else{
-      this._container.innerHTML = "current Zoom-Level: "+this._map.getZoom()+" all data at Level: "+minzoomlevel;
+      this._container.innerHTML = "Los POIs aparecerán al zoom: " + minzoomlevel + " (actual: " + this._map.getZoom() + ")";
     }
 
     if (this._map.getZoom() >= minzoomlevel) {
@@ -228,6 +222,10 @@ L.OverPassLayer = L.FeatureGroup.extend({
 
           var queryWithMapCoordinates = this.options.query.replace(/(BBOX)/g, bbox.toOverpassBBoxString());
           var url =  this.options.endpoint + "interpreter?data=[out:json];" + queryWithMapCoordinates;
+
+          // to show / hide the spinner
+          $('#spinner').show();
+          spinner += 1;
 
           var self = this;
           var request = new XMLHttpRequest();
