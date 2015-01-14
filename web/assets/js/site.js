@@ -62,7 +62,7 @@ var tileLayerData = {
     mapsurfer: {
 	name: 'OpenMapSurfer',
 	url: 'http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}',
-	attribution: 'Teselas <a href="http://giscience.uni-hd.de/" target="_blank">GIScience Research Group</a>'
+	attribution: 'Teselas <a href="http://giscience.uni-hd.de/" target="_blank">GIScience Research Group @ Heidelberg University</a>'
     }
 };
 
