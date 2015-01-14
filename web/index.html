@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Control.Loading.css" />
+    <link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
 
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="assets/css/site.css">
     <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
     
@@ -30,19 +30,39 @@
       <!-- Nav tabs -->
       <ul class="sidebar-tabs" role="tablist">
 	<li><a href="#home" role="tab"><i class="fa fa-home"></i></a></li>
+	<li><a href="#help" role="tab"><i class="fa fa-info-circle"></i></a></li>
 	<li><a href="#faq" role="tab"><i class="fa fa-question"></i></a></li>
 	<li><a href="#about" role="tab"><i class="fa fa-user"></i></a></li>
-	<li><a href="#link" role="tab"><i class="fa fa-link"></i></a></li>
+	<li><a href="#links" role="tab"><i class="fa fa-link"></i></a></li>
+	<li><a href="#software" role="tab"><i class="fa fa-cogs"></i></a></li>
+	<li><a href="#comments" role="tab"><i class="fa fa-comments"></i></a></li>
       </ul>
+
       <!-- Tab panes -->
       <div class="sidebar-content active">
+
 	<div class="sidebar-pane" id="home">
+	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
 	  <h1>Puntos de Interés</h1>
+	  <p>Elige los puntos que quieras visualizar en el mapa y
+	  luego cierra esta pestaña haciendo click en la <em>X</em>
+	  para una mejor visualización.</p>
+	  <p class="permalink">
+	    <span class="fa fa-link"></span>
+	    <a id="permalink" href="#">Compartir este mapa (link)</a>
+	  </p>
+
+	  <div id="pois"></div>
+	</div>
+
+	<div class="sidebar-pane" id="help">
+	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
+	  <h1>Ayuda</h1>
 	  <p>Esta web permite visualizar diferentes <em>Puntos de
 	  Interés</em> sobre un mapa. Los diferentes tipos de puntos
-	  pueden ser seleccionados desde el globo que se encuentra
-	  arriba a la derecha, pudiendo seleccionar varios a la
-	  vez.</p>
+	  pueden ser seleccionados desde la barra a la izquierda que
+	  se muestra al inicio (o bien haciendo click en <em>"la
+	  casita"</em>), pudiendo seleccionar varios a la vez.</p>
 
 	  <img src="assets/img/help-select-pois.jpg">
 
@@ -67,6 +87,13 @@
 
 	  <img src="assets/img/help-controls.jpg">
 
+	  <p>La "lupa" sirve para buscar una ciudad diferente a la que
+	  se está mostrando en el mapa, ingresando el nombre y la
+	  provincia de la misma. Por ejemplo, "capilla del monte,
+	  córdoba" y presionando <em>Enter</em>.</p>
+
+	  <img src="assets/img/help-geoposition.jpg">
+
 	  <p>Además hay un ícono con una "flechita" que sirve para
 	  centrar el mapa en la posición en la que te encuentras
 	  actualmente.</p>
@@ -76,7 +103,9 @@
 	  <p>¡Espero que te sea de utilidad!</p>
 
 	</div>
+
 	<div class="sidebar-pane" id="faq">
+	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
 	  <h1>Preguntas frecuentes</h1>
 	  <p>
 	    <ul>
@@ -87,18 +116,41 @@
 		el globo que se muestra al hacer click sobre el
 		ícono.</p>
 	      </div>
+              <div class="item">
+                <li><strong>¿Cómo puedo agregar más <em>POIs</em> a la lista?</strong></li>
+                <p>Podés <a href="mailto:humitos@gmail.com">contactarte
+                conmigo por email</a> (o <a href="#comments"
+                onclick="javascript:sidebar.open('comments')">dejar un
+                comentario</a>) y comentarme qué tipo de punto de
+                interés querés agregar así lo sumo a la lista.</p>
+	      </div>
 	      <div class="item">
-		<li><strong>¿Cómo se diferencia un <em>Banco</em> de un <em>Cajero</em>?</strong></li>
-		<p>Los Bancos tienen la etiqueta <em>amenity=bank</em>
-		y los cajeros <em>amenity=atm</em>. También puede ser
-		que un banco tenga un cajero adentro y para eso se
-		usan juntas las etiquetas <em>amenity=bank</em>
-		y <em>atm=yes</em>.</p>
+		<li><strong>¿Para qué sirve el link <em>Compartir este mapa (link)</em> que está en la lista de POIs?</strong></li>
+		<p>Cuando necesites mostrarle el mismo mapa que vos
+		estás viendo a otra persona, podés pasarle ese link y
+		así compartir el mapa. Para eso, tenés que hacer click
+		con el botón derecho del mouse en el
+		texto <em>Compartir este mapa (link)</em> y luego
+		"Copiar dirección de enlace" para guardarlo en el
+		portapapeles.</p>
+	      </div>
+	      <div class="item">
+		<li><strong>¿Porqué las etiquetas que se muestran son tan complicadas de entender?</strong></li>
+		<p>Básicamente, es porque el sitio está
+		en <em>beta</em>. ¿Qué quiere decir esto? Que está
+		actualmente en continuo desarrollo y la versión del
+		sitio web que estás utilizando no está terminada. De
+		hecho, este problema es algo pendiente en lo
+		que <a href="https://github.com/humitos/osm-pois/issues/9">se
+		está trabajando</a>. ¡Copate y ayudanos a
+		resolverlo!</p>
 	      </div>
 	    </ul>
 	  </p>
 	</div>
+
 	<div class="sidebar-pane" id="about">
+	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
 	  <h1>Acerca de...</h1>
 	  <p>Este es un sitio web que empecé para facilitar el acceso
 	  a la información mientras viajo con mi
@@ -122,13 +174,18 @@
 
 	  <p>Si no sabés que es Github y querés hacer un comentario o
 	  sugerencia sobre este sitio web, me podés enviar
-	  un <a href="mailto:humitos@gmail.com">email</a>.</p>
+	  un <a href="mailto:humitos@gmail.com">email</a>
+	  o <a href="#comments"
+	  onclick="javascript:sidebar.open('comments')">dejar un
+	  comentario</a> en este sitio.</p>
 
 	  <p>¡Muchas gracias!</p>
 
 	  <p style="text-align: right">humitos<br>-- <a href="http://elblogdehumitos.com.ar">http://elblogdehumitos.com.ar</a></p>
 	</div>
-	<div class="sidebar-pane" id="link">
+
+	<div class="sidebar-pane" id="links">
+	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
 	  <h1>Enlaces de interés</h1>
 	  <p>
 	    <ul>
@@ -170,18 +227,70 @@
 		  Argentina. ¡Sumate!</p>
 		</li>
 	      </div>
+	      <div class="item">
+		<li><strong>Crea tus mapas fácilmente:</strong> <a href="http://umap.openstreetmap.fr/es/">uMap</a>
+		  <p>uMap te permite crear mapas con capas de
+		  OpenStreetMap en un minuto y embeberlo en tu
+		  sitio.</p>
+		</li>
+	      </div>
 
 	    </ul>
 	  </p>
 	</div>
+
+	<div class="sidebar-pane" id="software">
+	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
+	  <h1>Herramientas usadas</h1>
+	  <p>Este sitio está construido utilizando estas herramientas:</p>
+
+	  <ul class="item">
+	    <li><a href="http://leafletjs.com/">Leafletjs</a> © Vladimir Agafonkin</li>
+	    <li>Leaflet Plugins:
+	      <ol>
+		<li><a href="https://github.com/ebrelsford/Leaflet.loading">Leaflet.loading</a> © Eric Brelsford</li>
+		<li><a href="https://github.com/perliedman/leaflet-control-geocoder">Control.Geocoder</a> © Per Liedman</li>
+		<li><a href="https://github.com/Turbo87/sidebar-v2/">L.control.sidebar</a> © Tobias Bieniek</li>
+		<li><a href="https://www.mapbox.com/mapbox.js/plugins/#leaflet-locatecontrol">L.Control.Locate</a> © Mapbox</li>
+		<li><a href="https://github.com/makinacorpus/Leaflet.RestoreView">Leaflet.RestoreView</a> © Makina Corpus</li>
+		<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass">L.OverPassLayer</a> © kartenkarsten</li>
+		<li><a href="https://github.com/mlevans/leaflet-hash">L.Hash</a> © Michael Lawrence Evans</li>
+	      </ol>
+	    </li>
+	    <li><a href="http://fortawesome.github.io/Font-Awesome/">Font-Awesome</a> © Dave Gandy</li>
+	    <li><a href="http://mapicons.nicolasmollet.com/">Map Icons</a> © Nicolas Mollet</li>
+	    <li><a href="http://jquery.com">jQuery</a> © The jQuery Foundation</li>
+	    <li><a href="https://github.com/medialize/URI.js">URI.js</a> © Medialize</li>
+	    <li><a href="https://github.com/janl/mustache.js">Mustache</a> © Jan Lehnardt</li>
+	  </ul>
+
+	  <p>¡Gracias a todos ellos funciona este sitio web!</p>
+	</div>
+
+	<div class="sidebar-pane" id="comments">
+	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
+	  <h1>Comentarios</h1>
+	  <p>¿Errores? ¿Ideas? ¿Sugerencias?</p>
+	  <p>¡Dejanos tus comentarios!</p>
+	  <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            var disqus_shortname = 'osmpois'; // required: replace example with your forum shortname
+            var disqus_identifier = 'pois-homepage';
+            var disqus_url = 'http://pois.elblogdehumitos.com.ar/';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
       </div>
     </div>
 
     <div id="map" class="sidebar-map"></div>
-
-    <div id="settings">
-      <p><strong>POIs</strong> <small>(elige los que quieras visualizar en el mapa)</small></p>
-    </div>
 
     <div id="spinner" style="display: none;">
       <img src="assets/img/spinner.gif">
@@ -189,14 +298,14 @@
 
     <!-- Javascripts -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src="assets/js/Control.Geocoder.js"></script>
+    <script src="assets/js/leaflet.restoreview.js"></script>
     <script src="assets/js/leaflet-sidebar.js"></script>
-    <script src="assets/js/leaflet.awesome-markers.js"></script>
     <script src="assets/js/Control.Loading.js"></script>
     <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js"></script>
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script src="assets/js/URI.js"></script>
     <script src="assets/js/OverPassLayer.js"></script>
-    <script src="assets/js/leaflet-providers.js"></script>
     <script src="assets/js/leaflet-hash.js"></script>
     <script src="assets/js/mustache.js"></script>
     <script src="assets/js/tags-parsers.js"></script>

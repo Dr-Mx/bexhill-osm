@@ -8,4 +8,7 @@ http://pois.elblogdehumitos.com.ar/
 
 ## Attribution
 
-Strongly based on http://unterkunftskarte.de/
+Strongly based on :
+ - http://unterkunftskarte.de/
+ - http://osm24.eu/
+ - https://github.com/simon04/POImap/
