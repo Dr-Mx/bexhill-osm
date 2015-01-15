@@ -88,3 +88,15 @@ ul {
     font-size: 14px;
     text-align: center;
 }
+
+.leaflet-control-container > div:last-child {
+    line-height: 20px;
+    right: 5px;
+    bottom: 5px;
+}
+
+.leaflet-control-container > div:last-child > div {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}

@@ -9,31 +9,63 @@ var map = new L.Map('map');
 var iconLayer = new L.LayerGroup();
 map.addLayer(iconLayer);
 
-var attribution = ' Data: <a href="http://www.overpass-api.de/" target="_blank">OverpassAPI</a>/ODbL OpenStreetMap';
+var attribution = 'Datos &#169; Colaboradores <a href="http://openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>';
+
 var tileLayerData = {
-    mapnik: {
-	name: 'Estándar',
+    std: {
+	name: 'Estándar (Mapnik)',
 	url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    },
+    hot: {
+	name: 'Equipo Humanitario',
+	url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+	attribution: 'Teselas <a href="http://hot.openstreetmap.org/" target="_blank">Equipo Humanitario OpenStreetMap</a>'
+    },
+    osmfr: {
+	name: 'OSM Francia',
+	url: 'http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
+	attribution: 'Teselas <a href="http://openstreetmap.fr/" target="_blank">OpenStreetMap Francia</a>'
+    },
+    cycle: {
+	name: 'Bicicleta',
+	url: 'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
+	attribution: 'Teselas <a href="http://thunderforest.com/opencyclemap/" target="_blank">ThunderForest</a>'
+    },
+    transport: {
+	name: 'Transporte Público',
+	url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+	attribution: 'Teselas <a href="http://thunderforest.com/transport/" target="_blank">ThunderForest</a>'
+    },
+    landscape: {
+	name: 'Paisaje',
+	url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
+	attribution: 'Teselas <a href="http://thunderforest.com/landscape/" target="_blank">ThunderForest</a>'
+    },
+    outdoor: {
+	name: 'Al Aire Libre',
+	url: 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
+	attribution: 'Teselas <a href="http://thunderforest.com/outdoors/" target="_blank">ThunderForest</a>'
     },
     lyrk: {
 	name: 'Lyrk',
 	url: 'http://tiles.lyrk.org/ls/{z}/{x}/{y}?apikey=3d836013a4ab468f965bfd1328d89522',
-	attribution: 'Tiles by <a href="http://lyrk.de/">Lyrk</a>'
+	attribution: 'Teselas <a href="http://lyrk.de/" target="_blank">Lyrk</a>'
     },
-    fr: {
-	name: 'OpenStreetMap France',
-	url: 'http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
+    mapbox: {
+	name: 'MapBox (Calles)',
+	url: 'http://{s}.tiles.mapbox.com/v3/51114u9.kogin3jb/{z}/{x}/{y}.png',
+	attribution: 'Teselas <a href="http://mapbox.com/" target="_blank">MapBox</a>'
     },
     mapquest: {
 	name: 'MapQuest Open',
-	url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
-	attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> &mdash;',
-	subdomains: '1234'
+	url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+	attribution: 'Teselas <a href="http://mapquest.com/" target="_blank">MapQuest</a>',
+	subdomains: '123'
     },
-    hot: {
-	name: 'Humanitario',
-	url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-	attribution: 'Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a> &mdash;'
+    mapsurfer: {
+	name: 'OpenMapSurfer',
+	url: 'http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}',
+	attribution: 'Teselas <a href="http://giscience.uni-hd.de/" target="_blank">GIScience Research Group @ Heidelberg University</a>'
     }
 };
 
@@ -42,7 +74,7 @@ for (tile in tileLayerData) {
     var tileAttribution;
     var subdomains = tileLayerData[tile].subdomains ? tileLayerData[tile].subdomains : 'abc';
     if (tileLayerData[tile].attribution) {
-	tileAttribution = tileLayerData[tile].attribution + attribution;
+	tileAttribution = tileLayerData[tile].attribution + ' &mdash; ' + attribution;
     }
     else tileAttribution = attribution;
 
@@ -52,7 +84,7 @@ for (tile in tileLayerData) {
     )
 }
 
-tileLayers['Estándar'].addTo(map);
+tileLayers['Estándar (Mapnik)'].addTo(map);
 L.control.layers(tileLayers).addTo(map);
 
 // https://github.com/perliedman/leaflet-control-geocoder
