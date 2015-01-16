@@ -118,7 +118,7 @@ var pois = {
 	iconName: 'youthhostel'
     },
 
-    info_tourism: {
+    information: {
 	name: 'Información Turística',
 	query: '[tourism=information]',
 	iconName: 'information'
