@@ -58,19 +58,38 @@ function address_parser(element) {
 
 function website_parser(element) {
     var tags = element.tags;
-    var website_tag = tags.website ? tags.website : tags['contact:website'];
+    var tag = tags.website ? tags.website : tags['contact:website'];
     var markerPopup = '';
 
-    if (website_tag) {
-	if (website_tag.indexOf('http://') == -1)
-	    website_tag = 'http://' + website_tag;
+    if (tag) {
+	if (tag.indexOf('http://') == -1)
+	    tag = 'http://' + tag;
 	var link = Mustache.render(
 	    '<a href="{{link}}" target="_blank">{{link}}</a>',
-	    {link: website_tag}
+	    {link: tag}
 	);
 	markerPopup += Mustache.render(
 	    tagTmpl,
 	    {tag: 'Sitio Web', value: link, iconName: 'globe'}
+	);
+    }
+    return markerPopup;
+}
+
+function email_parser(element) {
+    var tags = element.tags;
+    var tag = tags.email ? tags.email : tags['contact:email'];
+    var markerPopup = '';
+
+    if (tag) {
+	if (tag.indexOf('@') == -1) return markerPopup
+	var link = Mustache.render(
+	    '<a href="mailto:{{email}}" target="_blank">{{email}}</a>',
+	    {email: tag}
+	);
+	markerPopup += Mustache.render(
+	    tagTmpl,
+	    {tag: 'Email', value: link, iconName: 'at'}
 	);
     }
     return markerPopup;
@@ -175,8 +194,7 @@ function parse_tags(element, titlePopup, functions) {
 	{callback: generic_tag_parser, arg1: 'phone', arg2: 'Teléfono', iconName: 'phone'},
 	{callback: generic_tag_parser, arg1: 'contact:phone', arg2: 'Teléfono', iconName: 'phone'},
 	{callback: generic_tag_parser, arg1: 'contact:fax', arg2: 'Fax', iconName: 'fax'},
-	{callback: generic_tag_parser, arg1: 'contact:email', arg2: 'Email', iconName: 'at'},
-	{callback: generic_tag_parser, arg1: 'email', arg2: 'Email', iconName: 'at'},
+	{callback: email_parser},
 	{callback: website_parser},
     ].concat(functions)
 
