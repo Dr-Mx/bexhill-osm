@@ -187,7 +187,9 @@ function internet_access_parser(element) {
     var markerPopup = '';
     var yes = false;
 
-    if (tags.internet_access == 'yes' || tags.internet_access == 'wlan') yes = '<span class="fa fa-check"></span>';
+    if (tags.internet_access == 'yes' ||
+	tags.internet_access == 'wlan' ||
+	tags.internet_access == 'free') yes = '<span class="fa fa-check"></span>';
     else if (tags.internet_access == 'no') yes = '<span class="fa fa-remove"></span>';
 
     if (!yes) return ''
