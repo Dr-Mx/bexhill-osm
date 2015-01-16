@@ -8,6 +8,8 @@ http://pois.elblogdehumitos.com.ar/master/
 
 **Date:** not released yet
 
+ - Comments for all the POIs using disqus threads (#43)
+
 ## Version 0.3
 
 **Date:** 01/15/2015

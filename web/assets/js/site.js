@@ -179,13 +179,13 @@ function callback(data) {
 	    iconSize: [32, 37],
 	    iconAnchor: [18.5, 35],
 	    popupAnchor: [0, -27]
-        });
-        var marker = L.marker(pos, {
-            icon: markerIcon,
-            keyboard: false
-        })
+	});
+	var marker = L.marker(pos, {
+	    icon: markerIcon,
+	    keyboard: false
+	})
 
-        // show a label next to the icon on mouse hover
+	// show a label next to the icon on mouse hover
 	if (e.tags.name) {
 	    marker.bindLabel(
 		e.tags.name,
@@ -198,6 +198,17 @@ function callback(data) {
 	marker.on('click', function(e) {
 	    var element = e.target._element;
 	    $('#developer > .tags').html(develop_parser(element));
+
+	    var name = element.tags.name ? element.tags.name : element.id;
+	    $('#comments #comment-name').html(name);
+	    // reload disqus thread
+	    DISQUS.reset({
+		reload: true,
+		config: function () {
+		    this.page.identifier = element.id;
+		    this.page.url = 'http://pois.elblogdehumitos.com.ar/#!' + element.id;
+		}
+	    });
 	});
 
 	if (poi.tagParser) var markerPopup = poi.tagParser(e);

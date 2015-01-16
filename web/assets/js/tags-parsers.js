@@ -189,5 +189,9 @@ function parse_tags(element, titlePopup, functions) {
 	    markerPopup += data.callback(element);
 	}
     }
+
+    markerPopup += '<br> <span class="fa fa-comments"></span> ';
+    markerPopup += '<a href="#" onclick="javascript: sidebar.open(\'comments\'); return false;">Ver comentarios</a>';
+
     return markerPopup;
 }
