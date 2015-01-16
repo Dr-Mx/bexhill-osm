@@ -236,7 +236,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
               var reference = {instance: self};
               self.options.callback.call(reference, JSON.parse(this.response));
             }
-            if (this.status > 400 && this.status <= 500) {
+            if (this.status > 400 && this.status <= 502) {
                 // HACK: to avoid the spinner being shown when there
                 // was an error on one of the requests
                 self.options.callback.call(reference, {elements: []});
