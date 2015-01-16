@@ -172,14 +172,28 @@ function opening_hours_parser(element) {
 }
 
 function internet_access_parser(element) {
-    // TODO:
+    var tags = element.tags;
+    var markerPopup = '';
+    var yes = false;
+
+    if (tags.internet_access == 'yes' || tags.internet_access == 'wlan') yes = '<span class="fa fa-check"></span>';
+    else if (tags.internet_access == 'no') yes = '<span class="fa fa-remove"></span>';
+
+    if (!yes) return ''
+
+    markerPopup += Mustache.render(
+	tagTmpl,
+	{tag: 'WiFi', value: yes, iconName: 'wifi'}
+    );
+
+    return markerPopup;
 }
 
 function parse_tags(element, titlePopup, functions) {
     // functions = [
-    //	{callback: generic_tag_parse,  arg1: 'name', arg2: 'Nombre'},
-    //	{callback: address_parser},
-    //	{callback: generic_yes_no_tag_parser, arg1: 'fuel:diesel', arg2: 'Diesel'}
+    //  {callback: generic_tag_parse,  arg1: 'name', arg2: 'Nombre'},
+    //  {callback: address_parser},
+    //  {callback: generic_yes_no_tag_parser, arg1: 'fuel:diesel', arg2: 'Diesel'}
     // ]
 
     var markerPopup = '';
@@ -194,6 +208,7 @@ function parse_tags(element, titlePopup, functions) {
 	{callback: generic_tag_parser, arg1: 'phone', arg2: 'Teléfono', iconName: 'phone'},
 	{callback: generic_tag_parser, arg1: 'contact:phone', arg2: 'Teléfono', iconName: 'phone'},
 	{callback: generic_tag_parser, arg1: 'contact:fax', arg2: 'Fax', iconName: 'fax'},
+	{callback: internet_access_parser},
 	{callback: email_parser},
 	{callback: website_parser},
     ].concat(functions)
