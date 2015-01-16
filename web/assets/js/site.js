@@ -157,12 +157,12 @@ function callback(data) {
 	// TODO: improve this
 	var type = ''
 	if (e.tags.amenity) {
-	    if (type == '') type = e.tags.amenity;
-	}
-	if (e.tags.tourism) {
-	    if (type == '') type = e.tags.tourism;
-	}
-	if (e.tags.shop) {
+            if (type == '') type = e.tags.amenity;
+        }
+        if (e.tags.tourism) {
+            if (type == '') type = e.tags.tourism;
+        }
+        if (e.tags.shop) {
 	    if (e.tags.car_repair == 'wheel_repair') type = 'wheel_repair';
 	    if (type == '') type = e.tags.shop;
 	}
