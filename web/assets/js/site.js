@@ -156,6 +156,9 @@ function callback(data) {
 
 	// TODO: improve this
 	var type = ''
+	if (e.tags.highway) {
+            if (type == '') type = e.tags.highway;
+        }
 	if (e.tags.amenity) {
             if (type == '') type = e.tags.amenity;
         }
@@ -165,6 +168,9 @@ function callback(data) {
         if (e.tags.shop) {
 	    if (e.tags.car_repair == 'wheel_repair') type = 'wheel_repair';
 	    if (type == '') type = e.tags.shop;
+	}
+        if (e.tags.leisure) {
+	    if (type == '') type = e.tags.leisure;
 	}
 
 	var poi = pois[type];

@@ -19,6 +19,12 @@ var pois = {
 	iconName: 'restaurant'
     },
 
+    coffee: {
+	name: 'Café',
+	query: '[shop=coffee]',
+	iconName: 'coffee'
+    },
+
     fast_food: {
 	name: 'Comida Rápida',
 	query: '[amenity=fast_food]',
@@ -49,6 +55,18 @@ var pois = {
 	name: 'Gomería',
 	query: '[shop=car_repair][car_repair=wheel_repair]',
 	iconName: 'tires'
+    },
+
+    car_repair: {
+	name: 'Mecánico',
+	query: '[shop=car_repair][car_repair!=wheel_repair]',
+	iconName: 'repair'
+    },
+
+    bus_stop: {
+	name: 'Parada de Colectivos',
+	query: '[highway=bus_stop]',
+	iconName: 'busstop'
     },
 
     clinic: {
@@ -82,6 +100,18 @@ var pois = {
 	iconName: 'conveniencestore'
     },
 
+    kiosk: {
+	name: 'Kiosko',
+	query: '[shop=kiosk]',
+	iconName: 'kiosk'
+    },
+
+    butcher: {
+	name: 'Carnicería',
+	query: '[shop=butcher]',
+	iconName: 'butcher-2'
+    },
+
     gallery: {
 	name: 'Galería de Arte',
 	query: '[tourism=gallery]',
@@ -92,6 +122,12 @@ var pois = {
 	name: 'Museo',
 	query: '[tourism=museum]',
 	iconName: 'museum_crafts'
+    },
+
+    theatre: {
+	name: 'Teatro',
+	query: '[amenity=theatre]',
+	iconName: 'theater'
     },
 
     viewpoint: {
@@ -129,5 +165,11 @@ var pois = {
 	name: 'Zoológico',
 	query: '[tourism=zoo]',
 	iconName: 'zoo'
+    },
+
+    sports_centre: {
+	name: 'Club',
+	query: '[leisure=sports_centre]',
+	iconName: 'stadium'
     }
 }
