@@ -4,12 +4,22 @@ There is a *Live version!* for the `master` branch at:
 
 http://pois.elblogdehumitos.com.ar/master/
 
-## Version 0.4
+## Version 0.5
 
 **Date:** not released yet
 
+## Version 0.4
+
+**Date:** 01/16/2015
+
  - Comments for all the POIs using disqus threads (#43)
  - Show a label next to the POI with the name of it
+ - Show icons on marker popups
+ - Preview image updated
+ - Bugfix to show 'Información Turística'
+ - Hack to remove 'Spinner' when something goes wrong
+ - Help updated
+ - Added more POIs (coffee, car\_repair, bus\_stop, kiosk, butcher, theatre and sports_centre)
 
 ## Version 0.3
 
