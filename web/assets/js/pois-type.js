@@ -60,7 +60,8 @@ var pois = {
     hospital: {
 	name: 'Hospital',
 	query: '[amenity=hospital]',
-	iconName: 'hospital-building'
+	iconName: 'hospital-building',
+	tagParser: hospital_parser
     },
 
     pharmacy: {

@@ -108,9 +108,10 @@ function generic_tag_parser(element, tag, tagName, iconName) {
     return markerPopup;
 }
 
-function generic_yes_no_tag_parser(element, tag, tagName) {
+function generic_yes_no_tag_parser(element, tag, tagName, iconName) {
     var tags = element.tags;
     var markerPopup = '';
+    var iconName = iconName ? iconName : 'info-circle';
     var yes = false;
 
     if (tags[tag] == 'yes') yes = '<span class="fa fa-check"></span>';
@@ -120,7 +121,7 @@ function generic_yes_no_tag_parser(element, tag, tagName) {
 
     markerPopup += Mustache.render(
 	tagTmpl,
-	{tag: tagName, value: yes, iconName: 'info-circle'}
+	{tag: tagName, value: yes, iconName: iconName}
     );
 
     return markerPopup;
@@ -131,8 +132,8 @@ function bank_parser(element) {
 	element,
 	'Banco',
 	[
-	    {callback: generic_yes_no_tag_parser, arg1: 'atm', arg2: 'Cajero Automático'},
-	    {callback: generic_tag_parser, arg1: 'network', arg2: 'Red'},
+	    {callback: generic_yes_no_tag_parser, tag: 'atm', label: 'Cajero Automático'},
+	    {callback: generic_tag_parser, tag: 'network', label: 'Red'},
 	]
     );
 }
@@ -150,9 +151,9 @@ function fuel_parser(element) {
 	element,
 	'Estación de Servicio',
 	[
-	    {callback: generic_tag_parser, arg1: 'brand', arg2: 'Marca'},
-	    {callback: generic_yes_no_tag_parser, arg1: 'fuel:diesel', arg2: 'Diesel'},
-	    {callback: generic_yes_no_tag_parser, arg1: 'fuel:cng', arg2: 'GNC'},
+	    {callback: generic_tag_parser, tag: 'brand', label: 'Marca'},
+	    {callback: generic_yes_no_tag_parser, tag: 'fuel:diesel', label: 'Diesel'},
+	    {callback: generic_yes_no_tag_parser, tag: 'fuel:cng', label: 'GNC'},
 	]
     );
 }
@@ -162,7 +163,17 @@ function hotel_parser(element) {
 	element,
 	'Hotel',
 	[
-	    {callback: generic_tag_parser, arg1: 'stars', arg2: 'Estrellas', iconName: 'star'},
+	    {callback: generic_tag_parser, tag: 'stars', label: 'Estrellas', iconName: 'star'},
+	]
+    );
+}
+
+function hospital_parser(element) {
+    return parse_tags(
+	element,
+	'Hospital',
+	[
+	    {callback: generic_yes_no_tag_parser, tag: 'emergency', label: 'Emergencias', iconName: 'plus'},
 	]
     );
 }
@@ -191,9 +202,9 @@ function internet_access_parser(element) {
 
 function parse_tags(element, titlePopup, functions) {
     // functions = [
-    //  {callback: generic_tag_parse,  arg1: 'name', arg2: 'Nombre'},
+    //  {callback: generic_tag_parse,  tag: 'name', label: 'Nombre'},
     //  {callback: address_parser},
-    //  {callback: generic_yes_no_tag_parser, arg1: 'fuel:diesel', arg2: 'Diesel'}
+    //  {callback: generic_yes_no_tag_parser, tag: 'fuel:diesel', label: 'Diesel'}
     // ]
 
     var markerPopup = '';
@@ -203,11 +214,11 @@ function parse_tags(element, titlePopup, functions) {
     );
 
     functions = [
-	{callback: generic_tag_parser, arg1: 'name', arg2: 'Nombre'},
+	{callback: generic_tag_parser, tag: 'name', label: 'Nombre'},
 	{callback: address_parser},
-	{callback: generic_tag_parser, arg1: 'phone', arg2: 'Teléfono', iconName: 'phone'},
-	{callback: generic_tag_parser, arg1: 'contact:phone', arg2: 'Teléfono', iconName: 'phone'},
-	{callback: generic_tag_parser, arg1: 'contact:fax', arg2: 'Fax', iconName: 'fax'},
+	{callback: generic_tag_parser, tag: 'phone', label: 'Teléfono', iconName: 'phone'},
+	{callback: generic_tag_parser, tag: 'contact:phone', label: 'Teléfono', iconName: 'phone'},
+	{callback: generic_tag_parser, tag: 'contact:fax', label: 'Fax', iconName: 'fax'},
 	{callback: internet_access_parser},
 	{callback: email_parser},
 	{callback: website_parser},
@@ -215,9 +226,9 @@ function parse_tags(element, titlePopup, functions) {
 
     for (var i = 0; i < functions.length; i++) {
 	var data = functions[i]
-	if (data.arg1 && data.arg2) {
+	if (data.tag && data.label) {
 	    var iconName = data.iconName ? data.iconName : 'info-circle';
-	    markerPopup += data.callback(element, data.arg1, data.arg2, iconName);
+	    markerPopup += data.callback(element, data.tag, data.label, iconName);
 	}
 	else {
 	    markerPopup += data.callback(element);
