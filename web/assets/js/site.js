@@ -179,11 +179,19 @@ function callback(data) {
 	    iconSize: [32, 37],
 	    iconAnchor: [18.5, 35],
 	    popupAnchor: [0, -27]
-	});
-	var marker = L.marker(pos, {
-	    icon: markerIcon,
-	    keyboard: false
-	})
+        });
+        var marker = L.marker(pos, {
+            icon: markerIcon,
+            keyboard: false
+        })
+
+        // show a label next to the icon on mouse hover
+	if (e.tags.name) {
+	    marker.bindLabel(
+		e.tags.name,
+		{direction: 'auto', offset: [27, -32]}
+	    );
+	}
 
 	// used to show the expert mode panel side
 	marker._element = e;
