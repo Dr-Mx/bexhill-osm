@@ -9,6 +9,7 @@ http://pois.elblogdehumitos.com.ar/master/
 **Date:** not released yet
 
  - Comments for all the POIs using disqus threads (#43)
+ - Show a label next to the POI with the name of it
 
 ## Version 0.3
 
