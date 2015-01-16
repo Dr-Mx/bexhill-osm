@@ -1,8 +1,7 @@
-<html>
   <head>
     <title>Puntos de Interés</title>
 
-    <meta charset="utf-8"> 
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta property="og:title" content="Puntos de Interés" />
     <meta property="og:type" content="website" />
@@ -11,14 +10,13 @@
     <meta property="og:description" content="Encuentra los puntos de interés cerca de dónde estés." />
     <link rel="shortcut icon" href="assets/img/favicon.ico"/>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Control.Loading.css" />
     <link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
 
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/site.css">
     <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
-    
+
     <link href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css" rel="stylesheet" />
     <!--[if lt IE 9]>
 	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.21.0/L.Control.Locate.ie.css' rel='stylesheet' />
@@ -36,6 +34,7 @@
 	<li><a href="#links" role="tab"><i class="fa fa-link"></i></a></li>
 	<li><a href="#software" role="tab"><i class="fa fa-cogs"></i></a></li>
 	<li><a href="#comments" role="tab"><i class="fa fa-comments"></i></a></li>
+	<li><a href="#developer" role="tab"><i class="fa fa-code"></i></a></li>
       </ul>
 
       <!-- Tab panes -->
@@ -110,19 +109,12 @@
 	  <p>
 	    <ul>
 	      <div class="item">
-		<li><strong>¿Cómo sé si la <em>Estación de servicio</em> tiene GNC?</strong></li>
-		<p>Las estaciones de sevicio que cuentan con servicio
-		de GNC muestran la etiqueta <em>fuel:cng=yes</em> en
-		el globo que se muestra al hacer click sobre el
-		ícono.</p>
-	      </div>
-              <div class="item">
-                <li><strong>¿Cómo puedo agregar más <em>POIs</em> a la lista?</strong></li>
-                <p>Podés <a href="mailto:humitos@gmail.com">contactarte
-                conmigo por email</a> (o <a href="#comments"
-                onclick="javascript:sidebar.open('comments')">dejar un
-                comentario</a>) y comentarme qué tipo de punto de
-                interés querés agregar así lo sumo a la lista.</p>
+		<li><strong>¿Cómo puedo agregar más <em>POIs</em> a la lista?</strong></li>
+		<p>Podés <a href="mailto:humitos@gmail.com">contactarte
+		conmigo por email</a> (o <a href="#comments"
+		onclick="javascript:sidebar.open('comments')">dejar un
+		comentario</a>) y comentarme qué tipo de punto de
+		interés querés agregar así lo sumo a la lista.</p>
 	      </div>
 	      <div class="item">
 		<li><strong>¿Para qué sirve el link <em>Compartir este mapa (link)</em> que está en la lista de POIs?</strong></li>
@@ -135,15 +127,12 @@
 		portapapeles.</p>
 	      </div>
 	      <div class="item">
-		<li><strong>¿Porqué las etiquetas que se muestran son tan complicadas de entender?</strong></li>
-		<p>Básicamente, es porque el sitio está
-		en <em>beta</em>. ¿Qué quiere decir esto? Que está
-		actualmente en continuo desarrollo y la versión del
-		sitio web que estás utilizando no está terminada. De
-		hecho, este problema es algo pendiente en lo
-		que <a href="https://github.com/humitos/osm-pois/issues/9">se
-		está trabajando</a>. ¡Copate y ayudanos a
-		resolverlo!</p>
+		<li><strong>Estoy seguro que un POI tiene más información de la que se muestra. ¿Porqué?</strong></li>
+		<p>Es probable que algunas
+		etiquetas <em>importantes</em> se me hayan pasado y
+		que estén faltando. Enviame un email o dejá un
+		comentario en el sitio mecionando el POI en cuestión y
+		lo resolveré a la brevedad.</p>
 	      </div>
 	    </ul>
 	  </p>
@@ -273,20 +262,35 @@
 	  <p>¿Errores? ¿Ideas? ¿Sugerencias?</p>
 	  <p>¡Dejanos tus comentarios!</p>
 	  <div id="disqus_thread"></div>
-          <script type="text/javascript">
-            var disqus_shortname = 'osmpois'; // required: replace example with your forum shortname
-            var disqus_identifier = 'pois-homepage';
-            var disqus_url = 'http://pois.elblogdehumitos.com.ar/';
+	  <script type="text/javascript">
+	    var disqus_shortname = 'osmpois'; // required: replace example with your forum shortname
+	    var disqus_identifier = 'pois-homepage';
+	    var disqus_url = 'http://pois.elblogdehumitos.com.ar/';
 
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-          </script>
-          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        </div>
+	    /* * * DON'T EDIT BELOW THIS LINE * * */
+	    (function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	  </script>
+	  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	</div>
+	<div class="sidebar-pane" id="developer">
+	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
+	  <h1>Modo experto</h1>
+	  <p>Este panel muestra la infomación necesaria para los
+	  desarrolladores del sitio o aquellos que quieran colaborar
+	  con el proyecto: agregando funcionalidad o reportando
+	  errores.</p>
+
+	  <p>Para ver la información en este panel debes hacer click
+	  en alguno de los POIs que aparecen en el mapa luego de
+	  seleccionar algunos de la lista.</p>
+
+	  <p class="tags"></p>
+	</div>
+
       </div>
     </div>
 
@@ -309,6 +313,7 @@
     <script src="assets/js/leaflet-hash.js"></script>
     <script src="assets/js/mustache.js"></script>
     <script src="assets/js/tags-parsers.js"></script>
+    <script src="assets/js/pois-type.js"></script>
     <script src="assets/js/site.js"></script>
 
     <!-- Piwik -->

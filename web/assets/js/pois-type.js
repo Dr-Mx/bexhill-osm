@@ -41,14 +41,14 @@ var pois = {
     fuel: {
 	name: 'Estación de Servicio',
 	query: '[amenity=fuel]',
-	iconName: 'fillingstation'
+	iconName: 'fillingstation',
+	tagParser: fuel_parser
     },
 
     wheel_repair: {
 	name: 'Gomería',
 	query: '[shop=car_repair][car_repair=wheel_repair]',
-	iconName: 'tires',
-	tagParser: car_repair_parser
+	iconName: 'tires'
     },
 
     clinic: {
@@ -108,7 +108,8 @@ var pois = {
     hotel: {
 	name: 'Hotel',
 	query: '[tourism=hotel]',
-	iconName: 'hotel_0star'
+	iconName: 'hotel_0star',
+	tagParser: hotel_parser
     },
 
     hostel: {

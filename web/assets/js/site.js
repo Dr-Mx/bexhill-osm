@@ -180,25 +180,21 @@ function callback(data) {
 	    iconAnchor: [18.5, 35],
 	    popupAnchor: [0, -27]
 	});
-	var marker = L.marker(pos, {icon: markerIcon})
-	var markerPopup = '\
-            <ul class="nav nav-tabs" role="tablist" id="myTab">\
-              <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a></li>\
-              <li role="presentation"><a href="#raw" aria-controls="raw" role="tab" data-toggle="tab">Raw</a></li>\
-            </ul>';
+	var marker = L.marker(pos, {
+	    icon: markerIcon,
+	    keyboard: false
+	})
 
-	if (poi.tagParser) {
-	    markerPopup += poi.tagParser(e);
-	}
-	else {
-	    for(tag in e.tags) {
-		markerPopup += Mustache.render(
-		    '<strong>{{name}}:</strong> {{value}}<br>',
-		    {name: tag, value: e.tags[tag]});
-	    }
-	}
-	// TODO: use marker.getPopup().update() to update the layout
-	// once the user clicks on "Raw"
+	// used to show the expert mode panel side
+	marker._element = e;
+	marker.on('click', function(e) {
+	    var element = e.target._element;
+	    $('#developer > .tags').html(develop_parser(element));
+	});
+
+	if (poi.tagParser) var markerPopup = poi.tagParser(e);
+	else var markerPopup = generic_poi_parser(e, poi.name);
+
 	marker.bindPopup(markerPopup);
 	marker.addTo(this.instance);
     }

@@ -4,9 +4,21 @@ There is a *Live version!* for the `master` branch at:
 
 http://pois.elblogdehumitos.com.ar/master/
 
+## Version 0.4
+
+**Date:** not released yet
+
 ## Version 0.3
 
-**Date:** unreleased yet
+**Date:** 01/15/2015
+
+ - Tags are parsed in a better way (#9)
+ - Change copyright text and layers -thanks to @51114u9
+ - Leaflet OverpassLayer updated
+
+ - More layers added (Bicicleta, Transporte Público, Paisaje, Al Aire
+   Libre, MapBox (Calles), MapQuest Open, OpenMapSurfer) -thanks to
+   @51114u9
 
  - More layers (HOT, MapQuest OSM, Lyrk, OSMFr) (#12)
  - Show POIs checkboxes inside the sidebar pane (#19)

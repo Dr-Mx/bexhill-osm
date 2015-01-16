@@ -89,6 +89,10 @@ ul {
     text-align: center;
 }
 
+#developer > .tags > table {
+    font-size: 13px !important;
+}
+
 .leaflet-control-container > div:last-child {
     line-height: 20px;
     right: 5px;

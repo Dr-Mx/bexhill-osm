@@ -1,34 +1,53 @@
+var titleTmpl = '<h3>{{title}}</h3>';
 var tagTmpl = '<strong>{{tag}}:</strong> {{value}}<br>';
 
 function develop_parser(element) {
-    tags = element.tags;
-    markerPopup = '\
-        <div role="tabpanel" class="tab-pane" id="raw">\
-        <h4>Developer tools</h4>\
-    ';
+    var tags = element.tags;
+    var markerPopup = '<h2>Etiquetas</h2>';
+    var tagTmpl = '<tr><td><strong>{{tag}}</strong></td><td>{{value}}</td></tr>';
+    markerPopup += '<table>';
+
     for (tag in tags) {
 	markerPopup += Mustache.render(
 	    tagTmpl,
 	    {tag: tag, value: tags[tag]});
     }
+    markerPopup += '<table>';
 
-    link = Mustache.render(
+    markerPopup += '<h2>Acciones</h2>';
+
+    // View in OpenStreetMap
+    var link = Mustache.render(
 	'http://www.openstreetmap.org/node/{{id}}',
 	{id: element.id}
     );
     markerPopup += Mustache.render(
-	'<a href="{{link}}">View in OpenStreetMap</a>',
+	'<a href="{{link}}" target="_blank">Ver en OpenStreetMap</a> <br />',
 	{link: link}
     );
-    markerPopup += '</div>';
+
+    // Edit in OpenStreetMap
+    var link = Mustache.render(
+	'http://www.openstreetmap.org/edit?editor=id&node={{id}}',
+	{id: element.id}
+    );
+    markerPopup += Mustache.render(
+	'<a href="{{link}}" target="_blank">Editar en OpenStreetMap</a> <br />',
+	{link: link}
+    );
+
     return markerPopup;
 }
 
 function address_parser(element) {
-    tags = element.tags;
-    markerPopup = '';
+    var tags = element.tags;
+    var markerPopup = '';
+
     if (tags['addr:street']) {
-	value = tags['addr:street'] + ' ' + tags['addr:housenumber'] || '';
+	var value = tags['addr:street']
+	if (tags['addr:housenumber']) {
+	    value += ' ' + tags['addr:housenumber'];
+	}
 	markerPopup += Mustache.render(
 	    tagTmpl,
 	    {tag: 'Dirección', value: value}
@@ -38,14 +57,16 @@ function address_parser(element) {
 }
 
 function website_parser(element) {
-    tags = element.tags;
-    markerPopup = '';
-    if (tags.website) {
-	if (tags.website.indexOf('http://') == -1) 
-	    tags.website = 'http://' + tags.website;
-	link = Mustache.render(
-	    '<a href="{{link}}">{{link}}</a>',
-	    {link: tags.website}
+    var tags = element.tags;
+    var website_tag = tags.website ? tags.website : tags['contact:website'];
+    var markerPopup = '';
+
+    if (website_tag) {
+	if (website_tag.indexOf('http://') == -1)
+	    website_tag = 'http://' + website_tag;
+	var link = Mustache.render(
+	    '<a href="{{link}}" target="_blank">{{link}}</a>',
+	    {link: website_tag}
 	);
 	markerPopup += Mustache.render(
 	    tagTmpl,
@@ -55,24 +76,10 @@ function website_parser(element) {
     return markerPopup;
 }
 
-function atm_parser(element) {
-    tags = element.tags;
-    markerPopup = '';
-    if (tags.amenity == 'bank') {
-	if (tags.atm == 'yes') yes = 'Sí';
-	else if (tags.atm == 'no') yes = 'No';
-	else yes = 'Sin definir';
-	markerPopup += Mustache.render(
-	    tagTmpl,
-	    {tag: 'Cajero Automático', value: yes}
-	);
-    }
-    return markerPopup;
-}
-
 function generic_tag_parser(element, tag, tagName) {
-    tags = element.tags;
-    markerPopup = '';
+    var tags = element.tags;
+    var markerPopup = '';
+
     if (tags[tag]) {
 	markerPopup += Mustache.render(
 	    tagTmpl,
@@ -82,67 +89,105 @@ function generic_tag_parser(element, tag, tagName) {
     return markerPopup;
 }
 
-var tabContentTmpl = '\
-      <div class="tab-content">\
-        <div role="tabpanel" class="tab-pane active" id="info">\
-    ';
-var titleTmpl = '<h4>{{title}}</h4>';
-
-
-function bank_parser(element) {
-    tags = element.tags;
-    titlePopup = '';
-
-    if (tags.amenity == 'bank') titlePopup = 'Banco';
-    if (tags.amenity == 'atm') titlePopup = 'Cajero automático';
-
+function generic_yes_no_tag_parser(element, tag, tagName) {
+    var tags = element.tags;
     var markerPopup = '';
-    markerPopup += tabContentTmpl;
+    var yes = false;
+
+    if (tags[tag] == 'yes') yes = 'Sí';
+    else if (tags[tag] == 'no') yes = 'No';
+
+    if (!yes) return ''
 
     markerPopup += Mustache.render(
-	titleTmpl,
-	{title: titlePopup}
+	tagTmpl,
+	{tag: tagName, value: yes}
     );
 
-    markerPopup += generic_tag_parser(element, 'name', 'Nombre');
-    markerPopup += atm_parser(element);
-    markerPopup += generic_tag_parser(element, 'phone', 'Teléfono');
-    markerPopup += address_parser(element);
-    markerPopup += website_parser(element);
-    markerPopup += '</div>';
-
-    markerPopup += develop_parser(element);
-    markerPopup += '</div>';
-
-    // alert(markerPopup);
     return markerPopup;
 }
 
-function car_repair_parser(element) {
-    tags = element.tags;
-    titlePopup = '';
+function bank_parser(element) {
+    return parse_tags(
+	element,
+	'Banco',
+	[
+	    {callback: generic_yes_no_tag_parser, arg1: 'atm', arg2: 'Cajero Automático'},
+	    {callback: generic_tag_parser, arg1: 'network', arg2: 'Red'},
+	]
+    );
+}
 
-    if (tags.shop == 'car_repair') {
-	titlePopup = 'Taller';
-	if (tags.car_repair == 'wheel_repair')
-	    titlePopup = 'Gomería';
-    }
+function generic_poi_parser(element, titlePopup) {
+    return parse_tags(
+	element,
+	titlePopup,
+	[]
+    );
+}
+
+function fuel_parser(element) {
+    return parse_tags(
+	element,
+	'Estación de Servicio',
+	[
+	    {callback: generic_tag_parser, arg1: 'brand', arg2: 'Marca'},
+	    {callback: generic_yes_no_tag_parser, arg1: 'fuel:diesel', arg2: 'Diesel'},
+	    {callback: generic_yes_no_tag_parser, arg1: 'fuel:cng', arg2: 'GNC'},
+	]
+    );
+}
+
+function hotel_parser(element) {
+    return parse_tags(
+	element,
+	'Hotel',
+	[
+	    {callback: generic_tag_parser, arg1: 'stars', arg2: 'Estrellas'},
+	]
+    );
+}
+
+function opening_hours_parser(element) {
+    // TODO: https://github.com/ypid/opening_hours.js
+}
+
+function internet_access_parser(element) {
+    // TODO:
+}
+
+function parse_tags(element, titlePopup, functions) {
+    // functions = [
+    //	{callback: generic_tag_parse,  arg1: 'name', arg2: 'Nombre'},
+    //	{callback: address_parser},
+    //	{callback: generic_yes_no_tag_parser, arg1: 'fuel:diesel', arg2: 'Diesel'}
+    // ]
 
     var markerPopup = '';
-    markerPopup += tabContentTmpl;
     markerPopup += Mustache.render(
 	titleTmpl,
 	{title: titlePopup}
     );
 
-    markerPopup += generic_tag_parser(element, 'name', 'Nombre');
-    markerPopup += generic_tag_parser(element, 'phone', 'Teléfono');
-    markerPopup += address_parser(element);
-    markerPopup += website_parser(element);
-    markerPopup += '</div>';
+    functions = [
+	{callback: generic_tag_parser, arg1: 'name', arg2: 'Nombre'},
+	{callback: address_parser},
+	{callback: generic_tag_parser, arg1: 'phone', arg2: 'Teléfono'},
+	{callback: generic_tag_parser, arg1: 'contact:phone', arg2: 'Teléfono'},
+	{callback: generic_tag_parser, arg1: 'contact:fax', arg2: 'Fax'},
+	{callback: generic_tag_parser, arg1: 'contact:email', arg2: 'Email'},
+	{callback: generic_tag_parser, arg1: 'email', arg2: 'Email'},
+	{callback: website_parser},
+    ].concat(functions)
 
-    markerPopup += develop_parser(element);
-    markerPopup += '</div>';
-
+    for (var i = 0; i < functions.length; i++) {
+	var data = functions[i]
+	if (data.arg1 && data.arg2) {
+	    markerPopup += data.callback(element, data.arg1, data.arg2);
+	}
+	else {
+	    markerPopup += data.callback(element);
+	}
+    }
     return markerPopup;
 }
