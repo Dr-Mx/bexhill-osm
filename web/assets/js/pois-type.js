@@ -31,6 +31,12 @@ var pois = {
 	iconName: 'fastfood'
     },
 
+    internet_access: {
+	name: 'Lugares con WiFi',
+	query: '[internet_access][internet_access!=no]',
+	iconName: 'wifi'
+    },
+
     bank: {
 	name: 'Banco',
 	query: '[amenity=bank]',

@@ -1,6 +1,7 @@
 function get_poi(element) {
     // TODO: improve this
     var type = ''
+    if (e.tags.internet_access) type = 'internet_access';
     if (e.tags.highway) {
         if (type == '') type = e.tags.highway;
     }
