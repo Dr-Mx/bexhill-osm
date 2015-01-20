@@ -1,4 +1,10 @@
 function get_poi(element) {
+    if ($('#expert-mode').is(':checked'))
+	return {
+	    name: 'Custom Query',
+	    iconName: 'notvisited'
+	}
+
     // TODO: improve this
     var type = ''
     if (e.tags.internet_access) type = 'internet_access';
@@ -104,6 +110,9 @@ function build_overpass_query() {
 function setting_changed() {
     // remove pois from current map
     iconLayer.clearLayers();
+    // uncheck the expert mode
+    $('#expert-mode').attr('checked', false);
+    $('#expert-form').hide();
     build_overpass_query();
     show_overpass_layer();
 }
@@ -135,6 +144,9 @@ function show_pois_checkboxes() {
 }
 
 function show_overpass_layer() {
+    // remove tags from expert mode
+    $('#develop p.tags').html('');
+
     if (query == '' || query == '();out center;') {
 	console.debug('There is nothing selected to filter by.');
 	return;
@@ -163,3 +175,36 @@ function update_permalink() {
     var link = get_permalink();
     $('#permalink').attr('href', link);
 }
+
+function expert_call() {
+    var value = $('input[name=query]').attr('value');
+
+    query = '(';
+    query += 'node(BBOX){{value}};';
+    query += 'way(BBOX){{value}};';
+    query += 'relation(BBOX){{value}};';
+    query += ');out center;';
+    query = Mustache.render(
+	query,
+	{value: value}
+    )
+    console.debug(query);
+    // uncheck all the POIs to avoid confusion
+    // $('#pois input').attr('checked', false);
+    iconLayer.clearLayers();
+    show_overpass_layer();
+}
+
+function expert_mode_init() {
+    $('#expert-form').submit(function (e) {
+	e.preventDefault();
+	expert_call();
+    });
+
+    $('#expert-mode').attr('checked', false);
+    $('#expert-mode').click(function (e) {
+	$('#expert-form').toggle();
+    });
+
+}
+

@@ -164,3 +164,5 @@ if (uri.hasQuery('pois')) {
     }
     setting_changed();
 }
+
+expert_mode_init();

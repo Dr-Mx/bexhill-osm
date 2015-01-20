@@ -289,6 +289,17 @@
 	  en alguno de los POIs que aparecen en el mapa luego de
 	  seleccionar algunos de la lista.</p>
 
+	  <p>También puedes crear tu propia consulta utilizando
+	  OverpassAPI para buscar, por ejemplo, un POI que <em>no
+	  esté</em> en al lista marcando el siguiente checkbox.</p>
+
+	  <div>
+	    <label><input id="expert-mode" type="checkbox"/><span>Custom OverpassAPI Query</span></label>
+	    <form id="expert-form" style="display: none;">
+	      <input id="expert-query" style="width: 100%;" name="query" type="text" placeholder="[internet_access=wlan][amenity=fuel]"/>
+	    </form>
+	  </div>
+
 	  <p class="tags"></p>
 	</div>
 
