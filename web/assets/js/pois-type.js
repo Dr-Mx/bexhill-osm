@@ -69,6 +69,12 @@ var pois = {
 	iconName: 'busstop'
     },
 
+    bus_station: {
+	name: 'Terminal de Ómnibus',
+	query: '[amenity=bus_station]',
+	iconName: 'bus'
+    },
+
     clinic: {
 	name: 'Clínica',
 	query: '[amenity=clinic]',
