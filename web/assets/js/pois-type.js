@@ -161,12 +161,6 @@ var pois = {
 	iconName: 'information'
     },
 
-    zoo: {
-	name: 'Zoológico',
-	query: '[tourism=zoo]',
-	iconName: 'zoo'
-    },
-
     sports_centre: {
 	name: 'Club',
 	query: '[leisure=sports_centre]',
