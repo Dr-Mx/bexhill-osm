@@ -1,3 +1,28 @@
+function get_poi(element) {
+    // TODO: improve this
+    var type = ''
+    if (e.tags.highway) {
+        if (type == '') type = e.tags.highway;
+    }
+    if (e.tags.amenity) {
+        if (type == '') type = e.tags.amenity;
+    }
+    if (e.tags.tourism) {
+        if (type == '') type = e.tags.tourism;
+    }
+    if (e.tags.shop) {
+	if (e.tags.car_repair == 'wheel_repair') type = 'wheel_repair';
+	if (type == '') type = e.tags.shop;
+    }
+    if (e.tags.leisure) {
+	if (type == '') type = e.tags.leisure;
+    }
+
+    var poi = pois[type];
+    return poi;
+}
+
+
 // https://github.com/kartenkarsten/leaflet-layer-overpass
 function callback(data) {
     if (spinner > 0) spinner -= 1;
@@ -13,26 +38,7 @@ function callback(data) {
 	    new L.LatLng(e.lat, e.lon) :
 	    new L.LatLng(e.center.lat, e.center.lon);
 
-	// TODO: improve this
-	var type = ''
-	if (e.tags.highway) {
-            if (type == '') type = e.tags.highway;
-        }
-	if (e.tags.amenity) {
-            if (type == '') type = e.tags.amenity;
-        }
-        if (e.tags.tourism) {
-            if (type == '') type = e.tags.tourism;
-        }
-        if (e.tags.shop) {
-	    if (e.tags.car_repair == 'wheel_repair') type = 'wheel_repair';
-	    if (type == '') type = e.tags.shop;
-	}
-        if (e.tags.leisure) {
-	    if (type == '') type = e.tags.leisure;
-	}
-
-	var poi = pois[type];
+	var poi = get_poi(e)
 	// skip this undefined icon
 	if (!poi) {
 	    console.info('Skipping undefined icon: "' + type + '"');
