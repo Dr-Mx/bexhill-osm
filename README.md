@@ -6,6 +6,11 @@ Show POIs from OSM in a map
 
 http://pois.elblogdehumitos.com.ar/
 
+## Forked versions
+
+ - http://www.konfraria.org/osm/cerca/web/
+ - http://mapa.barriohacker.net/
+
 ## Attribution
 
 Strongly based on :
