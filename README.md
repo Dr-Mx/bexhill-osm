@@ -4,7 +4,7 @@ Show POIs from OSM in a map
 
 ## Live version!
 
-http://pois.elblogdehumitos.com.ar/
+http://upoi.org
 
 ## Forked versions
 
