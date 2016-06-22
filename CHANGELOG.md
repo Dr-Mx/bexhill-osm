@@ -13,23 +13,23 @@ Updated js
  - Mustache 2.2.1
  - leaflet-locatecontrol 0.52.0
  - JQuery 1.8.0
-
 Added js
  - opening_hours.js
  - Leaflet.EasyButton
 
-Restrict map area to bounds
-Many new poi icons added, grouped and colour coded
-Poi icons are now divided into tabs
-Maximum 3 pois can be selected at a time
-Clear poi checkboxes on tab change
-Extra zoom levels
-Permalink button
-Clear map button
-Narrower tab bar on mobile devices
-Geocoder only searches area in bounds
-Geocoder highlights area on result
-'Spinner' uses FontAwesome icons
+Site changes
+ - Restrict map area to bounds
+ - Many new poi icons added, grouped and colour coded
+ - Poi icons are now divided into tabs
+ - Maximum 3 pois can be selected at a time
+ - Clear poi checkboxes on tab change
+ - Extra zoom levels
+ - Permalink button
+ - Clear map button
+ - Narrower tab bar on mobile devices
+ - Geocoder only searches area in bounds
+ - Geocoder highlights area on result
+ - 'Spinner' uses FontAwesome icons
 
 Added additional parsing for the following tags:
  - addr:housename
