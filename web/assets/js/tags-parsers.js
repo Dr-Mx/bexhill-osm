@@ -1,44 +1,6 @@
 var titleTmpl = '<h3>{{title}}</h3>';
 var tagTmpl = '<span class="fa fa-{{iconName}}"></span> <strong>{{tag}}:</strong> {{value}}<br>';
 
-function develop_parser(element) {
-    var tags = element.tags;
-    var markerPopup = '<h2>Etiquetas</h2>';
-    var tagTmpl = '<tr><td><strong>{{tag}}</strong></td><td>{{value}}</td></tr>';
-    markerPopup += '<table>';
-
-    for (tag in tags) {
-	markerPopup += Mustache.render(
-	    tagTmpl,
-	    {tag: tag, value: tags[tag]});
-    }
-    markerPopup += '<table>';
-
-    markerPopup += '<h2>Actions</h2>';
-
-    // View in OpenStreetMap
-    var link = Mustache.render(
-	'http://www.openstreetmap.org/node/{{id}}',
-	{id: element.id}
-    );
-    markerPopup += Mustache.render(
-	'<a href="{{link}}" target="_blank">Ver en OpenStreetMap</a> <br />',
-	{link: link}
-    );
-
-    // Edit in OpenStreetMap
-    var link = Mustache.render(
-	'http://www.openstreetmap.org/edit?editor=id&node={{id}}',
-	{id: element.id}
-    );
-    markerPopup += Mustache.render(
-	'<a href="{{link}}" target="_blank">Editar en OpenStreetMap</a> <br />',
-	{link: link}
-    );
-
-    return markerPopup;
-}
-
 function address_parser(element) {
     var tags = element.tags;
     var markerPopup = '';

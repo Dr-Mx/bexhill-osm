@@ -85,6 +85,7 @@ tileLayers['OpenStreetMap (standard)'].addTo(map);
 L.control.layers(tileLayers).addTo(map);
 
 // https://github.com/cliffcloud/Leaflet.EasyButton
+// Check if POI selected then get permalink
 L.easyButton({
 	states:[{
 		icon:'fa-link',
@@ -98,6 +99,7 @@ L.easyButton({
 		}
 	}]
 }).addTo(map);
+// Clear map of all info layers
 L.easyButton({
 	states:[{
 		icon:'fa-trash-o',
@@ -192,11 +194,12 @@ function callback(data) {
 		var type = ''
 		if (e.tags.amenity) {
 			if (type == '') type = e.tags.amenity;
+			// Group similar pois
 			if (type == 'arts_centre') type = 'attraction';
 			if (type == 'nightclub') type = 'bar';
 			if (type == 'college') type = 'school';
 			if (type == 'retirement_home') type = 'social_facility';
-			//Hide non-public parking
+			// Hide non-public parking
 			if (type == 'parking') {
 				if (e.tags.access == 'private') type = '';
 				if (e.tags.access == 'customers') type = '';
@@ -211,7 +214,7 @@ function callback(data) {
 		}
 		if (e.tags.shop) {
 			if (type == '') type = e.tags.shop;
-			//if (e.tags.car_repair == 'wheel_repair') type = 'wheel_repair';
+			// Group similar pois
 			if (type == 'e-cigarette') type = 'tobacco';
 			if (type == 'hardware') type = 'doityourself';
 			if (type == 'window_blind') type = 'curtain';
@@ -245,7 +248,7 @@ function callback(data) {
 		}
 
 		var poi = pois[type];
-		//skip this undefined icon
+		// Skip this undefined icon
 		if (!poi) {
 			console.log('Skipping undefined icon: "' + type + '"');
 			continue;

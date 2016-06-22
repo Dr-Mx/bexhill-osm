@@ -9,8 +9,9 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="http://bexhill-osm.org.uk/" />
 	<meta property="og:image" content="http://bexhill-osm.org.uk/assets/img/preview.jpg" />
-	<meta property="og:description" content="Explore Bexhill, search points of interest and other information." />
+	<meta property="og:description" content="Explore Bexhill-on-Sea, UK.  Search points of interest and other information." />
 	
+	<!-- http://realfavicongenerator.net/ -->
 	<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
@@ -39,7 +40,6 @@
     <link rel="stylesheet" href="assets/css/site.css">
     <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
 	<link rel="stylesheet" href="assets/css/easy-button.css" />
-	
  </head>
 
  <body>
@@ -124,7 +124,7 @@
 				<p>This website (and the Bexhill area on OpenStreetMap) is managed by Alexis Markwick.</p>
 				<p>If you have any questions I can be reached at <a href="mailto:info@bexhill-osm.org.uk">info@bexhill-osm.org.uk</a></p>
 				<p>Bexhill-OSM is run completely on donations.  If you found it useful, or just wish to say thanks - click below.<br>
-				It is very much appreciated <i class="fa fa-smile-o"></i>.<br>
+				All is very much appreciated <i class="fa fa-smile-o"></i>.<br>
 				<center><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 					<input type="hidden" name="cmd" value="_s-xclick">
 					<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
@@ -145,7 +145,7 @@
 				<p>
 				<hr>
 				<h3>Software</h3>
-				<p>Bexhill-OSM is a fork of the project <a href="http://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> by Manuel Kaufmann.<p>
+				<p>The source-code for Bexhill-OSM can be found on <a href="https://github.com/Dr-Mx/osm-pois" target="_blank">GitHub</a>.  This is a fork of the project <a href="http://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> by Manuel Kaufmann.<p>
 				<p>The site is built using the following tools:</p>
 				<ul class="item2">
 					<li><a href="http://leafletjs.com/" target="_blank">Leafletjs</a> &copy; Vladimir Agafonkin</li>
@@ -174,7 +174,8 @@
 	
     <div id="map" class="sidebar-map"></div>
 
-    <div id="spinner" style="display: none;">
+    <!-- Overpass loading icon -->
+	<div id="spinner" style="display: none;">
 		<span class="fa-stack" style="font-size:75px">
 			<i class="fa fa-circle fa-stack-1x" style="font-size:100px; color:rgba(222, 222, 222, 0.9)"></i>
 			<i class="fa fa-spinner fa-pulse fa-stack-1x"></i>
@@ -199,6 +200,7 @@
     <script src="assets/js/tags-parsers.js"></script>
     <script src="assets/js/pois-type.js"></script>
     <script src="assets/js/site.js"></script>
+	
 	<!-- GoogleAnalytics -->
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
