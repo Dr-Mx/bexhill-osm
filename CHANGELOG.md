@@ -13,6 +13,7 @@ Updated js
  - Mustache 2.2.1
  - leaflet-locatecontrol 0.52.0
  - JQuery 1.8.0
+
 Added js
  - opening_hours.js
  - Leaflet.EasyButton
