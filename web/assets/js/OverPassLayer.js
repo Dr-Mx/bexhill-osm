@@ -76,7 +76,7 @@ L.Control.MinZoomIdenticator = L.Control.extend({
     if (minzoomlevel == -1) {
       this._container.innerHTML = "no layer assigned";
     }else{
-      this._container.innerHTML = "Los POIs aparecerán al zoom: " + minzoomlevel + " (actual: " + this._map.getZoom() + ")";
+      this._container.innerHTML = "POIs appear at zoom: " + minzoomlevel + " (current: " + this._map.getZoom() + ")";
     }
 
     if (this._map.getZoom() >= minzoomlevel) {
@@ -98,7 +98,7 @@ L.LatLngBounds.prototype.toOverpassBBoxString = function (){
 L.OverPassLayer = L.FeatureGroup.extend({
   options: {
     minzoom: 15,
-    endpoint: "http://overpass-api.de/api/",
+    endpoint: "https://overpass-api.de/api/",
     query: "(node(BBOX)[organic];node(BBOX)[second_hand];);out qt;",
     callback: function(data) {
       for(var i = 0; i < data.elements.length; i++) {
@@ -148,7 +148,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
   */
   long2tile: function (lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); },
   lat2tile: function (lat,zoom)  {
-    return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); 
+    return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom)));
   },
   tile2long: function (x,z) {
     return (x/Math.pow(2,z)*360-180);
@@ -239,7 +239,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
             if (this.status > 400 && this.status <= 502) {
                 // HACK: to avoid the spinner being shown when there
                 // was an error on one of the requests
-                self.options.callback.call(reference, {elements: []});
+				self.options.callback.call(reference, {elements: []});
             }
           };
 
@@ -252,6 +252,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 
   onAdd: function (map) {
     this._map = map;
+
     if (map.zoomIndecator) {
       this._zoomControl = map.zoomIndecator;
       this._zoomControl._addLayer(this);

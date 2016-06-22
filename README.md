@@ -1,17 +1,15 @@
-# osm-pois
+# Bexhill-OSM
 
-Show POIs from OSM in a map
+Local OpenStreetMap data showing multiple POIs and other information
 
 ## Live version!
 
-http://upoi.org
-
-## Forked versions
-
- - http://www.konfraria.org/osm/cerca/web/
- - http://mapa.barriohacker.net/
+http://bexhill-osm.org.uk/
 
 ## Attribution
+
+Forked from:
+ - http://pois.elblogdehumitos.com.ar/ (Humitos)
 
 Strongly based on :
  - http://unterkunftskarte.de/

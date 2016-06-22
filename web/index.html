@@ -1,350 +1,212 @@
-  <head>
-    <title>Puntos de Interés</title>
+<!DOCTYPE html>
+<html>
+ <head>
+    <title>Bexhill-OSM</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta property="og:title" content="Puntos de Interés" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://pois.elblogdehumitos.com.ar/" />
-    <meta property="og:image" content="http://pois.elblogdehumitos.com.ar/assets/img/preview.jpg" />
-    <meta property="og:description" content="Encuentra los puntos de interés cerca de dónde estés." />
-    <link rel="shortcut icon" href="assets/img/favicon.ico"/>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <link rel="stylesheet" href="assets/css/Control.Loading.css" />
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta property="og:title" content="Bexhill-OSM" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://bexhill-osm.org.uk/" />
+	<meta property="og:image" content="http://bexhill-osm.org.uk/assets/img/preview.jpg" />
+	<meta property="og:description" content="Explore Bexhill, search points of interest and other information." />
+	
+	<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/favicon-194x194.png" sizes="194x194">
+	<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/manifest.json">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#b05301">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+	<meta name="theme-color" content="#b05301">
+	
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
+	<link rel="stylesheet" href="assets/css/Control.Loading.css" />
     <link rel="stylesheet" href="assets/css/leaflet.label.css" />
-
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/site.css">
     <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+	<link rel="stylesheet" href="assets/css/easy-button.css" />
+	
+ </head>
 
-    <link href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css" rel="stylesheet" />
-    <!--[if lt IE 9]>
-	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.21.0/L.Control.Locate.ie.css' rel='stylesheet' />
-    <![endif]-->
-  </head>
-
-  <body>
+ <body>
     <div id="sidebar" class="sidebar collapsed">
       <!-- Nav tabs -->
-      <ul class="sidebar-tabs" role="tablist">
-	<li><a href="#home" role="tab"><i class="fa fa-home"></i></a></li>
-	<li><a href="#help" role="tab"><i class="fa fa-info-circle"></i></a></li>
-	<li><a href="#faq" role="tab"><i class="fa fa-question"></i></a></li>
-	<li><a href="#about" role="tab"><i class="fa fa-user"></i></a></li>
-	<li><a href="#links" role="tab"><i class="fa fa-link"></i></a></li>
-	<li><a href="#software" role="tab"><i class="fa fa-cogs"></i></a></li>
-	<li><a href="#comments" role="tab"><i class="fa fa-comments"></i></a></li>
-	<li><a href="#developer" role="tab"><i class="fa fa-code"></i></a></li>
-      </ul>
+        <div class="sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" title="Home" role="tab"><i class="fa fa-bars fa-2x"></i></a></li>
+				<li><a href="#shops" title="Shops" role="tab"><i class="fa fa-shopping-bag fa-2x"></i></a></li>
+				<li><a href="#amenities" title="Amenities" role="tab"><i class="fa fa-coffee fa-2x"></i></a></li>
+				<li><a href="#services" title="Services" role="tab"><i class="fa fa-heartbeat fa-2x"></i></a></li>
+				<li><a href="#leisure" title="Leisure & Tourism" role="tab"><i class="fa fa-tree fa-2x"></i></a></li>
+				<li class="disabled"><a href="#walks" title="Walks - coming soon!" role="tab"><i class="fa fa-compass fa-2x"></i></a></li>
+            </ul>
+            <ul role="tablist">
+                <li><a href="#help" title="Help" role="tab"><i class="fa fa-question fa-2x"></i></a></li>
+                <li><a href="#information" title="Information" role="tab"><i class="fa fa-info fa-2x"></i></a></li>
+            </ul>
+        </div>
 
       <!-- Tab panes -->
-      <div class="sidebar-content active">
-
-	<div class="sidebar-pane" id="home">
-	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
-	  <h1>Puntos de Interés</h1>
-	  <p>Elige los puntos que quieras visualizar en el mapa y
-	  luego cierra esta pestaña haciendo click en la <em>X</em>
-	  para una mejor visualización.</p>
-	  <p class="permalink">
-	    <span class="fa fa-link"></span>
-	    <a id="permalink" href="#">Compartir este mapa (link)</a>
-	  </p>
-
-	  <div id="pois"></div>
+      <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+				<h1 class="sidebar-header">Bexhill-on-Sea OSM<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <h3> Welcome!</h3>
+				<p><a href="http://www.openstreetmap.org" target="_blank">OpenStreetMap</a> (osm) is a free, collaborative project to create a free editable map of the world.  This unofficial site presents data that has been added by volunteers in the <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" target="_blank">Bexhill-on-Sea</a> area.</p>
+				<p>Bexhill-OSM allows you to easily gather information on local places like shops, parks, art, walks, food, wheelchair accessibility and display them on a map.</p>
+				<p>At present, the New Town, Old Town, Glyne Gap and shops in Sidley high-street are covered.</p>
+				<p>Zoom to an area on the map, then click a tab on the left to select up to 3 points of interest to be displayed.  View Help [<span style='color:#b05301' class='fa fa-question fa-fw'></span>] for more assistance.
+				<p>If you have any questions regarding Bexhill-OSM, contact details can be found in the Information [<span style='color:#b05301' class='fa fa-info fa-fw'></span>] section.</p>
+				<br>
+				<p><img src="assets/img/serpollet.png" alt="Image of the 'Easter Egg' sculpture." style="width: 50%; height: 50%"></p>
+				<p class="lorem">The 'Easter Egg' car designed and made by Leon Serpolet. A steel sculpture of this car be <a href="?tab=leisure&pois=artwork#19/50.8382/0.48125">found</a> along East Parade.</p>
+			</div>
+			<div class="sidebar-pane" id="shops">
+				<h1 class="sidebar-header">Shops<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<div id="poisshops"></div>
+			</div>
+			<div class="sidebar-pane" id="amenities">
+				<h1 class="sidebar-header">Amenities<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<div id="poisamenities"></div>
+			</div>
+			<div class="sidebar-pane" id="services">
+                <h1 class="sidebar-header">Services<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<div id="poisservices"></div>
+			</div>
+			<div class="sidebar-pane" id="leisure">
+                <h1 class="sidebar-header">Leisure & Tourism<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<div id="poisleisure"></div>
+			</div>
+			<div class="sidebar-pane" id="walks">
+                <h1 class="sidebar-header">Walks<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+			</div>
+			
+			<div class="sidebar-pane" id="help">
+				<h1 class="sidebar-header">Help<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<h3>Tabs</h3>
+				[<span style='color:#b05301' class='fa fa-shopping-bag fa-fw'></span>] Shops.  Buildings where general items are sold.<br><br>
+				[<span style='color:#b05301' class='fa fa-coffee fa-fw'></span>] Amenities.  Where to find a meal or a cup of coffee.  Social facilities, transport, recycling.<br><br>
+				[<span style='color:#b05301' class='fa fa-heartbeat fa-fw'></span>] Services.  Public and private offices and services.<br><br>
+				[<span style='color:#b05301' class='fa fa-tree fa-fw'></span>] Leisure & Tourism.  Where to stay, go, socialise and discover Bexhill's historical places.
+				<h3>Points of Interest (poi)</h3>
+				To begin displaying a poi, zoom to an area on the map and click an item - up to 3 pois can selected at once.  After a few seconds corresponding items will be displayed on the map as icons.  Larger map areas may take longer to load.
+				<p><img src="assets/img/checkboxes.png" alt="Checkbox preview" style="width: 50%; height: 50%"></p>
+				<h3>Map Icons</h3>
+				Once items have loaded on the map, click on their icon to see a pop-up detailing more specific information.  Opening hours are displayed as coloured icons showing if that place is open now.
+				<p><img src="assets/img/popup.png" alt="Icon popup preview" style="width: 75%; height: 75%"></p>
+				<h3>Map Controls</h3>
+				The zoom controls (<span style='color:#b05301' class='fa fa-plus'></span> / <span style='color:#b05301' class='fa fa-minus'></span>) will enlarge and shrink the map.<br><br>
+				If you wish to share your current view and selected poi, click the link icon (<span style='color:#b05301' class='fa fa-link'></span>) and copy the text displayed.<br><br>
+				To clear all current layers on the map, click the bin (<span style='color:#b05301' class='fa fa-trash-o'></span>).<br><br>
+				Find an address on the map by entering it into the search box (<span style='color:#b05301' class='fa fa-search'></span>).  A selection will appear if multiple results are found.<br><br>
+				Your current position can be located if you are in Bexhill by clicking the marker icon (<span style='color:#b05301' class='fa fa-map-marker'></span>).
+				<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
+				Various different styles of base map can be displayed using the picker.
+				<p><img src="assets/img/layer.png" alt="Map layer preview"></p>
+				</div>
+			<div class="sidebar-pane" id="information">
+				<h1 class="sidebar-header">Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<h3>About and Contact</h3>
+				<p>Bexhill-OSM is a non-commercial directory.  Its data has been collected by either personal survey or through internet research.<br>It was made as a hobby to herald the community, independent shops and history of Bexhill-on-Sea in an accessible form.</p>
+				<p>This website (and the Bexhill area on OpenStreetMap) is managed by Alexis Markwick.</p>
+				<p>If you have any questions I can be reached at <a href="mailto:info@bexhill-osm.org.uk">info@bexhill-osm.org.uk</a></p>
+				<p>Bexhill-OSM is run completely on donations.  If you found it useful, or just wish to say thanks - click below.<br>
+				It is very much appreciated <i class="fa fa-smile-o"></i>.<br>
+				<center><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
+					<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+				</form></center>
+				<p>
+				<hr>
+				<h3>Links</h3>
+				<ul class="item1">
+					<li><a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> - The map anyone can edit!</li>
+					<li><a href="http://demo.f4map.com/#lat=50.8390060&lon=0.4715886&zoom=17&camera.theta=53.021&camera.phi=34.95" target="_blank">F4Map</a> - A dynamic 3D map of Bexhill using OSM information.</li>
+					<li><a href="http://thebexhillhistorytrail.wordpress.com/" target="_blank">The Bexhill History Trail</a> - A guide to many of the historic gems.</li>
+					<li><a href="http://www.bexhilloldtown.org/" target="_blank">The Old Town Preservation Society</a> - Maps and information from past to present.</li>
+					<li><a href="http://www.discoverbexhill.com/" target="_blank">Discover Bexhill-on-Sea</a> - Local visitor and tourist guide.</li>
+					<li><a href="http://new.eastsussex.gov.uk/leisureandtourism/countryside/" target="_blank">Discover East Sussex</a> - Leisure and tourist guide for all of East Sussex.</li>
+				</ul>
+				<p>
+				<hr>
+				<h3>Software</h3>
+				<p>Bexhill-OSM is a fork of the project <a href="http://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> by Manuel Kaufmann.<p>
+				<p>The site is built using the following tools:</p>
+				<ul class="item2">
+					<li><a href="http://leafletjs.com/" target="_blank">Leafletjs</a> &copy; Vladimir Agafonkin</li>
+					<li>Leaflet Plugins:
+					<ol>
+						<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank">sidebar-v2</a> &copy; Tobias Bieniek</li>
+						<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank">Leaflet.loading</a> &copy; Eric Brelsford</li>
+						<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton" target="_blank">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
+						<li><a href="https://github.com/perliedman/leaflet-control-geocoder" target="_blank">leaflet-control-geocoder</a> &copy; Per Liedman</li>
+						<li><a href="https://www.mapbox.com/mapbox.js/plugins/#leaflet-locatecontrol" target="_blank">leaflet-locatecontrol</a> &copy; Mapbox</li>
+						<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
+						<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael Lawrence Evans</li>
+						<li><a href="https://github.com/Leaflet/Leaflet.label" target="_blank">Leaflet.label</a> &copy; Leaflet</li>
+						<li><a href="https://github.com/ypid/opening_hours.js" target="_blank">opening_hours.js</a> &copy; Robin Schneider</li>
+					</ol>
+					</li>
+					<li><a href="https://fortawesome.github.io/Font-Awesome/" target="_blank">Font-Awesome</a> &copy; Dave Gandy</li>
+					<li><a href="http://mapicons.nicolasmollet.com/" target="_blank">Map Icons</a> &copy; Nicolas Mollet</li>
+					<li><a href="http://jquery.com" target="_blank">jQuery</a> &copy; The jQuery Foundation</li>
+					<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
+					<li><a href="https://github.com/janl/mustache.js" target="_blank">Mustache</a> &copy; Jan Lehnardt</li>
+				</ul>
+			</div>
+		</div>
 	</div>
-
-	<div class="sidebar-pane" id="help">
-	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
-	  <h1>Ayuda</h1>
-	  <p>Esta web permite visualizar diferentes <em>Puntos de
-	  Interés</em> sobre un mapa. Los diferentes tipos de puntos
-	  pueden ser seleccionados desde la barra a la izquierda que
-	  se muestra al inicio (o bien haciendo click en <em>"la
-	  casita"</em>), pudiendo seleccionar varios a la vez.</p>
-
-	  <img src="assets/img/help-select-pois.jpg">
-
-	  <p>Una vez seleccionados los puntos de interés, los mismos
-	  se mostrarán en el mapa luego de algunos segundos
-	  (dependiendo de la conexión a internet) con diferentes
-	  íconos y colores para una rápida visualización.</p>
-
-	  <img src="assets/img/help-show-pois.jpg">
-
-	  <p>Si al seleccionar los POIs que quieres mostrar en el
-	  mapa, te aparece un mensaje como este:</p>
-
-	  <img src="assets/img/help-message.jpg">
-
-	  <p>Tenés que agrandar un poco más el mapa para que aparezcan
-	  los puntos.</p>
-
-	  <p>A la izquierda están los controles para hacer agrandar y
-	  achicar el mapa (también funciona con la ruedita del
-	  mouse).</p>
-
-	  <img src="assets/img/help-controls.jpg">
-
-	  <p>La "lupa" sirve para buscar una ciudad diferente a la que
-	  se está mostrando en el mapa, ingresando el nombre y la
-	  provincia de la misma. Por ejemplo, "capilla del monte,
-	  córdoba" y presionando <em>Enter</em>.</p>
-
-	  <img src="assets/img/help-geoposition.jpg">
-
-	  <p>Además hay un ícono con una "flechita" que sirve para
-	  centrar el mapa en la posición en la que te encuentras
-	  actualmente.</p>
-
-	  <img src="assets/img/help-my-position.jpg">
-
-	  <p>¡Espero que te sea de utilidad!</p>
-
-	</div>
-
-	<div class="sidebar-pane" id="faq">
-	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
-	  <h1>Preguntas frecuentes</h1>
-	  <p>
-	    <ul>
-	      <div class="item">
-		<li><strong>¿Cómo puedo agregar más <em>POIs</em> a la lista?</strong></li>
-		<p>Podés <a href="mailto:humitos@gmail.com">contactarte
-		conmigo por email</a> (o <a href="#comments"
-		onclick="javascript:sidebar.open('comments')">dejar un
-		comentario</a>) y comentarme qué tipo de punto de
-		interés querés agregar así lo sumo a la lista.</p>
-	      </div>
-	      <div class="item">
-		<li><strong>¿Para qué sirve el link <em>Compartir este mapa (link)</em> que está en la lista de POIs?</strong></li>
-		<p>Cuando necesites mostrarle el mismo mapa que vos
-		estás viendo a otra persona, podés pasarle ese link y
-		así compartir el mapa. Para eso, tenés que hacer click
-		con el botón derecho del mouse en el
-		texto <em>Compartir este mapa (link)</em> y luego
-		"Copiar dirección de enlace" para guardarlo en el
-		portapapeles.</p>
-	      </div>
-	      <div class="item">
-		<li><strong>Estoy seguro que un POI tiene más información de la que se muestra. ¿Porqué?</strong></li>
-		<p>Es probable que algunas
-		etiquetas <em>importantes</em> se me hayan pasado y
-		que estén faltando. Enviame un email o dejá un
-		comentario en el sitio mecionando el POI en cuestión y
-		lo resolveré a la brevedad.</p>
-	      </div>
-	    </ul>
-	  </p>
-	</div>
-
-	<div class="sidebar-pane" id="about">
-	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
-	  <h1>Acerca de...</h1>
-	  <p>Este es un sitio web que empecé para facilitar el acceso
-	  a la información mientras viajo con mi
-	  proyecto <a href="http://elblogdehumitos.com.ar/pages/argentina-en-python/">Argentina
-	  en Python</a>, ya que cada vez que llego a una ciudad nueva
-	  necesito acceder a lugares como estaciones de servicio,
-	  hostels o campings, farmacias y demás lugares públicos.</p>
-
-	  <p>Por lo tanto, este sitio me ayuda a recopilar fácilmente
-	  la información disponible
-	  en <a href="http://osm.org">OSM</a> a través
-	  de <a href="http://wiki.openstreetmap.org/wiki/Overpass_API">OverpassAPI</a>
-	  y así tener una visión general de los POIs que existen en la
-	  ciudad a la que estoy llegando.</p>
-
-	  <p>El código del proyecto lo podés encontrar en
-	  Github: <a href="https://github.com/humitos/osm-pois">aquí</a>. Por
-	  favor, si encuentras algún error repórtalo en
-	  los <a href="https://github.com/humitos/osm-pois/issues">issues</a>
-	  o crea un pull request.</p>
-
-	  <p>Si no sabés que es Github y querés hacer un comentario o
-	  sugerencia sobre este sitio web, me podés enviar
-	  un <a href="mailto:humitos@gmail.com">email</a>
-	  o <a href="#comments"
-	  onclick="javascript:sidebar.open('comments')">dejar un
-	  comentario</a> en este sitio.</p>
-
-	  <p>¡Muchas gracias!</p>
-
-	  <p style="text-align: right">humitos<br>-- <a href="http://elblogdehumitos.com.ar">http://elblogdehumitos.com.ar</a></p>
-	</div>
-
-	<div class="sidebar-pane" id="links">
-	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
-	  <h1>Enlaces de interés</h1>
-	  <p>
-	    <ul>
-	      <div class="item">
-		<li><strong>Ruteador:</strong> <a href="http://map.project-osrm.org/">Project OSRM</a>
-		  <p>Permite obtener una ruta seleccionando el punto
-		  de inicio y fin. Además, se le pueden agregar puntos
-		  intermedios.</p>
-		</li>
-	      </div>
-	      <div class="item">
-		<li><strong>Mapas para Garmin:</strong> <a href="http://www.i-nis.com.ar/osm/garmin">i-nis.com.ar</a>
-		  <p>Mapas listos para copiar en los dispositivos
-		  Garmin y obtener todo el poder de OSM en tu GPS.</p>
-		</li>
-	      </div>
-	      <div class="item">
-		<li><strong>Guía rápida sobre OpenStreetMap:</strong> <a href="http://learnosm.org/es/">LearnOSM</a>
-		  <p>Guía rápida en Español para aprender a utilizar
-		  OSM y todos sus beneficios en pocos pasos.</p>
-		</li>
-	      </div>
-	      <div class="item">
-		<li><strong>Tu negocio en OpenStreetMap:</strong> <a href="http://elblogdehumitos.com.ar/osm/">onosm (version en español)</a>
-		  <p>Agrega rápidamente tu negocio o POI favorito al
-		  mapa de OpenStreetMap. ¡Es rápido, fácil y no se
-		  necesita estar registrado!</p>
-		</li>
-	      </div>
-	      <div class="item">
-		<li><strong>OSM en tu Android:</strong> <a href="http://osmand.net/">OsmAnd</a>
-		  <p>¡Todo el poder de los mapas OSM en tu Android sin
-		  estar conectado a internet!.</p>
-		</li>
-	      </div>
-	      <div class="item">
-		<li><strong>Comunidad Argentina de OSM:</strong> <a href="http://openstreetmap.org.ar/">OSM Argentina</a>
-		  <p>Comunidad de Usuarios de OSM con locación en
-		  Argentina. ¡Sumate!</p>
-		</li>
-	      </div>
-	      <div class="item">
-		<li><strong>Crea tus mapas fácilmente:</strong> <a href="http://umap.openstreetmap.fr/es/">uMap</a>
-		  <p>uMap te permite crear mapas con capas de
-		  OpenStreetMap en un minuto y embeberlo en tu
-		  sitio.</p>
-		</li>
-	      </div>
-
-	    </ul>
-	  </p>
-	</div>
-
-	<div class="sidebar-pane" id="software">
-	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
-	  <h1>Herramientas usadas</h1>
-	  <p>Este sitio está construido utilizando estas herramientas:</p>
-
-	  <ul class="item">
-	    <li><a href="http://leafletjs.com/">Leafletjs</a> © Vladimir Agafonkin</li>
-	    <li>Leaflet Plugins:
-	      <ol>
-		<li><a href="https://github.com/ebrelsford/Leaflet.loading">Leaflet.loading</a> © Eric Brelsford</li>
-		<li><a href="https://github.com/perliedman/leaflet-control-geocoder">Control.Geocoder</a> © Per Liedman</li>
-		<li><a href="https://github.com/Turbo87/sidebar-v2/">L.control.sidebar</a> © Tobias Bieniek</li>
-		<li><a href="https://www.mapbox.com/mapbox.js/plugins/#leaflet-locatecontrol">L.Control.Locate</a> © Mapbox</li>
-		<li><a href="https://github.com/makinacorpus/Leaflet.RestoreView">Leaflet.RestoreView</a> © Makina Corpus</li>
-		<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass">L.OverPassLayer</a> © kartenkarsten</li>
-		<li><a href="https://github.com/mlevans/leaflet-hash">L.Hash</a> © Michael Lawrence Evans</li>
-		<li><a href="https://github.com/Leaflet/Leaflet.label">Leaflet.label</a> © Leaflet</li>
-	      </ol>
-	    </li>
-	    <li><a href="http://fortawesome.github.io/Font-Awesome/">Font-Awesome</a> © Dave Gandy</li>
-	    <li><a href="http://mapicons.nicolasmollet.com/">Map Icons</a> © Nicolas Mollet</li>
-	    <li><a href="http://jquery.com">jQuery</a> © The jQuery Foundation</li>
-	    <li><a href="https://github.com/medialize/URI.js">URI.js</a> © Medialize</li>
-	    <li><a href="https://github.com/janl/mustache.js">Mustache</a> © Jan Lehnardt</li>
-	  </ul>
-
-	  <p>¡Gracias a todos ellos funciona este sitio web!</p>
-	</div>
-
-	<div class="sidebar-pane" id="comments">
-	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
-	  <h1>Comentarios</h1>
-	  <p>¡Dejá un comentario para <strong id="comment-name">nuestro website</strong>!</p>
-	  <div id="disqus_thread"></div>
-	  <script type="text/javascript">
-	    var disqus_shortname = 'osmpois'; // required: replace example with your forum shortname
-	    var disqus_identifier = 'pois-homepage';
-	    var disqus_url = 'http://pois.elblogdehumitos.com.ar/';
-
-	    /* * * DON'T EDIT BELOW THIS LINE * * */
-	    (function() {
-		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	    })();
-	  </script>
-	  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-	</div>
-	<div class="sidebar-pane" id="developer">
-	  <div class="close-button"><span class="fa fa-close" onclick="javascript: sidebar.close()"></span></div>
-	  <h1>Modo experto</h1>
-	  <p>Este panel muestra la infomación necesaria para los
-	  desarrolladores del sitio o aquellos que quieran colaborar
-	  con el proyecto: agregando funcionalidad o reportando
-	  errores.</p>
-
-	  <p>Para ver la información en este panel debes hacer click
-	  en alguno de los POIs que aparecen en el mapa luego de
-	  seleccionar algunos de la lista.</p>
-
-	  <p>También puedes crear tu propia consulta utilizando
-	  OverpassAPI para buscar, por ejemplo, un POI que <em>no
-	  esté</em> en al lista marcando el siguiente checkbox.</p>
-
-	  <div>
-	    <label><input id="expert-mode" type="checkbox"/><span>Custom OverpassAPI Query</span></label>
-	    <form id="expert-form" style="display: none;">
-	      <input id="expert-query" style="width: 100%;" name="query" type="text" placeholder="[internet_access=wlan][amenity=fuel]"/>
-	    </form>
-	  </div>
-
-	  <p class="tags"></p>
-	</div>
-
-      </div>
-    </div>
-
+	
     <div id="map" class="sidebar-map"></div>
 
     <div id="spinner" style="display: none;">
-      <img src="assets/img/spinner.gif">
+		<span class="fa-stack" style="font-size:75px">
+			<i class="fa fa-circle fa-stack-1x" style="font-size:100px; color:rgba(222, 222, 222, 0.9)"></i>
+			<i class="fa fa-spinner fa-pulse fa-stack-1x"></i>
+		</span>
     </div>
 
     <!-- Javascripts -->
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script src="assets/js/leaflet.label.js"></script>
-    <script src="assets/js/Control.Geocoder.js"></script>
-    <script src="assets/js/leaflet.restoreview.js"></script>
     <script src="assets/js/leaflet-sidebar.js"></script>
+	<script src="assets/js/Control.Geocoder.js"></script>
     <script src="assets/js/Control.Loading.js"></script>
-    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js"></script>
-    <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+	<script src="assets/js/easy-button.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.locatecontrol/0.52.0/L.Control.Locate.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
     <script src="assets/js/URI.js"></script>
+	<script src="assets/js/suncalc.js"></script>
+	<script src="assets/js/opening_hours.js"></script>
     <script src="assets/js/OverPassLayer.js"></script>
     <script src="assets/js/leaflet-hash.js"></script>
     <script src="assets/js/mustache.js"></script>
     <script src="assets/js/tags-parsers.js"></script>
     <script src="assets/js/pois-type.js"></script>
-    <script src="assets/js/site.functions.js"></script>
     <script src="assets/js/site.js"></script>
-
-    <!-- Piwik -->
-    <script type="text/javascript">
-      var _paq = _paq || [];
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-	  var u="//elblogdehumitos.com.ar/piwik/";
-	  _paq.push(['setTrackerUrl', u+'piwik.php']);
-	  _paq.push(['setSiteId', 2]);
-	  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-	  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-      })();
-    </script>
-    <noscript><p><img src="//elblogdehumitos.com.ar/piwik/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
-    <!-- End Piwik Code -->
-  </body>
+	<!-- GoogleAnalytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-79665109-1', 'auto');
+		ga('send', 'pageview');
+	</script>  
+ </body>
 </html>

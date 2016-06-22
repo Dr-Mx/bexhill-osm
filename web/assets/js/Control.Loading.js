@@ -5,20 +5,26 @@
 
 (function () {
 
+    var console = window.console || {
+        error: function () {},
+        warn: function () {}
+    };
+
     function defineLeafletLoading(L) {
         L.Control.Loading = L.Control.extend({
             options: {
+                delayIndicator: null,
                 position: 'topleft',
                 separate: false,
                 zoomControl: null,
                 spinjs: false,
                 spin: { 
-                  lines: 7, 
-                  length: 3, 
-                  width: 3, 
-                  radius: 5, 
-                  rotate: 13, 
-                  top: "83%"
+                    lines: 7, 
+                    length: 3, 
+                    width: 3, 
+                    radius: 5, 
+                    rotate: 13, 
+                    top: "83%"
                 }
             },
 
@@ -58,6 +64,10 @@
                     container = this.zoomControl._container;
                     // These classes are no longer used as of Leaflet 0.6
                     classes += ' leaflet-bar-part-bottom leaflet-bar-part last';
+
+                    // Loading control will be added to the zoom control. So the visible last element is not the
+                    // last dom element anymore. So add the part-bottom class.
+                    L.DomUtil.addClass(this._getLastControlButton(), 'leaflet-bar-part-bottom');
                 }
                 else {
                     // Otherwise, create a container for the indicator
@@ -65,8 +75,8 @@
                 }
                 this._indicator = L.DomUtil.create('a', classes, container);
                 if (this.options.spinjs) {
-                  this._spinner = new Spinner(this.options.spin).spin();
-                  this._indicator.appendChild(this._spinner.el);
+                    this._spinner = new Spinner(this.options.spin).spin();
+                    this._indicator.appendChild(this._spinner.el);
                 }
                 return container;
             },
@@ -94,12 +104,32 @@
 
             addLoader: function(id) {
                 this._dataLoaders[id] = true;
-                this.updateIndicator();
+                if (this.options.delayIndicator && !this.delayIndicatorTimeout) {
+                    // If we are delaying showing the indicator and we're not
+                    // already waiting for that delay, set up a timeout.
+                    var that = this;
+                    this.delayIndicatorTimeout = setTimeout(function () {
+                        that.updateIndicator();
+                        that.delayIndicatorTimeout = null;
+                    }, this.options.delayIndicator);
+                }
+                else {
+                    // Otherwise show the indicator immediately
+                    this.updateIndicator();
+                }
             },
 
             removeLoader: function(id) {
                 delete this._dataLoaders[id];
                 this.updateIndicator();
+
+                // If removing this loader means we're in no danger of loading,
+                // clear the timeout. This prevents old delays from instantly 
+                // triggering the indicator.
+                if (this.options.delayIndicator && this.delayIndicatorTimeout && !this.isLoading()) {
+                    clearTimeout(this.delayIndicatorTimeout);
+                    this.delayIndicatorTimeout = null;
+                }
             },
 
             updateIndicator: function() {
@@ -130,7 +160,7 @@
                 // If zoomControl exists, make the zoom-out button not last
                 if (!this.options.separate) {
                     if (this.zoomControl instanceof L.Control.Zoom) {
-                        L.DomUtil.removeClass(this.zoomControl._zoomOutButton, 'leaflet-bar-part-bottom');
+                        L.DomUtil.removeClass(this._getLastControlButton(), 'leaflet-bar-part-bottom');
                     }
                     else if (typeof L.Control.Zoomslider === 'function' && this.zoomControl instanceof L.Control.Zoomslider) {
                         L.DomUtil.removeClass(this.zoomControl._ui.zoomOut, 'leaflet-bar-part-bottom');
@@ -145,7 +175,7 @@
                 // If zoomControl exists, make the zoom-out button last
                 if (!this.options.separate) {
                     if (this.zoomControl instanceof L.Control.Zoom) {
-                        L.DomUtil.addClass(this.zoomControl._zoomOutButton, 'leaflet-bar-part-bottom');
+                        L.DomUtil.addClass(this._getLastControlButton(), 'leaflet-bar-part-bottom');
                     }
                     else if (typeof L.Control.Zoomslider === 'function' && this.zoomControl instanceof L.Control.Zoomslider) {
                         L.DomUtil.addClass(this.zoomControl._ui.zoomOut, 'leaflet-bar-part-bottom');
@@ -153,8 +183,41 @@
                 }
             },
 
+            _getLastControlButton: function() {
+                var container = this.zoomControl._container,
+                    index = container.children.length - 1;
+
+                // Find the last visible control button that is not our loading
+                // indicator
+                while (index > 0) {
+                    var button = container.children[index];
+                    if (!(this._indicator === button || button.offsetWidth === 0 || button.offsetHeight === 0)) {
+                        break;
+                    }
+                    index--;
+                }
+
+                return container.children[index];
+            },
+
             _handleLoading: function(e) {
                 this.addLoader(this.getEventId(e));
+            },
+
+            _handleBaseLayerChange: function (e) {
+                var that = this;
+
+                // Check for a target 'layer' that contains multiple layers, such as
+                // L.LayerGroup. This will happen if you have an L.LayerGroup in an
+                // L.Control.Layers.
+                if (e.layer && e.layer.eachLayer && typeof e.layer.eachLayer === 'function') {
+                    e.layer.eachLayer(function (layer) {
+                        that._handleBaseLayerChange({ layer: layer });
+                    });
+                }
+                else {
+                    that._handleLoading(e);
+                }
             },
 
             _handleLoad: function(e) {
@@ -186,6 +249,21 @@
                 }
             },
 
+            _layerRemove: function(e) {
+                if (!e.layer || !e.layer.off) return;
+                try {
+                    e.layer.off({
+                        loading: this._handleLoading,
+                        load: this._handleLoad
+                    }, this);
+                }
+                catch (exception) {
+                    console.warn('L.Control.Loading: Tried and failed to remove ' +
+                                 'event handlers from layer', e.layer);
+                    console.warn('L.Control.Loading: Full details', exception);
+                }
+            },
+
             _addLayerListeners: function(map) {
                 // Add listeners for begin and end of load to any layers already on the 
                 // map
@@ -200,6 +278,7 @@
                 // When a layer is added to the map, add listeners for begin and end
                 // of load
                 map.on('layeradd', this._layerAdd, this);
+                map.on('layerremove', this._layerRemove, this);
             },
 
             _removeLayerListeners: function(map) {
@@ -212,8 +291,9 @@
                     }, this);
                 }, this);
 
-                // Remove layeradd listener from map
+                // Remove layeradd/layerremove listener from map
                 map.off('layeradd', this._layerAdd, this);
+                map.off('layerremove', this._layerRemove, this);
             },
 
             _addMapListeners: function(map) {
@@ -221,6 +301,7 @@
                 // events, eg, for AJAX calls that affect the map but will not be
                 // reflected in the above layer events.
                 map.on({
+                    baselayerchange: this._handleBaseLayerChange,
                     dataloading: this._handleLoading,
                     dataload: this._handleLoad,
                     layerremove: this._handleLoad
@@ -229,6 +310,7 @@
 
             _removeMapListeners: function(map) {
                 map.off({
+                    baselayerchange: this._handleBaseLayerChange,
                     dataloading: this._handleLoading,
                     dataload: this._handleLoad,
                     layerremove: this._handleLoad

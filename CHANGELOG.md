@@ -1,59 +1,53 @@
 # CHANGELOG
 
-There is a *Live version!* for the `master` branch at:
+## New Fork Bexhill-OSM
 
-http://pois.elblogdehumitos.com.ar/master/
+**Date:** 22/06/2016
 
-## Version 0.5
+Updated js
+ - Leaflet 0.7.7
+ - Sidebar-v2 0.3.0
+ - FontAwesome 4.6.3
+ - Control.Geocoder 1.5.1
+ - URI.js 1.18.1
+ - Mustache 2.2.1
+ - leaflet-locatecontrol 0.52.0
+ - JQuery 1.8.0
 
-**Date:** not released yet
+Added js
+ - opening_hours.js
+ - Leaflet.EasyButton
 
-## Version 0.4
+Restrict map area to bounds
+Many new poi icons added, grouped and colour coded
+Poi icons are now divided into tabs
+Maximum 3 pois can be selected at a time
+Clear poi checkboxes on tab change
+Extra zoom levels
+Permalink button
+Clear map button
+Narrower tab bar on mobile devices
+Geocoder only searches area in bounds
+Geocoder highlights area on result
+'Spinner' uses FontAwesome icons
 
-**Date:** 01/16/2015
-
- - Comments for all the POIs using disqus threads (#43)
- - Show a label next to the POI with the name of it
- - Show icons on marker popups
- - Preview image updated
- - Bugfix to show 'Información Turística'
- - Hack to remove 'Spinner' when something goes wrong
- - Help updated
- - Added more POIs (coffee, car\_repair, bus\_stop, kiosk, butcher, theatre and sports_centre)
-
-## Version 0.3
-
-**Date:** 01/15/2015
-
- - Tags are parsed in a better way (#9)
- - Change copyright text and layers -thanks to @51114u9
- - Leaflet OverpassLayer updated
-
- - More layers added (Bicicleta, Transporte Público, Paisaje, Al Aire
-   Libre, MapBox (Calles), MapQuest Open, OpenMapSurfer) -thanks to
-   @51114u9
-
- - More layers (HOT, MapQuest OSM, Lyrk, OSMFr) (#12)
- - Show POIs checkboxes inside the sidebar pane (#19)
- - Show POI icons in checkboxes (#16)
- - Split common POIs in different checkboxes
- - Help updated
- - Close button added in sidebar panes
-
-## Version 0.2
-
-**Date:** 01/11/2015
-
- - uMap service linked in "Links"
- - Added "Used tools" sidebar pane
- - Use "Mapicons" from http://mapicons.nicolasmollet.com/ (#6)
- - Support ways and relations (#5) -thanks to @51114u9
- - Shows Pubs (amenity=pub) and Restaurants
-   (amenity~'restaurant|fast_food')
-
-## Version 0.1
-
-**Date:** 01/07/2015
-
- - First release
- - Blog post: http://elblogdehumitos.com.ar/posts/puntos-de-interes-en-openstreetmap/
+Added additional parsing for the following tags:
+ - addr:housename
+ - facebook
+ - email
+ - wikipedia
+ - school / college
+ - cafe / fast_food / restaurant
+ - taxi
+ - recycling
+ - car_parking
+ - bicycle_parking
+ - healthcare
+ - defibrillator
+ - toilets
+ - artwork
+ - historic
+ - wheelchair
+ - information
+ - description
+ - opening_hours

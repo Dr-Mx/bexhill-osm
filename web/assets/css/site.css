@@ -18,7 +18,7 @@ ul {
 }
 
 .poi-checkbox {
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .poi-checkbox > label > img {
@@ -33,16 +33,12 @@ ul {
     margin-left: 5px;
 }
 
-.close-button {
-    float: right;
-    margin-top: 23px;
-    margin-right: 15px;
-    font-size: 25px;
-    cursor: pointer;
+.leaflet-control-loading {
+    background-image: url('../img/loading.gif');
 }
 
-.leaflet-control-loading {
-    background: url("../img/loading.gif");
+.leaflet-popup-content-wrapper {
+	opacity: 0.9;
 }
 
 .item > li {
@@ -63,8 +59,15 @@ ul {
     padding-top: 5px;
 }
 
+.leaflet-control-locate
+	a{font-size:1.4em}
+.leaflet-control-locate.active
+	a{color:#2074B6}
+.leaflet-control-locate.active.following
+	a{color:#20b674}
+
 .leaflet-control-minZoomIndecator {
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(176, 83, 1, 0.8);
     border-radius: 5px;
     font-family: Helvetica,Arial,sans-serif;
     font-size: 15px;
@@ -73,20 +76,14 @@ ul {
     z-index: 10;
 }
 
+
 #spinner {
-    width: 128px;
-    height: 128px;
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -50px;
     margin-top: -50px;
     z-index: 10;
-}
-
-.permalink {
-    font-size: 14px;
-    text-align: center;
 }
 
 #developer > .tags > table {
@@ -104,3 +101,13 @@ ul {
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
+
+.lorem {
+	text-align: center;
+	font-style: italic;
+	color: #808080;
+}
+
+a:link { color: #b05301; }
+a:visited { color: #b05301; }
+a:hover { color: #b05301; }
