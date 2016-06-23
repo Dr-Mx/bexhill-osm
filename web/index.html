@@ -3,13 +3,16 @@
  <head>
     <title>Bexhill-OSM</title>
 
-	<meta charset="utf-8" />
+	<meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="keywords" content="Bexhill-on-Sea,Bexhill,Map,OpenStreetMap,Shops,Places,History,Tourism,Amenities,Services,Leisure,POI" />
+	<meta name="description" content="Explore a map of Bexhill-on-Sea, UK.  Search points of interest and discover other information." />
+	<meta name="author" content="Alexis Markwick" />
 	<meta property="og:title" content="Bexhill-OSM" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="http://bexhill-osm.org.uk/" />
 	<meta property="og:image" content="http://bexhill-osm.org.uk/assets/img/preview.jpg" />
-	<meta property="og:description" content="Explore Bexhill-on-Sea, UK.  Search points of interest and other information." />
+	<meta property="og:description" content="Explore a map of Bexhill-on-Sea, UK.  Search points of interest and discover other information." />
 	
 	<!-- http://realfavicongenerator.net/ -->
 	<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
@@ -32,6 +35,7 @@
 	<meta name="msapplication-TileImage" content="/mstile-144x144.png">
 	<meta name="theme-color" content="#b05301">
 	
+	<!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
@@ -174,7 +178,7 @@
 	
     <div id="map" class="sidebar-map"></div>
 
-    <!-- Overpass loading icon -->
+    <!-- Overpass query loading icon -->
 	<div id="spinner" style="display: none;">
 		<span class="fa-stack" style="font-size:75px">
 			<i class="fa fa-circle fa-stack-1x" style="font-size:100px; color:rgba(222, 222, 222, 0.9)"></i>
@@ -182,7 +186,7 @@
 		</span>
     </div>
 
-    <!-- Javascripts -->
+    <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script src="assets/js/leaflet.label.js"></script>
     <script src="assets/js/leaflet-sidebar.js"></script>

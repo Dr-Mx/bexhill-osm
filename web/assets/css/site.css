@@ -84,6 +84,7 @@ ul {
     margin-left: -50px;
     margin-top: -50px;
     z-index: 10;
+	pointer-events: none;
 }
 
 #developer > .tags > table {
