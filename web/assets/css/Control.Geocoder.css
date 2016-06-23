@@ -22,6 +22,7 @@
 }
 
 .leaflet-control-geocoder a:hover, .leaflet-control-geocoder .leaflet-control-geocoder-icon:hover {
+	background-image: url(../img/geocoder-h.png);
 	border-bottom: none;
 	display: inline-block;
 }
