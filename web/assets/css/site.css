@@ -1,40 +1,46 @@
 body {
-    padding: 0;
-    margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 html, body, #map {
-    height: 100%;
-    font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+	height: 100%;
+	font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
 a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 ul {
-    list-style: none;
-    padding: 0px;
+	list-style: none;
+	padding: 0px;
+}
+
+hr {
+	background-color: #ccc;
+	height: 2px;
+	border: 0;
 }
 
 .poi-checkbox {
-    font-size: 14px;
+	font-size: 14px;
 }
 
 .poi-checkbox > label > img {
-    float: left;
+	float: left;
 }
 
 .poi-checkbox > label > input {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 .poi-checkbox > label > span {
-    margin-left: 5px;
+	margin-left: 5px;
 }
 
 .leaflet-control-loading {
-    background-image: url('../img/loading.gif');
+	background-image: url('../img/loading.gif');
 }
 
 .leaflet-popup-content-wrapper {
@@ -42,21 +48,21 @@ ul {
 }
 
 .item > li {
-    font-size: 15px;
+	font-size: 15px;
 }
 
 .sidebar p {
-    font-size: 15px;
+	font-size: 15px;
 }
 
 .sidebar img {
-    margin: 0px auto;
-    display: block;
+	margin: 0px auto;
+	display: block;
 }
 
 .sidebar-tabs > li {
-    font-size: 28pt !important;
-    padding-top: 5px;
+	font-size: 28pt !important;
+	padding-top: 5px;
 }
 
 .leaflet-control-locate
@@ -67,40 +73,40 @@ ul {
 	a{color:#20b674}
 
 .leaflet-control-minZoomIndecator {
-    background-color: rgba(176, 83, 1, 0.8);
-    border-radius: 5px;
-    font-family: Helvetica,Arial,sans-serif;
-    font-size: 15px;
-    color: white;
-    padding: 10px;
-    z-index: 10;
+	background-color: rgba(176, 83, 1, 0.8);
+	border-radius: 5px;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 15px;
+	color: white;
+	padding: 10px;
+	z-index: 10;
 }
 
 
 #spinner {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -50px;
-    margin-top: -50px;
-    z-index: 10;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -50px;
+	margin-top: -50px;
+	z-index: 10;
 	pointer-events: none;
 }
 
 #developer > .tags > table {
-    font-size: 13px !important;
+	font-size: 13px !important;
 }
 
 .leaflet-control-container > div:last-child {
-    line-height: 20px;
-    right: 5px;
-    bottom: 5px;
+	line-height: 20px;
+	right: 5px;
+	bottom: 5px;
 }
 
 .leaflet-control-container > div:last-child > div {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .lorem {

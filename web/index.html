@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
  <head>
-    <title>Bexhill-OSM</title>
+	<title>Bexhill-OSM</title>
 
 	<meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="keywords" content="Bexhill-on-Sea,Bexhill,Map,OpenStreetMap,Shops,Places,History,Tourism,Amenities,Services,Leisure,POI" />
 	<meta name="description" content="Explore a map of Bexhill-on-Sea, UK.  Search points of interest and discover other information." />
 	<meta name="author" content="Alexis Markwick" />
@@ -36,43 +36,48 @@
 	<meta name="theme-color" content="#b05301">
 	
 	<!-- CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
 	<link rel="stylesheet" href="assets/css/Control.Loading.css" />
-    <link rel="stylesheet" href="assets/css/leaflet.label.css" />
-    <link rel="stylesheet" href="assets/css/site.css">
-    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+	<link rel="stylesheet" href="assets/css/leaflet.label.css" />
+	<link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
 	<link rel="stylesheet" href="assets/css/easy-button.css" />
+	<link rel="stylesheet" href="assets/css/site.css">
+	<link rel="stylesheet" href="assets/css/easy-autocomplete.css" />
  </head>
 
  <body>
-    <div id="sidebar" class="sidebar collapsed">
-      <!-- Nav tabs -->
-        <div class="sidebar-tabs">
-            <ul role="tablist">
-                <li><a href="#home" title="Home" role="tab"><i class="fa fa-bars fa-2x"></i></a></li>
+	<div id="sidebar" class="sidebar collapsed">
+	
+		<!-- Nav tabs -->
+		<div class="sidebar-tabs">
+			<ul role="tablist">
+				<li><a href="#home" title="Home" role="tab"><i class="fa fa-bars fa-2x"></i></a></li>
 				<li><a href="#shops" title="Shops" role="tab"><i class="fa fa-shopping-bag fa-2x"></i></a></li>
 				<li><a href="#amenities" title="Amenities" role="tab"><i class="fa fa-coffee fa-2x"></i></a></li>
 				<li><a href="#services" title="Services" role="tab"><i class="fa fa-heartbeat fa-2x"></i></a></li>
 				<li><a href="#leisure" title="Leisure & Tourism" role="tab"><i class="fa fa-tree fa-2x"></i></a></li>
 				<li class="disabled"><a href="#walks" title="Walks - coming soon!" role="tab"><i class="fa fa-compass fa-2x"></i></a></li>
-            </ul>
-            <ul role="tablist">
-                <li><a href="#help" title="Help" role="tab"><i class="fa fa-question fa-2x"></i></a></li>
-                <li><a href="#information" title="Information" role="tab"><i class="fa fa-info fa-2x"></i></a></li>
-            </ul>
-        </div>
+			</ul>
+			<ul role="tablist">
+				<li><a href="#help" title="Help" role="tab"><i class="fa fa-question fa-2x"></i></a></li>
+				<li><a href="#information" title="Information" role="tab"><i class="fa fa-info fa-2x"></i></a></li>
+			</ul>
+		</div>
 
-      <!-- Tab panes -->
-      <div class="sidebar-content">
-            <div class="sidebar-pane" id="home">
+		<!-- Tab panes -->
+		<div class="sidebar-content">
+			<div class="sidebar-pane" id="home">
 				<h1 class="sidebar-header">Bexhill-on-Sea OSM<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-                <h3> Welcome!</h3>
+				<h3>Find an interest :</h3>
+				<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. 'clothing', 'coffee', 'memorial', 'art')"></p>
+				<hr>
+				<h3>Welcome!</h3>
 				<p><a href="http://www.openstreetmap.org" target="_blank">OpenStreetMap</a> (osm) is a free, collaborative project to create a free editable map of the world.  This unofficial site presents data that has been added by volunteers in the <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" target="_blank">Bexhill-on-Sea</a> area.</p>
 				<p>Bexhill-OSM allows you to easily gather information on local places like shops, parks, art, walks, food, wheelchair accessibility and display them on a map.</p>
 				<p>At present, the New Town, Old Town, Glyne Gap and shops in Sidley high-street are covered.</p>
-				<p>Zoom to an area on the map, then click a tab on the left to select up to 3 points of interest to be displayed.  View Help [<span style='color:#b05301' class='fa fa-question fa-fw'></span>] for more assistance.
+				<p>Zoom to an area on the map, enter a keyword above or click a tab on the left to select up to 3 points of interest to be displayed.  View Help [<span style='color:#b05301' class='fa fa-question fa-fw'></span>] for more assistance.
 				<p>If you have any questions regarding Bexhill-OSM, contact details can be found in the Information [<span style='color:#b05301' class='fa fa-info fa-fw'></span>] section.</p>
 				<br>
 				<p><img src="assets/img/serpollet.png" alt="Image of the 'Easter Egg' sculpture." style="width: 50%; height: 50%"></p>
@@ -87,40 +92,44 @@
 				<div id="poisamenities"></div>
 			</div>
 			<div class="sidebar-pane" id="services">
-                <h1 class="sidebar-header">Services<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Services<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 				<div id="poisservices"></div>
 			</div>
 			<div class="sidebar-pane" id="leisure">
-                <h1 class="sidebar-header">Leisure & Tourism<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Leisure & Tourism<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 				<div id="poisleisure"></div>
 			</div>
 			<div class="sidebar-pane" id="walks">
-                <h1 class="sidebar-header">Walks<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Walks<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 			</div>
-			
+
 			<div class="sidebar-pane" id="help">
 				<h1 class="sidebar-header">Help<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<h3>Find Interest</h3>
+				Type in the first three letters of a keyword (e.g. 'police', 'bike', 'diy').  Click the word in the category you are interested in to see it on the map.
+				<p><img src="assets/img/find.png" alt="Find Interest Preview" style="width: 75%; height: 75%"></p>
 				<h3>Tabs</h3>
 				[<span style='color:#b05301' class='fa fa-shopping-bag fa-fw'></span>] Shops.  Buildings where general items are sold.<br><br>
 				[<span style='color:#b05301' class='fa fa-coffee fa-fw'></span>] Amenities.  Where to find a meal or a cup of coffee.  Social facilities, transport, recycling.<br><br>
 				[<span style='color:#b05301' class='fa fa-heartbeat fa-fw'></span>] Services.  Public and private offices and services.<br><br>
-				[<span style='color:#b05301' class='fa fa-tree fa-fw'></span>] Leisure & Tourism.  Where to stay, go, socialise and discover Bexhill's historical places.
+				[<span style='color:#b05301' class='fa fa-tree fa-fw'></span>] Leisure & Tourism.  Where to stay, go, socialise and discover Bexhill's historical places.<br><br>
+				[<span style='color:#b05301' class='fa fa-compass fa-fw'></span>] Walks.  Coming soon.
 				<h3>Points of Interest (poi)</h3>
 				To begin displaying a poi, zoom to an area on the map and click an item - up to 3 pois can selected at once.  After a few seconds corresponding items will be displayed on the map as icons.  Larger map areas may take longer to load.
 				<p><img src="assets/img/checkboxes.png" alt="Checkbox preview" style="width: 50%; height: 50%"></p>
 				<h3>Map Icons</h3>
-				Once items have loaded on the map, click on their icon to see a pop-up detailing more specific information.  Opening hours are displayed as coloured icons showing if that place is open now.
+				Once items have loaded on the map, click on their icon to see a pop-up detailing more specific information.  Opening hours are displayed as coloured icons showing if that place is currently open.
 				<p><img src="assets/img/popup.png" alt="Icon popup preview" style="width: 75%; height: 75%"></p>
 				<h3>Map Controls</h3>
 				The zoom controls (<span style='color:#b05301' class='fa fa-plus'></span> / <span style='color:#b05301' class='fa fa-minus'></span>) will enlarge and shrink the map.<br><br>
 				If you wish to share your current view and selected poi, click the link icon (<span style='color:#b05301' class='fa fa-link'></span>) and copy the text displayed.<br><br>
 				To clear all current layers on the map, click the bin (<span style='color:#b05301' class='fa fa-trash-o'></span>).<br><br>
-				Find an address on the map by entering it into the search box (<span style='color:#b05301' class='fa fa-search'></span>).  A selection will appear if multiple results are found.<br><br>
+				Find an address on the map by entering part of it into the search box (<span style='color:#b05301' class='fa fa-search'></span>).  A selection will appear if multiple results are found.<br><br>
 				Your current position can be located if you are in Bexhill by clicking the marker icon (<span style='color:#b05301' class='fa fa-map-marker'></span>).
 				<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
-				Various different styles of base map can be displayed using the picker.
+				Various different styles of base map can be displayed using the overlay picker.
 				<p><img src="assets/img/layer.png" alt="Map layer preview"></p>
-				</div>
+			</div>
 			<div class="sidebar-pane" id="information">
 				<h1 class="sidebar-header">Information<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 				<h3>About and Contact</h3>
@@ -153,21 +162,23 @@
 				<ul class="item2">
 					<li><a href="http://leafletjs.com/" target="_blank">Leafletjs</a> &copy; Vladimir Agafonkin</li>
 					<li>Leaflet Plugins:
-					<ol>
-						<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank">sidebar-v2</a> &copy; Tobias Bieniek</li>
-						<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank">Leaflet.loading</a> &copy; Eric Brelsford</li>
-						<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton" target="_blank">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
-						<li><a href="https://github.com/perliedman/leaflet-control-geocoder" target="_blank">leaflet-control-geocoder</a> &copy; Per Liedman</li>
-						<li><a href="https://www.mapbox.com/mapbox.js/plugins/#leaflet-locatecontrol" target="_blank">leaflet-locatecontrol</a> &copy; Mapbox</li>
-						<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
-						<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael Lawrence Evans</li>
-						<li><a href="https://github.com/Leaflet/Leaflet.label" target="_blank">Leaflet.label</a> &copy; Leaflet</li>
-						<li><a href="https://github.com/ypid/opening_hours.js" target="_blank">opening_hours.js</a> &copy; Robin Schneider</li>
-					</ol>
+						<ol>
+							<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank">sidebar-v2</a> &copy; Tobias Bieniek</li>
+							<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank">Leaflet.loading</a> &copy; Eric Brelsford</li>
+							<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton" target="_blank">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
+							<li><a href="https://github.com/perliedman/leaflet-control-geocoder" target="_blank">leaflet-control-geocoder</a> &copy; Per Liedman</li>
+							<li><a href="https://www.mapbox.com/mapbox.js/plugins/#leaflet-locatecontrol" target="_blank">leaflet-locatecontrol</a> &copy; Mapbox</li>
+							<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
+							<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael Lawrence Evans</li>
+							<li><a href="https://github.com/Leaflet/Leaflet.label" target="_blank">Leaflet.label</a> &copy; Leaflet</li>
+							<li><a href="https://github.com/ypid/opening_hours.js" target="_blank">opening_hours.js</a> &copy; Robin Schneider</li>
+						</ol>
 					</li>
 					<li><a href="https://fortawesome.github.io/Font-Awesome/" target="_blank">Font-Awesome</a> &copy; Dave Gandy</li>
-					<li><a href="http://mapicons.nicolasmollet.com/" target="_blank">Map Icons</a> &copy; Nicolas Mollet</li>
+					<li><a href="https://mapicons.mapsmarker.com" target="_blank">Map Icons Collection</a> &copy; Nicolas Mollet</li>
 					<li><a href="http://jquery.com" target="_blank">jQuery</a> &copy; The jQuery Foundation</li>
+					<li><a href="http://jqueryui.com" target="_blank">jQuery UI</a> &copy; jQuery UI Team</li>
+					<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
 					<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
 					<li><a href="https://github.com/janl/mustache.js" target="_blank">Mustache</a> &copy; Jan Lehnardt</li>
 				</ul>
@@ -187,13 +198,15 @@
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<script src="assets/js/jquery-ui.min.js"></script>
+	<script src="assets/js/jquery.easy-autocomplete.min.js"></script>
     <script src="assets/js/leaflet.label.js"></script>
     <script src="assets/js/leaflet-sidebar.js"></script>
 	<script src="assets/js/Control.Geocoder.js"></script>
     <script src="assets/js/Control.Loading.js"></script>
 	<script src="assets/js/easy-button.js"></script>
     <script src="https://cdn.jsdelivr.net/leaflet.locatecontrol/0.52.0/L.Control.Locate.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
     <script src="assets/js/URI.js"></script>
 	<script src="assets/js/suncalc.js"></script>
 	<script src="assets/js/opening_hours.js"></script>
@@ -203,6 +216,7 @@
     <script src="assets/js/tags-parsers.js"></script>
     <script src="assets/js/pois-type.js"></script>
     <script src="assets/js/site.js"></script>
+	<script src="assets/js/autocomplete.js"></script>
 	
 	<!-- GoogleAnalytics -->
 	<script>
@@ -213,5 +227,6 @@
 		ga('create', 'UA-79665109-1', 'auto');
 		ga('send', 'pageview');
 	</script>  
+
  </body>
 </html>

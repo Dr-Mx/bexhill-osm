@@ -91,14 +91,13 @@
 	overflow-y: auto; }
 .sidebar-left .sidebar-content {
 	left: 40px;
-    right: 0; }
-  .sidebar-right .sidebar-content {
-    left: 0;
-    right: 40px; }
-  .sidebar.collapsed > .sidebar-content {
+	right: 0; }
+.sidebar-right .sidebar-content {
+	left: 0;
+	right: 40px; }
+.sidebar.collapsed > .sidebar-content {
     overflow-y: hidden; }
-	
-	@media (min-width: 768px) {
+@media (min-width: 1199px) {
 	.sidebar-left .sidebar-content {
 		left: 55px; }
 	.sidebar-right .sidebar-content {

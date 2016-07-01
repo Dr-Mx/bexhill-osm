@@ -92,10 +92,10 @@ L.easyButton({
 		title:'Get map link',
 		onClick:function(){
 			var link = get_permalink();
-				if (link.indexOf('&pois') >= 0) {
-					window.prompt('Copy permanent map link:', link);
-				}
-				else alert('Please select a POI');
+			if (link.indexOf('&pois') >= 0) {
+				window.prompt('Copy permanent map link:', link);
+			}
+			else alert('Please select a POI');
 		}
 	}]
 }).addTo(map);
@@ -203,6 +203,7 @@ function callback(data) {
 			if (type == 'parking') {
 				if (e.tags.access == 'private') type = '';
 				if (e.tags.access == 'customers') type = '';
+				if (e.tags.access == 'permissive') type = '';
 			}
 		}
 		if (e.tags.tourism) {
@@ -225,6 +226,10 @@ function callback(data) {
 		}
 		if (e.tags.landuse) {
 			if (type == '') type = e.tags.landuse;
+			// Hide non-public grounds
+			if (type == 'recreation_ground') {
+				if (e.tags.access == 'private') type = '';
+			}
 		}
 		if (e.tags.leisure) {
 			if (type == '') type = e.tags.leisure;
@@ -296,7 +301,7 @@ function build_overpass_query() {
 }
 
 function clear_map() {
-	$('input:checkbox').removeAttr('checked');
+	$('input:checkbox').prop("checked", false);
 	setting_changed();
 }
 
@@ -311,7 +316,7 @@ function setting_changed(newcheckbox) {
 		}
 		update_permalink();
 	}
-	else $('[data-key=' + newcheckbox + ']').attr('checked', false);
+	else $('[data-key=' + newcheckbox + ']').prop('checked', false);
 }
 
 function show_pois_checkboxes(tabName) {
@@ -327,7 +332,7 @@ function show_pois_checkboxes(tabName) {
 				'<div class="poi-checkbox"> \
 					<label> \
 						<img src="assets/img/icons/{{icon}}.png"></img> \
-						<input type="checkbox" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
+						<input type="checkbox" name="{{name}}" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
 					</label> \
 				</div>',
 				{key: poi, name: pois[poi].name, icon: pois[poi].iconName, tabname: pois[poi].tabName}
@@ -353,17 +358,21 @@ if (uri.hasQuery('pois')) {
 	if (!$.isArray(selectedPois)) {
 			// the last poi has a "/" on it because leaflet-hash
 			poi = selectedPois.replace('/', '');
-			$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').attr('checked', true);
+			$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').prop('checked', true);
 		}
 	else {
 		for (i = 0; i < selectedPois.length; i++) {
 			// the last poi has a "/" on it because leaflet-hash
 			poi = selectedPois[i].replace('/', '');
-			$('#pois' + uri.search(true).tab + ' input[data-key='+ poi + ']').attr('checked', true);
+			$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').prop('checked', true);
 		}
 	}
 	sidebar.open(uri.search(true).tab);
-	sidebar.close();
+	// Highlight checkbox or hide sidebar for mobile users
+	if ($(window).width() > 768) {
+		$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').parent().parent().parent().effect("highlight", {}, 3000);
+	}
+	else sidebar.close();
     setting_changed();
 }
 else {
@@ -373,8 +382,6 @@ else {
 map.setMaxBounds([[50.82,0.3], [50.88,0.525]]);
 
 var query = '';
-build_overpass_query();
-
 function show_overpass_layer() {
     if (query == '' || query == '();out center;') {
 		console.log('There is nothing selected to filter by.');
