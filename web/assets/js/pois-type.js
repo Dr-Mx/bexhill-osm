@@ -45,6 +45,14 @@ var pois = {
 	tagKeyword: ['bakery', 'bread', 'cake']
     },
 
+    confectionery: {
+	name: 'Confectionery',
+	query: '[shop=confectionery]',
+	iconName: 'patisserie',
+	tabName: 'shops',
+	tagKeyword: ['sugar', 'sweets', 'confectionery', 'cake']
+    },
+
     butcher: {
 	name: 'Butcher',
 	query: '[shop=butcher]',
@@ -117,12 +125,28 @@ var pois = {
 	tagKeyword: ['doityourself', 'hardware', 'diy', 'tools']
     },
 
+    religion: {
+	name: 'Religion',
+	query: '[shop=religion]',
+	iconName: 'prayer',
+	tabName: 'shops',
+	tagKeyword: ['religion']
+    },
+
     clothes: {
 	name: 'Clothes',
 	query: '[shop=clothes]',
 	iconName: 'clothers_female',
 	tabName: 'shops',
 	tagKeyword: ['clothing', 'boutique']
+    },
+
+    tailor: {
+	name: 'Tailor',
+	query: '[shop=tailor]',
+	iconName: 'tailor',
+	tabName: 'shops',
+	tagKeyword: ['clothing', 'tailor']
     },
 
     charity: {
@@ -141,6 +165,14 @@ var pois = {
 	tagKeyword: ['shoes', 'footwear']
     },
 	
+    houseware: {
+	name: 'House & Decor',
+	query: '["shop"~"houseware|interior_decoration"]',
+	iconName: 'kitchen',
+	tabName: 'shops',
+	tagKeyword: ['interior-decoration', 'houseware']
+    },
+
     furniture: {
 	name: 'Furniture',
 	query: '[shop=furniture]',
@@ -230,7 +262,7 @@ var pois = {
     },
 	
     dry_cleaning: {
-	name: 'Laundry & Dry-Cleaner',
+	name: 'Laundry & Dry-Clnr',
 	query: '["shop"~"dry_cleaning|laundry"]',
 	iconName: 'laundromat',
 	tabName: 'shops',
@@ -246,7 +278,7 @@ var pois = {
     },
 	
     florist: {
-	name: 'Florist & Garden Centre',
+	name: 'Florist & Garden',
 	query: '["shop"~"florist|garden_centre"]',
 	iconName: 'garden',
 	tabName: 'shops',
@@ -292,6 +324,14 @@ var pois = {
 	tabName: 'shops',
 	tagKeyword: ['crafts', 'photographer', 'handicraft', 'models', 'art'],
 	tagParser: craft_parser
+    },
+
+    frame: {
+	name: 'Picture Framing',
+	query: '[shop=frame]',
+	iconName: 'frame',
+	tabName: 'shops',
+	tagKeyword: ['picture-framing', 'artwork-framing']
     },
 
     gift: {
@@ -394,7 +434,7 @@ var pois = {
 
     school: {
 	name: 'Education',
-	query: '[amenity~"school|college"]',
+	query: '["amenity"~"school|college"]',
 	iconName: 'school',
 	tabName: 'amenities',
 	tagKeyword: ['school', 'college', 'education'],
@@ -414,16 +454,16 @@ var pois = {
 	query: '[amenity=place_of_worship]',
 	iconName: 'church-2',
 	tabName: 'amenities',
-	tagKeyword: ['church', 'worship', 'prayer', 'god'],
+	tagKeyword: ['church', 'worship', 'prayer', 'religion'],
 	tagParser: worship_parser
     },
 
     social_facility: {
 	name: 'Social-Facility',
-	query: '[amenity~"social_facility|retirement_home"]',
+	query: '["amenity"~"social_facility|retirement_home"]',
 	iconName: 'social',
 	tabName: 'amenities',
-	tagKeyword: ['retirement-home', 'nursing-home', 'social-facility', 'sheltered-housing', 'old-people']
+	tagKeyword: ['retirement-home', 'nursing-home', 'social-facility', 'sheltered-housing']
     },
 
     events_venue: {
@@ -679,7 +719,7 @@ var pois = {
 
     healthcare: {
 	name: 'Healthcare',
-	query: '[healthcare~"."]',
+	query: '["healthcare"~"."]',
 	iconName: 'medicalstore',
 	tabName: 'services',
 	tagKeyword: ['healthcare', 'medical', 'therapy', 'clinic', 'chiropractic', 'osteopathy'],
@@ -692,6 +732,14 @@ var pois = {
 	iconName: 'drugstore',
 	tabName: 'services',
 	tagKeyword: ['pharmacy', 'chemist', 'drugstore']
+    },
+	
+	mobility: {
+	name: 'Mobility & Hearing',
+	query: '["shop"~"mobility|hearing_aids"]',
+	iconName: 'mobility',
+	tabName: 'services',
+	tagKeyword: ['mobility', 'wheelchair', 'hearing', 'disability']
     },
 	
     defibrillator: {
@@ -746,7 +794,7 @@ var pois = {
 	
 	accountant: {
 	name: 'Accountant',
-	query: '[office~"accountant|financial"]',
+	query: '["office"~"accountant|financial"]',
 	iconName: 'coins',
 	tabName: 'services',
 	tagKeyword: ['accountant', 'financial', 'money']
@@ -772,7 +820,7 @@ var pois = {
 	
     park: {
 	name: 'Park',
-	query: '[leisure~"park|common"]',
+	query: '["leisure"~"park|common"]',
 	iconName: 'urbanpark',
 	tabName: 'leisure',
 	tagKeyword: ['park', 'common']
@@ -894,7 +942,7 @@ var pois = {
 
     historic: {
 	name: 'Historical',
-	query: '[historic~"."]',
+	query: '["historic"~"."]',
 	iconName: 'ruins-2',
 	tabName: 'leisure',
 	tagKeyword: ['tourism', 'hisorical', 'memorial', 'sight-seeing'],
@@ -903,7 +951,7 @@ var pois = {
 
     listed_status: {
 	name: 'Heritage-Listed',
-	query: '[listed_status~"."]',
+	query: '["listed_status"~"."]',
 	iconName: 'house',
 	tabName: 'leisure',
 	tagKeyword: ['tourism', 'listed-building', 'historic', 'sight-seeing'],

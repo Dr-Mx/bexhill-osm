@@ -97,7 +97,7 @@
 	right: 40px; }
 .sidebar.collapsed > .sidebar-content {
     overflow-y: hidden; }
-@media (min-width: 1199px) {
+@media (min-width: 768px) {
 	.sidebar-left .sidebar-content {
 		left: 55px; }
 	.sidebar-right .sidebar-content {
@@ -111,15 +111,12 @@
   padding: 10px 20px; }
 .sidebar-pane.active {
 	display: block; }
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px) and (max-width: 1199px) {
 	.sidebar-pane {
 		min-width: 265px; } }
-@media (min-width: 992px) and (max-width: 1199px) {
-	.sidebar-pane {
-		min-width: 350px; } }
 @media (min-width: 1200px) {
 	.sidebar-pane {
-		min-width: 410px; } }
+		min-width: 405px; } }
 
 .sidebar-header {
 	margin: -10px -20px 0;

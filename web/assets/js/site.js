@@ -223,6 +223,8 @@ function callback(data) {
 			if (type == 'laundry') type = 'dry_cleaning';
 			if (type == 'garden_centre') type = 'florist';
 			if (type == 'tyres') type = 'car_repair';
+			if (type == 'hearing_aids') type = 'mobility';
+			if (type == 'interior_decoration') type = 'houseware';
 		}
 		if (e.tags.landuse) {
 			if (type == '') type = e.tags.landuse;
@@ -280,10 +282,11 @@ function callback(data) {
 
 		if (poi.tagParser) var markerPopup = poi.tagParser(e);
 		else var markerPopup = generic_poi_parser(e, poi.name);
-		var customOptions =
-			{
-			'maxWidth': '350',
-			}
+		
+		// set width of popup on screensize
+		if ($(window).width() > 500) var customOptions  = { 'maxWidth': '350', }
+		else var customOptions = { 'maxWidth': '250', }
+		
 		marker.bindPopup(markerPopup, customOptions);
 		marker.addTo(this.instance);
 	}

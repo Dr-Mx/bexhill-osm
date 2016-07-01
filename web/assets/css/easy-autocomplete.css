@@ -19,7 +19,7 @@
   color: #555;
   float: none;
   padding: 6px 12px;
-  width: 250px;
+  width: 205px;
 }
 @media (min-width: 1199px) {
     .easy-autocomplete input {
