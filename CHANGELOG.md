@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## Find Interest Input
+
+**Date:** 01/07/2016
+
+Updated js
+ - jQuery 3.0.0
+ 
+Added js
+ - jQuery UI
+ - EasyAutocomplete
+ 
+Site changes
+ - New 'find interest' input that finds POIs based on keywords
+ - Checkboxes briefly highlight when selected by 'find interest' or returning from link
+ - Smaller screen devices hide sidebar instead of highlighting
+
+
 ## New Fork Bexhill-OSM
 
 **Date:** 22/06/2016
@@ -12,7 +29,7 @@ Updated js
  - URI.js 1.18.1
  - Mustache 2.2.1
  - leaflet-locatecontrol 0.52.0
- - JQuery 1.8.0
+ - jQuery 1.8.0
 
 Added js
  - opening_hours.js
