@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## opening_hours.js update
+
+**Date:** 05/07/2016
+
+Updated js
+ - opening_hours.js (now remote hosted)
+
+Site changes
+ - Fixed some POIs not parsing title tag correctly
+ - Top/bottom jumps links on all POI tabs (easier for smaller mobile devices)
+ 
 ## Find Interest Input
 
 **Date:** 01/07/2016
