@@ -504,7 +504,7 @@ var pois = {
 	query: '[amenity=fast_food]',
 	iconName: 'fastfood',
 	tabName: 'amenities',
-	tagKeyword: ['fast-food', 'food', 'eat', 'burger', 'chips', 'kebab', 'pizza'],
+	tagKeyword: ['fast-food', 'eat', 'burger', 'chips', 'kebab', 'pizza'],
 	tagParser: food_parser
     },
 

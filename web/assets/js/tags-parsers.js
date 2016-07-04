@@ -142,26 +142,26 @@ function generic_yes_no_tag_parser(element, tag, tagName, iconName) {
 
 function generic_poi_parser(element, titlePopup) {
     return parse_tags(
-	element,
-	titlePopup,
-	[]
+		element,
+		titlePopup,
+		[]
     );
 }
 
-function school_parser(element) {
+function school_parser(element, titlePopup) {
 	return parse_tags(
 		element,
-		'School' || 'College',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'ref:edubase', label: 'EduBase Ref', iconName: 'graduation-cap'},
 		]
 	);
 }
 
-function worship_parser(element) {
+function worship_parser(element, titlePopup) {
 	return parse_tags(
 		element,
-		'Place of Worship',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'religion', label: 'Religion', iconName: 'dot-circle-o'},
 			{callback: generic_tag_parser, tag: 'denomination', label: 'Denomination', iconName: 'dot-circle-o'},
@@ -170,10 +170,10 @@ function worship_parser(element) {
 	);
 }
 
-function food_parser(element) {
+function food_parser(element, titlePopup) {
 	return parse_tags(
 		element,
-		'Cafe' || 'Fast Food' || 'Restaurant',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'cuisine', label: 'Cuisine', iconName: 'cutlery'},
 			{callback: generic_tag_parser, tag: 'takeaway', label: 'Takeaway', iconName: 'shopping-bag'},
@@ -186,10 +186,10 @@ function food_parser(element) {
 	);
 }
 
-function taxi_parser(element) {
+function taxi_parser(element, titlePopup) {
 	return parse_tags(
 		element,
-		'Taxi',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'capacity', label: 'Taxi Rank Capacity', iconName: 'taxi'},
 
@@ -197,10 +197,10 @@ function taxi_parser(element) {
 	);
 }		
 
-function recycle_parser(element) {
+function recycle_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Recycling',
+		titlePopup,
 		[
 			{callback: generic_yes_no_tag_parser, tag: 'recycling:batteries', label: 'Batteries', iconName: 'recycle'},
 			{callback: generic_yes_no_tag_parser, tag: 'recycling:books', label: 'Books', iconName: 'recycle'},
@@ -222,10 +222,10 @@ function recycle_parser(element) {
 	);
 }
 
-function fuel_parser(element) {
+function fuel_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Fuel',
+		titlePopup,
 		[
 			{callback: generic_yes_no_tag_parser, tag: 'fuel:diesel', label: 'Diesel', iconName: 'tint'},
 			{callback: generic_yes_no_tag_parser, tag: 'fuel:octane_95', label: 'Octane 95', iconName: 'tint'},
@@ -233,10 +233,10 @@ function fuel_parser(element) {
 	);
 }
 
-function carpark_parser(element) {
+function carpark_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Car Parking',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'capacity', label: 'Spaces', iconName: 'car'},
 			{callback: generic_tag_parser, tag: 'capacity:disabled', label: 'Disabled Spaces', iconName: 'wheelchair'},
@@ -245,10 +245,10 @@ function carpark_parser(element) {
 	);
 }
 
-function bikepark_parser(element) {
+function bikepark_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Bicycle Parking',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'bicycle_parking', label: 'Type', iconName: 'lock'},
 			{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'bicycle'},
@@ -257,20 +257,20 @@ function bikepark_parser(element) {
 	);
 }
 
-function hospital_parser(element) {
+function hospital_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Hospital',
+		titlePopup,
 		[
 			{callback: generic_yes_no_tag_parser, tag: 'emergency', label: 'Emergency', iconName: 'ambulance'},
 		]
 	);
 }
 
-function healthcare_parser(element) {
+function healthcare_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Healthcare',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'healthcare', label: 'Healthcare Type', iconName: 'user-md'},
 			{callback: generic_tag_parser, tag: 'healthcare:speciality', label: 'Healthcare Speciality', iconName: 'user-md'},
@@ -278,20 +278,20 @@ function healthcare_parser(element) {
 	);
 }
 
-function defib_parser(element) {
+function defib_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Defibrillator',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'location-arrow'},
 		]
 	);
 }
 
-function toilet_parser(element) {
+function toilet_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Toilets',
+		titlePopup,
 		[
 			{callback: generic_yes_no_tag_parser, tag: 'female', label: 'Female', iconName: 'female'},
 			{callback: generic_yes_no_tag_parser, tag: 'male', label: 'Male', iconName: 'male'},
@@ -300,30 +300,30 @@ function toilet_parser(element) {
 	);
 }
 
-function club_parser(element) {
+function club_parser(element, titlePopup) {
 	return parse_tags(
 		element,
-		'Club',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'club', label: 'Club Type', iconName: 'info'},
 		]
 	);
 }
 
-function craft_parser(element) {
+function craft_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Craft',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'craft', label: 'Craft Type', iconName: 'shopping-bag'},
 		]
 	);
 }
 
-function artwork_parser(element) {
+function artwork_parser(element, titlePopup) {
 	return parse_tags(
 		element,
-		'Public Artwork',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'artwork_type', label: 'Artwork Type', iconName: 'paint-brush'},
 			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist Name', iconName: 'user'},
@@ -333,10 +333,10 @@ function artwork_parser(element) {
 	);
 }
 
-function historic_parser(element) {
+function historic_parser(element, titlePopup) {
 	return parse_tags(
 		element,
-		'Historical',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'historic', label: 'Historic Type', iconName: 'bank'},
 			{callback: generic_tag_parser, tag: 'memorial', label: 'Memorial Type', iconName: 'bank'},
@@ -367,10 +367,10 @@ function listedhe_parser(element, tag, tagName, iconName) {
 	return markerPopup;
 }	
 
-function listed_parser(element) {
+function listed_parser(element, titlePopup) {
     return parse_tags(
 		element,
-		'Heritage Listed',
+		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'listed_status', label: 'Listed Status', iconName: 'home'},
 			{callback: listedhe_parser},
@@ -383,23 +383,27 @@ function listed_parser(element) {
 function opening_hours_parser(element) {
     try
     {
+		var opening_hours = require('opening_hours');
 		var hours = element.tags["opening_hours"];
-		var oh = new opening_hours(hours);
-        var state = oh.getStateString();
-		var nextchange = oh.getNextChange();
-		if (state == "open") {
-			return "<span style='color:green' class='fa fa-circle'></span> <b>Opening hours:</b> " + hours + "<p>";
+		var oh = new opening_hours(hours, {}, { 'locale': 'en' });
+        var state = oh.getState();
+		console.log(state);
+		var prettified_value = oh.prettifyValue({
+			conf: { locale: 'en' },
+		});
+		if (state == true) {
+			return "<span style='color:green' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value + "<p>";
 		}
-		else if (state == "close") {
-			return "<span style='color:red' class='fa fa-circle'></span> <b>Opening hours:</b> " + hours + "<p>";
+		else if (state == false) {
+			return "<span style='color:red' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value + "<p>";
 		}
 		else if (state == "undefined") {
-			return "<span style='color:gray' class='fa fa-circle'></span> <b>Opening hours:</b> " + hours + "<p>";
+			return "<span style='color:gray' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value + "<p>";
 		}
 	}
     catch(err)
     {
-        //console.log("ERROR: cannot parse hours: " + hours);
+		//console.log("ERROR: cannot parse hours: " + hours);
 		return "";
     }
 }
@@ -407,10 +411,10 @@ function opening_hours_parser(element) {
 function parse_tags(element, titlePopup, functions) {
     var markerPopup = '';
     markerPopup += Mustache.render(
-	titleTmpl,
-	{title: titlePopup}
+		titleTmpl,
+		{title: titlePopup}
+		
     );
-
     functions = [
 		{callback: generic_tag_parser, tag: 'name', label: 'Name'},
 		{callback: generic_tag_parser, tag: 'operator', label: 'Operator', iconName: 'building-o'},
@@ -422,12 +426,12 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: wikipedia_parser},
 		{callback: generic_yes_no_tag_parser, tag: 'internet_access', label: 'Internet Access', iconName: 'wifi'},
 		{callback: generic_yes_no_tag_parser, tag: 'wheelchair', label: 'Wheelchair Access', iconName: 'wheelchair'},
+		{callback: generic_yes_no_tag_parser, tag: 'dog', label: 'Dog Friendly', iconName: 'paw'},
 		{callback: generic_tag_parser, tag: 'stars', label: 'Stars', iconName: 'star'},
 		{callback: generic_tag_parser, tag: 'information', label: 'Info Type', iconName: 'map-signs'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
 		{callback: opening_hours_parser},
     ].concat(functions)
-
     for (var i = 0; i < functions.length; i++) {
 		var data = functions[i]
 		if (data.tag && data.label) {
@@ -438,6 +442,5 @@ function parse_tags(element, titlePopup, functions) {
 			markerPopup += data.callback(element);
 		}
     }
-
     return markerPopup;
 }

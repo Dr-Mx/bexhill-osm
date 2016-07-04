@@ -280,7 +280,7 @@ function callback(data) {
 			);
 		}
 
-		if (poi.tagParser) var markerPopup = poi.tagParser(e);
+		if (poi.tagParser) var markerPopup = poi.tagParser(e, poi.name);
 		else var markerPopup = generic_poi_parser(e, poi.name);
 		
 		// set width of popup on screensize
@@ -326,6 +326,7 @@ function show_pois_checkboxes(tabName) {
     // build the content for the sidebar pane
 	var i = 0;
     var content = '';
+	content += '<div align="right"><a name="top' + tabName + '" href="#bottom' + tabName + '">| <span class="fa fa-arrow-down"></span> |</a></div>'
     content += '<table style="width:100%">';
 	for (poi in pois) {
 		if (pois[poi].tabName == tabName) {
@@ -347,6 +348,7 @@ function show_pois_checkboxes(tabName) {
 		}
     }
     content += '</table>';
+	content += '<div align="right"><a name="bottom' + tabName + '" href="#top' + tabName + '">| <span class="fa fa-arrow-up"></span> |</a></div>'
     $('#pois' + tabName).append(content);
 }
 show_pois_checkboxes('shops');
