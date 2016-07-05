@@ -186,6 +186,19 @@ function food_parser(element, titlePopup) {
 	);
 }
 
+function post_parser(element, titlePopup) {
+	return parse_tags(
+		element,
+		titlePopup,
+		[
+			{callback: generic_tag_parser, tag: 'post_box:type', label: 'Type', iconName: 'archive'},
+			{callback: generic_tag_parser, tag: 'ref', label: 'Post-Box Ref', iconName: 'archive'},
+			{callback: generic_tag_parser, tag: 'royal_cypher', label: 'Royal Cypher', iconName: 'archive'},
+			{callback: generic_tag_parser, tag: 'collection_times', label: 'Collection Times', iconName: 'clock-o'},
+		]
+	);
+}
+
 function taxi_parser(element, titlePopup) {
 	return parse_tags(
 		element,
@@ -387,7 +400,6 @@ function opening_hours_parser(element) {
 		var hours = element.tags["opening_hours"];
 		var oh = new opening_hours(hours, {}, { 'locale': 'en' });
         var state = oh.getState();
-		console.log(state);
 		var prettified_value = oh.prettifyValue({
 			conf: { locale: 'en' },
 		});

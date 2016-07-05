@@ -557,6 +557,15 @@ var pois = {
 	tagKeyword: ['telephone-box', 'phone-box']
     },
 
+    post_box: {
+	name: 'Post-Box & Office',
+	query: '[amenity~"post_box|post_office"]',
+	iconName: 'postal',
+	tabName: 'amenities',
+	tagKeyword: ['post-box', 'letter', 'mail', 'post-office'],
+	tagParser: post_parser
+    },
+
     recycling: {
 	name: 'Recycling',
 	query: '[amenity=recycling]',

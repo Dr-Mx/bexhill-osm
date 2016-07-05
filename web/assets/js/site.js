@@ -190,7 +190,6 @@ function callback(data) {
 			new L.LatLng(e.lat, e.lon) :
 			new L.LatLng(e.center.lat, e.center.lon);
 
-		// TODO: improve this
 		var type = ''
 		if (e.tags.amenity) {
 			if (type == '') type = e.tags.amenity;
@@ -199,6 +198,7 @@ function callback(data) {
 			if (type == 'nightclub') type = 'bar';
 			if (type == 'college') type = 'school';
 			if (type == 'retirement_home') type = 'social_facility';
+			if (type == 'post_office') type = 'post_box';
 			// Hide non-public parking
 			if (type == 'parking') {
 				if (e.tags.access == 'private') type = '';
@@ -265,6 +265,8 @@ function callback(data) {
 			iconUrl: 'assets/img/icons/' + poi.iconName + '.png',
 			iconSize: [32, 37],
 			iconAnchor: [18.5, 35],
+			shadowUrl: 'assets/img/icons/000shadow.png',
+			shadowAnchor: [17, 27],
 			popupAnchor: [0, -27]
 		});
 		var marker = L.marker(pos, {
