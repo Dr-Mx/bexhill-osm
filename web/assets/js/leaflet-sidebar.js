@@ -124,7 +124,8 @@ L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
                 L.DomUtil.addClass(child, 'active');
             else if (L.DomUtil.hasClass(child, 'active')) {
                 L.DomUtil.removeClass(child, 'active');
-				clear_map();
+				// !! clear checkboxes if moving to another poi tab !!
+				if (id == 'shops' || id == 'amenities' || id == 'services' || id == 'leisure') clear_map();
 			}
         }
 

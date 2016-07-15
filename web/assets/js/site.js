@@ -1,16 +1,54 @@
+// map bounds
+var mapleft = '0.3000';
+var maptop = '50.8200';
+var mapright = '0.5350';
+var mapbottom = '50.8800';
+
+// my mapbox api key
+var mapboxkey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
+
 // spinner
 var spinner = 0;
 
 // Don't scape HTML string in Mustache
 Mustache.escape = function (text) { return text; }
 
+// https://github.com/aratcliffe/Leaflet.contextmenu
+var map = new L.map('map', {
+	contextmenu: true,
+	contextmenuWidth: 140,
+	contextmenuItems: [{
+		text: 'Show coordinates',
+		callback: showCoordinates
+	}, {
+		text: 'Center map here',
+		callback: centerMap
+	}, '-', {
+		text: '<i class="fa fa-map-marker"></i>&nbsp; Start walk',
+		callback: walkStart
+	}, {
+		text: '<i class="fa fa-map-marker"></i>&nbsp; End walk',
+		callback: walkFinish
+	}]
+}); 
+function showCoordinates (e) {
+	alert(e.latlng);
+}
+function centerMap (e) {
+	map.panTo(e.latlng);
+}
+function walkStart (e) {
+	sidebar.open('walking');
+	routingControl.spliceWaypoints(0, 1, e.latlng);
+}
+function walkFinish (e) {
+	sidebar.open('walking');
+	routingControl.spliceWaypoints(routingControl.getWaypoints().length - 1, 1, e.latlng);
+}
+
 // https://github.com/Leaflet/Leaflet
-var map = new L.Map('map');
 var iconLayer = new L.LayerGroup();
 map.addLayer(iconLayer);
-
-var attribution = 'Data: &copy; Contributors <a href="http://openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>';
-
 var tileLayerData = {
     std: {
 		name: 'OpenStreetMap (standard)',
@@ -20,53 +58,53 @@ var tileLayerData = {
     osmfr: {
 		name: 'OpenStreetMap (france)',
 		url: 'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
-		attribution: 'Tiles: <a href="http://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>',
+		attribution: '<a href="http://openstreetmap.fr/" target="_blank">OSM France</a>',
 		zoom: '19'
     },
     cycle: {
-		name: 'Cycle Map',
+		name: 'OpenCycleMap',
 		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
-		attribution: 'Tiles: <a href="http://thunderforest.com/opencyclemap/" target="_blank">ThunderForest</a>',
-		zoom: '19'
+		attribution: '<a href="http://thunderforest.com/maps/opencyclemap/" target="_blank">ThunderForest</a>',
+		zoom: '20'
     },
-    transport: {
-		name: 'Transport Map',
-		url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-		attribution: 'Tiles: <a href="http://thunderforest.com/transport/" target="_blank">ThunderForest</a>',
-		zoom: '19'
+    trnsprt: {
+		name: 'Transport Dark',
+		url: 'https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png',
+		attribution: '<a href="http://thunderforest.com/maps/transport-dark/" target="_blank">ThunderForest</a>',
+		zoom: '20'
     },
-    landscape: {
-		name: 'Landscape',
-		url: 'https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
-		attribution: 'Tiles: <a href="http://thunderforest.com/landscape/" target="_blank">ThunderForest</a>',
-		zoom: '19'
+    matlas: {
+		name: 'Mobile Atlas',
+		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png',
+		attribution: '<a href="http://thunderforest.com/maps/mobile-atlas/" target="_blank">ThunderForest</a>',
+		zoom: '20'
     },
     outdoor: {
 		name: 'Outdoors',
 		url: 'https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
-		attribution: 'Tiles: <a href="http://thunderforest.com/outdoors/" target="_blank">ThunderForest</a>',
-		zoom: '19'
+		attribution: '<a href="http://thunderforest.com/maps/outdoors/" target="_blank">ThunderForest</a>',
+		zoom: '20'
     },
-    lyrk: {
+    opnsrfr: {
 		name: 'OpenMapSurfer',
 		url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
-		attribution: 'Tiles: <a href="http://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
+		attribution: '<a href="http://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
 		zoom: '19'
     },
-    mapboxsat: {
-		name: 'MapBox (satellite)',
+    mbxsat: {
+		name: 'MapBox Satellite',
 		url: 'https://{s}.tiles.mapbox.com/v3/51114u9.kogin3jb/{z}/{x}/{y}.png',
-		attribution: 'Tiles: <a href="http://mapbox.com/" target="_blank">MapBox</a>',
+		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
 		zoom: '19'
     },
-    mapbox: {
-		name: 'Mapbox',
-		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA',
-		attribution: 'Tiles: <a href="http://mapbox.com/" target="_blank">MapBox</a>',
-		zoom: '19'
+    mbxstr: {
+		name: 'Mapbox Streets',
+		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + mapboxkey,
+		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
+		zoom: '20'
     }
 };
-
+var attribution = '&copy; <a href="http://openstreetmap.org/copyright" title="Copyright and License" target="_blank">OpenStreetMap contributors</a>';
 var tileLayers = {};
 for (tile in tileLayerData) {
     var tileAttribution;
@@ -76,7 +114,8 @@ for (tile in tileLayerData) {
 		tileAttribution = tileLayerData[tile].attribution + ' | ' + attribution;
     }
 	else tileAttribution = attribution;
-		tileLayers[tileLayerData[tile].name] = L.tileLayer(
+	tileAttribution += ' | <a href="http://www.openstreetmap.org/note/new#map=16/50.8400/0.4680&layers=N" title="Create a note on OSM" target="_blank"><i>Improve map</i></a>';
+	tileLayers[tileLayerData[tile].name] = L.tileLayer(
 		tileLayerData[tile].url,
 		{maxNativeZoom: tilemaxZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains}
     )
@@ -84,31 +123,20 @@ for (tile in tileLayerData) {
 tileLayers['OpenStreetMap (standard)'].addTo(map);
 L.control.layers(tileLayers).addTo(map);
 
-// https://github.com/cliffcloud/Leaflet.EasyButton
-// Check if POI selected then get permalink
-L.easyButton({
-	states:[{
-		icon:'fa-link',
-		title:'Get map link',
-		onClick:function(){
-			var link = get_permalink();
-			if (link.indexOf('&pois') >= 0) {
-				window.prompt('Copy permanent map link:', link);
-			}
-			else alert('Please select a POI');
-		}
-	}]
-}).addTo(map);
-// Clear map of all info layers
-L.easyButton({
-	states:[{
-		icon:'fa-trash-o',
-		title:'Clear map',
-		onClick:function(){
-			if (map.hasLayer(poly)) { map.removeLayer(poly); }
-			clear_map();
-		}
-	}]
+// https://github.com/domoritz/leaflet-locatecontrol
+L.control.locate({
+	icon: 'fa fa-location-arrow',
+    setView: true,
+    keepCurrentZoomLevel: true,
+    showPopup: false,
+    strings: {
+		title: 'Locate me',
+		popup: 'You are within {distance} {unit} from this point',
+		outsideMapBoundsMsg: 'You appear to be located outside Bexhill.  Come visit!'
+    },
+    onLocationError: function(err) {
+		alert('Sorry, there was an error while trying to locate you.');
+    }
 }).addTo(map);
 
 // https://github.com/perliedman/leaflet-control-geocoder
@@ -117,7 +145,7 @@ L.Control.geocoder({
 	geocoder: L.Control.Geocoder.nominatim({
 		geocodingQueryParams: {
 			bounded: 1,
-			viewbox: '0.3000,50.8200,0.5250,50.8800'
+			viewbox: mapleft + ',' + maptop + ',' + mapright + ',' + mapbottom
 		}
 	}),
 	defaultMarkGeocode: false,
@@ -142,6 +170,33 @@ L.Control.geocoder({
 	map.panTo(center);
 })
 .addTo(map);
+$('.leaflet-control-geocoder-icon').attr('title','Find address');
+
+// https://github.com/cliffcloud/Leaflet.EasyButton
+// Check if POI selected then get permalink
+L.easyButton({
+	states:[{
+		icon:'fa-link',
+		title:'Get map link',
+		onClick:function(){
+			var link = get_permalink();
+			window.prompt('Copy permanent map link:', link);
+		}
+	}]
+}).addTo(map);
+// Clear map of all info layers
+L.easyButton({
+	states:[{
+		icon:'fa-trash',
+		title:'Clear map',
+		onClick:function(){
+			if (map.hasLayer(poly)) { map.removeLayer(poly); }
+			routingControl.setWaypoints([]);
+			$("#accordion" ).accordion({active: false});
+			clear_map();
+		}
+	}]
+}).addTo(map);
 
 // https://github.com/Turbo87/sidebar-v2/
 var sidebar = L.control.sidebar('sidebar').addTo(map);
@@ -154,30 +209,91 @@ window.onhashchange = function() {
     update_permalink();
 }
 
-// https://github.com/domoritz/leaflet-locatecontrol
-L.control.locate({
-    setView: true,
-    keepCurrentZoomLevel: true,
-    showPopup: false,
-    strings: {
-		title: 'Locate me',
-		popup: 'You are within {distance} {unit} from this point',
-		outsideMapBoundsMsg: 'You appear to be located outside Bexhill.  Come visit!'
-    },
-    onLocationError: function(err) {
-		alert('Sorry, there was an error while trying to locate you.');
-    }
-}).addTo(map);
-
 // https://github.com/ebrelsford/Leaflet.loading
 var loadingControl = L.Control.loading({
     separate: true
 });
 map.addControl(loadingControl);
 
+// https://github.com/perliedman/leaflet-routing-machine
+var routingControl = L.Routing.control({
+	units: 'imperial',
+	collapsible: false,
+	fitSelectedRoutes: true,
+	reverseWaypoints: true,
+	router: new L.Routing.mapbox(mapboxkey, {
+		profile: 'mapbox.walking',
+		alternatives: false
+	}),
+	lineOptions: {
+		styles: [{color: 'blue', opacity: 0.4, weight: 5}]
+	},
+	geocoder: L.Control.Geocoder.nominatim({
+		geocodingQueryParams: {
+			bounded: 1,
+			viewbox: mapleft + ',' + maptop + ',' + mapright + ',' + mapbottom
+		}
+	}),
+});
+var routeBlock = routingControl.onAdd(map);	
+document.getElementById('routingControl').appendChild(routeBlock);
+$( "#accordion" ).accordion({
+	heightStyle: "content",
+	collapsible: true,
+	active: false
+});
+
+// https://github.com/pawelczak/EasyAutocomplete
+var poitags = [];
+var category = [];
+var i = 0;
+// Get all tags
+for (poi in pois) {
+	poitags += '"' + pois[poi].tabName + "~" + poi + '": ' + JSON.stringify(pois[poi].tagKeyword) + ', ';
+	category[i] = {listLocation: pois[poi].tabName + '~' + poi, header: pois[poi].tabName + ' - ' + pois[poi].name};
+	i++;
+}
+// Clean up and covert to array
+poitags = poitags.substring(0, poitags.length - 2);
+poitags = JSON.parse('{ ' + poitags + '}');
+// Options for autocomplete
+var options = {
+	data: poitags,
+	minCharNumber: 3,
+	list: {
+		maxNumberOfElements: 10,
+		onChooseEvent: function() {
+			// Find selected items category, split it to get checkbox, then display
+			var z = ($('#autocomplete').getSelectedItemIndex());
+			var catsplit = (document.getElementsByClassName('eac-category')[z].innerText);
+			var catsplit = catsplit.split(" - ");
+			sidebar.open(catsplit[0]);
+			$('#pois' + catsplit[0] + ' input[name="' + catsplit[1] + '"]').prop('checked', true);
+			// Highlight checkbox or hide sidebar for mobile users
+			if ($(window).width() > 768) {
+				$('#pois' + catsplit[0] + ' input[name="' + catsplit[1] + '"]').parent().parent().parent().effect("highlight", {}, 3000);
+			}
+			else sidebar.close();
+			setting_changed();
+			$('#autocomplete').val('');
+	},
+	match: {
+		enabled: true
+		}
+	},
+	categories: [
+		category[0],
+	]
+};
+// Push categories into options array
+for (var x = 1; x < category.length; x++) {
+	options['categories'].push(category[x]);
+}
+$('#autocomplete').easyAutocomplete(options);
+
 // https://github.com/kartenkarsten/leaflet-layer-overpass
 function callback(data) {
-    if (spinner > 0) spinner -= 1;
+	if (spinner > 0) spinner -= 1;
     if (spinner == 0) $('#spinner').hide();
 
     for(i=0; i < data.elements.length; i++) {
@@ -260,7 +376,6 @@ function callback(data) {
 			console.log('Skipping undefined icon: "' + type + '"');
 			continue;
 		}
-		//console.log(pois[type]);
 		var markerIcon  = L.icon({
 			iconUrl: 'assets/img/icons/' + poi.iconName + '.png',
 			iconSize: [32, 37],
@@ -273,7 +388,6 @@ function callback(data) {
 			icon: markerIcon,
 			keyboard: false
 		})
-
 		// show a label next to the icon on mouse hover
 		if (e.tags.name) {
 			marker.bindLabel(
@@ -281,14 +395,11 @@ function callback(data) {
 				{direction: 'auto', offset: [27, -32]}
 			);
 		}
-
 		if (poi.tagParser) var markerPopup = poi.tagParser(e, poi.name);
 		else var markerPopup = generic_poi_parser(e, poi.name);
-		
 		// set width of popup on screensize
 		if ($(window).width() > 500) var customOptions  = { 'maxWidth': '350', }
 		else var customOptions = { 'maxWidth': '250', }
-		
 		marker.bindPopup(markerPopup, customOptions);
 		marker.addTo(this.instance);
 	}
@@ -302,12 +413,13 @@ function build_overpass_query() {
 		query += 'way' + pois[element.dataset.key].query + '(BBOX);';
     });
     query += ');out center;';
-	//console.log(query);
 }
 
 function clear_map() {
 	$('input:checkbox').prop("checked", false);
 	setting_changed();
+    spinner = 0;
+	$('#spinner').hide();
 }
 
 function setting_changed(newcheckbox) {
@@ -318,6 +430,10 @@ function setting_changed(newcheckbox) {
 		if ($('input:checkbox:checked').length > 0) {
 			build_overpass_query();
 			show_overpass_layer();
+		}
+		else {
+			spinner = 0;
+			$('#spinner').hide();
 		}
 		update_permalink();
 	}
@@ -359,14 +475,56 @@ show_pois_checkboxes('services');
 show_pois_checkboxes('leisure');
 show_pois_checkboxes('tourism');
 
+// Suggested walk waypoints
+function suggwalk(walkname) {
+	if (walkname == 'tmt') {
+		routingControl.setWaypoints([
+			L.latLng(50.84055, 0.49145),
+			L.latLng(50.83729, 0.47612),
+			L.latLng(50.83647, 0.46641),
+			L.latLng(50.83730, 0.46616)
+		]);
+	}
+	else if (walkname == '1066') {
+		routingControl.setWaypoints([
+			L.latLng(50.84522, 0.48044),
+			L.latLng(50.84972, 0.48419),
+			L.latLng(50.87800, 0.50009)
+		]);
+	}
+	else if (walkname == 'bc1') {
+		routingControl.setWaypoints([
+			L.latLng(50.84125, 0.47717),
+			L.latLng(50.84515, 0.47961),
+			L.latLng(50.86230, 0.51823),
+			L.latLng(50.84808, 0.52014),
+			L.latLng(50.83780, 0.47645),
+			L.latLng(50.84093, 0.47718)
+		]);
+	}
+	else if (walkname == 'wwh') {
+		routingControl.setWaypoints([
+			L.latLng(50.835675, 0.45892),
+			L.latLng(50.837011, 0.47363)
+		]);
+	}
+}
+function walkinfo() {
+	sidebar.open('leisure');
+	$('#poisleisure input[name="Information"]').prop('checked', true);
+	setting_changed();
+	sidebar.open('walking');
+}
+
+// https://github.com/medialize/URI.js
 var uri = URI(window.location.href);
 if (uri.hasQuery('pois')) {
 	var selectedPois = uri.search(true).pois;
 	if (!$.isArray(selectedPois)) {
-			// the last poi has a "/" on it because leaflet-hash
-			poi = selectedPois.replace('/', '');
-			$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').prop('checked', true);
-		}
+		// the last poi has a "/" on it because leaflet-hash
+		poi = selectedPois.replace('/', '');
+		$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').prop('checked', true);
+	}
 	else {
 		for (i = 0; i < selectedPois.length; i++) {
 			// the last poi has a "/" on it because leaflet-hash
@@ -375,7 +533,7 @@ if (uri.hasQuery('pois')) {
 		}
 	}
 	sidebar.open(uri.search(true).tab);
-	// Highlight checkbox or hide sidebar for mobile users
+	// highlight checkbox or hide sidebar for mobile users
 	if ($(window).width() > 768) {
 		$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').parent().parent().parent().effect("highlight", {}, 3000);
 	}
@@ -383,10 +541,14 @@ if (uri.hasQuery('pois')) {
     setting_changed();
 }
 else {
-	map.setView([50.840, 0.468], 16);
-	sidebar.open('home');
+	// if not returning from a hash, give defaults
+	if (window.location.href.indexOf('#') == -1) map.setView([50.840, 0.468], 16);
+	if (uri.hasQuery('tab')) {
+		sidebar.open(uri.search(true).tab);
+	}
+	else sidebar.open('home');
 }
-map.setMaxBounds([[50.82,0.3], [50.88,0.525]]);
+map.setMaxBounds([[maptop,mapleft], [mapbottom,mapright]]);
 
 var query = '';
 function show_overpass_layer() {
@@ -397,7 +559,8 @@ function show_overpass_layer() {
     var opl = new L.OverPassLayer({
 		query: query,
 		callback: callback,
-		minzoom: 15
+		debug: false,
+		minzoom: 16
     });
     iconLayer.addLayer(opl);
 }

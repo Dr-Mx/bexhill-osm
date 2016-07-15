@@ -24,7 +24,7 @@ hr {
 }
 
 .poi-checkbox {
-	font-size: 14px;
+	font-size: 13px;
 }
 
 .poi-checkbox > label > img {
@@ -65,6 +65,61 @@ hr {
 	padding-top: 5px;
 }
 
+.leaflet-contextmenu {
+    display: none;
+	box-shadow: 0 1px 7px rgba(0,0,0,0.4);
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+    padding: 4px 0;
+    background-color: #fff;
+    cursor: default;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.leaflet-contextmenu a.leaflet-contextmenu-item {
+    display: block;
+    color: #222;
+    font-size: 12px;
+    line-height: 20px;
+    text-decoration: none;
+    padding: 0 12px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    cursor: default;
+    outline: none;
+}
+
+.leaflet-contextmenu a.leaflet-contextmenu-item-disabled {
+    opacity: 0.5;
+}
+
+.leaflet-contextmenu a.leaflet-contextmenu-item.over {
+    background-color: #f4f4f4;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.leaflet-contextmenu a.leaflet-contextmenu-item-disabled.over {
+    background-color: inherit;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+
+.leaflet-contextmenu-icon {
+    margin: 2px 8px 0 0;
+    width: 16px;
+    height: 16px;
+    float: left;
+    border: 0;
+}
+
+.leaflet-contextmenu-separator {
+    border-bottom: 1px solid #ccc;
+    margin: 5px 0;
+}
+
 .leaflet-control-locate
 	a{font-size:1.4em}
 .leaflet-control-locate.active
@@ -72,7 +127,7 @@ hr {
 .leaflet-control-locate.active.following
 	a{color:#20b674}
 
-.leaflet-control-minZoomIndecator {
+.leaflet-control-minZoomIndicator {
 	background-color: rgba(176, 83, 1, 0.8);
 	border-radius: 5px;
 	font-family: Helvetica,Arial,sans-serif;
@@ -82,6 +137,10 @@ hr {
 	z-index: 10;
 }
 
+.leaflet-bottom {
+	margin-bottom: -5px;
+	margin-right: -5px;
+}
 
 #spinner {
 	position: absolute;
@@ -91,10 +150,6 @@ hr {
 	margin-top: -50px;
 	z-index: 10;
 	pointer-events: none;
-}
-
-#developer > .tags > table {
-	font-size: 13px !important;
 }
 
 .leaflet-control-container > div:last-child {
@@ -115,6 +170,28 @@ hr {
 	color: #808080;
 }
 
-a:link { color: #b05301; }
-a:visited { color: #b05301; }
-a:hover { color: #b05301; }
+.ui-accordion .ui-accordion-header {
+	display: block;
+	cursor: pointer;
+	position: relative;
+	margin: 2px 0 0 0;
+	padding: .5em .5em .5em .7em;
+	font-size: 100%;
+}
+.ui-accordion .ui-accordion-content {
+	padding: 0.5em 1.5em;
+	border-top: 0;
+	overflow: auto;
+	height: 100%;
+}
+
+.walkinfo {
+	color: #b05301;
+	cursor: pointer;
+	font-size: 12px !important;
+}
+
+a:link, a:visited, a:hover, .walklink {
+	color: #b05301;
+	cursor: pointer;
+}

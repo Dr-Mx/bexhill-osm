@@ -210,7 +210,7 @@ var pois = {
 	query: '[shop=jewelry]',
 	iconName: 'jewelry',
 	tabName: 'shops',
-	tagKeyword: ['jewelry', 'watches', 'rings', 'necklaces']
+	tagKeyword: ['jewellery', 'watches', 'rings', 'necklaces']
     },
 
     bag: {
@@ -419,7 +419,8 @@ var pois = {
 	query: '[shop=bicycle]',
 	iconName: 'bicycle_shop',
 	tabName: 'shops',
-	tagKeyword: ['bicycle', 'cycling', 'bike']
+	tagKeyword: ['bicycle', 'cycling', 'bike'],
+	tagParser: bike_parser
     },
 
     car: {
@@ -921,7 +922,8 @@ var pois = {
 	query: '[tourism=information]',
 	iconName: 'information',
 	tabName: 'leisure',
-	tagKeyword: ['tourism', 'information', 'sight-seeing']
+	tagKeyword: ['tourism', 'information', 'sight-seeing'],
+	tagParser: info_parser
     },
 
     viewpoint: {

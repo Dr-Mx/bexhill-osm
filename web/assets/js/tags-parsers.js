@@ -69,7 +69,7 @@ function email_parser(element) {
 		);
 		markerPopup += Mustache.render(
 			tagTmpl,
-			{tag: 'Email', value: link, iconName: 'at'}
+			{tag: 'E-mail', value: link, iconName: 'at'}
 		);
     }
     return markerPopup;
@@ -117,10 +117,10 @@ function generic_tag_parser(element, tag, tagName, iconName) {
     var tags = element.tags;
     var markerPopup = '';
     if (tags[tag]) {
-	markerPopup += Mustache.render(
-	    tagTmpl,
-	    {tag: tagName, value: tags[tag], iconName: iconName}
-	);
+		markerPopup += Mustache.render(
+			tagTmpl,
+			{tag: tagName, value: tags[tag], iconName: iconName}
+		);
     }
     return markerPopup;
 }
@@ -146,6 +146,19 @@ function generic_poi_parser(element, titlePopup) {
 		titlePopup,
 		[]
     );
+}
+
+function bike_parser(element, titlePopup) {
+	return parse_tags(
+		element,
+		titlePopup,
+		[
+			{callback: generic_yes_no_tag_parser, tag: 'service:bicycle:rental', label: 'Bike Rental', iconName: 'bicycle'},
+			{callback: generic_yes_no_tag_parser, tag: 'service:bicycle:repair', label: 'Bike Repair', iconName: 'bicycle'},
+			{callback: generic_yes_no_tag_parser, tag: 'service:bicycle:retail', label: 'Bike Sales', iconName: 'bicycle'},
+			{callback: generic_yes_no_tag_parser, tag: 'service:bicycle:second_hand', label: 'Second Hand', iconName: 'bicycle'},
+		]
+	);
 }
 
 function school_parser(element, titlePopup) {
@@ -346,6 +359,17 @@ function artwork_parser(element, titlePopup) {
 	);
 }
 
+function info_parser(element, titlePopup) {
+	return parse_tags(
+		element,
+		titlePopup,
+		[
+			{callback: generic_tag_parser, tag: 'information', label: 'Info Type', iconName: 'map-signs'},
+			{callback: generic_tag_parser, tag: 'ref', label: 'Reference', iconName: 'slack'},
+		]
+	);
+}
+
 function historic_parser(element, titlePopup) {
 	return parse_tags(
 		element,
@@ -440,7 +464,6 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: generic_yes_no_tag_parser, tag: 'wheelchair', label: 'Wheelchair Access', iconName: 'wheelchair'},
 		{callback: generic_yes_no_tag_parser, tag: 'dog', label: 'Dog Friendly', iconName: 'paw'},
 		{callback: generic_tag_parser, tag: 'stars', label: 'Stars', iconName: 'star'},
-		{callback: generic_tag_parser, tag: 'information', label: 'Info Type', iconName: 'map-signs'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
 		{callback: opening_hours_parser},
     ].concat(functions)
