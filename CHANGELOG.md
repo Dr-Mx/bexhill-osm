@@ -1,6 +1,30 @@
 # CHANGELOG
 
-## opening_hours.js update
+## v1.2.0 - Walking routes update
+
+**Date:** 15/07/2016
+
+Updated js
+ - opening_hours.js (reverted to local hosted due to stablility issues)
+ - OverPassLayer.js 1.0.2
+ - URI.js 1.18.1
+ - jQuery UI 1.12.0
+
+Added js
+ - Leaflet.contextmenu
+ - leaflet-routing-machine
+
+Site changes
+ - New walking directions tab
+ - Suggested walks
+ - Map context menu to drop direction markers
+ - Reduced and removed some unnecessary images and icons
+ - Set some global variables at top of site.js
+ - Spinner gets reset on clear map
+ - Url hash now keeps map position and tab
+ - Improve Map - links to osm's add note to map
+
+## v1.1.1 - opening_hours.js update
 
 **Date:** 05/07/2016
 
@@ -11,7 +35,7 @@ Site changes
  - Fixed some POIs not parsing title tag correctly
  - Top/bottom jumps links on all POI tabs (easier for smaller mobile devices)
  
-## Find Interest Input
+## v1.1.0 - Find Interest Input
 
 **Date:** 01/07/2016
 
@@ -28,7 +52,7 @@ Site changes
  - Smaller screen devices hide sidebar instead of highlighting
 
 
-## New Fork Bexhill-OSM
+## v1.0.0 - New Fork Bexhill-OSM
 
 **Date:** 22/06/2016
 
