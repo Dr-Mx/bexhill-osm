@@ -4,11 +4,26 @@ var maptop = '50.8200';
 var mapright = '0.5350';
 var mapbottom = '50.8800';
 
+// default map centre
+var maplat = '50.8400';
+var maplng = '0.4680';
+var mapzoom = '16';
+
+// default map base layer
+var activeTileLayer = 'mbxstr';
+
 // my mapbox api key
 var mapboxkey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
 
 // spinner
 var spinner = 0;
+
+// swipe away sidebar
+$(function(){
+	$(".sidebar-content").on("swipeleft",function(event){
+		if ($(window).width() >= 768) sidebar.close();
+	});
+});
 
 // Don't scape HTML string in Mustache
 Mustache.escape = function (text) { return text; }
@@ -38,11 +53,11 @@ function centerMap (e) {
 	map.panTo(e.latlng);
 }
 function walkStart (e) {
-	sidebar.open('walking');
+	if ($(window).width() >= 768) sidebar.open('walking');
 	routingControl.spliceWaypoints(0, 1, e.latlng);
 }
 function walkFinish (e) {
-	sidebar.open('walking');
+	if ($(window).width() >= 768) sidebar.open('walking');
 	routingControl.spliceWaypoints(routingControl.getWaypoints().length - 1, 1, e.latlng);
 }
 
@@ -50,7 +65,7 @@ function walkFinish (e) {
 var iconLayer = new L.LayerGroup();
 map.addLayer(iconLayer);
 var tileLayerData = {
-    std: {
+    osmstd: {
 		name: 'OpenStreetMap (standard)',
 		url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 		zoom: '19'
@@ -79,22 +94,10 @@ var tileLayerData = {
 		attribution: '<a href="http://thunderforest.com/maps/mobile-atlas/" target="_blank">ThunderForest</a>',
 		zoom: '20'
     },
-    outdoor: {
-		name: 'Outdoors',
-		url: 'https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
-		attribution: '<a href="http://thunderforest.com/maps/outdoors/" target="_blank">ThunderForest</a>',
-		zoom: '20'
-    },
     opnsrfr: {
 		name: 'OpenMapSurfer',
 		url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
 		attribution: '<a href="http://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
-		zoom: '19'
-    },
-    mbxsat: {
-		name: 'MapBox Satellite',
-		url: 'https://{s}.tiles.mapbox.com/v3/51114u9.kogin3jb/{z}/{x}/{y}.png',
-		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
 		zoom: '19'
     },
     mbxstr: {
@@ -102,26 +105,47 @@ var tileLayerData = {
 		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + mapboxkey,
 		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
 		zoom: '20'
+    },
+    mbxoutdr: {
+		name: 'Mapbox Outdoors',
+		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=' + mapboxkey,
+		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
+		zoom: '20'
+    },
+    mbxsat: {
+		name: 'MapBox Satellite',
+		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png?access_token=' + mapboxkey,
+		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
+		zoom: '19'
     }
 };
 var attribution = '&copy; <a href="http://openstreetmap.org/copyright" title="Copyright and License" target="_blank">OpenStreetMap contributors</a>';
 var tileLayers = {};
+var tileList = {name:[], keyname:[]};
 for (tile in tileLayerData) {
     var tileAttribution;
 	var tilemaxZoom = tileLayerData[tile].zoom;
     var subdomains = tileLayerData[tile].subdomains ? tileLayerData[tile].subdomains : 'abc';
-    if (tileLayerData[tile].attribution) {
-		tileAttribution = tileLayerData[tile].attribution + ' | ' + attribution;
-    }
+    if (tileLayerData[tile].attribution) tileAttribution = tileLayerData[tile].attribution + ' | ' + attribution;
 	else tileAttribution = attribution;
-	tileAttribution += ' | <a href="http://www.openstreetmap.org/note/new#map=16/50.8400/0.4680&layers=N" title="Create a note on OSM" target="_blank"><i>Improve map</i></a>';
+	tileAttribution += ' | <a href="http://www.openstreetmap.org/note/new#map=' + mapzoom + '/' + maplat + '/' + maplng + '&layers=N" title="Create a note on OSM" target="_blank"><i>Improve map</i></a>';
 	tileLayers[tileLayerData[tile].name] = L.tileLayer(
 		tileLayerData[tile].url,
 		{maxNativeZoom: tilemaxZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains}
     )
+	// create object array for base layer given from permalink
+	tileList['name'].push(tileLayerData[tile].name)
+	tileList['keyname'].push(tile);
 }
-tileLayers['OpenStreetMap (standard)'].addTo(map);
 L.control.layers(tileLayers).addTo(map);
+tileLayers[tileLayerData[activeTileLayer].name].addTo(map);
+
+// grab active base map name on change
+map.on('baselayerchange', function(e) {
+  for (var x = 0; x < tileList.name.length; x++) {
+	if (e.name == tileList.name[x]) activeTileLayer = tileList.keyname[x];
+  }
+});
 
 // https://github.com/domoritz/leaflet-locatecontrol
 L.control.locate({
@@ -175,8 +199,9 @@ $('.leaflet-control-geocoder-icon').attr('title','Find address');
 // https://github.com/cliffcloud/Leaflet.EasyButton
 // Check if POI selected then get permalink
 L.easyButton({
+	id:'btnpermalink',
 	states:[{
-		icon:'fa-link',
+		icon:'fa fa-link',
 		title:'Get map link',
 		onClick:function(){
 			var link = get_permalink();
@@ -186,8 +211,9 @@ L.easyButton({
 }).addTo(map);
 // Clear map of all info layers
 L.easyButton({
+	id:'btnclearmap',
 	states:[{
-		icon:'fa-trash',
+		icon:'fa fa-trash',
 		title:'Clear map',
 		onClick:function(){
 			if (map.hasLayer(poly)) { map.removeLayer(poly); }
@@ -197,6 +223,11 @@ L.easyButton({
 		}
 	}]
 }).addTo(map);
+// Complete reload on right click
+$('#btnclearmap').bind("contextmenu",function(e){
+	$(location).attr('href', window.location.pathname);
+	return false;
+}); 
 
 // https://github.com/Turbo87/sidebar-v2/
 var sidebar = L.control.sidebar('sidebar').addTo(map);
@@ -219,7 +250,7 @@ map.addControl(loadingControl);
 var routingControl = L.Routing.control({
 	units: 'imperial',
 	collapsible: false,
-	fitSelectedRoutes: true,
+	fitSelectedRoutes: 'smart',
 	reverseWaypoints: true,
 	router: new L.Routing.mapbox(mapboxkey, {
 		profile: 'mapbox.walking',
@@ -270,7 +301,7 @@ var options = {
 			sidebar.open(catsplit[0]);
 			$('#pois' + catsplit[0] + ' input[name="' + catsplit[1] + '"]').prop('checked', true);
 			// Highlight checkbox or hide sidebar for mobile users
-			if ($(window).width() > 768) {
+			if ($(window).width() >= 768) {
 				$('#pois' + catsplit[0] + ' input[name="' + catsplit[1] + '"]').parent().parent().parent().effect("highlight", {}, 3000);
 			}
 			else sidebar.close();
@@ -341,6 +372,7 @@ function callback(data) {
 			if (type == 'tyres') type = 'car_repair';
 			if (type == 'hearing_aids') type = 'mobility';
 			if (type == 'interior_decoration') type = 'houseware';
+			if (type == 'bathroom_furnishing') type = 'houseware';
 		}
 		if (e.tags.landuse) {
 			if (type == '') type = e.tags.landuse;
@@ -368,12 +400,14 @@ function callback(data) {
 		}
 		if (e.tags.listed_status) {
 			if (type == '') type = 'listed_status';
+			if (type == 'shelter') type = 'listed_status';
+			if (type == 'company') type = 'listed_status';
 		}
 
 		var poi = pois[type];
 		// Skip this undefined icon
 		if (!poi) {
-			console.log('Skipping undefined icon: "' + type + '"');
+			if (type != null) console.log('Skipping undefined icon: "' + type + '"');
 			continue;
 		}
 		var markerIcon  = L.icon({
@@ -534,7 +568,7 @@ if (uri.hasQuery('pois')) {
 	}
 	sidebar.open(uri.search(true).tab);
 	// highlight checkbox or hide sidebar for mobile users
-	if ($(window).width() > 768) {
+	if ($(window).width() >= 768) {
 		$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').parent().parent().parent().effect("highlight", {}, 3000);
 	}
 	else sidebar.close();
@@ -542,14 +576,22 @@ if (uri.hasQuery('pois')) {
 }
 else {
 	// if not returning from a hash, give defaults
-	if (window.location.href.indexOf('#') == -1) map.setView([50.840, 0.468], 16);
+	if (window.location.href.indexOf('#') == -1) map.setView([maplat, maplng], mapzoom);
 	if (uri.hasQuery('tab')) {
 		sidebar.open(uri.search(true).tab);
 	}
 	else sidebar.open('home');
 }
+if (uri.hasQuery('bmap')) {
+	var selectedBmap = uri.search(true).bmap;
+	if (!$.isArray(selectedBmap)) {
+		map.removeLayer(tileLayers[tileLayerData[activeTileLayer].name]);
+		tileLayers[tileLayerData[selectedBmap].name].addTo(map);
+		activeTileLayer = selectedBmap;
+	}
+}
 map.setMaxBounds([[maptop,mapleft], [mapbottom,mapright]]);
-
+	
 var query = '';
 function show_overpass_layer() {
     if (query == '' || query == '();out center;') {
@@ -557,22 +599,22 @@ function show_overpass_layer() {
 		return;
     }
     var opl = new L.OverPassLayer({
-		query: query,
+		query: query + '&contact=info@bexhill-osm.org.uk',
 		callback: callback,
 		debug: false,
-		minzoom: 16
+		minzoom: 15
     });
     iconLayer.addLayer(opl);
 }
 
 function get_permalink() {
     var uri = URI(window.location.href);
-    var selectedPois = [];
 	var acttab = $('.sidebar-pane.active').attr('id');
+    var selectedPois = [];
     $('#pois' + acttab + ' input:checked').each(function(i, element) {
 		selectedPois.push(element.dataset.key);
     });
-    uri.query({'tab': acttab, 'pois': selectedPois});
+    uri.query({'bmap': activeTileLayer, 'tab': acttab, 'pois': selectedPois});
     return uri.href();
 }
 

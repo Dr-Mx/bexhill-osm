@@ -1,13 +1,7 @@
 .leaflet-control-geocoder {
 	border-radius: 4px;
 	background: white;
-	min-width: 26px;
-	min-height: 26px;
-}
 
-.leaflet-touch .leaflet-control-geocoder {
-	min-width: 30px;
-	min-height: 30px;
 }
 
 .leaflet-control-geocoder a, .leaflet-control-geocoder .leaflet-control-geocoder-icon {
@@ -41,12 +35,7 @@
 	content: '\f002';
 	font-family: FontAwesome;
 	position: absolute;
-	left: 7px;
-}
-
-.leaflet-touch .leaflet-control-geocoder-icon {
-	width: 30px;
-	height: 30px;
+	left: 6px;
 }
 
 .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon:after, .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon {

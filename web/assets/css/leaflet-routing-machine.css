@@ -1,8 +1,9 @@
 .leaflet-routing-container, .leaflet-routing-error {
-    width: 100%;
+    width: calc(100% - 20px);
     transition: all 0.2s ease;
     box-sizing: border-box;
 	box-shadow: none;
+	border: none !important;
 }
 
 .leaflet-control-container .leaflet-routing-container-hide {
@@ -44,7 +45,7 @@
 
 .leaflet-routing-alt-minimized {
     color: #888;
-    max-height: 64px;
+    max-height: 0px;
     overflow: hidden;
     cursor: pointer;
 }
@@ -102,11 +103,21 @@
     padding: 4px 0px 4px 0px;
 }
 
+
 .leaflet-routing-geocoders input {
     width: 303px;
-    width: calc(100% - 4px);
+    width: calc(100% - 40px);
     line-height: 1.67;
     border: 1px solid #ccc;
+	height: 23px;
+	border-radius: 4px;
+	padding-left: 12px;
+	padding-right: 25px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+}
+
+.leaflet-routing-geocoders input:hover, .leaflet-routing-geocoders input:focus {
+	box-shadow: none;
 }
 
 .leaflet-routing-geocoders button {
@@ -200,7 +211,7 @@
     text-align: center;
     cursor: pointer;
     color: #b05301;
-    background: white;
+    background: transparent;
     padding-bottom: 16px;
     margin-top: -16px;
     padding-right: 4px;

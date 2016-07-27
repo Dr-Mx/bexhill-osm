@@ -101,7 +101,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
   options: {
     debug: false,
     minzoom: 15,
-    endpoint: "http://overpass-api.de/api/",
+    endpoint: "http://api.openstreetmap.fr/oapi/interpreter/",
     query: "(node(BBOX)[organic];node(BBOX)[second_hand];);out qt;",
     callback: function(data) {
       for(var i = 0; i < data.elements.length; i++) {

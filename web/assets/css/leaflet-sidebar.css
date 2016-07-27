@@ -87,8 +87,7 @@
 	top: 0;
 	bottom: 0;
 	background-color: rgba(222, 222, 222, 0.9);
-	overflow-x: hidden;
-	overflow-y: auto; }
+	overflow: hidden; }
 .sidebar-left .sidebar-content {
 	left: 40px;
 	right: 0; }
@@ -128,6 +127,15 @@
 	background-color: #b05301; }
 .sidebar-right .sidebar-header {
 	padding-left: 40px; }
+
+.sidebar-body {
+	position: absolute;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: calc(100% - 55px);
+	width: calc(100% - 30px);
+	padding-right: 10px;
+}
 
 .sidebar-close {
 	position: absolute;

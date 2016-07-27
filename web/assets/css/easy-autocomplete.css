@@ -9,6 +9,7 @@
 
 .easy-autocomplete {
   position: relative;
+  width: calc(100% - 50px) !important;
 }
 .easy-autocomplete input {
   border-color: #ccc;
@@ -19,12 +20,9 @@
   color: #555;
   float: none;
   padding: 6px 12px;
-  width: 205px;
+  width: 100%;
 }
-@media (min-width: 1199px) {
-    .easy-autocomplete input {
-		width: 300px; } 
-}
+
 .easy-autocomplete input:hover, .easy-autocomplete input:focus {
   box-shadow: none;
 }

@@ -1,3 +1,5 @@
+::-ms-clear { display: none; }
+
 body {
 	padding: 0;
 	margin: 0;
@@ -18,17 +20,20 @@ ul {
 }
 
 hr {
-	background-color: #ccc;
 	height: 2px;
+	margin-left: 0;
+	width: calc(100% - 10px);
+	background-color: #ccc;
 	border: 0;
-}
-
-.poi-checkbox {
-	font-size: 13px;
 }
 
 .poi-checkbox > label > img {
 	float: left;
+}
+
+input[type=checkbox] {
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
 }
 
 .poi-checkbox > label > input {
@@ -37,6 +42,7 @@ hr {
 
 .poi-checkbox > label > span {
 	margin-left: 5px;
+	font-family: Tahoma, Arial;
 }
 
 .leaflet-control-loading {
@@ -121,7 +127,7 @@ hr {
 }
 
 .leaflet-control-locate
-	a{font-size:1.4em}
+	a{font-size:1.2em}
 .leaflet-control-locate.active
 	a{color:#2074B6}
 .leaflet-control-locate.active.following
@@ -166,6 +172,12 @@ hr {
 
 .lorem {
 	text-align: center;
+	font-style: italic;
+	color: #808080;
+}
+
+.bitcoin {
+	font-size: 13px;
 	font-style: italic;
 	color: #808080;
 }

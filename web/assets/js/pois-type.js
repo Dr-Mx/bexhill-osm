@@ -167,10 +167,10 @@ var pois = {
 	
     houseware: {
 	name: 'House & Decor',
-	query: '["shop"~"houseware|interior_decoration"]',
+	query: '["shop"~"houseware|interior_decoration|bathroom_furnishing"]',
 	iconName: 'kitchen',
 	tabName: 'shops',
-	tagKeyword: ['interior-decoration', 'houseware']
+	tagKeyword: ['interior-decoration', 'houseware', 'bathroom']
     },
 
     furniture: {
@@ -262,7 +262,7 @@ var pois = {
     },
 	
     dry_cleaning: {
-	name: 'Laundry & Dry-Clnr',
+	name: 'Laundry & Dry-Clean',
 	query: '["shop"~"dry_cleaning|laundry"]',
 	iconName: 'laundromat',
 	tabName: 'shops',
@@ -395,7 +395,7 @@ var pois = {
 	query: '[shop=computer]',
 	iconName: 'computers',
 	tabName: 'shops',
-	tagKeyword: ['computer', 'mobile-phone']
+	tagKeyword: ['computer', 'mobile-phone', 'telephone']
     },
 
     games: {
@@ -431,7 +431,32 @@ var pois = {
 	tagKeyword: ['car-sales', 'second-hand']
     },
 
-//AMENITY - f34648 - 876759 - 3875d7 - baba06 - 128e4e
+//AMENITY - a8a8a8 - f34648 - 876759 - 3875d7 - baba06 - 128e4e
+
+    wheelchair: {
+	name: 'Wheelchair Access',
+	query: '[wheelchair=yes]',
+	iconName: 'disability',
+	tabName: 'amenities',
+	tagKeyword: ['wheelchair', 'disability'],
+    },
+
+    dog: {
+	name: 'Dog Friendly',
+	query: '[dog=yes]',
+	iconName: 'dogs_leash',
+	tabName: 'amenities',
+	tagKeyword: ['dog friendly', 'pet friendly'],
+    },
+
+    school: {
+	name: 'Education',
+	query: '["amenity"~"school|college"]',
+	iconName: 'school',
+	tabName: 'amenities',
+	tagKeyword: ['school', 'college', 'education'],
+	tagParser: school_parser
+    },
 
     school: {
 	name: 'Education',
@@ -956,7 +981,7 @@ var pois = {
 	query: '["historic"~"."]',
 	iconName: 'ruins-2',
 	tabName: 'leisure',
-	tagKeyword: ['tourism', 'hisorical', 'memorial', 'sight-seeing'],
+	tagKeyword: ['tourism', 'historical', 'memorial', 'sight-seeing'],
 	tagParser: historic_parser
     },
 
@@ -965,7 +990,7 @@ var pois = {
 	query: '["listed_status"~"."]',
 	iconName: 'house',
 	tabName: 'leisure',
-	tagKeyword: ['tourism', 'listed-building', 'historic', 'sight-seeing'],
+	tagKeyword: ['tourism', 'listed-building', 'historical', 'sight-seeing'],
 	tagParser: listed_parser
     },
 
