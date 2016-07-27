@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## v1.2.1 - Basemap Layer Permalink
+
+**Date:** 27/07/2016
+
+Updated js
+ - jQuery 2.2.4 (downgraded for jquery mobile support)
+
+Added js
+ - jQuery Mobile 1.4.5
+
+Site changes
+ - Basemap layer connected to url on permalink
+ - New favicons
+ - Swipe away sidebar with mobile
+ - Sidebar headers are now in fixed position
+ - Right-click on 'clear map' completely reloads page to defaults
+ - Parsing on pois 'dog', 'wheelchair', 'bathroom'
+ - More global variables on site.js
+ - Various cosmetic changes to try and be consistent on more browsers
+
 ## v1.2.0 - Walking routes update
 
 **Date:** 15/07/2016
