@@ -489,7 +489,8 @@ var pois = {
 	query: '["amenity"~"social_facility|retirement_home"]',
 	iconName: 'social',
 	tabName: 'amenities',
-	tagKeyword: ['retirement-home', 'nursing-home', 'social-facility', 'sheltered-housing']
+	tagKeyword: ['care-home', 'retirement-home', 'nursing-home', 'social-facility', 'sheltered-housing'],
+	tagParser: socialf_parser
     },
 
     events_venue: {
