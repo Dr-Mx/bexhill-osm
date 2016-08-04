@@ -45,8 +45,9 @@ input[type=checkbox] {
 	font-family: Tahoma, Arial;
 }
 
-.leaflet-control-loading {
-	background-image: url('../img/loading.gif');
+.leaflet-control-layers-toggle {
+	width: 40px !important;
+	height: 40px !important;
 }
 
 .leaflet-popup-content-wrapper {
@@ -97,28 +98,10 @@ input[type=checkbox] {
     outline: none;
 }
 
-.leaflet-contextmenu a.leaflet-contextmenu-item-disabled {
-    opacity: 0.5;
-}
-
 .leaflet-contextmenu a.leaflet-contextmenu-item.over {
     background-color: #f4f4f4;
     border-top: 1px solid #f0f0f0;
     border-bottom: 1px solid #f0f0f0;
-}
-
-.leaflet-contextmenu a.leaflet-contextmenu-item-disabled.over {
-    background-color: inherit;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-}
-
-.leaflet-contextmenu-icon {
-    margin: 2px 8px 0 0;
-    width: 16px;
-    height: 16px;
-    float: left;
-    border: 0;
 }
 
 .leaflet-contextmenu-separator {
@@ -198,12 +181,17 @@ input[type=checkbox] {
 }
 
 .walkinfo {
-	color: #b05301;
+	color: #b05000;
 	cursor: pointer;
 	font-size: 12px !important;
 }
 
-a:link, a:visited, a:hover, .walklink {
-	color: #b05301;
+a:link, a:visited, a:hover, .onlink {
+	color: #b05000;
 	cursor: pointer;
+}
+
+.onlink {
+	font-size: 10pt !important;
+	text-indent: 5px;
 }

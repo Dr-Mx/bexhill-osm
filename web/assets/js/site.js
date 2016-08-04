@@ -1,3 +1,7 @@
+// personal api keys
+var mapboxkey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
+var thuforkey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
+
 // map bounds
 var mapleft = '0.3000';
 var maptop = '50.8200';
@@ -5,18 +9,18 @@ var mapright = '0.5350';
 var mapbottom = '50.8800';
 
 // default map centre
-var maplat = '50.8400';
-var maplng = '0.4680';
-var mapzoom = '16';
+var maplat = '50.8430';
+var maplng = '0.4600';
+var mapzoom = '15';
 
 // default map base layer
-var activeTileLayer = 'mbxstr';
-
-// my mapbox api key
-var mapboxkey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
+var activeTileLayer = 'mbxoutdr';
 
 // spinner
 var spinner = 0;
+
+// default leaflet icon image path
+L.Icon.Default.imagePath = 'assets/img/leaflet';
 
 // swipe away sidebar
 $(function(){
@@ -25,8 +29,19 @@ $(function(){
 	});
 });
 
+// clear checkboxes if moving to another poi tab
+$('.sidebar-tabs').click(function() {
+	var acctab = $('.sidebar-pane.active').attr('id');
+	if (acctab == 'shops' || acctab == 'amenities' || acctab == 'services' || acctab == 'leisure') clear_map();
+});
+
 // Don't scape HTML string in Mustache
 Mustache.escape = function (text) { return text; }
+
+// https://github.com/davidjbradshaw/image-map-resizer
+$(window).load(function() {
+	$('map').imageMapResize();
+});
 
 // https://github.com/aratcliffe/Leaflet.contextmenu
 var map = new L.map('map', {
@@ -78,19 +93,19 @@ var tileLayerData = {
     },
     cycle: {
 		name: 'OpenCycleMap',
-		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
+		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + thuforkey,
 		attribution: '<a href="http://thunderforest.com/maps/opencyclemap/" target="_blank">ThunderForest</a>',
 		zoom: '20'
     },
     trnsprt: {
 		name: 'Transport Dark',
-		url: 'https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png',
+		url: 'https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey=' + thuforkey,
 		attribution: '<a href="http://thunderforest.com/maps/transport-dark/" target="_blank">ThunderForest</a>',
 		zoom: '20'
     },
     matlas: {
 		name: 'Mobile Atlas',
-		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png',
+		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=' + thuforkey,
 		attribution: '<a href="http://thunderforest.com/maps/mobile-atlas/" target="_blank">ThunderForest</a>',
 		zoom: '20'
     },
@@ -133,14 +148,13 @@ for (tile in tileLayerData) {
 		tileLayerData[tile].url,
 		{maxNativeZoom: tilemaxZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains}
     )
-	// create object array for base layer given from permalink
+	// create object array for getting map base layer name
 	tileList['name'].push(tileLayerData[tile].name)
 	tileList['keyname'].push(tile);
 }
 L.control.layers(tileLayers).addTo(map);
-tileLayers[tileLayerData[activeTileLayer].name].addTo(map);
 
-// grab active base map name on change
+// get map base layer name on change
 map.on('baselayerchange', function(e) {
   for (var x = 0; x < tileList.name.length; x++) {
 	if (e.name == tileList.name[x]) activeTileLayer = tileList.keyname[x];
@@ -187,7 +201,7 @@ L.Control.geocoder({
 		bbox.getSouthWest()
 	],
 	{
-		color: '#b05301',
+		color: '#b05000',
 		fill: false
 	}
 	).addTo(map);
@@ -227,10 +241,11 @@ L.easyButton({
 $('#btnclearmap').bind("contextmenu",function(e){
 	$(location).attr('href', window.location.pathname);
 	return false;
-}); 
+});
 
 // https://github.com/Turbo87/sidebar-v2/
-var sidebar = L.control.sidebar('sidebar').addTo(map);
+//var sidebar = L.control.sidebar('sidebar').addTo(map);
+var sidebar = $('#sidebar').sidebar();
 
 // https://github.com/mlevans/leaflet-hash
 var hash = new L.Hash(map);
@@ -420,7 +435,8 @@ function callback(data) {
 		});
 		var marker = L.marker(pos, {
 			icon: markerIcon,
-			keyboard: false
+			keyboard: false,
+			riseOnHover: true
 		})
 		// show a label next to the icon on mouse hover
 		if (e.tags.name) {
@@ -435,14 +451,18 @@ function callback(data) {
 		if ($(window).width() > 500) var customOptions  = { 'maxWidth': '350', }
 		else var customOptions = { 'maxWidth': '250', }
 		marker.bindPopup(markerPopup, customOptions);
-		marker.addTo(this.instance);
+		// display only open facilities on opennow checkbox
+		if ($('input.opennow').is(':checked')) {
+			if (state == true) marker.addTo(this.instance);
+		}
+		else marker.addTo(this.instance);
 	}
 }
 
 function build_overpass_query() {
 	var acttab = $('.sidebar-pane.active').attr('id');
     query = '(';
-    $('#pois' + acttab + ' input:checked').each(function(i, element) {
+    $('#pois' + acttab + ' input.poi-checkbox:checked').each(function(i, element) {
 		query += 'node' + pois[element.dataset.key].query + '(BBOX);';	
 		query += 'way' + pois[element.dataset.key].query + '(BBOX);';
     });
@@ -450,7 +470,7 @@ function build_overpass_query() {
 }
 
 function clear_map() {
-	$('input:checkbox').prop("checked", false);
+	$('input.poi-checkbox').prop("checked", false);
 	setting_changed();
     spinner = 0;
 	$('#spinner').hide();
@@ -458,10 +478,10 @@ function clear_map() {
 
 function setting_changed(newcheckbox) {
 	// limit number of selections
-	if ($('input:checkbox:checked').length <= 3) {
+	if ($('input.poi-checkbox:checked').length <= 3) {
 		// remove pois from current map
 		iconLayer.clearLayers();
-		if ($('input:checkbox:checked').length > 0) {
+		if ($('input.poi-checkbox:checked').length > 0) {
 			build_overpass_query();
 			show_overpass_layer();
 		}
@@ -488,7 +508,7 @@ function show_pois_checkboxes(tabName) {
 				'<div class="poi-checkbox"> \
 					<label> \
 						<img src="assets/img/icons/{{icon}}.png"></img> \
-						<input type="checkbox" name="{{name}}" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
+						<input type="checkbox" class="poi-checkbox" name="{{name}}" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
 					</label> \
 				</div>',
 				{key: poi, name: pois[poi].name, icon: pois[poi].iconName, tabname: pois[poi].tabName}
@@ -552,24 +572,29 @@ function walkinfo() {
 
 // https://github.com/medialize/URI.js
 var uri = URI(window.location.href);
-if (uri.hasQuery('pois')) {
-	var selectedPois = uri.search(true).pois;
+if (uri.hasQuery('M')) activeTileLayer = uri.search(true).M;
+if (uri.hasQuery('O')) {
+	if (uri.search(true).O == 1) $('input.opennow').prop("checked", true);
+	else $('input.opennow').prop("checked", false);
+}
+if (uri.hasQuery('P')) {
+	var selectedPois = uri.search(true).P;
 	if (!$.isArray(selectedPois)) {
 		// the last poi has a "/" on it because leaflet-hash
 		poi = selectedPois.replace('/', '');
-		$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').prop('checked', true);
+		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').prop('checked', true);
 	}
 	else {
 		for (i = 0; i < selectedPois.length; i++) {
 			// the last poi has a "/" on it because leaflet-hash
 			poi = selectedPois[i].replace('/', '');
-			$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').prop('checked', true);
+			$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').prop('checked', true);
 		}
 	}
-	sidebar.open(uri.search(true).tab);
+	sidebar.open(uri.search(true).T);
 	// highlight checkbox or hide sidebar for mobile users
 	if ($(window).width() >= 768) {
-		$('#pois' + uri.search(true).tab + ' input[data-key=' + poi + ']').parent().parent().parent().effect("highlight", {}, 3000);
+		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').parent().parent().parent().effect("highlight", {}, 3000);
 	}
 	else sidebar.close();
     setting_changed();
@@ -577,19 +602,12 @@ if (uri.hasQuery('pois')) {
 else {
 	// if not returning from a hash, give defaults
 	if (window.location.href.indexOf('#') == -1) map.setView([maplat, maplng], mapzoom);
-	if (uri.hasQuery('tab')) {
-		sidebar.open(uri.search(true).tab);
+	if (uri.hasQuery('t')) {
+		sidebar.open(uri.search(true).T);
 	}
 	else sidebar.open('home');
 }
-if (uri.hasQuery('bmap')) {
-	var selectedBmap = uri.search(true).bmap;
-	if (!$.isArray(selectedBmap)) {
-		map.removeLayer(tileLayers[tileLayerData[activeTileLayer].name]);
-		tileLayers[tileLayerData[selectedBmap].name].addTo(map);
-		activeTileLayer = selectedBmap;
-	}
-}
+tileLayers[tileLayerData[activeTileLayer].name].addTo(map);
 map.setMaxBounds([[maptop,mapleft], [mapbottom,mapright]]);
 	
 var query = '';
@@ -611,10 +629,13 @@ function get_permalink() {
     var uri = URI(window.location.href);
 	var acttab = $('.sidebar-pane.active').attr('id');
     var selectedPois = [];
-    $('#pois' + acttab + ' input:checked').each(function(i, element) {
+	if ($('input.opennow').is(':checked')) var opennow = 1;
+	else var opennow = 0;
+    $('#pois' + acttab + ' input.poi-checkbox:checked').each(function(i, element) {
 		selectedPois.push(element.dataset.key);
     });
-    uri.query({'bmap': activeTileLayer, 'tab': acttab, 'pois': selectedPois});
+	// M = basemap, T = tab, O = opennow, P = pois
+    uri.query({'M': activeTileLayer, 'T': acttab, 'O': opennow, 'P': selectedPois });
     return uri.href();
 }
 

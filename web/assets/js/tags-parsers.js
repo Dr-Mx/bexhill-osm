@@ -92,6 +92,20 @@ function phone_parser(element) {
     return markerPopup;
 }
 
+function payment_parser(element) {
+	var tags = element.tags;
+	var tag = '';
+	var markerPopup = '';
+	if (tags['payment:cash'] == 'yes') tag += "cash; ";
+	if (tags['payment:debit_cards'] == 'yes') tag += "debit card; ";
+	if (tags['payment:credit_cards'] == 'yes') tag += "credit card; ";
+	if (tag != '') markerPopup += Mustache.render(
+		tagTmpl,
+		{tag: 'Payment', value: tag, iconName: 'money'}
+	);
+	return markerPopup;
+}
+
 function wikipedia_parser(element, tag, tagName, iconName) {
 	var tags = element.tags;
 	var tag = tags.wikipedia ? tags.wikipedia : tags['site:wikipedia'];
@@ -102,7 +116,7 @@ function wikipedia_parser(element, tag, tagName, iconName) {
 		var subject = s[1];
 		var href = 'http://' + lang + 'wikipedia.com/wiki/' + subject;
 		var link = Mustache.render(
-			'<a href="{{wikipedia}}" target="_blank">' + subject +'</a>',
+			'<a href="{{wikipedia}}" target="_blank">' + subject + '</a>',
 			{wikipedia: href}
 		);
 		markerPopup += Mustache.render(
@@ -191,21 +205,58 @@ function worship_parser(element, titlePopup) {
 	);
 }
 
+function socialf_parser(element, titlePopup) {
+	return parse_tags(
+		element,
+		titlePopup,
+		[
+			{callback: generic_tag_parser, tag: 'social_facility', label: 'Facility Type', iconName: 'users'},
+			{callback: generic_tag_parser, tag: 'social_facility:for', label: 'Facility For', iconName: 'users'},
+			{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'users'},
+		]
+	);
+}
+
 function food_parser(element, titlePopup) {
 	return parse_tags(
 		element,
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'cuisine', label: 'Cuisine', iconName: 'cutlery'},
-			{callback: generic_tag_parser, tag: 'takeaway', label: 'Takeaway', iconName: 'shopping-bag'},
-			{callback: generic_tag_parser, tag: 'delivery', label: 'Delivery', iconName: 'motorcycle'},
-			{callback: generic_tag_parser, tag: 'outdoor_seating', label: 'Outdoor Seating', iconName: 'sun-o'},
-			{callback: generic_tag_parser, tag: 'diet:gluten_free', label: 'Gluten Free', iconName: 'dot-circle-o'},
-			{callback: generic_tag_parser, tag: 'diet:vegan', label: 'Vegan', iconName: 'dot-circle-o'},
-			{callback: generic_tag_parser, tag: 'diet:vegetarian', label: 'Vegetarian', iconName: 'dot-circle-o'},
+			{callback: diet_parser},
+			{callback: facility_parser},
 		]
 	);
 }
+
+function diet_parser(element) {
+	var tags = element.tags;
+	var tag = '';
+	var markerPopup = '';
+	if (tags['diet:gluten_free'] == 'yes') tag += "gluten free; ";
+	if (tags['diet:vegan'] == 'yes') tag += "vegan; ";
+	if (tags['diet:vegetarian'] == 'yes') tag += "vegetarian; ";
+	if (tag != '') markerPopup += Mustache.render(
+		tagTmpl,
+		{tag: 'Diet', value: tag, iconName: 'cutlery'}
+	);
+	return markerPopup;
+}
+
+function facility_parser(element) {
+	var tags = element.tags;
+	var tag = '';
+	var markerPopup = '';
+	if (tags['takeaway'] == 'yes') tag += "takeaway; ";
+	if (tags['takeaway'] == 'only') tag += "takeaway only; ";
+	if (tags['delivery'] == 'yes') tag += "delivery; ";
+	if (tags['outdoor_seating'] == 'yes') tag += "outdoor seating; ";
+	if (tag != '') markerPopup += Mustache.render(
+		tagTmpl,
+		{tag: 'Facilities', value: tag, iconName: 'shopping-bag'}
+	);
+	return markerPopup;
+}	
 
 function post_parser(element, titlePopup) {
 	return parse_tags(
@@ -427,29 +478,27 @@ function listed_parser(element, titlePopup) {
 
 // https://github.com/ypid/opening_hours.js
 var openhrs = '';
+var state = '';
 function opening_hours_parser(element) {
-    try
+	try
     {
 		var opening_hours = require('opening_hours');
 		var hours = element.tags["opening_hours"];
+		if (hours == '') console.log("test");
 		var oh = new opening_hours(hours);
-        var state = oh.getState();
+        state = oh.getState();
 		var prettified_value = oh.prettifyValue();
-		if (state == true) {
-			openhrs = "<span style='color:green' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
-		}
-		else if (state == false) {
-			openhrs = "<span style='color:red' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
-		}
-		else {
-			openhrs = "<span style='color:gray' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
-		}
+		if (state == true) openhrs = "<span style='color:green' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
+		else if (state == false) openhrs = "<span style='color:red' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
+		//else openhrs = "<span style='color:gray' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
 	}
     catch(err)
     {
 		if (hours != null) console.log("ERROR: cannot parse hours: " + hours + ". " + err);
 		openhrs = "";
     }
+	// return false state for no hours - opennow checkbox
+	if (element.tags["opening_hours"] == null) state = false;
 }
 
 function parse_tags(element, titlePopup, functions) {
@@ -457,7 +506,6 @@ function parse_tags(element, titlePopup, functions) {
     markerPopup += Mustache.render(
 		titleTmpl,
 		{title: titlePopup}
-		
     );
     functions = [
 		{callback: generic_tag_parser, tag: 'name', label: 'Name'},
@@ -472,7 +520,8 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: generic_tag_parser, tag: 'internet_access', label: 'Internet Access', iconName: 'wifi'},
 		{callback: generic_tag_parser, tag: 'wheelchair', label: 'Wheelchair Access', iconName: 'wheelchair'},
 		{callback: generic_tag_parser, tag: 'dog', label: 'Dog Friendly', iconName: 'paw'},
-		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'}
+		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
+		{callback: payment_parser},
 	].concat(functions)
 	for (var i = 0; i < functions.length; i++) {
 		var data = functions[i]

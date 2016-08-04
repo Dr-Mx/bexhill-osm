@@ -74,7 +74,7 @@
 }
 
 .leaflet-routing-icon {
-    background-image: url('../img/leaflet.routing.icons.png');
+    background-image: url('../img/leaflet/leaflet.routing.icons.png');
     -webkit-background-size: 240px 20px;
     background-size: 240px 20px;
     background-repeat: no-repeat;
@@ -137,13 +137,13 @@
 }
 
 .leaflet-routing-add-waypoint:after {
-	color: #b05301;	
+	color: #b05000;	
     content: '+';
 	line-height: 1;
 }
 
 .leaflet-routing-reverse-waypoints:after {
-	color: #b05301;	
+	color: #b05000;	
 	content: '\21c5';
 	line-height: 1;
 }
@@ -210,7 +210,7 @@
     content: "\00d7";
     text-align: center;
     cursor: pointer;
-    color: #b05301;
+    color: #b05000;
     background: transparent;
     padding-bottom: 16px;
     margin-top: -16px;
@@ -246,7 +246,7 @@
     display: block;
     width: 26px;
     height: 23px;
-    background-image: url('../img/routing-icon.png');
+    background-image: url('../img/leaflet/routing-icon.png');
 }
 
 .leaflet-routing-container-hide .leaflet-routing-collapse-btn:after {
