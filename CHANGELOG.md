@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v1.2.2 - Minimap
+
+**Date:** 04/08/2016
+
+Updated js
+ - jquery-sidebar.min.js (changed to jquery minified version)
+ - leaflet.js (moved to local, added exception that would cause firefox mobile to break sidebar)
+
+Added js
+ - imageMapResizer.min.js
+
+Site changes
+ - Clickable minimap to jump between suburbs
+ - 'Open now' checkbox with permalink
+ - New parsers for payment, diet and social_facility
+ - Thunderforest api key
+ - Replaced some images with cleaner ones
+
+
 ## v1.2.1 - Basemap Layer Permalink
 
 **Date:** 27/07/2016
