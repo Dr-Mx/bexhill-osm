@@ -210,7 +210,7 @@ var pois = {
 	query: '[shop=jewelry]',
 	iconName: 'jewelry',
 	tabName: 'shops',
-	tagKeyword: ['jewellery', 'watches', 'rings', 'necklaces']
+	tagKeyword: ['jewellery', 'watches', 'rings']
     },
 
     bag: {
@@ -229,12 +229,21 @@ var pois = {
 	tagKeyword: ['watches', 'clock']
     },
 
-    beauty: {
-	name: 'Beauty & Hair',
-	query: '["shop"~"beauty|hairdresser"]',
+	hairdresser: {
+	name: 'Hairdresser',
+	query: '[shop=hairdresser]',
 	iconName: 'barber',
 	tabName: 'shops',
-	tagKeyword: ['barber', 'hairdresser', 'beauty', 'massage']
+	tagKeyword: ['barber', 'hairdresser'],
+	tagParser: gender_parser
+	},	
+	
+    beauty: {
+	name: 'Beauty',
+	query: '[shop=beauty]',
+	iconName: 'beautysalon',
+	tabName: 'shops',
+	tagKeyword: ['hairdresser', 'beauty', 'massage', 'nails', 'tanning']
     },
 	
     massage: {
@@ -817,7 +826,7 @@ var pois = {
 	iconName: 'toilets',
 	tabName: 'services',
 	tagKeyword: ['toilet', 'wc', 'restroom', 'baby-changing', 'lavatory'],
-	tagParser: toilet_parser
+	tagParser: gender_parser
     },
 	
 	estate_agent: {

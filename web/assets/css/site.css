@@ -27,6 +27,14 @@ hr {
 	border: 0;
 }
 
+.anchor {
+	text-align: right;
+}
+
+.minimap {
+	width: 100%;
+}
+
 .poi-checkbox > label > img {
 	float: left;
 }

@@ -6,15 +6,9 @@ function address_parser(element) {
     var markerPopup = '';
     if (tags['addr:street']) {
 		var value = tags['addr:street']
-		if (tags['addr:housenumber']) {
-			value = tags['addr:housenumber'] + ' ' + value;
-		}
-		if (tags['addr:flats']) {
-			value = 'Flats:' + tags['addr:flats'] + ', ' + value;
-		}
-		if (tags['addr:housename']) {
-			value = tags['addr:housename'] + ', ' + value;
-		}
+		if (tags['addr:housenumber']) value = tags['addr:housenumber'] + ' ' + value;
+		if (tags['addr:flats']) value = 'Flats:' + tags['addr:flats'] + ', ' + value;
+		if (tags['addr:housename']) value = tags['addr:housename'] + ', ' + value;
 		markerPopup += Mustache.render(
 			tagTmpl,
 			{tag: 'Address', value: value, iconName: 'map-marker'}
@@ -28,14 +22,16 @@ function website_parser(element) {
     var tag = tags.website ? tags.website : tags['contact:website'];
     var markerPopup = '';
     if (tag) {
-	var link = Mustache.render(
-	    '<a href="{{link}}" target="_blank">{{link}}</a>',
-	    {link: tag}
-	);
-	markerPopup += Mustache.render(
-	    tagTmpl,
-	    {tag: 'Website', value: link, iconName: 'globe'}
-	);
+		var stag = tag;
+		if (stag.length > 35) stag = stag.substr(0,35) + '&hellip;';
+		var link = Mustache.render(
+			'<a href="{{tag}}" title="{{tag}}" target="_blank">{{stag}}</a>',
+			{tag: tag, stag: stag}
+		);
+		markerPopup += Mustache.render(
+			tagTmpl,
+			{tag: 'Website', value: link, iconName: 'globe'}
+		);
     }
     return markerPopup;
 }
@@ -45,14 +41,16 @@ function facebook_parser(element) {
     var tag = tags.facebook ? tags.facebook : tags['contact:facebook'];
     var markerPopup = '';
     if (tag) {
+		var stag = tag;
+		if (stag.length > 35) stag = stag.substr(0,35) + '&hellip;';
 		var link = Mustache.render(
-	    '<a href="{{link}}" target="_blank">{{link}}</a>',
-	    {link: tag}
-	);
-	markerPopup += Mustache.render(
-	    tagTmpl,
-	    {tag: 'Facebook', value: link, iconName: 'facebook-official'}
-	);
+			'<a href="{{tag}}" title="{{tag}}" target="_blank">{{stag}}</a>',
+			{tag: tag, stag: stag}
+		);
+		markerPopup += Mustache.render(
+			tagTmpl,
+			{tag: 'Facebook', value: link, iconName: 'facebook-official'}
+		);
     }
     return markerPopup;
 }
@@ -62,7 +60,7 @@ function email_parser(element) {
     var tag = tags.email ? tags.email : tags['contact:email'];
     var markerPopup = '';
     if (tag) {
-	if (tag.indexOf('@') == -1) return markerPopup
+		if (tag.indexOf('@') == -1) return markerPopup
 		var link = Mustache.render(
 			'<a href="mailto:{{email}}" target="_blank">{{email}}</a>',
 			{email: tag}
@@ -132,7 +130,7 @@ function star_parser(element, tag, tagName, iconName) {
 	var tag = tags.stars;
 	var markerPopup = '';
 	if (tag) {
-		var result = '<a href="https://www.visitengland.com/plan-your-visit/quality-assessment-and-star-ratings/visitengland-star-ratings" target="_blank">';
+		var result = '<a href="https://www.visitengland.com/plan-your-visit/quality-assessment-and-star-ratings/visitengland-star-ratings" title="VisitEngland ratings info" target="_blank">';
 		for (var i = 0; i < tag; i++) {
 			result += '<span class="fa fa-star-o"></span>';
 		}
@@ -373,13 +371,14 @@ function defib_parser(element, titlePopup) {
 	);
 }
 
-function toilet_parser(element, titlePopup) {
+function gender_parser(element, titlePopup) {
     return parse_tags(
 		element,
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'female', label: 'Female', iconName: 'female'},
 			{callback: generic_tag_parser, tag: 'male', label: 'Male', iconName: 'male'},
+			{callback: generic_tag_parser, tag: 'unisex', label: 'Unisex', iconName: 'venus-mars'},
 			{callback: generic_tag_parser, tag: 'diaper', label: 'Baby Changing', iconName: 'child'},			
 		]
 	);

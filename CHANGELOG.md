@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v1.2.3 - Smooth Scrolling
+
+**Date:** 10/08/2016
+
+Updated js
+ - Control.Loading.js 0.1.22
+ - mustache.js > mustache.min.js
+
+Site changes
+ - Page anchors now smooth scroll
+ - Added help and information menu anchors
+ - Context menu 'improve map' option opens osm.org and creates note
+ - Separate beauty and hairdresser pois
+ - Replaced toilet_parser with gender_parser
+ - Delay added to image-map-resizer to accommodate sidebar opening
+ - Cleaned up some code where 'name' was used instead of 'id'
+
+
 ## v1.2.2 - Minimap
 
 **Date:** 04/08/2016

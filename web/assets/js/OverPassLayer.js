@@ -1,7 +1,4 @@
 L.Control.MinZoomIndicator = L.Control.extend({
-  options: {
-    position: 'topright',
-  },
 
   /**
   * map: layerId -> zoomlevel

@@ -1,26 +1,23 @@
-// personal api keys
-var mapboxkey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
-var thuforkey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
-
-// map bounds
-var mapleft = '0.3000';
-var maptop = '50.8200';
-var mapright = '0.5350';
-var mapbottom = '50.8800';
-
-// default map centre
-var maplat = '50.8430';
-var maplng = '0.4600';
-var mapzoom = '15';
-
-// default map base layer
-var activeTileLayer = 'mbxoutdr';
-
-// spinner
-var spinner = 0;
-
-// default leaflet icon image path
-L.Icon.Default.imagePath = 'assets/img/leaflet';
+// START SET DEFAULTS
+	// personal api keys
+	var mapboxkey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
+	var thuforkey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
+	// map bounds
+	var mapleft = '0.3000';
+	var maptop = '50.8200';
+	var mapright = '0.5350';
+	var mapbottom = '50.8800';
+	// map centre
+	var maplat = '50.8430';
+	var maplng = '0.4600';
+	var mapzoom = '15';
+	// map base layer
+	var activeTileLayer = 'osmstd';
+	// email for overpass .fr endpoint
+	var email = 'info@bexhill-osm.org.uk'
+	// leaflet icon image path
+	L.Icon.Default.imagePath = 'assets/img/leaflet';
+// END SET DEFAULTS
 
 // swipe away sidebar
 $(function(){
@@ -29,18 +26,37 @@ $(function(){
 	});
 });
 
+// smooth scrolling to poi anchor
+$(document).on('click', 'a[href*="#goto"]', function(e) {
+    if (location.pathname.replace(/^\//,'') === this.pathname.replace(/^\//,'') && location.hostname === this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[id=' + this.hash.slice(1) +']');
+        if (target.length) {
+			console.log(target.offset().top);
+            $('.sidebar-body').animate({
+                scrollTop: target.offset().top - 50
+            }, 1000);
+            e.preventDefault();
+        }
+    }
+});
+
 // clear checkboxes if moving to another poi tab
 $('.sidebar-tabs').click(function() {
 	var acctab = $('.sidebar-pane.active').attr('id');
 	if (acctab == 'shops' || acctab == 'amenities' || acctab == 'services' || acctab == 'leisure') clear_map();
+	if (acctab == 'home') $('map').imageMapResize();
 });
 
-// Don't scape HTML string in Mustache
+// don't scape HTML string in Mustache
 Mustache.escape = function (text) { return text; }
 
 // https://github.com/davidjbradshaw/image-map-resizer
-$(window).load(function() {
-	$('map').imageMapResize();
+$(document).ready(function() {
+	// add small delay after load for sidebar to animate open
+	setTimeout(function() {
+		$('map').imageMapResize();
+    }, 500);
 });
 
 // https://github.com/aratcliffe/Leaflet.contextmenu
@@ -48,25 +64,16 @@ var map = new L.map('map', {
 	contextmenu: true,
 	contextmenuWidth: 140,
 	contextmenuItems: [{
-		text: 'Show coordinates',
-		callback: showCoordinates
-	}, {
-		text: 'Center map here',
-		callback: centerMap
-	}, '-', {
 		text: '<i class="fa fa-map-marker"></i>&nbsp; Start walk',
 		callback: walkStart
 	}, {
 		text: '<i class="fa fa-map-marker"></i>&nbsp; End walk',
 		callback: walkFinish
+	}, '-', {
+		text: '<i class="fa fa-external-link"></i>&nbsp; Improve map',
+		callback: improveMap
 	}]
 }); 
-function showCoordinates (e) {
-	alert(e.latlng);
-}
-function centerMap (e) {
-	map.panTo(e.latlng);
-}
 function walkStart (e) {
 	if ($(window).width() >= 768) sidebar.open('walking');
 	routingControl.spliceWaypoints(0, 1, e.latlng);
@@ -74,6 +81,9 @@ function walkStart (e) {
 function walkFinish (e) {
 	if ($(window).width() >= 768) sidebar.open('walking');
 	routingControl.spliceWaypoints(routingControl.getWaypoints().length - 1, 1, e.latlng);
+}
+function improveMap (e) {
+	window.open("http://www.openstreetmap.org/note/new#map=" + map.getZoom() + "/" + e.latlng.lat + "/" + e.latlng.lng, "_blank")
 }
 
 // https://github.com/Leaflet/Leaflet
@@ -143,7 +153,6 @@ for (tile in tileLayerData) {
     var subdomains = tileLayerData[tile].subdomains ? tileLayerData[tile].subdomains : 'abc';
     if (tileLayerData[tile].attribution) tileAttribution = tileLayerData[tile].attribution + ' | ' + attribution;
 	else tileAttribution = attribution;
-	tileAttribution += ' | <a href="http://www.openstreetmap.org/note/new#map=' + mapzoom + '/' + maplat + '/' + maplng + '&layers=N" title="Create a note on OSM" target="_blank"><i>Improve map</i></a>';
 	tileLayers[tileLayerData[tile].name] = L.tileLayer(
 		tileLayerData[tile].url,
 		{maxNativeZoom: tilemaxZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains}
@@ -211,7 +220,7 @@ L.Control.geocoder({
 $('.leaflet-control-geocoder-icon').attr('title','Find address');
 
 // https://github.com/cliffcloud/Leaflet.EasyButton
-// Check if POI selected then get permalink
+// permalink button
 L.easyButton({
 	id:'btnpermalink',
 	states:[{
@@ -223,7 +232,7 @@ L.easyButton({
 		}
 	}]
 }).addTo(map);
-// Clear map of all info layers
+// clear map button
 L.easyButton({
 	id:'btnclearmap',
 	states:[{
@@ -237,14 +246,13 @@ L.easyButton({
 		}
 	}]
 }).addTo(map);
-// Complete reload on right click
+// full reload on right click
 $('#btnclearmap').bind("contextmenu",function(e){
 	$(location).attr('href', window.location.pathname);
 	return false;
 });
 
 // https://github.com/Turbo87/sidebar-v2/
-//var sidebar = L.control.sidebar('sidebar').addTo(map);
 var sidebar = $('#sidebar').sidebar();
 
 // https://github.com/mlevans/leaflet-hash
@@ -293,16 +301,16 @@ $( "#accordion" ).accordion({
 var poitags = [];
 var category = [];
 var i = 0;
-// Get all tags
+// get all tags
 for (poi in pois) {
 	poitags += '"' + pois[poi].tabName + "~" + poi + '": ' + JSON.stringify(pois[poi].tagKeyword) + ', ';
 	category[i] = {listLocation: pois[poi].tabName + '~' + poi, header: pois[poi].tabName + ' - ' + pois[poi].name};
 	i++;
 }
-// Clean up and covert to array
+// clean up and covert to array
 poitags = poitags.substring(0, poitags.length - 2);
 poitags = JSON.parse('{ ' + poitags + '}');
-// Options for autocomplete
+// options for autocomplete
 var options = {
 	data: poitags,
 	minCharNumber: 3,
@@ -314,10 +322,10 @@ var options = {
 			var catsplit = (document.getElementsByClassName('eac-category')[z].innerText);
 			var catsplit = catsplit.split(" - ");
 			sidebar.open(catsplit[0]);
-			$('#pois' + catsplit[0] + ' input[name="' + catsplit[1] + '"]').prop('checked', true);
+			$('#pois' + catsplit[0] + ' input[id="' + catsplit[1] + '"]').prop('checked', true);
 			// Highlight checkbox or hide sidebar for mobile users
 			if ($(window).width() >= 768) {
-				$('#pois' + catsplit[0] + ' input[name="' + catsplit[1] + '"]').parent().parent().parent().effect("highlight", {}, 3000);
+				$('#pois' + catsplit[0] + ' input[id="' + catsplit[1] + '"]').parent().parent().parent().effect("highlight", {}, 3000);
 			}
 			else sidebar.close();
 			setting_changed();
@@ -331,13 +339,15 @@ var options = {
 		category[0],
 	]
 };
-// Push categories into options array
+// push categories into options array
 for (var x = 1; x < category.length; x++) {
 	options['categories'].push(category[x]);
 }
 $('#autocomplete').easyAutocomplete(options);
+$('div.easy-autocomplete').removeAttr('style');
 
 // https://github.com/kartenkarsten/leaflet-layer-overpass
+var spinner = 0;
 function callback(data) {
 	if (spinner > 0) spinner -= 1;
     if (spinner == 0) $('#spinner').hide();
@@ -381,7 +391,6 @@ function callback(data) {
 			if (type == 'e-cigarette') type = 'tobacco';
 			if (type == 'hardware') type = 'doityourself';
 			if (type == 'window_blind') type = 'curtain';
-			if (type == 'hairdresser') type = 'beauty';
 			if (type == 'laundry') type = 'dry_cleaning';
 			if (type == 'garden_centre') type = 'florist';
 			if (type == 'tyres') type = 'car_repair';
@@ -469,6 +478,7 @@ function build_overpass_query() {
     query += ');out center;';
 }
 
+// clear layers
 function clear_map() {
 	$('input.poi-checkbox').prop("checked", false);
 	setting_changed();
@@ -498,7 +508,7 @@ function show_pois_checkboxes(tabName) {
     // build the content for the sidebar pane
 	var i = 0;
     var content = '';
-	content += '<div align="right"><a name="top' + tabName + '" href="#bottom' + tabName + '">| <span class="fa fa-arrow-down"></span> |</a></div>'
+	content += '<div class="anchor"><a id="gototop' + tabName + '" href="#gotobot' + tabName + '">| <span class="fa fa-arrow-down"></span> |</a></div>'
     content += '<table style="width:100%">';
 	for (poi in pois) {
 		if (pois[poi].tabName == tabName) {
@@ -508,7 +518,7 @@ function show_pois_checkboxes(tabName) {
 				'<div class="poi-checkbox"> \
 					<label> \
 						<img src="assets/img/icons/{{icon}}.png"></img> \
-						<input type="checkbox" class="poi-checkbox" name="{{name}}" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
+						<input type="checkbox" class="poi-checkbox" id="{{name}}" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
 					</label> \
 				</div>',
 				{key: poi, name: pois[poi].name, icon: pois[poi].iconName, tabname: pois[poi].tabName}
@@ -520,7 +530,7 @@ function show_pois_checkboxes(tabName) {
 		}
     }
     content += '</table>';
-	content += '<div align="right"><a name="bottom' + tabName + '" href="#top' + tabName + '">| <span class="fa fa-arrow-up"></span> |</a></div>'
+	content += '<div class="anchor"><a id="gotobot' + tabName + '" href="#gototop' + tabName + '">| <span class="fa fa-arrow-up"></span> |</a></div>'
     $('#pois' + tabName).append(content);
 }
 show_pois_checkboxes('shops');
@@ -529,7 +539,7 @@ show_pois_checkboxes('services');
 show_pois_checkboxes('leisure');
 show_pois_checkboxes('tourism');
 
-// Suggested walk waypoints
+// suggested walk waypoints
 function suggwalk(walkname) {
 	if (walkname == 'tmt') {
 		routingControl.setWaypoints([
@@ -552,20 +562,21 @@ function suggwalk(walkname) {
 			L.latLng(50.84515, 0.47961),
 			L.latLng(50.86230, 0.51823),
 			L.latLng(50.84808, 0.52014),
-			L.latLng(50.83780, 0.47645),
+			L.latLng(50.84056, 0.49142),
+			L.latLng(50.83792, 0.47660),
 			L.latLng(50.84093, 0.47718)
 		]);
 	}
 	else if (walkname == 'wwh') {
 		routingControl.setWaypoints([
-			L.latLng(50.835675, 0.45892),
-			L.latLng(50.837011, 0.47363)
+			L.latLng(50.83567, 0.45892),
+			L.latLng(50.83701, 0.47363)
 		]);
 	}
 }
 function walkinfo() {
 	sidebar.open('leisure');
-	$('#poisleisure input[name="Information"]').prop('checked', true);
+	$('#poisleisure input[id="Information"]').prop('checked', true);
 	setting_changed();
 	sidebar.open('walking');
 }
@@ -602,7 +613,7 @@ if (uri.hasQuery('P')) {
 else {
 	// if not returning from a hash, give defaults
 	if (window.location.href.indexOf('#') == -1) map.setView([maplat, maplng], mapzoom);
-	if (uri.hasQuery('t')) {
+	if (uri.hasQuery('T')) {
 		sidebar.open(uri.search(true).T);
 	}
 	else sidebar.open('home');
@@ -617,10 +628,16 @@ function show_overpass_layer() {
 		return;
     }
     var opl = new L.OverPassLayer({
-		query: query + '&contact=info@bexhill-osm.org.uk',
-		callback: callback,
 		debug: false,
-		minzoom: 15
+		minzoom: 15,
+		query: query + '&contact=' + email, //contact info only for use with .fr endpoint
+		endpoint: "http://api.openstreetmap.fr/oapi/interpreter/",
+		callback: callback,
+		minZoomIndicatorOptions: {
+			position: 'topright',
+			minZoomMessageNoLayer: "No layer assigned",
+			minZoomMessage: "Zoom in to load data"
+		}
     });
     iconLayer.addLayer(opl);
 }
