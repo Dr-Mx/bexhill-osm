@@ -216,11 +216,7 @@
                     });
                 }
                 else {
-                    // If we're changing to a canvas layer, don't handle loading
-                    // as canvas layers will not fire load events.
-                    if (!(L.TileLayer.Canvas && e.layer instanceof L.TileLayer.Canvas)) {
-                        that._handleLoading(e);
-                    }
+                    that._handleLoading(e);
                 }
             },
 

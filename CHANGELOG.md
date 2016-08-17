@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v1.3.0 - Reverse Lookup
+
+**Date:** 17/08/2016
+
+Site changes
+ - Added 'Lookup' to context-menu, allowing users to view individual POIs
+ - If POI is not found, returns geocoder for address
+ - Added some status code messages to overpass if there was an error
+ - Reformatted address parser
+ - Added pub, hairdresser, clothes parsers
+ - Added Facebook links
+ - Tidy up of code using JSLint
+
+
 ## v1.2.3 - Smooth Scrolling
 
 **Date:** 10/08/2016

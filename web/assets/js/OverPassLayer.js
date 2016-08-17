@@ -92,7 +92,7 @@ L.LatLngBounds.prototype.toOverpassBBoxString = function (){
   var a = this._southWest,
   b = this._northEast;
   return [a.lat, a.lng, b.lat, b.lng].join(",");
-}
+};
 
 L.OverPassLayer = L.FeatureGroup.extend({
   options: {
@@ -136,7 +136,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
       position: 'topright',
       minZoomMessageNoLayer: "no layer assigned",
       minZoomMessage: "current Zoom-Level: CURRENTZOOM all data at Level: MINZOOMLEVEL"
-    },
+    }
   },
 
   initialize: function (options) {
@@ -157,7 +157,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
       row.insertCell(0).appendChild(document.createTextNode(key));
       row.insertCell(1).appendChild(document.createTextNode(tags[key]));
     }
-    var div = document.createElement("div")
+    var div = document.createElement("div");
     div.appendChild(link);
     div.appendChild(table);
     return div;
@@ -273,16 +273,15 @@ L.OverPassLayer = L.FeatureGroup.extend({
                   self.options.afterRequest.call(self);
               }
             }
-            if (this.status > 400 && this.status <= 502) {
-                // HACK: to avoid the spinner being shown when there
-                // was an error on one of the requests
+            // HACK: to avoid the spinner being shown when there was an error on one of the requests
+            else if (this.status >= 400 && this.status <= 504) {
+				if (this.status === 400) alert("Bad Request: contact site admin");
+				if (this.status === 429) alert("Too Many Requests: please try a smaller area");
+				if (this.status === 504) alert("Gateway Timeout: please try again");
 				self.options.callback.call(reference, {elements: []});
-            }
+			}
           };
-
           request.send();
-
-
         }
     }
   },

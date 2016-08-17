@@ -68,7 +68,7 @@
 					<h3>Welcome!</h3>
 						<p>Bexhill-OSM allows you to easily find information on local places like shops, cafés, parks, walks,  
 						wheelchair access, and much more in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
-						<p>Click an area and enter a keyword above, or choose a tab and select your point of interest from the list.</p>
+						<p>Enter a keyword above to see those items on the map.  Alternatively, right-click / long-press on the map to lookup an individual item.</p>
 						<p><img src="assets/img/minimap.png" class="minimap" alt="Minimap" usemap="#m_minimap"></p>
 						<map name="m_minimap">
 							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.setView([maplat, maplng], mapzoom, {'animate':true});" href="javascript:void(0);">
@@ -87,6 +87,7 @@
 						<p>View Help <a onclick='sidebar.open("help")'>[<span style='color:#b05000' class='fa fa-question fa-fw'></span>]</a> for more assistance.</p>
 						<p>If you have any questions or wish to help out, contact details can be found under Information 
 						<a onclick='sidebar.open("information")'>[<span style='color:#b05000' class='fa fa-info fa-fw'></span>]</a>.</p>
+						<p><iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&width=98&layout=button&action=like&size=small&show_faces=false&share=true&height=65&appId" width="98" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe></p>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="shops">
@@ -109,7 +110,7 @@
 				<h1 class="sidebar-header">Walking Routes<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
 				<div class="sidebar-body">
 					<h3>Find a walking route</h3>
-					Use the map pop-up menu, or type an address:
+					Use the map context-menu, or type an address:
 					<p id="routingControl">
 					<h3>Suggested leisure walks</h3>
 					<div id="accordion">
@@ -149,8 +150,9 @@
 				<a id="gototophelp"></a>
 					<p>
 						<a href="#gotocontrols">Map Controls</a><br>
-						<a href="#gototabs">Tabs</a><br>
+						<a href="#gotocontext">Context-menu</a><br>
 						<a href="#gotointerest">Find Interest</a><br>
+						<a href="#gototabs">Tabs</a><br>
 						<a href="#gotopoi">Points of Interest (POI)</a><br>
 						<a href="#gotowalking">Walking Routes</a><br>
 					</p>
@@ -163,18 +165,26 @@
 						To clear all current layers on the map, click the bin (<span style='color:#b05000' class='fa fa-trash'></span>).  Right-click / long press will reload the website to defaults.<br><br>
 						Various styles of base map can be displayed using the overlay picker - located at the top-right of the page.
 						<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
-					<a id="gototabs"></a><hr>
+					<a id="gotocontext"></a><hr>
+					<h3>Context-menu</h3>
+						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
+						<span class='fa fa-search fa-fw'></span> Lookup: Display information on selected item, only works on higher zoom levels.<br><br>
+						<span class='fa fa-map-marker fa-fw'></span> Start / End walk: Plot markers to create a walking route.<br><br>
+						<span class='fa fa-external-link fa-fw'></span> Improve map: Open openstreetmap.org where you can leave a note or edit the map.
+						<p><img src="assets/img/context.png" alt="Context-menu preview"></p>
+					<a id="gotointerest"></a><hr>
+					<h3>Find Interest</h3>
+						Type the first few letters of a keyword (e.g. 'police', 'bike', 'diy').  Click the word in the category you are interested in to display it on the map.<br>
+						To see only currently open facilities, check the box beneath.
+						<p><img src="assets/img/find.png" alt="Find interest Preview" style="width: 75%"></p>
+						<a id="gototabs"></a><hr>
 					<h3>Tabs</h3>
 						[<span style='color:#b05000' class='fa fa-shopping-bag fa-fw'></span>] Shops: Buildings where general items are sold.<br><br>
 						[<span style='color:#b05000' class='fa fa-coffee fa-fw'></span>] Amenities: Where to find a meal or a cup of coffee.  Social facilities, transport, recycling.<br><br>
 						[<span style='color:#b05000' class='fa fa-heartbeat fa-fw'></span>] Services: Public and private offices and services.<br><br>
 						[<span style='color:#b05000' class='fa fa-tree fa-fw'></span>] Leisure & Tourism: Where to stay, go, socialise and discover Bexhill's historical places.<br><br>
 						[<span style='color:#b05000' class='fa fa-compass fa-fw'></span>] Walking Routes: Select from a few local walks, or create your own path through the many twittens (see below for more info).
-					<a id="gotointerest"></a><hr>
-					<h3>Find Interest</h3>
-						Begin to type in a keyword (e.g. 'police', 'bike', 'diy').  Click the word in the category you are interested in to display it on the map.<br>
-						To see only currently open facilities, check the box beneath.
-						<p><img src="assets/img/find.png" alt="Find interest Preview" style="width: 75%"></p>
+					<p>
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
 						To begin displaying a POI, zoom to an area on the map and click an item - up to 3 POIs can selected at once.  After a few 
@@ -185,8 +195,7 @@
 						<p><img src="assets/img/popup.png" alt="Icon popup preview" style="width: 75%"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
-						Find a route by either entering an address, or using the map pop-up menu (right click / long press) where you want to add start and end markers.<br>
-						Add additional markers by dragging an existing path to a new location.
+						Find a route by either entering an address, or using the map context-menu.  Add additional markers by dragging an existing path to a new location.
 						<p><img src="assets/img/walking.png" alt="Walking route preview" style="width: 75%"></p>
 					<div class="anchor"><a href="#gototophelp">| <span class="fa fa-arrow-up"></span> |</a></div>
 				</div>
@@ -206,18 +215,21 @@
 						<p>OpenStreetMap (OSM) is a free, collaborative project to create an editable map of the world.  Bexhill-OSM is an unofficial site that 
 						presents data that has been added by volunteers in Bexhill-on-Sea.</p>
 						<p>Both this website and the underlying area on OpenStreetMap are managed by Alexis Markwick.</p>
-						<p>If you have any enquiries I can be reached via email: <a href="mailto:info@bexhill-osm.org.uk"><i class="fa fa-envelope"></i> info@bexhill-osm.org.uk</a>.</p>
+						<p>If you have any enquiries I can be reached via:<br>
+						<a href="mailto:info@bexhill-osm.org.uk" title="Email"><i style='color:#dd4b39' class="fa fa-envelope fa-fw"></i> info@bexhill-osm.org.uk</a><br>
+						<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style='color:#3b5998' class="fa fa-facebook-official fa-fw"></i> facebook.com/bexhillosm</a></p>
 					<a id="gotolinks"></a><hr>
 					<h3>Links</h3>
 					<p>
 						<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a><br>&nbsp; - The map anyone can edit!<br>
-						<a href="http://demo.f4map.com/#lat=50.8390060&lon=0.4715886&zoom=17&camera.theta=53.021&camera.phi=34.95" target="_blank">F4Map</a><br>&nbsp; - A dynamic 3D map of Bexhill using OSM data.<br>
+						<a href="http://osmand.net/" target="_blank">OsmAnd</a><br>&nbsp; - Offline mobile maps and navigation.<br>
+						<a href="http://demo.f4map.com/#lat=50.8390060&lon=0.4715886&zoom=17&camera.theta=53.021&camera.phi=34.95" target="_blank">F4Map</a><br>&nbsp; - Dynamic 3D map of Bexhill.<br>
 						<a href="http://www.discoverbexhill.com/" target="_blank">Discover Bexhill-on-Sea</a><br>&nbsp; - Local visitor and tourist guide.<br>
 						<a href="http://www.bexhillcommunitynewsonline.co.uk/" target="_blank">Bexhill Online</a><br>&nbsp; - Bexhill's Community Newspaper.<br>
 						<a href="http://www.bexhilltownteam.org.uk/" target="_blank">Bexhill Town Team</a><br>&nbsp; - News and events around the town centre.<br>
 						<a href="http://www.bexhilloldtown.org/" target="_blank">The Old Town Preservation Society</a><br>&nbsp; - Maps and information from past to present.<br>
 						<a href="http://thebexhillhistorytrail.wordpress.com/" target="_blank">The Bexhill History Trail</a><br>&nbsp; - A guide to many of the historic gems.<br>
-						<a href="http://new.eastsussex.gov.uk/leisureandtourism/countryside/" target="_blank">Discover East Sussex</a><br>&nbsp; - Leisure and tourist guide for all of East Sussex.<br>
+						<a href="http://new.eastsussex.gov.uk/leisureandtourism/countryside/" target="_blank">Discover East Sussex</a><br>&nbsp; - Leisure and tourist guide for East Sussex.<br>
 					</p>
 					<p>
 					<a id="gotodonate"></a><hr>
@@ -299,7 +311,7 @@
 	<script src="assets/js/Control.Geocoder.js"></script>
     <script src="assets/js/Control.Loading.js"></script>
 	<script src="assets/js/easy-button.js"></script>
-    <script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js"></script>
+    <script src="https://www.domoritz.de/leaflet-locatecontrol/dist/L.Control.Locate.min.js"></script>
     <script src="assets/js/URI.min.js"></script>
 	<script src="assets/js/opening_hours+deps.min.js"></script>
     <script src="assets/js/OverPassLayer.js"></script>
@@ -317,7 +329,6 @@
 		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 		ga('create', 'UA-79665109-1', 'auto');
 		ga('send', 'pageview');
-	</script>  
-
+	</script>
  </body>
 </html>
