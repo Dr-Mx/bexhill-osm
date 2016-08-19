@@ -1,6 +1,8 @@
-# Bexhill-OSM
+# Bexhill-OSM - http://bexhill-osm.org.uk/
 
 Searchable OpenStreetMap data showing POIs and other information
+
+![Image of Bexhill-OSM](http://bexhill-osm.org.uk/assets/img/preview.jpg)
 
 ## Features
  - Mobile and desktop friendly
@@ -11,10 +13,6 @@ Searchable OpenStreetMap data showing POIs and other information
  - Reverse lookup POIs through context-menu
  - Walking directions
  - Permalinking
-
-## Live version!
-
-http://bexhill-osm.org.uk/
 
 ## Attribution
 
