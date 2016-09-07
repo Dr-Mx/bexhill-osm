@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v1.3.1 - Edit on OSM
+
+**Date:** 07/09/2016
+
+Site changes
+ - Added link to edit selected POI on OSM
+ - Combined some functions and other code tidying
+
+
 ## v1.3.0 - Reverse Lookup
 
 **Date:** 17/08/2016
