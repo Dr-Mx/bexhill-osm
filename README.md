@@ -6,13 +6,17 @@ Searchable OpenStreetMap data showing POIs and other information
 
 ## Features
  - Mobile and desktop friendly
- - Detailed POIs with opening hours
+ - Geolocate user
+ - Address search
+ - Reverse lookup map elements
+ - Detailed POI markers
+ - Option to view only 'currently open' POIs
  - Find a POI based on a keyword
- - Manually select a POI from catagorised tabs
- - Show only 'currently open' POIs
- - Reverse lookup POIs through context-menu
- - Walking directions
- - Permalinking
+ - Manually select POIs from sidebar tabs
+ - Direct link to edit a POI on OSM
+ - Create walking directions
+ - View suggested walking routes
+ - Share view via permalinking
 
 ## Attribution
 
