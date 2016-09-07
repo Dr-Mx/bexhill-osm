@@ -20,28 +20,26 @@ var actTab = 'home';
 L.Icon.Default.imagePath = 'assets/img/leaflet';
 
 // swipe away sidebar
-$(function () {
-	$(".sidebar-content").on("swipeleft", function () {
+$(function() {
+	$(".sidebar-content").on("swipeleft", function() {
 		if ($(window).width() >= 768) sidebar.close();
 	});
 });
 
 // smooth scrolling to poi anchor
-$(document).on('click', 'a[href*="#goto"]', function (e) {
+$(document).on('click', 'a[href*="#goto"]', function(e) {
 	if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
 		var target = $(this.hash);
 		target = target.length ? target : $('[id=' + this.hash.slice(1) + ']');
 		if (target.length) {
-			$('.sidebar-body').animate({
-				scrollTop: target.offset().top - 55
-			}, 1000);
+			$('.sidebar-body').animate({ scrollTop: target.offset().top - 55 }, 1000);
 			e.preventDefault();
 		}
 	}
 });
 
 // clear checkboxes if moving to another poi tab
-$('.sidebar-tabs').click(function () {
+$('.sidebar-tabs').click(function() {
 	if (actTab !== $('.sidebar-pane.active').attr('id')) {
 		actTab = $('.sidebar-pane.active').attr('id');
 		if (actTab === 'shops' || actTab === 'amenities' || actTab === 'services' || actTab === 'leisure') clear_map();
@@ -49,15 +47,13 @@ $('.sidebar-tabs').click(function () {
 	}
 });
 
-// don't scape HTML string in Mustache
-Mustache.escape = function (text) { return text; };
+// don't escape HTML string in Mustache
+Mustache.escape = function(text) { return text; };
 
 // https://github.com/davidjbradshaw/image-map-resizer
 $(document).ready(function() {
 	// add small delay after load for sidebar to animate open
-	setTimeout(function() {
-		$('map').imageMapResize();
-	}, 500);
+	setTimeout(function() {	$('map').imageMapResize(); }, 500);
 });
 
 // https://github.com/aratcliffe/Leaflet.contextmenu
@@ -82,7 +78,7 @@ var map = new L.map('map', {
 var query = '';
 var geoMarker;
 var rLookup = false;
-function reverseLookup (e) {
+function reverseLookup(e) {
 	var geocoder = L.Control.Geocoder.nominatim();
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
 		geoMarker = results[0];
@@ -94,15 +90,15 @@ function reverseLookup (e) {
 		}
 	});
 }
-function walkStart (e) {
+function walkStart(e) {
 	if ($(window).width() >= 768) sidebar.open('walking');
 	routingControl.spliceWaypoints(0, 1, e.latlng);
 }
-function walkFinish (e) {
+function walkFinish(e) {
 	if ($(window).width() >= 768) sidebar.open('walking');
 	routingControl.spliceWaypoints(routingControl.getWaypoints().length - 1, 1, e.latlng);
 }
-function improveMap (e) {
+function improveMap(e) {
 	window.open("http://www.openstreetmap.org/note/new#map=" + map.getZoom() + "/" + e.latlng.lat + "/" + e.latlng.lng, "_blank");
 }
 
@@ -252,9 +248,15 @@ L.easyButton({
 	states:[{
 		icon:'fa fa-link',
 		title:'Get map link',
-		onClick:function(){
-			var link = get_permalink();
-			window.prompt('Copy permanent map link:', link);
+		onClick:function() {
+			var uri = URI(window.location.href);
+			var selectedPois = [];
+			var opennow;
+			if ($('input.opennow').is(':checked')) opennow = 1;
+			$('#pois' + actTab + ' input.poi-checkbox:checked').each(function(i, element) { selectedPois.push(element.dataset.key);	});
+			// M = basemap, T = tab, O = opennow, P = pois
+			uri.query({ 'M': activeTileLayer, 'T': actTab, 'O': opennow, 'P': selectedPois });
+			window.prompt('Copy permanent map link:', uri.href());
 		}
 	}]
 }).addTo(map);
@@ -264,7 +266,7 @@ L.easyButton({
 	states:[{
 		icon:'fa fa-trash',
 		title:'Clear map',
-		onClick:function(){
+		onClick:function() {
 			if (map.hasLayer(poly)) { map.removeLayer(poly); }
 			routingControl.setWaypoints([]);
 			$("#accordion").accordion({active: false});
@@ -273,7 +275,7 @@ L.easyButton({
 	}]
 }).addTo(map);
 // full reload on right click
-$('#btnclearmap').bind("contextmenu",function(){
+$('#btnclearmap').bind("contextmenu",function() {
 	$(location).attr('href', window.location.pathname);
 	return false;
 });
@@ -398,6 +400,7 @@ function callback(data) {
 				if (e.tags.access === 'private') type = '';
 				if (e.tags.access === 'permissive') type = '';
 			}
+			if (type === 'animal_boarding') type = 'animal_shelter';
 		}
 		if (e.tags.tourism) {
 			if (type === '') type = e.tags.tourism;
@@ -502,15 +505,6 @@ function callback(data) {
 	}
 }
 
-function build_overpass_query() {
-	query = '(';
-	$('#pois' + actTab + ' input.poi-checkbox:checked').each(function(i, element) {
-		query += 'node' + pois[element.dataset.key].query + '(BBOX);';
-		query += 'way' + pois[element.dataset.key].query + '(BBOX);';
-	});
-	query += ');out center;';
-}
-
 // clear layers
 function clear_map() {
 	$('input.poi-checkbox').prop("checked", false);
@@ -525,7 +519,13 @@ function setting_changed(newcheckbox) {
 		// remove pois from current map
 		iconLayer.clearLayers();
 		if ($('input.poi-checkbox:checked').length > 0) {
-			build_overpass_query();
+			//build overpass query
+			query = '(';
+			$('#pois' + actTab + ' input.poi-checkbox:checked').each(function(i, element) {
+				query += 'node' + pois[element.dataset.key].query + '(BBOX);';
+				query += 'way' + pois[element.dataset.key].query + '(BBOX);';
+			});
+			query += ');out center;';
 			show_overpass_layer();
 		}
 		else {
@@ -539,8 +539,7 @@ function setting_changed(newcheckbox) {
 function show_pois_checkboxes(tabName) {
 	// build the content for the sidebar pane
 	var i = 0;
-	var content = '';
-	content += '<div class="anchor"><a id="gototop' + tabName + '" href="#gotobot' + tabName + '">| <span class="fa fa-arrow-down"></span> |</a></div>';
+	var content = '<div class="anchor"><a id="gototop' + tabName + '" href="#gotobot' + tabName + '">| <span class="fa fa-arrow-down"></span> |</a></div>';
 	content += '<table style="width:100%">';
 	for (var poi in pois) {
 		if (pois[poi].tabName == tabName) {
@@ -548,8 +547,8 @@ function show_pois_checkboxes(tabName) {
 			content += '<td style="overflow:hidden; white-space:nowrap">';
 			var checkbox = Mustache.render(
 				'<div class="poi-checkbox"> \
-					<label> \
-						<img src="assets/img/icons/{{icon}}.png"></img> \
+					<label title="{{name}}"> \
+						<img style="width:28px" src="assets/img/icons/{{icon}}.png"></img> \
 						<input type="checkbox" class="poi-checkbox" id="{{name}}" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
 					</label> \
 				</div>',
@@ -632,17 +631,16 @@ if (uri.hasQuery('P')) {
 		}
 	}
 	actTab = uri.search(true).T;
-	sidebar.open(actTab);
 	// highlight checkbox or hide sidebar for mobile users
 	if ($(window).width() >= 768) {
 		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').parent().parent().parent().effect("highlight", {}, 3000);
+		sidebar.open(actTab);
 	}
-	else sidebar.close();
 	setting_changed();
 }
 else {
-	// if not returning from a hash, give defaults
-	if (window.location.href.indexOf('#') == -1) map.setView([maplat, maplng], mapzoom);
+	// if not returning from a  permalink, give defaults
+	if (window.location.hash.indexOf('/') !== 3) map.setView([maplat, maplng], mapzoom);
 	if (uri.hasQuery('T')) actTab = uri.search(true).T;
 	if ($(window).width() >= 768) sidebar.open(actTab);
 }
@@ -667,17 +665,4 @@ function show_overpass_layer() {
 		}
 	});
 	iconLayer.addLayer(opl);
-}
-
-function get_permalink() {
-	var uri = URI(window.location.href);
-	var selectedPois = [];
-	var opennow;
-	if ($('input.opennow').is(':checked')) opennow = 1;
-	$('#pois' + actTab + ' input.poi-checkbox:checked').each(function(i, element) {
-		selectedPois.push(element.dataset.key);
-	});
-	// M = basemap, T = tab, O = opennow, P = pois
-	uri.query({'M': activeTileLayer, 'T': actTab, 'O': opennow, 'P': selectedPois });
-	return uri.href();
 }

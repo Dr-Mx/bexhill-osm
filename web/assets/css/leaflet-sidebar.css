@@ -121,6 +121,8 @@
 		min-width: 405px; } }
 
 .sidebar-header {
+	overflow:hidden;
+	white-space:nowrap;
 	margin: -10px -20px 0;
 	height: 55px;
 	padding: 0 20px;
@@ -146,7 +148,8 @@
 	width: 40px;
 	height: 55px;
 	text-align: center;
-	cursor: pointer; }
+	cursor: pointer;
+	background-color: #b05000; }
 .sidebar-left .sidebar-close {
 	right: 0; }
 .sidebar-right .sidebar-close {

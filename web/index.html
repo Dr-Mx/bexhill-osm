@@ -59,7 +59,7 @@
 		<div class="sidebar-content">
 			<!-- Upper tabs -->
 			<div class="sidebar-pane" id="home">
-				<h1 class="sidebar-header">Bexhill-on-Sea OSM<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Bexhill OpenStreetMap<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
 				<div class="sidebar-body">
 					<h3>Find an interest:</h3>
 					<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. 'clothing', 'tea', 'memorial', 'tourism')"></p>
@@ -87,7 +87,10 @@
 						<p>View Help <a onclick='sidebar.open("help")'>[<span style='color:#b05000' class='fa fa-question fa-fw'></span>]</a> for more assistance.</p>
 						<p>If you have any questions or wish to help out, contact details can be found under Information 
 						<a onclick='sidebar.open("information")'>[<span style='color:#b05000' class='fa fa-info fa-fw'></span>]</a>.</p>
-						<p><iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&width=98&layout=button&action=like&size=small&show_faces=false&share=true&height=65&appId" width="98" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe></p>
+						<p>
+							<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&layout=button&action=like&size=small&show_faces=false&share=false&appId" width="55" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbexhill-osm.org.uk&layout=button&size=small&mobile_iframe=true&appId" width="60" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+						</p>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="shops">
@@ -189,10 +192,11 @@
 					<h3>Points of Interest (POI)</h3>
 						To begin displaying a POI, zoom to an area on the map and click an item - up to 3 POIs can selected at once.  After a few 
 						seconds corresponding items will be displayed on the map as icons.  Larger map areas may take longer to load.
-						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview" style="width: 50%"></p>
+						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview" style="width: 45%"></p>
 						Once items have loaded on the map, click on their icon to see a pop-up detailing more specific information.  Opening hours are 
-						displayed as coloured icons showing if that place is currently open.
-						<p><img src="assets/img/popup.png" alt="Icon popup preview" style="width: 75%"></p>
+						displayed as coloured icons showing if that place is currently open.<br>
+						By clicking <span style='color:#b05000' class='fa fa-pencil fa-fw'></span> you can edit the item on openstreetmap.org.
+						<p><img src="assets/img/popup.png" alt="Marker popup preview" style="width: 75%"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
 						Find a route by either entering an address, or using the map context-menu.  Add additional markers by dragging an existing path to a new location.

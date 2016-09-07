@@ -118,7 +118,7 @@ var pois = {
 	},
 
 	doityourself : {
-		name : 'DIY & Hardware',
+		name : 'DIY/Hardware',
 		query : '["shop"~"doityourself|hardware"]',
 		iconName : 'tools',
 		tabName : 'shops',
@@ -167,7 +167,7 @@ var pois = {
 	},
 
 	houseware : {
-		name : 'House & Decor',
+		name : 'House/Decoration',
 		query : '["shop"~"houseware|interior_decoration|bathroom_furnishing|kitchen"]',
 		iconName : 'kitchen',
 		tabName : 'shops',
@@ -199,7 +199,7 @@ var pois = {
 	},
 
 	curtain : {
-		name : 'Curtain & Blinds',
+		name : 'Curtain/Blinds',
 		query : '["shop"~"curtain|window_blind"]',
 		iconName : 'curtains',
 		tabName : 'shops',
@@ -272,7 +272,7 @@ var pois = {
 	},
 
 	dry_cleaning : {
-		name : 'Laundry & Dry-Clean',
+		name : 'Laundry/Dry-Cleaning',
 		query : '["shop"~"dry_cleaning|laundry"]',
 		iconName : 'laundromat',
 		tabName : 'shops',
@@ -288,7 +288,7 @@ var pois = {
 	},
 
 	florist : {
-		name : 'Florist & Garden',
+		name : 'Florist/Garden Centre',
 		query : '["shop"~"florist|garden_centre"]',
 		iconName : 'garden',
 		tabName : 'shops',
@@ -520,7 +520,7 @@ var pois = {
 	},
 
 	bar : {
-		name : 'Bar & Nightclub',
+		name : 'Bar/Nightclub',
 		query : '["amenity"~"bar|nightclub"]',
 		iconName : 'bar_coktail',
 		tabName : 'amenities',
@@ -587,7 +587,7 @@ var pois = {
 	},
 
 	post_box : {
-		name : 'Post-Box & Office',
+		name : 'Post-Box/Office',
 		query : '[amenity~"post_box|post_office"]',
 		iconName : 'postal',
 		tabName : 'amenities',
@@ -689,11 +689,11 @@ var pois = {
 	},
 
 	animal_shelter : {
-		name : 'Animal-Shelter',
-		query : '[amenity=animal_shelter]',
+		name : 'Animal-Shltr/Brding',
+		query : '["amenity"~"animal_shelter|animal_boarding"]',
 		iconName : 'animal-shelter-export',
 		tabName : 'amenities',
-		tagKeyword : ['animal-shelter', 'pet']
+		tagKeyword : ['animal-shelter', 'animal-boarding', 'pet']
 	},
 
 	//SERVICES - 3875d7 - f34648 - 5ec8bd - 6b46f2
@@ -773,7 +773,7 @@ var pois = {
 	},
 
 	mobility : {
-		name : 'Mobility & Hearing',
+		name : 'Mobility/Hearing',
 		query : '["shop"~"mobility|hearing_aids"]',
 		iconName : 'mobility',
 		tabName : 'services',

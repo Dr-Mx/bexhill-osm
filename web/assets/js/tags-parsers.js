@@ -1,15 +1,27 @@
 // how much to truncate from web addresses labels depending on screensize
-if ($(window).width() > 500) var truncWidth = 35;
-else var truncWidth = 20;
+var truncWidth = 20;
+if ($(window).width() > 500) truncWidth = 35;
 
-var titleTmpl = '<h3>{{title}}</h3>';
 var tagTmpl = '<span class="fa fa-{{iconName}}"></span> <strong>{{tag}}:</strong> {{value}}<br>';
 var tag = '';
 
+// edit in osm
+function osmedit_parser(element) {
+	var link = Mustache.render(
+		'http://www.openstreetmap.org/edit?editor=id&{{type}}={{id}}', 
+		{type: element.type, id: element.id}
+	);
+	var markerPopup = Mustache.render(
+		'<a style="top:20px;right:20px;position:absolute;" href="{{link}}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>', 
+		{link: link}
+	);
+	return markerPopup;
+}
+
 function address_parser(element) {
-    var tags = element.tags;
-    var markerPopup = '';
-    if (tags['addr:street'] || tags['addr:place']) {
+	var tags = element.tags;
+	var markerPopup = '';
+	if (tags['addr:street'] || tags['addr:place']) {
 		var value = '';
 		if (tags['addr:housename']) value += tags['addr:housename'] + ', ';
 		if (tags['addr:flats']) value += 'Flats:' + tags['addr:flats'] + ', ';
@@ -22,15 +34,15 @@ function address_parser(element) {
 			tagTmpl,
 			{tag: 'Address', value: value, iconName: 'map-marker'}
 		);
-    }
-    return markerPopup;
+	}
+	return markerPopup;
 }
 
 function website_parser(element) {
 	var tags = element.tags;
 	var tagwebsite = tags.website ? tags.website : tags['contact:website'];
-	var markerPopup = '';
 	var link = '';
+	var markerPopup = '';
 	if (tagwebsite) {
 		var stagwebsite = tagwebsite;
 		if (stagwebsite.length > truncWidth) stagwebsite = stagwebsite.substr(0,truncWidth) + '&hellip;';
@@ -42,7 +54,7 @@ function website_parser(element) {
 			tagTmpl,
 			{tag: 'Website', value: link, iconName: 'globe'}
 		);
-    }
+	}
 	var tagurl = tags.url ? tags.url : tags['contact:url'];
 	if (tagurl) {
 		var stagurl = tagurl;
@@ -55,15 +67,15 @@ function website_parser(element) {
 			tagTmpl,
 			{tag: 'Just Eat', value: link, iconName: 'external-link-square'}
 		);
-    }
-    return markerPopup;
+	}
+	return markerPopup;
 }
 
 function facebook_parser(element) {
-    var tags = element.tags;
-    var tagfb = tags.facebook ? tags.facebook : tags['contact:facebook'];
-    var markerPopup = '';
-    if (tagfb) {
+	var tags = element.tags;
+	var tagfb = tags.facebook ? tags.facebook : tags['contact:facebook'];
+	var markerPopup = '';
+	if (tagfb) {
 		var stagfb = tagfb;
 		if (stagfb.length > truncWidth) stagfb = stagfb.substr(0,truncWidth) + '&hellip;';
 		var link = Mustache.render(
@@ -74,15 +86,15 @@ function facebook_parser(element) {
 			tagTmpl,
 			{tag: 'Facebook', value: link, iconName: 'facebook-official'}
 		);
-    }
-    return markerPopup;
+	}
+	return markerPopup;
 }
 
 function email_parser(element) {
-    var tags = element.tags;
-    tag = tags.email ? tags.email : tags['contact:email'];
-    var markerPopup = '';
-    if (tag) {
+	var tags = element.tags;
+	tag = tags.email ? tags.email : tags['contact:email'];
+	var markerPopup = '';
+	if (tag) {
 		if (tag.indexOf('@') == -1) return markerPopup;
 		var link = Mustache.render(
 			'<a href="mailto:{{email}}" target="_blank">{{email}}</a>',
@@ -92,15 +104,15 @@ function email_parser(element) {
 			tagTmpl,
 			{tag: 'E-mail', value: link, iconName: 'at'}
 		);
-    }
-    return markerPopup;
+	}
+	return markerPopup;
 }
 
 function phone_parser(element) {
-    var tags = element.tags;
-    tag = tags.phone ? tags.phone : tags['contact:phone'];
-    var markerPopup = '';
-    if (tag) {
+	var tags = element.tags;
+	tag = tags.phone ? tags.phone : tags['contact:phone'];
+	var markerPopup = '';
+	if (tag) {
 		var link = Mustache.render(
 			'<a href="tel:{{phone}}" title="Call now">{{phone}}</a>',
 			{phone: tag}
@@ -109,8 +121,8 @@ function phone_parser(element) {
 			tagTmpl,
 			{tag: 'Phone', value: link, iconName: 'phone'}
 		);
-    }
-    return markerPopup;
+	}
+	return markerPopup;
 }
 
 function payment_parser(element) {
@@ -331,7 +343,7 @@ function taxi_parser(element, titlePopup) {
 }		
 
 function recycle_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -356,7 +368,7 @@ function recycle_parser(element, titlePopup) {
 }
 
 function fuel_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -368,7 +380,7 @@ function fuel_parser(element, titlePopup) {
 }
 
 function carpark_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -380,7 +392,7 @@ function carpark_parser(element, titlePopup) {
 }
 
 function bikepark_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -392,7 +404,7 @@ function bikepark_parser(element, titlePopup) {
 }
 
 function hospital_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -402,7 +414,7 @@ function hospital_parser(element, titlePopup) {
 }
 
 function healthcare_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -413,7 +425,7 @@ function healthcare_parser(element, titlePopup) {
 }
 
 function defib_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -446,7 +458,7 @@ function club_parser(element, titlePopup) {
 }
 
 function clothes_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -459,7 +471,7 @@ function clothes_parser(element, titlePopup) {
 
 
 function craft_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -487,6 +499,7 @@ function info_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'information', label: 'Info Type', iconName: 'map-signs'},
+			{callback: generic_tag_parser, tag: 'board_type', label: 'Board Type', iconName: 'map-signs'},
 			{callback: generic_tag_parser, tag: 'map_size', label: 'Map Size', iconName: 'map-signs'},
 			{callback: generic_tag_parser, tag: 'ref', label: 'Reference', iconName: 'slack'}
 		]
@@ -503,7 +516,7 @@ function historic_parser(element, titlePopup) {
 			{callback: generic_tag_parser, tag: 'bunker_type', label: 'Military Bunker Type', iconName: 'fighter-jet'},
 			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist Name', iconName: 'user'},
 			{callback: generic_tag_parser, tag: 'start_date', label: 'Made', iconName: 'calendar'},
-			{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'pencil'},
+			{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'pencil-square-o'},
 			{callback: generic_tag_parser, tag: 'wreck:date_sunk', label: 'Date Sunk', iconName: 'ship'},
 			{callback: generic_tag_parser, tag: 'wreck:visible_at_low_tide', label: 'Visible at low tide', iconName: 'ship'}
 		]
@@ -528,7 +541,7 @@ function listedhe_parser(element) {
 }	
 
 function listed_parser(element, titlePopup) {
-    return parse_tags(
+	return parse_tags(
 		element,
 		titlePopup,
 		[
@@ -544,32 +557,28 @@ var openhrs = '';
 var state = '';
 function opening_hours_parser(element) {
 	try
-    {
+	{
 		var opening_hours = require('opening_hours');
 		var hours = element.tags.opening_hours;
-		if (hours === '') console.log("test");
 		var oh = new opening_hours(hours);
-        state = oh.getState();
+		state = oh.getState();
 		var prettified_value = oh.prettifyValue();
 		if (state === true) openhrs = "<span style='color:green' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
 		else if (state === false) openhrs = "<span style='color:red' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
 	}
-    catch(err)
-    {
-		if (hours !== null) console.log("ERROR: Object '" + element.tags.name + "' cannot parse hours: " + hours + ". " + err);
+	catch(err)
+	{
+		if (hours != null) console.log("ERROR: Object '" + element.tags.name + "' cannot parse hours: " + hours + ". " + err);
 		openhrs = '';
-    }
+	}
 	// return false state for no hours - opennow checkbox
 	if (element.tags.opening_hours === null) state = false;
 }
 
 function parse_tags(element, titlePopup, functions) {
-    var markerPopup = '';
-    markerPopup += Mustache.render(
-		titleTmpl,
-		{title: titlePopup}
-    );
-    functions = [
+	var markerPopup = Mustache.render('<h3>{{title}}<hr style="width:100%;"></h3>', {title: titlePopup});
+	functions = [
+		{callback: osmedit_parser},
 		{callback: generic_tag_parser, tag: 'name', label: 'Name'},
 		{callback: generic_tag_parser, tag: 'operator', label: 'Operator', iconName: 'building-o'},
 		{callback: address_parser},
