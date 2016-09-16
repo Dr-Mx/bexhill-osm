@@ -4,6 +4,8 @@ Searchable OpenStreetMap data showing POIs and other information
 
 ![Image of Bexhill-OSM](http://bexhill-osm.org.uk/assets/img/preview.jpg)
 
+[YouTube Demo Videos](https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us)
+
 ## Features
  - Mobile and desktop friendly
  - Geolocate user
