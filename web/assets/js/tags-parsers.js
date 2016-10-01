@@ -12,7 +12,7 @@ function osmedit_parser(element) {
 		{type: element.type, id: element.id}
 	);
 	var markerPopup = Mustache.render(
-		'<a style="top:20px;right:20px;position:absolute;" href="{{link}}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>', 
+		'<a style="top:19px;right:20px;position:absolute;" href="{{link}}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>', 
 		{link: link}
 	);
 	return markerPopup;
@@ -130,8 +130,8 @@ function payment_parser(element) {
 	var markerPopup = '';
 	tag = '';
 	if (tags['payment:cash'] == 'yes') tag += "cash; ";
-	if (tags['payment:debit_cards'] == 'yes') tag += "debit card; ";
-	if (tags['payment:credit_cards'] == 'yes') tag += "credit card; ";
+	if (tags['payment:mastercard'] == 'yes') tag += "mastercard; ";
+	if (tags['payment:visa'] == 'yes') tag += "visa; ";
 	if (tag !== '') markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Payment Options', value: tag, iconName: 'money'}
@@ -158,6 +158,21 @@ function wikipedia_parser(element) {
 		);
 	}
 	return markerPopup;
+}
+
+function hotel_parser(element, titlePopup) {
+	return parse_tags(
+		element,
+		titlePopup,
+		[
+			{callback: generic_tag_parser, tag: 'rooms', label: 'Rooms', iconName: 'bed'},
+			{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'bed'},
+			{callback: generic_tag_parser, tag: 'balcony', label: 'Balcony', iconName: 'dot-circle-o'},
+			{callback: generic_tag_parser, tag: 'view', label: 'View', iconName: 'dot-circle-o'},
+			{callback: generic_tag_parser, tag: 'cooking', label: 'Cooking facilities', iconName: 'dot-circle-o'},
+			{callback: star_parser}
+		]
+	);
 }
 
 function star_parser(element) {
@@ -229,15 +244,52 @@ function bike_parser(element, titlePopup) {
 	);
 }
 
+
 function school_parser(element, titlePopup) {
 	return parse_tags(
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'ref:edubase', label: 'EduBase Ref', iconName: 'graduation-cap'}
+			{callback: edubase_parser}
 		]
 	);
 }
+
+function edubase_parser(element) {
+	var tags = element.tags;
+	tag = tags['ref:edubase'];
+	var markerPopup = '';
+	if (tag) {
+		var link = Mustache.render(
+			'<a href="http://www.education.gov.uk/edubase/establishment/summary.xhtml?urn={{link}}" title="Department for Education" target="_blank">{{link}}</a>',
+			{link: tag}
+		);
+		markerPopup += Mustache.render(
+			tagTmpl,
+			{tag: 'EduBase Ref', value: link, iconName: 'graduation-cap'}
+		);
+	}
+	return markerPopup;
+}
+
+
+function listedhe_parser(element) {
+	var tags = element.tags;
+	tag = tags.HE_ref ? tags.HE_ref : tags['he:ref'];
+	var markerPopup= '';
+	if (tag) {
+		var link = Mustache.render(
+			'<a href="http://www.britishlistedbuildings.co.uk/en-{{link}}" title="British Listed Buildings" target="_blank">{{link}}</a>',
+			{link: tag}
+		);
+		markerPopup += Mustache.render(
+			tagTmpl,
+			{tag: 'Historic England Ref', value: link, iconName: 'home'}
+		);
+	}
+	return markerPopup;
+}
+
 
 function worship_parser(element, titlePopup) {
 	return parse_tags(
@@ -403,6 +455,19 @@ function bikepark_parser(element, titlePopup) {
 	);
 }
 
+function cctv_parser(element, titlePopup) {
+	return parse_tags(
+		element,
+		titlePopup,
+		[
+			{callback: generic_tag_parser, tag: 'surveillance:type', label: 'Type', iconName: 'eye'},
+			{callback: generic_tag_parser, tag: 'surveillance:zone', label: 'Zone', iconName: 'eye'},
+			{callback: generic_tag_parser, tag: 'camera:mount', label: 'Camera Mount', iconName: 'video-camera'},
+			{callback: generic_tag_parser, tag: 'camera:type', label: 'Camera Type', iconName: 'video-camera'}
+		]
+	);
+}
+
 function hospital_parser(element, titlePopup) {
 	return parse_tags(
 		element,
@@ -462,8 +527,7 @@ function clothes_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'female', label: 'Female', iconName: 'female'},
-			{callback: generic_tag_parser, tag: 'male', label: 'Male', iconName: 'male'},
+			{callback: generic_tag_parser, tag: 'clothes', label: 'Clothes Type', iconName: 'shopping-bag'},
 			{callback: generic_tag_parser, tag: 'second_hand', label: 'Second Hand', iconName: 'shopping-bag'}
 		]
 	);
@@ -576,7 +640,7 @@ function opening_hours_parser(element) {
 }
 
 function parse_tags(element, titlePopup, functions) {
-	var markerPopup = Mustache.render('<h3>{{title}}<hr style="width:100%;"></h3>', {title: titlePopup});
+	var markerPopup = Mustache.render('<h3>{{title}}&emsp;<hr style="width:100%;"></h3>', {title: titlePopup});
 	functions = [
 		{callback: osmedit_parser},
 		{callback: generic_tag_parser, tag: 'name', label: 'Name'},
@@ -587,7 +651,6 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: website_parser},
 		{callback: facebook_parser},
 		{callback: wikipedia_parser},
-		{callback: star_parser},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
 		{callback: generic_tag_parser, tag: 'internet_access', label: 'Internet Access', iconName: 'wifi'},
 		{callback: generic_tag_parser, tag: 'wheelchair', label: 'Wheelchair Access', iconName: 'wheelchair'},

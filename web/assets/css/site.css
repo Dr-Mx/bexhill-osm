@@ -62,6 +62,10 @@ input[type=checkbox] {
 	opacity: 0.9;
 }
 
+.leaflet-tooltip {
+	font-weight: bold;
+}
+
 .item > li {
 	font-size: 15px;
 }

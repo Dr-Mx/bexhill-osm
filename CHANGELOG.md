@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v1.4.0 - Leaflet 1.0
+
+**Date:** 01/10/2016
+
+Updated js
+ - leaflet.js 1.0.0
+ - Control.Loading.js 0.1.23
+ - easy-button.js 1.3.1
+ - leaflet-routing-machine.min.js 3.1.2
+
+Site changes
+ - Removed leaflet.label.js and replaced with leaflet's built-in version
+ - Added scale to map
+ - Made middle-mouse button a shortcut to lookup
+ - Added surveillance, school, rental apartment pois and parsers
+ - Use new flyTo, instead of setView for minimap
+
+ 
 ## v1.3.1 - Edit on OSM
 
 **Date:** 07/09/2016

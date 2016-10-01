@@ -173,11 +173,12 @@ L.Control.EasyButton = L.Control.extend({
     }
 
     if (this.options.leafletClasses){
-      L.DomUtil.addClass(this.button, 'easy-button-button leaflet-bar-part');
+      L.DomUtil.addClass(this.button, 'easy-button-button leaflet-bar-part leaflet-interactive');
     }
 
-    // don't let double clicks get to the map
+    // don't let double clicks and mousedown get to the map
     L.DomEvent.addListener(this.button, 'dblclick', L.DomEvent.stop);
+    L.DomEvent.addListener(this.button, 'mousedown', L.DomEvent.stop);
 
     // take care of normal clicks
     L.DomEvent.addListener(this.button,'click', function(e){

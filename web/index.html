@@ -25,7 +25,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0/dist/leaflet.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
 	<link rel="stylesheet" href="assets/css/Control.Loading.css" />
@@ -68,29 +68,29 @@
 					<h3>Welcome!</h3>
 						<p>Bexhill-OSM allows you to easily find information on local places like shops, cafés, parks, walks,  
 						wheelchair access, and much more in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
-						<p>Enter a keyword above to see those items on the map.  Alternatively, right-click / long-press on the map to lookup an individual item.</p>
+						<p>Enter a keyword above to see those items on the map.  Alternatively, zoom-in and middle-click / long-press a place to view its details.</p>
 						<p><img src="assets/img/minimap.png" class="minimap" alt="Minimap" usemap="#m_minimap"></p>
 						<map name="m_minimap">
-							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.setView([maplat, maplng], mapzoom, {'animate':true});" href="javascript:void(0);">
-							<area title="New Town" shape="rect" coords="236,187,324,245" onclick="map.setView([50.8390, 0.4730], 17, {'animate':true});" href="javascript:void(0);">
-							<area title="Old Town" shape="rect" coords="265,131,348,186" onclick="map.setView([50.8447, 0.4775], 17, {'animate':true});" href="javascript:void(0);">
-							<area title="Sidley" shape="rect" coords="238,21,336,97" onclick="map.setView([50.8560, 0.4700], 17, {'animate':true});" href="javascript:void(0);">
-							<area title="Glyne Gap" shape="rect" coords="403,115,477,196" onclick="map.setView([50.8445, 0.5005], 17, {'animate':true});" href="javascript:void(0);">
-							<area title="Pebsham" shape="rect" coords="379,55,477,114" onclick="map.setView([50.8505, 0.4990], 17, {'animate':true});" href="javascript:void(0);">
-							<area title="Collington" shape="rect" coords="103,136,197,220" onclick="map.setView([50.8410, 0.4515], 16, {'animate':true});" href="javascript:void(0);">
-							<area title="The Highlands" shape="rect" coords="110,1,237,46" onclick="map.setView([50.8590, 0.4545], 17, {'animate':true});" href="javascript:void(0);">
-							<area title="Little Common" shape="rect" coords="1,102,101,184" onclick="map.setView([50.8460, 0.4338], 17, {'animate':true});" href="javascript:void(0);">
-							<area title="Cooden" shape="rect" coords="1,185,101,270" onclick="map.setView([50.8375, 0.4335], 16, {'animate':true});" href="javascript:void(0);">
-							<area title="Glenleigh Park" shape="rect" coords="110,48,237,118" onclick="map.setView([50.8520, 0.4552], 16, {'animate':true});" href="javascript:void(0);">
+							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.flyTo([maplat, maplng], mapzoom);" href="javascript:void(0);">
+							<area title="New Town" shape="rect" coords="236,187,324,245" onclick="map.flyTo([50.8390, 0.4730], 17);" href="javascript:void(0);">
+							<area title="Old Town" shape="rect" coords="265,131,348,186" onclick="map.flyTo([50.8447, 0.4775], 17);" href="javascript:void(0);">
+							<area title="Sidley" shape="rect" coords="238,21,336,97" onclick="map.flyTo([50.8560, 0.4700], 17);" href="javascript:void(0);">
+							<area title="Glyne Gap" shape="rect" coords="403,115,477,196" onclick="map.flyTo([50.8445, 0.5005], 17);" href="javascript:void(0);">
+							<area title="Pebsham" shape="rect" coords="379,55,477,114" onclick="map.flyTo([50.8505, 0.4990], 17);" href="javascript:void(0);">
+							<area title="Collington" shape="rect" coords="103,136,197,220" onclick="map.flyTo([50.8410, 0.4515], 16);" href="javascript:void(0);">
+							<area title="The Highlands" shape="rect" coords="110,1,237,46" onclick="map.flyTo([50.8590, 0.4545], 17);" href="javascript:void(0);">
+							<area title="Little Common" shape="rect" coords="1,102,101,184" onclick="map.flyTo([50.8460, 0.4338], 17);" href="javascript:void(0);">
+							<area title="Cooden" shape="rect" coords="1,185,101,270" onclick="map.flyTo([50.8375, 0.4335], 16);" href="javascript:void(0);">
+							<area title="Glenleigh Park" shape="rect" coords="110,48,237,118" onclick="map.flyTo([50.8520, 0.4552], 16);" href="javascript:void(0);">
 						</map>
 						<p class="lorem">Note: areas to the west are work-in-progress.</p>
-						<p>View Help <a onclick='sidebar.open("help")'>[<span style='color:#b05000' class='fa fa-question fa-fw'></span>]</a> for more assistance.</p>
-						<p>If you have any questions or wish to help out, contact details can be found under Information 
-						<a onclick='sidebar.open("information")'>[<span style='color:#b05000' class='fa fa-info fa-fw'></span>]</a>.</p>
+						<p>View Help <a onclick="sidebar.open('help')">[<span style="color:#b05000" class="fa fa-question fa-fw"></span>]</a> for more assistance.</p>
+						<p>If you have any questions or wish to help out, contact details can be found under Information <a onclick="sidebar.open('information')">[<span style="color:#b05000" class="fa fa-info fa-fw"></span>]</a>.</p>
 						<p>
 							<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&layout=button&action=like&size=small&show_faces=false&share=false&appId" width="55" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbexhill-osm.org.uk&layout=button&size=small&mobile_iframe=true&appId" width="60" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 						</p>
+						<span class="lorem">Bexhill-OSM &copy; 2016</span>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="shops">
@@ -117,26 +117,26 @@
 					<p id="routingControl">
 					<h3>Suggested leisure walks</h3>
 					<div id="accordion">
-						<p class="onlink" onclick='suggwalk("tmt")'><i class="fa fa-map-marker"></i> The Motor Trail</p>
+						<p class="onlink" onclick="suggwalk('tmt')"><i class="fa fa-map-marker"></i> The Motor Trail</p>
 						<div>
 							In May 1902 Bexhill on Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels 
 							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside Cooden Beach Hotel).
 							<a href="http://www.discoverbexhill.com/docs/bexhill-guide-2013.pdf#page=5" target="_blank">Source</a>.<br>
-							<p class='walkinfo' onclick='walkinfo()'><i class="fa fa-info"></i>&nbsp; Click to see information panels.</p>
+							<p class="walkinfo" onclick="walkinfo()"><i class="fa fa-info"></i>&nbsp; Click to see information panels.</p>
 						</div>
-						<p class="onlink" onclick='suggwalk("1066")'><i class="fa fa-map-marker"></i> 1066 Country Walk - Bexhill Link</p>
+						<p class="onlink" onclick="suggwalk('1066')"><i class="fa fa-map-marker"></i> 1066 Country Walk - Bexhill Link</p>
 						<div>
 							The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time.  This is a 
 							section of the Bexhill - Battle link, the full route can be found <a href="http://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">here</a>.
 						</div>
-						<p class="onlink" onclick='suggwalk("bc1")'><i class="fa fa-map-marker"></i> Bexhill Circular</p>
+						<p class="onlink" onclick="suggwalk('bc1')"><i class="fa fa-map-marker"></i> Bexhill Circular</p>
 						<div>
 							This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient 
 							woodland, reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy 
 							areas. Refreshments and toilets are available at the start point - Bexhill railway station - and towards the end of the walk. 
 							<a href="http://www.riverocean.org.uk/ocean/webwalks/Bexhill%20Circular.html" target="_blank">Source</a>.
 						</div>
-						<p class="onlink" onclick='suggwalk("wwh")'><i class="fa fa-map-marker"></i> Walking the Way to Health</p>
+						<p class="onlink" onclick="suggwalk('wwh')"><i class="fa fa-map-marker"></i> Walking the Way to Health</p>
 						<div>
 							The route of this walk is marked out by a series of 10 plaques along the promenade.  Launched in 2011, it hopes to 
 							encourage people to regularly walk a specific distance along the promenade.  Small plinths are placed at ground level 
@@ -159,21 +159,23 @@
 						<a href="#gotopoi">Points of Interest (POI)</a><br>
 						<a href="#gotowalking">Walking Routes</a><br>
 					</p>
+					<hr>
+					<b><span style="color:#e52d27" class="fa fa-youtube-play"></span> <a href="https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us" title="YouTube" target="_blank">View Demo Videos</a></b>
 					<a id="gotocontrols"></a><hr>
 					<h3>Map Controls</h3>
-						The zoom controls (<span style='color:#b05000' class='fa fa-plus'></span> / <span style='color:#b05000' class='fa fa-minus'></span>) will enlarge and shrink the map.<br><br>
-						Your current position can be located if you are in Bexhill by clicking the arrow icon (<span style='color:#b05000' class='fa fa-location-arrow'></span>).<br><br>
-						Find an address on the map by entering part of it into the search box (<span style='color:#b05000' class='fa fa-search'></span>).  A selection will appear if multiple results are found.<br><br>
-						If you wish to share your current view and selected options, click the link icon (<span style='color:#b05000' class='fa fa-link'></span>) and copy the text displayed.<br><br>
-						To clear all current layers on the map, click the bin (<span style='color:#b05000' class='fa fa-trash'></span>).  Right-click / long press will reload the website to defaults.<br><br>
+						The zoom controls (<span style="color:#b05000" class="fa fa-plus"></span> / <span style="color:#b05000" class="fa fa-minus"></span>) will enlarge and shrink the map.<br><br>
+						Your current position can be located if you are in Bexhill by clicking the arrow icon (<span style="color:#b05000" class="fa fa-location-arrow"></span>).<br><br>
+						Find an address on the map by entering part of it into the search box (<span style="color:#b05000" class="fa fa-search"></span>).  A selection will appear if multiple results are found.<br><br>
+						If you wish to share your current view and selected options, click the link icon (<span style="color:#b05000" class="fa fa-link"></span>) and copy the text displayed.<br><br>
+						To clear all current layers on the map, click the bin (<span style="color:#b05000" class="fa fa-trash"></span>).  Right-click / long press will reload the website to defaults.<br><br>
 						Various styles of base map can be displayed using the overlay picker - located at the top-right of the page.
 						<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
-						<span class='fa fa-search fa-fw'></span> Lookup: Display information on selected item, only works on higher zoom levels.<br><br>
-						<span class='fa fa-map-marker fa-fw'></span> Start / End walk: Plot markers to create a walking route.<br><br>
-						<span class='fa fa-external-link fa-fw'></span> Improve map: Open openstreetmap.org where you can leave a note or edit the map.
+						<span class="fa fa-search fa-fw"></span> Lookup: Display information on an item under the cursor, only works on higher zoom levels.  Middle-clicking the scroll-wheel is equivalent.<br><br>
+						<span class="fa fa-map-marker fa-fw"></span> Start / End walk: Plot markers to create a walking route.<br><br>
+						<span class="fa fa-external-link fa-fw"></span> Improve map: Open openstreetmap.org where you can leave a note or edit the map.
 						<p><img src="assets/img/context.png" alt="Context-menu preview"></p>
 					<a id="gotointerest"></a><hr>
 					<h3>Find Interest</h3>
@@ -182,11 +184,11 @@
 						<p><img src="assets/img/find.png" alt="Find interest Preview" style="width: 75%"></p>
 						<a id="gototabs"></a><hr>
 					<h3>Tabs</h3>
-						[<span style='color:#b05000' class='fa fa-shopping-bag fa-fw'></span>] Shops: Buildings where general items are sold.<br><br>
-						[<span style='color:#b05000' class='fa fa-coffee fa-fw'></span>] Amenities: Where to find a meal or a cup of coffee.  Social facilities, transport, recycling.<br><br>
-						[<span style='color:#b05000' class='fa fa-heartbeat fa-fw'></span>] Services: Public and private offices and services.<br><br>
-						[<span style='color:#b05000' class='fa fa-tree fa-fw'></span>] Leisure & Tourism: Where to stay, go, socialise and discover Bexhill's historical places.<br><br>
-						[<span style='color:#b05000' class='fa fa-compass fa-fw'></span>] Walking Routes: Select from a few local walks, or create your own path through the many twittens (see below for more info).
+						[<span style="color:#b05000" class="fa fa-shopping-bag fa-fw"></span>] Shops: Buildings where general items are sold.<br><br>
+						[<span style="color:#b05000" class="fa fa-coffee fa-fw"></span>] Amenities: Where to find a meal or a cup of coffee.  Social facilities, transport, recycling.<br><br>
+						[<span style="color:#b05000" class="fa fa-heartbeat fa-fw"></span>] Services: Public and private offices and services.<br><br>
+						[<span style="color:#b05000" class="fa fa-tree fa-fw"></span>] Leisure & Tourism: Where to stay, go, socialise and discover Bexhill's historical places.<br><br>
+						[<span style="color:#b05000" class="fa fa-compass fa-fw"></span>] Walking Routes: Select from a few local walks, or create your own path through the many twittens (see below for more info).
 					<p>
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
@@ -195,7 +197,7 @@
 						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview" style="width: 45%"></p>
 						Once items have loaded on the map, click on their icon to see a pop-up detailing more specific information.  Opening hours are 
 						displayed as coloured icons showing if that place is currently open.<br>
-						By clicking <span style='color:#b05000' class='fa fa-pencil fa-fw'></span> you can edit the item on openstreetmap.org.
+						By clicking <span style="color:#b05000" class="fa fa-pencil fa-fw"></span> you can edit the item on openstreetmap.org.
 						<p><img src="assets/img/popup.png" alt="Marker popup preview" style="width: 75%"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
@@ -220,8 +222,8 @@
 						presents data that has been added by volunteers in Bexhill-on-Sea.</p>
 						<p>Both this website and the underlying area on OpenStreetMap are managed by Alexis Markwick.</p>
 						<p>If you have any enquiries I can be reached via:<br>
-						<a href="mailto:info@bexhill-osm.org.uk" title="Email"><i style='color:#dd4b39' class="fa fa-envelope fa-fw"></i> info@bexhill-osm.org.uk</a><br>
-						<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style='color:#3b5998' class="fa fa-facebook-official fa-fw"></i> facebook.com/bexhillosm</a></p>
+						<a href="mailto:info@bexhill-osm.org.uk" title="Email"><i style="color:#dd4b39" class="fa fa-envelope fa-fw"></i> info@bexhill-osm.org.uk</a><br>
+						<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998" class="fa fa-facebook-official fa-fw"></i> facebook.com/bexhillosm</a></p>
 					<a id="gotolinks"></a><hr>
 					<h3>Links</h3>
 					<p>
@@ -254,7 +256,7 @@
 					<h3>Software</h3>
 						<p>Source-code for Bexhill-OSM can be downloaded from <a href="https://github.com/Dr-Mx/osm-pois" target="_blank"><i class="fa fa-github"></i> GitHub</a>, as well as a <a href="https://github.com/Dr-Mx/osm-pois/blob/master/CHANGELOG.md" target="_blank">change-log</a> of continuing web developments.
 						<br>To see my recent map changes click <a href="http://www.openstreetmap.org/user/Dr-Mx/history" target="_blank">here</a>.</p>
-						<p>Special thanks to the the developers below, for without them this website would not be where it is today:</p>
+						<p>Special thanks to the developers below, for without them this website would not be where it is today:</p>
 						<ul>
 							<li><a href="https://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> (founding project) &copy; Manuel Kaufmann</li>
 							<li><a href="http://leafletjs.com/" target="_blank">Leaflet</a> &copy; Vladimir Agafonkin</li>
@@ -269,7 +271,6 @@
 									<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
 									<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
 									<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael Lawrence Evans</li>
-									<li><a href="https://github.com/Leaflet/Leaflet.label" target="_blank">Leaflet.label</a> &copy; Leaflet</li>
 								</ol>
 							</li>
 							<li><a href="https://fortawesome.github.io/Font-Awesome/" target="_blank">Font-Awesome</a> &copy; Dave Gandy</li>
@@ -293,7 +294,7 @@
     <div id="map" class="sidebar-map"></div>
 
     <!-- Overpass query search icon -->
-	<div id="spinner" style="display: none;">
+	<div id="spinner" style="display:none; z-index:500">
 		<span class="fa-stack" style="font-size:75px">
 			<i class="fa fa-circle fa-stack-1x" style="font-size:100px; color:rgba(222, 222, 222, 0.9)"></i>
 			<i class="fa fa-spinner fa-pulse fa-stack-1x"></i>
@@ -310,7 +311,6 @@
 	<script src="assets/js/jquery.easy-autocomplete.min.js"></script>
 	<script src="assets/js/leaflet-routing-machine.min.js"></script>
 	<script src="assets/js/lrm-mapbox-1.0.4.min.js"></script>
-    <script src="assets/js/leaflet.label.js"></script>
     <script src="assets/js/jquery-sidebar.min.js"></script>
 	<script src="assets/js/Control.Geocoder.js"></script>
     <script src="assets/js/Control.Loading.js"></script>

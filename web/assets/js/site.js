@@ -14,10 +14,10 @@ var maplng = '0.4676';
 var mapzoom = '15';
 // map base layer
 var activeTileLayer = 'osmstd';
-// default tab to open
+// tab to open
 var actTab = 'home';
 // leaflet icon image path
-L.Icon.Default.imagePath = 'assets/img/leaflet';
+L.Icon.Default.imagePath = 'assets/img/leaflet/';
 
 // swipe away sidebar
 $(function() {
@@ -43,8 +43,8 @@ $('.sidebar-tabs').click(function() {
 	if (actTab !== $('.sidebar-pane.active').attr('id')) {
 		actTab = $('.sidebar-pane.active').attr('id');
 		if (actTab === 'shops' || actTab === 'amenities' || actTab === 'services' || actTab === 'leisure') clear_map();
-		if (actTab === 'home') $('map').imageMapResize();
 	}
+	if (actTab === 'home') setTimeout(function() { $('map').imageMapResize(); }, 500);
 });
 
 // don't escape HTML string in Mustache
@@ -102,6 +102,7 @@ function improveMap(e) {
 	window.open("http://www.openstreetmap.org/note/new#map=" + map.getZoom() + "/" + e.latlng.lat + "/" + e.latlng.lng, "_blank");
 }
 
+
 // https://github.com/Leaflet/Leaflet
 var iconLayer = new L.LayerGroup();
 map.addLayer(iconLayer);
@@ -124,9 +125,9 @@ var tileLayerData = {
 		zoom: '20'
 	},
 	trnsprt: {
-		name: 'Transport Dark',
-		url: 'https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey=' + thuforkey,
-		attribution: '<a href="http://thunderforest.com/maps/transport-dark/" target="_blank">ThunderForest</a>',
+		name: 'Public Transport',
+		url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + thuforkey,
+		attribution: '<a href="http://thunderforest.com/maps/transport/" target="_blank">ThunderForest</a>',
 		zoom: '20'
 	},
 	matlas: {
@@ -141,6 +142,12 @@ var tileLayerData = {
 		attribution: '<a href="http://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
 		zoom: '19'
 	},
+	antique: {
+		name: 'Antique Style',
+		url: 'https://{s}.tiles.mapbox.com/v4/lrqdo.me2bng9n/{z}/{x}/{y}.png?access_token=' + mapboxkey,
+		attribution: '<a href="https://laruchequiditoui.fr/" target="_blank">LRQDO</a>',
+		zoom: '20'
+	},
 	mbxstr: {
 		name: 'Mapbox Streets',
 		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + mapboxkey,
@@ -152,12 +159,6 @@ var tileLayerData = {
 		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=' + mapboxkey,
 		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
 		zoom: '20'
-	},
-	mbxsat: {
-		name: 'MapBox Satellite',
-		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png?access_token=' + mapboxkey,
-		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
-		zoom: '19'
 	}
 };
 var attribution = '&copy; <a href="http://openstreetmap.org/copyright" title="Copyright and License" target="_blank">OpenStreetMap contributors</a>';
@@ -178,6 +179,7 @@ for (var tile in tileLayerData) {
 	tileList.keyname.push(tile);
 }
 L.control.layers(tileLayers).addTo(map);
+L.control.scale({metric:false, position:'bottomright'}).addTo(map);
 
 // get map base layer name on change
 map.on('baselayerchange', function(e) {
@@ -192,6 +194,12 @@ map.on('zoomend', function() {
 	else map.contextmenu.setDisabled(0, true);
 });
 
+// allow middle-mouse button reverselookup
+map.on('mouseup', function(e) {
+	if (e.originalEvent.button === 1 && map.getZoom() >= 18) reverseLookup(e);
+});
+
+
 // https://github.com/domoritz/leaflet-locatecontrol
 L.control.locate({
 	icon: 'fa fa-location-arrow',
@@ -203,8 +211,8 @@ L.control.locate({
 		popup: 'You are within {distance} {unit} from this point',
 		outsideMapBoundsMsg: 'You appear to be located outside Bexhill.  Come visit!'
 	},
-	onLocationError: function(err) {
-		alert('Sorry, there was an error while trying to locate you. ' + err);
+	onLocationError: function() {
+		alert('Sorry, there was an error while trying to locate you.');
 	}
 }).addTo(map);
 
@@ -292,6 +300,7 @@ var loadingControl = L.Control.loading({
 });
 map.addControl(loadingControl);
 
+
 // https://github.com/perliedman/leaflet-routing-machine
 var routingControl = L.Routing.control({
 	units: 'imperial',
@@ -364,9 +373,7 @@ var options = {
 	]
 };
 // push categories into options array
-for (var x = 1; x < category.length; x++) {
-	options.categories.push(category[x]);
-}
+for (var x = 1; x < category.length; x++) {	options.categories.push(category[x]); }
 $('#autocomplete').easyAutocomplete(options);
 $('div.easy-autocomplete').removeAttr('style');
 
@@ -375,17 +382,11 @@ var spinner = 0;
 function callback(data) {
 	if (spinner > 0) spinner -= 1;
 	if (spinner === 0) $('#spinner').hide();
-
 	for(i=0; i < data.elements.length; i++) {
 		e = data.elements[i];
-
 		if (e.id in this.instance._ids) return;
 		this.instance._ids[e.id] = true;
-
-		var pos = (e.type == 'node') ?
-			new L.LatLng(e.lat, e.lon) :
-			new L.LatLng(e.center.lat, e.center.lon);
-
+		var pos = (e.type == 'node') ? new L.LatLng(e.lat, e.lon) :	new L.LatLng(e.center.lat, e.center.lon);
 		var type = '';
 		if (e.tags.amenity) {
 			if (type === '') type = e.tags.amenity;
@@ -402,6 +403,9 @@ function callback(data) {
 			}
 			if (type === 'animal_boarding') type = 'animal_shelter';
 		}
+		if (e.tags.man_made) {
+			if (type === '') type = e.tags.man_made;
+		}
 		if (e.tags.tourism) {
 			if (type === '') type = e.tags.tourism;
 		}
@@ -412,8 +416,10 @@ function callback(data) {
 		if (e.tags.shop) {
 			if (type === '') type = e.tags.shop;
 			// Group similar pois
+			if (type === 'deli') type = 'butcher';
 			if (type === 'e-cigarette') type = 'tobacco';
 			if (type === 'hardware') type = 'doityourself';
+			if (type === 'boutique') type = 'clothes';
 			if (type === 'window_blind') type = 'curtain';
 			if (type === 'laundry') type = 'dry_cleaning';
 			if (type === 'garden_centre') type = 'florist';
@@ -469,17 +475,13 @@ function callback(data) {
 			riseOnHover: true
 		});
 		// set width of popup on screensize
-		var customOptions = { 'maxWidth': '250' };
-		if ($(window).width() > 500) customOptions  = { 'maxWidth': '350' };
+		var customOptions = { maxWidth: 250 };
+		if ($(window).width() > 500) customOptions = { maxWidth: 350 };
 		// check if already defined poi
 		if (poi) {
-			// show a label next to the icon on mouse hover
-			if (e.tags.name) {
-				marker.bindLabel(
-					e.tags.name,
-					{direction: 'auto', offset: [27, -32]}
-				);
-			}
+			// show a tooltip on mouse hover
+			if (e.tags.name) marker.bindTooltip(e.tags.name, {direction: 'left', offset: [-15, -2]}).openTooltip();
+			// show pop-up
 			var markerPopup = generic_poi_parser(e, poi.name);
 			if (poi.tagParser) markerPopup = poi.tagParser(e, poi.name);
 			marker.bindPopup(markerPopup, customOptions);
@@ -656,7 +658,7 @@ function show_overpass_layer() {
 		debug: false,
 		minzoom: 15,
 		query: query + '&contact=' + email, //contact info only for use with .fr endpoint
-		endpoint: "http://api.openstreetmap.fr/oapi/interpreter/",
+		endpoint: "https://api.openstreetmap.fr/oapi/interpreter/",
 		callback: callback,
 		minZoomIndicatorOptions: {
 			position: 'topright',
