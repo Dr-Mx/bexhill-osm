@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v1.5.0 -  Address Search Reverse Lookup
+
+**Date:** 09/10/2016
+
+Updated js
+ - leaflet.js 1.0.1 (moved back to hosted)
+ - Control.Geocoder 1.5.2
+ - leaflet-routing-machine.min.js 3.2.0
+ - Leaflet.contextmenu 1.0.1
+
+Site changes
+ - Reverse lookup now works for 'Find address' button
+ - Recoded some parsers to get relevant labels from tags rather than code
+ - Added parser for Food Hygine ids, facility parser shows useful icons
+ - Disable caching
+
+
 ## v1.4.0 - Leaflet 1.0
 
 **Date:** 01/10/2016
@@ -17,7 +34,7 @@ Site changes
  - Added surveillance, school, rental apartment pois and parsers
  - Use new flyTo, instead of setView for minimap
 
- 
+
 ## v1.3.1 - Edit on OSM
 
 **Date:** 07/09/2016
@@ -98,6 +115,7 @@ Site changes
  - More global variables on site.js
  - Various cosmetic changes to try and be consistent on more browsers
 
+
 ## v1.2.0 - Walking routes update
 
 **Date:** 15/07/2016
@@ -122,6 +140,7 @@ Site changes
  - Url hash now keeps map position and tab
  - Improve Map - links to osm's add note to map
 
+
 ## v1.1.1 - opening_hours.js update
 
 **Date:** 05/07/2016
@@ -132,7 +151,8 @@ Updated js
 Site changes
  - Fixed some POIs not parsing title tag correctly
  - Top/bottom jumps links on all POI tabs (easier for smaller mobile devices)
- 
+
+
 ## v1.1.0 - Find Interest Input
 
 **Date:** 01/07/2016

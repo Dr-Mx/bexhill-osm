@@ -4,14 +4,9 @@ var thuforkey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
 // email for overpass .fr endpoint
 var email = 'info@bexhill-osm.org.uk';
 // map bounds
-var mapleft = '0.3000';
-var maptop = '50.8200';
-var mapright = '0.5350';
-var mapbottom = '50.8800';
+var mapleft = '0.3000', maptop = '50.8200', mapright = '0.5350', mapbottom = '50.8800';
 // map centre
-var maplat = '50.8424';
-var maplng = '0.4676';
-var mapzoom = '15';
+var maplat = '50.8424', maplng = '0.4676', mapzoom = '15';
 // map base layer
 var activeTileLayer = 'osmstd';
 // tab to open
@@ -19,10 +14,10 @@ var actTab = 'home';
 // leaflet icon image path
 L.Icon.Default.imagePath = 'assets/img/leaflet/';
 
-// swipe away sidebar
+// swipe away sidebar on larger touch devices
 $(function() {
-	$(".sidebar-content").on("swipeleft", function() {
-		if ($(window).width() >= 768) sidebar.close();
+	$('.sidebar-content').on('swipeleft', function() {
+		if ($(window).width() >= 768 && (L.Browser.touch)) sidebar.close();
 	});
 });
 
@@ -38,8 +33,8 @@ $(document).on('click', 'a[href*="#goto"]', function(e) {
 	}
 });
 
-// clear checkboxes if moving to another poi tab
 $('.sidebar-tabs').click(function() {
+	// clear checkboxes if moving to another poi tab
 	if (actTab !== $('.sidebar-pane.active').attr('id')) {
 		actTab = $('.sidebar-pane.active').attr('id');
 		if (actTab === 'shops' || actTab === 'amenities' || actTab === 'services' || actTab === 'leisure') clear_map();
@@ -99,9 +94,8 @@ function walkFinish(e) {
 	routingControl.spliceWaypoints(routingControl.getWaypoints().length - 1, 1, e.latlng);
 }
 function improveMap(e) {
-	window.open("http://www.openstreetmap.org/note/new#map=" + map.getZoom() + "/" + e.latlng.lat + "/" + e.latlng.lng, "_blank");
+	window.open('http://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, '_blank');
 }
-
 
 // https://github.com/Leaflet/Leaflet
 var iconLayer = new L.LayerGroup();
@@ -181,7 +175,7 @@ for (var tile in tileLayerData) {
 L.control.layers(tileLayers).addTo(map);
 L.control.scale({metric:false, position:'bottomright'}).addTo(map);
 
-// get map base layer name on change
+// get basemap layer name on change
 map.on('baselayerchange', function(e) {
   for (var x = 0; x < tileList.name.length; x++) {
 	if (e.name == tileList.name[x]) activeTileLayer = tileList.keyname[x];
@@ -198,7 +192,6 @@ map.on('zoomend', function() {
 map.on('mouseup', function(e) {
 	if (e.originalEvent.button === 1 && map.getZoom() >= 18) reverseLookup(e);
 });
-
 
 // https://github.com/domoritz/leaflet-locatecontrol
 L.control.locate({
@@ -217,7 +210,6 @@ L.control.locate({
 }).addTo(map);
 
 // https://github.com/perliedman/leaflet-control-geocoder
-var poly;
 L.Control.geocoder({
 	geocoder: L.Control.Geocoder.nominatim({
 		geocodingQueryParams: {
@@ -230,21 +222,13 @@ L.Control.geocoder({
 	position: 'topleft'
 })
 .on('markgeocode', function(e) {
-	var bbox = e.geocode.bbox;
-	var center = e.geocode.center;
-	if (map.hasLayer(poly)) { map.removeLayer(poly); }
-	poly = L.polygon([
-		bbox.getSouthEast(),
-		bbox.getNorthEast(),
-		bbox.getNorthWest(),
-		bbox.getSouthWest()
-	],
-	{
-		color: '#b05000',
-		fill: false
-	}
-	).addTo(map);
-	map.panTo(center);
+	rLookup = true;
+	geoMarker = e.geocode;
+	var osm_id = geoMarker.properties.osm_id;
+	if (geoMarker.properties.osm_type === 'node') query = 'node' + '(' + osm_id + ');' + 'out center;';
+	if (geoMarker.properties.osm_type === 'way') query = 'way' + '(' + osm_id + ');' + 'out center;';
+	show_overpass_layer();
+	map.panTo(geoMarker.center);
 })
 .addTo(map);
 $('.leaflet-control-geocoder-icon').attr('title','Find address');
@@ -275,15 +259,14 @@ L.easyButton({
 		icon:'fa fa-trash',
 		title:'Clear map',
 		onClick:function() {
-			if (map.hasLayer(poly)) { map.removeLayer(poly); }
 			routingControl.setWaypoints([]);
-			$("#accordion").accordion({active: false});
+			$('#accordion').accordion({active: false});
 			clear_map();
 		}
 	}]
 }).addTo(map);
 // full reload on right click
-$('#btnclearmap').bind("contextmenu",function() {
+$('#btnclearmap').bind('contextmenu',function() {
 	$(location).attr('href', window.location.pathname);
 	return false;
 });
@@ -295,11 +278,8 @@ var sidebar = $('#sidebar').sidebar();
 new L.Hash(map);
 
 // https://github.com/ebrelsford/Leaflet.loading
-var loadingControl = L.Control.loading({
-	separate: true
-});
+var loadingControl = L.Control.loading({separate: true});
 map.addControl(loadingControl);
-
 
 // https://github.com/perliedman/leaflet-routing-machine
 var routingControl = L.Routing.control({
@@ -323,8 +303,8 @@ var routingControl = L.Routing.control({
 });
 var routeBlock = routingControl.onAdd(map);	
 document.getElementById('routingControl').appendChild(routeBlock);
-$( "#accordion" ).accordion({
-	heightStyle: "content",
+$('#accordion').accordion({
+	heightStyle: 'content',
 	collapsible: true,
 	active: false
 });
@@ -335,7 +315,7 @@ var category = [];
 var i = 0;
 // get all tags
 for (var poi in pois) {
-	poitags += '"' + pois[poi].tabName + "~" + poi + '": ' + JSON.stringify(pois[poi].tagKeyword) + ', ';
+	poitags += '"' + pois[poi].tabName + '~' + poi + '": ' + JSON.stringify(pois[poi].tagKeyword) + ', ';
 	category[i] = {listLocation: pois[poi].tabName + '~' + poi, header: pois[poi].tabName + ' - ' + pois[poi].name};
 	i++;
 }
@@ -352,7 +332,7 @@ var options = {
 			// Find selected items category, split it to get checkbox, then display
 			var z = ($('#autocomplete').getSelectedItemIndex());
 			var catsplit = (document.getElementsByClassName('eac-category')[z].innerText);
-			catsplit = catsplit.split(" - ");
+			catsplit = catsplit.split(' - ');
 			actTab = catsplit[0];
 			sidebar.open(actTab);
 			$('#pois' + actTab + ' input[id="' + catsplit[1] + '"]').prop('checked', true);
@@ -373,7 +353,7 @@ var options = {
 	]
 };
 // push categories into options array
-for (var x = 1; x < category.length; x++) {	options.categories.push(category[x]); }
+for (var x = 1; x < category.length; x++) { options.categories.push(category[x]); }
 $('#autocomplete').easyAutocomplete(options);
 $('div.easy-autocomplete').removeAttr('style');
 
@@ -386,7 +366,7 @@ function callback(data) {
 		e = data.elements[i];
 		if (e.id in this.instance._ids) return;
 		this.instance._ids[e.id] = true;
-		var pos = (e.type == 'node') ? new L.LatLng(e.lat, e.lon) :	new L.LatLng(e.center.lat, e.center.lon);
+		var pos = (e.type == 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
 		var type = '';
 		if (e.tags.amenity) {
 			if (type === '') type = e.tags.amenity;
@@ -486,20 +466,20 @@ function callback(data) {
 			if (poi.tagParser) markerPopup = poi.tagParser(e, poi.name);
 			marker.bindPopup(markerPopup, customOptions);
 			// check if coming from reverselookup
-			if (rLookup === false) {
-				// display only open facilities on opennow checkbox
-				if ($('input.opennow').is(':checked')) {
-					if (state === true) marker.addTo(this.instance);
-				}
-				else marker.addTo(this.instance);
-			}
-			else {
+			if (rLookup) {
 				marker.addTo(this.instance).openPopup();
 				rLookup = false;
 			}
+			else {
+				// display only open facilities on opennow checkbox
+				if ($('input.opennow').is(':checked')) {
+					if (state) marker.addTo(this.instance);
+				}
+				else marker.addTo(this.instance);
+			}
 		}
 		// use geomarker
-		else if (rLookup === true) {
+		else if (rLookup) {
 			marker.bindPopup(geoMarker.html, customOptions);
 			marker.addTo(this.instance).openPopup();
 			rLookup = false;
@@ -509,7 +489,7 @@ function callback(data) {
 
 // clear layers
 function clear_map() {
-	$('input.poi-checkbox').prop("checked", false);
+	$('input.poi-checkbox').prop('checked', false);
 	setting_changed();
 	spinner = 0;
 	$('#spinner').hide();
@@ -617,17 +597,17 @@ function walkinfo() {
 // https://github.com/medialize/URI.js
 var uri = URI(window.location.href);
 if (uri.hasQuery('M')) activeTileLayer = uri.search(true).M;
-if (uri.hasQuery('O')) $('input.opennow').prop("checked", uri.search(true).O);
+if (uri.hasQuery('O')) $('input.opennow').prop('checked', uri.search(true).O);
 if (uri.hasQuery('P')) {
 	var selectedPois = uri.search(true).P;
 	if (!$.isArray(selectedPois)) {
-		// the last poi has a "/" on it because leaflet-hash
+		// the last poi has a '/' on it because leaflet-hash
 		poi = selectedPois.replace('/', '');
 		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').prop('checked', true);
 	}
 	else {
 		for (i = 0; i < selectedPois.length; i++) {
-			// the last poi has a "/" on it because leaflet-hash
+			// the last poi has a '/' on it because leaflet-hash
 			poi = selectedPois[i].replace('/', '');
 			$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').prop('checked', true);
 		}
@@ -635,7 +615,7 @@ if (uri.hasQuery('P')) {
 	actTab = uri.search(true).T;
 	// highlight checkbox or hide sidebar for mobile users
 	if ($(window).width() >= 768) {
-		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').parent().parent().parent().effect("highlight", {}, 3000);
+		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').parent().parent().parent().effect('highlight', {}, 3000);
 		sidebar.open(actTab);
 	}
 	setting_changed();
@@ -658,12 +638,12 @@ function show_overpass_layer() {
 		debug: false,
 		minzoom: 15,
 		query: query + '&contact=' + email, //contact info only for use with .fr endpoint
-		endpoint: "https://api.openstreetmap.fr/oapi/interpreter/",
+		endpoint: 'https://api.openstreetmap.fr/oapi/interpreter/',
 		callback: callback,
 		minZoomIndicatorOptions: {
 			position: 'topright',
-			minZoomMessageNoLayer: "No layer assigned",
-			minZoomMessage: "Zoom in to load data"
+			minZoomMessageNoLayer: 'No layer assigned',
+			minZoomMessage: 'Zoom in to load data'
 		}
 	});
 	iconLayer.addLayer(opl);

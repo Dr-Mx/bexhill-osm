@@ -64,6 +64,7 @@ input[type=checkbox] {
 
 .leaflet-tooltip {
 	font-weight: bold;
+	background-color: #dedede;
 }
 
 .item > li {

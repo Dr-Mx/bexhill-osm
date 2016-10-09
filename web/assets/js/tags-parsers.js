@@ -2,8 +2,7 @@
 var truncWidth = 20;
 if ($(window).width() > 500) truncWidth = 35;
 
-var tagTmpl = '<span class="fa fa-{{iconName}}"></span> <strong>{{tag}}:</strong> {{value}}<br>';
-var tag = '';
+var tagTmpl = '<span class="fa fa-{{iconName}}"></span> <strong>{{tag}}:</strong> {{value}}<br>', tag = '';
 
 // edit in osm
 function osmedit_parser(element) {
@@ -18,6 +17,30 @@ function osmedit_parser(element) {
 	return markerPopup;
 }
 
+function generic_tag_parser(element, tag, tagName, iconName) {
+	var tags = element.tags;
+	var markerPopup = '';
+	var result = '';
+	if (tags[tag]) {
+		if (tags[tag] == 'yes') result = '<span class="fa fa-check"></span>';
+		else if (tags[tag] == 'no') result = '<span class="fa fa-remove"></span>';
+		else result = tags[tag];
+		markerPopup += Mustache.render(
+			tagTmpl,
+			{tag: tagName, value: result, iconName: iconName}
+		);
+	}
+	return markerPopup;
+}
+
+function generic_poi_parser(element, titlePopup) {
+	return parse_tags(
+		element,
+		titlePopup,
+		[]
+	);
+}
+
 function address_parser(element) {
 	var tags = element.tags;
 	var markerPopup = '';
@@ -28,8 +51,8 @@ function address_parser(element) {
 		if (tags['addr:housenumber']) value += tags['addr:housenumber'] + ' ';
 		if (tags['addr:street']) value += tags['addr:street'];
 		else if (tags['addr:place']) value += tags['addr:place'];
-		if (tags['addr:city']) value += ", " + tags['addr:city'];
-		if (tags['addr:postcode']) value += ", " + tags['addr:postcode'];
+		if (tags['addr:city']) value += ', ' + tags['addr:city'];
+		if (tags['addr:postcode']) value += ', ' + tags['addr:postcode'];
 		markerPopup += Mustache.render(
 			tagTmpl,
 			{tag: 'Address', value: value, iconName: 'map-marker'}
@@ -45,7 +68,7 @@ function website_parser(element) {
 	var markerPopup = '';
 	if (tagwebsite) {
 		var stagwebsite = tagwebsite;
-		if (stagwebsite.length > truncWidth) stagwebsite = stagwebsite.substr(0,truncWidth) + '&hellip;';
+		if (stagwebsite.length > truncWidth) stagwebsite = stagwebsite.substr(0, truncWidth) + '&hellip;';
 		link = Mustache.render(
 			'<a href="{{tagwebsite}}" title="{{tagwebsite}}" target="_blank">{{stagwebsite}}</a>',
 			{tagwebsite: tagwebsite, stagwebsite: stagwebsite}
@@ -125,16 +148,31 @@ function phone_parser(element) {
 	return markerPopup;
 }
 
+function facility_parser(element) {
+	var tags = element.tags;
+	var markerPopup = '';
+	tag = '';
+	if (tags.wheelchair == 'yes') tag += '<span class="fa fa-wheelchair fa-fw" title="wheelchair access"></span>';
+	else if (tags.wheelchair == 'limited') tag += '<span class="fa fa-wheelchair fa-fw" title="limited wheelchair access"></span>(limited) ';
+	if (tags.internet_access == 'yes') tag += '<span class="fa fa-wifi fa-fw" title="internet access"></span>';
+	if (tags.dog == 'yes') tag += '<span class="fa fa-paw fa-fw" title="dog friendly"></span>';
+	if (tag !== '') markerPopup += Mustache.render(
+		tagTmpl,
+		{tag: 'Facilities', value: tag, iconName: 'info-circle'}
+	);
+	return markerPopup;
+}
+
 function payment_parser(element) {
 	var tags = element.tags;
 	var markerPopup = '';
 	tag = '';
-	if (tags['payment:cash'] == 'yes') tag += "cash; ";
-	if (tags['payment:mastercard'] == 'yes') tag += "mastercard; ";
-	if (tags['payment:visa'] == 'yes') tag += "visa; ";
+	for (key in tags) {
+		if (key.indexOf('payment:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
+	}
 	if (tag !== '') markerPopup += Mustache.render(
 		tagTmpl,
-		{tag: 'Payment Options', value: tag, iconName: 'money'}
+		{tag: 'Payment options', value: tag, iconName: 'money'}
 	);
 	return markerPopup;
 }
@@ -165,12 +203,12 @@ function hotel_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
+			{callback: star_parser},
 			{callback: generic_tag_parser, tag: 'rooms', label: 'Rooms', iconName: 'bed'},
 			{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'bed'},
 			{callback: generic_tag_parser, tag: 'balcony', label: 'Balcony', iconName: 'dot-circle-o'},
 			{callback: generic_tag_parser, tag: 'view', label: 'View', iconName: 'dot-circle-o'},
-			{callback: generic_tag_parser, tag: 'cooking', label: 'Cooking facilities', iconName: 'dot-circle-o'},
-			{callback: star_parser}
+			{callback: generic_tag_parser, tag: 'cooking', label: 'Cooking facilities', iconName: 'dot-circle-o'}
 		]
 	);
 }
@@ -187,37 +225,12 @@ function star_parser(element) {
 		result += '</a>';
 		markerPopup += Mustache.render(
 			tagTmpl,
-			{tag: 'VisitEngland Rating', value: result, iconName: 'star'}
+			{tag: 'VisitEngland rating', value: result, iconName: 'star'}
 		);
 	}
 	return markerPopup;
 }
 	
-
-function generic_tag_parser(element, tag, tagName, iconName) {
-	var tags = element.tags;
-	var markerPopup = '';
-	var result = '';
-	if (tags[tag]) {
-		if (tags[tag] == 'yes') result = '<span class="fa fa-check"></span>';
-		else if (tags[tag] == 'no') result = '<span class="fa fa-remove"></span>';
-		else result = tags[tag];
-		markerPopup += Mustache.render(
-			tagTmpl,
-			{tag: tagName, value: result, iconName: iconName}
-		);
-	}
-	return markerPopup;
-}
-
-function generic_poi_parser(element, titlePopup) {
-	return parse_tags(
-		element,
-		titlePopup,
-		[]
-	);
-}
-
 function hairdresser_parser(element, titlePopup) {
 	return parse_tags(
 		element,
@@ -230,20 +243,28 @@ function hairdresser_parser(element, titlePopup) {
 	);
 }
 
-function bike_parser(element, titlePopup) {
+function bikeshop_parser(element, titlePopup) {
 	return parse_tags(
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'service:bicycle:retail', label: 'Bike Sales', iconName: 'bicycle'},
-			{callback: generic_tag_parser, tag: 'service:bicycle:second_hand', label: 'Second Hand', iconName: 'bicycle'},
-			{callback: generic_tag_parser, tag: 'service:bicycle:rental', label: 'Bike Rental', iconName: 'bicycle'},
-			{callback: generic_tag_parser, tag: 'service:bicycle:repair', label: 'Bike Repair', iconName: 'bicycle'},
-			{callback: generic_tag_parser, tag: 'service:bicycle:pump', label: 'Free Pump', iconName: 'bicycle'}
+			{callback: bikeservices_parser}
 		]
 	);
 }
-
+function bikeservices_parser(element) {
+	var tags = element.tags;
+	var markerPopup = '';
+	tag = '';
+	for (key in tags) {
+		if (key.indexOf('service:bicycle:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[2] + '; ';
+	}
+	if (tag !== '') markerPopup += Mustache.render(
+		tagTmpl,
+		{tag: 'Bicycle services', value: tag, iconName: 'bicycle'}
+	);
+	return markerPopup;
+}
 
 function school_parser(element, titlePopup) {
 	return parse_tags(
@@ -266,12 +287,28 @@ function edubase_parser(element) {
 		);
 		markerPopup += Mustache.render(
 			tagTmpl,
-			{tag: 'EduBase Ref', value: link, iconName: 'graduation-cap'}
+			{tag: 'EduBase ref', value: link, iconName: 'file'}
 		);
 	}
 	return markerPopup;
 }
 
+function fhrs_parser(element) {
+	var tags = element.tags;
+	tag = tags['fhrs:id'];
+	var markerPopup= '';
+	if (tag) {
+		var link = Mustache.render(
+			'<a href="http://ratings.food.gov.uk/business/en-GB/{{link}}" title="Food Standards Agency" target="_blank">{{link}}</a>',
+			{link: tag}
+		);
+		markerPopup += Mustache.render(
+			tagTmpl,
+			{tag: 'Food Hygiene id', value: link, iconName: 'file'}
+		);
+	}
+	return markerPopup;
+}
 
 function listedhe_parser(element) {
 	var tags = element.tags;
@@ -284,12 +321,11 @@ function listedhe_parser(element) {
 		);
 		markerPopup += Mustache.render(
 			tagTmpl,
-			{tag: 'Historic England Ref', value: link, iconName: 'home'}
+			{tag: 'Historic England ref', value: link, iconName: 'file'}
 		);
 	}
 	return markerPopup;
 }
-
 
 function worship_parser(element, titlePopup) {
 	return parse_tags(
@@ -298,7 +334,7 @@ function worship_parser(element, titlePopup) {
 		[
 			{callback: generic_tag_parser, tag: 'religion', label: 'Religion', iconName: 'dot-circle-o'},
 			{callback: generic_tag_parser, tag: 'denomination', label: 'Denomination', iconName: 'dot-circle-o'},
-			{callback: generic_tag_parser, tag: 'service_times', label: 'Service Times', iconName: 'clock-o'}
+			{callback: generic_tag_parser, tag: 'service_times', label: 'Service times', iconName: 'clock-o'}
 		]
 	);
 }
@@ -308,8 +344,8 @@ function socialf_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'social_facility', label: 'Facility Type', iconName: 'users'},
-			{callback: generic_tag_parser, tag: 'social_facility:for', label: 'Facility For', iconName: 'users'},
+			{callback: generic_tag_parser, tag: 'social_facility', label: 'Facility type', iconName: 'users'},
+			{callback: generic_tag_parser, tag: 'social_facility:for', label: 'Facility for', iconName: 'users'},
 			{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'users'}
 		]
 	);
@@ -320,23 +356,23 @@ function food_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'cuisine', label: 'Cuisine', iconName: 'cutlery'},
-			{callback: diet_parser},
-			{callback: facility_parser}
+			{callback: cuisine_parser},
+			{callback: order_parser}
 		]
 	);
 }
 
-function diet_parser(element) {
+function cuisine_parser(element) {
 	var tags = element.tags;
 	var markerPopup = '';
 	tag = '';
-	if (tags['diet:gluten_free'] == 'yes') tag += "gluten free; ";
-	if (tags['diet:vegan'] == 'yes') tag += "vegan; ";
-	if (tags['diet:vegetarian'] == 'yes') tag += "vegetarian; ";
+	if (tags.cuisine) tag += tags.cuisine + '; ';
+	for (key in tags) {
+		if (key.indexOf('diet:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + ' options; ';
+	}
 	if (tag !== '') markerPopup += Mustache.render(
 		tagTmpl,
-		{tag: 'Diet Options', value: tag, iconName: 'cutlery'}
+		{tag: 'Cuisine', value: tag, iconName: 'cutlery'}
 	);
 	return markerPopup;
 }
@@ -346,26 +382,26 @@ function pub_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'real_ale', label: 'Real Ale', iconName: 'beer'},
-			{callback: generic_tag_parser, tag: 'real_cider', label: 'Real Cider', iconName: 'beer'},
-			{callback: facility_parser}
+			{callback: generic_tag_parser, tag: 'real_ale', label: 'Real ale', iconName: 'beer'},
+			{callback: generic_tag_parser, tag: 'real_cider', label: 'Real cider', iconName: 'beer'},
+			{callback: order_parser}
 		]
 	);
 }
 
-function facility_parser(element) {
+function order_parser(element) {
 	var tags = element.tags;
 	var markerPopup = '';
 	tag = '';
-	if (tags.takeaway == 'yes') tag += "takeaway; ";
-	else if (tags.takeaway == 'only') tag += "takeaway only; ";
+	if (tags.takeaway == 'yes') tag += 'takeaway; ';
+	else if (tags.takeaway == 'only') tag += 'takeaway only; ';
 	if (tags.delivery == 'yes') tag += "delivery; ";
-	if (tags.outdoor_seating == 'yes') tag += "outdoor seating; ";
-	if (tags.reservation == 'yes') tag += "takes reservation; ";
-	else if (tags.reservation == 'required') tag += "needs reservation; ";
+	if (tags.outdoor_seating == 'yes') tag += 'outdoor seating; ';
+	if (tags.reservation == 'yes') tag += 'takes reservation; ';
+	else if (tags.reservation == 'required') tag += 'needs reservation; ';
 	if (tag !== '') markerPopup += Mustache.render(
 		tagTmpl,
-		{tag: 'Facilities', value: tag, iconName: 'shopping-bag'}
+		{tag: 'Order options', value: tag, iconName: 'shopping-bag'}
 	);
 	return markerPopup;
 }	
@@ -376,9 +412,9 @@ function post_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'post_box:type', label: 'Type', iconName: 'archive'},
-			{callback: generic_tag_parser, tag: 'ref', label: 'Post-Box Ref', iconName: 'archive'},
-			{callback: generic_tag_parser, tag: 'royal_cypher', label: 'Royal Cypher', iconName: 'archive'},
-			{callback: generic_tag_parser, tag: 'collection_times', label: 'Collection Times', iconName: 'clock-o'}
+			{callback: generic_tag_parser, tag: 'ref', label: 'Post-Box ref', iconName: 'archive'},
+			{callback: generic_tag_parser, tag: 'royal_cypher', label: 'Royal cypher', iconName: 'archive'},
+			{callback: generic_tag_parser, tag: 'collection_times', label: 'Collection times', iconName: 'clock-o'}
 		]
 	);
 }
@@ -388,47 +424,57 @@ function taxi_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'capacity', label: 'Taxi Rank Capacity', iconName: 'taxi'}
+			{callback: generic_tag_parser, tag: 'capacity', label: 'Taxi rank capacity', iconName: 'taxi'}
 
 		]
 	);
 }		
 
-function recycle_parser(element, titlePopup) {
+function recyclecentre_parser(element, titlePopup) {
 	return parse_tags(
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'recycling:batteries', label: 'Batteries', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:books', label: 'Books', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:cans', label: 'Cans', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:cardboard', label: 'Cardboard', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:clothes', label: 'Clothes', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:electrical_appliances', label: 'Electrical Appliances', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:glass', label: 'Glass', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:glass_bottles', label: 'Glass Bottles', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:green_waste', label: 'Green Waste', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:paper', label: 'Paper', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:plastic', label: 'Plastic', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:plastic_packaging', label: 'Plastic Packaging', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:scrap_metal', label: 'Scrap Metal', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:shoes', label: 'Shoes', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:small_appliances', label: 'Small Appliances', iconName: 'recycle'},
-			{callback: generic_tag_parser, tag: 'recycling:waste', label: 'General Waste', iconName: 'recycle'}
+			{callback: recycle_parser}
 		]
 	);
 }
+function recycle_parser(element) {
+	var tags = element.tags;
+	var markerPopup = '';
+	tag = '';
+	for (key in tags) {
+		if (key.indexOf('recycling:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
+	}
+	if (tag !== '') markerPopup += Mustache.render(
+		tagTmpl,
+		{tag: 'Recycling options', value: tag, iconName: 'recycle'}
+	);
+	return markerPopup;
+}
 
-function fuel_parser(element, titlePopup) {
+function fuelstation_parser(element, titlePopup) {
 	return parse_tags(
 		element,
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'shop', label: 'Shop', iconName: 'shopping-basket'},
-			{callback: generic_tag_parser, tag: 'fuel:diesel', label: 'Diesel', iconName: 'tint'},
-			{callback: generic_tag_parser, tag: 'fuel:octane_95', label: 'Octane 95', iconName: 'tint'}
+			{callback: fuel_parser}
 		]
 	);
+}
+function fuel_parser(element) {
+	var tags = element.tags;
+	var markerPopup = '';
+	tag = '';
+	for (key in tags) {
+		if (key.indexOf('fuel:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
+	}
+	if (tag !== '') markerPopup += Mustache.render(
+		tagTmpl,
+		{tag: 'Fuel options', value: tag, iconName: 'tint'}
+	);
+	return markerPopup;
 }
 
 function carpark_parser(element, titlePopup) {
@@ -437,7 +483,7 @@ function carpark_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'capacity', label: 'Spaces', iconName: 'car'},
-			{callback: generic_tag_parser, tag: 'capacity:disabled', label: 'Disabled Spaces', iconName: 'wheelchair'},
+			{callback: generic_tag_parser, tag: 'capacity:disabled', label: 'Disabled spaces', iconName: 'wheelchair'},
 			{callback: generic_tag_parser, tag: 'fee', label: 'Fee', iconName: 'money'}
 		]
 	);
@@ -462,8 +508,8 @@ function cctv_parser(element, titlePopup) {
 		[
 			{callback: generic_tag_parser, tag: 'surveillance:type', label: 'Type', iconName: 'eye'},
 			{callback: generic_tag_parser, tag: 'surveillance:zone', label: 'Zone', iconName: 'eye'},
-			{callback: generic_tag_parser, tag: 'camera:mount', label: 'Camera Mount', iconName: 'video-camera'},
-			{callback: generic_tag_parser, tag: 'camera:type', label: 'Camera Type', iconName: 'video-camera'}
+			{callback: generic_tag_parser, tag: 'camera:mount', label: 'Camera mount', iconName: 'video-camera'},
+			{callback: generic_tag_parser, tag: 'camera:type', label: 'Camera type', iconName: 'video-camera'}
 		]
 	);
 }
@@ -483,8 +529,8 @@ function healthcare_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'healthcare', label: 'Healthcare Type', iconName: 'user-md'},
-			{callback: generic_tag_parser, tag: 'healthcare:speciality', label: 'Healthcare Speciality', iconName: 'user-md'}
+			{callback: generic_tag_parser, tag: 'healthcare', label: 'Healthcare type', iconName: 'user-md'},
+			{callback: generic_tag_parser, tag: 'healthcare:speciality', label: 'Healthcare speciality', iconName: 'user-md'}
 		]
 	);
 }
@@ -506,7 +552,7 @@ function toilet_parser(element, titlePopup) {
 		[
 			{callback: generic_tag_parser, tag: 'female', label: 'Female', iconName: 'female'},
 			{callback: generic_tag_parser, tag: 'male', label: 'Male', iconName: 'male'},
-			{callback: generic_tag_parser, tag: 'diaper', label: 'Baby Changing', iconName: 'child'}
+			{callback: generic_tag_parser, tag: 'diaper', label: 'Baby changing', iconName: 'child'}
 		]
 	);
 }
@@ -516,8 +562,8 @@ function club_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'club', label: 'Club Type', iconName: 'comments'},
-			{callback: generic_tag_parser, tag: 'sport', label: 'Sport Type', iconName: 'trophy'}
+			{callback: generic_tag_parser, tag: 'club', label: 'Club type', iconName: 'comments'},
+			{callback: generic_tag_parser, tag: 'sport', label: 'Sport type', iconName: 'trophy'}
 		]
 	);
 }
@@ -527,8 +573,8 @@ function clothes_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'clothes', label: 'Clothes Type', iconName: 'shopping-bag'},
-			{callback: generic_tag_parser, tag: 'second_hand', label: 'Second Hand', iconName: 'shopping-bag'}
+			{callback: generic_tag_parser, tag: 'clothes', label: 'Clothes type', iconName: 'shopping-bag'},
+			{callback: generic_tag_parser, tag: 'second_hand', label: 'Second hand', iconName: 'shopping-bag'}
 		]
 	);
 }
@@ -539,7 +585,7 @@ function craft_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'craft', label: 'Craft Type', iconName: 'shopping-bag'}
+			{callback: generic_tag_parser, tag: 'craft', label: 'Craft type', iconName: 'shopping-bag'}
 		]
 	);
 }
@@ -549,8 +595,8 @@ function artwork_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'artwork_type', label: 'Artwork Type', iconName: 'paint-brush'},
-			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist Name', iconName: 'user'},
+			{callback: generic_tag_parser, tag: 'artwork_type', label: 'Artwork type', iconName: 'paint-brush'},
+			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist name', iconName: 'user'},
 			{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'cube'},
 			{callback: generic_tag_parser, tag: 'start_date', label: 'Made', iconName: 'calendar'}
 		]
@@ -562,9 +608,9 @@ function info_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'information', label: 'Info Type', iconName: 'map-signs'},
-			{callback: generic_tag_parser, tag: 'board_type', label: 'Board Type', iconName: 'map-signs'},
-			{callback: generic_tag_parser, tag: 'map_size', label: 'Map Size', iconName: 'map-signs'},
+			{callback: generic_tag_parser, tag: 'information', label: 'Info type', iconName: 'map-signs'},
+			{callback: generic_tag_parser, tag: 'board_type', label: 'Board type', iconName: 'map-signs'},
+			{callback: generic_tag_parser, tag: 'map_size', label: 'Map size', iconName: 'map-signs'},
 			{callback: generic_tag_parser, tag: 'ref', label: 'Reference', iconName: 'slack'}
 		]
 	);
@@ -575,13 +621,13 @@ function historic_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'historic', label: 'Historic Type', iconName: 'bank'},
-			{callback: generic_tag_parser, tag: 'memorial', label: 'Memorial Type', iconName: 'bank'},
-			{callback: generic_tag_parser, tag: 'bunker_type', label: 'Military Bunker Type', iconName: 'fighter-jet'},
-			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist Name', iconName: 'user'},
+			{callback: generic_tag_parser, tag: 'historic', label: 'Historic type', iconName: 'bank'},
+			{callback: generic_tag_parser, tag: 'memorial', label: 'Memorial type', iconName: 'bank'},
+			{callback: generic_tag_parser, tag: 'bunker_type', label: 'Military bunker type', iconName: 'fighter-jet'},
+			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist name', iconName: 'user'},
 			{callback: generic_tag_parser, tag: 'start_date', label: 'Made', iconName: 'calendar'},
 			{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'pencil-square-o'},
-			{callback: generic_tag_parser, tag: 'wreck:date_sunk', label: 'Date Sunk', iconName: 'ship'},
+			{callback: generic_tag_parser, tag: 'wreck:date_sunk', label: 'Date sunk', iconName: 'ship'},
 			{callback: generic_tag_parser, tag: 'wreck:visible_at_low_tide', label: 'Visible at low tide', iconName: 'ship'}
 		]
 	);
@@ -598,7 +644,7 @@ function listedhe_parser(element) {
 		);
 		markerPopup += Mustache.render(
 			tagTmpl,
-			{tag: 'Historic England Ref', value: link, iconName: 'home'}
+			{tag: 'Historic England ref', value: link, iconName: 'file'}
 		);
 	}
 	return markerPopup;
@@ -609,7 +655,7 @@ function listed_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'listed_status', label: 'Listed Status', iconName: 'home'},
+			{callback: generic_tag_parser, tag: 'listed_status', label: 'Listed status', iconName: 'home'},
 			{callback: listedhe_parser},
 			{callback: generic_tag_parser, tag: 'start_date', label: 'Built', iconName: 'calendar'}
 		]
@@ -617,22 +663,18 @@ function listed_parser(element, titlePopup) {
 }
 
 // https://github.com/ypid/opening_hours.js
-var openhrs = '';
-var state = '';
+var openhrs = '', state = '';
 function opening_hours_parser(element) {
-	try
-	{
+	try {
 		var opening_hours = require('opening_hours');
 		var hours = element.tags.opening_hours;
 		var oh = new opening_hours(hours);
 		state = oh.getState();
-		var prettified_value = oh.prettifyValue();
-		if (state === true) openhrs = "<span style='color:green' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
-		else if (state === false) openhrs = "<span style='color:red' class='fa fa-circle'></span> <b>Opening hours:</b> " + prettified_value;
+		if (state) openhrs = '<span style="color:green" class="fa fa-circle" title="Open"></span> <b>Opening hours:</b> ' + oh.prettifyValue();
+		else if (state === false) openhrs = '<span style="color:red" class="fa fa-circle" title="Closed"></span> <b>Opening hours:</b> ' + oh.prettifyValue();
 	}
-	catch(err)
-	{
-		if (hours != null) console.log("ERROR: Object '" + element.tags.name + "' cannot parse hours: " + hours + ". " + err);
+	catch(err) {
+		if (hours != null) console.log('ERROR: Object "' + element.tags.name + '" cannot parse hours: ' + hours + '. ' + err);
 		openhrs = '';
 	}
 	// return false state for no hours - opennow checkbox
@@ -651,17 +693,16 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: website_parser},
 		{callback: facebook_parser},
 		{callback: wikipedia_parser},
+		{callback: facility_parser},
+		{callback: fhrs_parser},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
-		{callback: generic_tag_parser, tag: 'internet_access', label: 'Internet Access', iconName: 'wifi'},
-		{callback: generic_tag_parser, tag: 'wheelchair', label: 'Wheelchair Access', iconName: 'wheelchair'},
-		{callback: generic_tag_parser, tag: 'dog', label: 'Dog Friendly', iconName: 'paw'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
 		{callback: payment_parser}
 	].concat(functions);
 	for (var i = 0; i < functions.length; i++) {
 		var data = functions[i];
 		if (data.tag && data.label) {
-			var iconName = data.iconName ? data.iconName : 'info-circle';
+			var iconName = data.iconName ? data.iconName : 'tag';
 			markerPopup += data.callback(element, data.tag, data.label, iconName);
 		}
 		else markerPopup += data.callback(element);

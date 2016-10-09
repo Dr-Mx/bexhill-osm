@@ -430,7 +430,7 @@ var pois = {
 		iconName: 'bicycle_shop',
 		tabName: 'shops',
 		tagKeyword: ['bicycle', 'cycling', 'bike'],
-		tagParser: bike_parser
+		tagParser: bikeshop_parser
 	},
 
 	car: {
@@ -601,7 +601,7 @@ var pois = {
 		iconName: 'recycle',
 		tabName: 'amenities',
 		tagKeyword: ['recycling'],
-		tagParser: recycle_parser
+		tagParser: recyclecentre_parser
 	},
 
 	grit_bin: {
@@ -635,7 +635,7 @@ var pois = {
 		iconName: 'fillingstation',
 		tabName: 'amenities',
 		tagKeyword: ['fuel', 'gas-station', 'petrol-station', 'unleaded', 'diesel', 'motoring'],
-		tagParser: fuel_parser
+		tagParser: fuelstation_parser
 	},
 
 	car_repair: {
@@ -886,7 +886,7 @@ var pois = {
 		query: '[landuse=recreation_ground]',
 		iconName: 'soccer',
 		tabName: 'leisure',
-		tagKeyword: ['recreation-ground', 'sport', 'park']
+		tagKeyword: ['recreation-ground', 'sport', 'park', 'football']
 	},
 
 	playground: {
@@ -918,7 +918,7 @@ var pois = {
 		query: '[amenity=club]',
 		iconName: 'conversation-map-icon',
 		tabName: 'leisure',
-		tagKeyword: ['club', 'organisation', 'social', 'events-venue'],
+		tagKeyword: ['organisation-club', 'social', 'events-venue', 'sports-club'],
 		tagParser: club_parser
 	},
 

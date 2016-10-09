@@ -3,7 +3,7 @@
  <head>
 	<title>Bexhill-OSM</title>
 
-	<!-- Display, social network and search index info -->
+	<!-- Display, social network, search index info, disable cache -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="application-name" content="Bexhill-OSM" />
@@ -14,6 +14,8 @@
 	<meta property="og:url" content="http://bexhill-osm.org.uk/" />
 	<meta property="og:image" content="http://bexhill-osm.org.uk/assets/img/preview.jpg" />
 	<meta property="og:description" content="Explore a map of Bexhill-on-Sea, UK.  Discover points of interest, walking directions and other information." />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Pragma" content="no-cache" />
 
 	<!-- http://realfavicongenerator.net/ -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=rM3MAN5zdX">
@@ -25,7 +27,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
 	<link rel="stylesheet" href="assets/css/Control.Loading.css" />
@@ -66,9 +68,15 @@
 					<label><input type="checkbox" class="opennow"> Only facilities open right now</label>
 					<hr>
 					<h3>Welcome!</h3>
-						<p>Bexhill-OSM allows you to easily find information on local places like shops, cafés, parks, walks,  
-						wheelchair access, and much more in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
-						<p>Enter a keyword above to see those items on the map.  Alternatively, zoom-in and middle-click / long-press a place to view its details.</p>
+						<p>Bexhill-OSM is a non-commercial, community based project.  It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
+						<ul style='font-size:11pt;color:#112900'>
+							<li>To get started:</li>
+							<ol style='list-style-type:circle'>
+								<li>Enter a keyword above to see a group of interests.</li>
+								<li>Look up an address by using the (<span style="font-size:10pt" class="fa fa-search"></span>) button.</li>
+								<li>Middle-click / long-press a place on the map to view its details.</li>
+							</ol>
+						</ul>
 						<p><img src="assets/img/minimap.png" class="minimap" alt="Minimap" usemap="#m_minimap"></p>
 						<map name="m_minimap">
 							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.flyTo([maplat, maplng], mapzoom);" href="javascript:void(0);">
@@ -90,7 +98,7 @@
 							<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&layout=button&action=like&size=small&show_faces=false&share=false&appId" width="55" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbexhill-osm.org.uk&layout=button&size=small&mobile_iframe=true&appId" width="60" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 						</p>
-						<span class="lorem">Bexhill-OSM &copy; 2016</span>
+						<span class="lorem">Bexhill-OSM v1.5.0 &copy; 2016</span>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="shops">
@@ -160,7 +168,7 @@
 						<a href="#gotowalking">Walking Routes</a><br>
 					</p>
 					<hr>
-					<b><span style="color:#e52d27" class="fa fa-youtube-play"></span> <a href="https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us" title="YouTube" target="_blank">View Demo Videos</a></b>
+					<b><span style="color:#e52d27" class="fa fa-youtube-play"></span> <a href="https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us" title="YouTube" target="_blank">View demonstration videos</a></b>
 					<a id="gotocontrols"></a><hr>
 					<h3>Map Controls</h3>
 						The zoom controls (<span style="color:#b05000" class="fa fa-plus"></span> / <span style="color:#b05000" class="fa fa-minus"></span>) will enlarge and shrink the map.<br><br>
@@ -302,7 +310,7 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="assets/js/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="assets/js/jquery-ui.min.js"></script>
 	<script src="assets/js/jquery.mobile.custom.min.js"></script>
