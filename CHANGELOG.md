@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v1.6.0 - Permalinking for walks and reverse lookups
+
+**Date:** 15/10/2016
+
+Updated js
+ - leaflet-routing-machine.min.js 3.2.4
+
+Site changes
+ - Added permalinking to walking routes and markers found with reverse lookup
+ - Reverse lookups that have no group poi now use generic_poi_parser
+ - Adding walking points is one context-menu option now
+ - New green waypoint markers for walking points
+ - Made facility_parser icons colour coded (green - yes, red - no)
+ - More code tidying
+
+
 ## v1.5.0 -  Address Search Reverse Lookup
 
 **Date:** 09/10/2016

@@ -1,17 +1,16 @@
 // how much to truncate from web addresses labels depending on screensize
-var truncWidth = 20;
-if ($(window).width() > 500) truncWidth = 35;
-
+var truncWidth = ($(window).width() > 500) ? 35 : 20;
+// tag template
 var tagTmpl = '<span class="fa fa-{{iconName}}"></span> <strong>{{tag}}:</strong> {{value}}<br>', tag = '';
 
 // edit in osm
 function osmedit_parser(element) {
 	var link = Mustache.render(
-		'http://www.openstreetmap.org/edit?editor=id&{{type}}={{id}}', 
+		'http://www.openstreetmap.org/edit?editor=id&{{type}}={{id}}',
 		{type: element.type, id: element.id}
 	);
 	var markerPopup = Mustache.render(
-		'<a style="top:19px;right:20px;position:absolute;" href="{{link}}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>', 
+		'<a style="top:19px;right:20px;position:absolute;" href="{{link}}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
 		{link: link}
 	);
 	return markerPopup;
@@ -22,8 +21,8 @@ function generic_tag_parser(element, tag, tagName, iconName) {
 	var markerPopup = '';
 	var result = '';
 	if (tags[tag]) {
-		if (tags[tag] == 'yes') result = '<span class="fa fa-check"></span>';
-		else if (tags[tag] == 'no') result = '<span class="fa fa-remove"></span>';
+		if (tags[tag] === 'yes') result = '<span class="fa fa-check"></span>';
+		else if (tags[tag] === 'no') result = '<span class="fa fa-remove"></span>';
 		else result = tags[tag];
 		markerPopup += Mustache.render(
 			tagTmpl,
@@ -33,6 +32,7 @@ function generic_tag_parser(element, tag, tagName, iconName) {
 	return markerPopup;
 }
 
+// used if poi has no parser
 function generic_poi_parser(element, titlePopup) {
 	return parse_tags(
 		element,
@@ -118,7 +118,7 @@ function email_parser(element) {
 	tag = tags.email ? tags.email : tags['contact:email'];
 	var markerPopup = '';
 	if (tag) {
-		if (tag.indexOf('@') == -1) return markerPopup;
+		if (tag.indexOf('@') === -1) return markerPopup;
 		var link = Mustache.render(
 			'<a href="mailto:{{email}}" target="_blank">{{email}}</a>',
 			{email: tag}
@@ -152,11 +152,13 @@ function facility_parser(element) {
 	var tags = element.tags;
 	var markerPopup = '';
 	tag = '';
-	if (tags.wheelchair == 'yes') tag += '<span class="fa fa-wheelchair fa-fw" title="wheelchair access"></span>';
-	else if (tags.wheelchair == 'limited') tag += '<span class="fa fa-wheelchair fa-fw" title="limited wheelchair access"></span>(limited) ';
-	if (tags.internet_access == 'yes') tag += '<span class="fa fa-wifi fa-fw" title="internet access"></span>';
-	if (tags.dog == 'yes') tag += '<span class="fa fa-paw fa-fw" title="dog friendly"></span>';
-	if (tag !== '') markerPopup += Mustache.render(
+	if (tags.wheelchair === 'yes') tag += '<span class="fa fa-wheelchair fa-fw" title="wheelchair access" style="color:darkgreen"></span>';
+	else if (tags.wheelchair === 'limited') tag += '<span class="fa fa-wheelchair fa-fw" title="limited wheelchair access" style="color:teal"></span>(limited) ';
+	else if (tags.wheelchair === 'no') tag += '<span class="fa fa-wheelchair fa-fw" title="no wheelchair access" style="color:red"></span>(no) ';
+	if (tags.dog === 'yes') tag += '<span class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen"></span>';
+	else if (tags.dog === 'no') tag += '<span class="fa fa-paw fa-fw" title="no dog access" style="color:red"></span>(no) ';
+	if (tags.internet_access === 'yes') tag += '<span class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen"></span>';
+	if (tag) markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Facilities', value: tag, iconName: 'info-circle'}
 	);
@@ -164,13 +166,13 @@ function facility_parser(element) {
 }
 
 function payment_parser(element) {
-	var tags = element.tags;
+	var tags = element.tags, key;
 	var markerPopup = '';
 	tag = '';
 	for (key in tags) {
 		if (key.indexOf('payment:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag !== '') markerPopup += Mustache.render(
+	if (tag) markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Payment options', value: tag, iconName: 'money'}
 	);
@@ -253,13 +255,13 @@ function bikeshop_parser(element, titlePopup) {
 	);
 }
 function bikeservices_parser(element) {
-	var tags = element.tags;
+	var tags = element.tags, key;
 	var markerPopup = '';
 	tag = '';
 	for (key in tags) {
 		if (key.indexOf('service:bicycle:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[2] + '; ';
 	}
-	if (tag !== '') markerPopup += Mustache.render(
+	if (tag) markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Bicycle services', value: tag, iconName: 'bicycle'}
 	);
@@ -363,14 +365,14 @@ function food_parser(element, titlePopup) {
 }
 
 function cuisine_parser(element) {
-	var tags = element.tags;
+	var tags = element.tags, key;
 	var markerPopup = '';
 	tag = '';
 	if (tags.cuisine) tag += tags.cuisine + '; ';
 	for (key in tags) {
 		if (key.indexOf('diet:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + ' options; ';
 	}
-	if (tag !== '') markerPopup += Mustache.render(
+	if (tag) markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Cuisine', value: tag, iconName: 'cutlery'}
 	);
@@ -393,13 +395,13 @@ function order_parser(element) {
 	var tags = element.tags;
 	var markerPopup = '';
 	tag = '';
-	if (tags.takeaway == 'yes') tag += 'takeaway; ';
-	else if (tags.takeaway == 'only') tag += 'takeaway only; ';
-	if (tags.delivery == 'yes') tag += "delivery; ";
-	if (tags.outdoor_seating == 'yes') tag += 'outdoor seating; ';
-	if (tags.reservation == 'yes') tag += 'takes reservation; ';
-	else if (tags.reservation == 'required') tag += 'needs reservation; ';
-	if (tag !== '') markerPopup += Mustache.render(
+	if (tags.takeaway === 'yes') tag += 'takeaway; ';
+	else if (tags.takeaway === 'only') tag += 'takeaway only; ';
+	if (tags.delivery === 'yes') tag += "delivery; ";
+	if (tags.outdoor_seating === 'yes') tag += 'outdoor seating; ';
+	if (tags.reservation === 'yes') tag += 'takes reservation; ';
+	else if (tags.reservation === 'required') tag += 'needs reservation; ';
+	if (tag) markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Order options', value: tag, iconName: 'shopping-bag'}
 	);
@@ -440,13 +442,13 @@ function recyclecentre_parser(element, titlePopup) {
 	);
 }
 function recycle_parser(element) {
-	var tags = element.tags;
+	var tags = element.tags, key;
 	var markerPopup = '';
 	tag = '';
 	for (key in tags) {
 		if (key.indexOf('recycling:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag !== '') markerPopup += Mustache.render(
+	if (tag) markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Recycling options', value: tag, iconName: 'recycle'}
 	);
@@ -464,13 +466,13 @@ function fuelstation_parser(element, titlePopup) {
 	);
 }
 function fuel_parser(element) {
-	var tags = element.tags;
+	var tags = element.tags, key;
 	var markerPopup = '';
 	tag = '';
 	for (key in tags) {
 		if (key.indexOf('fuel:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag !== '') markerPopup += Mustache.render(
+	if (tag) markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Fuel options', value: tag, iconName: 'tint'}
 	);

@@ -1,18 +1,16 @@
 // personal api keys
-var mapboxkey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
-var thuforkey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
-// email for overpass .fr endpoint
-var email = 'info@bexhill-osm.org.uk';
+var mapboxKey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
+var thuforKey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
+// overpass layer options
+var minOpZoom = 15, email = 'info@bexhill-osm.org.uk';
 // map bounds
-var mapleft = '0.3000', maptop = '50.8200', mapright = '0.5350', mapbottom = '50.8800';
+var mapLeft = 0.3000, mapTop = 50.8200, mapRight = 0.5350, mapBottom = 50.8800;
 // map centre
-var maplat = '50.8424', maplng = '0.4676', mapzoom = '15';
+var mapLat = 50.8424, mapLng = 0.4676, mapZoom = 15;
 // map base layer
-var activeTileLayer = 'osmstd';
+var actTileLayer = 'osmstd';
 // tab to open
 var actTab = 'home';
-// leaflet icon image path
-L.Icon.Default.imagePath = 'assets/img/leaflet/';
 
 // swipe away sidebar on larger touch devices
 $(function() {
@@ -60,38 +58,36 @@ var map = new L.map('map', {
 		callback: reverseLookup,
 		index: 0
 	}, '-', {
-		text: '<i class="fa fa-map-marker"></i>&nbsp; Start walk',
-		callback: walkStart
-	}, {
-		text: '<i class="fa fa-map-marker"></i>&nbsp; End walk',
-		callback: walkFinish
+		text: '<i class="fa fa-map-marker"></i>&nbsp; Add walk point',
+		callback: walkPoint
 	}, '-', {
 		text: '<i class="fa fa-external-link"></i>&nbsp; Improve map',
 		callback: improveMap
 	}]
 });
-var query = '';
-var geoMarker;
-var rLookup = false;
+var query, geoMarker, rLookup = false;
 function reverseLookup(e) {
 	var geocoder = L.Control.Geocoder.nominatim();
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
 		geoMarker = results[0];
 		if (geoMarker) {
+			if (markerId) clear_map();
 			rLookup = true;
-			var bbox = geoMarker.properties.boundingbox;
-			query = 'way(' + geoMarker.properties.osm_id + ')(' + bbox[0] + ',' + bbox[2] + ',' + bbox[1] + ',' + bbox[3] + ');out center;';
+			query = geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ');out center;';
 			show_overpass_layer();
 		}
 	});
 }
-function walkStart(e) {
+function walkPoint(e) {
 	if ($(window).width() >= 768) sidebar.open('walking');
-	routingControl.spliceWaypoints(0, 1, e.latlng);
-}
-function walkFinish(e) {
-	if ($(window).width() >= 768) sidebar.open('walking');
-	routingControl.spliceWaypoints(routingControl.getWaypoints().length - 1, 1, e.latlng);
+	var wp = routingControl.getWaypoints();
+	for(var i = 0; i < wp.length; i++){
+		if(!wp[i].name){
+			routingControl.spliceWaypoints(i, 1, e.latlng);
+			return;
+		}
+	}
+    routingControl.spliceWaypoints(wp.length, 0, e.latlng);
 }
 function improveMap(e) {
 	window.open('http://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, '_blank');
@@ -100,64 +96,66 @@ function improveMap(e) {
 // https://github.com/Leaflet/Leaflet
 var iconLayer = new L.LayerGroup();
 map.addLayer(iconLayer);
+// leaflet icon image path
+L.Icon.Default.imagePath = 'assets/img/leaflet/';
 var tileLayerData = {
 	osmstd: {
 		name: 'OpenStreetMap (standard)',
 		url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-		zoom: '19'
+		zoom: 19
 	},
 	osmfr: {
 		name: 'OpenStreetMap (france)',
 		url: 'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
 		attribution: '<a href="http://openstreetmap.fr/" target="_blank">OSM France</a>',
-		zoom: '19'
+		zoom: 19
 	},
 	cycle: {
 		name: 'OpenCycleMap',
-		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + thuforkey,
+		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + thuforKey,
 		attribution: '<a href="http://thunderforest.com/maps/opencyclemap/" target="_blank">ThunderForest</a>',
-		zoom: '20'
+		zoom: 20
 	},
 	trnsprt: {
 		name: 'Public Transport',
-		url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + thuforkey,
+		url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + thuforKey,
 		attribution: '<a href="http://thunderforest.com/maps/transport/" target="_blank">ThunderForest</a>',
-		zoom: '20'
+		zoom: 20
 	},
 	matlas: {
 		name: 'Mobile Atlas',
-		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=' + thuforkey,
+		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=' + thuforKey,
 		attribution: '<a href="http://thunderforest.com/maps/mobile-atlas/" target="_blank">ThunderForest</a>',
-		zoom: '20'
+		zoom: 20
 	},
 	opnsrfr: {
 		name: 'OpenMapSurfer',
 		url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
 		attribution: '<a href="http://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
-		zoom: '19'
+		zoom: 19
 	},
 	antique: {
 		name: 'Antique Style',
-		url: 'https://{s}.tiles.mapbox.com/v4/lrqdo.me2bng9n/{z}/{x}/{y}.png?access_token=' + mapboxkey,
+		url: 'https://{s}.tiles.mapbox.com/v4/lrqdo.me2bng9n/{z}/{x}/{y}.png?access_token=' + mapboxKey,
 		attribution: '<a href="https://laruchequiditoui.fr/" target="_blank">LRQDO</a>',
-		zoom: '20'
+		zoom: 20
 	},
 	mbxstr: {
 		name: 'Mapbox Streets',
-		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + mapboxkey,
+		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + mapboxKey,
 		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
-		zoom: '20'
+		zoom: 20
 	},
 	mbxoutdr: {
 		name: 'Mapbox Outdoors',
-		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=' + mapboxkey,
+		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=' + mapboxKey,
 		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
-		zoom: '20'
+		zoom: 20
 	}
 };
 var attribution = '&copy; <a href="http://openstreetmap.org/copyright" title="Copyright and License" target="_blank">OpenStreetMap contributors</a>';
 var tileLayers = {};
-var tileList = {name:[], keyname:[]};
+var tileList = {name: [], keyname: []};
 for (var tile in tileLayerData) {
 	var tileAttribution;
 	var tilemaxZoom = tileLayerData[tile].zoom;
@@ -165,30 +163,29 @@ for (var tile in tileLayerData) {
 	if (tileLayerData[tile].attribution) tileAttribution = tileLayerData[tile].attribution + ' | ' + attribution;
 	else tileAttribution = attribution;
 	tileLayers[tileLayerData[tile].name] = L.tileLayer(
-		tileLayerData[tile].url,
-		{maxNativeZoom: tilemaxZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains}
+		tileLayerData[tile].url, { maxNativeZoom: tilemaxZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains }
 	);
 	// create object array for getting map base layer name
 	tileList.name.push(tileLayerData[tile].name);
 	tileList.keyname.push(tile);
 }
 L.control.layers(tileLayers).addTo(map);
-L.control.scale({metric:false, position:'bottomright'}).addTo(map);
+L.control.scale({ metric: false, position: 'bottomright' }).addTo(map);
 
 // get basemap layer name on change
 map.on('baselayerchange', function(e) {
   for (var x = 0; x < tileList.name.length; x++) {
-	if (e.name == tileList.name[x]) activeTileLayer = tileList.keyname[x];
+	if (e.name === tileList.name[x]) actTileLayer = tileList.keyname[x];
   }
 });
 
-// allow reverselookup only on high zoom level
+// reverselookup only on high zoom level
 map.on('zoomend', function() {
 	if (map.getZoom() >= 18) map.contextmenu.setDisabled(0, false);
 	else map.contextmenu.setDisabled(0, true);
 });
 
-// allow middle-mouse button reverselookup
+// middle-mouse button reverselookup
 map.on('mouseup', function(e) {
 	if (e.originalEvent.button === 1 && map.getZoom() >= 18) reverseLookup(e);
 });
@@ -214,21 +211,25 @@ L.Control.geocoder({
 	geocoder: L.Control.Geocoder.nominatim({
 		geocodingQueryParams: {
 			bounded: 1,
-			viewbox: mapleft + ',' + maptop + ',' + mapright + ',' + mapbottom
+			viewbox: mapLeft + ',' + mapTop + ',' + mapRight + ',' + mapBottom,
+			extratags: 1,
+			email: email
 		}
 	}),
 	defaultMarkGeocode: false,
 	showResultIcons: true,
-	position: 'topleft'
+	position: 'topleft',
+	placeholder: 'Type address or place name...'
 })
 .on('markgeocode', function(e) {
 	rLookup = true;
 	geoMarker = e.geocode;
-	var osm_id = geoMarker.properties.osm_id;
-	if (geoMarker.properties.osm_type === 'node') query = 'node' + '(' + osm_id + ');' + 'out center;';
-	if (geoMarker.properties.osm_type === 'way') query = 'way' + '(' + osm_id + ');' + 'out center;';
+	query = geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ');out center;';
+	if (map.getZoom() <= minOpZoom) map.setZoom(minOpZoom, { animate: false });
+	map.flyTo(geoMarker.center);
 	show_overpass_layer();
-	map.panTo(geoMarker.center);
+	$(':input','.leaflet-control-geocoder-form').blur();
+	$(':input','.leaflet-control-geocoder-form').val('');
 })
 .addTo(map);
 $('.leaflet-control-geocoder-icon').attr('title','Find address');
@@ -242,13 +243,18 @@ L.easyButton({
 		title:'Get map link',
 		onClick:function() {
 			var uri = URI(window.location.href);
-			var selectedPois = [];
-			var opennow;
-			if ($('input.opennow').is(':checked')) opennow = 1;
+			var selectedPois = [], walkCoords = [], openNow;
+			var walkWayp = routingControl.getWaypoints();
+			if (walkWayp[1].latLng != null) {
+				for (var c in walkWayp) {
+					walkCoords[c] = Math.round(walkWayp[c].latLng.lat * 100000) / 100000 + '~' + Math.round(walkWayp[c].latLng.lng * 100000) / 100000;
+				}
+			}
+			if ($('input.opennow').is(':checked')) openNow = 1;
 			$('#pois' + actTab + ' input.poi-checkbox:checked').each(function(i, element) { selectedPois.push(element.dataset.key);	});
-			// M = basemap, T = tab, O = opennow, P = pois
-			uri.query({ 'M': activeTileLayer, 'T': actTab, 'O': opennow, 'P': selectedPois });
-			window.prompt('Copy permanent map link:', uri.href());
+			// M = basemap, T = tab, O = opennow, P = grouped pois, I = single poi, W = walkpoints
+			uri.query({ 'M': actTileLayer, 'T': actTab, 'O': openNow, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
+			window.prompt('Copy this link to share current map:', uri.href());
 		}
 	}]
 }).addTo(map);
@@ -260,7 +266,7 @@ L.easyButton({
 		title:'Clear map',
 		onClick:function() {
 			routingControl.setWaypoints([]);
-			$('#accordion').accordion({active: false});
+			$('#accordion').accordion({ active: false });
 			clear_map();
 		}
 	}]
@@ -278,26 +284,26 @@ var sidebar = $('#sidebar').sidebar();
 new L.Hash(map);
 
 // https://github.com/ebrelsford/Leaflet.loading
-var loadingControl = L.Control.loading({separate: true});
+var loadingControl = L.Control.loading({ separate: true });
 map.addControl(loadingControl);
 
 // https://github.com/perliedman/leaflet-routing-machine
 var routingControl = L.Routing.control({
 	units: 'imperial',
 	collapsible: false,
-	fitSelectedRoutes: 'smart',
+	fitSelectedRoutes: false,
 	reverseWaypoints: true,
-	router: new L.Routing.mapbox(mapboxkey, {
+	router: new L.Routing.mapbox(mapboxKey, {
 		profile: 'mapbox.walking',
 		alternatives: false
 	}),
 	lineOptions: {
-		styles: [{color: 'blue', opacity: 0.4, weight: 5}]
+		styles: [{ color: 'darkgreen', opacity: 0.6, weight: 5 }]
 	},
 	geocoder: L.Control.Geocoder.nominatim({
 		geocodingQueryParams: {
 			bounded: 1,
-			viewbox: mapleft + ',' + maptop + ',' + mapright + ',' + mapbottom
+			viewbox: mapLeft + ',' + mapTop + ',' + mapRight + ',' + mapBottom
 		}
 	})
 });
@@ -316,7 +322,7 @@ var i = 0;
 // get all tags
 for (var poi in pois) {
 	poitags += '"' + pois[poi].tabName + '~' + poi + '": ' + JSON.stringify(pois[poi].tagKeyword) + ', ';
-	category[i] = {listLocation: pois[poi].tabName + '~' + poi, header: pois[poi].tabName + ' - ' + pois[poi].name};
+	category[i] = { listLocation: pois[poi].tabName + '~' + poi, header: pois[poi].tabName + ' - ' + pois[poi].name };
 	i++;
 }
 // clean up and covert to array
@@ -358,43 +364,43 @@ $('#autocomplete').easyAutocomplete(options);
 $('div.easy-autocomplete').removeAttr('style');
 
 // https://github.com/kartenkarsten/leaflet-layer-overpass
-var spinner = 0;
+var spinner = 0, markerId;
 function callback(data) {
 	if (spinner > 0) spinner -= 1;
 	if (spinner === 0) $('#spinner').hide();
-	for(i=0; i < data.elements.length; i++) {
-		e = data.elements[i];
-		if (e.id in this.instance._ids) return;
+	for(i = 0; i < data.elements.length; i++) {
+		var e = data.elements[i];
+		if (e.id in this.instance._ids) continue;
 		this.instance._ids[e.id] = true;
-		var pos = (e.type == 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
-		var type = '';
+		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
+		var type = undefined;
 		if (e.tags.amenity) {
-			if (type === '') type = e.tags.amenity;
+			if (!type) type = e.tags.amenity;
 			// Group similar pois
 			if (type === 'arts_centre') type = 'attraction';
 			if (type === 'nightclub') type = 'bar';
 			if (type === 'college') type = 'school';
+			if (type === 'school' && e.tags.name === undefined) type = undefined;
 			if (type === 'retirement_home') type = 'social_facility';
 			if (type === 'post_office') type = 'post_box';
 			// Hide non-public parking
-			if (type == 'parking') {
-				if (e.tags.access === 'private') type = '';
-				if (e.tags.access === 'permissive') type = '';
+			if (type === 'parking') {
+				if (e.tags.access === 'private' || e.tags.access === 'permissive') type = undefined;
 			}
 			if (type === 'animal_boarding') type = 'animal_shelter';
 		}
 		if (e.tags.man_made) {
-			if (type === '') type = e.tags.man_made;
+			if (!type) type = e.tags.man_made;
 		}
 		if (e.tags.tourism) {
-			if (type === '') type = e.tags.tourism;
+			if (!type) type = e.tags.tourism;
 		}
 		if (e.tags.historic) {
-			if (type === '') type = 'historic';
+			if (!type) type = 'historic';
 			if (type === 'manor') type = 'attraction';
 		}
 		if (e.tags.shop) {
-			if (type === '') type = e.tags.shop;
+			if (!type) type = e.tags.shop;
 			// Group similar pois
 			if (type === 'deli') type = 'butcher';
 			if (type === 'e-cigarette') type = 'tobacco';
@@ -405,42 +411,37 @@ function callback(data) {
 			if (type === 'garden_centre') type = 'florist';
 			if (type === 'tyres') type = 'car_repair';
 			if (type === 'hearing_aids') type = 'mobility';
-			if (type === 'interior_decoration') type = 'houseware';
-			if (type === 'bathroom_furnishing') type = 'houseware';
-			if (type === 'kitchen') type = 'houseware';
+			if (type === 'interior_decoration' || type === 'bathroom_furnishing' || type === 'kitchen') type = 'houseware';
 		}
 		if (e.tags.landuse) {
-			if (type === '') type = e.tags.landuse;
+			if (!type) type = e.tags.landuse;
 			// Hide non-public grounds
 			if (type === 'recreation_ground') {
-				if (e.tags.access == 'private') type = '';
+				if (e.tags.access === 'private') type = undefined;
 			}
 		}
 		if (e.tags.leisure) {
-			if (type === '') type = e.tags.leisure;
+			if (!type) type = e.tags.leisure;
 			if (type === 'common') type = 'park';
 			if (type === 'swimming_pool') {
-				if (e.tags.access == 'private') type = '';
+				if (e.tags.access === 'private') type = undefined;
 			}
 		}
 		if (e.tags.emergency) {
-			if (type === '') type = e.tags.emergency;
+			if (!type) type = e.tags.emergency;
 		}
 		if (e.tags.office) {
-			if (type === '') type = e.tags.office;
+			if (!type) type = e.tags.office;
 			if (type === 'financial') type = 'accountant';
 		}
 		if (e.tags.healthcare) {
-			if (type === '') type = 'healthcare';
+			if (!type) type = 'healthcare';
 		}
 		if (e.tags.listed_status) {
-			if (type === '') type = 'listed_status';
-			if (type === 'shelter') type = 'listed_status';
-			if (type === 'company') type = 'listed_status';
+			if (!type || type === 'shelter' || type === 'company') type = 'listed_status';
 		}
-		var iconName = '000blank';
 		var poi = pois[type];
-		if (poi) iconName = poi.iconName;
+		var iconName = poi ? poi.iconName : '000blank';
 		var markerIcon  = L.icon({
 			iconUrl: 'assets/img/icons/' + iconName + '.png',
 			iconSize: [32, 37],
@@ -454,20 +455,20 @@ function callback(data) {
 			keyboard: false,
 			riseOnHover: true
 		});
-		// set width of popup on screensize
-		var customOptions = { maxWidth: 250 };
-		if ($(window).width() > 500) customOptions = { maxWidth: 350 };
+		// show a tooltip on mouse hover
+		if (e.tags.name) marker.bindTooltip(e.tags.name, { direction: 'left', offset: [-15, -2] }).openTooltip();
 		// check if already defined poi
+		var customOptions = ($(window).width() > 500) ? { maxWidth: 350 } : { maxWidth: 250 };
 		if (poi) {
-			// show a tooltip on mouse hover
-			if (e.tags.name) marker.bindTooltip(e.tags.name, {direction: 'left', offset: [-15, -2]}).openTooltip();
+			// create pop-up
+			var markerPopup = poi.tagParser ? poi.tagParser(e, poi.name) : generic_poi_parser(e, poi.name);
+			// set width of popup on screensize
 			// show pop-up
-			var markerPopup = generic_poi_parser(e, poi.name);
-			if (poi.tagParser) markerPopup = poi.tagParser(e, poi.name);
 			marker.bindPopup(markerPopup, customOptions);
 			// check if coming from reverselookup
 			if (rLookup) {
 				marker.addTo(this.instance).openPopup();
+				markerId = e.type + '~' + e.id;
 				rLookup = false;
 			}
 			else {
@@ -478,10 +479,14 @@ function callback(data) {
 				else marker.addTo(this.instance);
 			}
 		}
-		// use geomarker
 		else if (rLookup) {
-			marker.bindPopup(geoMarker.html, customOptions);
+			// use generic marker
+			var name = e.tags.name ? e.tags.name : e.tags.building;
+			if (!name || name === 'yes') name = '&hellip;';
+			markerPopup = generic_poi_parser(e, name)
+			marker.bindPopup(markerPopup, customOptions);
 			marker.addTo(this.instance).openPopup();
+			markerId = e.type + '~' + e.id;
 			rLookup = false;
 		}
 	}
@@ -500,6 +505,7 @@ function setting_changed(newcheckbox) {
 	if ($('input.poi-checkbox:checked').length <= 3) {
 		// remove pois from current map
 		iconLayer.clearLayers();
+		markerId = undefined;
 		if ($('input.poi-checkbox:checked').length > 0) {
 			//build overpass query
 			query = '(';
@@ -524,7 +530,7 @@ function show_pois_checkboxes(tabName) {
 	var content = '<div class="anchor"><a id="gototop' + tabName + '" href="#gotobot' + tabName + '">| <span class="fa fa-arrow-down"></span> |</a></div>';
 	content += '<table style="width:100%">';
 	for (var poi in pois) {
-		if (pois[poi].tabName == tabName) {
+		if (pois[poi].tabName === tabName) {
 			if (i % 2 === 0) content += '<tr>';
 			content += '<td style="overflow:hidden; white-space:nowrap">';
 			var checkbox = Mustache.render(
@@ -534,7 +540,7 @@ function show_pois_checkboxes(tabName) {
 						<input type="checkbox" class="poi-checkbox" id="{{name}}" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
 					</label> \
 				</div>',
-				{key: poi, name: pois[poi].name, icon: pois[poi].iconName, tabname: pois[poi].tabName}
+				{ key: poi, name: pois[poi].name, icon: pois[poi].iconName, tabname: pois[poi].tabName }
 			);
 			content += checkbox;
 			content += '</td>';
@@ -554,37 +560,41 @@ show_pois_checkboxes('tourism');
 
 // suggested walk waypoints
 function suggwalk(walkname) {
-	if (walkname == 'tmt') {
+	if (walkname === 'tmt') {
 		routingControl.setWaypoints([
-			L.latLng(50.84055, 0.49145),
-			L.latLng(50.83729, 0.47612),
-			L.latLng(50.83647, 0.46641),
-			L.latLng(50.83730, 0.46616)
+			[50.84055, 0.49145],
+			[50.83729, 0.47612],
+			[50.83647, 0.46641],
+			[50.83730, 0.46616]
 		]);
+		map.flyTo([50.8385, 0.4787], 16);
 	}
-	else if (walkname == '1066') {
+	else if (walkname === '1066') {
 		routingControl.setWaypoints([
-			L.latLng(50.84522, 0.48044),
-			L.latLng(50.84972, 0.48419),
-			L.latLng(50.87800, 0.50009)
+			[50.84522, 0.48044],
+			[50.84972, 0.48419],
+			[50.87800, 0.50009]
 		]);
+		map.flyTo([50.8551, 0.4527], 14);
 	}
-	else if (walkname == 'bc1') {
+	else if (walkname === 'bc1') {
 		routingControl.setWaypoints([
-			L.latLng(50.84125, 0.47717),
-			L.latLng(50.84515, 0.47961),
-			L.latLng(50.86230, 0.51823),
-			L.latLng(50.84808, 0.52014),
-			L.latLng(50.84056, 0.49142),
-			L.latLng(50.83792, 0.47660),
-			L.latLng(50.84093, 0.47718)
+			[50.84125, 0.47717],
+			[50.84515, 0.47961],
+			[50.86230, 0.51823],
+			[50.84808, 0.52014],
+			[50.84056, 0.49142],
+			[50.83792, 0.47660],
+			[50.84093, 0.47718]
 		]);
+		map.flyTo([50.8526, 0.4526], 14);
 	}
-	else if (walkname == 'wwh') {
+	else if (walkname === 'wwh') {
 		routingControl.setWaypoints([
-			L.latLng(50.83567, 0.45892),
-			L.latLng(50.83701, 0.47363)
+			[50.83567, 0.45892],
+			[50.83701, 0.47363]
 		]);
+		map.flyTo([50.8364, 0.4664], 16);
 	}
 }
 function walkinfo() {
@@ -596,47 +606,56 @@ function walkinfo() {
 
 // https://github.com/medialize/URI.js
 var uri = URI(window.location.href);
-if (uri.hasQuery('M')) activeTileLayer = uri.search(true).M;
+if (uri.hasQuery('M')) actTileLayer = uri.search(true).M;
+if (uri.hasQuery('T')) actTab = uri.search(true).T;
 if (uri.hasQuery('O')) $('input.opennow').prop('checked', uri.search(true).O);
+if (uri.hasQuery('W')) {
+	var walkCoords = uri.search(true).W;
+	for (i = 0; i < walkCoords.length; i++) {
+		walkCoords[i] = walkCoords[i].replace('~', ', ');
+		routingControl.spliceWaypoints(i, 1, JSON.parse('[' + walkCoords[i] + ']'));
+	}
+}
 if (uri.hasQuery('P')) {
-	var selectedPois = uri.search(true).P;
-	if (!$.isArray(selectedPois)) {
-		// the last poi has a '/' on it because leaflet-hash
-		poi = selectedPois.replace('/', '');
+	var poi = uri.search(true).P;
+	if (!$.isArray(poi)) {
 		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').prop('checked', true);
 	}
 	else {
-		for (i = 0; i < selectedPois.length; i++) {
-			// the last poi has a '/' on it because leaflet-hash
-			poi = selectedPois[i].replace('/', '');
+		for (i = 0; i < poi.length; i++) {
 			$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').prop('checked', true);
 		}
 	}
-	actTab = uri.search(true).T;
 	// highlight checkbox or hide sidebar for mobile users
 	if ($(window).width() >= 768) {
-		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').parent().parent().parent().effect('highlight', {}, 3000);
 		sidebar.open(actTab);
+		$('#pois' + uri.search(true).T + ' input[data-key=' + poi + ']').parent().parent().parent().effect('highlight', {}, 3000);
 	}
 	setting_changed();
 }
-else {
-	// if not returning from a  permalink, give defaults
-	if (window.location.hash.indexOf('/') !== 3) map.setView([maplat, maplng], mapzoom);
-	if (uri.hasQuery('T')) actTab = uri.search(true).T;
+if (uri.hasQuery('I')) {
+	rLookup = true;
+	markerId = uri.search(true).I
+	var splitId = markerId.split('~');
+	query = splitId[0] + '(' + splitId[1] + ');out center;';
+	show_overpass_layer();
+}
+// if not returning from a permalink, give defaults
+if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
+	if (window.location.hash.indexOf('/') !== 3) map.setView([mapLat, mapLng], mapZoom);
 	if ($(window).width() >= 768) sidebar.open(actTab);
 }
-tileLayers[tileLayerData[activeTileLayer].name].addTo(map);
-map.setMaxBounds([[maptop,mapleft], [mapbottom,mapright]]);
+tileLayers[tileLayerData[actTileLayer].name].addTo(map);
+map.setMaxBounds([[mapTop, mapLeft], [mapBottom, mapRight]]);
 	
 function show_overpass_layer() {
-	if (query === '' || query === '();out center;') {
+	if (!query || query === '();out center;') {
 		console.log('There is nothing selected to filter by.');
 		return;
 	}
 	var opl = new L.OverPassLayer({
 		debug: false,
-		minzoom: 15,
+		minzoom: minOpZoom,
 		query: query + '&contact=' + email, //contact info only for use with .fr endpoint
 		endpoint: 'https://api.openstreetmap.fr/oapi/interpreter/',
 		callback: callback,

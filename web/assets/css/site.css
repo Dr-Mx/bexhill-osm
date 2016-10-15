@@ -209,12 +209,14 @@ input[type=checkbox] {
 	font-size: 12px !important;
 }
 
-a:link, a:visited, a:hover, .onlink {
-	color: #b05000;
+.walklink {
+	font-size: 10pt !important;
+	color: darkgreen;
+	text-indent: 5px;
 	cursor: pointer;
 }
 
-.onlink {
-	font-size: 10pt !important;
-	text-indent: 5px;
+a:link, a:visited, a:hover {
+	color: #b05000;
+	cursor: pointer;
 }
