@@ -8,24 +8,19 @@ Searchable OpenStreetMap data showing POIs and other information
 
 ## Features
  - Mobile and desktop friendly
- - Geolocate user
- - Address search
- - Reverse lookup map elements
- - Detailed POI markers
+ - Detailed POI markers through Overpass API
+ - Nominatim > Overpass address search
+ - Nominatim > Overpass reverse lookup
  - Option to view only 'currently open' POIs
- - Find a POI based on a keyword
- - Manually select POIs from sidebar tabs
- - Direct link to edit a POI on OSM
+ - Find group POIs based on a keyword
+ - Manually select group POIs from sidebar tabs
  - Create walking directions
  - View suggested walking routes
- - Share view via permalinking
+ - Direct link to edit an element on OSM
+ - Geolocate user
+ - Share any layer via permalink
 
 ## Attribution
 
 Forked from:
  - http://pois.elblogdehumitos.com.ar/ (Humitos)
-
-Strongly based on :
- - http://unterkunftskarte.de/
- - http://osm24.eu/
- - https://github.com/simon04/POImap/
