@@ -62,6 +62,10 @@ input[type=checkbox] {
 	opacity: 0.9;
 }
 
+.popup-mobile {
+	font-size: 90%;
+}
+
 .leaflet-tooltip {
 	font-weight: bold;
 	background-color: #dedede;
@@ -188,7 +192,7 @@ input[type=checkbox] {
 	color: #808080;
 }
 
-.ui-accordion .ui-accordion-header {
+#accordWk {
 	display: block;
 	cursor: pointer;
 	position: relative;
@@ -196,11 +200,21 @@ input[type=checkbox] {
 	padding: .5em .5em .5em .7em;
 	font-size: 100%;
 }
+#accordOh {
+	display: inline-block;
+	cursor: pointer;
+}
 .ui-accordion .ui-accordion-content {
 	padding: 0.5em 1.5em;
 	border-top: 0;
 	overflow: auto;
 	height: 100%;
+}
+
+.ohTable {
+	display: none;
+	cursor: default;
+	font-style: italic;
 }
 
 .walkinfo {

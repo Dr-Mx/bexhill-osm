@@ -37,6 +37,7 @@ $('.sidebar-tabs').click(function() {
 		actTab = $('.sidebar-pane.active').attr('id');
 		if (actTab === 'shops' || actTab === 'amenities' || actTab === 'services' || actTab === 'leisure') clear_map();
 	}
+	// resize links on mini map
 	if (actTab === 'home') setTimeout(function() { $('map').imageMapResize(); }, 500);
 });
 
@@ -47,6 +48,18 @@ Mustache.escape = function(text) { return text; };
 $(document).ready(function() {
 	// add small delay after load for sidebar to animate open
 	setTimeout(function() {	$('map').imageMapResize(); }, 500);
+	// set collapsible accordion for opening hours
+	map.on('popupopen', function() {
+		// delay required when switching popups immediately
+		setTimeout(function() {
+			$('#accordOh').accordion({
+				heightStyle: 'content',
+				collapsible: true,
+				active: false,
+				animate: 100
+			});
+		}, 250);
+	});
 });
 
 // https://github.com/aratcliffe/Leaflet.contextmenu
@@ -67,6 +80,7 @@ var map = new L.map('map', {
 });
 var query, geoMarker, rLookup = false;
 function reverseLookup(e) {
+	// get location, look up id on nominatim and pass it to overpass
 	var geocoder = L.Control.Geocoder.nominatim();
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
 		geoMarker = results[0];
@@ -80,6 +94,7 @@ function reverseLookup(e) {
 }
 function walkPoint(e) {
 	if ($(window).width() >= 768) sidebar.open('walking');
+	// drop a walk marker if one doesn't exist
 	var wp = routingControl.getWaypoints();
 	for(var i = 0; i < wp.length; i++){
 		if(!wp[i].name){
@@ -90,6 +105,7 @@ function walkPoint(e) {
     routingControl.spliceWaypoints(wp.length, 0, e.latlng);
 }
 function improveMap(e) {
+	// create a note on osm.org
 	window.open('http://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, '_blank');
 }
 
@@ -165,7 +181,7 @@ for (var tile in tileLayerData) {
 	tileLayers[tileLayerData[tile].name] = L.tileLayer(
 		tileLayerData[tile].url, { maxNativeZoom: tilemaxZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains }
 	);
-	// create object array for getting map base layer name
+	// create object array for all basemap layers
 	tileList.name.push(tileLayerData[tile].name);
 	tileList.keyname.push(tile);
 }
@@ -222,6 +238,8 @@ L.Control.geocoder({
 	placeholder: 'Type address or place name...'
 })
 .on('markgeocode', function(e) {
+	// pass nominatim address lookup to overpass
+	if (markerId) clear_map();
 	rLookup = true;
 	geoMarker = e.geocode;
 	query = geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ');out center;';
@@ -245,7 +263,7 @@ L.easyButton({
 			var uri = URI(window.location.href);
 			var selectedPois = [], walkCoords = [], openNow;
 			var walkWayp = routingControl.getWaypoints();
-			if (walkWayp[1].latLng != null) {
+			if (walkWayp[1].latLng !== null) {
 				for (var c in walkWayp) {
 					walkCoords[c] = Math.round(walkWayp[c].latLng.lat * 100000) / 100000 + '~' + Math.round(walkWayp[c].latLng.lng * 100000) / 100000;
 				}
@@ -265,8 +283,9 @@ L.easyButton({
 		icon:'fa fa-trash',
 		title:'Clear map',
 		onClick:function() {
+			// clear walk points, roll up suggested walks, clear poi marker layers
 			routingControl.setWaypoints([]);
-			$('#accordion').accordion({ active: false });
+			$('#accordWk').accordion({ active: false });
 			clear_map();
 		}
 	}]
@@ -293,6 +312,7 @@ var routingControl = L.Routing.control({
 	collapsible: false,
 	fitSelectedRoutes: false,
 	reverseWaypoints: true,
+	routeWhileDragging: true,
 	router: new L.Routing.mapbox(mapboxKey, {
 		profile: 'mapbox.walking',
 		alternatives: false
@@ -309,7 +329,8 @@ var routingControl = L.Routing.control({
 });
 var routeBlock = routingControl.onAdd(map);	
 document.getElementById('routingControl').appendChild(routeBlock);
-$('#accordion').accordion({
+// collapsible suggested walks
+$('#accordWk').accordion({
 	heightStyle: 'content',
 	collapsible: true,
 	active: false
@@ -344,7 +365,7 @@ var options = {
 			$('#pois' + actTab + ' input[id="' + catsplit[1] + '"]').prop('checked', true);
 			// Highlight checkbox or hide sidebar for mobile users
 			if ($(window).width() >= 768) {
-				$('#pois' + actTab + ' input[id="' + catsplit[1] + '"]').parent().parent().parent().effect("highlight", {}, 3000);
+				$('#pois' + actTab + ' input[id="' + catsplit[1] + '"]').parent().parent().parent().effect('highlight', {}, 3000);
 			}
 			else sidebar.close();
 			setting_changed();
@@ -366,6 +387,8 @@ $('div.easy-autocomplete').removeAttr('style');
 // https://github.com/kartenkarsten/leaflet-layer-overpass
 var spinner = 0, markerId;
 function callback(data) {
+	// set marker popup dimensions on screensize
+	var type, markerPopup, customOptions = ($(window).width() > 500) ? { maxWidth: 350, minWidth: 205 } : { maxWidth: 250, minWidth: 205, autoPanPaddingTopLeft: 30, className: 'popup-mobile' };
 	if (spinner > 0) spinner -= 1;
 	if (spinner === 0) $('#spinner').hide();
 	for(i = 0; i < data.elements.length; i++) {
@@ -373,7 +396,7 @@ function callback(data) {
 		if (e.id in this.instance._ids) continue;
 		this.instance._ids[e.id] = true;
 		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
-		var type = undefined;
+		type = undefined;
 		if (e.tags.amenity) {
 			if (!type) type = e.tags.amenity;
 			// Group similar pois
@@ -389,15 +412,15 @@ function callback(data) {
 			}
 			if (type === 'animal_boarding') type = 'animal_shelter';
 		}
-		if (e.tags.man_made) {
-			if (!type) type = e.tags.man_made;
-		}
 		if (e.tags.tourism) {
 			if (!type) type = e.tags.tourism;
 		}
 		if (e.tags.historic) {
 			if (!type) type = 'historic';
 			if (type === 'manor') type = 'attraction';
+		}
+		if (e.tags.man_made) {
+			if (!type) type = e.tags.man_made;
 		}
 		if (e.tags.shop) {
 			if (!type) type = e.tags.shop;
@@ -458,10 +481,9 @@ function callback(data) {
 		// show a tooltip on mouse hover
 		if (e.tags.name) marker.bindTooltip(e.tags.name, { direction: 'left', offset: [-15, -2] }).openTooltip();
 		// check if already defined poi
-		var customOptions = ($(window).width() > 500) ? { maxWidth: 350 } : { maxWidth: 250 };
 		if (poi) {
 			// create pop-up
-			var markerPopup = poi.tagParser ? poi.tagParser(e, poi.name) : generic_poi_parser(e, poi.name);
+			markerPopup = poi.tagParser ? poi.tagParser(e, poi.name) : generic_poi_parser(e, poi.name);
 			// set width of popup on screensize
 			// show pop-up
 			marker.bindPopup(markerPopup, customOptions);
@@ -483,7 +505,7 @@ function callback(data) {
 			// use generic marker
 			var name = e.tags.name ? e.tags.name : e.tags.building;
 			if (!name || name === 'yes') name = '&hellip;';
-			markerPopup = generic_poi_parser(e, name)
+			markerPopup = generic_poi_parser(e, name);
 			marker.bindPopup(markerPopup, customOptions);
 			marker.addTo(this.instance).openPopup();
 			markerId = e.type + '~' + e.id;
@@ -492,7 +514,7 @@ function callback(data) {
 	}
 }
 
-// clear layers
+// clear poi marker layers
 function clear_map() {
 	$('input.poi-checkbox').prop('checked', false);
 	setting_changed();
@@ -503,7 +525,7 @@ function clear_map() {
 function setting_changed(newcheckbox) {
 	// limit number of selections
 	if ($('input.poi-checkbox:checked').length <= 3) {
-		// remove pois from current map
+		// remove poi markers
 		iconLayer.clearLayers();
 		markerId = undefined;
 		if ($('input.poi-checkbox:checked').length > 0) {
@@ -524,10 +546,10 @@ function setting_changed(newcheckbox) {
 	else $('[data-key=' + newcheckbox + ']').prop('checked', false);
 }
 
+// build content for sidebar pois
 function show_pois_checkboxes(tabName) {
-	// build the content for the sidebar pane
 	var i = 0;
-	var content = '<div class="anchor"><a id="gototop' + tabName + '" href="#gotobot' + tabName + '">| <span class="fa fa-arrow-down"></span> |</a></div>';
+	var content = '<div class="anchor"><a id="gototop' + tabName + '" href="#gotobot' + tabName + '">| <i class="fa fa-arrow-down"></i> |</a></div>';
 	content += '<table style="width:100%">';
 	for (var poi in pois) {
 		if (pois[poi].tabName === tabName) {
@@ -549,7 +571,7 @@ function show_pois_checkboxes(tabName) {
 		}
 	}
 	content += '</table>';
-	content += '<div class="anchor"><a id="gotobot' + tabName + '" href="#gototop' + tabName + '">| <span class="fa fa-arrow-up"></span> |</a></div>';
+	content += '<div class="anchor"><a id="gotobot' + tabName + '" href="#gototop' + tabName + '">| <i class="fa fa-arrow-up"></i> |</a></div>';
 	$('#pois' + tabName).append(content);
 }
 show_pois_checkboxes('shops');
@@ -635,7 +657,7 @@ if (uri.hasQuery('P')) {
 }
 if (uri.hasQuery('I')) {
 	rLookup = true;
-	markerId = uri.search(true).I
+	markerId = uri.search(true).I;
 	var splitId = markerId.split('~');
 	query = splitId[0] + '(' + splitId[1] + ');out center;';
 	show_overpass_layer();

@@ -61,7 +61,7 @@
 		<div class="sidebar-content">
 			<!-- Upper tabs -->
 			<div class="sidebar-pane" id="home">
-				<h1 class="sidebar-header">Bexhill OpenStreetMap<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Bexhill OpenStreetMap<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
 					<h3>Find an interest:</h3>
 					<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. 'clothing', 'tea', 'memorial', 'tourism')"></p>
@@ -73,7 +73,7 @@
 							<li>Tips to get started:</li>
 							<ol style="list-style-type:circle">
 								<li>Enter a keyword above to see a group of interests.</li>
-								<li>Find an address by using the (<span style="font-size:10pt" class="fa fa-search"></span>) button.</li>
+								<li>Find an address by using the (<i style="font-size:10pt" class="fa fa-search"></i>) button.</li>
 								<li>Zoom in and right-click a building to lookup its details.</li>
 							</ol>
 						</ul>
@@ -92,39 +92,39 @@
 							<area title="Glenleigh Park" shape="rect" coords="110,48,237,118" onclick="map.flyTo([50.8520, 0.4552], 16);" href="javascript:void(0);">
 						</map>
 						<p class="lorem">Note: areas to the west are work-in-progress.</p>
-						<p>View Help <a onclick="sidebar.open('help')">[<span style="color:#b05000" class="fa fa-question fa-fw"></span>]</a> for more assistance.</p>
-						<p>If you have any questions or wish to help out, contact details can be found under Information <a onclick="sidebar.open('information')">[<span style="color:#b05000" class="fa fa-info fa-fw"></span>]</a>.</p>
+						<p>View Help <a onclick="sidebar.open('help')">[<i style="color:#b05000" class="fa fa-question fa-fw"></i>]</a> for more assistance.</p>
+						<p>If you have any questions or wish to help out, contact details can be found under Information <a onclick="sidebar.open('information')">[<i style="color:#b05000" class="fa fa-info fa-fw"></i>]</a>.</p>
 						<p>
 							<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&layout=button&action=like&size=small&show_faces=false&share=false&appId" width="55" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbexhill-osm.org.uk&layout=button&size=small&mobile_iframe=true&appId" width="60" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 						</p>
-						<span class="lorem">Bexhill-OSM v1.6.0 &copy; 2016</span>
+						<i class="lorem">Bexhill-OSM v1.7.0 &copy; 2016</i>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="shops">
-				<h1 class="sidebar-header">Shops<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Shops<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body" id="poisshops"></div>
 			</div>
 			<div class="sidebar-pane" id="amenities">
-				<h1 class="sidebar-header">Amenities<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Amenities<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body" id="poisamenities"></div>
 			</div>
 			<div class="sidebar-pane" id="services">
-				<h1 class="sidebar-header">Services<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Services<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body" id="poisservices"></div>
 			</div>
 			<div class="sidebar-pane" id="leisure">
-				<h1 class="sidebar-header">Leisure & Tourism<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Leisure & Tourism<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body" id="poisleisure"></div>
 			</div>
 			<div class="sidebar-pane" id="walking">
-				<h1 class="sidebar-header">Walking Routes<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Walking Routes<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
 					<h3>Find a walking route</h3>
 					Use the map context-menu, or type an address:
 					<p id="routingControl">
 					<h3>Suggested leisure walks</h3>
-					<div id="accordion">
+					<div id="accordWk">
 						<p class="walklink" onclick="suggwalk('tmt')"><i class="fa fa-map-marker"></i> The Motor Trail</p>
 						<div>
 							In May 1902 Bexhill on Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels 
@@ -156,7 +156,7 @@
 			</div>
 			<!-- Lower tabs -->
 			<div class="sidebar-pane" id="help">
-				<h1 class="sidebar-header">Help<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Help<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
 				<a id="gototophelp"></a>
 					<p>
@@ -168,22 +168,22 @@
 						<a href="#gotowalking">Walking Routes</a><br>
 					</p>
 					<hr>
-					<b><span style="color:#e52d27" class="fa fa-youtube-play"></span> <a href="https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us" title="YouTube" target="_blank">View demonstration videos</a></b>
+					<b><i style="color:#e52d27" class="fa fa-youtube-play"></i> <a href="https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us" title="YouTube" target="_blank">View demonstration videos</a></b>
 					<a id="gotocontrols"></a><hr>
 					<h3>Map Controls</h3>
-						The zoom controls (<span style="color:#b05000" class="fa fa-plus"></span> / <span style="color:#b05000" class="fa fa-minus"></span>) will enlarge and shrink the map.<br><br>
-						Your current position can be located if you are in Bexhill by clicking the arrow icon (<span style="color:#b05000" class="fa fa-location-arrow"></span>).<br><br>
-						Find an address on the map by entering part of it into the search box (<span style="color:#b05000" class="fa fa-search"></span>).  A selection will appear if multiple results are found.<br><br>
-						If you wish to share your current view and selected options, click the link icon (<span style="color:#b05000" class="fa fa-link"></span>) and copy the text displayed.<br><br>
-						To clear all current layers on the map, click the bin (<span style="color:#b05000" class="fa fa-trash"></span>).  Right-click / long press will reload the website to defaults.<br><br>
+						The zoom controls (<i style="color:#b05000" class="fa fa-plus"></i> / <i style="color:#b05000" class="fa fa-minus"></i>) will enlarge and shrink the map.<br><br>
+						Your current position can be located if you are in Bexhill by clicking the arrow icon (<i style="color:#b05000" class="fa fa-location-arrow"></i>).<br><br>
+						Find an address on the map by entering part of it into the search box (<i style="color:#b05000" class="fa fa-search"></i>).  A selection will appear if multiple results are found.<br><br>
+						If you wish to share your current view and selected options, click the link icon (<i style="color:#b05000" class="fa fa-link"></i>) and copy the text displayed.<br><br>
+						To clear all current layers on the map, click the bin (<i style="color:#b05000" class="fa fa-trash"></i>).  Right-click / long press will reload the website to defaults.<br><br>
 						Various styles of base map can be displayed using the overlay picker - located at the top-right of the page.
 						<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
-						<span class="fa fa-search fa-fw"></span> Lookup: Display information on an item under the cursor, only works on higher zoom levels.  Middle-clicking the scroll-wheel is a shortcut to this.<br><br>
-						<span class="fa fa-map-marker fa-fw"></span> Add walk point: Plot markers to create a walking route.<br><br>
-						<span class="fa fa-external-link fa-fw"></span> Improve map: Open openstreetmap.org where you can leave a note or edit the map.
+						<i class="fa fa-search fa-fw"></i> Lookup: Display information on an item under the cursor, only works on higher zoom levels.  Middle-clicking the scroll-wheel is a shortcut to this.<br><br>
+						<i class="fa fa-map-marker fa-fw"></i> Add walk point: Plot markers to create a walking route.<br><br>
+						<i class="fa fa-external-link fa-fw"></i> Improve map: Open openstreetmap.org where you can leave a note or edit the map.
 						<p><img src="assets/img/context.png" alt="Context-menu preview"></p>
 					<a id="gotointerest"></a><hr>
 					<h3>Find Interest</h3>
@@ -192,11 +192,11 @@
 						<p><img src="assets/img/find.png" alt="Find interest Preview" style="width: 75%"></p>
 						<a id="gototabs"></a><hr>
 					<h3>Tabs</h3>
-						[<span style="color:#b05000" class="fa fa-shopping-bag fa-fw"></span>] Shops: Buildings where general items are sold.<br><br>
-						[<span style="color:#b05000" class="fa fa-coffee fa-fw"></span>] Amenities: Where to find a meal or a cup of coffee.  Social facilities, transport, recycling.<br><br>
-						[<span style="color:#b05000" class="fa fa-heartbeat fa-fw"></span>] Services: Public and private offices and services.<br><br>
-						[<span style="color:#b05000" class="fa fa-tree fa-fw"></span>] Leisure & Tourism: Where to stay, go, socialise and discover Bexhill's historical places.<br><br>
-						[<span style="color:#b05000" class="fa fa-compass fa-fw"></span>] Walking Routes: Select from a few local walks, or create your own path through the many twittens (see below for more info).
+						[<i style="color:#b05000" class="fa fa-shopping-bag fa-fw"></i>] Shops: Buildings where general items are sold.<br><br>
+						[<i style="color:#b05000" class="fa fa-coffee fa-fw"></i>] Amenities: Where to find a meal or a cup of coffee.  Social facilities, transport, recycling.<br><br>
+						[<i style="color:#b05000" class="fa fa-heartbeat fa-fw"></i>] Services: Public and private offices and services.<br><br>
+						[<i style="color:#b05000" class="fa fa-tree fa-fw"></i>] Leisure & Tourism: Where to stay, go, socialise and discover Bexhill's historical places.<br><br>
+						[<i style="color:#b05000" class="fa fa-compass fa-fw"></i>] Walking Routes: Select from a few local walks, or create your own path through the many twittens (see below for more info).
 					<p>
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
@@ -205,17 +205,17 @@
 						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview" style="width: 45%"></p>
 						Once items have loaded on the map, click on their icon to see a pop-up detailing more specific information.  Opening hours are 
 						displayed as coloured icons showing if that place is currently open.<br>
-						By clicking <span style="color:#b05000" class="fa fa-pencil fa-fw"></span> you can edit the item on openstreetmap.org.
+						By clicking <i style="color:#b05000" class="fa fa-pencil fa-fw"></i> you can edit the item on openstreetmap.org.
 						<p><img src="assets/img/popup.png" alt="Marker popup preview" style="width: 75%"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
 						Find a route by either entering an address, or using the map context-menu.  Add additional markers by dragging an existing path to a new location.
 						<p><img src="assets/img/walking.png" alt="Walking route preview" style="width: 75%"></p>
-					<div class="anchor"><a href="#gototophelp">| <span class="fa fa-arrow-up"></span> |</a></div>
+					<div class="anchor"><a href="#gototophelp">| <i class="fa fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="information">
-				<h1 class="sidebar-header">Information<span class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></span></h1>
+				<h1 class="sidebar-header">Information<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
 				<a id="gototopinfo"></a>
 					<p>
@@ -289,10 +289,11 @@
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
 							<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
 							<li><a href="https://github.com/janl/mustache.js" target="_blank">Mustache</a> &copy; Jan Lehnardt</li>
+							<li><a href="https://github.com/placemarker/jQuery-MD5" target="_blank">jQuery MD5 Plugin</a> &copy; Christopher Casebeer</li>
 							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
-					<div class="anchor"><a href="#gototopinfo">| <span class="fa fa-arrow-up"></span> |</a></div>
+					<div class="anchor"><a href="#gototopinfo">| <i class="fa fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
 		</div>
@@ -303,13 +304,13 @@
 
     <!-- Overpass query search icon -->
 	<div id="spinner" style="display:none; z-index:500">
-		<span class="fa-stack" style="font-size:75px">
+		<i class="fa-stack" style="font-size:75px">
 			<i class="fa fa-circle fa-stack-1x" style="font-size:100px; color:rgba(222, 222, 222, 0.9)"></i>
 			<i class="fa fa-spinner fa-pulse fa-stack-1x"></i>
-		</span>
+		</i>
     </div>
 
-    <!-- JavaScript -->
+    <!-- JavaScript | website plugins -->
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="assets/js/jquery-ui.min.js"></script>
@@ -329,6 +330,8 @@
     <script src="assets/js/OverPassLayer.js"></script>
     <script src="assets/js/leaflet-hash.js"></script>
     <script src="assets/js/mustache.min.js"></script>
+	<script src="assets/js/jquery.md5.js"></script>
+	<!-- JavaScript | website code -->
     <script src="assets/js/tags-parsers.js"></script>
     <script src="assets/js/pois-type.js"></script>
     <script src="assets/js/site.js"></script>

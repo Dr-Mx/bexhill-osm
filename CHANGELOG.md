@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v1.7.0 - Wikimedia images
+
+**Date:** 22/10/2016
+
+Updated js
+ - jQuery UI 1.12.1
+
+Added js
+ - jQuery MD5 1.2.1
+
+Site changes
+ - Support for Wikimedia images using 'image=File:example.jpg' tag
+ - Expandable opening hours table with next open/close time
+ - Compressed all png files using compresspng.com
+
+
 ## v1.6.0 - Permalinking for walks and reverse lookups
 
 **Date:** 15/10/2016
