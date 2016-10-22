@@ -9,6 +9,11 @@ Searchable OpenStreetMap data showing POIs and other information
 ## Features
  - Mobile and desktop friendly
  - Detailed POI markers through Overpass API
+   - Facilities parser for wheelchair/wifi/pet access
+   - Payment parser
+   - Diet parser
+   - Expandable opening hours table
+   - Wikimedia images
  - Nominatim > Overpass address search
  - Nominatim > Overpass reverse lookup
  - Option to view only 'currently open' POIs
