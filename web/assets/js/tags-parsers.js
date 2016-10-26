@@ -10,7 +10,7 @@ function osmedit_parser(element) {
 		{type: element.type, id: element.id}
 	);
 	var markerPopup = Mustache.render(
-		'<a style="top:19px;right:20px;position:absolute;" href="{{link}}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
+		'<a style="top:19px; right:20px; position:absolute;" href="{{link}}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
 		{link: link}
 	);
 	return markerPopup;
@@ -152,12 +152,12 @@ function facility_parser(element) {
 	var tags = element.tags;
 	var markerPopup = '';
 	tag = '';
-	if (tags.wheelchair === 'yes') tag += '<i class="fa fa-wheelchair fa-fw" title="wheelchair access" style="color:darkgreen"></i>';
-	else if (tags.wheelchair === 'limited') tag += '<i class="fa fa-wheelchair fa-fw" title="limited wheelchair access" style="color:teal"></i>(limited) ';
-	else if (tags.wheelchair === 'no') tag += '<i class="fa fa-wheelchair fa-fw" title="no wheelchair access" style="color:red"></i>(no) ';
-	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen"></i>';
-	else if (tags.dog === 'no') tag += '<i class="fa fa-paw fa-fw" title="no dog access" style="color:red"></i>(no) ';
-	if (tags.internet_access === 'yes') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen"></i>';
+	if (tags.wheelchair === 'yes') tag += '<i class="fa fa-wheelchair fa-fw" title="wheelchair access" style="color:darkgreen;"></i>';
+	else if (tags.wheelchair === 'limited') tag += '<i class="fa fa-wheelchair fa-fw" title="limited wheelchair access" style="color:teal;"></i>(limited) ';
+	else if (tags.wheelchair === 'no') tag += '<i class="fa fa-wheelchair fa-fw" title="no wheelchair access" style="color:red;"></i>(no) ';
+	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen;"></i>';
+	else if (tags.dog === 'no') tag += '<i class="fa fa-paw fa-fw" title="no dog access" style="color:red;"></i>(no) ';
+	if (tags.internet_access === 'yes') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen;"></i>';
 	if (tag) markerPopup += Mustache.render(
 		tagTmpl,
 		{tag: 'Facilities', value: tag, iconName: 'info-circle'}
@@ -671,19 +671,34 @@ function opening_hours_parser(element) {
 		var opening_hours = require('opening_hours');
 		var hours = element.tags.opening_hours;
 		var oh = new opening_hours(hours);
-		// display 'today' instead of week day
-		var nextchange = oh.getNextChange().toLocaleDateString('en-GB', { weekday: 'long', hour: '2-digit', minute: '2-digit'} );
-		if (oh.getNextChange().toLocaleDateString('en-GB') === new Date().toLocaleDateString('en-GB')) {
-			nextchange = 'Today ' + oh.getNextChange().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit'} );
+		var strNextChange;
+		if (oh.getNextChange()) {
+			var dateTomorrow = new Date(), dateWeek = new Date();
+			dateTomorrow.setDate(new Date().getDate() + 1);
+			dateWeek.setDate(new Date().getDate() + 7);
+			// display 'today'
+			if (oh.getNextChange().toLocaleDateString('en-GB') === new Date().toLocaleDateString('en-GB')) {
+				strNextChange = 'Today ' + oh.getNextChange().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit'} );
+			}
+			// display 'tomorrow'
+			else if (oh.getNextChange().toLocaleDateString('en-GB') === dateTomorrow.toLocaleDateString('en-GB')) {
+				strNextChange = 'Tomorrow ' + oh.getNextChange().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit'} );
+			}
+			// display day if within a week
+			else if (oh.getNextChange().getTime() > dateTomorrow.getTime() && oh.getNextChange().getTime() < dateWeek.getTime()) {
+				strNextChange = oh.getNextChange().toLocaleDateString('en-GB', { weekday: 'long', hour: '2-digit', minute: '2-digit'} );
+			}
+			// otherwise display date
+			else strNextChange = oh.getNextChange().toLocaleDateString('en-GB');
 		}
+		else strNextChange = oh.prettifyValue();
 		state = oh.getState();
 		// create table
 		var ohTable = oh.prettifyValue({ conf: { rule_sep_string: '<br>', print_semicolon: false } });
 		// collapsible accordion
-		if (state) openhrs = '<div id="accordOh"><span><i style="color:green" class="fa fa-circle"></i> <strong>Open until:</strong> ';
-		else if (state === false) openhrs = '<div id="accordOh"><span><i style="color:red" class="fa fa-circle"></i> <strong>Closed until:</strong> ';
-		if (openhrs) openhrs +=  nextchange + '&nbsp; <i style="color:#b05000" class="fa fa-caret-down"></i> </span><div class="ohTable">' + ohTable + '</div></div>';
-		
+		if (state) openhrs = '<div id="accordOh"><span><i style="color:green;" class="fa fa-circle"></i> <strong>Open until:</strong> ';
+		else if (state === false) openhrs = '<div id="accordOh"><span><i style="color:red;" class="fa fa-circle"></i> <strong>Closed until:</strong> ';
+		if (openhrs) openhrs +=  strNextChange + '&nbsp; <i style="color:#b05000;" title="See full opening hours" class="fa fa-caret-down"></i> </span><div class="ohTable">' + ohTable + '</div></div>';
 	}
 	catch(err) {
 		if (hours) console.log('ERROR: Object "' + element.tags.name + '" cannot parse hours: ' + hours + '. ' + err);
@@ -694,7 +709,7 @@ function opening_hours_parser(element) {
 }
 
 // https://github.com/placemarker/jQuery-MD5
-// get md5 hash from wikimedia filename to find link to image thumbnail
+// get md5 hash from wikimedia filename to link image thumbnail
 var wikimediaImg;
 function image_parser(img) {
 	imgSplit = img.split(':');
@@ -702,7 +717,7 @@ function image_parser(img) {
 		imgSplit[1] = imgSplit[1].replace(/ /gi, '_');
 		var md5 = $.md5(imgSplit[1]);
 		var wikimediaUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/200px-' + imgSplit[1];
-		wikimediaImg = '<p style="text-align:center"><a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img style="border:2px solid #ccc" src="' + wikimediaUrl + '"></a></p>';
+		wikimediaImg = '<p style="text-align:center;"><a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img style="border:2px solid #ccc;" src="' + wikimediaUrl + '"></a></p>';
 	}
 	else wikimediaImg = '';
 }
@@ -719,10 +734,10 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: website_parser},
 		{callback: facebook_parser},
 		{callback: wikipedia_parser},
-		{callback: facility_parser},
 		{callback: fhrs_parser},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
+		{callback: facility_parser},
 		{callback: payment_parser}
 	].concat(functions);
 	for (var i = 0; i < functions.length; i++) {

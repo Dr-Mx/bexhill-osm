@@ -78,7 +78,7 @@ var map = new L.map('map', {
 		callback: improveMap
 	}]
 });
-var query, geoMarker, rLookup = false;
+var geoMarker, rLookup = false;
 function reverseLookup(e) {
 	// get location, look up id on nominatim and pass it to overpass
 	var geocoder = L.Control.Geocoder.nominatim();
@@ -87,8 +87,7 @@ function reverseLookup(e) {
 		if (geoMarker) {
 			if (markerId) clear_map();
 			rLookup = true;
-			query = geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ');out center;';
-			show_overpass_layer();
+			show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ');');
 		}
 	});
 }
@@ -242,10 +241,9 @@ L.Control.geocoder({
 	if (markerId) clear_map();
 	rLookup = true;
 	geoMarker = e.geocode;
-	query = geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ');out center;';
 	if (map.getZoom() <= minOpZoom) map.setZoom(minOpZoom, { animate: false });
 	map.flyTo(geoMarker.center);
-	show_overpass_layer();
+	show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ');');
 	$(':input','.leaflet-control-geocoder-form').blur();
 	$(':input','.leaflet-control-geocoder-form').val('');
 })
@@ -530,13 +528,13 @@ function setting_changed(newcheckbox) {
 		markerId = undefined;
 		if ($('input.poi-checkbox:checked').length > 0) {
 			//build overpass query
-			query = '(';
+			var query = '(';
 			$('#pois' + actTab + ' input.poi-checkbox:checked').each(function(i, element) {
 				query += 'node' + pois[element.dataset.key].query + '(BBOX);';
 				query += 'way' + pois[element.dataset.key].query + '(BBOX);';
 			});
-			query += ');out center;';
-			show_overpass_layer();
+			query += ');';
+			show_overpass_layer(query);
 		}
 		else {
 			spinner = 0;
@@ -550,15 +548,15 @@ function setting_changed(newcheckbox) {
 function show_pois_checkboxes(tabName) {
 	var i = 0;
 	var content = '<div class="anchor"><a id="gototop' + tabName + '" href="#gotobot' + tabName + '">| <i class="fa fa-arrow-down"></i> |</a></div>';
-	content += '<table style="width:100%">';
+	content += '<table style="width:100%;">';
 	for (var poi in pois) {
 		if (pois[poi].tabName === tabName) {
 			if (i % 2 === 0) content += '<tr>';
-			content += '<td style="overflow:hidden; white-space:nowrap">';
+			content += '<td style="overflow:hidden; white-space:nowrap;">';
 			var checkbox = Mustache.render(
 				'<div class="poi-checkbox"> \
 					<label title="{{name}}"> \
-						<img style="width:28px" src="assets/img/icons/{{icon}}.png"></img> \
+						<img style="width:28px;" src="assets/img/icons/{{icon}}.png"></img> \
 						<input type="checkbox" class="poi-checkbox" id="{{name}}" data-key="{{key}}" onclick="setting_changed(&#39;{{key}}&#39;)"><span>{{name}}</span> \
 					</label> \
 				</div>',
@@ -582,13 +580,16 @@ show_pois_checkboxes('tourism');
 
 // suggested walk waypoints
 function suggwalk(walkname) {
+	clear_map();
 	if (walkname === 'tmt') {
 		routingControl.setWaypoints([
-			[50.84055, 0.49145],
+			[50.84059, 0.49121],
 			[50.83729, 0.47612],
-			[50.83647, 0.46641],
-			[50.83730, 0.46616]
+			[50.83647, 0.46637],
+			[50.83732, 0.46639]
 		]);
+		// show related information boards
+		show_overpass_layer('(node["ref"~"^TMT"](BBOX));');
 		map.flyTo([50.8385, 0.4787], 16);
 	}
 	else if (walkname === '1066') {
@@ -618,12 +619,6 @@ function suggwalk(walkname) {
 		]);
 		map.flyTo([50.8364, 0.4664], 16);
 	}
-}
-function walkinfo() {
-	sidebar.open('leisure');
-	$('#poisleisure input[id="Information"]').prop('checked', true);
-	setting_changed();
-	sidebar.open('walking');
 }
 
 // https://github.com/medialize/URI.js
@@ -659,8 +654,7 @@ if (uri.hasQuery('I')) {
 	rLookup = true;
 	markerId = uri.search(true).I;
 	var splitId = markerId.split('~');
-	query = splitId[0] + '(' + splitId[1] + ');out center;';
-	show_overpass_layer();
+	show_overpass_layer(splitId[0] + '(' + splitId[1] + ');');
 }
 // if not returning from a permalink, give defaults
 if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
@@ -670,20 +664,19 @@ if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
 tileLayers[tileLayerData[actTileLayer].name].addTo(map);
 map.setMaxBounds([[mapTop, mapLeft], [mapBottom, mapRight]]);
 	
-function show_overpass_layer() {
-	if (!query || query === '();out center;') {
+function show_overpass_layer(query) {
+	if (!query || query === '();') {
 		console.log('There is nothing selected to filter by.');
 		return;
 	}
 	var opl = new L.OverPassLayer({
 		debug: false,
 		minzoom: minOpZoom,
-		query: query + '&contact=' + email, //contact info only for use with .fr endpoint
+		query: query + 'out center;&contact=' + email, //contact info only for use with .fr endpoint
 		endpoint: 'https://api.openstreetmap.fr/oapi/interpreter/',
 		callback: callback,
 		minZoomIndicatorOptions: {
 			position: 'topright',
-			minZoomMessageNoLayer: 'No layer assigned',
 			minZoomMessage: 'Zoom in to load data'
 		}
 	});

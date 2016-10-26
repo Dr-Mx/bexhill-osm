@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v1.7.1
+
+**Date:** 26/10/2016
+
+Updated js
+ - opening_hours.js
+
+Site changes
+ - Fix for calculating opening hours
+ - Amended a walk to show related info boards
+
+
 ## v1.7.0 - Wikimedia images
 
 **Date:** 22/10/2016

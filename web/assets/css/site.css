@@ -217,12 +217,6 @@ input[type=checkbox] {
 	font-style: italic;
 }
 
-.walkinfo {
-	color: #b05000;
-	cursor: pointer;
-	font-size: 12px !important;
-}
-
 .walklink {
 	font-size: 10pt !important;
 	color: darkgreen;
