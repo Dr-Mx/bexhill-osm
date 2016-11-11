@@ -71,15 +71,15 @@
 						<p>Bexhill-OSM is a non-commercial, community based mapping project.  It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
 						<ul style="font-size:11pt; color:#143000;">
 							<li>Tips to get started:</li>
-							<ol style="list-style-type:circle;">
+							<ol style="list-style-type:circle; padding-left:20px">
 								<li>Enter a keyword above to see a group of interests.</li>
-								<li>Find an address by using the <a onclick="$('.leaflet-control-geocoder-icon').click();">( <i style="color:#b05000; font-size:10pt;" class="fa fa-search"></i> )</a> button.</li>
-								<li>Zoom in and right-click a building to lookup its details.</li>
+								<li>Find an address by using the <a onclick="geocoderLink();">( <i style="color:#b05000; font-size:10pt;" class="fa fa-search"></i> )</a> button.</li>
+								<li>Zoom in and right-click a place to lookup its details.</li>
 							</ol>
 						</ul>
 						<p><img src="assets/img/minimap.png" class="minimap" alt="Minimap" usemap="#m_minimap"></p>
 						<map name="m_minimap">
-							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.flyTo([mapLat, mapLng], mapZoom);" href="javascript:void(0);">
+							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.flyTo(mapCentre, mapZoom);" href="javascript:void(0);">
 							<area title="New Town" shape="rect" coords="236,187,324,245" onclick="map.flyTo([50.8390, 0.4730], 17);" href="javascript:void(0);">
 							<area title="Old Town" shape="rect" coords="265,131,348,186" onclick="map.flyTo([50.8447, 0.4775], 17);" href="javascript:void(0);">
 							<area title="Sidley" shape="rect" coords="238,21,336,97" onclick="map.flyTo([50.8560, 0.4700], 17);" href="javascript:void(0);">
@@ -98,7 +98,7 @@
 							<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&layout=button&action=like&size=small&show_faces=false&share=false&appId" width="55" height="20" style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbexhill-osm.org.uk&layout=button&size=small&mobile_iframe=true&appId" width="60" height="20" style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 						</p>
-						<i class="lorem">Bexhill-OSM v1.7.1 &copy; 2016</i>
+						<i class="lorem">Bexhill-OSM v1.7.2 &copy; 2016</i>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="shops">
@@ -125,25 +125,25 @@
 					<p id="routingControl"></p>
 					<h3>Suggested leisure walks</h3>
 					<div id="accordWk">
-						<p class="walklink" onclick="suggwalk('tmt');"><i class="fa fa-map-marker"></i> The Motor Trail</p>
+						<p class="walklink" onclick="suggWalk('tmt');"><i class="fa fa-map-marker"></i> The Motor Trail</p>
 						<div>
 							In May 1902 Bexhill on Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels 
 							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a style="color:#b05000;" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel</a>).
 							<a href="http://www.discoverbexhill.com/docs/bexhill-guide-2013.pdf#page=5" target="_blank">Source</a>.<br>
 						</div>
-						<p class="walklink" onclick="suggwalk('1066');"><i class="fa fa-map-marker"></i> 1066 Country Walk - Bexhill Link</p>
+						<p class="walklink" onclick="suggWalk('1066');"><i class="fa fa-map-marker"></i> 1066 Country Walk - Bexhill Link</p>
 						<div>
 							The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time.  This is a 
 							section of the Bexhill - Battle link, the full route can be found <a href="http://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">here</a>.
 						</div>
-						<p class="walklink" onclick="suggwalk('bc1');"><i class="fa fa-map-marker"></i> Bexhill Circular</p>
+						<p class="walklink" onclick="suggWalk('bc1');"><i class="fa fa-map-marker"></i> Bexhill Circular</p>
 						<div>
 							This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient 
 							woodland, reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy 
 							areas. Refreshments and toilets are available at the start point - Bexhill railway station - and towards the end of the walk. 
 							<a href="http://www.riverocean.org.uk/ocean/webwalks/Bexhill%20Circular.html" target="_blank">Source</a>.
 						</div>
-						<p class="walklink" onclick="suggwalk('wwh');"><i class="fa fa-map-marker"></i> Walking the Way to Health</p>
+						<p class="walklink" onclick="suggWalk('wwh');"><i class="fa fa-map-marker"></i> Walking the Way to Health</p>
 						<div>
 							The route of this walk is marked out by a series of 10 plaques along the promenade.  Launched in 2011, it hopes to 
 							encourage people to regularly walk a specific distance along the promenade.  Small plinths are placed at ground level 
@@ -244,24 +244,27 @@
 						<a href="http://thebexhillhistorytrail.wordpress.com/" target="_blank">The Bexhill History Trail</a><br>&nbsp; - A guide to many of the historic gems.<br>
 						<a href="http://new.eastsussex.gov.uk/leisureandtourism/countryside/" target="_blank">Discover East Sussex</a><br>&nbsp; - Leisure and tourist guide for East Sussex.<br>
 					</p>
-					<p></p>
+					<p>
 					<a id="gotodonate"></a><hr>
 					<h3>Donate</h3>
-						<p>Bexhill-OSM is entirely advertisement and commercial free.  If you found it useful, or just wish to say thanks - click below.  Any amount is appreciated!<br>
-						<center>Paypal:
-							<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+						<p>Bexhill-OSM is entirely advertisement and commercial free.  If you found it useful, or just wish to say thanks - click below.  Any amount is appreciated!</p>
+						<p>
+						<table style="text-align:center; width:100%;"><tr><td>
+							Paypal<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 								<input type="hidden" name="cmd" value="_s-xclick">
 								<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
-								<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
-								<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-							</form>
-							<p>Flattr:<a href="https://flattr.com/submit/auto?fid=voxyne&url=http%3A%2F%2Fbexhill-osm.org.uk%2F" target="_blank"><img src="https://button.flattr.com/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a></p>
-							<p>Bitcoin:<br><a class="bitcoin">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</a></p>
-						</center>
-					<p></p>
+								<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal – The safer, easier way to pay online!">
+							</form></td>
+							<td>
+							Flattr<a href="https://flattr.com/submit/auto?fid=voxyne&url=http%3A%2F%2Fbexhill-osm.org.uk%2F" target="_blank"><img src="https://button.flattr.com/flattr-badge-large.png" title="Flattr this" border="0"></a>
+							</td></tr></table>
+							<p style="text-align:center;">Bitcoin<br><a class="bitcoin">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</a></p>
+						</p>
+					</p>
+					<p>
 					<a id="gotosoftware"></a><hr>
 					<h3>Software</h3>
-						<p>Source-code for Bexhill-OSM can be downloaded from <a href="https://github.com/Dr-Mx/osm-pois" target="_blank"><i class="fa fa-github"></i> GitHub</a>, as well as a <a href="https://github.com/Dr-Mx/osm-pois/blob/master/CHANGELOG.md" target="_blank">change-log</a> of continuing web developments.</p>
+						<p>Source-code for Bexhill-OSM can be downloaded from <a href="https://github.com/Dr-Mx/osm-pois" target="_blank"><i class="fa fa-github"></i> GitHub</a>, as well as a <a href="https://github.com/Dr-Mx/osm-pois/blob/master/CHANGELOG.md" target="_blank">change-log</a> of continuing web developments.
 						<br>To see my recent map changes click <a href="http://www.openstreetmap.org/user/Dr-Mx/history" target="_blank">here</a>.</p>
 						<p>Special thanks to the developers below, for without them this website would not be where it is today:</p>
 						<ul>
@@ -287,11 +290,11 @@
 							<li><a href="https://github.com/ypid/opening_hours.js" target="_blank">opening_hours.js</a> &copy; Robin Schneider</li>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
 							<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
-							<li><a href="https://github.com/janl/mustache.js" target="_blank">Mustache</a> &copy; Jan Lehnardt</li>
 							<li><a href="https://github.com/placemarker/jQuery-MD5" target="_blank">jQuery MD5 Plugin</a> &copy; Christopher Casebeer</li>
 							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
+					</p>
 					<div class="anchor"><a href="#gototopinfo">| <i class="fa fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
@@ -328,7 +331,6 @@
 	<script src="assets/js/opening_hours+deps.min.js"></script>
     <script src="assets/js/OverPassLayer.js"></script>
     <script src="assets/js/leaflet-hash.js"></script>
-    <script src="assets/js/mustache.min.js"></script>
 	<script src="assets/js/jquery.md5.js"></script>
 	<!-- JavaScript | website code -->
     <script src="assets/js/tags-parsers.js"></script>

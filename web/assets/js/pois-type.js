@@ -125,14 +125,6 @@ var pois = {
 		tagKeyword: ['doityourself', 'hardware', 'diy', 'tools']
 	},
 
-	religion: {
-		name: 'Religion',
-		query: '[shop=religion]',
-		iconName: 'prayer',
-		tabName: 'shops',
-		tagKeyword: ['religion']
-	},
-
 	clothes: {
 		name: 'Clothes',
 		query: '["shop"~"clothes|boutique"]',
@@ -639,7 +631,7 @@ var pois = {
 	},
 
 	car_repair: {
-		name: 'Car-Mechanic',
+		name: 'Car-Repair / MOT',
 		query: '["shop"~"car_repair|tyres"]',
 		iconName: 'carrepair',
 		tabName: 'amenities',

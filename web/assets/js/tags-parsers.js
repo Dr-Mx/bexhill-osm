@@ -1,30 +1,28 @@
-// how much to truncate from web addresses labels depending on screensize
+// how much to truncate from popup labels depending on screensize
 var truncWidth = ($(window).width() > 500) ? 35 : 20;
 // tag template
-var tagTmpl = '<i class="fa fa-{{iconName}}"></i> <strong>{{tag}}:</strong> {{value}}<br>', tag = '';
+var tagTmpl = '<i class="fa fa-{iconName}"></i> <strong>{tag}:</strong> {value}<br>', state = '';
 
 // edit in osm
 function osmedit_parser(element) {
-	var link = Mustache.render(
-		'http://www.openstreetmap.org/edit?editor=id&{{type}}={{id}}',
+	var link = L.Util.template(
+		'http://www.openstreetmap.org/edit?editor=id&{type}={id}',
 		{type: element.type, id: element.id}
 	);
-	var markerPopup = Mustache.render(
-		'<a style="top:19px; right:20px; position:absolute;" href="{{link}}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
+	var markerPopup = L.Util.template(
+		'<a style="top:19px; right:20px; position:absolute;" href="{link}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
 		{link: link}
 	);
 	return markerPopup;
 }
 
 function generic_tag_parser(element, tag, tagName, iconName) {
-	var tags = element.tags;
-	var markerPopup = '';
-	var result = '';
+	var tags = element.tags, markerPopup = '', result;
 	if (tags[tag]) {
 		if (tags[tag] === 'yes') result = '<i class="fa fa-check"></i>';
 		else if (tags[tag] === 'no') result = '<i class="fa fa-remove"></i>';
 		else result = tags[tag];
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: tagName, value: result, iconName: iconName}
 		);
@@ -53,7 +51,7 @@ function address_parser(element) {
 		else if (tags['addr:place']) value += tags['addr:place'];
 		if (tags['addr:city']) value += ', ' + tags['addr:city'];
 		if (tags['addr:postcode']) value += ', ' + tags['addr:postcode'];
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'Address', value: value, iconName: 'map-marker'}
 		);
@@ -62,31 +60,29 @@ function address_parser(element) {
 }
 
 function website_parser(element) {
-	var tags = element.tags;
+	var tags = element.tags, link = '', markerPopup = '';
 	var tagwebsite = tags.website ? tags.website : tags['contact:website'];
-	var link = '';
-	var markerPopup = '';
+	var tagurl = tags.url ? tags.url : tags['contact:url'];
 	if (tagwebsite) {
 		var stagwebsite = tagwebsite;
 		if (stagwebsite.length > truncWidth) stagwebsite = stagwebsite.substr(0, truncWidth) + '&hellip;';
-		link = Mustache.render(
-			'<a href="{{tagwebsite}}" title="{{tagwebsite}}" target="_blank">{{stagwebsite}}</a>',
+		link = L.Util.template(
+			'<a href="{tagwebsite}" title="{tagwebsite}" target="_blank">{stagwebsite}</a>',
 			{tagwebsite: tagwebsite, stagwebsite: stagwebsite}
 		);
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'Website', value: link, iconName: 'globe'}
 		);
 	}
-	var tagurl = tags.url ? tags.url : tags['contact:url'];
 	if (tagurl) {
 		var stagurl = tagurl;
 		if (stagurl.length > truncWidth) stagurl = stagurl.substr(0,truncWidth) + '&hellip;';
-		link = Mustache.render(
-			'<a href="{{tagurl}}" title="{{tagurl}}" target="_blank">{{stagurl}}</a>',
+		link = L.Util.template(
+			'<a href="{tagurl}" title="{tagurl}" target="_blank">{stagurl}</a>',
 			{tagurl: tagurl, stagurl: stagurl}
 		);
-		markerPopup += Mustache.render(
+		markerPopup += L.Util.template(
 			tagTmpl,
 			{tag: 'Just Eat', value: link, iconName: 'external-link-square'}
 		);
@@ -95,17 +91,16 @@ function website_parser(element) {
 }
 
 function facebook_parser(element) {
-	var tags = element.tags;
-	var tagfb = tags.facebook ? tags.facebook : tags['contact:facebook'];
+	var tagfb = element.tags.facebook ? element.tags.facebook : element.tags['contact:facebook'];
 	var markerPopup = '';
 	if (tagfb) {
 		var stagfb = tagfb;
 		if (stagfb.length > truncWidth) stagfb = stagfb.substr(0,truncWidth) + '&hellip;';
-		var link = Mustache.render(
-			'<a href="{{tagfb}}" title="{{tagfb}}" target="_blank">{{stagfb}}</a>',
+		var link = L.Util.template(
+			'<a href="{tagfb}" title="{tagfb}" target="_blank">{stagfb}</a>',
 			{tagfb: tagfb, stagfb: stagfb}
 		);
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'Facebook', value: link, iconName: 'facebook-official'}
 		);
@@ -114,16 +109,16 @@ function facebook_parser(element) {
 }
 
 function email_parser(element) {
-	var tags = element.tags;
-	tag = tags.email ? tags.email : tags['contact:email'];
+	var tagmail = element.tags.email ? element.tags.email : element.tags['contact:email'];
 	var markerPopup = '';
-	if (tag) {
-		if (tag.indexOf('@') === -1) return markerPopup;
-		var link = Mustache.render(
-			'<a href="mailto:{{email}}" target="_blank">{{email}}</a>',
-			{email: tag}
+	if (tagmail && tagmail.indexOf('@') !== -1) {
+		var stagmail = tagmail;
+		if (stagmail.length > truncWidth) stagmail = stagmail.substr(0,truncWidth) + '&hellip;';
+		var link = L.Util.template(
+			'<a href="mailto:{tagmail}" title="{tagmail}" target="_blank">{stagmail}</a>',
+			{tagmail: tagmail, stagmail: stagmail}
 		);
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'E-mail', value: link, iconName: 'at'}
 		);
@@ -132,15 +127,14 @@ function email_parser(element) {
 }
 
 function phone_parser(element) {
-	var tags = element.tags;
-	tag = tags.phone ? tags.phone : tags['contact:phone'];
+	var phone = element.tags.phone ? element.tags.phone : element.tags['contact:phone'];
 	var markerPopup = '';
-	if (tag) {
-		var link = Mustache.render(
-			'<a href="tel:{{phone}}" title="Call now">{{phone}}</a>',
-			{phone: tag}
+	if (phone) {
+		var link = L.Util.template(
+			'<a href="tel:{phone}" title="Call now">{phone}</a>',
+			{phone: phone}
 		);
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'Phone', value: link, iconName: 'phone'}
 		);
@@ -150,15 +144,14 @@ function phone_parser(element) {
 
 function facility_parser(element) {
 	var tags = element.tags;
-	var markerPopup = '';
-	tag = '';
+	var markerPopup = '', tag = '';
 	if (tags.wheelchair === 'yes') tag += '<i class="fa fa-wheelchair fa-fw" title="wheelchair access" style="color:darkgreen;"></i>';
 	else if (tags.wheelchair === 'limited') tag += '<i class="fa fa-wheelchair fa-fw" title="limited wheelchair access" style="color:teal;"></i>(limited) ';
 	else if (tags.wheelchair === 'no') tag += '<i class="fa fa-wheelchair fa-fw" title="no wheelchair access" style="color:red;"></i>(no) ';
 	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen;"></i>';
 	else if (tags.dog === 'no') tag += '<i class="fa fa-paw fa-fw" title="no dog access" style="color:red;"></i>(no) ';
-	if (tags.internet_access === 'yes') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen;"></i>';
-	if (tag) markerPopup += Mustache.render(
+	if (tags.internet_access === 'wlan') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen;"></i>';
+	if (tag) markerPopup = L.Util.template(
 		tagTmpl,
 		{tag: 'Facilities', value: tag, iconName: 'info-circle'}
 	);
@@ -166,13 +159,11 @@ function facility_parser(element) {
 }
 
 function payment_parser(element) {
-	var tags = element.tags, key;
-	var markerPopup = '';
-	tag = '';
-	for (key in tags) {
-		if (key.indexOf('payment:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
+	var markerPopup = '', tag = '';
+	for (var key in element.tags) {
+		if (key.indexOf('payment:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag) markerPopup += Mustache.render(
+	if (tag) markerPopup = L.Util.template(
 		tagTmpl,
 		{tag: 'Payment options', value: tag, iconName: 'money'}
 	);
@@ -180,19 +171,17 @@ function payment_parser(element) {
 }
 
 function wikipedia_parser(element) {
-	var tags = element.tags;
-	tag = tags.wikipedia ? tags.wikipedia : tags['site:wikipedia'];
+	var wikipedia = element.tags.wikipedia ? element.tags.wikipedia : element.tags['site:wikipedia'];
 	var markerPopup = '';
-	if (tag) {
-		var s = tag.split(':');
-		var lang = s[0] + '.';
-		var subject = s[1];
+	if (wikipedia) {
+		var s = wikipedia.split(':');
+		var lang = s[0] + '.', subject = s[1];
 		var href = 'http://' + lang + 'wikipedia.com/wiki/' + subject;
-		var link = Mustache.render(
-			'<a href="{{wikipedia}}" title="Wikipedia article" target="_blank">' + subject + '</a>',
+		var link = L.Util.template(
+			'<a href="{wikipedia}" title="Wikipedia article" target="_blank">' + subject + '</a>',
 			{wikipedia: href}
 		);
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'Wikipedia', value: link, iconName: 'wikipedia-w'}
 		);
@@ -216,16 +205,14 @@ function hotel_parser(element, titlePopup) {
 }
 
 function star_parser(element) {
-	var tags = element.tags;
-	tag = tags.stars;
-	var markerPopup = '';
-	if (tag) {
+	var stars = element.tags.stars, markerPopup = '';
+	if (stars) {
 		var result = '<a href="https://www.visitengland.com/plan-your-visit/quality-assessment-and-star-ratings/visitengland-star-ratings" title="VisitEngland ratings" target="_blank">';
-		for (var i = 0; i < tag; i++) {
+		for (var c = 0; c < stars; c++) {
 			result += '<i class="fa fa-star-o"></i>';
 		}
 		result += '</a>';
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'VisitEngland rating', value: result, iconName: 'star'}
 		);
@@ -255,13 +242,11 @@ function bikeshop_parser(element, titlePopup) {
 	);
 }
 function bikeservices_parser(element) {
-	var tags = element.tags, key;
-	var markerPopup = '';
-	tag = '';
-	for (key in tags) {
-		if (key.indexOf('service:bicycle:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[2] + '; ';
+	var markerPopup = '', tag = '';
+	for (var key in element.tags) {
+		if (key.indexOf('service:bicycle:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[2] + '; ';
 	}
-	if (tag) markerPopup += Mustache.render(
+	if (tag) markerPopup = L.Util.template(
 		tagTmpl,
 		{tag: 'Bicycle services', value: tag, iconName: 'bicycle'}
 	);
@@ -277,17 +262,14 @@ function school_parser(element, titlePopup) {
 		]
 	);
 }
-
 function edubase_parser(element) {
-	var tags = element.tags;
-	tag = tags['ref:edubase'];
-	var markerPopup = '';
+	var tag = element.tags['ref:edubase'], markerPopup = '';
 	if (tag) {
-		var link = Mustache.render(
-			'<a href="http://www.education.gov.uk/edubase/establishment/summary.xhtml?urn={{link}}" title="Department for Education" target="_blank">{{link}}</a>',
+		var link = L.Util.template(
+			'<a href="http://www.education.gov.uk/edubase/establishment/summary.xhtml?urn={link}" title="Department for Education" target="_blank">{link}</a>',
 			{link: tag}
 		);
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'EduBase ref', value: link, iconName: 'file'}
 		);
@@ -296,15 +278,13 @@ function edubase_parser(element) {
 }
 
 function fhrs_parser(element) {
-	var tags = element.tags;
-	tag = tags['fhrs:id'];
-	var markerPopup= '';
-	if (tag) {
-		var link = Mustache.render(
-			'<a href="http://ratings.food.gov.uk/business/en-GB/{{link}}" title="Food Standards Agency" target="_blank">{{link}}</a>',
-			{link: tag}
+	var fhrs = element.tags['fhrs:id'], markerPopup = '';
+	if (fhrs) {
+		var link = L.Util.template(
+			'<a href="http://ratings.food.gov.uk/business/en-GB/{link}" title="Food Standards Agency" target="_blank">{link}</a>',
+			{link: fhrs}
 		);
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'Food Hygiene id', value: link, iconName: 'file'}
 		);
@@ -313,15 +293,13 @@ function fhrs_parser(element) {
 }
 
 function listedhe_parser(element) {
-	var tags = element.tags;
-	tag = tags.HE_ref ? tags.HE_ref : tags['he:ref'];
-	var markerPopup= '';
-	if (tag) {
-		var link = Mustache.render(
-			'<a href="http://www.britishlistedbuildings.co.uk/en-{{link}}" title="British Listed Buildings" target="_blank">{{link}}</a>',
-			{link: tag}
+	var HEref = element.tags.HE_ref ? element.tags.HE_ref : element.tags['he:ref'], markerPopup = '';
+	if (HEref) {
+		var link = L.Util.template(
+			'<a href="http://www.britishlistedbuildings.co.uk/en-{link}" title="British Listed Buildings" target="_blank">{link}</a>',
+			{link: HEref}
 		);
-		markerPopup += Mustache.render(
+		markerPopup = L.Util.template(
 			tagTmpl,
 			{tag: 'Historic England ref', value: link, iconName: 'file'}
 		);
@@ -365,14 +343,12 @@ function food_parser(element, titlePopup) {
 }
 
 function cuisine_parser(element) {
-	var tags = element.tags, key;
-	var markerPopup = '';
-	tag = '';
-	if (tags.cuisine) tag += tags.cuisine + '; ';
-	for (key in tags) {
-		if (key.indexOf('diet:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + ' options; ';
+	var markerPopup = '', tag = '';
+	if (element.tags.cuisine) tag = element.tags.cuisine + '; ';
+	for (var key in element.tags) {
+		if (key.indexOf('diet:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + ' options; ';
 	}
-	if (tag) markerPopup += Mustache.render(
+	if (tag) markerPopup = L.Util.template(
 		tagTmpl,
 		{tag: 'Cuisine', value: tag, iconName: 'cutlery'}
 	);
@@ -392,16 +368,14 @@ function pub_parser(element, titlePopup) {
 }
 
 function order_parser(element) {
-	var tags = element.tags;
-	var markerPopup = '';
-	tag = '';
+	var tags = element.tags, tag = '', markerPopup = '';
 	if (tags.takeaway === 'yes') tag += 'takeaway; ';
 	else if (tags.takeaway === 'only') tag += 'takeaway only; ';
 	if (tags.delivery === 'yes') tag += 'delivery; ';
 	if (tags.outdoor_seating === 'yes') tag += 'outdoor seating; ';
 	if (tags.reservation === 'yes') tag += 'takes reservation; ';
 	else if (tags.reservation === 'required') tag += 'needs reservation; ';
-	if (tag) markerPopup += Mustache.render(
+	if (tag) markerPopup = L.Util.template(
 		tagTmpl,
 		{tag: 'Order options', value: tag, iconName: 'shopping-bag'}
 	);
@@ -442,13 +416,11 @@ function recyclecentre_parser(element, titlePopup) {
 	);
 }
 function recycle_parser(element) {
-	var tags = element.tags, key;
-	var markerPopup = '';
-	tag = '';
-	for (key in tags) {
-		if (key.indexOf('recycling:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
+	var markerPopup = '', tag = '';
+	for (var key in element.tags) {
+		if (key.indexOf('recycling:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag) markerPopup += Mustache.render(
+	if (tag) markerPopup = L.Util.template(
 		tagTmpl,
 		{tag: 'Recycling options', value: tag, iconName: 'recycle'}
 	);
@@ -466,13 +438,11 @@ function fuelstation_parser(element, titlePopup) {
 	);
 }
 function fuel_parser(element) {
-	var tags = element.tags, key;
-	var markerPopup = '';
-	tag = '';
-	for (key in tags) {
-		if (key.indexOf('fuel:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
+	var markerPopup = '', tag = '';
+	for (var key in element.tags) {
+		if (key.indexOf('fuel:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag) markerPopup += Mustache.render(
+	if (tag) markerPopup = L.Util.template(
 		tagTmpl,
 		{tag: 'Fuel options', value: tag, iconName: 'tint'}
 	);
@@ -486,9 +456,22 @@ function carpark_parser(element, titlePopup) {
 		[
 			{callback: generic_tag_parser, tag: 'capacity', label: 'Spaces', iconName: 'car'},
 			{callback: generic_tag_parser, tag: 'capacity:disabled', label: 'Disabled spaces', iconName: 'wheelchair'},
-			{callback: generic_tag_parser, tag: 'fee', label: 'Fee', iconName: 'money'}
+			{callback: generic_tag_parser, tag: 'fee', label: 'Fee', iconName: 'money'},
+			{callback: maxstay_parser}
 		]
 	);
+}
+
+function maxstay_parser(element) {
+	var maxstay = element.tags.maxstay, markerPopup = '';
+	if (maxstay) {
+		maxstay = (maxstay >= 60) ? maxstay / 60 + ' hour(s)' : maxstay + ' minutes';
+		markerPopup = L.Util.template(
+			tagTmpl,
+			{tag: 'Max stay', value: maxstay, iconName: 'clock-o'}
+		);
+	}
+	return markerPopup;
 }
 
 function bikepark_parser(element, titlePopup) {
@@ -542,7 +525,8 @@ function defib_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'location-arrow'}
+			{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'location-arrow'},
+			{callback: generic_tag_parser, tag: 'indoor', label: 'Inside building', iconName: 'sign-in'}
 		]
 	);
 }
@@ -635,23 +619,6 @@ function historic_parser(element, titlePopup) {
 	);
 }
 
-function listedhe_parser(element) {
-	var tags = element.tags;
-	tag = tags.HE_ref ? tags.HE_ref : tags['he:ref'];
-	var markerPopup= '';
-	if (tag) {
-		var link = Mustache.render(
-			'<a href="http://www.britishlistedbuildings.co.uk/en-{{link}}" title="British Listed Buildings" target="_blank">{{link}}</a>',
-			{link: tag}
-		);
-		markerPopup += Mustache.render(
-			tagTmpl,
-			{tag: 'Historic England ref', value: link, iconName: 'file'}
-		);
-	}
-	return markerPopup;
-}	
-
 function listed_parser(element, titlePopup) {
 	return parse_tags(
 		element,
@@ -665,13 +632,15 @@ function listed_parser(element, titlePopup) {
 }
 
 // https://github.com/ypid/opening_hours.js
-var openhrs = '', state = '';
-function opening_hours_parser(element) {
+function opening_hours_parser(tags) {
+	var openhrs = '';
 	try {
 		var opening_hours = require('opening_hours');
-		var hours = element.tags.opening_hours;
+		var hours = tags.opening_hours;
 		var oh = new opening_hours(hours);
 		var strNextChange;
+		// return false state for no hours - opennow checkbox
+		if (!hours) state = false;
 		if (oh.getNextChange()) {
 			var dateTomorrow = new Date(), dateWeek = new Date();
 			dateTomorrow.setDate(new Date().getDate() + 1);
@@ -701,29 +670,27 @@ function opening_hours_parser(element) {
 		if (openhrs) openhrs +=  strNextChange + '&nbsp; <i style="color:#b05000;" title="See full opening hours" class="fa fa-caret-down"></i> </span><div class="ohTable">' + ohTable + '</div></div>';
 	}
 	catch(err) {
-		if (hours) console.log('ERROR: Object "' + element.tags.name + '" cannot parse hours: ' + hours + '. ' + err);
-		openhrs = '';
+		if (hours) console.log('ERROR: Object "' + tags.name + '" cannot parse hours: ' + hours + '. ' + err);
 	}
-	// return false state for no hours - opennow checkbox
-	if (!element.tags.opening_hours) state = false;
+	return openhrs;
 }
 
 // https://github.com/placemarker/jQuery-MD5
 // get md5 hash from wikimedia filename to link image thumbnail
-var wikimediaImg;
 function image_parser(img) {
-	imgSplit = img.split(':');
-	if (imgSplit[0] === 'File') {
+	var markerPopup = '';
+	if (img && img.indexOf('File:') === 0) {
+		var imgSplit = img.split(':');
 		imgSplit[1] = imgSplit[1].replace(/ /gi, '_');
 		var md5 = $.md5(imgSplit[1]);
-		var wikimediaUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/200px-' + imgSplit[1];
-		wikimediaImg = '<p style="text-align:center;"><a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img style="border:2px solid #ccc;" src="' + wikimediaUrl + '"></a></p>';
+		var url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/200px-' + imgSplit[1];
+		markerPopup = '<p style="text-align:center;"><a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img style="border:2px solid #ccc;" src="' + url + '"></a></p>';
 	}
-	else wikimediaImg = '';
+	return markerPopup;
 }
 
 function parse_tags(element, titlePopup, functions) {
-	var markerPopup = Mustache.render('<h3>{{title}}&emsp;<hr style="width:100%;"></h3>', {title: titlePopup});
+	var markerPopup = L.Util.template('<h3>{title}&emsp;<hr style="width:100%;"></h3>', {title: titlePopup});
 	functions = [
 		{callback: osmedit_parser},
 		{callback: generic_tag_parser, tag: 'name', label: 'Name'},
@@ -740,19 +707,15 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: facility_parser},
 		{callback: payment_parser}
 	].concat(functions);
-	for (var i = 0; i < functions.length; i++) {
-		var data = functions[i];
+	for (var c = 0; c < functions.length; c++) {
+		var data = functions[c];
 		if (data.tag && data.label) {
 			var iconName = data.iconName ? data.iconName : 'tag';
 			markerPopup += data.callback(element, data.tag, data.label, iconName);
 		}
 		else markerPopup += data.callback(element);
 	}
-	opening_hours_parser(element);
-	markerPopup += openhrs;
-	if (element.tags.image) {
-		image_parser(element.tags.image);
-		markerPopup += wikimediaImg;
-	}
+	markerPopup += opening_hours_parser(element.tags);
+	markerPopup += image_parser(element.tags.image);
 	return markerPopup;
 }

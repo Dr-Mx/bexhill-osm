@@ -58,8 +58,8 @@ input[type=checkbox] {
 	height: 40px !important;
 }
 
-.leaflet-popup-content-wrapper {
-	opacity: 0.9;
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+	background: rgba(255,255,255,0.9);
 }
 
 .popup-mobile {

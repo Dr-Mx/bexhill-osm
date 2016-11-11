@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v1.7.2
+
+**Date:** 11/11/2016
+
+Updated js
+ - mustache.js removed, replaced with leaflet's L.Util.template
+
+Site changes
+ - Debug mode, type 'siteDebug = true' in console to see current data requests
+ - Improvement for keeping popups on mobile within screen
+
+ 
 ## v1.7.1
 
 **Date:** 26/10/2016
