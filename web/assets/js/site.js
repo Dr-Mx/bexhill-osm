@@ -23,14 +23,10 @@ $(function () {
 
 // smooth scrolling to poi anchor
 $(document).on('click', 'a[href*="#goto"]', function (e) {
-	if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
-		var target = $(this.hash);
-		target = target.length ? target : $('[id=' + this.hash.slice(1) + ']');
-		if (target.length) {
-			$('.sidebar-body').animate({ scrollTop: target.offset().top - 55 }, 1000);
-			e.preventDefault();
-		}
-	}
+	var target = $('[id=' + this.hash.slice(1) + ']');
+	console.log(target);
+	$('.sidebar-body').animate({ scrollTop: target.offset().top - 55 }, 1000);
+	e.preventDefault();
 });
 
 $('.sidebar-tabs').click(function () {
@@ -66,7 +62,7 @@ var map = new L.map('map', {
 	contextmenu: true,
 	contextmenuItems: [{
 		text: '<i class="fa fa-search"></i>&nbsp; Lookup',
-		callback: reverseLookup,
+		callback: reverseLookup
 	}, '-', {
 		text: '<i class="fa fa-map-marker"></i>&nbsp; Add walk point',
 		callback: walkPoint
@@ -90,7 +86,7 @@ function reverseLookup(e) {
 	});
 }
 function walkPoint(e) {
-	if ($(window).width() >= 768) sidebar.open('walking');
+	if ($(window).width() >= 768) $('a[href="#walking"]').click();
 	// drop a walk marker if one doesn't exist
 	var wp = routingControl.getWaypoints();
 	for (var c = 0; c < wp.length; c++){
@@ -111,7 +107,7 @@ var iconLayer = new L.LayerGroup();
 map.addLayer(iconLayer);
 // leaflet icon image path
 L.Icon.Default.imagePath = 'assets/img/leaflet/';
-var tileLayerData = {
+var tileBaseLayer = {
 	osmstd: {
 		name: 'OpenStreetMap (standard)',
 		url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -166,21 +162,28 @@ var tileLayerData = {
 	}
 };
 var attribution = '&copy; <a href="http://openstreetmap.org/copyright" title="Copyright and License" target="_blank">OpenStreetMap contributors</a>';
-var tileLayers = {};
+var tileBaseLayers = {}, tileOverlay = {};
 var tileList = {name: [], keyname: []};
-for (var tile in tileLayerData) {
-	var tilemaxZoom = tileLayerData[tile].zoom;
-	var subdomains = tileLayerData[tile].subdomains ? tileLayerData[tile].subdomains : 'abc';
-	var tileAttribution = (tileLayerData[tile].attribution) ? tileLayerData[tile].attribution + ' | ' + attribution : attribution;
-	tileLayers[tileLayerData[tile].name] = L.tileLayer(
-		tileLayerData[tile].url, { maxNativeZoom: tilemaxZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains }
-	);
+for (var tile in tileBaseLayer) {
+	var subdomains = tileBaseLayer[tile].subdomains ? tileBaseLayer[tile].subdomains : 'abc';
+	var tileAttribution = (tileBaseLayer[tile].attribution) ? tileBaseLayer[tile].attribution + ' | ' + attribution : attribution;
+	tileBaseLayers[tileBaseLayer[tile].name] = L.tileLayer(tileBaseLayer[tile].url, { maxNativeZoom: tileBaseLayer[tile].zoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains });
 	// create object array for all basemap layers
-	tileList.name.push(tileLayerData[tile].name);
+	tileList.name.push(tileBaseLayer[tile].name);
 	tileList.keyname.push(tile);
 }
-L.control.layers(tileLayers).addTo(map);
+tileOverlay.Hillshading = L.tileLayer('https://tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png', { maxNativeZoom: 15 });
+L.control.layers(tileBaseLayers, tileOverlay).addTo(map);
 L.control.scale({ metric: false, position: 'bottomright' }).addTo(map);
+
+// xmas overlay
+if ((new Date().getMonth() === 10 && new Date().getDate() >= 15) || new Date().getMonth() === 11) {
+	// new town
+	L.imageOverlay('assets/img/xmas-tree.png', [[50.84090, 0.47320], [50.84055, 0.47370]], { opacity: 0.9 }).addTo(map);
+	L.imageOverlay('assets/img/xmas-lights.png', [[50.84037, 0.47415], [50.83800, 0.46980]], { opacity: 0.9 }).addTo(map);
+	// little common
+	L.imageOverlay('assets/img/xmas-tree.png', [[50.84545, 0.43400], [50.84510, 0.43350]], { opacity: 0.9 }).addTo(map);
+}
 
 // get basemap layer name on change
 map.on('baselayerchange', function (e) {
@@ -241,6 +244,10 @@ $('.leaflet-control-geocoder-icon').attr('title','Find address');
 function geocoderLink() {
 	if ($(window).width() < 768) sidebar.close();
 	$('.leaflet-control-geocoder-icon').click();
+}
+function donateLink() {
+	$('a[href="#information"]').click();
+	$('a[href="#gotodonate"]').click();
 }
 
 // https://github.com/cliffcloud/Leaflet.EasyButton
@@ -400,12 +407,8 @@ function callback(data) {
 			}
 			if (type === 'animal_boarding') type = 'animal_shelter';
 		}
-		if (e.tags.tourism) {
-			if (!type) type = e.tags.tourism;
-		}
 		if (e.tags.historic) {
 			if (!type) type = 'historic';
-			if (type === 'manor') type = 'attraction';
 		}
 		if (e.tags.man_made) {
 			if (!type) type = e.tags.man_made;
@@ -423,6 +426,9 @@ function callback(data) {
 			if (type === 'tyres') type = 'car_repair';
 			if (type === 'hearing_aids') type = 'mobility';
 			if (type === 'interior_decoration' || type === 'bathroom_furnishing' || type === 'kitchen') type = 'houseware';
+		}
+		if (e.tags.tourism) {
+			if (!type) type = e.tags.tourism;
 		}
 		if (e.tags.landuse) {
 			if (!type) type = e.tags.landuse;
@@ -451,6 +457,9 @@ function callback(data) {
 		if (e.tags.listed_status) {
 			if (!type || type === 'shelter' || type === 'company') type = 'listed_status';
 		}
+		if (e.tags.image) {
+			if (!type) type = 'image';
+		}
 		var poi = pois[type];
 		var iconName = poi ? poi.iconName : '000blank';
 		var markerIcon = L.icon({
@@ -466,8 +475,16 @@ function callback(data) {
 			keyboard: false,
 			riseOnHover: true
 		});
+		var name = '&hellip;';
+		if (e.tags.name) name = e.tags.name;
+		else if (e.tags.ref) name = e.tags.ref;
+		else if (poi) name = poi.name;
+		else if (e.tags.building && e.tags.building !== 'yes') {
+			name = e.tags.building;
+			name = name.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1);});
+		}
 		// show a tooltip on mouse hover
-		if (e.tags.name) marker.bindTooltip(e.tags.name, { direction: 'left', offset: [-15, -2] }).openTooltip();
+		if (name) marker.bindTooltip(name, { direction: 'left', offset: [-15, -2] }).openTooltip();
 		// check if already defined poi
 		if (poi) {
 			// create pop-up
@@ -491,8 +508,6 @@ function callback(data) {
 		}
 		else if (rLookup) {
 			// use generic marker
-			var name = e.tags.name ? e.tags.name : e.tags.building;
-			if (!name || name === 'yes') name = '&hellip;';
 			markerPopup = generic_poi_parser(e, name);
 			marker.bindPopup(markerPopup, customOptions);
 			marker.addTo(this.instance).openPopup();
@@ -658,7 +673,7 @@ if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
 	if ($(window).width() >= 768) sidebar.open(actTab);
 }
-tileLayers[tileLayerData[actTileLayer].name].addTo(map);
+tileBaseLayers[tileBaseLayer[actTileLayer].name].addTo(map);
 map.setMaxBounds([[mapBounds.top, mapBounds.lef], [mapBounds.bot, mapBounds.rig]]);
 	
 function show_overpass_layer(query) {

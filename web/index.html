@@ -27,8 +27,8 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
 	<link rel="stylesheet" href="assets/css/Control.Loading.css" />
 	<link rel="stylesheet" href="assets/css/leaflet.label.css" />
@@ -44,7 +44,7 @@
 		<!-- Navigation tabs -->
 		<div class="sidebar-tabs">
 			<ul role="tablist">
-				<li><a href="#home" title="Home" role="tab"><i class="fa fa-home fa-2x"></i></a></li>
+				<li><a href="#home" title="Home" role="tab"><i class="fa fa-bars fa-2x"></i></a></li>
 				<li><a href="#shops" title="Shops" role="tab"><i class="fa fa-shopping-bag fa-2x"></i></a></li>
 				<li><a href="#amenities" title="Amenities" role="tab"><i class="fa fa-coffee fa-2x"></i></a></li>
 				<li><a href="#services" title="Services" role="tab"><i class="fa fa-heartbeat fa-2x"></i></a></li>
@@ -63,18 +63,17 @@
 			<div class="sidebar-pane" id="home">
 				<h1 class="sidebar-header">Bexhill OpenStreetMap<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
-					<h3>Find an interest:</h3>
+					<h3>Find an interest</h3>
 					<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. 'clothing', 'tea', 'memorial', 'tourism')"></p>
 					<label><input type="checkbox" class="opennow"> Only facilities open right now</label>
 					<hr>
-					<h3>Welcome!</h3>
-						<p>Bexhill-OSM is a non-commercial, community based mapping project.  It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
+						<h3>Tips to get started</h3>
 						<ul style="font-size:11pt; color:#143000;">
-							<li>Tips to get started:</li>
 							<ol style="list-style-type:circle; padding-left:20px">
 								<li>Enter a keyword above to see a group of interests.</li>
 								<li>Find an address by using the <a onclick="geocoderLink();">( <i style="color:#b05000; font-size:10pt;" class="fa fa-search"></i> )</a> button.</li>
-								<li>Zoom in and right-click a place to lookup its details.</li>
+								<li>Right-click any place to lookup its details.</li>
+								<li>Fly to a suburb by clicking the minimap below.</li>
 							</ol>
 						</ul>
 						<p><img src="assets/img/minimap.png" class="minimap" alt="Minimap" usemap="#m_minimap"></p>
@@ -92,13 +91,15 @@
 							<area title="Glenleigh Park" shape="rect" coords="110,48,237,118" onclick="map.flyTo([50.8520, 0.4552], 16);" href="javascript:void(0);">
 						</map>
 						<p class="lorem">Note: areas to the west are work-in-progress.</p>
-						<p>View Help <a onclick="sidebar.open('help');">[<i style="color:#b05000;" class="fa fa-question fa-fw"></i>]</a> for more assistance.</p>
-						<p>If you have any questions or wish to help out, contact details can be found under Information <a onclick="sidebar.open('information');">[<i style="color:#b05000;" class="fa fa-info fa-fw"></i>]</a>.</p>
+					<hr>
+						<p>Bexhill-OSM is a non-commercial, community based mapping project run entirely on <a style="color:#b05000;" onclick="donateLink();">donations</a>.  It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
+						<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i style="color:#b05000;" class="fa fa-question fa-fw"></i>]</a> for more assistance.
+						<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i style="color:#b05000;" class="fa fa-info fa-fw"></i>]</a>.</p>
 						<p>
 							<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&layout=button&action=like&size=small&show_faces=false&share=false&appId" width="55" height="20" style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbexhill-osm.org.uk&layout=button&size=small&mobile_iframe=true&appId" width="60" height="20" style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 						</p>
-						<i class="lorem">Bexhill-OSM v1.7.2 &copy; 2016</i>
+						<i class="lorem">Bexhill-OSM v1.7.3 &copy; 2016</i>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="shops">
@@ -175,12 +176,12 @@
 						Find an address on the map by entering part of it into the search box (<i style="color:#b05000;" class="fa fa-search"></i>).  A selection will appear if multiple results are found.<br><br>
 						If you wish to share your current view and selected options, click the link icon (<i style="color:#b05000;" class="fa fa-link"></i>) and copy the text displayed.<br><br>
 						To clear all current layers on the map, click the bin (<i style="color:#b05000;" class="fa fa-trash"></i>).  Right-click / long press will reload the website to defaults.<br><br>
-						Various styles of base map can be displayed using the overlay picker - located at the top-right of the page.
+						Various map styles can be displayed using the overlay picker - located at the top-right of the page.
 						<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
-						<i class="fa fa-search fa-fw"></i> Lookup: Display information on an item under the cursor, only works on higher zoom levels.  Middle-clicking the scroll-wheel is a shortcut to this.<br><br>
+						<i class="fa fa-search fa-fw"></i> Lookup: Display information on an item under the cursor (middle-clicking the scroll-wheel also works).<br><br>
 						<i class="fa fa-map-marker fa-fw"></i> Add walk point: Plot markers to create a walking route.<br><br>
 						<i class="fa fa-external-link fa-fw"></i> Improve map: Open openstreetmap.org where you can leave a note or edit the map.
 						<p><img src="assets/img/context.png" alt="Context-menu preview"></p>
@@ -247,7 +248,8 @@
 					<p>
 					<a id="gotodonate"></a><hr>
 					<h3>Donate</h3>
-						<p>Bexhill-OSM is entirely advertisement and commercial free.  If you found it useful, or just wish to say thanks - click below.  Any amount is appreciated!</p>
+						<p>Bexhill-OSM is advertisement and commercial free.  If you found it useful or just wish to show support, please consider giving a small donation.
+						<br>Your money goes towards server costs and time needed to keep the site up to date.  Thank you!</p>
 						<p>
 						<table style="text-align:center; width:100%;"><tr><td>
 							Paypal<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
@@ -313,7 +315,7 @@
     </div>
 
     <!-- JavaScript | website plugins -->
-    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="assets/js/jquery-ui.min.js"></script>
 	<script src="assets/js/jquery.mobile.custom.min.js"></script>

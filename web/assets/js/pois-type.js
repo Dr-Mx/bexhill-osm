@@ -471,9 +471,9 @@ var pois = {
 	place_of_worship: {
 		name: 'Place of Worship',
 		query: '[amenity=place_of_worship]',
-		iconName: 'church-2',
+		iconName: 'prayer',
 		tabName: 'amenities',
-		tagKeyword: ['church', 'worship', 'prayer', 'religion'],
+		tagKeyword: ['church', 'mosque', 'worship', 'prayer', 'religion'],
 		tagParser: worship_parser
 	},
 
@@ -631,7 +631,7 @@ var pois = {
 	},
 
 	car_repair: {
-		name: 'Car-Repair / MOT',
+		name: 'Car-Repair/MOT',
 		query: '["shop"~"car_repair|tyres"]',
 		iconName: 'carrepair',
 		tabName: 'amenities',
@@ -855,7 +855,75 @@ var pois = {
 		tagKeyword: ['lawyer', 'solicitor']
 	},
 
-	//LEISURE - 67c547 - 3875d7 - a8a8a8 - c259b6 - c47848 - 5ec8bd
+	//LEISURE - a8a8a8 - c259b6 - c47848 - 67c547 - 3875d7  - 5ec8bd
+	
+	image: {
+		name: 'Wiki Photos',
+		query: '["image"~"."]',
+		iconName: 'photo',
+		tabName: 'leisure',
+		tagKeyword: ['photos', 'pictures', 'images']
+	},
+		
+	attraction: {
+		name: 'Attraction',
+		query: '["tourism"~"attraction|museum|gallery"]',
+		iconName: 'star-3',
+		tabName: 'leisure',
+		tagKeyword: ['tourism', 'attraction']
+	},
+
+	information: {
+		name: 'Information',
+		query: '[tourism=information]',
+		iconName: 'information',
+		tabName: 'leisure',
+		tagKeyword: ['tourism', 'information'],
+		tagParser: info_parser
+	},
+
+	viewpoint: {
+		name: 'Viewpoint',
+		query: '[tourism=viewpoint]',
+		iconName: 'panoramicview',
+		tabName: 'leisure',
+		tagKeyword: ['tourism', 'viewpoint']
+	},
+
+	museum: {
+		name: 'Museum',
+		query: '[tourism=museum]',
+		iconName: 'museum_archeological',
+		tabName: 'leisure',
+		tagKeyword: ['tourism', 'museum']
+	},
+
+	artwork: {
+		name: 'Public Artwork',
+		query: '[tourism=artwork]',
+		iconName: 'publicart',
+		tabName: 'leisure',
+		tagKeyword: ['tourism', 'artwork', 'sculpture'],
+		tagParser: artwork_parser
+	},
+
+	historic: {
+		name: 'Historical',
+		query: '["historic"~"."]',
+		iconName: 'ruins-2',
+		tabName: 'leisure',
+		tagKeyword: ['tourism', 'historical', 'memorial'],
+		tagParser: historic_parser
+	},
+
+	listed_status: {
+		name: 'Heritage-Listed',
+		query: '["HE_ref"~"."]',
+		iconName: 'house',
+		tabName: 'leisure',
+		tagKeyword: ['tourism', 'listed-building', 'historical', 'heritage'],
+		tagParser: listed_parser
+	},
 
 	park: {
 		name: 'Park',
@@ -936,66 +1004,6 @@ var pois = {
 		iconName: 'casino-2',
 		tabName: 'leisure',
 		tagKeyword: ['amusement-arcade', 'arcade', 'gambling']
-	},
-
-	attraction: {
-		name: 'Attraction',
-		query: '[tourism=attraction]',
-		iconName: 'star-3',
-		tabName: 'leisure',
-		tagKeyword: ['tourism', 'attraction', 'sight-seeing']
-	},
-
-	information: {
-		name: 'Information',
-		query: '[tourism=information]',
-		iconName: 'information',
-		tabName: 'leisure',
-		tagKeyword: ['tourism', 'information', 'sight-seeing'],
-		tagParser: info_parser
-	},
-
-	viewpoint: {
-		name: 'Viewpoint',
-		query: '[tourism=viewpoint]',
-		iconName: 'panoramicview',
-		tabName: 'leisure',
-		tagKeyword: ['tourism', 'viewpoint', 'sight-seeing']
-	},
-
-	museum: {
-		name: 'Museum',
-		query: '[tourism=museum]',
-		iconName: 'museum_archeological',
-		tabName: 'leisure',
-		tagKeyword: ['tourism', 'museum', 'sight-seeing']
-	},
-
-	artwork: {
-		name: 'Public Artwork',
-		query: '[tourism=artwork]',
-		iconName: 'publicart',
-		tabName: 'leisure',
-		tagKeyword: ['tourism', 'artwork', 'sculpture', 'sight-seeing'],
-		tagParser: artwork_parser
-	},
-
-	historic: {
-		name: 'Historical',
-		query: '["historic"~"."]',
-		iconName: 'ruins-2',
-		tabName: 'leisure',
-		tagKeyword: ['tourism', 'historical', 'memorial', 'sight-seeing'],
-		tagParser: historic_parser
-	},
-
-	listed_status: {
-		name: 'Heritage-Listed',
-		query: '["listed_status"~"."]',
-		iconName: 'house',
-		tabName: 'leisure',
-		tagKeyword: ['tourism', 'listed-building', 'historical', 'sight-seeing'],
-		tagParser: listed_parser
 	},
 
 	hotel: {

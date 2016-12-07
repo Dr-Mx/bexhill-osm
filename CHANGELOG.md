@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v1.7.3
+
+**Date:** 07/12/2016
+
+Updated js
+ - URI.js 1.18.3
+ - leaflet.js 1.0.2
+
+Site changes
+ - Added xmas decorations that appear mid November - end December
+ - Swapped church icon used for 'place of worship' with prayer icon
+ - Expanded 'Attraction' POI to include more places
+ - New 'Wiki Photos' POI
+ - Now using historicengland.org.uk for listed buildings
+ - Optional 'Hillshading' overlay
+ - Minimap update
+
+
 ## v1.7.2
 
 **Date:** 11/11/2016
@@ -11,7 +29,7 @@ Site changes
  - Debug mode, type 'siteDebug = true' in console to see current data requests
  - Improvement for keeping popups on mobile within screen
 
- 
+
 ## v1.7.1
 
 **Date:** 26/10/2016

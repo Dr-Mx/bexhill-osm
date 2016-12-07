@@ -293,10 +293,10 @@ function fhrs_parser(element) {
 }
 
 function listedhe_parser(element) {
-	var HEref = element.tags.HE_ref ? element.tags.HE_ref : element.tags['he:ref'], markerPopup = '';
+	var HEref = element.tags.HE_ref, markerPopup = '';
 	if (HEref) {
 		var link = L.Util.template(
-			'<a href="http://www.britishlistedbuildings.co.uk/en-{link}" title="British Listed Buildings" target="_blank">{link}</a>',
+			'<a href="https://historicengland.org.uk/listing/the-list/list-entry/{link}" title="Historic England entry" target="_blank">{link}</a>',
 			{link: HEref}
 		);
 		markerPopup = L.Util.template(
@@ -625,7 +625,6 @@ function listed_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'listed_status', label: 'Listed status', iconName: 'home'},
-			{callback: listedhe_parser},
 			{callback: generic_tag_parser, tag: 'start_date', label: 'Built', iconName: 'calendar'}
 		]
 	);
@@ -701,6 +700,7 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: website_parser},
 		{callback: facebook_parser},
 		{callback: wikipedia_parser},
+		{callback: listedhe_parser},
 		{callback: fhrs_parser},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
