@@ -1,3 +1,5 @@
+// parse tags into marker popups
+
 // how much to truncate from popup labels depending on screensize
 var truncWidth = ($(window).width() > 500) ? 35 : 20;
 // tag template
@@ -538,7 +540,8 @@ function toilet_parser(element, titlePopup) {
 		[
 			{callback: generic_tag_parser, tag: 'female', label: 'Female', iconName: 'female'},
 			{callback: generic_tag_parser, tag: 'male', label: 'Male', iconName: 'male'},
-			{callback: generic_tag_parser, tag: 'diaper', label: 'Baby changing', iconName: 'child'}
+			{callback: generic_tag_parser, tag: 'diaper', label: 'Baby changing', iconName: 'child'},
+			{callback: generic_tag_parser, tag: 'indoor', label: 'Inside building', iconName: 'sign-in'}
 		]
 	);
 }
@@ -683,7 +686,7 @@ function image_parser(img) {
 		imgSplit[1] = imgSplit[1].replace(/ /gi, '_');
 		var md5 = $.md5(imgSplit[1]);
 		var url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/200px-' + imgSplit[1];
-		markerPopup = '<p style="text-align:center;"><a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img style="border:2px solid #ccc;" src="' + url + '"></a></p>';
+		markerPopup = '<p style="text-align:center;"><a id="wikiImg" href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img style="border:2px solid #ccc; margin-bottom: -5px;" src="' + url + '"></a><br><span id="wikiAttrib"></span></p>';
 	}
 	return markerPopup;
 }

@@ -130,7 +130,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 					this._requested[x] = {};
 				}
 				this._requested[x][y] = true;
-				var queryWithMapCoordinates = this.options.query.replace(/(BBOX)/g, bbox.toOverpassBBoxString());
+				var queryWithMapCoordinates = this.options.query.replace(/(screenBbox)/g, bbox.toOverpassBBoxString());
 				var url =  this.options.endpoint + "interpreter?data=[out:json];" + queryWithMapCoordinates;
 				// to show / hide the spinner
 				$('#spinner').show();
@@ -149,7 +149,6 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						if (self.options.debug) console.debug('queryCount: ' + queryCount + ' - finishedCount: ' + finishedCount);
 						if (++finishedCount == queryCount) self.options.afterRequest.call(self);
 					}
-					// HACK: to avoid the spinner being shown when there was an error on one of the requests
 					else if (this.status >= 400 && this.status <= 504) {
 						if (this.status === 400) alert("Bad Request: contact site admin");
 						if (this.status === 429) alert("Too Many Requests: please try a smaller area");
@@ -173,7 +172,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			this._zoomControl._addLayer(this);
 		}
 		this.onMoveEnd();
-		if (this.options.query.indexOf("(BBOX)") != -1) map.on('moveend', this.onMoveEnd, this);
+		if (this.options.query.indexOf("(screenBbox)") != -1) map.on('moveend', this.onMoveEnd, this);
 		if (this.options.debug) console.debug("add layer");
 	},
 	onRemove: function (map) {

@@ -303,6 +303,10 @@
   font-size: 0.9em;
 }
 
+.eac-item {
+	margin-left: 10px;
+}
+
 .eac-icon-left .eac-item img {
   margin-right: 4px;
   max-height: 30px;

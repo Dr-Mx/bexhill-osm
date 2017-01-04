@@ -1,0 +1,4 @@
+
+ErrorDocument 404 "/404//http-error.cgi"
+ErrorDocument 500 "/404//http-error.cgi"
+

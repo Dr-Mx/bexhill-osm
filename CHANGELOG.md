@@ -1,6 +1,24 @@
 # CHANGELOG
 
-## v1.7.3
+## v2.0.0
+
+**Date:** 04/01/2017 - Historic Tour
+
+Updated js
+ - Minified all plugins
+
+Site changes
+ - Re-write of creating POI checkbox tables, now a single tab with page jump links.  Complete automated import from pois-types.js
+ - Changed URL encoding to not use unsafe characters and less parameters, old links will no longer work.
+ - Added a Historic Tour tab. Contains controls linking to an iframe containing various articles that interact with the map
+ - Suggested walks now use switch statement
+ - Wikipedia images now display proper attribution through their api
+ - Added 'shelter' POI
+ - Customised 404 page
+ - Various code improvements
+
+
+ ## v1.7.3
 
 **Date:** 07/12/2016
 

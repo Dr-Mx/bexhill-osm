@@ -28,7 +28,6 @@
     padding: 6px;
     margin-top: 2px;
     margin-bottom: 6px;
-    border-bottom: 1px solid #ccc;
     max-height: 320px;
     overflow-y: auto;
     transition: all 0.2s ease;

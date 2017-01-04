@@ -33,6 +33,7 @@ hr {
 
 .minimap {
 	width: 100%;
+	cursor: pointer;
 }
 
 .poi-checkbox > label > img {
@@ -79,10 +80,12 @@ input[type=checkbox] {
 	font-size: 15px;
 }
 
-.sidebar img {
-	margin: 0px auto;
+#help img {
+	margin: auto;
 	display: block;
+	border: 2px solid #ccc;
 }
+
 
 .sidebar-tabs > li {
 	font-size: 28pt !important;
@@ -180,7 +183,23 @@ input[type=checkbox] {
 	border-radius: 3px;
 }
 
-.lorem {
+.tour-control {
+	display: inline-block !important;
+	white-space: nowrap;
+	color: #b05000;
+	box-shadow: none;
+	border: none;
+	height: 26px;
+}
+
+#tourFrame {
+	height: inherit;
+	width: 103%;
+	margin-left: -7px;
+	border: none;
+}
+
+.comment {
 	text-align: center;
 	font-style: italic;
 	color: #808080;
@@ -222,6 +241,11 @@ input[type=checkbox] {
 	color: darkgreen;
 	text-indent: 5px;
 	cursor: pointer;
+}
+
+#wikiAttrib, #wikiAttrib a:link, #wikiAttrib a:visited, #wikiAttrib a:hover {
+	font-size: 75%;
+	color: #808080;
 }
 
 a:link, a:visited, a:hover {

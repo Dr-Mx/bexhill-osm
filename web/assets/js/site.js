@@ -1,3 +1,5 @@
+// all main functions for site
+
 // debug mode
 var siteDebug = false;
 // personal api keys
@@ -7,6 +9,7 @@ var thuforKey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
 var minOpZoom = 15, email = 'info@bexhill-osm.org.uk';
 // map area
 var mapBounds = { lef: 0.3000, top: 50.8200, rig: 0.5350, bot: 50.8800 };
+var mapBbox = [mapBounds.top, mapBounds.lef, mapBounds.bot, mapBounds.rig];
 // map open location
 var mapCentre = [50.8424, 0.4676], mapZoom = 15;
 // map base layer
@@ -14,45 +17,63 @@ var actTileLayer = 'osmstd';
 // tab to open
 var actTab = 'home';
 
+// get safari to scroll tour tab containing iframe
+if (navigator.userAgent.indexOf("Safari") > -1) {
+	$("#tour .sidebar-body").css("-webkit-overflow-scrolling","touch");
+	$("#tour .sidebar-body").css("overflow","auto");
+}
+
 // swipe away sidebar on larger touch devices
-$(function () {
-	$('.sidebar-content').on('swipeleft', function () {
-		if ($(window).width() >= 768 && (L.Browser.touch)) sidebar.close();
-	});
+$('.sidebar-content').on('swipeleft', function () {
+	if ($(window).width() >= 768 && L.Browser.touch) sidebar.close();
 });
 
-// smooth scrolling to poi anchor
+// smooth scrolling to anchor
 $(document).on('click', 'a[href*="#goto"]', function (e) {
 	var target = $('[id=' + this.hash.slice(1) + ']');
-	console.log(target);
 	$('.sidebar-body').animate({ scrollTop: target.offset().top - 55 }, 1000);
 	e.preventDefault();
 });
 
+// get current sidebar-tab
 $('.sidebar-tabs').click(function () {
-	// clear checkboxes if moving to another poi tab
-	if (actTab !== $('.sidebar-pane.active').attr('id')) {
-		actTab = $('.sidebar-pane.active').attr('id');
-		if (actTab === 'shops' || actTab === 'amenities' || actTab === 'services' || actTab === 'leisure') clear_map();
-	}
-	// resize links on mini map
+	if (actTab !== $('.sidebar-pane.active').attr('id')) actTab = $('.sidebar-pane.active').attr('id');
+	// resize links on minimap
 	if (actTab === 'home') setTimeout(function () { $('map').imageMapResize(); }, 500);
 });
 
-// https://github.com/davidjbradshaw/image-map-resizer
 $(document).ready(function () {
-	// add small delay after load for sidebar to animate open
+	// https://github.com/davidjbradshaw/image-map-resizer
+	// add delay after load for sidebar to animate open to create minimap
 	setTimeout(function () { $('map').imageMapResize(); }, 500);
 	// set collapsible accordion for opening hours
 	map.on('popupopen', function () {
 		// delay required when switching popups immediately
 		setTimeout(function () {
+			// opening-hours accordion
 			$('#accordOh').accordion({
 				heightStyle: 'content',
 				collapsible: true,
 				active: false,
 				animate: 100
 			});
+			// wikimedia api for image attribution
+			if ($('#wikiImg').length) {
+				var img = $('#wikiImg').attr('href');
+				img = img.split('File:');
+				$.ajax({
+					url: '//commons.wikipedia.org/w/api.php',
+					data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata',  titles: 'File:' + img[1], format: 'json' },
+					dataType: 'jsonp',
+					success: function (result) {
+						var wikiAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
+						$('#wikiAttrib').append('&copy; ' + wikiAttrib.Artist.value);
+						$('.external.text').attr('target', '_blank');
+						$('.external.text').attr('title', 'Artist');
+						$('#wikiAttrib').append(' | <a href="' + wikiAttrib.LicenseUrl.value + '" title="Licence" target="_blank">' + wikiAttrib.LicenseShortName.value + '</a>');
+					}
+				});
+			}
 		}, 250);
 	});
 });
@@ -81,15 +102,15 @@ function reverseLookup(e) {
 			if (siteDebug) console.debug(geoMarker);
 			if (markerId) clear_map();
 			rLookup = true;
-			show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ')(' + [mapBounds.top, mapBounds.lef, mapBounds.bot, mapBounds.rig] + ');');
+			show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ')(' + mapBbox + ');');
 		}
 	});
 }
 function walkPoint(e) {
-	if ($(window).width() >= 768) $('a[href="#walking"]').click();
+	if ($(window).width() >= 768 && actTab !== 'walking') $('a[href="#walking"]').click();
 	// drop a walk marker if one doesn't exist
 	var wp = routingControl.getWaypoints();
-	for (var c = 0; c < wp.length; c++){
+	for (var c in wp) {
 		if(!wp[c].name){
 			routingControl.spliceWaypoints(c, 1, e.latlng);
 			return;
@@ -101,6 +122,29 @@ function improveMap(e) {
 	// create a note on osm.org
 	window.open('http://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, '_blank');
 }
+
+// navigation controls for historic tour
+$('#tourNext').click(function() {
+    if ($('#tourList option:selected').next().is(':enabled')) {
+		$('#tourList option:selected').next().prop('selected', 'selected');
+		$('#tourList').trigger('change');
+	}
+});
+$('#tour').on('swipeleft', function () {
+	if ($(window).width() < 768 && L.Browser.touch) $('#tourNext').trigger('click');
+});
+$('#tourPrev').click(function() {
+	if ($('#tourList option:selected').prev().is(':enabled')) {
+		$('#tourList option:selected').prev().prop('selected', 'selected');
+		$('#tourList').trigger('change');
+	}
+});
+$('#tour').on('swiperight', function () {
+	if ($(window).width() < 768 && L.Browser.touch) $('#tourPrev').trigger('click');
+});
+$('#tourList').change(function () {
+	$('#tourFrame').attr('src', 'assets/tour/tour' + $(this).val() + '.html');
+});
 
 // https://github.com/Leaflet/Leaflet
 var iconLayer = new L.LayerGroup();
@@ -162,7 +206,7 @@ var tileBaseLayer = {
 	}
 };
 var attribution = '&copy; <a href="http://openstreetmap.org/copyright" title="Copyright and License" target="_blank">OpenStreetMap contributors</a>';
-var tileBaseLayers = {}, tileOverlay = {};
+var tileBaseLayers = {}, tileOverlay = {}, imageOverlay = {};
 var tileList = {name: [], keyname: []};
 for (var tile in tileBaseLayer) {
 	var subdomains = tileBaseLayer[tile].subdomains ? tileBaseLayer[tile].subdomains : 'abc';
@@ -187,7 +231,7 @@ if ((new Date().getMonth() === 10 && new Date().getDate() >= 15) || new Date().g
 
 // get basemap layer name on change
 map.on('baselayerchange', function (e) {
-	for (var c = 0; c < tileList.name.length; c++) {
+	for (var c in tileList.name) {
 		if (e.name === tileList.name[c]) actTileLayer = tileList.keyname[c];
 	}
 });
@@ -234,7 +278,7 @@ L.Control.geocoder({
 	geoMarker = e.geocode;
 	if (siteDebug) console.debug(geoMarker);
 	if (map.getZoom() <= minOpZoom) map.setZoom(minOpZoom, { animate: false });
-	show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ')(' + [mapBounds.top, mapBounds.lef, mapBounds.bot, mapBounds.rig] + ');');
+	show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ')(' + mapBbox + ');');
 	$(':input','.leaflet-control-geocoder-form').blur();
 	$(':input','.leaflet-control-geocoder-form').val('');
 })
@@ -247,41 +291,46 @@ function geocoderLink() {
 }
 function donateLink() {
 	$('a[href="#information"]').click();
+	$('#information .sidebar-body').scrollTop(0);
 	$('a[href="#gotodonate"]').click();
 }
 
 // https://github.com/cliffcloud/Leaflet.EasyButton
 // permalink button
 L.easyButton({
-	id:'btnpermalink',
-	states:[{
-		icon:'fa fa-link',
-		title:'Get map link',
-		onClick:function () {
+	id: 'btnPermalink',
+	states: [{
+		icon: 'fa fa-link',
+		title: 'Get map link',
+		onClick: function () {
 			var uri = URI(window.location.href);
-			var selectedPois = [], walkCoords = [], openNow;
+			var selectedPois = '', walkCoords = '', tourPage, openNow;
 			var walkWayp = routingControl.getWaypoints();
 			if (walkWayp[1].latLng !== null) {
 				for (var c in walkWayp) {
-					walkCoords[c] = Math.round(walkWayp[c].latLng.lat * 100000) / 100000 + '~' + Math.round(walkWayp[c].latLng.lng * 100000) / 100000;
+					walkCoords += Math.round(walkWayp[c].latLng.lat * 100000) / 100000 + 'x' + Math.round(walkWayp[c].latLng.lng * 100000) / 100000 + '_';
 				}
 			}
+			walkCoords = walkCoords ? walkCoords = walkCoords.slice(0, -1) : undefined;
+			if (actTab === 'tour') tourPage = $('#tourList option:selected').val();
 			if ($('input.opennow').is(':checked')) openNow = 1;
-			$('#pois' + actTab + ' input.poi-checkbox:checked').each(function (i, element) { selectedPois.push(element.dataset.key);	});
-			// M = basemap, T = tab, O = opennow, P = grouped pois, I = single poi, W = walkpoints
-			uri.query({ 'M': actTileLayer, 'T': actTab, 'O': openNow, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
+			$('#pois input.poi-checkbox:checked').each(function (i, element) { selectedPois += element.dataset.key + '-'; });
+			selectedPois = selectedPois ? selectedPois = selectedPois.slice(0, -1) : undefined;
+			// M = basemap, T = tab, U = tour page, O = opennow, P = grouped pois, I = single poi, W = walkpoints
+			uri.query({ 'M': actTileLayer, 'T': actTab, 'U': tourPage, 'O': openNow, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
 			window.prompt('Copy this link to share current map:', uri.href());
 		}
 	}]
 }).addTo(map);
 // clear map button
 L.easyButton({
-	id:'btnclearmap',
-	states:[{
-		icon:'fa fa-trash',
-		title:'Clear map',
-		onClick:function () {
-			// clear walk points, roll up suggested walks, clear poi marker layers
+	id: 'btnClearmap',
+	states: [{
+		icon: 'fa fa-trash',
+		title: 'Clear map',
+		onClick: function () {
+			// clear overlay, clear walk points, collapse suggested walks, clear poi marker layers
+			map.removeLayer(imageOverlay);
 			routingControl.setWaypoints([]);
 			$('#accordWk').accordion({ active: false });
 			clear_map();
@@ -289,7 +338,7 @@ L.easyButton({
 	}]
 }).addTo(map);
 // full reload on right click
-$('#btnclearmap').bind('contextmenu',function () {
+$('#btnClearmap').bind('contextmenu',function () {
 	$(location).attr('href', window.location.pathname);
 	return false;
 });
@@ -334,44 +383,81 @@ $('#accordWk').accordion({
 	active: false
 });
 
-// https://github.com/pawelczak/EasyAutocomplete
-var poitags = [], category = [], c = 0;
-// get all keywords
-for (var poi in pois) {
-	poitags += '"' + pois[poi].tabName + '~' + poi + '": ' + JSON.stringify(pois[poi].tagKeyword) + ', ';
-	category[c] = { listLocation: pois[poi].tabName + '~' + poi, header: pois[poi].tabName + ' - ' + pois[poi].name };
-	c++;
-}
-// clean up and covert to array
-poitags = poitags.substring(0, poitags.length - 2);
-poitags = JSON.parse('{' + poitags + '}');
-// options for autocomplete
-var options = {
-	data: poitags,
-	minCharNumber: 3,
-	list: {
-		maxNumberOfElements: 10,
-		match: { enabled: true },
-		onChooseEvent: function () {
-			// Find selected items category, split it to get checkbox, then display
-			var z = ($('#autocomplete').getSelectedItemIndex());
-			var catSplit = (document.getElementsByClassName('eac-category')[z].innerText);
-			catSplit = catSplit.split(' - ');
-			actTab = catSplit[0];
-			sidebar.open(actTab);
-			$('#pois' + actTab + ' input[id="' + catSplit[1] + '"]').prop('checked', true);
-			// Highlight checkbox or hide sidebar for mobile users
-			if ($(window).width() >= 768) $('#pois' + actTab + ' input[id="' + catSplit[1] + '"]').parent().parent().parent().effect('highlight', {}, 3000);
-			setting_changed();
-			$('#autocomplete').val('');
+function populate_tabs() {
+	var poitags = [], category = [], categoryList = [], c = 0, t;
+	// get all keywords
+	for (var poi in pois) {
+		poitags += '"' + pois[poi].catName + '~' + poi + '": ' + JSON.stringify(pois[poi].tagKeyword) + ', ';
+		category[c] = { listLocation: pois[poi].catName + '~' + poi, header: pois[poi].catName + ' - ' + pois[poi].name };
+		if (categoryList.indexOf(pois[poi].catName) === -1) categoryList.push(pois[poi].catName);
+		c++;
+	}
+	// clean up and covert to array
+	poitags = poitags.substring(0, poitags.length - 2);
+	poitags = JSON.parse('{' + poitags + '}');
+	// https://github.com/pawelczak/EasyAutocomplete
+	var options = {
+		data: poitags,
+		minCharNumber: 3,
+		list: {
+			maxNumberOfElements: 10,
+			match: { enabled: true },
+			onChooseEvent: function () {
+				// find selected items category, split it to get checkbox, then display
+				var z = ($('#autocomplete').getSelectedItemIndex());
+				var catSplit = (document.getElementsByClassName('eac-category')[z].innerText);
+				catSplit = catSplit.split(' - ');
+				clear_map();
+				$('a[href="#pois"]').click();
+				$('#pois input[id="' + catSplit[1] + '"]').prop('checked', true);
+				// scroll to and highlight checkbox
+				if ($(window).width() >= 768) {
+					$('#pois .sidebar-body').scrollTop(0);
+					$('#pois .sidebar-body').scrollTop($('#pois input[id="' + catSplit[1] + '"]').position().top - 50);
+					$('#pois input[id="' + catSplit[1] + '"]').parent().parent().parent().effect('highlight', {}, 3000);
+				}
+				setting_changed();
+				$('#autocomplete').val('');
+			}
+		},
+		categories: []
+	};
+	// push categories into options array
+	for (c in category) { options.categories.push(category[c]); }
+	$('#autocomplete').easyAutocomplete(options);
+	$('div.easy-autocomplete').removeAttr('style');
+	// create checkbox tables using poi categories
+	var checkboxContent = "<p>";
+	for (c in categoryList) { checkboxContent += '<a href="#goto' + categoryList[c] + '">' + categoryList[c] + '</a><br>'; }
+	checkboxContent += "<p>";
+	for (c in categoryList) { 
+		t = 0;
+		checkboxContent += '<div id="goto' + categoryList[c] + '"><hr><h3>' + categoryList[c] + '</h3></div>';
+		checkboxContent += '<table style="width:100%;">';
+		for (poi in pois) {
+			if (pois[poi].catName === categoryList[c]) {
+				if (t % 2 === 0) checkboxContent += '<tr>';
+				checkboxContent += L.Util.template(
+					'<td style="overflow:hidden; white-space:nowrap;"> \
+					<div class="poi-checkbox"> \
+						<label title="{name}"> \
+							<img style="width:28px;" src="assets/img/icons/{icon}.png"></img> \
+							<input type="checkbox" class="poi-checkbox" id="{name}" data-key="{key}" onclick="setting_changed(&#39;{key}&#39;)"><span>{name}</span> \
+						</label> \
+					</div> \
+					</td>',
+					{ key: poi, name: pois[poi].name, icon: pois[poi].iconName }
+				);
+				t++;
+				if (t % 2 === 0) checkboxContent += '</tr>';
+			}
 		}
-	},
-	categories: [category[0]]
-};
-// push categories into options array
-for (var c = 1; c < category.length; c++) { options.categories.push(category[c]); }
-$('#autocomplete').easyAutocomplete(options);
-$('div.easy-autocomplete').removeAttr('style');
+		checkboxContent += '</table>';
+		checkboxContent += '<div class="anchor"><a href="#gototoppois">| <i class="fa fa-arrow-up"></i> |</a></div>';
+	}
+	$('#pois .sidebar-body').append(checkboxContent);
+}
+populate_tabs();
 
 // https://github.com/kartenkarsten/leaflet-layer-overpass
 var spinner = 0, markerId;
@@ -385,7 +471,7 @@ function callback(data) {
 	customOptions.closeButton = false;
 	if (spinner > 0) spinner--;
 	if (spinner === 0) $('#spinner').hide();
-	for (var c = 0; c < data.elements.length; c++) {
+	for (var c in data.elements) {
 		var e = data.elements[c];
 		if (e.id in this.instance._ids) continue;
 		this.instance._ids[e.id] = true;
@@ -483,6 +569,7 @@ function callback(data) {
 			name = e.tags.building;
 			name = name.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1);});
 		}
+		else if (e.tags['addr:housename']) name = e.tags['addr:housename'];
 		// show a tooltip on mouse hover
 		if (name) marker.bindTooltip(name, { direction: 'left', offset: [-15, -2] }).openTooltip();
 		// check if already defined poi
@@ -495,7 +582,7 @@ function callback(data) {
 			// check if coming from reverselookup
 			if (rLookup) {
 				marker.addTo(this.instance).openPopup();
-				markerId = e.type + '~' + e.id;
+				markerId = e.type + '_' + e.id;
 				rLookup = false;
 			}
 			else {
@@ -511,7 +598,7 @@ function callback(data) {
 			markerPopup = generic_poi_parser(e, name);
 			marker.bindPopup(markerPopup, customOptions);
 			marker.addTo(this.instance).openPopup();
-			markerId = e.type + '~' + e.id;
+			markerId = e.type + '_' + e.id;
 			rLookup = false;
 		}
 	}
@@ -526,18 +613,18 @@ function clear_map() {
 }
 
 function setting_changed(newcheckbox) {
-	// limit number of selections
+	// limit number of active checkboxes
 	if ($('input.poi-checkbox:checked').length <= 3) {
-		// remove poi markers
+		// remove old poi markers
 		iconLayer.clearLayers();
 		markerId = undefined;
 		if ($('input.poi-checkbox:checked').length > 0) {
 			if ($(window).width() < 768) sidebar.close();
 			//build overpass query
 			var query = '(';
-			$('#pois' + actTab + ' input.poi-checkbox:checked').each(function (i, element) {
-				query += 'node' + pois[element.dataset.key].query + '(BBOX);';
-				query += 'way' + pois[element.dataset.key].query + '(BBOX);';
+			$('#pois input.poi-checkbox:checked').each(function (i, element) {
+				query += 'node' + pois[element.dataset.key].query + '(screenBbox);';
+				query += 'way' + pois[element.dataset.key].query + '(screenBbox);';
 			});
 			query += ');';
 			show_overpass_layer(query);
@@ -550,114 +637,91 @@ function setting_changed(newcheckbox) {
 	else $('[data-key=' + newcheckbox + ']').prop('checked', false);
 }
 
-// build content for sidebar pois
-function show_pois_checkboxes(tabName) {
-	var c = 0;
-	var content = '<div class="anchor"><a id="gototop' + tabName + '" href="#gotobot' + tabName + '">| <i class="fa fa-arrow-down"></i> |</a></div>';
-	content += '<table style="width:100%;">';
-	for (var poi in pois) {
-		if (pois[poi].tabName === tabName) {
-			if (c % 2 === 0) content += '<tr>';
-			content += '<td style="overflow:hidden; white-space:nowrap;">';
-			content += L.Util.template(
-				'<div class="poi-checkbox"> \
-					<label title="{name}"> \
-						<img style="width:28px;" src="assets/img/icons/{icon}.png"></img> \
-						<input type="checkbox" class="poi-checkbox" id="{name}" data-key="{key}" onclick="setting_changed(&#39;{key}&#39;)"><span>{name}</span> \
-					</label> \
-				</div>',
-				{ key: poi, name: pois[poi].name, icon: pois[poi].iconName, tabname: pois[poi].tabName }
-			);
-			content += '</td>';
-			c++;
-			if (c % 2 === 0) content += '</tr>';
-		}
-	}
-	content += '</table>';
-	content += '<div class="anchor"><a id="gotobot' + tabName + '" href="#gototop' + tabName + '">| <i class="fa fa-arrow-up"></i> |</a></div>';
-	$('#pois' + tabName).append(content);
-}
-show_pois_checkboxes('shops');
-show_pois_checkboxes('amenities');
-show_pois_checkboxes('services');
-show_pois_checkboxes('leisure');
-show_pois_checkboxes('tourism');
-
 // suggested walk waypoints
 function suggWalk(walkName) {
 	clear_map();
-	if (walkName === 'tmt') {
-		routingControl.setWaypoints([
-			[50.84059, 0.49121],
-			[50.83729, 0.47612],
-			[50.83647, 0.46637],
-			[50.83732, 0.46639]
-		]);
-		// show related information boards
-		show_overpass_layer('(node["ref"~"^TMT"](BBOX));');
-		map.flyTo([50.8385, 0.4787], 16);
-	}
-	else if (walkName === '1066') {
-		routingControl.setWaypoints([
-			[50.84522, 0.48044],
-			[50.84972, 0.48419],
-			[50.87800, 0.50009]
-		]);
-		map.flyTo([50.8504, 0.4840], 15);
-	}
-	else if (walkName === 'bc1') {
-		routingControl.setWaypoints([
-			[50.84125, 0.47717],
-			[50.84515, 0.47961],
-			[50.86230, 0.51823],
-			[50.84808, 0.52014],
-			[50.84056, 0.49142],
-			[50.83792, 0.47660],
-			[50.84093, 0.47718]
-		]);
-		map.flyTo([50.8474, 0.4874], 14);
-	}
-	else if (walkName === 'wwh') {
-		routingControl.setWaypoints([
-			[50.83567, 0.45892],
-			[50.83701, 0.47363]
-		]);
-		map.flyTo([50.8364, 0.4664], 16);
+	switch(walkName) {
+		case 'tmt':
+			routingControl.setWaypoints([
+				[50.84059, 0.49121],
+				[50.83729, 0.47612],
+				[50.83647, 0.46637],
+				[50.83732, 0.46639]
+			]);
+			// show related information boards
+			show_overpass_layer('(node["ref"~"^TMT"](screenBbox));');
+			map.flyTo([50.8385, 0.4787], 16);
+			break;
+		case '1066':
+			routingControl.setWaypoints([
+				[50.84522, 0.48044],
+				[50.84972, 0.48419],
+				[50.87800, 0.50009]
+			]);
+			map.flyTo([50.8504, 0.4840], 15);
+			break;
+		case 'bc1':
+			routingControl.setWaypoints([
+				[50.84125, 0.47717],
+				[50.84515, 0.47961],
+				[50.86230, 0.51823],
+				[50.84808, 0.52014],
+				[50.84056, 0.49142],
+				[50.83792, 0.47660],
+				[50.84093, 0.47718]
+			]);
+			map.flyTo([50.8474, 0.4874], 14);
+			break;
+		case 'wwh':
+			routingControl.setWaypoints([
+				[50.83567, 0.45892],
+				[50.83701, 0.47363]
+			]);
+			map.flyTo([50.8364, 0.4664], 16);
+			break;
 	}
 }
 
 // https://github.com/medialize/URI.js
+// M = basemap, T = tab, U = tour page, O = opennow, P = grouped pois, I = single poi, W = walkpoints
 var uri = URI(window.location.href);
 if (uri.hasQuery('M')) actTileLayer = uri.search(true).M;
 if (uri.hasQuery('T')) actTab = uri.search(true).T;
+if (uri.hasQuery('U')) {
+		$('#tourList').val(uri.search(true).U);
+		$('#tourList').trigger('change');
 if (uri.hasQuery('O')) $('input.opennow').prop('checked', uri.search(true).O);
 if (uri.hasQuery('W')) {
 	var walkCoords = uri.search(true).W;
-	for (var c = 0; c < walkCoords.length; c++) {
-		walkCoords[c] = walkCoords[c].replace('~', ', ');
+	walkCoords = walkCoords.split("_");
+	for (var c in walkCoords) {
+		walkCoords[c] = walkCoords[c].replace('x', ', ');
 		routingControl.spliceWaypoints(c, 1, JSON.parse('[' + walkCoords[c] + ']'));
 	}
 }
 if (uri.hasQuery('P')) {
 	var selectedPois = uri.search(true).P;
+	if (selectedPois.indexOf("-") > -1) selectedPois = selectedPois.split("-");
 	if (!$.isArray(selectedPois)) {
-		$('#pois' + uri.search(true).T + ' input[data-key=' + selectedPois + ']').prop('checked', true);
-		// highlight checkbox or hide sidebar for mobile users
+		$('#pois input[data-key=' + selectedPois + ']').prop('checked', true);
+		// open tab when not on mobile, scroll to and highlight checkbox
 		if ($(window).width() >= 768) {
 			sidebar.open(actTab);
-			$('#pois' + uri.search(true).T + ' input[data-key=' + selectedPois + ']').parent().parent().parent().effect('highlight', {}, 3000);
+			$('#pois .sidebar-body').scrollTop(0);
+			// add delay after load for sidebar to animate open to allow for scroll position
+			setTimeout(function () { 
+				$('#pois .sidebar-body').scrollTop($('#pois input[data-key="' + selectedPois + '"]').position().top - 50);
+				$('#pois input[data-key=' + selectedPois + ']').parent().parent().parent().effect('highlight', {}, 3000);
+			}, 500);
 		}
 	}
 	else {
-		for (var c = 0; c < selectedPois.length; c++) {
+		for (var c in selectedPois) {
 			// the last poi has a "/" on it because leaflet-hash
 			var multiplePois = selectedPois[c].replace('/', '');
-			$('#pois' + actTab + ' input[data-key=' + multiplePois + ']').prop('checked', true);
-			// highlight checkbox or hide sidebar for mobile users
-			if ($(window).width() >= 768) {
-				sidebar.open(actTab);
-				$('#pois' + actTab + ' input[data-key=' + multiplePois + ']').parent().parent().parent().effect('highlight', {}, 3000);
-			}
+			$('#pois input[data-key=' + multiplePois + ']').prop('checked', true);
+			// open tab when not on mobile
+			if ($(window).width() >= 768) sidebar.open(actTab);
 		}
 	}
 	setting_changed();
@@ -665,13 +729,13 @@ if (uri.hasQuery('P')) {
 if (uri.hasQuery('I')) {
 	rLookup = true;
 	markerId = uri.search(true).I;
-	var splitId = markerId.split('~');
-	show_overpass_layer(splitId[0] + '(' + splitId[1] + ')(' + [mapBounds.top, mapBounds.lef, mapBounds.bot, mapBounds.rig] + ');');
+	var splitId = markerId.split('_');
+	show_overpass_layer(splitId[0] + '(' + splitId[1] + ')(' + mapBbox + ');');
 }
 // if not returning from a permalink, give defaults
 if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
-	if ($(window).width() >= 768) sidebar.open(actTab);
+	if ($(window).width() >= 768 || actTab === 'tour') sidebar.open(actTab);
 }
 tileBaseLayers[tileBaseLayer[actTileLayer].name].addTo(map);
 map.setMaxBounds([[mapBounds.top, mapBounds.lef], [mapBounds.bot, mapBounds.rig]]);

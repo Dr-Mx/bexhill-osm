@@ -1,0 +1,38 @@
+body {
+	font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+ul, ol {
+	padding-left: 20px;
+}
+
+img {
+	width: 90%;
+	border: 2px solid #ccc;
+	margin: auto;
+	display: block;
+}
+
+.comment {
+	font-size: 85%;
+	margin-top: -8px;
+	text-align: center;
+	font-style: italic;
+	color: #808080;
+}
+
+.maplink {
+	cursor: pointer;
+	background-image: url(show.png);
+	background-repeat: no-repeat;
+	background-position: right, top;
+	top: -35px;
+	height: 20px;
+	margin-bottom: -20px;
+	position: relative;
+}
+
+a:link, a:visited, a:hover {
+	color: #b05000;
+	cursor: pointer;
+}
