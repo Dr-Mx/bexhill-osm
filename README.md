@@ -13,13 +13,14 @@ Searchable OpenStreetMap data showing POIs and other information
    - Payment parser
    - Diet parser
    - Expandable opening hours table
-   - Wikimedia images
+   - Wikimedia images with full attribution
  - Nominatim > Overpass address search
  - Nominatim > Overpass reverse lookup
  - Option to view only 'currently open' POIs
  - Find group POIs based on a keyword
  - Manually select group POIs from sidebar tabs
  - Create walking directions
+ - Tour tab with various articles that interact with the map
  - View suggested walking routes
  - Direct link to edit an element on OSM
  - Geolocate user
