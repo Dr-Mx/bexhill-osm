@@ -19,8 +19,8 @@ var actTab = 'home';
 
 // get safari to scroll tour tab containing iframe
 if (navigator.userAgent.indexOf("Safari") > -1) {
-	$("#tour .sidebar-body").css("-webkit-overflow-scrolling","touch");
-	$("#tour .sidebar-body").css("overflow","auto");
+	$("#tour .sidebar-body").css("-webkit-overflow-scrolling", "touch");
+	$("#tour .sidebar-body").css("overflow", "auto");
 }
 
 // swipe away sidebar on larger touch devices
@@ -690,6 +690,7 @@ if (uri.hasQuery('T')) actTab = uri.search(true).T;
 if (uri.hasQuery('U')) {
 		$('#tourList').val(uri.search(true).U);
 		$('#tourList').trigger('change');
+}
 if (uri.hasQuery('O')) $('input.opennow').prop('checked', uri.search(true).O);
 if (uri.hasQuery('W')) {
 	var walkCoords = uri.search(true).W;

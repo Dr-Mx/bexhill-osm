@@ -314,6 +314,7 @@ function worship_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
+			{callback: generic_tag_parser, tag: 'start_date', label: 'Built', iconName: 'calendar'},
 			{callback: generic_tag_parser, tag: 'religion', label: 'Religion', iconName: 'dot-circle-o'},
 			{callback: generic_tag_parser, tag: 'denomination', label: 'Denomination', iconName: 'dot-circle-o'},
 			{callback: generic_tag_parser, tag: 'service_times', label: 'Service times', iconName: 'clock-o'}

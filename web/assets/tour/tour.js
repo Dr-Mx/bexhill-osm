@@ -12,7 +12,7 @@ function tour(tourName) {
 				shadowAnchor: [16, 27],
 				popupAnchor: [0, -27]
 			});
-			imageOverlay = L.marker([50.837617, 0.482517], {icon: dinoIcon}).addTo(map).bindPopup('<h3>Iguanadon Tracks</h3>View at low tide.  Walk directly out onto the beach infront of Sackville Apartments. The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>One footprint is about 18-inches long.').openPopup();
+			imageOverlay = L.marker([50.837617, 0.482517], { icon: dinoIcon }).addTo(map).bindPopup('<h3>Iguanadon Tracks</h3>View at low tide.  Walk directly out onto the beach infront of Sackville Apartments. The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>One footprint is about 18-inches long.');
 			break;
 		case 'shipwreck':
 			rLookup = true;
