@@ -9,11 +9,14 @@ Searchable OpenStreetMap data showing POIs and other information
 ## Features
  - Mobile and desktop friendly
  - Detailed POI markers through Overpass API
-   - Facilities parser for wheelchair/wifi/pet access
-   - Payment parser
-   - Diet parser
-   - Expandable opening hours table
-   - Wikimedia images with full attribution
+   - Facilities parser for wheelchair/wifi/pet access (key:wheelchair, key:internet_access, key:dog)
+   - Payment parser (key:payment)
+   - Diet parser (key:diet)
+   - Cuisine parser (key:cuisine, key:breakfast, key:lunch)
+   - Ordering parser (key:takeaway, key:delivery, key:outdoor_searing, key:reservation)
+   - Expandable opening hours table (key:opening_hours)
+   - UK Food Hygiene Rating System API (key:fhrs:id)
+   - Wikimedia Commons API (key:image)
  - Nominatim > Overpass address search
  - Nominatim > Overpass reverse lookup
  - Option to view only 'currently open' POIs
