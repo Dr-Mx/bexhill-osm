@@ -18,12 +18,13 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 
 	<!-- http://realfavicongenerator.net/ -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=rM3MAN5zdX">
-	<link rel="icon" type="image/png" href="/favicon-32x32.png?v=rM3MAN5zdX" sizes="32x32">
-	<link rel="icon" type="image/png" href="/favicon-16x16.png?v=rM3MAN5zdX" sizes="16x16">
-	<link rel="manifest" href="/manifest.json?v=rM3MAN5zdX">
-	<link rel="mask-icon" href="/safari-pinned-tab.svg?v=rM3MAN5zdX" color="#b05000">
-	<link rel="shortcut icon" href="/favicon.ico?v=rM3MAN5zdX">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=oLaWK24GG8">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png?v=oLaWK24GG8" sizes="32x32">
+	<link rel="icon" type="image/png" href="/favicon-16x16.png?v=oLaWK24GG8" sizes="16x16">
+	<link rel="manifest" href="/manifest.json?v=oLaWK24GG8">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg?v=oLaWK24GG8" color="#b05000">
+	<link rel="shortcut icon" href="/favicon.ico?v=oLaWK24GG8">
+	<meta name="apple-mobile-web-app-title" content="Bexhill-OSM">
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS -->
@@ -60,14 +61,14 @@
 				<h1 class="sidebar-header">Bexhill OpenStreetMap<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
 					<h3>Find an interest</h3>
-					<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. 'clothing', 'tea', 'memorial', 'tourism')"></p>
-					<label><input type="checkbox" class="opennow"> Only facilities open right now</label>
+					<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. artwork, coffee, doctor, tourism)"></p>
+					<label class="opennow"><input type="checkbox"> Only facilities open right now</label>
 					<hr>
 						<h3>Tips to get started</h3>
-						<ul style="font-size:11pt; color:#143000;">
+						<ul style="color:#143000;">
 							<ol style="list-style-type:circle; padding-left:20px;">
 								<li>Enter a keyword above to see a group of interests.</li>
-								<li>Find an address by using the <a onclick="geocoderLink();">( <i style="color:#b05000; font-size:10pt;" class="fa fa-search"></i> )</a> button.</li>
+								<li>Find an address by using the <a onclick="geocoderLink();">(<i style="color:#b05000;" class="fa fa-search"></i>)</a> button.</li>
 								<li>Right-click any place to lookup its details.</li>
 								<li>Fly to a suburb by clicking the minimap below.</li>
 							</ol>
@@ -96,7 +97,7 @@
 							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbexhill-osm.org.uk&layout=button&size=small&mobile_iframe=true&appId" width="60" height="20" style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 							<i style="padding-left:3px;"></i><a href="https://twitter.com/BexhillOSM" class="twitter-follow-button" data-show-screen-name="false" data-dnt="true" data-show-count="false">Follow @BexhillOSM</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 						</p>
-						<i class="comment">Bexhill-OSM v2.0.0 &copy; 2016 - 2017</i>
+						<i class="comment">&copy; Bexhill-OSM 2016-2017</i>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="pois">
@@ -116,33 +117,42 @@
 					<hr>
 					<h3>Suggested leisure walks</h3>
 					<div id="accordWk">
-						<p style='margin-top:-5px;' class="walklink" onclick="suggWalk('tmt');"><i class="fa fa-map-marker"></i> The Motor Trail</p>
-						<div>
-							In May 1902 Bexhill on Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels 
-							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a style="color:#b05000;" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel</a>).
-							<a href="http://www.discoverbexhill.com/docs/bexhill-guide-2013.pdf#page=5" target="_blank">Source</a>.<br>
-						</div>
-						<p class="walklink" onclick="suggWalk('1066');"><i class="fa fa-map-marker"></i> 1066 Country Walk - Bexhill Link</p>
-						<div>
-							The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time.  This is a 
-							section of the Bexhill - Battle link, the full route can be found <a href="http://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">here</a>.
-						</div>
-						<p class="walklink" onclick="suggWalk('bc1');"><i class="fa fa-map-marker"></i> Bexhill Circular</p>
-						<div>
-							This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient 
-							woodland, reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy 
-							areas. Refreshments and toilets are available at the start point - Bexhill railway station - and towards the end of the walk. 
-							<a href="http://www.riverocean.org.uk/ocean/webwalks/Bexhill%20Circular.html" target="_blank">Source</a>.
-						</div>
-						<p class="walklink" onclick="suggWalk('wwh');"><i class="fa fa-map-marker"></i> Walking the Way to Health</p>
+						<p class="walklink" onclick="suggWalk('wwh');"><i class="fa fa-map-marker"></i> Walking the Way to Health (0.7mi)</p>
 						<div>
 							The route of this walk is marked out by a series of 10 plaques along the promenade.  Launched in 2011, it hopes to 
 							encourage people to regularly walk a specific distance along the promenade.  Small plinths are placed at ground level 
 							opposite every third beach groyne between numbers 48 and 72.  
 							<a href="https://thebexhillhistorytrail.wordpress.com/2015/01/15/30-walking-the-way-to-health-plaques-west-parade/" target="_blank">Source</a>.
 						</div>
+						<p class="walklink" onclick="suggWalk('tmt');"><i class="fa fa-map-marker"></i> The Motor Trail (1.3mi)</p>
+						<div>
+							In May 1902 Bexhill on Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels 
+							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a style="color:#b05000;" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel</a>).
+							<a href="http://www.discoverbexhill.com/docs/bexhill-guide-2013.pdf#page=5" target="_blank">Source</a>.<br>
+						</div>
+						<p class="walklink" onclick="suggWalk('greenway');"><i class="fa fa-map-marker"></i> Bexhill to Hastings Greenway (2.6mi)</p>
+						<div>
+							The Greenway runs alongside the Combe Valley Way, providing access for walkers, cyclists and horse riders between Bexhill and Hastings. 
+							It links up with public bridleways and footpaths in the area, including the 1066 Country Walk Bexhill Link, with two sections where horse 
+							riders take an alternative route to walkers and cyclists.
+							<a href="https://www.eastsussex.gov.uk/leisureandtourism/countryside/rightsofway/rights-of-way-in-east-sussex/bexhill-hastings-greenway/" target="_blank">Source</a>.
+						</div>
+						<p class="walklink" onclick="suggWalk('1066');"><i class="fa fa-map-marker"></i> 1066 Country Walk - Bexhill Link (3.0mi+)</p>
+						<div>
+							The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time.  This is a 
+							section of the Bexhill - Battle link, the full route can be found <a href="http://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">here</a>.
+						</div>
+						<p class="walklink" onclick="suggWalk('bc1');"><i class="fa fa-map-marker"></i> Bexhill Circular (6.3mi)</p>
+						<div>
+							This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient 
+							woodland, reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy 
+							areas. Refreshments and toilets are available at the start point - Bexhill railway station - and towards the end of the walk. 
+							<a href="http://www.riverocean.org.uk/ocean/webwalks/Bexhill%20Circular.html" target="_blank">Source</a>.
+						</div>
 					</div>
-					<p><a href="http://geotourist.com/users/454" target="_blank"><i class="fa fa-external-link"></i> GeoTourist audio walks by Bexhill Museum</a></p>
+					<hr>
+					<h3>External websites</h3>
+					<p><a href="http://geotourist.com/users/454" target="_blank">GeoTourist audio walks by Bexhill Museum</a></p>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="tour">
@@ -150,15 +160,15 @@
 				<div class="sidebar-body" style="text-align:center; overflow:hidden;">
 					<p><div class="tour-control leaflet-bar">
 						<button type="button" id="tourPrev" class="tour-control"><i class="fa fa-chevron-left"></i></button>
-							<select id="tourList" class="tour-control" style="width:70%; background-color:white;">
+							<select id="tourList" class="tour-control">
 								<option value = "0">&nbsp;Introduction</option>
 								<option value = "1">&nbsp;&nbsp; 1. Prehistoric Period</option>
 								<option value = "2">&nbsp;&nbsp; 2. The Amsterdam Shipwreck (1749)</option>
 								<option value = "3">&nbsp;&nbsp; 3. Smuggling (1700-1850)</option>
 								<option value = "4">&nbsp;&nbsp; 4. Railways (1846+)</option>
 								<option value = "5">&nbsp;&nbsp; 5. Tramway &amp; Trolleybuses (1906-59)</option>
-								<option value = "6" disabled>&nbsp;&nbsp; 6. Birthplace of British Motor Racing (1902)</option>
-								<option value = "7" disabled>&nbsp;&nbsp; 7. De La Warr Pavilion (1935)</option>
+								<option value = "6">&nbsp;&nbsp; 6. Birthplace of British Motor Racing (1902)</option>
+								<option value = "7">&nbsp;&nbsp; 7. De La Warr Pavilion (1935)</option>
 								<option value = "8" disabled>&nbsp;&nbsp; 8. Old Town Manor</option>
 								<option value = "9" disabled>&nbsp;&nbsp; 9. World War II (1939-45)</option>
 								<option value = "10" disabled>&nbsp; 10. Northeye Prison (1986)</option>
@@ -205,7 +215,7 @@
 					<h3>Find Interest</h3>
 						Type the first few letters of a keyword (e.g. 'police', 'bike', 'diy').  Click the word in the category you are interested in to display it on the map.<br>
 						To see only currently open facilities, check the box beneath.
-						<p><img src="assets/img/find.png" alt="Find interest Preview" style="width:75%;"></p>
+						<p><img src="assets/img/find.png" alt="Find interest Preview"></p>
 						<a id="gototabs"></a><hr>
 					<h3>Tabs</h3>
 						[<i style="color:#b05000;" class="fa fa-thumb-tack fa-fw"></i>] Points of Interest: Select an interest to be displayed on the map.<br><br>
@@ -216,20 +226,20 @@
 					<h3>Points of Interest (POI)</h3>
 						To begin displaying a POI, zoom to an area on the map and click an item - up to 3 POIs can selected at once.  After a few 
 						moments corresponding items will be displayed on the map as icons.  Larger map areas may take longer to load.
-						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview" style="width:45%;"></p>
+						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview"></p>
 						Once items have loaded on the map, click on their icon to see a pop-up detailing more specific information.  Opening hours are 
 						displayed as coloured icons showing if that place is currently open.<br>
-						By clicking (<i style="color:#b05000;" class="fa fa-pencil fa-fw"></i>) you can edit the item on openstreetmap.org.
-						<p><img src="assets/img/popup.png" alt="Marker popup preview" style="width:75%;"></p>
+						Click edit (<i style="color:#b05000;" class="fa fa-pencil fa-fw"></i>) to make changes on openstreetmap.org.
+						<p><img src="assets/img/popup.png" alt="Marker popup preview"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
 						Find a route by either entering an address, or using the map context-menu.  Add additional markers by dragging an existing path to a new location.
-						<p><img src="assets/img/walking.png" alt="Walking route preview" style="width:75%;"></p>
+						<p><img src="assets/img/walking.png" alt="Walking route preview"></p>
 					<a id="gototour"></a><hr>
 					<h3>Historic Tour</h3>
 						Navigate by either selecting from the list-box or using the arrows to jump between articles.  Mobile users may also swipe the title-bar to navigate.  Use the map-icon within an article to display related information on the map.
 						<img src="assets/tour/show.png" alt="Show on map button">
-					<div class="anchor"><a href="#gototophelp">| <i class="fa fa-arrow-up"></i> |</a></div>
+					<div class="anchor"><a href="#gototophelp" title="Back to top">| <i class="fa fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="information">
@@ -246,10 +256,10 @@
 					<h3>About &amp; Contact</h3>
 						<p>OpenStreetMap (OSM) is a free, collaborative project to create an editable map of the world.  Bexhill-OSM is an unofficial site that 
 						presents data that has been added by volunteers in Bexhill-on-Sea.</p>
-						<p>Bexhill-OSM is not a directory listing, nor a place for advertising.  We only map visitable, physical places.</p>
+						<p>Bexhill-OSM is not a directory listing, nor a place for advertising.  We only map public, visitable places.</p>
 						<p>Both this website and the underlying area on OpenStreetMap are managed by Alexis Markwick.</p>
 						<p>If you have any enquiries I can be reached via:<br>
-						&nbsp;<a href="mailto:info@bexhill-osm.org.uk" title="Email"><i style="color:#dd4b39;" class="fa fa-envelope fa-fw"></i> info@bexhill-osm.org.uk</a><br>
+						&nbsp;<a href="" onclick="this.href='mailto:' + 'info' + '@' + 'bexhill-osm.org.uk'" title="Email"><i style="color:#dd4b39;" class="fa fa-envelope fa-fw"></i> info [at] bexhill-osm.org.uk</a><br>
 						&nbsp;<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fa fa-facebook-official fa-fw"></i> facebook.com/bexhillosm</a><br>
 						&nbsp;<a href="https://www.twitter.com/bexhillosm" target="_blank" title="Twitter"><i style="color:#1da1f2;" class="fa fa-twitter fa-fw"></i> twitter.com/bexhillosm</a></p>
 					<a id="gotolinks"></a><hr>
@@ -279,7 +289,7 @@
 							</form></td>
 							<td>Flattr<br><a href="https://flattr.com/submit/auto?fid=voxyne&url=http%3A%2F%2Fbexhill-osm.org.uk%2F" target="_blank"><img src="https://button.flattr.com/flattr-badge-large.png" title="Flattr this" border="0"></a>
 							</td></tr></table>
-							<p style="text-align:center;">Bitcoin<br><a class="bitcoin">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</a></p>
+							<p style="text-align:center;">Bitcoin<br><a class="comment">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</a></p>
 						</p>
 					</p>
 					<p>
@@ -316,7 +326,7 @@
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
 					</p>
-					<div class="anchor"><a href="#gototopinfo">| <i class="fa fa-arrow-up"></i> |</a></div>
+					<div class="anchor"><a href="#gototopinfo" title="Back to top">| <i class="fa fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
 		</div>
@@ -328,7 +338,7 @@
     <!-- Overpass query search icon -->
 	<div id="spinner" style="display:none; z-index:500; color:#555;">
 		<i class="fa-stack" style="font-size:70px;">
-			<i class="fa fa-circle fa-stack-1x" style="font-size:100px; color:rgba(222, 222, 222, 0.9);"></i>
+			<i class="fa fa-circle fa-stack-1x" style="font-size:100px; color:rgba(224, 224, 224, 0.9);"></i>
 			<i class="fa fa-spinner fa-pulse fa-stack-1x"></i>
 		</i>
     </div>

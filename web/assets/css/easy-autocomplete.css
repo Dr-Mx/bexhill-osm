@@ -17,7 +17,6 @@
   border-style: solid;
   border-width: 1px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
-  color: #555;
   float: none;
   padding: 6px 12px;
   width: 100%;
@@ -293,12 +292,12 @@
   font-weight: bold;
 }
 .easy-autocomplete-container ul .eac-category {
-  color: #aaa;
+  color: #808080;
   font-style: italic;
 }
 
 .eac-description .eac-item span {
-  color: #aaa;
+  color: #808080;
   font-style: italic;
   font-size: 0.9em;
 }

@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v2.1.0
+
+**Date:** 04/01/2017 - Food Hygine Rating Standards API
+
+Updated js
+ - opening_hours+deps.min.js
+ - Control.Loading.js 0.1.24
+ - jQuery UI (removed unnecessary component)
+
+Site changes
+ - Display FHRS ratings through api
+ - Lots of CSS changes, added hover on some elements and better fitting on mobile devices
+ - Moved callback function to tag-parsers.js
+ - Tooltips and Titles for POI are more descriptive
+ - POI names are displayed in header of popups
+ - Changed ice-cream POI to show items with ice_cream=yes
+ - Couple more Historic Tour articles
+
+
 ## v2.0.0
 
 **Date:** 04/01/2017 - Historic Tour

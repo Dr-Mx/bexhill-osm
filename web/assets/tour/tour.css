@@ -1,5 +1,14 @@
 body {
-	font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+	padding: 0 12px 0 12px;
+}
+
+strong {
+	font-size: 115%;
+}
+
+sup {
+	font-size: 75%
 }
 
 ul, ol {
@@ -7,14 +16,14 @@ ul, ol {
 }
 
 img {
-	width: 90%;
+	max-width: 100%;
 	border: 2px solid #ccc;
 	margin: auto;
 	display: block;
 }
 
 .comment {
-	font-size: 85%;
+	font-size: 9pt;
 	margin-top: -8px;
 	text-align: center;
 	font-style: italic;
@@ -23,16 +32,24 @@ img {
 
 .maplink {
 	cursor: pointer;
-	background-image: url(show.png);
-	background-repeat: no-repeat;
-	background-position: right, top;
-	top: -35px;
-	height: 20px;
-	margin-bottom: -20px;
+	background:
+		url(show.png)
+		right top
+		no-repeat;
 	position: relative;
+	padding-right: 20px;
+}
+.maplink:hover {
+	background-color: rgba(255,255,255,0.6);
 }
 
+a {
+	text-decoration: none;
+}
 a:link, a:visited, a:hover {
 	color: #b05000;
 	cursor: pointer;
+}
+a:hover {
+	text-decoration: underline;
 }

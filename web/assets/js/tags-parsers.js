@@ -1,18 +1,22 @@
-// parse tags into marker popups
+// parse tags and marker popup
 
-// how much to truncate from popup labels depending on screensize
-var truncWidth = ($(window).width() > 500) ? 35 : 20;
 // tag template
 var tagTmpl = '<i class="fa fa-{iconName}"></i> <strong>{tag}:</strong> {value}<br>', state = '';
+
+// convert a string to title case
+function titleCase(str) {
+	str = str.replace(/_/g, ' ');
+	return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+}
 
 // edit in osm
 function osmedit_parser(element) {
 	var link = L.Util.template(
-		'http://www.openstreetmap.org/edit?editor=id&{type}={id}',
+		'https://www.openstreetmap.org/edit?editor=id&{type}={id}',
 		{type: element.type, id: element.id}
 	);
 	var markerPopup = L.Util.template(
-		'<a style="top:19px; right:20px; position:absolute;" href="{link}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
+		'<a class="popup-edit" href="{link}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
 		{link: link}
 	);
 	return markerPopup;
@@ -67,10 +71,9 @@ function website_parser(element) {
 	var tagurl = tags.url ? tags.url : tags['contact:url'];
 	if (tagwebsite) {
 		var stagwebsite = tagwebsite;
-		if (stagwebsite.length > truncWidth) stagwebsite = stagwebsite.substr(0, truncWidth) + '&hellip;';
 		link = L.Util.template(
-			'<a href="{tagwebsite}" title="{tagwebsite}" target="_blank">{stagwebsite}</a>',
-			{tagwebsite: tagwebsite, stagwebsite: stagwebsite}
+			'<a class="truncate" href="{tagwebsite}" title="{tagwebsite}" target="_blank">{tagwebsite}</a>',
+			{tagwebsite: tagwebsite}
 		);
 		markerPopup = L.Util.template(
 			tagTmpl,
@@ -78,11 +81,9 @@ function website_parser(element) {
 		);
 	}
 	if (tagurl) {
-		var stagurl = tagurl;
-		if (stagurl.length > truncWidth) stagurl = stagurl.substr(0,truncWidth) + '&hellip;';
 		link = L.Util.template(
-			'<a href="{tagurl}" title="{tagurl}" target="_blank">{stagurl}</a>',
-			{tagurl: tagurl, stagurl: stagurl}
+			'<a class="truncate" href="{tagurl}" title="{tagurl}" target="_blank">{tagurl}</a>',
+			{tagurl: tagurl}
 		);
 		markerPopup += L.Util.template(
 			tagTmpl,
@@ -96,11 +97,9 @@ function facebook_parser(element) {
 	var tagfb = element.tags.facebook ? element.tags.facebook : element.tags['contact:facebook'];
 	var markerPopup = '';
 	if (tagfb) {
-		var stagfb = tagfb;
-		if (stagfb.length > truncWidth) stagfb = stagfb.substr(0,truncWidth) + '&hellip;';
 		var link = L.Util.template(
-			'<a href="{tagfb}" title="{tagfb}" target="_blank">{stagfb}</a>',
-			{tagfb: tagfb, stagfb: stagfb}
+			'<a class="truncate" href="{tagfb}" title="{tagfb}" target="_blank">{tagfb}</a>',
+			{tagfb: tagfb}
 		);
 		markerPopup = L.Util.template(
 			tagTmpl,
@@ -114,11 +113,9 @@ function email_parser(element) {
 	var tagmail = element.tags.email ? element.tags.email : element.tags['contact:email'];
 	var markerPopup = '';
 	if (tagmail && tagmail.indexOf('@') !== -1) {
-		var stagmail = tagmail;
-		if (stagmail.length > truncWidth) stagmail = stagmail.substr(0,truncWidth) + '&hellip;';
 		var link = L.Util.template(
-			'<a href="mailto:{tagmail}" title="{tagmail}" target="_blank">{stagmail}</a>',
-			{tagmail: tagmail, stagmail: stagmail}
+			'<a href="mailto:{tagmail}" title="{tagmail}" target="_blank">{tagmail}</a>',
+			{tagmail: tagmail}
 		);
 		markerPopup = L.Util.template(
 			tagTmpl,
@@ -180,8 +177,8 @@ function wikipedia_parser(element) {
 		var lang = s[0] + '.', subject = s[1];
 		var href = 'http://' + lang + 'wikipedia.com/wiki/' + subject;
 		var link = L.Util.template(
-			'<a href="{wikipedia}" title="Wikipedia article" target="_blank">' + subject + '</a>',
-			{wikipedia: href}
+			'<a class="truncate" href="{wikipedia}" title="{subject}" target="_blank">{subject}</a>',
+			{wikipedia: href, subject: subject}
 		);
 		markerPopup = L.Util.template(
 			tagTmpl,
@@ -283,12 +280,12 @@ function fhrs_parser(element) {
 	var fhrs = element.tags['fhrs:id'], markerPopup = '';
 	if (fhrs) {
 		var link = L.Util.template(
-			'<a href="http://ratings.food.gov.uk/business/en-GB/{link}" title="Food Standards Agency" target="_blank">{link}</a>',
+			'<a href="http://ratings.food.gov.uk/business/en-GB/{link}" title="Food Standards Agency" target="_blank"><span id="fhrsLink">{link}</span></a>',
 			{link: fhrs}
 		);
 		markerPopup = L.Util.template(
 			tagTmpl,
-			{tag: 'Food Hygiene id', value: link, iconName: 'file'}
+			{tag: 'Food hygiene rating', value: link, iconName: 'file'}
 		);
 	}
 	return markerPopup;
@@ -314,8 +311,6 @@ function worship_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'start_date', label: 'Built', iconName: 'calendar'},
-			{callback: generic_tag_parser, tag: 'religion', label: 'Religion', iconName: 'dot-circle-o'},
 			{callback: generic_tag_parser, tag: 'denomination', label: 'Denomination', iconName: 'dot-circle-o'},
 			{callback: generic_tag_parser, tag: 'service_times', label: 'Service times', iconName: 'clock-o'}
 		]
@@ -347,7 +342,10 @@ function food_parser(element, titlePopup) {
 
 function cuisine_parser(element) {
 	var markerPopup = '', tag = '';
-	if (element.tags.cuisine) tag = element.tags.cuisine + '; ';
+	if (element.tags.cuisine) tag += element.tags.cuisine + '; ';
+	if (element.tags.breakfast === 'yes') tag += 'breakfast; ';
+	if (element.tags.lunch === 'yes') tag += 'lunch; ';
+	if (element.tags.ice_cream === 'yes') tag += 'ice cream; ';
 	for (var key in element.tags) {
 		if (key.indexOf('diet:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + ' options; ';
 	}
@@ -588,7 +586,6 @@ function artwork_parser(element, titlePopup) {
 			{callback: generic_tag_parser, tag: 'artwork_type', label: 'Artwork type', iconName: 'paint-brush'},
 			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist name', iconName: 'user'},
 			{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'cube'},
-			{callback: generic_tag_parser, tag: 'start_date', label: 'Made', iconName: 'calendar'}
 		]
 	);
 }
@@ -612,10 +609,8 @@ function historic_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'historic', label: 'Historic type', iconName: 'bank'},
-			{callback: generic_tag_parser, tag: 'memorial', label: 'Memorial type', iconName: 'bank'},
 			{callback: generic_tag_parser, tag: 'bunker_type', label: 'Military bunker type', iconName: 'fighter-jet'},
 			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist name', iconName: 'user'},
-			{callback: generic_tag_parser, tag: 'start_date', label: 'Made', iconName: 'calendar'},
 			{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'pencil-square-o'},
 			{callback: generic_tag_parser, tag: 'wreck:date_sunk', label: 'Date sunk', iconName: 'ship'},
 			{callback: generic_tag_parser, tag: 'wreck:visible_at_low_tide', label: 'Visible at low tide', iconName: 'ship'}
@@ -629,7 +624,6 @@ function listed_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'listed_status', label: 'Listed status', iconName: 'home'},
-			{callback: generic_tag_parser, tag: 'start_date', label: 'Built', iconName: 'calendar'}
 		]
 	);
 }
@@ -687,16 +681,17 @@ function image_parser(img) {
 		imgSplit[1] = imgSplit[1].replace(/ /gi, '_');
 		var md5 = $.md5(imgSplit[1]);
 		var url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/200px-' + imgSplit[1];
-		markerPopup = '<p style="text-align:center;"><a id="wikiImg" href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img style="border:2px solid #ccc; margin-bottom: -5px;" src="' + url + '"></a><br><span id="wikiAttrib"></span></p>';
+		markerPopup = '<p style="text-align:center;"><a id="wikiImg" href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img src="' + url + '"></a><br><span id="wikiAttrib"></span></p>';
 	}
 	return markerPopup;
 }
 
 function parse_tags(element, titlePopup, functions) {
-	var markerPopup = L.Util.template('<h3>{title}&emsp;<hr style="width:100%;"></h3>', {title: titlePopup});
+	var markerPopup = L.Util.template('<h3>{title}</h3>', {title: titlePopup});
+	if (element.tags.name) markerPopup += L.Util.template('<span class="popup-tagName">{tagName}</span>', {tagName: element.tags.name});
+	markerPopup += '<hr>';
 	functions = [
 		{callback: osmedit_parser},
-		{callback: generic_tag_parser, tag: 'name', label: 'Name'},
 		{callback: generic_tag_parser, tag: 'operator', label: 'Operator', iconName: 'building-o'},
 		{callback: address_parser},
 		{callback: phone_parser},
@@ -705,6 +700,7 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: facebook_parser},
 		{callback: wikipedia_parser},
 		{callback: listedhe_parser},
+		{callback: generic_tag_parser, tag: 'start_date', label: 'Start date', iconName: 'calendar'},
 		{callback: fhrs_parser},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
@@ -722,4 +718,172 @@ function parse_tags(element, titlePopup, functions) {
 	markerPopup += opening_hours_parser(element.tags);
 	markerPopup += image_parser(element.tags.image);
 	return markerPopup;
+}
+
+// marker popup
+var spinner = 0, markerId;
+function callback(data) {
+	var type, name, markerPopup;
+	// set marker popup dimensions on screensize
+	var customOptions = ($(window).width() >= 768) ? { maxWidth: 350 } : { maxWidth: 250, className: 'popup-mobile' };
+	customOptions.autoPanPaddingTopLeft = (($(window).width() >= 768) && rLookup) ? [sidebar.width()+50,5] : [30,5];
+	customOptions.autoPanPaddingBottomRight = [5,75];
+	customOptions.minWidth = 205;
+	customOptions.closeButton = false;
+	if (spinner > 0) spinner--;
+	if (spinner === 0) $('#spinner').hide();
+	for (var c in data.elements) {
+		var e = data.elements[c];
+		if (e.id in this.instance._ids) continue;
+		this.instance._ids[e.id] = true;
+		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
+		name = undefined;
+		type = undefined;
+		if (siteDebug) console.debug(e);
+		if (e.tags.amenity) {
+			if (!name && (e.tags.amenity === 'restaurant' || e.tags.amenity === 'fast_food' || e.tags.amenity === 'cafe') && e.tags.cuisine) {
+				name = e.tags.cuisine;
+				if (e.tags.amenity === 'restaurant' && e.tags.takeaway === 'only') name += ' takeaway';
+				else name += ' ' + e.tags.amenity;
+			}
+			else if (!name && e.tags.amenity === 'place_of_worship' && e.tags.religion) name = e.tags.religion;
+			else if (!name) name = e.tags.amenity;
+			if (!type) type = e.tags.amenity;
+			// Group similar pois
+			if (type === 'arts_centre') type = 'attraction';
+			if (type === 'nightclub') type = 'bar';
+			if (type === 'college') type = 'school';
+			if (type === 'school' && e.tags.name === undefined) type = undefined;
+			if (type === 'retirement_home') type = 'social_facility';
+			if (type === 'post_office') type = 'post_box';
+			// Hide non-public parking
+			if (type === 'parking') {
+				if (e.tags.access === 'private' || e.tags.access === 'permissive') type = undefined;
+			}
+			if (type === 'animal_boarding') type = 'animal_shelter';
+		}
+		if (e.tags.historic) {
+			if (!name && e.tags.memorial) name = 'historic ' + e.tags.memorial;
+			else if (!name) name = 'historic ' + e.tags.historic;
+			if (!type) type = 'historic';
+		}
+		if (e.tags.man_made) {
+			if (!name) name = e.tags.man_made;
+			if (!type) type = e.tags.man_made;
+		}
+		if (e.tags.shop) {
+			if (!name && e.tags.craft) name = e.tags.craft;
+			else if (!name) name = e.tags.shop;
+			if (!type) type = e.tags.shop;
+			// Group similar pois
+			if (type === 'deli') type = 'butcher';
+			if (type === 'e-cigarette') type = 'tobacco';
+			if (type === 'hardware') type = 'doityourself';
+			if (type === 'boutique') type = 'clothes';
+			if (type === 'window_blind') type = 'curtain';
+			if (type === 'laundry') type = 'dry_cleaning';
+			if (type === 'garden_centre') type = 'florist';
+			if (type === 'tyres') type = 'car_repair';
+			if (type === 'hearing_aids') type = 'mobility';
+			if (type === 'interior_decoration' || type === 'bathroom_furnishing' || type === 'kitchen') type = 'houseware';
+		}
+		if (e.tags.tourism) {
+			if (!name && e.tags.artwork_type) name = e.tags.artwork_type + ' artwork';
+			else if (!name) name = e.tags.tourism;
+			if (!type) type = e.tags.tourism;
+		}
+		if (e.tags.landuse) {
+			if (!name) name = e.tags.landuse;
+			if (!type) type = e.tags.landuse;
+			// Hide non-public grounds
+			if (type === 'recreation_ground') {
+				if (e.tags.access === 'private') type = undefined;
+			}
+		}
+		if (e.tags.leisure) {
+			if (!name) name = e.tags.leisure;
+			if (!type) type = e.tags.leisure;
+			if (type === 'common') type = 'park';
+			if (type === 'swimming_pool') {
+				if (e.tags.access === 'private') type = undefined;
+			}
+		}
+		if (e.tags.emergency) {
+			if (!name) name = e.tags.emergency;
+			if (!type) type = e.tags.emergency;
+		}
+		if (e.tags.office) {
+			if (!name) name = e.tags.office + ' office';
+			if (!type) type = e.tags.office;
+			if (type === 'financial') type = 'accountant';
+		}
+		if (e.tags.healthcare) {
+			if (!name && e.tags['healthcare:speciality']) name = e.tags['healthcare:speciality'];
+			else if (!name) name = e.tags.healthcare;
+			if (!type) type = 'healthcare';
+		}
+		if (e.tags.listed_status) {
+			if (!type || type === 'shelter' || type === 'company') type = 'listed_status';
+		}
+		if (e.tags.image) {
+			if (!type) type = 'image';
+		}
+		var poi = pois[type];
+		var iconName = poi ? poi.iconName : '000blank';
+		var markerIcon = L.icon({
+			iconUrl: 'assets/img/icons/' + iconName + '.png',
+			iconSize: [32, 37],
+			iconAnchor: [16, 35],
+			shadowUrl: 'assets/img/icons/000shadow.png',
+			shadowAnchor: [16, 27],
+			popupAnchor: [0, -27]
+		});
+		var marker = L.marker(pos, {
+			icon: markerIcon,
+			keyboard: false,
+			riseOnHover: true
+		});
+		// find alternative poi name
+		if (!name) {
+			if (poi) name = poi.name;
+			else if (e.tags.natural) name = e.tags.natural;
+			else if (e.tags.highway) name = e.tags.highway + ' highway';
+			else if (e.tags.ref) name = e.tags.ref;
+			else if (e.tags.building && e.tags.building !== 'yes') name = e.tags.building;
+			else if (e.tags['addr:housename']) name = e.tags['addr:housename'];
+			else name = '&hellip;';
+		}
+		if (name != '&hellip;') name = titleCase(name);
+		// show a tooltip on mouse hover
+		if (name) marker.bindTooltip(name, { direction: 'left', offset: [-15, -2] }).openTooltip();
+		// check if already defined poi
+		if (poi) {
+			// create pop-up
+			markerPopup = poi.tagParser ? poi.tagParser(e, name) : generic_poi_parser(e, name);
+			// set width of popup on screensize
+			// show pop-up
+			marker.bindPopup(markerPopup, customOptions);
+			// check if coming from reverselookup
+			if (rLookup) {
+				marker.addTo(this.instance).openPopup();
+				markerId = e.type + '_' + e.id;
+				rLookup = false;
+			}
+			else {
+				// display only open facilities on opennow checkbox
+				if ($('.opennow input').is(':checked')) {
+					if (state) marker.addTo(this.instance);
+				}
+				else marker.addTo(this.instance);
+			}
+		}
+		else if (rLookup) {
+			// use generic marker
+			markerPopup = generic_poi_parser(e, name);
+			marker.bindPopup(markerPopup, customOptions);
+			marker.addTo(this.instance).openPopup();
+			markerId = e.type + '_' + e.id;
+			rLookup = false;
+		}
+	}
 }

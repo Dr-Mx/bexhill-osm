@@ -325,7 +325,7 @@ var pois = {
 		query: '[shop=craft]',
 		iconName: 'craftstore',
 		catName: 'Shops',
-		tagKeyword: ['crafts', 'photographer', 'handicraft', 'models', 'art'],
+		tagKeyword: ['crafts', 'photographer', 'handi', 'models', 'art'],
 		tagParser: craft_parser
 	},
 
@@ -506,7 +506,7 @@ var pois = {
 
 	ice_cream: {
 		name: 'Ice-Cream',
-		query: '[amenity=ice_cream]',
+		query: '[ice_cream=yes]',
 		iconName: 'icecream',
 		catName: 'Amenities',
 		tagKeyword: ['ice-cream']
@@ -909,11 +909,11 @@ var pois = {
 	},
 
 	historic: {
-		name: 'Historical',
+		name: 'Historic',
 		query: '["historic"~"."]',
 		iconName: 'ruins-2',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'historical', 'memorial'],
+		tagKeyword: ['tourism', 'historic', 'memorial'],
 		tagParser: historic_parser
 	},
 
@@ -922,7 +922,7 @@ var pois = {
 		query: '["HE_ref"~"."]',
 		iconName: 'house',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'listed-building', 'historical', 'heritage'],
+		tagKeyword: ['tourism', 'listed-building', 'historic', 'heritage'],
 		tagParser: listed_parser
 	},
 
@@ -1038,7 +1038,7 @@ var pois = {
 		query: '[tourism=apartment]',
 		iconName: 'villa',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'apartment', 'self-catering', 'lodging', 'sleep'],
+		tagKeyword: ['tourism', 'apartment', 'self-catering', 'lodging', 'sleep', 'bed'],
 		tagParser: hotel_parser
 	},
 
