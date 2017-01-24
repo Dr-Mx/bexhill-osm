@@ -45,6 +45,9 @@ $('.sidebar-tabs').click(function () {
 });
 
 $(document).ready(function () {
+	// clear loading elements
+	$('#spinner').hide();
+	$('#map').css('background-color', '#dedede');
 	// https://github.com/davidjbradshaw/image-map-resizer
 	// add delay after load for sidebar to animate open to create minimap
 	setTimeout(function () { $('map').imageMapResize(); }, 500);
@@ -484,7 +487,6 @@ function clear_map() {
 function setting_changed(newcheckbox) {
 	// limit number of active checkboxes
 	if ($('input.poi-checkbox:checked').length <= 3) {
-		//$('[data-key=' + newcheckbox + ']').parent().parent().parent().css('background-color', 'rgba(255,255,255,0.6)');
 		// remove old poi markers
 		iconLayer.clearLayers();
 		markerId = undefined;

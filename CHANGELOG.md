@@ -1,8 +1,21 @@
 # CHANGELOG
 
+## v2.1.1
+
+**Date:** 24/01/2017
+
+Updated js
+ - jquery.easy-autocomplete.min.js
+
+Site changes
+ - Fixed a bug where keypresses on autocomplete input weren't being recognised on some mobile devices
+ - Added a custom font for sidebar tab titles
+ - Spinner shows for initial website load
+
+
 ## v2.1.0
 
-**Date:** 04/01/2017 - Food Hygine Rating Standards API
+**Date:** 21/01/2017 - Food Hygine Rating Standards API
 
 Updated js
  - opening_hours+deps.min.js

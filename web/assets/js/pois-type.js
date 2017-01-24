@@ -46,20 +46,12 @@ var pois = {
 		tagKeyword: ['bakery', 'bread', 'cake']
 	},
 
-	confectionery: {
-		name: 'Confectionery',
-		query: '[shop=confectionery]',
-		iconName: 'patisserie',
-		catName: 'Shops',
-		tagKeyword: ['sugar', 'sweets', 'confectionery', 'cake']
-	},
-
 	butcher: {
 		name: 'Butcher/Deli',
 		query: '["shop"~"butcher|deli"]',
-		iconName: 'butcher-2',
+		iconName: 'butcher',
 		catName: 'Shops',
-		tagKeyword: ['butcher', 'meat', 'deli']
+		tagKeyword: ['butcher', 'meat', 'delicatessen']
 	},
 
 	seafood: {
@@ -68,6 +60,14 @@ var pois = {
 		iconName: 'restaurant_fish',
 		catName: 'Shops',
 		tagKeyword: ['seafood', 'fish']
+	},
+
+	confectionery: {
+		name: 'Confectionery',
+		query: '[shop=confectionery]',
+		iconName: 'patisserie',
+		catName: 'Shops',
+		tagKeyword: ['sugar', 'sweets', 'confectionery', 'cake']
 	},
 
 	alcohol: {

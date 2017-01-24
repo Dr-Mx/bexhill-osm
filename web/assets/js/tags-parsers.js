@@ -585,7 +585,7 @@ function artwork_parser(element, titlePopup) {
 		[
 			{callback: generic_tag_parser, tag: 'artwork_type', label: 'Artwork type', iconName: 'paint-brush'},
 			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist name', iconName: 'user'},
-			{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'cube'},
+			{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'cube'}
 		]
 	);
 }
@@ -623,7 +623,7 @@ function listed_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
-			{callback: generic_tag_parser, tag: 'listed_status', label: 'Listed status', iconName: 'home'},
+			{callback: generic_tag_parser, tag: 'listed_status', label: 'Listed status', iconName: 'home'}
 		]
 	);
 }

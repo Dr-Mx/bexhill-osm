@@ -1,5 +1,10 @@
 ::-ms-clear { display: none; }
 
+@font-face {
+    font-family: BerlinSans;
+	src: url('../font/berlinsans.ttf');
+}
+
 body {
 	padding: 0;
 	margin: 0;
@@ -8,6 +13,9 @@ body {
 html, body, #map {
 	height: 100%;
 	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+#map {
+	background-color: #b05000;
 }
 
 a {
@@ -178,7 +186,7 @@ input[type="checkbox"] {
 }
 
 .leaflet-control-locate
-	a{font-size:1.2em}
+	a{color:#b05000}
 .leaflet-control-locate.active
 	a{color:#2074B6}
 .leaflet-control-locate.active.following
