@@ -18,6 +18,10 @@ html, body, #map {
 	background-color: #b05000;
 }
 
+#theme {
+	color: #b05000;
+}
+
 a {
 	text-decoration: none;
 }
@@ -208,12 +212,14 @@ input[type="checkbox"] {
 }
 
 #spinner {
+	color: #555;
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	margin-left: -50px;
 	margin-top: -50px;
-	z-index: 10;
+	z-index: 500;
+	font-size: 70px;
 	pointer-events: none;
 }
 
@@ -255,6 +261,8 @@ input[type="checkbox"] {
 	height: calc(100% - 60px);
 	width: 100%;
 	margin: 5px -20px;
+	text-align: center;
+	overflow: hidden;
 }
 
 .comment {

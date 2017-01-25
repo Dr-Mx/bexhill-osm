@@ -727,7 +727,7 @@ function callback(data) {
 	// set marker popup dimensions on screensize
 	var customOptions = ($(window).width() >= 768) ? { maxWidth: 350 } : { maxWidth: 250, className: 'popup-mobile' };
 	customOptions.autoPanPaddingTopLeft = (($(window).width() >= 768) && rLookup) ? [sidebar.width()+50,5] : [30,5];
-	customOptions.autoPanPaddingBottomRight = [5,75];
+	customOptions.autoPanPaddingBottomRight = [5, 75];
 	customOptions.minWidth = 205;
 	customOptions.closeButton = false;
 	if (spinner > 0) spinner--;
@@ -791,6 +791,7 @@ function callback(data) {
 			if (!name && e.tags.artwork_type) name = e.tags.artwork_type + ' artwork';
 			else if (!name) name = e.tags.tourism;
 			if (!type) type = e.tags.tourism;
+			if (type === 'hotel') type = 'guest_house';
 		}
 		if (e.tags.landuse) {
 			if (!name) name = e.tags.landuse;

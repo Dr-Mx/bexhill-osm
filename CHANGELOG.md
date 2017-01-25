@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v2.1.2
+
+**Date:** 25/01/2017
+
+Updated js
+ - leaflet.js 1.0.3
+
+Site changes
+ - Merged guest_house and hotel pois
+ - Set theme colour in css
+
+
 ## v2.1.1
 
 **Date:** 24/01/2017

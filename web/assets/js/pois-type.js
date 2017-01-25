@@ -1015,21 +1015,12 @@ var pois = {
 		tagKeyword: ['amusement-arcade', 'arcade', 'gambling']
 	},
 
-	hotel: {
-		name: 'Hotel',
-		query: '[tourism=hotel]',
-		iconName: 'hotel_0star',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'hotel', 'lodging', 'sleep', 'bed'],
-		tagParser: hotel_parser
-	},
-
 	guest_house: {
-		name: 'Guest-House',
-		query: '[tourism=guest_house]',
+		name: 'Hotel/Guest-House',
+		query: '["tourism"~"guest_house|hotel"]',
 		iconName: 'bed_breakfast1-2',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'bed-and-breakfast', 'guest-house', 'lodging', 'sleep'],
+		tagKeyword: ['tourism', 'bed-and-breakfast', 'hotel', 'guest-house', 'lodging', 'sleep'],
 		tagParser: hotel_parser
 	},
 

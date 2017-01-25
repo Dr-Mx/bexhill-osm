@@ -28,7 +28,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
 	<link rel="stylesheet" href="assets/css/Control.Loading.css" />
@@ -68,7 +68,7 @@
 						<ul style="color:#143000;">
 							<ol style="list-style-type:circle; padding-left:20px;">
 								<li>Enter a keyword above to see a group of interests.</li>
-								<li>Find an address by using the <a onclick="geocoderLink();">(<i style="color:#b05000;" class="fa fa-search"></i>)</a> button.</li>
+								<li>Find an address by using the <a onclick="geocoderLink();">(<i id="theme" class="fa fa-search"></i>)</a> button.</li>
 								<li>Right-click any place to lookup its details.</li>
 								<li>Fly to a suburb by clicking the minimap below.</li>
 							</ol>
@@ -89,9 +89,9 @@
 						</map>
 						<p class="comment">Note: areas to the west are work-in-progress.</p>
 					<hr>
-						<p>Bexhill-OSM is a non-commercial, community based mapping project run entirely on <a style="color:#b05000;" onclick="donateLink();">donations</a>.  It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
-						<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i style="color:#b05000;" class="fa fa-question fa-fw"></i>]</a> for more assistance.
-						<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i style="color:#b05000;" class="fa fa-info fa-fw"></i>]</a>.</p>
+						<p>Bexhill-OSM is a non-commercial, community based mapping project run entirely on <a id="theme" onclick="donateLink();">donations</a>.  It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
+						<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i id="theme" class="fa fa-question fa-fw"></i>]</a> for more assistance.
+						<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i id="theme" class="fa fa-info fa-fw"></i>]</a>.</p>
 						<p>
 							<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbexhillosm%2F&layout=button&action=like&size=small&show_faces=false&share=false&appId" width="55" height="20" style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbexhill-osm.org.uk&layout=button&size=small&mobile_iframe=true&appId" width="60" height="20" style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
@@ -127,7 +127,7 @@
 						<p class="walklink" onclick="suggWalk('tmt');"><i class="fa fa-map-marker"></i> The Motor Trail (1.3mi)</p>
 						<div>
 							In May 1902 Bexhill on Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels 
-							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a style="color:#b05000;" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel</a>).
+							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a id="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel</a>).
 							<a href="http://www.discoverbexhill.com/docs/bexhill-guide-2013.pdf#page=5" target="_blank">Source</a>.<br>
 						</div>
 						<p class="walklink" onclick="suggWalk('greenway');"><i class="fa fa-map-marker"></i> Bexhill to Hastings Greenway (2.6mi)</p>
@@ -157,7 +157,7 @@
 			</div>
 			<div class="sidebar-pane" id="tour">
 				<h1 class="sidebar-header">Historic Tour<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
-				<div class="sidebar-body" style="text-align:center; overflow:hidden;">
+				<div class="sidebar-body">
 					<p><div class="tour-control leaflet-bar">
 						<button type="button" id="tourPrev" class="tour-control"><i class="fa fa-chevron-left"></i></button>
 							<select id="tourList" class="tour-control">
@@ -197,11 +197,11 @@
 					<b><i style="color:#e52d27;" class="fa fa-youtube-play"></i> <a href="https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us" title="YouTube" target="_blank">View demonstration videos</a></b>
 					<a id="gotocontrols"></a><hr>
 					<h3>Map Controls</h3>
-						The zoom controls (<i style="color:#b05000;" class="fa fa-plus"></i> / <i style="color:#b05000;" class="fa fa-minus"></i>) will enlarge and shrink the map.<br><br>
-						If you are in the area your current position can be located, just click the arrow icon (<i style="color:#b05000;" class="fa fa-location-arrow"></i>).<br><br>
-						Find an address on the map by entering part of it into the search box (<i style="color:#b05000;" class="fa fa-search"></i>).  A selection will appear if multiple results are found.<br><br>
-						Share your current view and selected options by clicking the link icon (<i style="color:#b05000;" class="fa fa-link"></i>) and copying the text displayed.<br><br>
-						To clear all current layers on the map, click the bin (<i style="color:#b05000;" class="fa fa-trash"></i>).  Right-click / long press will reload the website to defaults.<br><br>
+						The zoom controls (<i id="theme" class="fa fa-plus"></i> / <i id="theme" class="fa fa-minus"></i>) will enlarge and shrink the map.<br><br>
+						If you are in the area your current position can be located, just click the arrow icon (<i id="theme" class="fa fa-location-arrow"></i>).<br><br>
+						Find an address on the map by entering part of it into the search box (<i id="theme" class="fa fa-search"></i>).  A selection will appear if multiple results are found.<br><br>
+						Share your current view and selected options by clicking the link icon (<i id="theme" class="fa fa-link"></i>) and copying the text displayed.<br><br>
+						To clear all current layers on the map, click the bin (<i id="theme" class="fa fa-trash"></i>).  Right-click / long press will reload the website to defaults.<br><br>
 						Various map styles can be displayed using the overlay picker - located at the top-right of the page.
 						<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
 					<a id="gotocontext"></a><hr>
@@ -218,9 +218,9 @@
 						<p><img src="assets/img/find.png" alt="Find interest Preview"></p>
 						<a id="gototabs"></a><hr>
 					<h3>Tabs</h3>
-						[<i style="color:#b05000;" class="fa fa-thumb-tack fa-fw"></i>] Points of Interest: Select an interest to be displayed on the map.<br><br>
-						[<i style="color:#b05000;" class="fa fa-compass fa-fw"></i>] Walking Routes: Select from a few local walks, or create your own path through the many twittens.<br><br>
-						[<i style="color:#b05000;" class="fa fa-map-signs fa-fw"></i>] Historic Tour: Travel back in time and discover the history of the town.
+						[<i id="theme" class="fa fa-thumb-tack fa-fw"></i>] Points of Interest: Select an interest to be displayed on the map.<br><br>
+						[<i id="theme" class="fa fa-compass fa-fw"></i>] Walking Routes: Select from a few local walks, or create your own path through the many twittens.<br><br>
+						[<i id="theme" class="fa fa-map-signs fa-fw"></i>] Historic Tour: Travel back in time and discover the history of the town.
 					<p></p>
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
@@ -229,7 +229,7 @@
 						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview"></p>
 						Once items have loaded on the map, click on their icon to see a pop-up detailing more specific information.  Opening hours are 
 						displayed as coloured icons showing if that place is currently open.<br>
-						Click edit (<i style="color:#b05000;" class="fa fa-pencil fa-fw"></i>) to make changes on openstreetmap.org.
+						Click edit (<i id="theme" class="fa fa-pencil fa-fw"></i>) to make changes on openstreetmap.org.
 						<p><img src="assets/img/popup.png" alt="Marker popup preview"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
@@ -259,7 +259,7 @@
 						<p>Bexhill-OSM is not a directory listing, nor a place for advertising.  We only map public, visitable places.</p>
 						<p>Both this website and the underlying area on OpenStreetMap are managed by Alexis Markwick.</p>
 						<p>If you have any enquiries I can be reached via:<br>
-						&nbsp;<a href="" onclick="this.href='mailto:' + 'info' + '@' + 'bexhill-osm.org.uk'" title="Email"><i style="color:#dd4b39;" class="fa fa-envelope fa-fw"></i> info [at] bexhill-osm.org.uk</a><br>
+						&nbsp;<a href="" onclick="this.href='mailto:' + 'info' + '@' + 'bexhill-osm.org.uk';" title="Email"><i style="color:#dd4b39;" class="fa fa-envelope fa-fw"></i> info [at] bexhill-osm.org.uk</a><br>
 						&nbsp;<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fa fa-facebook-official fa-fw"></i> facebook.com/bexhillosm</a><br>
 						&nbsp;<a href="https://www.twitter.com/bexhillosm" target="_blank" title="Twitter"><i style="color:#1da1f2;" class="fa fa-twitter fa-fw"></i> twitter.com/bexhillosm</a></p>
 					<a id="gotolinks"></a><hr>
@@ -336,15 +336,15 @@
     <div id="map" class="sidebar-map"></div>
 
     <!-- Overpass query search icon -->
-	<div id="spinner" style="z-index:500; color:#555;">
-		<i class="fa-stack" style="font-size:70px;">
-			<i class="fa fa-circle fa-stack-1x" style="font-size:100px; color:rgba(224, 224, 224, 0.9);"></i>
+	<div id="spinner">
+		<i class="fa-stack">
+			<i class="fa fa-circle fa-stack-1x" style="font-size:140%; color:rgba(224, 224, 224, 0.9);"></i>
 			<i class="fa fa-spinner fa-pulse fa-stack-1x"></i>
 		</i>
     </div>
 
     <!-- JavaScript | website plugins -->
-    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="assets/js/jquery-ui.min.js"></script>
 	<script src="assets/js/jquery.mobile.custom.min.js"></script>
