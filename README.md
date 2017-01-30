@@ -22,10 +22,10 @@ Searchable OpenStreetMap data showing POIs and other information
  - Option to view only 'currently open' POIs
  - Find group POIs based on a keyword
  - Manually select group POIs from sidebar tabs
- - Create walking directions
- - Tour tab with various articles that interact with the map
+ - Walking directions with Mapbox API
  - View suggested walking routes
- - Direct link to edit an element on OSM
+ - Tour tab with various articles on the town that interact with the map
+ - Direct link to edit an element on OSM or leave a note
  - Geolocate user
  - Share any layer via permalink
 
