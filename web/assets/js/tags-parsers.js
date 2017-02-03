@@ -93,38 +93,6 @@ function website_parser(element) {
 	return markerPopup;
 }
 
-function facebook_parser(element) {
-	var tagfb = element.tags.facebook ? element.tags.facebook : element.tags['contact:facebook'];
-	var markerPopup = '';
-	if (tagfb) {
-		var link = L.Util.template(
-			'<a class="truncate" href="{tagfb}" title="{tagfb}" target="_blank">{tagfb}</a>',
-			{tagfb: tagfb}
-		);
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'Facebook', value: link, iconName: 'facebook-official'}
-		);
-	}
-	return markerPopup;
-}
-
-function email_parser(element) {
-	var tagmail = element.tags.email ? element.tags.email : element.tags['contact:email'];
-	var markerPopup = '';
-	if (tagmail && tagmail.indexOf('@') !== -1) {
-		var link = L.Util.template(
-			'<a href="mailto:{tagmail}" title="{tagmail}" target="_blank">{tagmail}</a>',
-			{tagmail: tagmail}
-		);
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'E-mail', value: link, iconName: 'at'}
-		);
-	}
-	return markerPopup;
-}
-
 function phone_parser(element) {
 	var phone = element.tags.phone ? element.tags.phone : element.tags['contact:phone'];
 	var markerPopup = '';
@@ -141,15 +109,30 @@ function phone_parser(element) {
 	return markerPopup;
 }
 
+function contact_parser(element) {
+	var markerPopup = '', tag = '';
+	var tagmail = element.tags.email ? element.tags.email : element.tags['contact:email'];
+	var tagfb = element.tags.facebook ? element.tags.facebook : element.tags['contact:facebook'];
+	var tagtwit = element.tags.twitter ? element.tags.twitter : element.tags['contact:twitter'];
+	if (tagmail) tag += '<a href="mailto:' + tagmail + '"><i class="fa fa-envelope fa-fw" title="' + tagmail + '"></i></a> ';
+	if (tagfb) tag += '<a href="' + tagfb + '" target="_blank"><i class="fa fa-facebook-official fa-fw" title="' + tagfb + '" style="color:#3b5998;"></i></a> ';
+	if (tagtwit) tag += '<a href="https://twitter.com/' + tagtwit + '" target="_blank"><i class="fa fa-twitter fa-fw" title="@' + tagtwit + '" style="color:#1da1f2;"></i></a> ';
+	if (tag) markerPopup = L.Util.template(
+		tagTmpl,
+		{tag: 'Contact', value: tag, iconName: 'user-circle'}
+	);
+	return markerPopup;
+}
+
 function facility_parser(element) {
 	var tags = element.tags;
 	var markerPopup = '', tag = '';
-	if (tags.wheelchair === 'yes') tag += '<i class="fa fa-wheelchair fa-fw" title="wheelchair access" style="color:darkgreen;"></i>';
+	if (tags.wheelchair === 'yes') tag += '<i class="fa fa-wheelchair fa-fw" title="wheelchair access" style="color:darkgreen;"></i> ';
 	else if (tags.wheelchair === 'limited') tag += '<i class="fa fa-wheelchair fa-fw" title="limited wheelchair access" style="color:teal;"></i>(limited) ';
 	else if (tags.wheelchair === 'no') tag += '<i class="fa fa-wheelchair fa-fw" title="no wheelchair access" style="color:red;"></i>(no) ';
-	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen;"></i>';
+	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen;"></i> ';
 	else if (tags.dog === 'no') tag += '<i class="fa fa-paw fa-fw" title="no dog access" style="color:red;"></i>(no) ';
-	if (tags.internet_access === 'wlan') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen;"></i>';
+	if (tags.internet_access === 'wlan') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen;"></i> ';
 	if (tag) markerPopup = L.Util.template(
 		tagTmpl,
 		{tag: 'Facilities', value: tag, iconName: 'info-circle'}
@@ -664,7 +647,7 @@ function opening_hours_parser(tags) {
 		// collapsible accordion
 		if (state) openhrs = '<div id="accordOh"><span><i style="color:green;" class="fa fa-circle"></i> <strong>Open until:</strong> ';
 		else if (state === false) openhrs = '<div id="accordOh"><span><i style="color:red;" class="fa fa-circle"></i> <strong>Closed until:</strong> ';
-		if (openhrs) openhrs +=  strNextChange + '&nbsp; <i style="color:#b05000;" title="See full opening hours" class="fa fa-caret-down"></i> </span><div class="ohTable">' + ohTable + '</div></div>';
+		if (openhrs) openhrs += strNextChange + '&nbsp; <i style="color:#b05000;" title="See full opening hours" class="fa fa-caret-down"></i> </span><div class="ohTable">' + ohTable + '</div></div>';
 	}
 	catch(err) {
 		if (hours) console.log('ERROR: Object "' + tags.name + '" cannot parse hours: ' + hours + '. ' + err);
@@ -681,7 +664,7 @@ function image_parser(img) {
 		imgSplit[1] = imgSplit[1].replace(/ /gi, '_');
 		var md5 = $.md5(imgSplit[1]);
 		var url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/200px-' + imgSplit[1];
-		markerPopup = '<p style="text-align:center;"><a id="wikiImg" href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img src="' + url + '"></a><br><span id="wikiAttrib"></span></p>';
+		markerPopup = '<p style="margin:13px 0; text-align:center;"><a id="wikiImg" href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img src="' + url + '"></a><br><span id="wikiAttrib">Loading attribution...</span></p>';
 	}
 	return markerPopup;
 }
@@ -695,9 +678,8 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: generic_tag_parser, tag: 'operator', label: 'Operator', iconName: 'building-o'},
 		{callback: address_parser},
 		{callback: phone_parser},
-		{callback: email_parser},
 		{callback: website_parser},
-		{callback: facebook_parser},
+		{callback: contact_parser},
 		{callback: wikipedia_parser},
 		{callback: listedhe_parser},
 		{callback: generic_tag_parser, tag: 'start_date', label: 'Start date', iconName: 'calendar'},
@@ -747,6 +729,7 @@ function callback(data) {
 				else name += ' ' + e.tags.amenity;
 			}
 			else if (!name && e.tags.amenity === 'place_of_worship' && e.tags.religion) name = e.tags.religion;
+			else if (!name && e.tags.amenity === 'taxi' && e.tags.capacity) name = e.tags.amenity + ' rank';
 			else if (!name) name = e.tags.amenity;
 			if (!type) type = e.tags.amenity;
 			// Group similar pois
@@ -773,6 +756,7 @@ function callback(data) {
 		}
 		if (e.tags.shop) {
 			if (!name && e.tags.craft) name = e.tags.craft;
+			else if (!name && e.tags.beauty) name = e.tags.beauty + ' beauty';
 			else if (!name) name = e.tags.shop;
 			if (!type) type = e.tags.shop;
 			// Group similar pois

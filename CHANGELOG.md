@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v2.2.0 - Contact Parser
+
+**Date:** 25/01/2017
+
+Updated js
+ - URI.js 1.18.5
+ - leaflet-routing-machine.min.js 3.2.5
+
+Site changes
+ - Added contact parser to show email, facebook and twitter as icons
+ - Added own custom tile base layer
+ - Historic Tour article
+ - Mobile devices get an additional zoom level to search data
+ - Loading screen
+ - Some css tidying
+
+
 ## v2.1.2
 
 **Date:** 25/01/2017
@@ -25,9 +42,9 @@ Site changes
  - Spinner shows for initial website load
 
 
-## v2.1.0
+## v2.1.0 - Food Hygine Rating Standards API
 
-**Date:** 21/01/2017 - Food Hygine Rating Standards API
+**Date:** 21/01/2017
 
 Updated js
  - opening_hours+deps.min.js
@@ -44,9 +61,9 @@ Site changes
  - Couple more Historic Tour articles
 
 
-## v2.0.0
+## v2.0.0 - Historic Tour
 
-**Date:** 04/01/2017 - Historic Tour
+**Date:** 04/01/2017
 
 Updated js
  - Minified all plugins

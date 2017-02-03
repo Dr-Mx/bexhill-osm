@@ -6,14 +6,15 @@ var siteDebug = false;
 var mapboxKey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
 var thuforKey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
 // overpass layer options
-var minOpZoom = 15, email = 'info@bexhill-osm.org.uk';
+var minOpZoom = ($(window).width() < 768) ? 14 : 15;
+var email = 'info@bexhill-osm.org.uk';
 // map area
 var mapBounds = { lef: 0.3000, top: 50.8200, rig: 0.5350, bot: 50.8800 };
 var mapBbox = [mapBounds.top, mapBounds.lef, mapBounds.bot, mapBounds.rig];
 // map open location
 var mapCentre = [50.8424, 0.4676], mapZoom = 15;
 // map base layer
-var defTileLayer = 'osmstd', actTileLayer = defTileLayer;
+var defTileLayer = 'bosm', actTileLayer = defTileLayer;
 // tab to open
 var defTab = 'home', actTab = defTab;
 
@@ -47,7 +48,7 @@ $('.sidebar-tabs').click(function () {
 $(document).ready(function () {
 	// clear loading elements
 	$('#spinner').hide();
-	$('#map').css('background-color', '#dedede');
+	$('#map').css('background', '#dedede');
 	// https://github.com/davidjbradshaw/image-map-resizer
 	// add delay after load for sidebar to animate open to create minimap
 	setTimeout(function () { $('map').imageMapResize(); }, 500);
@@ -62,7 +63,7 @@ $(document).ready(function () {
 				active: false,
 				animate: 100
 			});
-			// fhrs api for food hygine ratings
+			// fhrs api for food hygiene ratings
 			if ($('#fhrsLink').length) {
 				$.ajax({
 					url: 'http://api.ratings.food.gov.uk/establishments/' + $('#fhrsLink').text(),
@@ -79,11 +80,11 @@ $(document).ready(function () {
 				img = img.split('File:');
 				$.ajax({
 					url: 'http://commons.wikipedia.org/w/api.php',
-					data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata',  titles: 'File:' + img[1], format: 'json' },
+					data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata', titles: 'File:' + img[1], format: 'json' },
 					dataType: 'jsonp',
 					success: function (result) {
 						var wikiAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
-						$('#wikiAttrib').append('&copy; ' + wikiAttrib.Artist.value);
+						$('#wikiAttrib').html('&copy; ' + wikiAttrib.Artist.value);
 						$('.external.text').attr('target', '_blank');
 						$('.external.text').attr('title', 'Artist');
 						$('#wikiAttrib').append(' | <a href="' + wikiAttrib.LicenseUrl.value + '" title="Licence" target="_blank">' + wikiAttrib.LicenseShortName.value + '</a>');
@@ -141,7 +142,7 @@ function improveMap(e) {
 
 // navigation controls for historic tour
 $('#tourNext').click(function() {
-    if ($('#tourList option:selected').next().is(':enabled')) {
+	if ($('#tourList option:selected').next().is(':enabled')) {
 		$('#tourList option:selected').next().prop('selected', 'selected');
 		$('#tourList').trigger('change');
 	}
@@ -178,6 +179,24 @@ var tileBaseLayer = {
 		url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 		zoom: 19
 	},
+	bosm: {
+		name: 'Bexhill-OSM',
+		url: 'https://{s}.tiles.mapbox.com/v4/drmx.fa383e0e/{z}/{x}/{y}.png?access_token=' + mapboxKey,
+		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
+		zoom: 20
+	},
+	antique: {
+		name: 'Antique',
+		url: 'https://{s}.tiles.mapbox.com/v4/lrqdo.me2bng9n/{z}/{x}/{y}.png?access_token=' + mapboxKey,
+		attribution: '<a href="https://laruchequiditoui.fr/" target="_blank">LRQDO</a>',
+		zoom: 20
+	},
+	mbxoutdr: {
+		name: 'Mapbox Outdoors',
+		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=' + mapboxKey,
+		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
+		zoom: 20
+	},
 	cycle: {
 		name: 'OpenCycleMap',
 		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + thuforKey,
@@ -201,24 +220,6 @@ var tileBaseLayer = {
 		url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
 		attribution: '<a href="http://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
 		zoom: 19
-	},
-	antique: {
-		name: 'Antique Style',
-		url: 'https://{s}.tiles.mapbox.com/v4/lrqdo.me2bng9n/{z}/{x}/{y}.png?access_token=' + mapboxKey,
-		attribution: '<a href="https://laruchequiditoui.fr/" target="_blank">LRQDO</a>',
-		zoom: 20
-	},
-	mbxstr: {
-		name: 'Mapbox Streets',
-		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + mapboxKey,
-		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
-		zoom: 20
-	},
-	mbxoutdr: {
-		name: 'Mapbox Outdoors',
-		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=' + mapboxKey,
-		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
-		zoom: 20
 	}
 };
 var attribution = '&copy; <a href="http://openstreetmap.org/copyright" title="Copyright and License" target="_blank">OpenStreetMap contributors</a>';
@@ -261,12 +262,13 @@ map.on('mouseup', function (e) {
 L.control.locate({
 	icon: 'fa fa-location-arrow',
 	setView: true,
+	flyTo: true,
 	keepCurrentZoomLevel: true,
-	showPopup: false,
+	metric: false,
 	strings: {
 		title: 'Locate me',
-		popup: 'You are within {distance} {unit} from this point',
-		outsideMapBoundsMsg: 'You appear to be located outside Bexhill.  Come visit!'
+		popup: 'Located within {distance} {unit}.',
+		outsideMapBoundsMsg: 'You appear to be located outside Bexhill. Come visit!'
 	},
 	onLocationError: function () {
 		alert('Sorry, there was an error while trying to locate you.');
@@ -296,7 +298,6 @@ L.Control.geocoder({
 	if (map.getZoom() <= minOpZoom) map.setZoom(minOpZoom, { animate: false });
 	show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ')(' + mapBbox + ');');
 	$(':input','.leaflet-control-geocoder-form').blur();
-	$(':input','.leaflet-control-geocoder-form').val('');
 })
 .addTo(map);
 $('.leaflet-control-geocoder-icon').attr('title','Find address');
@@ -329,11 +330,11 @@ L.easyButton({
 					walkCoords += Math.round(walkWayp[c].latLng.lat * 100000) / 100000 + 'x' + Math.round(walkWayp[c].latLng.lng * 100000) / 100000 + '_';
 				}
 			}
-			walkCoords = walkCoords ? walkCoords = walkCoords.slice(0, -1) : undefined;
+			walkCoords = walkCoords ? walkCoords.slice(0, -1) : undefined;
 			if (actTab === 'tour' && $('#tourList option:selected').val() > 0) tourPage = $('#tourList option:selected').val();
 			if ($('.opennow input').is(':checked')) openNow = 1;
 			$('#pois input.poi-checkbox:checked').each(function (i, element) { selectedPois += element.dataset.key + '-'; });
-			selectedPois = selectedPois ? selectedPois = selectedPois.slice(0, -1) : undefined;
+			selectedPois = selectedPois ? selectedPois.slice(0, -1) : undefined;
 			// M = basemap, T = tab, U = tour page, O = opennow, P = grouped pois, I = single poi, W = walkpoints
 			uri.query({ 'M': actTileLayer, 'T': actTab, 'U': tourPage, 'O': openNow, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
 			window.prompt('Copy this link to share current map:', uri.href());
@@ -635,8 +636,9 @@ function show_overpass_layer(query) {
 	var opl = new L.OverPassLayer({
 		debug: siteDebug,
 		minzoom: minOpZoom,
-		query: query + 'out center;&contact=' + email, //contact info only for use with .fr endpoint
-		endpoint: 'https://api.openstreetmap.fr/oapi/interpreter/',
+		query: query + 'out center;&contact=' + email, // contact info only for use with .fr endpoints
+		// endpoint: 'https://api.openstreetmap.fr/oapi/interpreter/',
+		endpoint: 'https://overpass.osm.vi-di.fr/api/',
 		callback: callback,
 		minZoomIndicatorOptions: {
 			position: 'topright',

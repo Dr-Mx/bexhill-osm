@@ -1,7 +1,7 @@
 ::-ms-clear { display: none; }
 
 @font-face {
-    font-family: BerlinSans;
+	font-family: BerlinSans;
 	src: url('../font/berlinsans.ttf');
 }
 
@@ -15,10 +15,11 @@ html, body, #map {
 	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 #map {
-	background-color: #b05000;
+	background: #be7b43;
+	background: linear-gradient(#b05000, #dedede);
 }
 
-#theme {
+.theme {
 	color: #b05000;
 }
 
@@ -68,8 +69,8 @@ hr {
 	width:28px;
 }
 input[type="checkbox"] {
-  transform: scale(1.2);
-  -webkit-transform: scale(1.2);
+	transform: scale(1.2);
+	-webkit-transform: scale(1.2);
 }
 .poi-checkbox > label {
 	display: block;
@@ -96,6 +97,9 @@ input[type="checkbox"] {
 .popup-mobile {
 	font-size: 9pt;
 }
+.leaflet-popup .fa {
+	font-size: 10.5pt;
+}
 .leaflet-popup-content h3 {
 	padding-right: 13px;
 	margin-bottom: 0px;
@@ -118,9 +122,11 @@ input[type="checkbox"] {
 	margin-bottom: -5px;
 	border: 2px solid #ccc;
 }
-
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-	background-color: rgba(255,255,255,0.9);
+	background: rgba(255,255,255,0.9);
+}
+.leaflet-popup-content-wrapper {
+	background: linear-gradient(rgba(225,225,225,0.9), rgba(255,255,255,0.9));
 }
 .leaflet-tooltip {
 	font-size: 10pt;
@@ -143,50 +149,50 @@ input[type="checkbox"] {
 }
 
 .leaflet-contextmenu {
-    display: none;
+	display: none;
 	box-shadow: 0 1px 7px rgba(0,0,0,0.4);
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
-    padding: 4px 0;
-    background-color: white;
-    cursor: default;
+	padding: 4px 0;
+	background-color: white;
+	cursor: default;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
 }
 
 .leaflet-contextmenu a.leaflet-contextmenu-item {
-    display: block;
-    color: #222;
-    font-size: 10pt;
-    line-height: 20px;
-    text-decoration: none;
-    padding: 0 12px;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-    cursor: default;
-    outline: none;
+	display: block;
+	color: #222;
+	font-size: 10pt;
+	line-height: 20px;
+	text-decoration: none;
+	padding: 0 12px;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	cursor: default;
+	outline: none;
 }
 
 .leaflet-contextmenu a.leaflet-contextmenu-item-disabled {
-    opacity: 0.5;
+	opacity: 0.5;
 }
 
 .leaflet-contextmenu a.leaflet-contextmenu-item.over {
-    background-color: #f4f4f4;
-    border-top: 1px solid #f0f0f0;
-    border-bottom: 1px solid #f0f0f0;
+	background-color: #f4f4f4;
+	border-top: 1px solid #f0f0f0;
+	border-bottom: 1px solid #f0f0f0;
 }
 
 .leaflet-contextmenu a.leaflet-contextmenu-item-disabled.over {
-    background-color: inherit;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
+	background-color: inherit;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
 }
 
 .leaflet-contextmenu-separator {
-    border-bottom: 1px solid #ccc;
-    margin: 5px 0;
+	border-bottom: 1px solid #ccc;
+	margin: 5px 0;
 }
 
 .leaflet-control-locate
@@ -213,14 +219,18 @@ input[type="checkbox"] {
 
 #spinner {
 	color: #555;
+	font-size: 70px;
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	margin-left: -50px;
 	margin-top: -50px;
 	z-index: 500;
-	font-size: 70px;
 	pointer-events: none;
+}
+#spinner-o {
+	color: rgba(240, 240, 240, 0.9);
+	font-size: 140%;
 }
 
 .leaflet-control-container > div:last-child {
@@ -239,7 +249,6 @@ input[type="checkbox"] {
 .tour-control {
 	display: inline-block !important;
 	white-space: nowrap;
-	color: #b05000;
 	box-shadow: none;
 	border: none;
 	height: 26px;
@@ -277,7 +286,7 @@ input[type="checkbox"] {
 
 .truncate {
 	display: inline-block;
-	width: calc(100% - 100px);
+	max-width: 180px;
 	overflow-x: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -317,6 +326,11 @@ input[type="checkbox"] {
 .walklink:hover {
 	background-color: rgba(255,255,255,0.6);
 }
+
+#wikiImg img {
+	max-height: 200px;
+}
+
 
 #wikiAttrib, #wikiAttrib a:link, #wikiAttrib a:visited, #wikiAttrib a:hover {
 	font-size: 75%;

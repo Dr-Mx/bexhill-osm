@@ -1,10 +1,10 @@
 // links for tour pages
 //file:///D:/My%20Documents/Archive/Mapping/Website/BexhillOSM/osm-pois/web/index.html?I=way_397637928#18/50.84328/0.46052
 function tour(tourName) {
-	switch(tourName) {
+	switch (tourName) {
 		case 'fossils':
 			map.removeLayer(imageOverlay);
-			var dinoIcon = L.icon({ 
+			var dinoIcon = L.icon({
 				iconUrl: 'assets/tour/tour1/dinomarker.png',
 				iconSize: [32, 37],
 				iconAnchor: [16, 35],
@@ -12,7 +12,7 @@ function tour(tourName) {
 				shadowAnchor: [16, 27],
 				popupAnchor: [0, -27]
 			});
-			imageOverlay = L.marker([50.837617, 0.482517], { icon: dinoIcon }).addTo(map).bindPopup('<h3>Iguanadon Tracks</h3>View at low tide.  Walk directly out onto the beach infront of Sackville Apartments. The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>One footprint is about 18-inches long.');
+			imageOverlay = L.marker([50.837617, 0.482517], { icon: dinoIcon }).addTo(map).bindPopup('<h3>Iguanadon Tracks</h3>View at low tide. Walk directly out onto the beach infront of Sackville Apartments. The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>One footprint is about 18-inches long.', { maxWidth: 250 });
 			// timeout hack to stop iframe breaking on ff
 			setTimeout(function () { imageOverlay.openPopup(); }, 50);
 			break;
@@ -29,7 +29,7 @@ function tour(tourName) {
 			show_overpass_layer('way(263267372)(' + mapBbox + ');');
 			break;
 		case 'railwayBexhillstation':
-			rLookup=true; 
+			rLookup = true;
 			show_overpass_layer('way(397839677)(' + mapBbox + ');');
 			break;
 		case 'railwayWestbranch':
@@ -60,7 +60,7 @@ function tour(tourName) {
 			imageOverlay = L.imageOverlay('assets/tour/tour6/racetrack.png', [[50.84135, 0.47991], [50.83772, 0.49508]], { opacity: 1 }).addTo(map);
 			break;
 		case 'motorSerpollet':
-			rLookup=true; 
+			rLookup = true;
 			show_overpass_layer('node(3592525934)(' + mapBbox + ');');
 			break;
 		case 'motorTrail':

@@ -856,7 +856,7 @@ var pois = {
 		tagKeyword: ['lawyer', 'solicitor']
 	},
 
-	//LEISURE - a8a8a8 - c259b6 - c47848 - 67c547 - 3875d7  - 5ec8bd
+	//LEISURE - a8a8a8 - c259b6 - c47848 - 67c547 - 3875d7 - 5ec8bd
 	
 	image: {
 		name: 'Wiki Photos',
