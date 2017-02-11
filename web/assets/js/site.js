@@ -19,9 +19,9 @@ var defTileLayer = 'bosm', actTileLayer = defTileLayer;
 var defTab = 'home', actTab = defTab;
 
 // hack to get safari to scroll iframe
-if (navigator.userAgent.indexOf("Safari") > -1) {
-	$("#tour .sidebar-body").css("-webkit-overflow-scrolling", "touch");
-	$("#tour .sidebar-body").css("overflow", "auto");
+if (navigator.userAgent.indexOf('Safari') > -1) {
+	$('#tour .sidebar-body').css('-webkit-overflow-scrolling', 'touch');
+	$('#tour .sidebar-body').css('overflow', 'auto');
 }
 
 // swipe away sidebar on larger touch devices
@@ -45,6 +45,7 @@ $('.sidebar-tabs').click(function () {
 	else if (actTab === 'tour' && L.Browser.touch) $('#tourList').trigger('change');
 });
 
+var userCountry, areaOutline = '';
 $(document).ready(function () {
 	// clear loading elements
 	$('#spinner').hide();
@@ -52,7 +53,8 @@ $(document).ready(function () {
 	// https://github.com/davidjbradshaw/image-map-resizer
 	// add delay after load for sidebar to animate open to create minimap
 	setTimeout(function () { $('map').imageMapResize(); }, 500);
-	// set collapsible accordion for opening hours
+	// get users location so we don't have to show country code on phone numbers
+	$.get('https://ipinfo.io', function (result) { userCountry = result.country; }, 'jsonp');
 	map.on('popupopen', function () {
 		// delay required when switching directly to another popup
 		setTimeout(function () {
@@ -63,7 +65,19 @@ $(document).ready(function () {
 				active: false,
 				animate: 100
 			});
-			// fhrs api for food hygiene ratings
+			// https://github.com/jfirebaugh/leaflet-osm
+			// get and display the area outline through openstreetmap api (id is taken from the edit button attribute)
+			if ($('.popup-edit').length) {
+				$.ajax({
+					url: 'http://www.openstreetmap.org/api/0.6/' + $('.popup-edit').attr('id').replace('_', '/') + '/full',
+					dataType: 'xml',
+					success: function (xml) {
+						if (siteDebug) console.debug(xml);
+						areaOutline = new L.OSM.DataLayer(xml).addTo(map);
+					}
+				});
+			}
+			// fhrs api for showing food hygiene ratings
 			if ($('#fhrsLink').length) {
 				$.ajax({
 					url: 'http://api.ratings.food.gov.uk/establishments/' + $('#fhrsLink').text(),
@@ -92,6 +106,9 @@ $(document).ready(function () {
 				});
 			}
 		}, 200);
+		map.on('popupclose', function () {
+			map.removeLayer(areaOutline);
+		});
 	});
 });
 
@@ -99,13 +116,13 @@ $(document).ready(function () {
 var map = new L.map('map', {
 	contextmenu: true,
 	contextmenuItems: [{
-		text: '<i class="fa fa-search"></i>&nbsp; Lookup',
+		text: '<i class="fa fa-search fa-fw"></i> Lookup place',
 		callback: reverseLookup
 	}, '-', {
-		text: '<i class="fa fa-map-marker"></i>&nbsp; Add walk point',
+		text: '<i class="fa fa-map-marker fa-fw"></i> Add walk point',
 		callback: walkPoint
 	}, '-', {
-		text: '<i class="fa fa-external-link"></i>&nbsp; Improve map',
+		text: '<i class="fa fa-bug fa-fw"></i> Report problem',
 		callback: improveMap
 	}]
 });
@@ -253,9 +270,9 @@ map.on('baselayerchange', function (e) {
 	}
 });
 
-// middle-mouse button reverselookup
+// middle-mouse button reverselookup on map layer
 map.on('mouseup', function (e) {
-	if (e.originalEvent.button === 1) reverseLookup(e);
+	if (e.originalEvent.button === 1 && e.originalEvent.target.id === 'map') reverseLookup(e);
 });
 
 // https://github.com/domoritz/leaflet-locatecontrol
@@ -445,9 +462,9 @@ function populate_tabs() {
 	$('#autocomplete').easyAutocomplete(options);
 	$('div.easy-autocomplete').removeAttr('style');
 	// create checkbox tables using poi categories
-	var checkboxContent = "<p>";
+	var checkboxContent = '<p>';
 	for (c in categoryList) { checkboxContent += '<a href="#goto' + categoryList[c] + '">' + categoryList[c] + '</a><br>'; }
-	checkboxContent += "<p>";
+	checkboxContent += '<p>';
 	for (c in categoryList) { 
 		t = 0;
 		checkboxContent += '<div id="goto' + categoryList[c] + '"><hr><h3>' + categoryList[c] + '</h3></div>';
@@ -540,7 +557,7 @@ function suggWalk(walkName) {
 			break;
 		case 'greenway':
 			routingControl.setWaypoints([
-				[50.85782, 0.48228],
+				[50.85676, 0.47896],
 				[50.87008, 0.52089]
 			]);
 			map.flyTo([50.8632, 0.4938], 15);
@@ -580,7 +597,7 @@ if (uri.hasQuery('U')) {
 if (uri.hasQuery('O')) $('.opennow input').prop('checked', uri.search(true).O);
 if (uri.hasQuery('W')) {
 	var walkCoords = uri.search(true).W;
-	walkCoords = walkCoords.split("_");
+	walkCoords = walkCoords.split('_');
 	for (var c in walkCoords) {
 		walkCoords[c] = walkCoords[c].replace('x', ', ');
 		routingControl.spliceWaypoints(c, 1, JSON.parse('[' + walkCoords[c] + ']'));
@@ -588,7 +605,7 @@ if (uri.hasQuery('W')) {
 }
 if (uri.hasQuery('P')) {
 	var selectedPois = uri.search(true).P;
-	if (selectedPois.indexOf("-") > -1) selectedPois = selectedPois.split("-");
+	if (selectedPois.indexOf('-') > -1) selectedPois = selectedPois.split('-');
 	if (!$.isArray(selectedPois)) {
 		$('#pois input[data-key=' + selectedPois + ']').prop('checked', true);
 		// open tab when not on mobile, scroll to checkbox

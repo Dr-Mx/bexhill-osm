@@ -11,13 +11,9 @@ function titleCase(str) {
 
 // edit in osm
 function osmedit_parser(element) {
-	var link = L.Util.template(
-		'https://www.openstreetmap.org/edit?editor=id&{type}={id}',
-		{type: element.type, id: element.id}
-	);
 	var markerPopup = L.Util.template(
-		'<a class="popup-edit" href="{link}" title="Edit in OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
-		{link: link}
+		'<a id="{type}_{id}" class="popup-edit" href="https://www.openstreetmap.org/edit?editor=id&{type}={id}" title="Edit with OpenStreetMap" target="_blank"><i class="fa fa-pencil"></i></a>',
+		{type: element.type, id: element.id}
 	);
 	return markerPopup;
 }
@@ -28,10 +24,7 @@ function generic_tag_parser(element, tag, tagName, iconName) {
 		if (tags[tag] === 'yes') result = '<i class="fa fa-check"></i>';
 		else if (tags[tag] === 'no') result = '<i class="fa fa-remove"></i>';
 		else result = tags[tag];
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: tagName, value: result, iconName: iconName}
-		);
+		markerPopup = L.Util.template(tagTmpl, {tag: tagName, value: result, iconName: iconName});
 	}
 	return markerPopup;
 }
@@ -57,70 +50,46 @@ function address_parser(element) {
 		else if (tags['addr:place']) value += tags['addr:place'];
 		if (tags['addr:city']) value += ', ' + tags['addr:city'];
 		if (tags['addr:postcode']) value += ', ' + tags['addr:postcode'];
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'Address', value: value, iconName: 'map-marker'}
-		);
+		markerPopup = L.Util.template(tagTmpl, {tag: 'Address', value: value, iconName: 'map-marker'});
 	}
 	return markerPopup;
 }
 
 function website_parser(element) {
 	var tags = element.tags, link = '', markerPopup = '';
-	var tagwebsite = tags.website ? tags.website : tags['contact:website'];
-	var tagurl = tags.url ? tags.url : tags['contact:url'];
-	if (tagwebsite) {
-		var stagwebsite = tagwebsite;
-		link = L.Util.template(
-			'<a class="truncate" href="{tagwebsite}" title="{tagwebsite}" target="_blank">{tagwebsite}</a>',
-			{tagwebsite: tagwebsite}
-		);
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'Website', value: link, iconName: 'globe'}
-		);
+	var tagWebsite = tags.website ? tags.website : tags['contact:website'];
+	var tagUrl = tags.url ? tags.url : tags['contact:url'];
+	if (tagWebsite) {
+		link = '<a class="truncate" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank">' + tagWebsite + '</a>',
+		markerPopup = L.Util.template(tagTmpl, {tag: 'Website', value: link, iconName: 'globe'});
 	}
-	if (tagurl) {
-		link = L.Util.template(
-			'<a class="truncate" href="{tagurl}" title="{tagurl}" target="_blank">{tagurl}</a>',
-			{tagurl: tagurl}
-		);
-		markerPopup += L.Util.template(
-			tagTmpl,
-			{tag: 'Just Eat', value: link, iconName: 'external-link-square'}
-		);
+	if (tagUrl) {
+		link = '<a class="truncate" href="' + tagUrl + '" title="' + tagUrl + '" target="_blank">' + tagUrl + '</a>';
+		markerPopup += L.Util.template(tagTmpl, {tag: 'Just Eat', value: link, iconName: 'external-link-square'});
 	}
 	return markerPopup;
 }
 
 function phone_parser(element) {
-	var phone = element.tags.phone ? element.tags.phone : element.tags['contact:phone'];
+	var tagPhone = element.tags.phone ? element.tags.phone : element.tags['contact:phone'];
 	var markerPopup = '';
-	if (phone) {
-		var link = L.Util.template(
-			'<a href="tel:{phone}" title="Call now">{phone}</a>',
-			{phone: phone}
-		);
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'Phone', value: link, iconName: 'phone'}
-		);
+	if (tagPhone) {
+		if (userCountry === 'GB') tagPhone = tagPhone.replace('+44 ', '0');
+		var link = '<a href="tel:' + tagPhone + '" title="Call now">' + tagPhone + '</a>';
+		markerPopup = L.Util.template(tagTmpl, {tag: 'Phone', value: link, iconName: 'phone'});
 	}
 	return markerPopup;
 }
 
 function contact_parser(element) {
 	var markerPopup = '', tag = '';
-	var tagmail = element.tags.email ? element.tags.email : element.tags['contact:email'];
-	var tagfb = element.tags.facebook ? element.tags.facebook : element.tags['contact:facebook'];
-	var tagtwit = element.tags.twitter ? element.tags.twitter : element.tags['contact:twitter'];
-	if (tagmail) tag += '<a href="mailto:' + tagmail + '"><i class="fa fa-envelope fa-fw" title="' + tagmail + '"></i></a> ';
-	if (tagfb) tag += '<a href="' + tagfb + '" target="_blank"><i class="fa fa-facebook-official fa-fw" title="' + tagfb + '" style="color:#3b5998;"></i></a> ';
-	if (tagtwit) tag += '<a href="https://twitter.com/' + tagtwit + '" target="_blank"><i class="fa fa-twitter fa-fw" title="@' + tagtwit + '" style="color:#1da1f2;"></i></a> ';
-	if (tag) markerPopup = L.Util.template(
-		tagTmpl,
-		{tag: 'Contact', value: tag, iconName: 'user-circle'}
-	);
+	var tagMail = element.tags.email ? element.tags.email : element.tags['contact:email'];
+	var tagFb = element.tags.facebook ? element.tags.facebook : element.tags['contact:facebook'];
+	var tagTwit = element.tags.twitter ? element.tags.twitter : element.tags['contact:twitter'];
+	if (tagMail) tag += '<a href="mailto:' + tagMail + '"><i class="fa fa-envelope fa-fw" title="' + tagMail + '"></i></a> ';
+	if (tagFb) tag += '<a href="' + tagFb + '" target="_blank"><i class="fa fa-facebook-official fa-fw" title="' + tagFb + '" style="color:#3b5998;"></i></a> ';
+	if (tagTwit) tag += '<a href="https://twitter.com/' + tagTwit + '" target="_blank"><i class="fa fa-twitter fa-fw" title="@' + tagTwit + '" style="color:#1da1f2;"></i></a> ';
+	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Contact', value: tag, iconName: 'user-circle'});
 	return markerPopup;
 }
 
@@ -133,10 +102,7 @@ function facility_parser(element) {
 	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen;"></i> ';
 	else if (tags.dog === 'no') tag += '<i class="fa fa-paw fa-fw" title="no dog access" style="color:red;"></i>(no) ';
 	if (tags.internet_access === 'wlan') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen;"></i> ';
-	if (tag) markerPopup = L.Util.template(
-		tagTmpl,
-		{tag: 'Facilities', value: tag, iconName: 'info-circle'}
-	);
+	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Facilities', value: tag, iconName: 'info-circle'});
 	return markerPopup;
 }
 
@@ -145,10 +111,7 @@ function payment_parser(element) {
 	for (var key in element.tags) {
 		if (key.indexOf('payment:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag) markerPopup = L.Util.template(
-		tagTmpl,
-		{tag: 'Payment options', value: tag, iconName: 'money'}
-	);
+	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Payment options', value: tag, iconName: 'money'});
 	return markerPopup;
 }
 
@@ -159,14 +122,18 @@ function wikipedia_parser(element) {
 		var s = wikipedia.split(':');
 		var lang = s[0] + '.', subject = s[1];
 		var href = 'http://' + lang + 'wikipedia.com/wiki/' + subject;
-		var link = L.Util.template(
-			'<a class="truncate" href="{wikipedia}" title="{subject}" target="_blank">{subject}</a>',
-			{wikipedia: href, subject: subject}
-		);
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'Wikipedia', value: link, iconName: 'wikipedia-w'}
-		);
+		var link = '<a class="truncate" href="' + href + '" title="' + subject + '" target="_blank">' + subject + '</a>',
+		markerPopup = L.Util.template(tagTmpl, {tag: 'Wikipedia', value: link, iconName: 'wikipedia-w'});
+	}
+	return markerPopup;
+}
+
+function listed_parser(element) {
+	var HEref = element.tags.HE_ref, markerPopup = '';
+	if (HEref) {
+		var listedStatus = element.tags.listed_status ? element.tags.listed_status : HEref;
+		var link = '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + HEref + '" title="Historic England entry" target="_blank">' + listedStatus + '</a>';
+		markerPopup = L.Util.template(tagTmpl, {tag: 'Listed status', value: link, iconName: 'file'});
 	}
 	return markerPopup;
 }
@@ -194,10 +161,7 @@ function star_parser(element) {
 			result += '<i class="fa fa-star-o"></i>';
 		}
 		result += '</a>';
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'VisitEngland rating', value: result, iconName: 'star'}
-		);
+		markerPopup = L.Util.template(tagTmpl, {tag: 'VisitEngland rating', value: result, iconName: 'star'});
 	}
 	return markerPopup;
 }
@@ -228,10 +192,7 @@ function bikeservices_parser(element) {
 	for (var key in element.tags) {
 		if (key.indexOf('service:bicycle:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[2] + '; ';
 	}
-	if (tag) markerPopup = L.Util.template(
-		tagTmpl,
-		{tag: 'Bicycle services', value: tag, iconName: 'bicycle'}
-	);
+	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Bicycle services', value: tag, iconName: 'bicycle'});
 	return markerPopup;
 }
 
@@ -247,14 +208,8 @@ function school_parser(element, titlePopup) {
 function edubase_parser(element) {
 	var tag = element.tags['ref:edubase'], markerPopup = '';
 	if (tag) {
-		var link = L.Util.template(
-			'<a href="http://www.education.gov.uk/edubase/establishment/summary.xhtml?urn={link}" title="Department for Education" target="_blank">{link}</a>',
-			{link: tag}
-		);
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'EduBase ref', value: link, iconName: 'file'}
-		);
+		var link = '<a href="http://www.education.gov.uk/edubase/establishment/summary.xhtml?urn=' + tag + '" title="Department for Education" target="_blank">' + tag + '</a>',
+		markerPopup = L.Util.template(tagTmpl, {tag: 'EduBase URN', value: link, iconName: 'file'});
 	}
 	return markerPopup;
 }
@@ -262,29 +217,8 @@ function edubase_parser(element) {
 function fhrs_parser(element) {
 	var fhrs = element.tags['fhrs:id'], markerPopup = '';
 	if (fhrs) {
-		var link = L.Util.template(
-			'<a href="http://ratings.food.gov.uk/business/en-GB/{link}" title="Food Standards Agency" target="_blank"><span id="fhrsLink">{link}</span></a>',
-			{link: fhrs}
-		);
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'Food hygiene rating', value: link, iconName: 'file'}
-		);
-	}
-	return markerPopup;
-}
-
-function listedhe_parser(element) {
-	var HEref = element.tags.HE_ref, markerPopup = '';
-	if (HEref) {
-		var link = L.Util.template(
-			'<a href="https://historicengland.org.uk/listing/the-list/list-entry/{link}" title="Historic England entry" target="_blank">{link}</a>',
-			{link: HEref}
-		);
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'Historic England ref', value: link, iconName: 'file'}
-		);
+		var link = '<a href="http://ratings.food.gov.uk/business/en-GB/' + fhrs + '" title="Food Standards Agency" target="_blank"><span id="fhrsLink">' + fhrs + '</span></a>';
+		markerPopup = L.Util.template(tagTmpl, {tag: 'Food hygiene rating', value: link, iconName: 'file'});
 	}
 	return markerPopup;
 }
@@ -332,10 +266,7 @@ function cuisine_parser(element) {
 	for (var key in element.tags) {
 		if (key.indexOf('diet:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + ' options; ';
 	}
-	if (tag) markerPopup = L.Util.template(
-		tagTmpl,
-		{tag: 'Cuisine', value: tag, iconName: 'cutlery'}
-	);
+	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Cuisine', value: tag, iconName: 'cutlery'});
 	return markerPopup;
 }
 
@@ -359,10 +290,7 @@ function order_parser(element) {
 	if (tags.outdoor_seating === 'yes') tag += 'outdoor seating; ';
 	if (tags.reservation === 'yes') tag += 'takes reservation; ';
 	else if (tags.reservation === 'required') tag += 'needs reservation; ';
-	if (tag) markerPopup = L.Util.template(
-		tagTmpl,
-		{tag: 'Order options', value: tag, iconName: 'shopping-bag'}
-	);
+	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Order options', value: tag, iconName: 'shopping-bag'});
 	return markerPopup;
 }	
 
@@ -385,7 +313,6 @@ function taxi_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'capacity', label: 'Taxi rank capacity', iconName: 'taxi'}
-
 		]
 	);
 }		
@@ -404,10 +331,7 @@ function recycle_parser(element) {
 	for (var key in element.tags) {
 		if (key.indexOf('recycling:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag) markerPopup = L.Util.template(
-		tagTmpl,
-		{tag: 'Recycling options', value: tag, iconName: 'recycle'}
-	);
+	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Recycling options', value: tag, iconName: 'recycle'});
 	return markerPopup;
 }
 
@@ -426,10 +350,7 @@ function fuel_parser(element) {
 	for (var key in element.tags) {
 		if (key.indexOf('fuel:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + '; ';
 	}
-	if (tag) markerPopup = L.Util.template(
-		tagTmpl,
-		{tag: 'Fuel options', value: tag, iconName: 'tint'}
-	);
+	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Fuel options', value: tag, iconName: 'tint'});
 	return markerPopup;
 }
 
@@ -450,10 +371,7 @@ function maxstay_parser(element) {
 	var maxstay = element.tags.maxstay, markerPopup = '';
 	if (maxstay) {
 		maxstay = (maxstay >= 60) ? maxstay / 60 + ' hour(s)' : maxstay + ' minutes';
-		markerPopup = L.Util.template(
-			tagTmpl,
-			{tag: 'Max stay', value: maxstay, iconName: 'clock-o'}
-		);
+		markerPopup = L.Util.template(tagTmpl, {tag: 'Max stay', value: maxstay, iconName: 'clock-o'});
 	}
 	return markerPopup;
 }
@@ -601,16 +519,6 @@ function historic_parser(element, titlePopup) {
 	);
 }
 
-function listed_parser(element, titlePopup) {
-	return parse_tags(
-		element,
-		titlePopup,
-		[
-			{callback: generic_tag_parser, tag: 'listed_status', label: 'Listed status', iconName: 'home'}
-		]
-	);
-}
-
 // https://github.com/ypid/opening_hours.js
 function opening_hours_parser(tags) {
 	var openhrs = '';
@@ -633,7 +541,7 @@ function opening_hours_parser(tags) {
 			else if (oh.getNextChange().toLocaleDateString('en-GB') === dateTomorrow.toLocaleDateString('en-GB')) {
 				strNextChange = 'Tomorrow ' + oh.getNextChange().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit'} );
 			}
-			// display day if within a week
+			// display day name if within a week
 			else if (oh.getNextChange().getTime() > dateTomorrow.getTime() && oh.getNextChange().getTime() < dateWeek.getTime()) {
 				strNextChange = oh.getNextChange().toLocaleDateString('en-GB', { weekday: 'long', hour: '2-digit', minute: '2-digit'} );
 			}
@@ -681,7 +589,7 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: website_parser},
 		{callback: contact_parser},
 		{callback: wikipedia_parser},
-		{callback: listedhe_parser},
+		{callback: listed_parser},
 		{callback: generic_tag_parser, tag: 'start_date', label: 'Start date', iconName: 'calendar'},
 		{callback: fhrs_parser},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
@@ -710,7 +618,6 @@ function callback(data) {
 	var customOptions = ($(window).width() >= 768) ? { maxWidth: 350 } : { maxWidth: 250, className: 'popup-mobile' };
 	customOptions.autoPanPaddingTopLeft = (($(window).width() >= 768) && rLookup) ? [sidebar.width()+50,5] : [30,5];
 	customOptions.autoPanPaddingBottomRight = [5, 75];
-	customOptions.minWidth = 205;
 	customOptions.closeButton = false;
 	if (spinner > 0) spinner--;
 	if (spinner === 0) $('#spinner').hide();
@@ -812,6 +719,7 @@ function callback(data) {
 		}
 		if (e.tags.image) {
 			if (!type) type = 'image';
+			customOptions.minWidth = 205;
 		}
 		var poi = pois[type];
 		var iconName = poi ? poi.iconName : '000blank';
@@ -840,7 +748,11 @@ function callback(data) {
 		}
 		if (name != '&hellip;') name = titleCase(name);
 		// show a tooltip on mouse hover
-		if (name) marker.bindTooltip(name, { direction: 'left', offset: [-15, -2] }).openTooltip();
+		if (name) {
+			var toolTip = '<b>' + name + '</b>';
+			if (e.tags.name) toolTip += '<br><i>' + e.tags.name + '</i>';
+			marker.bindTooltip(toolTip, { direction: 'left', offset: [-15, -2] }).openTooltip();
+		}
 		// check if already defined poi
 		if (poi) {
 			// create pop-up

@@ -101,7 +101,7 @@ input[type="checkbox"] {
 	font-size: 10.5pt;
 }
 .leaflet-popup-content h3 {
-	padding-right: 13px;
+	padding-right: 20px;
 	margin-bottom: 0px;
 }
 .leaflet-popup-content hr {
@@ -120,7 +120,6 @@ input[type="checkbox"] {
 .leaflet-popup img {
 	margin-top: -5px;
 	margin-bottom: -5px;
-	border: 2px solid #ccc;
 }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
 	background: rgba(255,255,255,0.9);
@@ -130,7 +129,6 @@ input[type="checkbox"] {
 }
 .leaflet-tooltip {
 	font-size: 10pt;
-	font-weight: bold;
 	background-color: #f4f4f4;
 }
 
@@ -167,7 +165,7 @@ input[type="checkbox"] {
 	font-size: 10pt;
 	line-height: 20px;
 	text-decoration: none;
-	padding: 0 12px;
+	padding: 0 10px 0 7px;
 	border-top: 1px solid transparent;
 	border-bottom: 1px solid transparent;
 	cursor: default;
@@ -179,7 +177,7 @@ input[type="checkbox"] {
 }
 
 .leaflet-contextmenu a.leaflet-contextmenu-item.over {
-	background-color: #f4f4f4;
+	background-color: #eee;
 	border-top: 1px solid #f0f0f0;
 	border-bottom: 1px solid #f0f0f0;
 }
@@ -203,7 +201,7 @@ input[type="checkbox"] {
 	a{color:#20b674}
 
 .leaflet-control-minZoomIndicator {
-	background-color: rgba(176, 83, 1, 0.8);
+	background-color: rgba(176, 83, 1, 0.75);
 	border-radius: 5px;
 	font-family: Helvetica,Arial,sans-serif;
 	font-size: 10pt;
@@ -229,7 +227,7 @@ input[type="checkbox"] {
 	pointer-events: none;
 }
 #spinner-o {
-	color: rgba(240, 240, 240, 0.9);
+	color: rgba(240, 240, 240, 0.75);
 	font-size: 140%;
 }
 
@@ -295,7 +293,6 @@ input[type="checkbox"] {
 
 #accordWk {
 	display: block;
-	cursor: pointer;
 	position: relative;
 	margin: 2px 0 0 0;
 	padding: 0 .5em 0 0;
@@ -320,15 +317,19 @@ input[type="checkbox"] {
 
 .walklink {
 	color: darkgreen;
-	text-indent: 5px;
+	text-indent: 3px;
 	cursor: pointer;
 }
 .walklink:hover {
 	background-color: rgba(255,255,255,0.6);
 }
+#walking img {
+	margin-left: 5px;
+}
 
 #wikiImg img {
 	max-height: 200px;
+	border: 2px solid #ccc;
 }
 
 
@@ -338,7 +339,7 @@ input[type="checkbox"] {
 }
 
 #fhrsLink, #fhrsLink > img {
-	border: none;
 	display: inline-block;
 	width: 80px;
+	filter: saturate(70%);
 }

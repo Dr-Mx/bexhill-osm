@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## v2.3.0 - Highlight selected object
+
+**Date:** 11/02/2017
+
+Updated js
+ - URI.js 1.18.6
+
+Added js
+ - leaflet-osm.js 0.1.0
+
+Site changes
+ - Render polygons over selected osm objects on popup
+ - Removed some unnecessary variables using Util.Templates
+ - Merged 'listed_status' and 'HEref' tags into one label
+ - Tooltips now include objects name if it exists
+ - Remove country-code from phone numbers if user is local
+ - Renamed 'improve map' to 'report problem' on context menu
+ - Changed middle-click to only action on map layer
+
+
 ## v2.2.0 - Contact Parser
 
 **Date:** 25/01/2017
@@ -102,11 +122,12 @@ Site changes
 **Date:** 11/11/2016
 
 Updated js
- - mustache.js removed, replaced with leaflet's L.Util.template
+ - mustache.min.js removed
 
 Site changes
  - Debug mode, type 'siteDebug = true' in console to see current data requests
  - Improvement for keeping popups on mobile within screen
+ - Replaced mustache with leaflet's L.Util.template
 
 
 ## v1.7.1
@@ -126,10 +147,10 @@ Site changes
 **Date:** 22/10/2016
 
 Updated js
- - jQuery UI 1.12.1
+ - jquery-ui.min.js 1.12.1
 
 Added js
- - jQuery MD5 1.2.1
+ - jquery.md5.min.js 1.2.1
 
 Site changes
  - Support for Wikimedia images using 'image=File:example.jpg' tag
@@ -159,9 +180,9 @@ Site changes
 
 Updated js
  - leaflet.js 1.0.1 (moved back to hosted)
- - Control.Geocoder 1.5.2
+ - Control.Geocoder.js 1.5.2
  - leaflet-routing-machine.min.js 3.2.0
- - Leaflet.contextmenu 1.0.1
+ - leaflet.contextmenu.js 1.0.1
 
 Site changes
  - Reverse lookup now works for 'Find address' button
@@ -256,7 +277,7 @@ Updated js
  - jQuery 2.2.4 (downgraded for jquery mobile support)
 
 Added js
- - jQuery Mobile 1.4.5
+ - jquery.mobile.custom.min.js 1.4.5
 
 Site changes
  - Basemap layer connected to url on permalink
@@ -280,8 +301,8 @@ Updated js
  - jQuery UI 1.12.0
 
 Added js
- - Leaflet.contextmenu
- - leaflet-routing-machine
+ - leaflet.contextmenu.js
+ - leaflet-routing-machine.js
 
 Site changes
  - New walking directions tab
@@ -314,8 +335,8 @@ Updated js
  - jQuery 3.0.0
  
 Added js
- - jQuery UI
- - EasyAutocomplete
+ - jquery-ui.min.js
+ - jquery.easy-autocomplete.js
  
 Site changes
  - New 'find interest' input that finds POIs based on keywords
@@ -328,18 +349,18 @@ Site changes
 **Date:** 22/06/2016
 
 Updated js
- - Leaflet 0.7.7
+ - leaflet.js 0.7.7
  - Sidebar-v2 0.3.0
  - FontAwesome 4.6.3
- - Control.Geocoder 1.5.1
+ - Control.Geocoder.js 1.5.1
  - URI.js 1.18.1
- - Mustache 2.2.1
+ - mustache.js 2.2.1
  - leaflet-locatecontrol 0.52.0
  - jQuery 1.8.0
 
 Added js
  - opening_hours.js
- - Leaflet.EasyButton
+ - easy-button.js
 
 Site changes
  - Restrict map area to bounds

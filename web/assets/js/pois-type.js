@@ -922,8 +922,7 @@ var pois = {
 		query: '["HE_ref"~"."]',
 		iconName: 'house',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'listed-building', 'historic', 'heritage'],
-		tagParser: listed_parser
+		tagKeyword: ['tourism', 'listed-building', 'historic', 'heritage']
 	},
 
 	park: {
