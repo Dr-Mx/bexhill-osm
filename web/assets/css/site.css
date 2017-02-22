@@ -51,39 +51,9 @@ hr {
 	text-align: right;
 }
 
-.minimap {
+#minimap {
 	width: 100%;
 	cursor: pointer;
-}
-
-/* checkbox tables */
-#pois .sidebar-body > table > tbody > tr > td {
-	overflow: hidden;
-	white-space: nowrap;
-}
-#pois .sidebar-body > table > tbody > tr > td:hover {
-	background-color: rgba(255,255,255,0.6);
-}
-.poi-checkbox > label > img {
-	float: left;
-	width:28px;
-}
-input[type="checkbox"] {
-	transform: scale(1.2);
-	-webkit-transform: scale(1.2);
-}
-.poi-checkbox > label {
-	display: block;
-}
-.poi-checkbox > label > input {
-	margin-top: 8px;
-}
-.poi-checkbox > label > span, .opennow {
-	margin-left: 3px;
-	font-size: 9pt;
-}
-.poi-checkbox > label > input:checked + span {
-	font-weight: bold;
 }
 
 .leaflet-control-layers-toggle {
@@ -91,55 +61,22 @@ input[type="checkbox"] {
 	height: 40px !important;
 }
 
-.leaflet-control-layers-list, .leaflet-popup {
+.comment {
+	text-align: center;
+	font-style: italic;
 	font-size: 10pt;
+	color: #808080;
 }
-.popup-mobile {
-	font-size: 9pt;
-}
-.leaflet-popup .fa {
-	font-size: 10.5pt;
-}
-.leaflet-popup-content h3 {
-	padding-right: 20px;
-	margin-bottom: 0px;
-}
-.leaflet-popup-content hr {
-	width:100%;
-}
-.popup-edit {
-	top: 19px;
-	right: 20px;
-	position: absolute;
-}
-.popup-tagName {
-	display: block;
-	font-style: oblique;
-	font-weight: bold;
-}
-.leaflet-popup img {
-	margin-top: -5px;
-	margin-bottom: -5px;
-}
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-	background: rgba(255,255,255,0.9);
-}
-.leaflet-popup-content-wrapper {
-	background: linear-gradient(rgba(225,225,225,0.9), rgba(255,255,255,0.9));
-}
-.leaflet-tooltip {
-	font-size: 10pt;
-	background-color: #f4f4f4;
+.comment:hover {
+	text-decoration: none;
 }
 
-#help img {
-	box-sizing: border-box;
-	max-width: 100%;
-	margin: auto;
-	display: block;
-	padding: 0 15px 0 15px;
+.ui-accordion .ui-accordion-content {
+	padding: 10px 0 10px 20px;
+	border-top: 0;
+	overflow: auto;
+	height: 100%;
 }
-
 
 .sidebar-tabs > li {
 	font-size: 28pt !important;
@@ -215,6 +152,18 @@ input[type="checkbox"] {
 	margin-right: -5px;
 }
 
+.leaflet-control-container > div:last-child {
+	line-height: 20px;
+	right: 5px;
+	bottom: 5px;
+}
+
+.leaflet-control-container > div:last-child > div {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
 #spinner {
 	color: #555;
 	font-size: 70px;
@@ -231,19 +180,57 @@ input[type="checkbox"] {
 	font-size: 140%;
 }
 
-.leaflet-control-container > div:last-child {
-	line-height: 20px;
-	right: 5px;
-	bottom: 5px;
+/* poi tab */
+#pois .sidebar-body > table > tbody > tr > td {
+	overflow: hidden;
+	white-space: nowrap;
+}
+#pois .sidebar-body > table > tbody > tr > td:hover {
+	background-color: rgba(255,255,255,0.6);
+}
+.poi-checkbox > label > img {
+	float: left;
+	width:28px;
+}
+input[type="checkbox"] {
+	transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+}
+.poi-checkbox > label {
+	display: block;
+}
+.poi-checkbox > label > input {
+	margin-top: 8px;
+}
+.poi-checkbox > label > span, .opennow {
+	margin-left: 3px;
+	font-size: 9pt;
+}
+.poi-checkbox > label > input:checked + span {
+	font-weight: bold;
 }
 
-.leaflet-control-container > div:last-child > div {
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+/* walking tab */
+#walking img {
+	margin-left: 5px;
+}
+#walkContainer {
+	display: block;
+	position: relative;
+	margin: 2px 0 0 0;
+	padding: 0 .5em 0 0;
+	font-size: 100%;
+}
+.walkLink {
+	color: darkgreen;
+	text-indent: 3px;
+	cursor: pointer;
+}
+.walkLink:hover {
+	background-color: rgba(255,255,255,0.6);
 }
 
-/* tour controls */
+/* tour tab */
 .tour-control {
 	display: inline-block !important;
 	white-space: nowrap;
@@ -272,74 +259,119 @@ input[type="checkbox"] {
 	overflow: hidden;
 }
 
-.comment {
-	text-align: center;
-	font-style: italic;
-	font-size: 10pt;
-	color: #808080;
-}
-.comment:hover {
-	text-decoration: none;
+/* help tab*/
+#help img {
+	box-sizing: border-box;
+	max-width: 100%;
+	margin: auto;
+	display: block;
+	padding: 0 15px 0 15px;
 }
 
-.truncate {
+/* marker popups */
+@media screen and (max-width: 767px) {
+	.popup-truncate {
+			max-width: 170px !important;
+	}
+	.leaflet-control-layers-list, .leaflet-popup {
+		font-size: 9pt !important;
+	}
+}
+.leaflet-control-layers-list, .leaflet-popup {
+	font-size: 10pt;
+}
+.leaflet-popup .fa {
+	font-size: 10.5pt;
+	text-indent: 0;
+}
+.leaflet-popup-content {
+	padding-right: 10px;
+	margin: 0 10px 10px 19px;
+}
+.popup-edit {
+	top: 11px;
+	right: 20px;
+	position: absolute;
+}
+.popup-header {
+	margin: auto -20px 10px -20px;
+	padding: 10px 0 5px 20px;
+	border-bottom: 2px solid #ddd;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	background-color: rgba(200,200,200,0.2);
+}
+.popup-header h3 {
+	padding-right: 35px;
+	margin: 0px auto 0px;
+}
+.popup-header-tagName {
+	display: block;
+	font-style: oblique;
+	font-weight: bold;
+}
+.popup-tagContainer {
+	display: table;
+}
+.popup-tagIcon {
+	display: table-cell;
+	padding-right: 3px;
+}
+.popup-tagValue {
+	display: table-cell;
+	text-indent: -10px;
+	padding-left: 10px;
+}
+.popup-truncate {
 	display: inline-block;
-	max-width: 180px;
+	max-width: 220px;
 	overflow-x: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	margin-bottom: -4px;
+	text-indent: 0;
 }
-
-#accordWk {
+.popup-streetSource {
+	font-size: 80%;
+	padding: 5px 0 0 30px;
 	display: block;
-	position: relative;
-	margin: 2px 0 0 0;
-	padding: 0 .5em 0 0;
-	font-size: 100%;
 }
-#accordOh {
+.popup-ohContainer {
 	display: inline-block;
 	cursor: pointer;
 }
-.ui-accordion .ui-accordion-content {
-	padding: 0.5em 1.5em;
-	border-top: 0;
-	overflow: auto;
-	height: 100%;
-}
-
-.ohTable {
+.popup-ohTable {
 	display: none;
 	cursor: default;
-	font-style: italic;
+	font: 95% monospace;
 }
-
-.walklink {
-	color: darkgreen;
-	text-indent: 3px;
-	cursor: pointer;
+.popup-imgContainer {
+	margin-top: 10px;
+	text-align: center;
 }
-.walklink:hover {
-	background-color: rgba(255,255,255,0.6);
-}
-#walking img {
-	margin-left: 5px;
-}
-
-#wikiImg img {
-	max-height: 200px;
+.popup-imgContainer a img {
+	max-height: 256px;
 	border: 2px solid #ccc;
 }
-
-
-#wikiAttrib, #wikiAttrib a:link, #wikiAttrib a:visited, #wikiAttrib a:hover {
+.popup-imgAttrib, .popup-imgAttrib a:link, .popup-imgAttrib a:visited, .popup-imgAttrib a:hover {
 	font-size: 75%;
 	color: #808080;
 }
-
-#fhrsLink, #fhrsLink > img {
-	display: inline-block;
+.popup-fhrs, .popup-fhrs > img {
 	width: 80px;
 	filter: saturate(70%);
+	text-indent: 0;
+}
+.leaflet-popup img {
+	margin-top: -5px;
+	margin-bottom: -5px;
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-tooltip {
+	background-color: rgba(244,244,244,0.9);
+}
+.leaflet-popup-content-wrapper {
+	padding: 0px 1px 1px 1px;
+}
+.leaflet-tooltip {
+	font-size: 10pt;
 }

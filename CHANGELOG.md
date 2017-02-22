@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v2.4.0 - Street history
+
+**Date:** 22/02/2017
+
+Updated js
+ - opening_hours+deps.min.js 3.5.0
+ - URI.js 1.18.7
+
+Site changes
+ - Use XML street history data from Bexhill Museum for displaying information on highways
+ - Different levels of lookup on context menu depending on zoom level - area / street / place
+ - Centre map option on context menu
+ - Added some custom icons for streets / houses / apartments / construction
+ - Included icons in autocomplete categories
+ - Cleaned up some class names and css
+
+
 ## v2.3.0 - Highlight selected object
 
 **Date:** 11/02/2017

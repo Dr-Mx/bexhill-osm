@@ -69,11 +69,11 @@
 							<ol style="list-style-type:circle; padding-left:20px;">
 								<li>Enter a keyword above to see a group of interests.</li>
 								<li>Find an address by using the <a onclick="geocoderLink();">(<i class="theme fa fa-search"></i>)</a> button.</li>
-								<li>Right-click any place to lookup its details.</li>
+								<li>Right-click the map to lookup specific details.</li>
 								<li>Fly to a suburb by clicking the minimap below.</li>
 							</ol>
 						</ul>
-						<p><img src="assets/img/minimap.png" class="minimap" alt="Minimap" usemap="#m_minimap"></p>
+						<p><img src="assets/img/minimap.png" id="minimap" alt="Minimap" usemap="#m_minimap"></p>
 						<map name="m_minimap">
 							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.flyTo(mapCentre, mapZoom);" >
 							<area title="New Town" shape="rect" coords="236,187,324,245" onclick="map.flyTo([50.8390, 0.4730], 17);">
@@ -89,7 +89,7 @@
 						</map>
 						<p class="comment">Note: areas to the west are work-in-progress.</p>
 					<hr>
-						<p>Bexhill-OSM is a non-commercial, community based mapping project run entirely on <a class="theme" onclick="donateLink();">donations</a>.  It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
+						<p>Bexhill-OSM is a non-commercial, community based mapping project run entirely on your <a class="theme" onclick="donateLink();">donations</a>.  It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
 						<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fa fa-question fa-fw"></i>]</a> for more assistance.
 						<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fa fa-info fa-fw"></i>]</a>.</p>
 					<hr>
@@ -112,33 +112,33 @@
 					<p id="routingControl"></p>
 					<hr>
 					<h3>Suggested leisure walks</h3>
-					<div id="accordWk">
-						<p class="walklink" onclick="suggWalk('wwh');"><i class="fa fa-map-marker"></i> Walking the Way to Health (0.7mi)</p>
+					<div id="walkContainer">
+						<p class="walkLink" onclick="suggWalk('wwh');"><i class="fa fa-map-marker"></i> Walking the Way to Health (0.7mi)</p>
 						<div>
 							The route of this walk is marked out by a series of 10 plaques along the promenade.  Launched in 2011, it hopes to 
 							encourage people to regularly walk a specific distance along the promenade.  Small plinths are placed at ground level 
 							opposite every third beach groyne between numbers 48 and 72.  
 							<a href="https://thebexhillhistorytrail.wordpress.com/2015/01/15/30-walking-the-way-to-health-plaques-west-parade/" target="_blank">Source</a>.
 						</div>
-						<p class="walklink" onclick="suggWalk('tmt');"><i class="fa fa-map-marker"></i> The Motor Trail (1.3mi)</p>
+						<p class="walkLink" onclick="suggWalk('tmt');"><i class="fa fa-map-marker"></i> The Motor Trail (1.3mi)</p>
 						<div>
 							In May 1902 Bexhill on Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels 
 							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel</a>).
 							<a href="http://www.discoverbexhill.com/docs/bexhill-guide-2013.pdf#page=5" target="_blank">Source</a>.<br>
 						</div>
-						<p class="walklink" onclick="suggWalk('greenway');"><i class="fa fa-map-marker"></i> Bexhill to Hastings Greenway (2.6mi)</p>
+						<p class="walkLink" onclick="suggWalk('greenway');"><i class="fa fa-map-marker"></i> Bexhill to Hastings Greenway (2.6mi)</p>
 						<div>
 							The Greenway runs alongside the Combe Valley Way, providing access for walkers, cyclists and horse riders between Bexhill and Hastings. 
 							It links up with public bridleways and footpaths in the area, including the 1066 Country Walk Bexhill Link, with two sections where horse 
 							riders take an alternative route to walkers and cyclists.
 							<a href="https://www.eastsussex.gov.uk/leisureandtourism/countryside/rightsofway/rights-of-way-in-east-sussex/bexhill-hastings-greenway/" target="_blank">Source</a>.
 						</div>
-						<p class="walklink" onclick="suggWalk('1066');"><i class="fa fa-map-marker"></i> 1066 Country Walk (3.0mi+)</p>
+						<p class="walkLink" onclick="suggWalk('1066');"><i class="fa fa-map-marker"></i> 1066 Country Walk (3.0mi+)</p>
 						<div>
 							The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time.  This is a 
 							section of the Bexhill - Battle link, the full route can be found <a href="http://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">here</a>.
 						</div>
-						<p class="walklink" onclick="suggWalk('bc1');"><i class="fa fa-map-marker"></i> Bexhill Circular (6.3mi)</p>
+						<p class="walkLink" onclick="suggWalk('bc1');"><i class="fa fa-map-marker"></i> Bexhill Circular (6.3mi)</p>
 						<div>
 							This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient 
 							woodland, reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy 
@@ -172,7 +172,7 @@
 							</select>
 						<button type="button" id="tourNext" class="tour-control"><i class="fa fa-chevron-right"></i></button>
 					</div></p>
-					<iframe id="tourFrame" src="assets/tour/tour0.html"></iframe>
+					<iframe id="tourFrame" src="tour/tour0.html"></iframe>
 				</div>
 			</div>
 			<!-- Lower tabs -->
@@ -203,9 +203,10 @@
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
-						<i class="fa fa-search fa-fw"></i> Lookup place: Display information on an item under the cursor (middle-clicking the scroll-wheel also works).<br><br>
-						<i class="fa fa-map-marker fa-fw"></i> Add walk point: Plot markers to create a walking route.<br><br>
-						<i class="fa fa-bug fa-fw"></i> Report problem: Open openstreetmap.org where you can leave a note.
+						<i class="fa fa-search fa-fw"></i> Lookup are/street/place: Display information on an item under the cursor depending on zoom level (middle-clicking the scroll-wheel acts as short-cut).<br><br>
+						<i class="fa fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
+						<i class="fa fa-map-marker fa-fw"></i> Add walk point here: Plot a marker to create a walking route.<br><br>
+						<i class="fa fa-sticky-note-o fa-fw"></i> Leave a note here: Report a mistake or something missing.
 						<p><img src="assets/img/context.png" alt="Context-menu preview"></p>
 					<a id="gotointerest"></a><hr>
 					<h3>Find Interest</h3>
@@ -234,7 +235,7 @@
 					<a id="gototour"></a><hr>
 					<h3>Historic Tour</h3>
 						Navigate by either selecting from the list-box or using the arrows to jump between articles.  Mobile users may also swipe the title-bar to navigate.  Use the map-icon within an article to display related information on the map.
-						<img src="assets/tour/show.png" alt="Show on map button">
+						<img src="tour/show.png" alt="Show on map button">
 					<div class="anchor"><a href="#gototophelp" title="Back to top">| <i class="fa fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
@@ -365,7 +366,7 @@
     <script src="assets/js/tags-parsers.js"></script>
     <script src="assets/js/pois-type.js"></script>
     <script src="assets/js/site.js"></script>
-	<script src="assets/tour/tour.js"></script>
+	<script src="tour/tour.js"></script>
 
 	<!-- GoogleAnalytics -->
 	<script>

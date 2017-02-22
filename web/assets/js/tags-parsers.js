@@ -1,7 +1,7 @@
 // parse tags and marker popup
 
 // tag template
-var tagTmpl = '<i class="fa fa-{iconName}"></i> <strong>{tag}:</strong> {value}<br>', state = '';
+var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon fa fa-{iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}: </strong>{value}</span></div>', state = '';
 
 // convert a string to title case
 function titleCase(str) {
@@ -56,16 +56,11 @@ function address_parser(element) {
 }
 
 function website_parser(element) {
-	var tags = element.tags, link = '', markerPopup = '';
+	var tags = element.tags, markerPopup = '';
 	var tagWebsite = tags.website ? tags.website : tags['contact:website'];
-	var tagUrl = tags.url ? tags.url : tags['contact:url'];
 	if (tagWebsite) {
-		link = '<a class="truncate" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank">' + tagWebsite + '</a>',
+		var link = '<a class="popup-truncate" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank">' + tagWebsite + '</a>',
 		markerPopup = L.Util.template(tagTmpl, {tag: 'Website', value: link, iconName: 'globe'});
-	}
-	if (tagUrl) {
-		link = '<a class="truncate" href="' + tagUrl + '" title="' + tagUrl + '" target="_blank">' + tagUrl + '</a>';
-		markerPopup += L.Util.template(tagTmpl, {tag: 'Just Eat', value: link, iconName: 'external-link-square'});
 	}
 	return markerPopup;
 }
@@ -86,9 +81,9 @@ function contact_parser(element) {
 	var tagMail = element.tags.email ? element.tags.email : element.tags['contact:email'];
 	var tagFb = element.tags.facebook ? element.tags.facebook : element.tags['contact:facebook'];
 	var tagTwit = element.tags.twitter ? element.tags.twitter : element.tags['contact:twitter'];
-	if (tagMail) tag += '<a href="mailto:' + tagMail + '"><i class="fa fa-envelope fa-fw" title="' + tagMail + '"></i></a> ';
-	if (tagFb) tag += '<a href="' + tagFb + '" target="_blank"><i class="fa fa-facebook-official fa-fw" title="' + tagFb + '" style="color:#3b5998;"></i></a> ';
-	if (tagTwit) tag += '<a href="https://twitter.com/' + tagTwit + '" target="_blank"><i class="fa fa-twitter fa-fw" title="@' + tagTwit + '" style="color:#1da1f2;"></i></a> ';
+	if (tagMail) tag += '<a href="mailto:' + tagMail + '"><i class="fa fa-envelope fa-fw" title="E-mail: ' + tagMail + '"></i></a> ';
+	if (tagFb) tag += '<a href="' + tagFb + '" target="_blank"><i class="fa fa-facebook-official fa-fw" title="Facebook: ' + tagFb + '" style="color:#3b5998;"></i></a> ';
+	if (tagTwit) tag += '<a href="https://twitter.com/' + tagTwit + '" target="_blank"><i class="fa fa-twitter fa-fw" title="Twitter: @' + tagTwit + '" style="color:#1da1f2;"></i></a> ';
 	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Contact', value: tag, iconName: 'user-circle'});
 	return markerPopup;
 }
@@ -122,7 +117,7 @@ function wikipedia_parser(element) {
 		var s = wikipedia.split(':');
 		var lang = s[0] + '.', subject = s[1];
 		var href = 'http://' + lang + 'wikipedia.com/wiki/' + subject;
-		var link = '<a class="truncate" href="' + href + '" title="' + subject + '" target="_blank">' + subject + '</a>',
+		var link = '<a class="popup-truncate" href="' + href + '" title="' + subject + '" target="_blank">' + subject + '</a>',
 		markerPopup = L.Util.template(tagTmpl, {tag: 'Wikipedia', value: link, iconName: 'wikipedia-w'});
 	}
 	return markerPopup;
@@ -217,7 +212,7 @@ function edubase_parser(element) {
 function fhrs_parser(element) {
 	var fhrs = element.tags['fhrs:id'], markerPopup = '';
 	if (fhrs) {
-		var link = '<a href="http://ratings.food.gov.uk/business/en-GB/' + fhrs + '" title="Food Standards Agency" target="_blank"><span id="fhrsLink">' + fhrs + '</span></a>';
+		var link = '<a href="http://ratings.food.gov.uk/business/en-GB/' + fhrs + '" title="Food Standards Agency" target="_blank"><span class="popup-fhrs">' + fhrs + '</span></a>';
 		markerPopup = L.Util.template(tagTmpl, {tag: 'Food hygiene rating', value: link, iconName: 'file'});
 	}
 	return markerPopup;
@@ -284,12 +279,16 @@ function pub_parser(element, titlePopup) {
 
 function order_parser(element) {
 	var tags = element.tags, tag = '', markerPopup = '';
+	var tagUrl = tags.url ? tags.url : tags['contact:url'];
 	if (tags.takeaway === 'yes') tag += 'takeaway; ';
 	else if (tags.takeaway === 'only') tag += 'takeaway only; ';
 	if (tags.delivery === 'yes') tag += 'delivery; ';
 	if (tags.outdoor_seating === 'yes') tag += 'outdoor seating; ';
 	if (tags.reservation === 'yes') tag += 'takes reservation; ';
 	else if (tags.reservation === 'required') tag += 'needs reservation; ';
+	if (tagUrl && tagUrl.indexOf('just-eat.co.uk') >= 0) {
+		tag += '<a href="' + tagUrl + '" title="' + tagUrl + '" target="_blank">just-eat</a>;';
+	}
 	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Order options', value: tag, iconName: 'shopping-bag'});
 	return markerPopup;
 }	
@@ -428,7 +427,7 @@ function defib_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'location-arrow'},
-			{callback: generic_tag_parser, tag: 'indoor', label: 'Inside building', iconName: 'sign-in'}
+			{callback: generic_tag_parser, tag: 'indoor', label: 'Enter building to access', iconName: 'sign-in'}
 		]
 	);
 }
@@ -441,7 +440,7 @@ function toilet_parser(element, titlePopup) {
 			{callback: generic_tag_parser, tag: 'female', label: 'Female', iconName: 'female'},
 			{callback: generic_tag_parser, tag: 'male', label: 'Male', iconName: 'male'},
 			{callback: generic_tag_parser, tag: 'diaper', label: 'Baby changing', iconName: 'child'},
-			{callback: generic_tag_parser, tag: 'indoor', label: 'Inside building', iconName: 'sign-in'}
+			{callback: generic_tag_parser, tag: 'indoor', label: 'Enter building to access', iconName: 'sign-in'}
 		]
 	);
 }
@@ -519,9 +518,32 @@ function historic_parser(element, titlePopup) {
 	);
 }
 
+// get bexhill street history through xml file lookup
+function street_parser(element) {
+	var markerPopup = '';
+	if (element.tags.highway && element.tags.name) {
+		$.ajax({
+			async: false,
+			url: 'assets/xml/streetnames.xml',
+			dataType: 'xml',
+			success: function (xml) {
+				var $street = $(xml).find('name').filter(function () {
+					return $(this).text() === element.tags.name;
+				}).closest('street');
+				var streetDate = $('date', $street).text();
+				var streetDesc = $('desc', $street).text();
+				if (streetDate) markerPopup += L.Util.template(tagTmpl, {tag: 'Street date', value: streetDate, iconName: 'calendar'});
+				if (streetDesc) markerPopup += L.Util.template(tagTmpl, {tag: 'Street history', value: streetDesc, iconName: 'road'});
+				if (markerPopup) markerPopup += '<span class="popup-streetSource"><a href="' + $(xml).find('source').text() + '" target="_blank" title="Source">&copy; ' + $(xml).find('author').text() + '</a></span>';
+			}
+		});
+	}
+	return markerPopup;
+}
+
 // https://github.com/ypid/opening_hours.js
 function opening_hours_parser(tags) {
-	var openhrs = '';
+	var openhrsState = [], openhrs = '';
 	try {
 		var opening_hours = require('opening_hours');
 		var hours = tags.opening_hours;
@@ -552,10 +574,19 @@ function opening_hours_parser(tags) {
 		state = oh.getState();
 		// create table
 		var ohTable = oh.prettifyValue({ conf: { rule_sep_string: '<br>', print_semicolon: false } });
-		// collapsible accordion
-		if (state) openhrs = '<div id="accordOh"><span><i style="color:green;" class="fa fa-circle"></i> <strong>Open until:</strong> ';
-		else if (state === false) openhrs = '<div id="accordOh"><span><i style="color:red;" class="fa fa-circle"></i> <strong>Closed until:</strong> ';
-		if (openhrs) openhrs += strNextChange + '&nbsp; <i style="color:#b05000;" title="See full opening hours" class="fa fa-caret-down"></i> </span><div class="ohTable">' + ohTable + '</div></div>';
+		// show tag and collapsible accordion
+		if (state) openhrsState = [ 'green', 'Open' ];
+		else if (state === false) openhrsState = [ 'red', 'Closed' ];
+		if (openhrsState) {	openhrs =
+			'<div class="popup-ohContainer">' +
+				'<span class="popup-tagContainer">' +
+					'<i style="color:' + openhrsState[0] + ';" class="popup-tagIcon fa fa-circle fa-fw"></i>' +
+					'<span class="popup-tagValue"><strong>' + openhrsState[1] + ' until:</strong> ' + strNextChange + '&nbsp; </span>' +
+					'<i style="color:#b05000;" title="See full opening hours" class="fa fa-caret-down fa-fw"></i>' +
+				'</span>' +
+				'<div class="popup-ohTable">' + ohTable + '</div>' +
+			'</div>';
+		}
 	}
 	catch(err) {
 		if (hours) console.log('ERROR: Object "' + tags.name + '" cannot parse hours: ' + hours + '. ' + err);
@@ -564,23 +595,28 @@ function opening_hours_parser(tags) {
 }
 
 // https://github.com/placemarker/jQuery-MD5
-// get md5 hash from wikimedia filename to link image thumbnail
+var imgSize = 256;
 function image_parser(img) {
 	var markerPopup = '';
 	if (img && img.indexOf('File:') === 0) {
 		var imgSplit = img.split(':');
 		imgSplit[1] = imgSplit[1].replace(/ /gi, '_');
+		// get md5 hash from wikimedia filename to link image thumbnail
 		var md5 = $.md5(imgSplit[1]);
-		var url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/200px-' + imgSplit[1];
-		markerPopup = '<p style="margin:13px 0; text-align:center;"><a id="wikiImg" href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img src="' + url + '"></a><br><span id="wikiAttrib">Loading attribution...</span></p>';
+		var url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/' + imgSize + 'px-' + imgSplit[1];
+		markerPopup =
+			'<div class="popup-imgContainer">' +
+				'<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img src="' + url + '"></a><br>' +
+				'<span class="popup-imgAttrib">Loading attribution...</span>' +
+			'</div>';
 	}
 	return markerPopup;
 }
 
 function parse_tags(element, titlePopup, functions) {
-	var markerPopup = L.Util.template('<h3>{title}</h3>', {title: titlePopup});
-	if (element.tags.name) markerPopup += L.Util.template('<span class="popup-tagName">{tagName}</span>', {tagName: element.tags.name});
-	markerPopup += '<hr>';
+	var markerPopup = L.Util.template('<div class="popup-header"><h3>{title}</h3>', {title: titlePopup});
+	if (element.tags.name) markerPopup += L.Util.template('<span class="popup-header-tagName">{tagName}</span>', {tagName: element.tags.name});
+	markerPopup += '</div>';
 	functions = [
 		{callback: osmedit_parser},
 		{callback: generic_tag_parser, tag: 'operator', label: 'Operator', iconName: 'building-o'},
@@ -595,7 +631,8 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
 		{callback: facility_parser},
-		{callback: payment_parser}
+		{callback: payment_parser},
+		{callback: street_parser}
 	].concat(functions);
 	for (var c = 0; c < functions.length; c++) {
 		var data = functions[c];
@@ -613,9 +650,9 @@ function parse_tags(element, titlePopup, functions) {
 // marker popup
 var spinner = 0, markerId;
 function callback(data) {
-	var type, name, markerPopup;
+	var type, name, iconName, markerPopup, customOptions = {};
 	// set marker popup dimensions on screensize
-	var customOptions = ($(window).width() >= 768) ? { maxWidth: 350 } : { maxWidth: 250, className: 'popup-mobile' };
+	customOptions.maxWidth = ($(window).width() >= 768) ? 350 : imgSize;
 	customOptions.autoPanPaddingTopLeft = (($(window).width() >= 768) && rLookup) ? [sidebar.width()+50,5] : [30,5];
 	customOptions.autoPanPaddingBottomRight = [5, 75];
 	customOptions.closeButton = false;
@@ -719,10 +756,15 @@ function callback(data) {
 		}
 		if (e.tags.image) {
 			if (!type) type = 'image';
-			customOptions.minWidth = 205;
+			customOptions.minWidth = imgSize;
 		}
+		
 		var poi = pois[type];
-		var iconName = poi ? poi.iconName : '000blank';
+		if (poi) iconName = poi.iconName;
+		else if (e.tags.construction) iconName = 'construction';
+		else if (e.tags.highway) iconName = 'roadtype_tar';
+		else if (e.tags.building) iconName = (e.tags.building === 'house' || e.tags.building === 'bungalow') ? 'home-2' : 'apartment-3';
+		else iconName = '000blank';
 		var markerIcon = L.icon({
 			iconUrl: 'assets/img/icons/' + iconName + '.png',
 			iconSize: [32, 37],

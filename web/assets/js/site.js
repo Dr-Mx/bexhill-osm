@@ -3,7 +3,7 @@
 // debug mode
 var siteDebug = false;
 // personal api keys
-var mapboxKey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
+var mapboxKey = 'pk.eyJ1IjoiZHJteCIsImEiOiJjaWwzc2RzcmgwMGNpeDFtMDU4dHZyamFsIn0.bt_BKxPV9Pg83JlUFnZzBw';
 var thuforKey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
 // overpass layer options
 var minOpZoom = ($(window).width() < 768) ? 14 : 15;
@@ -55,11 +55,11 @@ $(document).ready(function () {
 	setTimeout(function () { $('map').imageMapResize(); }, 500);
 	// get users location so we don't have to show country code on phone numbers
 	$.get('https://ipinfo.io', function (result) { userCountry = result.country; }, 'jsonp');
-	map.on('popupopen', function () {
+	map.on('popupopen', function (e) {
 		// delay required when switching directly to another popup
 		setTimeout(function () {
 			// opening-hours accordion
-			$('#accordOh').accordion({
+			$('.popup-ohContainer').accordion({
 				heightStyle: 'content',
 				collapsible: true,
 				active: false,
@@ -78,37 +78,41 @@ $(document).ready(function () {
 				});
 			}
 			// fhrs api for showing food hygiene ratings
-			if ($('#fhrsLink').length) {
+			if ($('.popup-fhrs').length) {
 				$.ajax({
-					url: 'http://api.ratings.food.gov.uk/establishments/' + $('#fhrsLink').text(),
+					url: 'http://api.ratings.food.gov.uk/establishments/' + $('.popup-fhrs').text(),
 					headers: { 'x-api-version': 2 },
 					dataType: 'json',
 					success: function (result) {
-						$('#fhrsLink').html('<img src="assets/img/fhrs/' + result.RatingKey + '.jpg">');
+						$('.popup-fhrs').html('<img src="assets/img/fhrs/' + result.RatingKey + '.jpg">');
 					}
 				});
 			}
 			// wikimedia api for image attribution
-			if ($('#wikiImg').length) {
-				var img = $('#wikiImg').attr('href');
+			if ($('.popup-imgContainer').length) {
+				var img = $('.popup-imgContainer a').attr('href');
 				img = img.split('File:');
 				$.ajax({
 					url: 'http://commons.wikipedia.org/w/api.php',
 					data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata', titles: 'File:' + img[1], format: 'json' },
 					dataType: 'jsonp',
 					success: function (result) {
-						var wikiAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
-						$('#wikiAttrib').html('&copy; ' + wikiAttrib.Artist.value);
+						var imgAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
+						$('.popup-imgAttrib').html('&copy; ' + imgAttrib.Artist.value);
 						$('.external.text').attr('target', '_blank');
 						$('.external.text').attr('title', 'Artist');
-						$('#wikiAttrib').append(' | <a href="' + wikiAttrib.LicenseUrl.value + '" title="Licence" target="_blank">' + wikiAttrib.LicenseShortName.value + '</a>');
+						$('.popup-imgAttrib').append(' | <a href="' + imgAttrib.LicenseUrl.value + '" title="Licence" target="_blank">' + imgAttrib.LicenseShortName.value + '</a>');
 					}
 				});
 			}
 		}, 200);
-		map.on('popupclose', function () {
-			map.removeLayer(areaOutline);
-		});
+		// fit popup on screen when image is fully loaded by triggering an autopan
+		if ($('.popup-imgContainer').length) $('.popup-imgContainer a img').load(function () { setTimeout(function () {
+			e.popup._adjustPan();
+		}, 200); });
+	});
+	map.on('popupclose', function () {
+		map.removeLayer(areaOutline);
 	});
 });
 
@@ -116,18 +120,36 @@ $(document).ready(function () {
 var map = new L.map('map', {
 	contextmenu: true,
 	contextmenuItems: [{
-		text: '<i class="fa fa-search fa-fw"></i> Lookup place',
+		text: '<i class="fa fa-search fa-fw"></i> <span class="contextmenu-lookup"></span>',
+		index: 0,
 		callback: reverseLookup
-	}, '-', {
-		text: '<i class="fa fa-map-marker fa-fw"></i> Add walk point',
+	}, {
+		text: '<i class="fa fa-crosshairs fa-fw"></i> Centre map here',
+		callback: centreMap
+	}, {
+		text: '<i class="fa fa-map-marker fa-fw"></i> Add walk point here',
 		callback: walkPoint
 	}, '-', {
-		text: '<i class="fa fa-bug fa-fw"></i> Report problem',
+		text: '<i class="fa fa-sticky-note-o fa-fw"></i> Leave a note here',
 		callback: improveMap
 	}]
 });
+// set reverselookup levels
+map.on('zoomend', function () {
+	var contextLookup = [];
+	if (map.getZoom() <= 14) contextLookup = ['', true]
+	else if (map.getZoom() === 15) contextLookup = [' area', false]
+	else if (map.getZoom() <= 17) contextLookup = [' street', false]
+	else if (map.getZoom() >= 18) contextLookup = [' place', false]
+	$('.contextmenu-lookup').html('Lookup' + contextLookup[0]);
+	map.contextmenu.setDisabled(0, contextLookup[1]);
+});
+// middle-mouse button reverselookup on map layer
+map.on('mouseup', function (e) {
+	if (e.originalEvent.button === 1 && e.originalEvent.target.id === 'map'  && map.getZoom() >= 15) reverseLookup(e);
+});
 var geoMarker, rLookup = false;
-function reverseLookup(e) {
+function reverseLookup (e) {
 	// get location, look up id on nominatim and pass it to overpass
 	var geocoder = L.Control.Geocoder.nominatim();
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function (results) {
@@ -140,7 +162,10 @@ function reverseLookup(e) {
 		}
 	});
 }
-function walkPoint(e) {
+function centreMap (e) {
+    map.panTo(e.latlng);
+}
+function walkPoint (e) {
 	if ($(window).width() >= 768 && actTab !== 'walking') $('a[href="#walking"]').click();
 	// drop a walk marker if one doesn't exist
 	var wp = routingControl.getWaypoints();
@@ -152,13 +177,13 @@ function walkPoint(e) {
 	}
 	routingControl.spliceWaypoints(wp.length, 0, e.latlng);
 }
-function improveMap(e) {
+function improveMap (e) {
 	// create a note on osm.org
 	window.open('https://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, '_blank');
 }
 
 // navigation controls for historic tour
-$('#tourNext').click(function() {
+$('#tourNext').click(function () {
 	if ($('#tourList option:selected').next().is(':enabled')) {
 		$('#tourList option:selected').next().prop('selected', 'selected');
 		$('#tourList').trigger('change');
@@ -167,7 +192,7 @@ $('#tourNext').click(function() {
 $('#tour').on('swipeleft', function () {
 	if ($(window).width() < 768 && L.Browser.touch) $('#tourNext').trigger('click');
 });
-$('#tourPrev').click(function() {
+$('#tourPrev').click(function () {
 	if ($('#tourList option:selected').prev().is(':enabled')) {
 		$('#tourList option:selected').prev().prop('selected', 'selected');
 		$('#tourList').trigger('change');
@@ -177,7 +202,7 @@ $('#tour').on('swiperight', function () {
 	if ($(window).width() < 768 && L.Browser.touch) $('#tourPrev').trigger('click');
 });
 $('#tourList').change(function () {
-	$('#tourFrame').attr('src', 'assets/tour/tour' + $(this).val() + '.html');
+	$('#tourFrame').attr('src', 'tour/tour' + $(this).val() + '.html');
 });
 
 // https://github.com/Leaflet/Leaflet
@@ -268,11 +293,6 @@ map.on('baselayerchange', function (e) {
 	for (var c in tileList.name) {
 		if (e.name === tileList.name[c]) actTileLayer = tileList.keyname[c];
 	}
-});
-
-// middle-mouse button reverselookup on map layer
-map.on('mouseup', function (e) {
-	if (e.originalEvent.button === 1 && e.originalEvent.target.id === 'map') reverseLookup(e);
 });
 
 // https://github.com/domoritz/leaflet-locatecontrol
@@ -368,7 +388,7 @@ L.easyButton({
 			// clear overlay, clear walk points, collapse suggested walks, clear poi marker layers
 			map.removeLayer(imageOverlay);
 			routingControl.setWaypoints([]);
-			$('#accordWk').accordion({ active: false });
+			$('#walkContainer').accordion({ active: false });
 			clear_map();
 		}
 	}]
@@ -413,7 +433,7 @@ var routingControl = L.Routing.control({
 var routeBlock = routingControl.onAdd(map);	
 document.getElementById('routingControl').appendChild(routeBlock);
 // collapsible suggested walks
-$('#accordWk').accordion({
+$('#walkContainer').accordion({
 	heightStyle: 'content',
 	collapsible: true,
 	active: false
@@ -424,7 +444,7 @@ function populate_tabs() {
 	// get all keywords
 	for (var poi in pois) {
 		poitags += '"' + pois[poi].catName + '~' + poi + '": ' + JSON.stringify(pois[poi].tagKeyword) + ', ';
-		category[c] = { listLocation: pois[poi].catName + '~' + poi, header: pois[poi].catName + ' - ' + pois[poi].name };
+		category[c] = { listLocation: pois[poi].catName + '~' + poi, header: '<img class="eac-category-icon" src="assets/img/icons/' + pois[poi].iconName + '.png">' + pois[poi].catName + ' - ' + pois[poi].name };
 		if (categoryList.indexOf(pois[poi].catName) === -1) categoryList.push(pois[poi].catName);
 		c++;
 	}
@@ -473,14 +493,12 @@ function populate_tabs() {
 			if (pois[poi].catName === categoryList[c]) {
 				if (t % 2 === 0) checkboxContent += '<tr>';
 				checkboxContent += L.Util.template(
-					'<td> \
-					<div class="poi-checkbox"> \
-						<label title="{name}"> \
-							<img src="assets/img/icons/{icon}.png"></img> \
-							<input type="checkbox" class="poi-checkbox" id="{name}" data-key="{key}" onclick="setting_changed(&#39;{key}&#39;)"><span>{name}</span> \
-						</label> \
-					</div> \
-					</td>',
+					'<td><div class="poi-checkbox">' +
+						'<label title="{name}">' +
+							'<img src="assets/img/icons/{icon}.png"></img>' +
+							'<input type="checkbox" class="poi-checkbox" id="{name}" data-key="{key}" onclick="setting_changed(&#39;{key}&#39;)"><span>{name}</span>' +
+						'</label>' +
+					'</div></td>',
 					{ key: poi, name: pois[poi].name, icon: pois[poi].iconName }
 				);
 				t++;

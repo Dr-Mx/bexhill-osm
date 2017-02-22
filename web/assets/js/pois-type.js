@@ -1,10 +1,11 @@
 // all the POIs available to the map
 // comments below indicate tabs and colour-codes of icons (for use on mapicons.mapsmarker.com)
-// array name must be same as query
+// OTHER - 7e9992
+// array name must be the same as query key
 
 var pois = {
 
-	//SHOPS - 5ec8bd - 5e8ac7 - 5fc78a - 6b46f2 - 99cf43 - cfaf44
+	// SHOPS - 5ec8bd - 5e8ac7 - 5fc78a - 6b46f2 - 99cf43 - cfaf44
 
 	supermarket: {
 		name: 'Supermarket',
@@ -99,7 +100,8 @@ var pois = {
 		query: '[shop=department_store]',
 		iconName: 'departmentstore',
 		catName: 'Shops',
-		tagKeyword: ['department-store']
+		tagKeyword: ['department-store'],
+		tagParser: clothes_parser
 	},
 
 	variety_store: {
@@ -434,7 +436,7 @@ var pois = {
 		tagKeyword: ['car-sales', 'second-hand']
 	},
 
-	//AMENITY - a8a8a8 - f34648 - 876759 - 3875d7 - baba06 - 128e4e
+	// AMENITY - a8a8a8 - f34648 - 876759 - 3875d7 - baba06 - 128e4e
 
 	wheelchair: {
 		name: 'Wheelchair Access',
@@ -689,7 +691,7 @@ var pois = {
 		tagKeyword: ['animal-shelter', 'animal-boarding', 'pet', 'cat', 'dog']
 	},
 
-	//SERVICES - 3875d7 - f34648 - 5ec8bd - 6b46f2
+	// SERVICES - 3875d7 - f34648 - 5ec8bd - 6b46f2
 
 	townhall: {
 		name: 'Town-Hall',
@@ -827,7 +829,7 @@ var pois = {
 	estate_agent: {
 		name: 'Estate Agent',
 		query: '[office=estate_agent]',
-		iconName: 'apartment-3',
+		iconName: 'apartment-2',
 		catName: 'Services',
 		tagKeyword: ['estate-agent', 'property', 'housing']
 	},
@@ -856,8 +858,8 @@ var pois = {
 		tagKeyword: ['lawyer', 'solicitor']
 	},
 
-	//LEISURE - a8a8a8 - c259b6 - c47848 - 67c547 - 3875d7 - 5ec8bd
-	
+	// LEISURE - a8a8a8 - c259b6 - c47848 - 67c547 - 3875d7 - 5ec8bd
+/*
 	image: {
 		name: 'Wiki Photos',
 		query: '["image"~"."]',
@@ -865,7 +867,7 @@ var pois = {
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['photos', 'pictures', 'images']
 	},
-		
+*/
 	attraction: {
 		name: 'Attraction',
 		query: '["tourism"~"attraction|museum|gallery"]',
@@ -1039,5 +1041,4 @@ var pois = {
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'caravan-site', 'camping', 'sleep']
 	}
-
 };
