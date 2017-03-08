@@ -1,11 +1,11 @@
 // links for tour pages
-//file:///D:/My%20Documents/Archive/Mapping/Website/BexhillOSM/osm-pois/web/index.html?I=way_397637928#18/50.84328/0.46052
+
 function tour(tourName) {
-	map.removeLayer(imageOverlay);
 	// timeout hack to stop iframe breaking on ff
 	setTimeout(function () {
 		switch (tourName) {
 			case 'fossils':
+				map.removeLayer(imageOverlay);
 				var dinoIcon = L.icon({
 					iconUrl: 'tour/tour1/dinomarker.png',
 					iconSize: [32, 37],
@@ -33,6 +33,7 @@ function tour(tourName) {
 				show_overpass_layer('way(397839677)(' + mapBbox + ');');
 				break;
 			case 'railwayWestbranch':
+				map.removeLayer(imageOverlay);
 				map.setZoom(15);
 				imageOverlay = L.imageOverlay('tour/tour4/westbranchline.png', [[50.8860, 0.4625], [50.8400, 0.5100]], { opacity: 0.9 }).addTo(map);
 				break;
@@ -49,10 +50,12 @@ function tour(tourName) {
 				show_overpass_layer('node(4033104292)(' + mapBbox + ');');
 				break;
 			case 'tramway':
+				map.removeLayer(imageOverlay);
 				map.setZoom(15);
 				imageOverlay = L.imageOverlay('tour/tour5/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }).addTo(map);
 				break;
 			case 'motorTrack':
+				map.removeLayer(imageOverlay);
 				map.flyTo([50.83958, 0.48503], 17);
 				imageOverlay = L.imageOverlay('tour/tour6/racetrack.png', [[50.84135, 0.47991], [50.83772, 0.49508]], { opacity: 0.9 }).addTo(map);
 				break;

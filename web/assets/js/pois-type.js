@@ -66,9 +66,9 @@ var pois = {
 	confectionery: {
 		name: 'Confectionery',
 		query: '[shop=confectionery]',
-		iconName: 'patisserie',
+		iconName: 'candy',
 		catName: 'Shops',
-		tagKeyword: ['sugar', 'sweets', 'confectionery', 'cake']
+		tagKeyword: ['sugar', 'sweets', 'candy', 'confectionery']
 	},
 
 	alcohol: {
@@ -93,15 +93,6 @@ var pois = {
 		iconName: 'cup',
 		catName: 'Shops',
 		tagKeyword: ['bookmaker', 'betting', 'gambling']
-	},
-
-	department_store: {
-		name: 'Department-Store',
-		query: '[shop=department_store]',
-		iconName: 'departmentstore',
-		catName: 'Shops',
-		tagKeyword: ['department-store'],
-		tagParser: clothes_parser
 	},
 
 	variety_store: {
@@ -130,10 +121,10 @@ var pois = {
 
 	clothes: {
 		name: 'Clothes',
-		query: '["shop"~"clothes|boutique"]',
+		query: '["shop"~"clothes|boutique|department_store"]',
 		iconName: 'clothers_female',
 		catName: 'Shops',
-		tagKeyword: ['clothing', 'boutique'],
+		tagKeyword: ['clothing', 'boutique', 'department-store'],
 		tagParser: clothes_parser
 	},
 
@@ -570,7 +561,8 @@ var pois = {
 		query: '[amenity=atm]',
 		iconName: 'atm_pound',
 		catName: 'Amenities',
-		tagKeyword: ['atm', 'bank', 'money', 'cash-point']
+		tagKeyword: ['atm', 'bank', 'money', 'cash-point'],
+		tagParser: atm_parser
 	},
 
 	telephone: {
@@ -859,15 +851,7 @@ var pois = {
 	},
 
 	// LEISURE - a8a8a8 - c259b6 - c47848 - 67c547 - 3875d7 - 5ec8bd
-/*
-	image: {
-		name: 'Wiki Photos',
-		query: '["image"~"."]',
-		iconName: 'photo',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['photos', 'pictures', 'images']
-	},
-*/
+
 	attraction: {
 		name: 'Attraction',
 		query: '["tourism"~"attraction|museum|gallery"]',

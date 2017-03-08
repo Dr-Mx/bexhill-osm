@@ -1,6 +1,8 @@
 body {
 	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
-	padding: 0 12px 0 12px;
+	padding: 0 15px 15px 15px;
+	text-align: justify;
+	margin: 0;
 }
 
 strong {

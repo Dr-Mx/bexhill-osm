@@ -46,6 +46,7 @@
 
 .leaflet-control-geocoder-form-no-error {
 	display: none;
+	font-size: 10pt;
 }
 
 .leaflet-control-geocoder-form input:focus {
@@ -63,10 +64,10 @@
 }
 .leaflet-control-geocoder-alternatives {
 	display: block;
-	width: 200px;
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	font-size: 10pt;
 }
 
 .leaflet-control-geocoder-alternatives-minimized {

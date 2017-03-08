@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v2.5.0 - Bounce markers
+
+**Date:** 08/03/2017
+
+Added js
+ - bouncemarker-min.js 1.0
+
+Site changes
+ - Markers selected through group POIs now bounce on selection
+ - Count number of POIs on the map are now displayed in an overlay control
+ - Moved overpass error messages to an overlay control
+ - Added Bing satellite overlay
+ - Redirect access to tour pages to iframe (checkframe.js)
+ - Support comments in opening hours
+ - Cleaned up some css
+
+
 ## v2.4.0 - Street history
 
 **Date:** 22/02/2017

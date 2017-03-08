@@ -36,7 +36,7 @@ a:hover {
 
 ul {
 	list-style: none;
-	padding: 0px;
+	padding: 0;
 }
 
 hr {
@@ -138,13 +138,14 @@ hr {
 	a{color:#20b674}
 
 .leaflet-control-minZoomIndicator {
-	background-color: rgba(176, 83, 1, 0.75);
-	border-radius: 5px;
-	font-family: Helvetica,Arial,sans-serif;
+	background-color: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 	font-size: 10pt;
-	color: white;
+	font-weight: bold;
+	border-radius: 5px;
 	padding: 10px;
 	z-index: 10;
+	pointer-events: none;
 }
 
 .leaflet-bottom {
@@ -164,6 +165,10 @@ hr {
 	border-radius: 3px;
 }
 
+.leaflet-control-attribution {
+	white-space: nowrap;
+}
+
 #spinner {
 	color: #555;
 	font-size: 70px;
@@ -178,6 +183,7 @@ hr {
 #spinner-o {
 	color: rgba(240, 240, 240, 0.75);
 	font-size: 140%;
+	text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 /* poi tab */
@@ -185,25 +191,25 @@ hr {
 	overflow: hidden;
 	white-space: nowrap;
 }
-#pois .sidebar-body > table > tbody > tr > td:hover {
-	background-color: rgba(255,255,255,0.6);
-}
 .poi-checkbox > label > img {
 	float: left;
-	width:28px;
+	width: 28px;
 }
 input[type="checkbox"] {
 	transform: scale(1.2);
 	-webkit-transform: scale(1.2);
 }
 .poi-checkbox > label {
-	display: block;
+	display: inline-block;
+	width: 100%;
+}
+.poi-checkbox > label:hover {
+	background-color: rgba(255,255,255,0.6);
 }
 .poi-checkbox > label > input {
 	margin-top: 8px;
 }
 .poi-checkbox > label > span, .opennow {
-	margin-left: 3px;
 	font-size: 9pt;
 }
 .poi-checkbox > label > input:checked + span {
@@ -252,11 +258,11 @@ input[type="checkbox"] {
 	border: none;
 }
 #tour .sidebar-body {
-	height: calc(100% - 60px);
+	height: calc(100% - 55px);
 	width: 100%;
-	margin: 5px -20px;
 	text-align: center;
 	overflow: hidden;
+	padding: 0;
 }
 
 /* help tab*/
@@ -270,10 +276,14 @@ input[type="checkbox"] {
 
 /* marker popups */
 @media screen and (max-width: 767px) {
-	.popup-truncate {
-			max-width: 170px !important;
+	.popup-streetDesc {
+		max-height: 200px !important;
 	}
-	.leaflet-control-layers-list, .leaflet-popup {
+	.popup-truncate {
+		max-width: 170px !important;
+	}
+	.leaflet-control-layers-list, .leaflet-popup, .leaflet-control-minZoomIndicator, 
+	.leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-form-no-error {
 		font-size: 9pt !important;
 	}
 }
@@ -303,7 +313,7 @@ input[type="checkbox"] {
 }
 .popup-header h3 {
 	padding-right: 35px;
-	margin: 0px auto 0px;
+	margin: 0 auto 0;
 }
 .popup-header-tagName {
 	display: block;
@@ -331,10 +341,17 @@ input[type="checkbox"] {
 	margin-bottom: -4px;
 	text-indent: 0;
 }
+.popup-streetDesc {
+	display: block;
+	overflow-y: auto;
+	max-height: 250px;
+	text-align: justify;
+	padding-right: 3px;
+}
 .popup-streetSource {
+	display: block;
 	font-size: 80%;
 	padding: 5px 0 0 30px;
-	display: block;
 }
 .popup-ohContainer {
 	display: inline-block;
@@ -361,6 +378,7 @@ input[type="checkbox"] {
 	width: 80px;
 	filter: saturate(70%);
 	text-indent: 0;
+	display: inline-block;
 }
 .leaflet-popup img {
 	margin-top: -5px;
@@ -370,7 +388,7 @@ input[type="checkbox"] {
 	background-color: rgba(244,244,244,0.9);
 }
 .leaflet-popup-content-wrapper {
-	padding: 0px 1px 1px 1px;
+	padding: 0 1px 1px 1px;
 }
 .leaflet-tooltip {
 	font-size: 10pt;

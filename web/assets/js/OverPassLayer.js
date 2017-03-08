@@ -1,3 +1,33 @@
+// query overpass server - based on https://github.com/kartenkarsten/leaflet-layer-overpass
+
+function show_overpass_layer(query) {
+	if (siteDebug) console.debug(query);
+	if (!query || query === '();') {
+		console.log('There is nothing selected to filter by.');
+		return;
+	}
+	var opl = new L.OverPassLayer({
+		debug: siteDebug,
+		minzoom: minOpZoom,
+		query: query + 'out center;&contact=' + email, // contact info only for use with .fr endpoints
+		// endpoint: 'https://api.openstreetmap.fr/oapi/interpreter/',
+		endpoint: 'https://overpass.osm.vi-di.fr/api/',
+		callback: callback,
+		minZoomIndicatorOptions: {
+			position: 'topright',
+			minZoomMessage: 'Zoom in to load data'
+		}
+	});
+	iconLayer.addLayer(opl);
+}
+
+function poiCounter() {
+	var str = $('.leaflet-marker-icon').length;
+	if (str === 1) str += ' POI';
+	else str += ' POIs';
+	return str + ' found';
+}
+
 L.Control.MinZoomIndicator = L.Control.extend({
 	// map: layerId -> zoomlevel
 	_layers: {},
@@ -44,18 +74,19 @@ L.Control.MinZoomIndicator = L.Control.extend({
 	_updateBox: function (event) {
 		if (event != null) L.DomEvent.preventDefault(event);
 		var minzoomlevel = this._getMinZoomLevel();
-		if (minzoomlevel == -1) this._container.innerHTML = this.options.minZoomMessageNoLayer;
-		else this._container.innerHTML = this.options.minZoomMessage.replace(/CURRENTZOOM/, this._map.getZoom()).replace(/MINZOOMLEVEL/, minzoomlevel);
-		if (this._map.getZoom() >= minzoomlevel) this._container.style.display = 'none';
-		else this._container.style.display = 'block';
+		if (minzoomlevel == -1) $(this._container).html(this.options.minZoomMessageNoLayer);
+		else if (this._map.getZoom() < minzoomlevel) $(this._container).html(this.options.minZoomMessage.replace(/CURRENTZOOM/, this._map.getZoom()).replace(/MINZOOMLEVEL/, minzoomlevel));
+		else if ($('input.poi-checkbox:checked').length > 0) $(this._container).html(poiCounter());
+		if (this._map.getZoom() >= minzoomlevel && $('input.poi-checkbox:checked').length === 0) $(this._container).css('display', 'none');
+		else $(this._container).css('display', 'block');
 	},
-	className : 'leaflet-control-minZoomIndicator'
+	className : 'theme leaflet-control-minZoomIndicator'
 });
 
 L.LatLngBounds.prototype.toOverpassBBoxString = function (){
 	var a = this._southWest,
 	b = this._northEast;
-	return [a.lat, a.lng, b.lat, b.lng].join(",");
+	return [a.lat, a.lng, b.lat, b.lng].join(',');
 };
 
 L.OverPassLayer = L.FeatureGroup.extend({
@@ -72,7 +103,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 	},
 	// splits the current view in uniform bboxes to allow caching
 	long2tile: function (lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); },
-	lat2tile: function (lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); },
+	lat2tile: function (lat,zoom) { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); },
 	tile2long: function (x,z) { return (x/Math.pow(2,z)*360-180); },
 	tile2lat: function (y,z) {
 		var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
@@ -107,7 +138,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		]).addTo(this._map);
 	},
 	onMoveEnd: function () {
-		if (this.options.debug) console.debug("load Pois");
+		if (this.options.debug) console.debug('load Pois');
 		if (this._map.getZoom() >= this.options.minzoom) {
 			var bboxList = this._view2BBoxes(
 			this._map.getBounds()._southWest.lng,
@@ -131,7 +162,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				}
 				this._requested[x][y] = true;
 				var queryWithMapCoordinates = this.options.query.replace(/(screenBbox)/g, bbox.toOverpassBBoxString());
-				var url =  this.options.endpoint + "interpreter?data=[out:json];" + queryWithMapCoordinates;
+				var url = this.options.endpoint + 'interpreter?data=[out:json];' + queryWithMapCoordinates;
 				// to show / hide the spinner
 				$('#spinner').show();
 				spinner++;
@@ -141,19 +172,28 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				}
 				var self = this;
 				var request = new XMLHttpRequest();
-				request.open("GET", url, true);
+				request.open('GET', url, true);
 				request.onload = function() {
+					var indicatorMsg;
 					if (this.status >= 200 && this.status < 400) {
 						var reference = {instance: self};
 						self.options.callback.call(reference, JSON.parse(this.response));
 						if (self.options.debug) console.debug('queryCount: ' + queryCount + ' - finishedCount: ' + finishedCount);
 						if (++finishedCount == queryCount) self.options.afterRequest.call(self);
+						// show number of pois found
+						if ($('input.poi-checkbox:checked').length > 0) indicatorMsg = poiCounter();
 					}
 					else if (this.status >= 400 && this.status <= 504) {
-						if (this.status === 400) alert("Bad Request: contact site admin");
-						if (this.status === 429) alert("Too Many Requests: please try a smaller area");
-						if (this.status === 504) alert("Gateway Timeout: please try again");
+						indicatorMsg = '<i class="fa fa-exclamation-triangle fa-fw"></i> ERROR ' + this.status + ': ';
+						if (this.status === 400) indicatorMsg += 'Bad Request.<br>Check the URL is correct or contact<br>' + email;
+						else if (this.status === 429) indicatorMsg += 'Too Many Requests.<br>Please try a smaller area';
+						else if (this.status === 504) indicatorMsg += 'Gateway Timeout.<br>Please try again later';
+						else indicatorMsg += 'UNKNOWN ERROR<br>We have no idea what just happened, but something went wrong';
 						self.options.callback.call(reference, {elements: []});
+					}
+					if (indicatorMsg) {
+						$('.leaflet-control-minZoomIndicator').html(indicatorMsg);
+						$('.leaflet-control-minZoomIndicator').css('display', 'block');
 					}
 				};
 				request.send();
@@ -172,11 +212,11 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			this._zoomControl._addLayer(this);
 		}
 		this.onMoveEnd();
-		if (this.options.query.indexOf("(screenBbox)") != -1) map.on('moveend', this.onMoveEnd, this);
-		if (this.options.debug) console.debug("add layer");
+		if (this.options.query.indexOf('(screenBbox)') != -1) map.on('moveend', this.onMoveEnd, this);
+		if (this.options.debug) console.debug('add layer');
 	},
 	onRemove: function (map) {
-		if (this.options.debug) console.debug("remove layer");
+		if (this.options.debug) console.debug('remove layer');
 		L.LayerGroup.prototype.onRemove.call(this, map);
 		this._ids = {};
 		this._requested = {};

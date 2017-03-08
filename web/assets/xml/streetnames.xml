@@ -236,7 +236,7 @@
 		<desc>Built in the grounds of the home, called Birchington House, of Mr Ebenezer Howard, the first Bexhill Borough Mayor during 1902 - 1903. (This road had not been adopted by East Sussex County Council by March 2013).</desc>
 	</street>
 	<street>
-		<name>Birch View</name>
+		<name>Birchview</name>
 		<date>1930</date>
 		<desc>Sir Ernest Birch, KCMG was Bexhill Borough Mayor, 1926 – 1927. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
 	</street>
@@ -519,6 +519,11 @@
 		<name>Chepbourne Road</name>
 		<date>1898</date>
 		<desc>Belle Hill Farm was previously called Chepbourne Farm or Russells Farm and was located at the foot of Belle Hill where Chepbourne Road now runs. A Manor Rental of 1576 records the name Chepbournes. (Adopted by Borough of Bexhill 16th September 1901).Cherry Tree Gardens1958 Cherry is the fruit of many plants of the genus Prunus usually consisting of a small fleshy fruit and a large hard stone. (Maytree, Laburnham and Rowan Gardens are nearby). (Adopted by Borough of Bexhill 27th September 1965).</desc>
+	</street>
+	<street>
+		<name>Cherry Tree Gardens</name>
+		<date>1958</date>
+		<desc>Cherry is the fruit of many plants of the genus Prunus usually consisting of a small fleshy fruit and a large hard stone. (Maytree, Laburnham and Rowan Gardens are nearby). (Adopted by Borough of Bexhill 27th September 1965).</desc>
 	</street>
 	<street>
 		<name>Chestnut Walk</name>
@@ -1933,7 +1938,7 @@
 		<desc>Near here the former independent school called Normandale Preparatory School for Boys was opened in 1911. The school had originally been opened in 1905 by Mr Salmon in Dorset Road. It amalgamated with its neighbouring school, Harewood, in 1963 before finally closing in 1971. (Harewood Close is nearby). (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
 	</street>
 	<street>
-		<name>Normans Bay</name>
+		<name>Normans Bay Road</name>
 		<desc>Normans are natives or inhabitants of Normandy, France, who conquered England in 1066. This area was previously called Pevensey Sluice but renamed Normans Bay when the railway halt of that name was first opened in 1905.</desc>
 	</street>
 	<street>
@@ -2449,6 +2454,11 @@
 		<name>South Cliff</name>
 		<date>1924</date>
 		<desc>The coastal cliffs and rock formations between the present-day Richmond Road and Veness Gap were previously known as West Cliff(s) but are now generally referred to as South Cliff. (Adopted by Borough of Bexhill, 1st part 27th May 1935 and last part 15th August 1966).</desc>
+	</street>
+	<street>
+		<name>South Cliff Avenue</name>
+		<date>1924</date>
+		<desc>The coastal cliffs and rock formations between the present-day Richmond Road and Veness Gap were previously known as West Cliff(s) but are now generally referred to as South Cliff. (Adopted by Borough of Bexhill 30th January 1939).</desc>
 	</street>
 	<street>
 		<name>Southcourt Avenue</name>

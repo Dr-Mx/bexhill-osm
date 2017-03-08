@@ -15,13 +15,13 @@
 		width: 390px; } }
 @media (min-width: 1200px) {
     .sidebar {
-		width: 460px; } }
+		width: 450px; } }
 
 .sidebar.collapsed {
 	width: 40px; }
 @media (min-width: 768px) {
 	.sidebar.collapsed {
-		width: 55px; } }
+		width: 45px; } }
 	
 .sidebar-left {
 	left: 0; }
@@ -84,7 +84,7 @@
 	bottom: 0; }
 @media (min-width: 768px) {
     .sidebar-tabs, .sidebar-tabs > ul {
-		width: 55px; } }
+		width: 45px; } }
 
 .sidebar-content {
 	position: absolute;
@@ -102,16 +102,15 @@
     overflow-y: hidden; }
 @media (min-width: 768px) {
 	.sidebar-left .sidebar-content {
-		left: 55px; }
+		left: 45px; }
 	.sidebar-right .sidebar-content {
-		right: 55px; } }
+		right: 45px; } }
 	
 .sidebar-pane {
 	display: none;
 	left: 0;
 	right: 0;
-	box-sizing: border-box;
-	padding: 10px 20px; }
+	box-sizing: border-box; }
 .sidebar-pane.active {
 	display: block; }
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -124,9 +123,10 @@
 .sidebar-header {
 	overflow: hidden;
 	white-space: nowrap;
-	margin: -10px -20px 0;
+	margin: 0;
 	height: 55px;
-	padding: 0 20px;
+	padding: 0 15px;
+	margin: 0;
 	font: normal 16pt/55px BerlinSans, "Helvetica Neue", Arial, Helvetica, sans-serif;
 	color: #fff;
 	background-color: #b05000; }
@@ -138,7 +138,8 @@
 	overflow-y: scroll;
 	height: calc(100% - 55px);
 	width: calc(100% - 30px);
-	padding-right: 10px; }
+	padding: 0 15px; 
+	min-width: 250px; }
 .sidebar-close {
 	position: absolute;
 	top: 0;
@@ -153,7 +154,7 @@
 	left: 0; }
 @media (min-width: 768px) {
 	.sidebar-close {
-		width: 55px; } }
+		width: 45px; } }
 		
 .sidebar-left ~ .sidebar-map {
 	margin-left: 40px; }
@@ -186,13 +187,13 @@
 
 @media (min-width: 1200px) {
 	.sidebar-left ~ .sidebar-map .leaflet-left {
-		left: 470px; } }
+		left: 460px; } }
 
 .sidebar-left.collapsed ~ .sidebar-map .leaflet-left {
-	left: 0px; }
+	left: 0; }
 @media (min-width: 768px) {
 	.sidebar-left.collapsed ~ .sidebar-map .leaflet-left {
-		left: 65px; } }
+		left: 55px; } }
 
 @media (min-width: 768px) {
 	.sidebar-right ~ .sidebar-map .leaflet-right {
@@ -208,7 +209,7 @@
 
 @media (min-width: 1200px) {
 	.sidebar-right ~ .sidebar-map .leaflet-right {
-		right: 470px; } }
+		right: 460px; } }
 
 .sidebar-right.collapsed ~ .sidebar-map .leaflet-right {
 	right: 40px; }
