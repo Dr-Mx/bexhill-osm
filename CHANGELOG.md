@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v2.5.1
+
+**Date:** 08/03/2017
+
+Site changes
+ - Fixed a bug when looking up generic poi
+ - Minimap interaction automatically closes sidebar on mobile devices
+
+
 ## v2.5.0 - Bounce markers
 
 **Date:** 08/03/2017

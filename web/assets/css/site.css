@@ -41,8 +41,6 @@ ul {
 
 hr {
 	height: 2px;
-	margin-left: 0;
-	width: calc(100% - 10px);
 	background-color: #ccc;
 	border: 0;
 }

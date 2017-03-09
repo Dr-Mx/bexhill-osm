@@ -182,6 +182,13 @@ function improveMap (e) {
 	window.open('https://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, '_blank');
 }
 
+// minimap click
+function minimap(latlng, zoom) {
+	if ($(window).width() < 768) sidebar.close();
+	map.flyTo(latlng, zoom);
+}
+
+
 // navigation controls for historic tour
 $('#tourNext').click(function () {
 	if ($('#tourList option:selected').next().is(':enabled')) {

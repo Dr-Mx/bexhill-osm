@@ -816,10 +816,10 @@ function callback(data) {
 			riseOnHover: true
 		});
 		// find alternative poi name
-		if (!name || name === poi.name.toLowerCase()) {
+		if (!name || (poi && name === poi.name.toLowerCase())) {
 			if (poi) name = poi.name;
 			else if (e.tags.natural) name = e.tags.natural;
-			else if (e.tags.highway) name = 'bus_stop' ? e.tags.highway : e.tags.highway + ' highway';
+			else if (e.tags.highway) name = (e.tags.highway === 'bus_stop') ? e.tags.highway : e.tags.highway + ' highway';
 			else if (e.tags.railway) name = 'railway ' + e.tags.railway;
 			else if (e.tags.ref) name = e.tags.ref;
 			else if (e.tags.building && e.tags.building !== 'yes') name = e.tags.building;

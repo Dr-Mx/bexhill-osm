@@ -561,7 +561,7 @@ var pois = {
 		query: '[amenity=atm]',
 		iconName: 'atm_pound',
 		catName: 'Amenities',
-		tagKeyword: ['atm', 'bank', 'money', 'cash-point'],
+		tagKeyword: ['ATM', 'bank', 'money', 'cash-point'],
 		tagParser: atm_parser
 	},
 
@@ -781,7 +781,7 @@ var pois = {
 		query: '[emergency=defibrillator]',
 		iconName: 'aed-2',
 		catName: 'Services',
-		tagKeyword: ['defibrillator', 'aed', 'emergency', 'help'],
+		tagKeyword: ['defibrillator', 'AED', 'emergency', 'help'],
 		tagParser: defib_parser
 	},
 
