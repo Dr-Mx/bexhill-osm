@@ -192,6 +192,7 @@ hr {
 .poi-checkbox > label > img {
 	float: left;
 	width: 28px;
+	margin-right: 3px;
 }
 input[type="checkbox"] {
 	transform: scale(1.2);
@@ -205,10 +206,13 @@ input[type="checkbox"] {
 	background-color: rgba(255,255,255,0.6);
 }
 .poi-checkbox > label > input {
-	margin-top: 8px;
+	display: none;
 }
 .poi-checkbox > label > span, .opennow {
 	font-size: 9pt;
+}
+.poi-checkbox > label > span {
+	line-height: 2.6;
 }
 .poi-checkbox > label > input:checked + span {
 	font-weight: bold;
@@ -241,6 +245,7 @@ input[type="checkbox"] {
 	box-shadow: none;
 	border: none;
 	height: 26px;
+	width: 100%;
 }
 #tourList {
 	width: 70%;
@@ -256,7 +261,6 @@ input[type="checkbox"] {
 	border: none;
 }
 #tour .sidebar-body {
-	height: calc(100% - 55px);
 	width: 100%;
 	text-align: center;
 	overflow: hidden;

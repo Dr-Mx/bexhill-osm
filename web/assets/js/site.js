@@ -19,7 +19,7 @@ var defTileLayer = 'bosm', actTileLayer = defTileLayer;
 var defTab = 'home', actTab = defTab;
 
 // hack to get safari to scroll iframe
-if (navigator.userAgent.indexOf('Safari') > -1) {
+if (L.Browser.touch && navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
 	$('#tour .sidebar-body').css('-webkit-overflow-scrolling', 'touch');
 	$('#tour .sidebar-body').css('overflow', 'auto');
 }
@@ -28,6 +28,7 @@ if (navigator.userAgent.indexOf('Safari') > -1) {
 $('.sidebar-content').on('swipeleft', function () {
 	if ($(window).width() >= 768 && L.Browser.touch) sidebar.close();
 });
+
 
 // smooth scrolling to anchor
 $(document).on('click', 'a[href*="#goto"]', function (e) {
@@ -44,6 +45,8 @@ $('.sidebar-tabs').click(function () {
 	// hack to stop iframe freezing on firefox android
 	else if (actTab === 'tour' && L.Browser.touch) $('#tourList').trigger('change');
 });
+// no sidebar-tab
+$('.sidebar-close').click(function () {	actTab = 'none'; });
 
 var userCountry, areaOutline = '';
 $(document).ready(function () {
@@ -124,11 +127,11 @@ var map = new L.map('map', {
 		index: 0,
 		callback: reverseLookup
 	}, {
-		text: '<i class="fa fa-crosshairs fa-fw"></i> Centre map here',
-		callback: centreMap
-	}, {
 		text: '<i class="fa fa-map-marker fa-fw"></i> Add walk point here',
 		callback: walkPoint
+	}, {
+		text: '<i class="fa fa-crosshairs fa-fw"></i> Centre map here',
+		callback: centreMap
 	}, '-', {
 		text: '<i class="fa fa-sticky-note-o fa-fw"></i> Leave a note here',
 		callback: improveMap
@@ -162,9 +165,6 @@ function reverseLookup (e) {
 		}
 	});
 }
-function centreMap (e) {
-	map.panTo(e.latlng);
-}
 function walkPoint (e) {
 	if ($(window).width() >= 768 && actTab !== 'walking') $('a[href="#walking"]').click();
 	// drop a walk marker if one doesn't exist
@@ -176,6 +176,9 @@ function walkPoint (e) {
 		}
 	}
 	routingControl.spliceWaypoints(wp.length, 0, e.latlng);
+}
+function centreMap (e) {
+	map.panTo(e.latlng);
 }
 function improveMap (e) {
 	// create a note on osm.org
@@ -513,7 +516,7 @@ function populate_tabs() {
 				// scroll to checkbox
 				if ($(window).width() >= 768) {
 					$('#pois .sidebar-body').scrollTop(0);
-					$('#pois .sidebar-body').scrollTop($('#pois input[id="' + catSplit[1] + '"]').position().top - 50);
+					$('#pois .sidebar-body').scrollTop($('#pois input[id="' + catSplit[1] + '"]').parent().position().top - 50);
 				}
 				setting_changed();
 				$('#autocomplete').val('');
@@ -648,7 +651,7 @@ function suggWalk(walkName) {
 }
 
 // https://github.com/medialize/URI.js
-// M = basemap, T = tab, U = tour page, O = opennow, P = grouped pois, I = single poi, W = walkpoints
+// M = basemap, T = tab, U = tour frame, O = opennow, P = grouped pois, I = single poi, W = walkpoints
 var uri = URI(window.location.href);
 if (uri.hasQuery('M')) actTileLayer = uri.search(true).M;
 if (uri.hasQuery('T')) actTab = uri.search(true).T;
@@ -671,12 +674,12 @@ if (uri.hasQuery('P')) {
 	if (!$.isArray(selectedPois)) {
 		$('#pois input[data-key=' + selectedPois + ']').prop('checked', true);
 		// open tab when not on mobile, scroll to checkbox
-		if ($(window).width() >= 768) {
+		if ($(window).width() >= 768 && actTab !== 'none') {
 			sidebar.open(actTab);
 			$('#pois .sidebar-body').scrollTop(0);
 			// add delay after load for sidebar to animate open to allow for scroll position
 			setTimeout(function () {
-				$('#pois .sidebar-body').scrollTop($('#pois input[data-key="' + selectedPois + '"]').position().top - 50);
+				$('#pois .sidebar-body').scrollTop($('#pois input[data-key="' + selectedPois + '"]').parent().position().top - 50);
 			}, 500);
 		}
 	}
@@ -686,7 +689,7 @@ if (uri.hasQuery('P')) {
 			var multiplePois = selectedPois[c].replace('/', '');
 			$('#pois input[data-key=' + multiplePois + ']').prop('checked', true);
 			// open tab when not on mobile
-			if ($(window).width() >= 768) sidebar.open(actTab);
+			if ($(window).width() >= 768 && actTab !== 'none') sidebar.open(actTab);
 		}
 	}
 	setting_changed();
@@ -700,7 +703,7 @@ else if (uri.hasQuery('I')) {
 // if not returning from a permalink, give defaults
 if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
-	if ($(window).width() >= 768 || actTab === 'tour') sidebar.open(actTab);
+	if (($(window).width() >= 768 || actTab === 'tour') && actTab !== 'none') sidebar.open(actTab);
 }
 
 tileBaseLayers[tileBaseLayer[actTileLayer].name].addTo(map);

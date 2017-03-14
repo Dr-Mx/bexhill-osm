@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v2.6.0 - Update POI markers
+
+**Date:** 14/03/2017
+
+Updated js
+ - leaflet.contextmenu.min.js 1.3.0
+
+Site changes
+ - Updated POI markers with solid colours, rearranged categories, hide checkbox controls
+ - Allow sidebar to remain closed from permalink
+ - Bugfix where chrome was confused with safari when adjusting iframe
+ - Bugfix where popup width wasn't being set correctly
+
+
 ## v2.5.1
 
 **Date:** 08/03/2017

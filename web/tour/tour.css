@@ -40,6 +40,7 @@ img {
 		no-repeat;
 	position: relative;
 	padding-right: 20px;
+	text-align: left;
 }
 .maplink:hover {
 	background-color: rgba(255,255,255,0.6);

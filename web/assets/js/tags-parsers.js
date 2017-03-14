@@ -345,7 +345,11 @@ function recycle_parser(element) {
 	for (var key in element.tags) {
 		if (key.indexOf('recycling:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + ', ';
 	}
-	if (tag) markerPopup = L.Util.template(tagTmpl, {tag: 'Recycling options', value: tag.substring(0, tag.length - 2), iconName: 'recycle'});
+	if (tag) {
+		tag = tag.replace(/_/g, '-');
+		tag = tag.substring(0, tag.length - 2);
+		markerPopup = L.Util.template(tagTmpl, {tag: 'Recycling options', value: tag, iconName: 'recycle'});
+	}
 	return markerPopup;
 }
 
@@ -789,7 +793,7 @@ function callback(data) {
 		if (e.tags.listed_status) {
 			if (!type || type === 'shelter' || type === 'company') type = 'listed_status';
 		}
-		if (e.tags.image) customOptions.minWidth = imgSize;
+		customOptions.minWidth = e.tags.image ? imgSize : '';
 
 		var poi = pois[type];
 		if (poi) iconName = poi.iconName;
@@ -799,7 +803,11 @@ function callback(data) {
 			else if (e.tags.highway === 'bus_stop') iconName = 'busstop';
 			else iconName = 'roadtype_tar';
 		}
-		else if (e.tags.building) iconName = (e.tags.building === 'house' || e.tags.building === 'bungalow') ? 'home-2' : 'apartment-3';
+		else if (e.tags.building) {
+			if (e.tags.building === 'house' || e.tags.building === 'bungalow') iconName = 'bighouse';
+			else if (e.tags.building === 'service') iconName = 'powersubstation';
+			else iconName = 'apartment-3';
+		}
 		else iconName = '000blank';
 		var markerIcon = L.icon({
 			iconUrl: 'assets/img/icons/' + iconName + '.png',

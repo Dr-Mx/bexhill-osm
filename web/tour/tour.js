@@ -7,7 +7,7 @@ function tour(tourName) {
 			case 'fossils':
 				map.removeLayer(imageOverlay);
 				var dinoIcon = L.icon({
-					iconUrl: 'tour/tour1/dinomarker.png',
+					iconUrl: 'tour/tour1/dinopark.png',
 					iconSize: [32, 37],
 					iconAnchor: [16, 35],
 					shadowUrl: 'assets/img/icons/000shadow.png',
