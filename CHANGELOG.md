@@ -14,7 +14,7 @@ Site changes
  - social_facility, hotel, and general facility parser update
  - More descriptive looking icons
  - jQuery UI tooltip for sidebar tabs
- - User window.ontouchstart instead of L.Browser.touch to check if touch device
+ - Use window.ontouchstart instead of L.Browser.touch to check if touch device
  - If location is turned on and user is within the bounds of the map, additional walking direction options are show in popups and context-menu
  - Two new Historic Tour articles, including a geojson bomb map of ww2
  - Bugfix where openstreetmap api would error if trying to select a node
