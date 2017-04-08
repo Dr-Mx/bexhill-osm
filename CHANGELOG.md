@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## v2.7.0
+
+**Date:** 08/04/2017
+
+Updated js
+ - URI.js 1.18.10
+ - jquery-ui.min.js
+
+Site changes
+ - Renamed 'Lookup' to 'Query' (more in-line with osm.org)
+ - Added 'Depends on' state for opening hours
+ - social_facility, hotel, and general facility parser update
+ - More descriptive looking icons
+ - jQuery UI tooltip for sidebar tabs
+ - User window.ontouchstart instead of L.Browser.touch to check if touch device
+ - If location is turned on and user is within the bounds of the map, additional walking direction options are show in popups and context-menu
+ - Two new Historic Tour articles, including a geojson bomb map of ww2
+ - Bugfix where openstreetmap api would error if trying to select a node
+ - Recreated favicons and logos
+ - Various other improvements
+
+
 ## v2.6.0 - Update POI markers
 
 **Date:** 14/03/2017

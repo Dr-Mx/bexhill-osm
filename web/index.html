@@ -5,38 +5,39 @@
 
 	<!-- Display, social network, search index info, disable cache -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta name="application-name" content="Bexhill-OSM" />
-	<meta name="description" content="Explore a highly detailed map of Bexhill-on-Sea, UK. Discover points of interest, walking directions, history and other information." />
-	<meta name="author" content="Alexis Markwick" />
-	<meta property="og:title" content="Bexhill-OSM" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="http://bexhill-osm.org.uk/" />
-	<meta property="og:image" content="http://bexhill-osm.org.uk/assets/img/preview.jpg" />
-	<meta property="og:description" content="Explore a highly detailed map of Bexhill-on-Sea, UK. Discover points of interest, walking directions, history and other information." />
-	<meta http-equiv="Cache-Control" content="no-cache" />
-	<meta http-equiv="Pragma" content="no-cache" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="application-name" content="Bexhill-OSM">
+	<meta name="description" content="Explore a highly detailed map of Bexhill-on-Sea, UK. Discover points of interest, walking directions, history and other information.">
+	<meta name="author" content="Alexis Markwick">
+	<meta property="og:title" content="Bexhill-OSM">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="http://bexhill-osm.org.uk/">
+	<meta property="og:image" content="http://bexhill-osm.org.uk/assets/img/preview.jpg">
+	<meta property="og:description" content="Explore a highly detailed map of Bexhill-on-Sea, UK. Discover points of interest, walking directions, history and other information.">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
 
 	<!-- http://realfavicongenerator.net/ -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=oLaWK24GG8">
-	<link rel="icon" type="image/png" href="/favicon-32x32.png?v=oLaWK24GG8" sizes="32x32">
-	<link rel="icon" type="image/png" href="/favicon-16x16.png?v=oLaWK24GG8" sizes="16x16">
-	<link rel="manifest" href="/manifest.json?v=oLaWK24GG8">
-	<link rel="mask-icon" href="/safari-pinned-tab.svg?v=oLaWK24GG8" color="#b05000">
-	<link rel="shortcut icon" href="/favicon.ico?v=oLaWK24GG8">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=oLaELXy3gr">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png?v=oLaELXy3gr" sizes="32x32">
+	<link rel="icon" type="image/png" href="/favicon-16x16.png?v=oLaELXy3gr" sizes="16x16">
+	<link rel="manifest" href="/manifest.json?v=oLaELXy3gr">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg?v=oLaELXy3gr" color="#b05000">
+	<link rel="shortcut icon" href="/favicon.ico?v=oLaELXy3gr">
 	<meta name="apple-mobile-web-app-title" content="Bexhill-OSM">
+	<meta name="application-name" content="Bexhill-OSM">
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/css/Control.Geocoder.css" />
-	<link rel="stylesheet" href="assets/css/Control.Loading.css" />
-	<link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
-	<link rel="stylesheet" href="assets/css/easy-button.css" />
-	<link rel="stylesheet" href="assets/css/easy-autocomplete.css" />
+	<link rel="stylesheet" href="assets/css/Control.Geocoder.css">
+	<link rel="stylesheet" href="assets/css/Control.Loading.css">
+	<link rel="stylesheet" href="assets/css/leaflet-sidebar.css">
+	<link rel="stylesheet" href="assets/css/easy-button.css">
+	<link rel="stylesheet" href="assets/css/easy-autocomplete.css">
 	<link rel="stylesheet" href="assets/css/leaflet-routing-machine.css">
-	<link rel="stylesheet" href="assets/css/site.css">
+	<link rel="stylesheet" href="assets/css/site.css?v2.7.0">
  </head>
 
  <body>
@@ -45,9 +46,9 @@
 		<div class="sidebar-tabs">
 			<ul role="tablist">
 				<li><a href="#home" title="Home" role="tab"><i class="fa fa-bars fa-2x"></i></a></li>
-				<li><a href="#pois" title="Points of Interest" role="tab"><i class="fa fa-thumb-tack fa-2x"></i></a></li>
+				<li><a href="#pois" title="Points of Interest" role="tab"><i class="fa fa-map-marker fa-2x"></i></a></li>
 				<li><a href="#walking" title="Walking Routes" role="tab"><i class="fa fa-compass fa-2x"></i></a></li>
-				<li><a href="#tour" title="Historic Tour" role="tab"><i class="fa fa-map-signs fa-2x"></i></a></li>
+				<li><a href="#tour" title="Historic Tour" role="tab"><i class="fa fa-bank fa-2x"></i></a></li>
 			</ul>
 			<ul role="tablist">
 				<li><a href="#help" title="Help" role="tab"><i class="fa fa-question fa-2x"></i></a></li>
@@ -61,7 +62,7 @@
 				<h1 class="sidebar-header">Bexhill OpenStreetMap<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
 					<h3>Find an interest</h3>
-					<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. artwork, coffee, doctor, tourism)"></p>
+					<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. artwork, coffee, doctor, hotel)"></p>
 					<label class="opennow"><input type="checkbox"> Only facilities open right now</label>
 					<hr>
 						<h3>Tips to get started</h3>
@@ -69,7 +70,7 @@
 							<ol style="list-style-type:circle; padding-left:20px;">
 								<li>Enter a keyword above to see a group of interests.</li>
 								<li>Find an address by using the <a onclick="geocoderLink();">(<i class="theme fa fa-search"></i>)</a> button.</li>
-								<li>Right-click the map to lookup specific details.</li>
+								<li>Right-click the map to query specific details.</li>
 								<li>Fly to a suburb by clicking the minimap below.</li>
 							</ol>
 						</ul>
@@ -89,7 +90,7 @@
 						</map>
 						<p class="comment">Note: areas to the west are work-in-progress.</p>
 					<hr>
-						<p>Bexhill-OSM is a non-commercial, community based mapping project run entirely on your <a class="theme" onclick="donateLink();">donations</a>. It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
+						<p>Bexhill-OSM is a community based mapping project run entirely on your <a class="theme" onclick="donateLink();">donations</a>. It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
 						<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fa fa-question fa-fw"></i>]</a> for more assistance.
 						<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fa fa-info fa-fw"></i>]</a>.</p>
 					<hr>
@@ -113,32 +114,32 @@
 					<hr>
 					<h3>Suggested leisure walks</h3>
 					<div id="walkContainer">
-						<p class="walkLink" onclick="suggWalk('wwh');"><i class="fa fa-map-marker"></i> Walking the Way to Health (0.7mi)</p>
+						<p class="walkLink" onclick="suggWalk('wwh');"><i class="fa fa-compass"></i> Walking the Way to Health (0.7mi)</p>
 						<div>
 							The route of this walk is marked out by a series of 10 plaques along the promenade. Launched in 2011, it hopes to 
 							encourage people to regularly walk a specific distance along the promenade. Small plinths are placed at ground level 
 							opposite every third beach groyne between numbers 48 and 72. 
 							<a href="https://thebexhillhistorytrail.wordpress.com/2015/01/15/30-walking-the-way-to-health-plaques-west-parade/" target="_blank">Source</a>.
 						</div>
-						<p class="walkLink" onclick="suggWalk('tmt');"><i class="fa fa-map-marker"></i> The Motor Trail (1.3mi)</p>
+						<p class="walkLink" onclick="suggWalk('tmt');"><i class="fa fa-compass"></i> The Motor Trail (1.3mi)</p>
 						<div>
 							In May 1902 Bexhill on Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels 
 							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel</a>).
 							<a href="http://www.discoverbexhill.com/docs/bexhill-guide-2013.pdf#page=5" target="_blank">Source</a>.<br>
 						</div>
-						<p class="walkLink" onclick="suggWalk('greenway');"><i class="fa fa-map-marker"></i> Bexhill to Hastings Greenway (2.6mi)</p>
+						<p class="walkLink" onclick="suggWalk('greenway');"><i class="fa fa-compass"></i> Bexhill to Hastings Greenway (2.6mi)</p>
 						<div>
 							The Greenway runs alongside the Combe Valley Way, providing access for walkers, cyclists and horse riders between Bexhill and Hastings. 
 							It links up with public bridleways and footpaths in the area, including the 1066 Country Walk Bexhill Link, with two sections where horse 
 							riders take an alternative route to walkers and cyclists.
 							<a href="https://www.eastsussex.gov.uk/leisureandtourism/countryside/rightsofway/rights-of-way-in-east-sussex/bexhill-hastings-greenway/" target="_blank">Source</a>.
 						</div>
-						<p class="walkLink" onclick="suggWalk('1066');"><i class="fa fa-map-marker"></i> 1066 Country Walk (3.0mi+)</p>
+						<p class="walkLink" onclick="suggWalk('1066');"><i class="fa fa-compass"></i> 1066 Country Walk (3.0mi+)</p>
 						<div>
 							The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time. This is a 
 							section of the Bexhill - Battle link, the full route can be found <a href="http://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">here</a>.
 						</div>
-						<p class="walkLink" onclick="suggWalk('bc1');"><i class="fa fa-map-marker"></i> Bexhill Circular (6.3mi)</p>
+						<p class="walkLink" onclick="suggWalk('bc1');"><i class="fa fa-compass"></i> Bexhill Circular (6.3mi)</p>
 						<div>
 							This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient 
 							woodland, reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy 
@@ -147,15 +148,15 @@
 						</div>
 					</div>
 					<hr>
-					<h3>Links to more walks</h3>
+					<h3>Offsite walking tours</h3>
 					<p><a href="http://geotourist.com/users/454" target="_blank" title="GeoTourist walks by Bexhill Museum"><img src="assets/img/geotourist.png"></a></p>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="tour">
 				<h1 class="sidebar-header">Historic Tour<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
-					<p><div class="theme tour-control leaflet-bar">
-						<button type="button" id="tourPrev" class="tour-control"><i class="fa fa-chevron-left"></i></button>
+					<div class="theme tour-control leaflet-bar">
+						<button type="button" id="tourPrev" class="tour-control" title="Previous"><i class="fa fa-chevron-left"></i></button>
 							<select id="tourList" class="tour-control">
 								<option value = "0">&nbsp;Introduction</option>
 								<option value = "1">&nbsp;&nbsp; 1. Prehistoric Period</option>
@@ -166,13 +167,13 @@
 								<option value = "6">&nbsp;&nbsp; 6. Birthplace of British Motor Racing (1902)</option>
 								<option value = "7">&nbsp;&nbsp; 7. De La Warr Pavilion (1935)</option>
 								<option value = "8">&nbsp;&nbsp; 8. Old Town Manor</option>
-								<option value = "9" disabled>&nbsp;&nbsp; 9. World War II (1939-45)</option>
-								<option value = "10" disabled>&nbsp; 10. Northeye Prison (1986)</option>
-								<option value = "99">&nbsp;Sources</option>
+								<option value = "9">&nbsp;&nbsp; 9. World War II (1939-45)</option>
+								<option value = "10">&nbsp; 10. Northeye Prison Site</option>
+								<option value = "99">&nbsp;Sources &amp; further reading</option>
 							</select>
-						<button type="button" id="tourNext" class="tour-control"><i class="fa fa-chevron-right"></i></button>
-					</div></p>
-					<iframe id="tourFrame" src="tour/tour0.html"></iframe>
+						<button type="button" id="tourNext" class="tour-control" title="Next"><i class="fa fa-chevron-right"></i></button>
+					</div>
+					<iframe id="tourFrame" src="tour/tour00.html"></iframe>
 				</div>
 			</div>
 			<!-- Lower tabs -->
@@ -203,8 +204,9 @@
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
-						<i class="fa fa-search fa-fw"></i> Lookup area/street/place: Display information on an item under the cursor depending on zoom level (middle-clicking the map acts as shortcut).<br><br>
-						<i class="fa fa-map-marker fa-fw"></i> Add walk point here: Plot a marker to create a walking route.<br><br>
+						<i class="fa fa-search fa-fw"></i> Query area/street/place: Display information on an item under the cursor depending on zoom level (middle-clicking the map acts as shortcut).<br><br>
+						<i class="fa fa-location-arrow fa-fw"></i> Walk to here: If location is turned on and you are within the bounds of the map, this will create walking directions from where you currently are to this location.<br><br>
+						<i class="fa fa-compass fa-fw"></i> Add walk point here: Plot a marker to create a walking route.<br><br>
 						<i class="fa fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
 						<i class="fa fa-sticky-note-o fa-fw"></i> Leave a note here: Report a mistake or something missing.
 						<p><img src="assets/img/context.png" alt="Context-menu preview"></p>
@@ -215,18 +217,19 @@
 						<p><img src="assets/img/find.png" alt="Find interest Preview"></p>
 						<a id="gototabs"></a><hr>
 					<h3>Tabs</h3>
-						[<i class="theme fa fa-thumb-tack fa-fw"></i>] Points of Interest: Select an interest to be displayed on the map.<br><br>
+						[<i class="theme fa fa-map-marker fa-fw"></i>] Points of Interest: Select an interest to be displayed on the map.<br><br>
 						[<i class="theme fa fa-compass fa-fw"></i>] Walking Routes: Select from a few local walks, or create your own path through the many twittens.<br><br>
-						[<i class="theme fa fa-map-signs fa-fw"></i>] Historic Tour: Travel back in time and discover the history of the town.
+						[<i class="theme fa fa-bank fa-fw"></i>] Historic Tour: Travel back in time and discover the history of the town.
 					<p></p>
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
 						To begin displaying POIs, zoom to an area on the map and click up to 3 POI groups. After a few 	moments 
 						the corresponding items will be displayed on the map as markers. Larger map areas may take longer to load.
 						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview"></p>
-						Click each marker to see a pop-up detailing more specific information. Opening hours are 
-						displayed as coloured icons showing if that place is currently open, click this see the full opening times.<br>
-						Clicking edit (<i class="theme fa fa-pencil fa-fw"></i>) opens openstreetmap.org where you can make changes to the POI.
+						Click each marker to see a pop-up detailing more specific information.
+						<p><img src="assets/img/icons/star-3.png" alt="POI preview"></p>
+						Clicking edit (<i class="fa fa-pencil fa-fw"></i>) opens openstreetmap.org where you can make immediate changes to the POI.<br><br>
+						Create walking directions (<i class="fa fa-location-arrow"></i>) to this marker, your location needs to be turned on and be within the bounds of the map.<br>
 						<p><img src="assets/img/popup.png" alt="Marker popup preview"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
@@ -251,10 +254,10 @@
 					</p>
 					<a id="gotoabout"></a><hr>
 					<h3>About &amp; Contact</h3>
-						<p>OpenStreetMap (OSM) is a free, collaborative project to create an editable map of the world. This is an unofficial website that 
-						presents data that has been added by volunteers in Bexhill-on-Sea.</p>
-						<p>Although Bexhill-OSM is not a directory, nor a place for advertising, we do welcome business listings on all public visitable places.</p>
-						<p>Both this website and the underlying area on OpenStreetMap are managed by Alexis Markwick.</p>
+						<p>Bexhill-OSM is part of a community of mappers that want to create a free, editable map of the world. You can learn about the global project at the official <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap website</a>.</p>
+						<p>This independent website was created to herald the community, unique shops and history of Bexhill-on-Sea in a informative, accessible form.</p>
+						<p>Although Bexhill-OSM is not a business directory, nor a place for advertising, we do welcome listings on all public visitable places.</p>
+						<p>Web-development and the underlying map data are managed by Alexis Markwick.</p>
 						<p>If you have any enquiries I can be reached via:<br>
 						&nbsp;<a href="" onclick="this.href='mailto:' + 'info' + '@' + 'bexhill-osm.org.uk';" title="Email"><i class="fa fa-envelope fa-fw"></i> info [at] bexhill-osm.org.uk</a><br>
 						&nbsp;<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fa fa-facebook-official fa-fw"></i> fb.com/bexhillosm</a><br>
@@ -276,19 +279,16 @@
 					<a id="gotodonate"></a><hr>
 					<h3>Donate</h3>
 						<p>Bexhill-OSM is advertisement and commercial free. If you found it useful or just wish to show support, please consider giving a small donation.
-						<br>Your money goes towards server costs and time needed to keep the site up to date. Thank you so much.</p>
+						<br>Your money goes towards server costs and time needed to keep the site up to date. Thank you.</p>
 						<p>
-						<table style="text-align:center; width:100%;"><tr>
-							<td>Paypal<br><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+						<table style="text-align:center; width:100%;">
+							<tr><td><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 								<input type="hidden" name="cmd" value="_s-xclick">
 								<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
-								<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal – The safer, easier way to pay online!">
-							</form></td>
-							<td>Flattr<br><a href="https://flattr.com/submit/auto?fid=voxyne&url=http%3A%2F%2Fbexhill-osm.org.uk%2F" target="_blank"><img src="https://button.flattr.com/flattr-badge-large.png" title="Flattr this" border="0"></a>
-							</td></tr></table>
-							<p style="text-align:center;">Bitcoin<br><a class="comment">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</a></p>
-						</p>
-					</p>
+								<input type="image" src="assets/img/paypal.png" style="padding-bottom:10px;" name="submit" title="PayPal – The safer, easier way to pay online!">
+							</form></td></tr>
+							<tr><td title="Bitcoin"><a href="https://bitcoin.org/en/" target="_blank"><i class="fa fa-btc"></i></a> <i class="comment">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</i></td></tr>
+						</table>
 					<p>
 					<a id="gotosoftware"></a><hr>
 					<h3>Software</h3>
@@ -324,7 +324,6 @@
 							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
-					</p>
 					<div class="anchor"><a href="#gototopinfo" title="Back to top">| <i class="fa fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
@@ -334,7 +333,7 @@
 	<!-- Map -->
 	<div id="map" class="sidebar-map"></div>
 
-	<!-- Overpass query search icon -->
+	<!-- Loading spinner -->
 	<div id="spinner">
 		<i class="fa-stack">
 			<i id="spinner-o" class="fa fa-circle fa-stack-1x"></i>
@@ -365,10 +364,10 @@
 	<script src="assets/js/jquery.md5.min.js"></script>
 	<!-- JavaScript | main site code -->
 	<script src="assets/js/OverPassLayer.js"></script>
-	<script src="assets/js/tags-parsers.js"></script>
-	<script src="assets/js/pois-type.js"></script>
-	<script src="assets/js/site.js"></script>
-	<script src="tour/tour.js"></script>
+	<script src="assets/js/tags-parsers.js?v2.7.0"></script>
+	<script src="assets/js/pois-type.js?v2.7.0"></script>
+	<script src="assets/js/site.js?v2.7.0"></script>
+	<script src="tour/tour.js?v2.7.0"></script>
 
 	<!-- GoogleAnalytics -->
 	<script>

@@ -7,12 +7,13 @@
 	z-index: 1100; }
 @media (min-width: 768px) {
 	.sidebar {
+		opacity: 1;
 		top: 10px;
 		bottom: 10px;
-		transition: width 500ms; } }
+		transition: width 500ms, opacity 250ms; } }
 @media (min-width: 768px) and (max-width: 1199px) {
 	.sidebar {
-		width: 390px; } }
+		width: 350px; } }
 @media (min-width: 1200px) {
     .sidebar {
 		width: 450px; } }
@@ -21,7 +22,11 @@
 	width: 40px; }
 @media (min-width: 768px) {
 	.sidebar.collapsed {
-		width: 45px; } }
+		opacity: 0.7;
+	}
+	.sidebar.collapsed:hover {
+		opacity: 1;
+	} }
 	
 .sidebar-left {
 	left: 0; }
@@ -54,7 +59,6 @@
 	width: 100%;
 	height: 55px;
 	color: #b05000;
-	font-size: 12pt;
 	overflow: hidden;
 	transition: all 80ms; }
 .sidebar-tabs > li:hover, .sidebar-tabs > ul > li:hover {
@@ -78,13 +82,11 @@
 	line-height: 65px;
 	color: inherit;
 	text-decoration: none;
+	font-size: 11pt;
 	text-align: center; }
 .sidebar-tabs > ul + ul {
 	z-index: 0;
 	bottom: 0; }
-@media (min-width: 768px) {
-    .sidebar-tabs, .sidebar-tabs > ul {
-		width: 45px; } }
 
 .sidebar-content {
 	position: absolute;
@@ -100,11 +102,6 @@
 	right: 40px; }
 .sidebar.collapsed > .sidebar-content {
     overflow-y: hidden; }
-@media (min-width: 768px) {
-	.sidebar-left .sidebar-content {
-		left: 45px; }
-	.sidebar-right .sidebar-content {
-		right: 45px; } }
 	
 .sidebar-pane {
 	display: none;
@@ -152,9 +149,6 @@
 	right: 0; }
 .sidebar-right .sidebar-close {
 	left: 0; }
-@media (min-width: 768px) {
-	.sidebar-close {
-		width: 45px; } }
 		
 .sidebar-left ~ .sidebar-map {
 	margin-left: 40px; }
@@ -183,7 +177,7 @@
 
 @media (min-width: 768px) and (max-width: 1199px) {
 	.sidebar-left ~ .sidebar-map .leaflet-left {
-		left: 400px; } }
+		left: 360px; } }
 
 @media (min-width: 1200px) {
 	.sidebar-left ~ .sidebar-map .leaflet-left {
@@ -193,7 +187,7 @@
 	left: 0; }
 @media (min-width: 768px) {
 	.sidebar-left.collapsed ~ .sidebar-map .leaflet-left {
-		left: 55px; } }
+		left: 50px; } }
 
 @media (min-width: 768px) {
 	.sidebar-right ~ .sidebar-map .leaflet-right {

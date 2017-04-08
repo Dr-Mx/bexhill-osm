@@ -19,16 +19,15 @@ var defTileLayer = 'bosm', actTileLayer = defTileLayer;
 var defTab = 'home', actTab = defTab;
 
 // hack to get safari to scroll iframe
-if (L.Browser.touch && navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+if (window.ontouchstart !== undefined && navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) {
 	$('#tour .sidebar-body').css('-webkit-overflow-scrolling', 'touch');
 	$('#tour .sidebar-body').css('overflow', 'auto');
 }
 
 // swipe away sidebar on larger touch devices
 $('.sidebar-content').on('swipeleft', function () {
-	if ($(window).width() >= 768 && L.Browser.touch) sidebar.close();
+	if ($(window).width() >= 768 && window.ontouchstart !== undefined) sidebar.close();
 });
-
 
 // smooth scrolling to anchor
 $(document).on('click', 'a[href*="#goto"]', function (e) {
@@ -39,26 +38,35 @@ $(document).on('click', 'a[href*="#goto"]', function (e) {
 
 $('.sidebar-tabs').click(function () {
 	// get current sidebar-tab
-	actTab = $('.sidebar-pane.active').attr('id');
+	actTab = ($('.sidebar.collapsed').length) ? 'none' : $('.sidebar-pane.active').attr('id');
 	// resize links on minimap
 	if (actTab === 'home') setTimeout(function () { $('map').imageMapResize(); }, 500);
 	// hack to stop iframe freezing on firefox android
-	else if (actTab === 'tour' && L.Browser.touch) $('#tourList').trigger('change');
+	else if (actTab === 'tour' && window.ontouchstart !== undefined) $('#tourList').trigger('change');
 });
 // no sidebar-tab
 $('.sidebar-close').click(function () {	actTab = 'none'; });
 
-var userCountry, areaOutline = '';
+var userCountry = 'GB', areaOutline = '';
 $(document).ready(function () {
 	// clear loading elements
 	$('#spinner').hide();
-	$('#map').css('background', '#dedede');
+	$('#map').css('background', '#e6e6e6');
+	// jquery ui tooltip
+	if (window.ontouchstart === undefined) $('.sidebar-tabs').tooltip({ hide: false, show: false, track: true, position: { my: 'left+15 top+10' } });
 	// https://github.com/davidjbradshaw/image-map-resizer
 	// add delay after load for sidebar to animate open to create minimap
 	setTimeout(function () { $('map').imageMapResize(); }, 500);
 	// get users location so we don't have to show country code on phone numbers
 	$.get('https://ipinfo.io', function (result) { userCountry = result.country; }, 'jsonp');
 	map.on('popupopen', function (e) {
+		// show directions button if user located within map
+		if (lc._active && map.options.maxBounds.contains(lc._event.latlng)) $('.popup-direct').show();
+		$('.popup-direct').click(function () { 
+			var popupLatlng = {};
+			popupLatlng.latlng = e.popup._latlng;
+			walkHere(popupLatlng);
+		});
 		// delay required when switching directly to another popup
 		setTimeout(function () {
 			// opening-hours accordion
@@ -71,8 +79,9 @@ $(document).ready(function () {
 			// https://github.com/jfirebaugh/leaflet-osm
 			// get and display the area outline through openstreetmap api (id is taken from the edit button attribute)
 			if ($('.popup-edit').length) {
+				var nodeway = ($('.popup-edit').attr('id').split('_')[0] === 'node') ? '' : '/full';
 				$.ajax({
-					url: 'http://www.openstreetmap.org/api/0.6/' + $('.popup-edit').attr('id').replace('_', '/') + '/full',
+					url: 'http://www.openstreetmap.org/api/0.6/' + $('.popup-edit').attr('id').replace('_', '/') + nodeway,
 					dataType: 'xml',
 					success: function (xml) {
 						if (siteDebug) console.debug(xml);
@@ -92,7 +101,7 @@ $(document).ready(function () {
 				});
 			}
 			// wikimedia api for image attribution
-			if ($('.popup-imgContainer').length) {
+			if ($('.popup-imgContainer').html() && $('.popup-imgContainer').html().indexOf('wikimedia.org') !== -1) {
 				var img = $('.popup-imgContainer a').attr('href');
 				img = img.split('File:');
 				$.ajax({
@@ -123,50 +132,61 @@ $(document).ready(function () {
 var map = new L.map('map', {
 	contextmenu: true,
 	contextmenuItems: [{
-		text: '<i class="fa fa-search fa-fw"></i> <span class="contextmenu-lookup"></span>',
+		text: '<i class="fa fa-search fa-fw"></i> <span class="contextmenu-query"></span>',
 		index: 0,
-		callback: reverseLookup
+		callback: reverseQuery
 	}, {
-		text: '<i class="fa fa-map-marker fa-fw"></i> Add walk point here',
+		text: '<i class="fa fa-location-arrow fa-fw"></i> Walk to here',
+		index: 1,
+		callback: walkHere
+	}, {
+		text: '<i class="fa fa-compass fa-fw"></i> Add a walk point',
+		index: 2,
 		callback: walkPoint
 	}, {
 		text: '<i class="fa fa-crosshairs fa-fw"></i> Centre map here',
+		index: 3,
 		callback: centreMap
 	}, '-', {
 		text: '<i class="fa fa-sticky-note-o fa-fw"></i> Leave a note here',
+		index: 4,
 		callback: improveMap
 	}]
 });
-// set reverselookup levels
-map.on('zoomend', function () {
-	var contextLookup = [];
-	if (map.getZoom() <= 14) contextLookup = ['', true];
-	else if (map.getZoom() === 15) contextLookup = [' area', false];
-	else if (map.getZoom() <= 17) contextLookup = [' street', false];
-	else if (map.getZoom() >= 18) contextLookup = [' place', false];
-	$('.contextmenu-lookup').html('Lookup' + contextLookup[0]);
-	map.contextmenu.setDisabled(0, contextLookup[1]);
+map.on('contextmenu.show', function () {
+	// set reverseQuery levels
+	var contextQuery = [];
+	if (map.getZoom() <= 14) contextQuery = ['', true];
+	else if (map.getZoom() === 15) contextQuery = [' area', false];
+	else if (map.getZoom() <= 17) contextQuery = [' street', false];
+	else if (map.getZoom() >= 18) contextQuery = [' place', false];
+	$('.contextmenu-query').html('Query' + contextQuery[0]);
+	map.contextmenu.setDisabled(0, contextQuery[1]);
+	// show walkHere if user located within map
+	if (lc._active && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14) $('.leaflet-contextmenu-item').eq(1).show();
+	else $('.leaflet-contextmenu-item').eq(1).hide();
 });
-// middle-mouse button reverselookup on map layer
+// middle-mouse button reverseQuery on map layer
 map.on('mouseup', function (e) {
-	if (e.originalEvent.button === 1 && e.originalEvent.target.id === 'map' && map.getZoom() >= 15) reverseLookup(e);
+	if (e.originalEvent.button === 1 && e.originalEvent.target.id === 'map' && map.getZoom() >= 15) reverseQuery(e);
 });
-var geoMarker, rLookup = false;
-function reverseLookup (e) {
+var geoMarker, rQuery = false;
+function reverseQuery (e) {
 	// get location, look up id on nominatim and pass it to overpass
+	$('#spinner').show();
 	var geocoder = L.Control.Geocoder.nominatim();
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function (results) {
 		geoMarker = results[0];
 		if (geoMarker) {
 			if (siteDebug) console.debug(geoMarker);
 			clear_map();
-			rLookup = true;
+			rQuery = true;
 			show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ')(' + mapBbox + ');');
 		}
 	});
 }
 function walkPoint (e) {
-	if ($(window).width() >= 768 && actTab !== 'walking') $('a[href="#walking"]').click();
+	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').click();
 	// drop a walk marker if one doesn't exist
 	var wp = routingControl.getWaypoints();
 	for (var c in wp) {
@@ -176,6 +196,13 @@ function walkPoint (e) {
 		}
 	}
 	routingControl.spliceWaypoints(wp.length, 0, e.latlng);
+}
+function walkHere (e) {
+	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').click();
+	routingControl.setWaypoints([
+		[lc._event.latlng.lat, lc._event.latlng.lng],
+		[e.latlng.lat, e.latlng.lng]
+	]);
 }
 function centreMap (e) {
 	map.panTo(e.latlng);
@@ -191,7 +218,6 @@ function minimap(latlng, zoom) {
 	map.flyTo(latlng, zoom);
 }
 
-
 // navigation controls for historic tour
 $('#tourNext').click(function () {
 	if ($('#tourList option:selected').next().is(':enabled')) {
@@ -200,7 +226,7 @@ $('#tourNext').click(function () {
 	}
 });
 $('#tour').on('swipeleft', function () {
-	if ($(window).width() < 768 && L.Browser.touch) $('#tourNext').trigger('click');
+	if ($(window).width() < 768 && window.ontouchstart !== undefined) $('#tourNext').trigger('click');
 });
 $('#tourPrev').click(function () {
 	if ($('#tourList option:selected').prev().is(':enabled')) {
@@ -209,10 +235,12 @@ $('#tourPrev').click(function () {
 	}
 });
 $('#tour').on('swiperight', function () {
-	if ($(window).width() < 768 && L.Browser.touch) $('#tourPrev').trigger('click');
+	if ($(window).width() < 768 && window.ontouchstart !== undefined) $('#tourPrev').trigger('click');
 });
 $('#tourList').change(function () {
-	$('#tourFrame').attr('src', 'tour/tour' + $(this).val() + '.html');
+	var tourNum = $(this).val();
+	if (tourNum.length === 1) tourNum = '0' + tourNum;
+	$('#tourFrame').attr('src', 'tour/tour' + tourNum + '.html');
 });
 
 // https://github.com/Leaflet/Leaflet
@@ -343,19 +371,25 @@ map.on('baselayerchange', function (e) {
 });
 
 // https://github.com/domoritz/leaflet-locatecontrol
-L.control.locate({
+var lc = L.control.locate({
 	icon: 'fa fa-location-arrow',
 	setView: true,
 	flyTo: true,
 	keepCurrentZoomLevel: true,
 	metric: false,
+	showPopup: false,
 	strings: {
-		title: 'Locate me',
-		popup: 'Located within {distance} {unit}.',
-		outsideMapBoundsMsg: 'You appear to be located outside the Bexhill area.\nCome visit! :)'
+		title: 'Locate me'
+	},
+	locateOptions: {
+		enableHighAccuracy: true
 	},
 	onLocationError: function () {
 		alert('Sorry, there was an error while trying to locate you.');
+	},
+	onLocationOutsideMapBounds: function () {
+		alert('You appear to be located outside the Bexhill area.\nCome visit! :)');
+		lc.stop();
 	}
 }).addTo(map);
 
@@ -374,9 +408,9 @@ L.Control.geocoder({
 	placeholder: 'Type address or place name...'
 })
 .on('markgeocode', function (e) {
-	// pass nominatim address lookup to overpass
+	// pass nominatim address query to overpass
 	clear_map();
-	rLookup = true;
+	rQuery = true;
 	geoMarker = e.geocode;
 	if (siteDebug) console.debug(geoMarker);
 	if (map.getZoom() <= minOpZoom) map.setZoom(minOpZoom, { animate: false });
@@ -506,10 +540,8 @@ function populate_tabs() {
 			maxNumberOfElements: 10,
 			match: { enabled: true },
 			onChooseEvent: function () {
-				// find selected items category, split it to get checkbox, then display
-				var z = ($('#autocomplete').getSelectedItemIndex());
-				var catSplit = (document.getElementsByClassName('eac-category')[z].innerText);
-				catSplit = catSplit.split(' - ');
+				// find selected items category and split it to get checkbox, then display
+				var catSplit = $('.eac-category')[$('#autocomplete').getSelectedItemIndex()].textContent.split(' - ');
 				clear_map();
 				$('a[href="#pois"]').click();
 				$('#pois input[id="' + catSplit[1] + '"]').prop('checked', true);
@@ -535,7 +567,7 @@ function populate_tabs() {
 	for (c in categoryList) {
 		t = 0;
 		checkboxContent += '<div id="goto' + categoryList[c] + '"><hr><h3>' + categoryList[c] + '</h3></div>';
-		checkboxContent += '<table style="width:100%;">';
+		checkboxContent += '<table>';
 		for (poi in pois) {
 			if (pois[poi].catName === categoryList[c]) {
 				if (t % 2 === 0) checkboxContent += '<tr>';
@@ -594,8 +626,8 @@ function setting_changed(newcheckbox) {
 }
 // checkbox highlight
 $('input.poi-checkbox').change(function () {
-	if ($(this).prop('checked') === true) $(this).parent().parent().parent().css('background-color', 'rgba(255,255,255,0.6)');
-	else $(this).parent().parent().parent().css('background-color', '');
+	if ($(this).prop('checked') === true) $(this).parent().css('background-color', 'rgba(255,255,255,0.6)');
+	else $(this).parent().css('background-color', '');
 });
 
 // suggested walk waypoints
@@ -695,7 +727,7 @@ if (uri.hasQuery('P')) {
 	setting_changed();
 }
 else if (uri.hasQuery('I')) {
-	rLookup = true;
+	rQuery = true;
 	markerId = uri.search(true).I;
 	var splitId = markerId.split('_');
 	show_overpass_layer(splitId[0] + '(' + splitId[1] + ')(' + mapBbox + ');');

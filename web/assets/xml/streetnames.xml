@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="streetnames.xsl"?>
+
+<!-- Taken from 'The Story of Bexhill Street Names' by Dr Paul Wright, Local History Group, 2014 -->
+
 <streetNames>
+	<copyright>
+		<author>Dr Paul Wright, Local History Group, 2014</author>
+		<source>http://www.bexhillmuseum.co.uk/museum-pages/research-104.html</source>
+	</copyright>
 	<street>
 		<name>Abbey View</name>
 		<date>1955</date>
@@ -1007,7 +1014,7 @@
 	</street>
 	<street>
 		<name>Fairmount Road</name>
-		<date>1891 777777</date>
+		<date>1891</date>
 		<desc>Built on the former Fairmount Estate, which in 1887 was bordered approximately by the present-day Hastings Road, Elmstead Road, Dorset Road and De La Warr Road. In the 1886 street directory, Fairmount and Elmstead were both large detached houses on St Johns Road. Elmstead is still there in March 2013 but Fairmount was demolished in about 1923. Although Fairmount Road is close to Elmstead Road it is uncertain whether the two properties in St Johns Road had any influence on the choice of these two road names. (Adopted by Borough of Bexhill 20th October 1902).</desc>
 	</street>
 	<street>
@@ -3005,8 +3012,4 @@
 		<date>1937</date>
 		<desc>Prince Albert, Duke of York and later King George VI (1895 – 1952), was the second son of King George V. (Gloucester Avenue and Kent Close are nearby). (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
-	<copyright>
-		<author>Dr Paul Wright, Local History Group, 2014</author>
-		<source>http://www.bexhillmuseum.co.uk/museum-pages/research-104.html</source>
-	</copyright>
 </streetNames>

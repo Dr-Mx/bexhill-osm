@@ -62,7 +62,7 @@ var pois = {
 		query: '["HE_ref"~"."]',
 		iconName: 'house',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'listed-building', 'historic', 'heritage']
+		tagKeyword: ['tourism', 'listed', 'historic', 'heritage']
 	},
 
 	park: {
@@ -70,7 +70,7 @@ var pois = {
 		query: '["leisure"~"park|common"]',
 		iconName: 'urbanpark',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['park', 'common']
+		tagKeyword: ['park', 'common', 'open-space', 'green']
 	},
 
 	recreation_ground: {
@@ -78,7 +78,7 @@ var pois = {
 		query: '[landuse=recreation_ground]',
 		iconName: 'soccer',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['recreation-ground', 'sport', 'park', 'football']
+		tagKeyword: ['recreation-ground', 'sport', 'park', 'football', 'open-space', 'green']
 	},
 
 	playground: {
@@ -86,7 +86,7 @@ var pois = {
 		query: '[leisure=playground]',
 		iconName: 'playground',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['playground', 'park']
+		tagKeyword: ['playground', 'park', 'open-space', 'kids']
 	},
 
 	picnic_table: {
@@ -110,7 +110,7 @@ var pois = {
 		query: '[landuse=allotments]',
 		iconName: 'soil',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['allotment']
+		tagKeyword: ['allotment', 'garden']
 	},
 
 	club: {
@@ -118,7 +118,7 @@ var pois = {
 		query: '[amenity=club]',
 		iconName: 'conversation-map-icon',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['organisation-club', 'social', 'events-venue', 'sports-club'],
+		tagKeyword: ['organisation', 'social', 'events', 'venue', 'sport', 'club'],
 		tagParser: club_parser
 	},
 
@@ -127,7 +127,7 @@ var pois = {
 		query: '[leisure=fitness_centre]',
 		iconName: 'weights',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['fitness-centre', 'leisure-centre', 'gym', 'sport']
+		tagKeyword: ['fitness', 'leisure', 'gym', 'sport']
 	},
 
 	swimming_pool: {
@@ -135,7 +135,7 @@ var pois = {
 		query: '[leisure=swimming_pool]',
 		iconName: 'swimming2',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['swimming-pool', 'leisure-centre', 'sport']
+		tagKeyword: ['swim', 'leisure', 'sport', 'pool']
 	},
 
 	boat_rental: {
@@ -143,15 +143,15 @@ var pois = {
 		query: '[amenity=boat_rental]',
 		iconName: 'rowboat',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['boat-rental']
+		tagKeyword: ['boat', 'rental']
 	},
 
 	amusement_arcade: {
-		name: 'Amusement-Arcade',
+		name: 'Amusement Arcade',
 		query: '[leisure=amusement_arcade]',
 		iconName: 'casino-2',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['amusement-arcade', 'arcade', 'gambling']
+		tagKeyword: ['amusement-arcade', 'gamble']
 	},
 
 	guest_house: {
@@ -159,7 +159,7 @@ var pois = {
 		query: '["tourism"~"guest_house|hotel"]',
 		iconName: 'bed_breakfast1-2',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'bed-and-breakfast', 'hotel', 'guest-house', 'lodging', 'sleep'],
+		tagKeyword: ['tourism', 'bed-and-breakfast', 'hotel', 'guest-house', 'lodge', 'sleep'],
 		tagParser: hotel_parser
 	},
 
@@ -168,20 +168,28 @@ var pois = {
 		query: '[tourism=apartment]',
 		iconName: 'villa',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'apartment', 'self-catering', 'lodging', 'sleep', 'bed'],
+		tagKeyword: ['tourism', 'apartment', 'self-cater', 'lodge', 'sleep', 'bed'],
 		tagParser: hotel_parser
 	},
 
 	caravan_site: {
-		name: 'Caravan-Site',
+		name: 'Caravan Site',
 		query: '[tourism=caravan_site]',
 		iconName: 'campingcar',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'caravan-site', 'camping', 'sleep']
+		tagKeyword: ['tourism', 'caravan-site', 'camp', 'sleep']
 	},
 
 	// AMENITIES - 85929e - 7e5109 - 2980b9 - d4ac0d - 45b39d
-
+/*
+	fairtrade: {
+		name: 'Fairtrade',
+		query: '[fair_trade=yes]',
+		iconName: 'fairtrade',
+		catName: 'Amenities',
+		tagKeyword: ['fairtrade']
+	},
+*/
 	wheelchair: {
 		name: 'Wheelchair Access',
 		query: '[wheelchair=yes]',
@@ -195,7 +203,7 @@ var pois = {
 		query: '[dog=yes]',
 		iconName: 'dogs_leash',
 		catName: 'Amenities',
-		tagKeyword: ['dog friendly']
+		tagKeyword: ['dog']
 	},
 
 	cafe: {
@@ -207,20 +215,13 @@ var pois = {
 		tagParser: food_parser
 	},
 
-	ice_cream: {
-		name: 'Ice-Cream',
-		query: '[ice_cream=yes]',
-		iconName: 'icecream',
+	restaurant: {
+		name: 'Restaurant',
+		query: '[amenity=restaurant]',
+		iconName: 'restaurant',
 		catName: 'Amenities',
-		tagKeyword: ['ice-cream']
-	},
-
-	bar: {
-		name: 'Bar/Nightclub',
-		query: '["amenity"~"bar|nightclub"]',
-		iconName: 'bar_coktail',
-		catName: 'Amenities',
-		tagKeyword: ['bar', 'nightclub', 'cocktail', 'drink', 'dancing', 'alcohol', 'wine']
+		tagKeyword: ['restaurant', 'food', 'eat', 'takeaway', 'dine', 'lunch'],
+		tagParser: food_parser
 	},
 
 	fast_food: {
@@ -232,13 +233,12 @@ var pois = {
 		tagParser: food_parser
 	},
 
-	restaurant: {
-		name: 'Restaurant',
-		query: '[amenity=restaurant]',
-		iconName: 'restaurant',
+	ice_cream: {
+		name: 'Ice-Cream',
+		query: '[ice_cream=yes]',
+		iconName: 'icecream',
 		catName: 'Amenities',
-		tagKeyword: ['restaurant', 'food', 'eat', 'take-away', 'dining', 'lunch'],
-		tagParser: food_parser
+		tagKeyword: ['ice-cream']
 	},
 
 	pub: {
@@ -250,12 +250,20 @@ var pois = {
 		tagParser: pub_parser
 	},
 
+	bar: {
+		name: 'Bar/Nightclub',
+		query: '["amenity"~"bar|nightclub"]',
+		iconName: 'bar_coktail',
+		catName: 'Amenities',
+		tagKeyword: ['bar', 'nightclub', 'cocktail', 'drink', 'dance', 'alcohol', 'wine']
+	},
+
 	marketplace: {
 		name: 'Marketplace',
 		query: '[amenity=marketplace]',
 		iconName: 'market',
 		catName: 'Amenities',
-		tagKeyword: ['market-place', 'greengrocer', 'fruit', 'vegetables', 'cheese', 'meat']
+		tagKeyword: ['market', 'greengrocer', 'fruit', 'vegetables', 'cheese', 'meat']
 	},
 
 	toilets: {
@@ -263,7 +271,7 @@ var pois = {
 		query: '[amenity=toilets]',
 		iconName: 'toilets',
 		catName: 'Amenities',
-		tagKeyword: ['toilet', 'wc', 'restroom', 'baby-changing', 'lavatory'],
+		tagKeyword: ['toilet', 'water-closet', 'restroom', 'baby-change', 'lavatory', 'bog'],
 		tagParser: toilet_parser
 	},
 
@@ -281,7 +289,7 @@ var pois = {
 		query: '[amenity=telephone]',
 		iconName: 'telephone',
 		catName: 'Amenities',
-		tagKeyword: ['telephone-box', 'phone-box']
+		tagKeyword: ['telephone', 'emergency', 'help']
 	},
 
 	post_box: {
@@ -289,7 +297,7 @@ var pois = {
 		query: '[amenity~"post_box|post_office"]',
 		iconName: 'postal',
 		catName: 'Amenities',
-		tagKeyword: ['post-box', 'letter', 'mail', 'post-office'],
+		tagKeyword: ['post', 'letter', 'mail'],
 		tagParser: post_parser
 	},
 
@@ -306,7 +314,7 @@ var pois = {
 		query: '[amenity=recycling]',
 		iconName: 'recycle',
 		catName: 'Amenities',
-		tagKeyword: ['recycling'],
+		tagKeyword: ['recycle', 'dump', 'refuse', 'rubbish'],
 		tagParser: recyclecentre_parser
 	},
 
@@ -324,7 +332,7 @@ var pois = {
 		query: '[amenity=grit_bin]',
 		iconName: 'roadtype_gravel',
 		catName: 'Amenities',
-		tagKeyword: ['grit-bin']
+		tagKeyword: ['grit-bin', 'snow']
 	},
 
 	parking: {
@@ -332,7 +340,7 @@ var pois = {
 		query: '[amenity=parking]',
 		iconName: 'parking',
 		catName: 'Amenities',
-		tagKeyword: ['car-parking', 'motoring'],
+		tagKeyword: ['car-parking', 'motor'],
 		tagParser: carpark_parser
 	},
 
@@ -341,7 +349,7 @@ var pois = {
 		query: '[amenity=bicycle_parking]',
 		iconName: 'parking_bicycle',
 		catName: 'Amenities',
-		tagKeyword: ['bicycle-parking', 'cycling', 'bike'],
+		tagKeyword: ['bike-parking', 'bicycle'],
 		tagParser: bikepark_parser
 	},
 
@@ -359,7 +367,7 @@ var pois = {
 		query: '[amenity=fuel]',
 		iconName: 'fillingstation',
 		catName: 'Amenities',
-		tagKeyword: ['fuel', 'gas-station', 'petrol-station', 'unleaded', 'diesel', 'motoring'],
+		tagKeyword: ['fuel', 'gas', 'petrol', 'unleaded', 'diesel', 'motor', 'station'],
 		tagParser: fuelstation_parser
 	},
 
@@ -368,7 +376,7 @@ var pois = {
 		query: '["shop"~"car_repair|tyres"]',
 		iconName: 'carrepair',
 		catName: 'Amenities',
-		tagKeyword: ['car-repair', 'garage', 'tyres', 'mechanic', 'motoring']
+		tagKeyword: ['repair', 'garage', 'tyres', 'mechanic', 'motor', 'car']
 	},
 
 	car_rental: {
@@ -376,7 +384,7 @@ var pois = {
 		query: '[amenity=car_rental]',
 		iconName: 'carrental',
 		catName: 'Amenities',
-		tagKeyword: ['car-rental', 'rental', 'motoring']
+		tagKeyword: ['car-rental', 'motor']
 	},
 
 	car_wash: {
@@ -384,7 +392,7 @@ var pois = {
 		query: '[amenity=car_wash]',
 		iconName: 'carwash',
 		catName: 'Amenities',
-		tagKeyword: ['car-wash', 'motoring']
+		tagKeyword: ['car-wash', 'motor']
 	},
 
 	veterinary: {
@@ -396,11 +404,11 @@ var pois = {
 	},
 
 	animal_shelter: {
-		name: 'Animal-Shltr/Brding',
+		name: 'Animal Kennel',
 		query: '["amenity"~"animal_shelter|animal_boarding"]',
 		iconName: 'animal-shelter-export',
 		catName: 'Amenities',
-		tagKeyword: ['animal-shelter', 'animal-boarding', 'pet', 'cat', 'dog']
+		tagKeyword: ['kennel', 'shelter', 'board', 'pet', 'cat', 'dog', 'animal']
 	},
 
 	// SERVICES - 2874a6 - a04000 - 1abc9c - af7ac5
@@ -410,7 +418,7 @@ var pois = {
 		query: '[amenity=townhall]',
 		iconName: 'townhouse',
 		catName: 'Services',
-		tagKeyword: ['townhall', 'administration']
+		tagKeyword: ['townhall', 'administration', 'council', 'government']
 	},
 
 	community_centre: {
@@ -418,7 +426,7 @@ var pois = {
 		query: '[amenity=community_centre]',
 		iconName: 'communitycentre',
 		catName: 'Services',
-		tagKeyword: ['community-centre', 'meeting', 'events-venue', 'social']
+		tagKeyword: ['community-centre', 'meet', 'events-venue', 'social']
 	},
 
 	police: {
@@ -450,7 +458,7 @@ var pois = {
 		query: '[amenity=library]',
 		iconName: 'library',
 		catName: 'Services',
-		tagKeyword: ['library', 'books']
+		tagKeyword: ['library', 'books', 'read']
 	},
 
 	jobcentre: {
@@ -458,7 +466,7 @@ var pois = {
 		query: '[amenity=jobcentre]',
 		iconName: 'workoffice',
 		catName: 'Services',
-		tagKeyword: ['job-centre', 'employment-office']
+		tagKeyword: ['job', 'employment']
 	},
 
 	surveillance: {
@@ -466,7 +474,7 @@ var pois = {
 		query: '[man_made=surveillance]',
 		iconName: 'cctv',
 		catName: 'Services',
-		tagKeyword: ['surveillance-camera', 'cctv', 'security-camera'],
+		tagKeyword: ['surveillance', 'cctv', 'security', 'camera'],
 		tagParser: cctv_parser
 	},
 
@@ -484,7 +492,7 @@ var pois = {
 		query: '[amenity=kindergarten]',
 		iconName: 'daycare',
 		catName: 'Services',
-		tagKeyword: ['daycare', 'kindergarten', 'nursery', 'child-care']
+		tagKeyword: ['daycare', 'kindergarten', 'nursery']
 	},
 
 	place_of_worship: {
@@ -501,7 +509,7 @@ var pois = {
 		query: '["amenity"~"social_facility|retirement_home"]',
 		iconName: 'sozialeeinrichtung',
 		catName: 'Services',
-		tagKeyword: ['care-home', 'retirement-home', 'nursing-home', 'social-facility', 'sheltered-housing'],
+		tagKeyword: ['care', 'retirement', 'nurse', 'home', 'social-facility', 'sheltered-house'],
 		tagParser: socialf_parser
 	},
 
@@ -535,7 +543,7 @@ var pois = {
 		query: '[amenity=dentist]',
 		iconName: 'dentist',
 		catName: 'Services',
-		tagKeyword: ['dentist', 'teeth', 'dentures']
+		tagKeyword: ['dentist', 'teeth']
 	},
 
 	healthcare: {
@@ -560,7 +568,7 @@ var pois = {
 		query: '["shop"~"mobility|hearing_aids"]',
 		iconName: 'retirement_home',
 		catName: 'Services',
-		tagKeyword: ['mobility', 'wheelchair', 'hearing', 'disability']
+		tagKeyword: ['mobility', 'wheelchair', 'deaf', 'disabled']
 	},
 
 	funeral_directors: {
@@ -576,7 +584,7 @@ var pois = {
 		query: '[office=estate_agent]',
 		iconName: 'apartment-2',
 		catName: 'Services',
-		tagKeyword: ['estate-agent', 'property', 'housing']
+		tagKeyword: ['estate-agent', 'property']
 	},
 
 	accountant: {
@@ -610,7 +618,7 @@ var pois = {
 		query: '[shop=supermarket]',
 		iconName: 'supermarket',
 		catName: 'Shops',
-		tagKeyword: ['supermarket', 'shopping']
+		tagKeyword: ['supermarket', 'food']
 	},
 
 	convenience: {
@@ -678,11 +686,11 @@ var pois = {
 	},
 
 	tobacco: {
-		name: 'Cigarettes',
+		name: 'Smoking',
 		query: '["shop"~"tobacco|e-cigarette"]',
 		iconName: 'smoking',
 		catName: 'Shops',
-		tagKeyword: ['tobacco', 'e-cigarette', 'smoking', 'vaping']
+		tagKeyword: ['tobacco', 'e-cigarette', 'smoke', 'vape']
 	},
 
 	bookmaker: {
@@ -690,7 +698,7 @@ var pois = {
 		query: '[shop=bookmaker]',
 		iconName: 'cup',
 		catName: 'Shops',
-		tagKeyword: ['bookmaker', 'betting', 'gambling']
+		tagKeyword: ['bookmaker', 'bet', 'gamble']
 	},
 
 	variety_store: {
@@ -698,7 +706,7 @@ var pois = {
 		query: '[shop=variety_store]',
 		iconName: 'mall',
 		catName: 'Shops',
-		tagKeyword: ['variety-store', 'pound-store', '99p', 'supplies', 'toys', 'confectionery']
+		tagKeyword: ['variety', 'pound', '99p', 'supplies', 'toys', 'confectionery']
 	},
 
 	stationery: {
@@ -706,7 +714,7 @@ var pois = {
 		query: '[shop=stationery]',
 		iconName: 'pens',
 		catName: 'Shops',
-		tagKeyword: ['stationery', 'office-supplies']
+		tagKeyword: ['stationery', 'supplies']
 	},
 
 	doityourself: {
@@ -722,7 +730,7 @@ var pois = {
 		query: '["shop"~"clothes|boutique|department_store"]',
 		iconName: 'clothers_female',
 		catName: 'Shops',
-		tagKeyword: ['clothing', 'boutique', 'department-store'],
+		tagKeyword: ['clothes', 'boutique', 'department-store'],
 		tagParser: clothes_parser
 	},
 
@@ -731,7 +739,7 @@ var pois = {
 		query: '[shop=tailor]',
 		iconName: 'tailor',
 		catName: 'Shops',
-		tagKeyword: ['clothing', 'tailor']
+		tagKeyword: ['clothes', 'tailor']
 	},
 
 	charity: {
@@ -739,7 +747,7 @@ var pois = {
 		query: '[shop=charity]',
 		iconName: 'charity',
 		catName: 'Shops',
-		tagKeyword: ['charity', 'clothing', 'books', 'toys', 'confectionery', 'furniture', 'crafts', 'second-hand']
+		tagKeyword: ['charity', 'clothes', 'books', 'toys', 'confectionery', 'furniture', 'crafts', 'second-hand']
 	},
 
 	shoes: {
@@ -771,7 +779,7 @@ var pois = {
 		query: '[shop=carpet]',
 		iconName: 'textiles',
 		catName: 'Shops',
-		tagKeyword: ['carpet', 'flooring']
+		tagKeyword: ['carpet', 'floor']
 	},
 
 	bed: {
@@ -803,7 +811,7 @@ var pois = {
 		query: '[shop=bag]',
 		iconName: 'bags',
 		catName: 'Shops',
-		tagKeyword: ['bag', 'handbag']
+		tagKeyword: ['handbag']
 	},
 
 	watches: {
@@ -819,8 +827,7 @@ var pois = {
 		query: '[shop=hairdresser]',
 		iconName: 'barber',
 		catName: 'Shops',
-		tagKeyword: ['barber', 'hairdresser'],
-		tagParser: hairdresser_parser
+		tagKeyword: ['barber', 'hairdresser']
 	},
 
 	beauty: {
@@ -828,7 +835,7 @@ var pois = {
 		query: '[shop=beauty]',
 		iconName: 'beautysalon',
 		catName: 'Shops',
-		tagKeyword: ['hairdresser', 'beauty', 'massage', 'nails', 'tanning']
+		tagKeyword: ['hairdresser', 'beauty', 'massage', 'nails', 'tan']
 	},
 
 	massage: {
@@ -850,9 +857,9 @@ var pois = {
 	tattoo: {
 		name: 'Tattoo',
 		query: '[shop=tattoo]',
-		iconName: 'acupuncture',
+		iconName: 'tattoo',
 		catName: 'Shops',
-		tagKeyword: ['tattoo', 'piercing']
+		tagKeyword: ['tattoo', 'pierce']
 	},
 
 	dry_cleaning: {
@@ -860,7 +867,7 @@ var pois = {
 		query: '["shop"~"dry_cleaning|laundry"]',
 		iconName: 'laundromat',
 		catName: 'Shops',
-		tagKeyword: ['laundry', 'dry-cleaning', 'washing']
+		tagKeyword: ['laundry', 'dry-clean', 'wash']
 	},
 
 	travel_agency: {
@@ -884,7 +891,7 @@ var pois = {
 		query: '[shop=art]',
 		iconName: 'museum_art',
 		catName: 'Shops',
-		tagKeyword: ['art-gallery', 'gallery']
+		tagKeyword: ['art-gallery']
 	},
 
 	books: {
@@ -892,7 +899,7 @@ var pois = {
 		query: '[shop=books]',
 		iconName: 'book',
 		catName: 'Shops',
-		tagKeyword: ['books', 'reading']
+		tagKeyword: ['books', 'read']
 	},
 
 	antiques: {
@@ -908,7 +915,7 @@ var pois = {
 		query: '[shop=second_hand]',
 		iconName: '2hand',
 		catName: 'Shops',
-		tagKeyword: ['second-hand', 'clothing', 'books', 'toys', 'confectionery', 'furniture', 'crafts']
+		tagKeyword: ['second-hand', 'clothes', 'books', 'toys', 'confectionery', 'furniture', 'crafts']
 	},
 
 	craft: {
@@ -925,7 +932,7 @@ var pois = {
 		query: '[shop=frame]',
 		iconName: 'beautifulview',
 		catName: 'Shops',
-		tagKeyword: ['picture-framing', 'artwork-framing']
+		tagKeyword: ['picture', 'artwork', 'frame']
 	},
 
 	gift: {
@@ -949,7 +956,7 @@ var pois = {
 		query: '[shop=fishing]',
 		iconName: 'fishingstore',
 		catName: 'Shops',
-		tagKeyword: ['fishing', 'angling']
+		tagKeyword: ['fish', 'angling']
 	},
 
 	pet: {
@@ -957,7 +964,7 @@ var pois = {
 		query: '[shop=pet]',
 		iconName: 'pets',
 		catName: 'Shops',
-		tagKeyword: ['pet', 'cat', 'dog']
+		tagKeyword: ['pet', 'cat', 'dog', 'animals']
 	},
 
 	music: {
@@ -973,7 +980,7 @@ var pois = {
 		query: '[shop=musical_instrument]',
 		iconName: 'music_rock',
 		catName: 'Shops',
-		tagKeyword: ['musical-instrument', 'instrument']
+		tagKeyword: ['musical', 'instrument']
 	},
 
 	electronics: {
@@ -1013,7 +1020,7 @@ var pois = {
 		query: '[shop=bicycle]',
 		iconName: 'bicycle_shop',
 		catName: 'Shops',
-		tagKeyword: ['bicycle', 'cycling', 'bike'],
+		tagKeyword: ['bicycle', 'bike'],
 		tagParser: bikeshop_parser
 	},
 

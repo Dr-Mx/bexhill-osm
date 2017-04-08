@@ -2,16 +2,17 @@
     "name": "Bexhill-OSM",
     "icons": [
         {
-            "src": "/android-chrome-192x192.png?v=oLaWK24GG8",
+            "src": "/android-chrome-192x192.png?v=oLaELXy3gr",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/android-chrome-512x512.png?v=oLaWK24GG8",
+            "src": "/android-chrome-512x512.png?v=oLaELXy3gr",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
     "theme_color": "#b05000",
-    "background_color": "#b05000"
+    "background_color": "#b05000",
+    "display": "standalone"
 }

@@ -14,9 +14,15 @@ html, body, #map {
 	height: 100%;
 	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
+@media (min-width: 768px) and (max-width: 1199px), (max-width: 350px) {
+	body {
+		font-size: 10pt;
+	}
+}
+
 #map {
-	background: #be7b43;
-	background: linear-gradient(#b05000, #dedede);
+	background: #cb9b73;
+	background: linear-gradient(#b05000, #e6e6e6);
 }
 
 .theme {
@@ -26,7 +32,7 @@ html, body, #map {
 a {
 	text-decoration: none;
 }
-a:link, a:visited, a:hover {
+a:link, a:visited, a:hover, .leaflet-container a {
 	color: #b05000;
 	cursor: pointer;
 }
@@ -62,7 +68,7 @@ hr {
 .comment {
 	text-align: center;
 	font-style: italic;
-	font-size: 10pt;
+	font-size: 90%;
 	color: #808080;
 }
 .comment:hover {
@@ -74,11 +80,6 @@ hr {
 	border-top: 0;
 	overflow: auto;
 	height: 100%;
-}
-
-.sidebar-tabs > li {
-	font-size: 28pt !important;
-	padding-top: 5px;
 }
 
 .leaflet-contextmenu {
@@ -173,8 +174,7 @@ hr {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -50px;
-	margin-top: -50px;
+	transform: translate(-50%, -50%);
 	z-index: 500;
 	pointer-events: none;
 }
@@ -185,14 +185,14 @@ hr {
 }
 
 /* poi tab */
-#pois .sidebar-body > table > tbody > tr > td {
-	overflow: hidden;
-	white-space: nowrap;
+#pois .sidebar-body > table {
+	width: 100%;
+	table-layout: fixed;
 }
 .poi-checkbox > label > img {
 	float: left;
-	width: 28px;
-	margin-right: 3px;
+	height: 32px;
+	margin: 2px 3px;
 }
 input[type="checkbox"] {
 	transform: scale(1.2);
@@ -201,6 +201,9 @@ input[type="checkbox"] {
 .poi-checkbox > label {
 	display: inline-block;
 	width: 100%;
+	border-radius: 5px;
+	white-space: nowrap;
+	cursor: pointer;
 }
 .poi-checkbox > label:hover {
 	background-color: rgba(255,255,255,0.6);
@@ -209,10 +212,14 @@ input[type="checkbox"] {
 	display: none;
 }
 .poi-checkbox > label > span, .opennow {
-	font-size: 9pt;
+	font-size: 90%;
 }
 .poi-checkbox > label > span {
 	line-height: 2.6;
+	display: inline-block;
+	overflow: hidden;
+	width: calc(100% - 40px);
+	height: 32px;
 }
 .poi-checkbox > label > input:checked + span {
 	font-weight: bold;
@@ -233,6 +240,8 @@ input[type="checkbox"] {
 	color: darkgreen;
 	text-indent: 3px;
 	cursor: pointer;
+	border-radius: 3px;
+	cursor: pointer;
 }
 .walkLink:hover {
 	background-color: rgba(255,255,255,0.6);
@@ -246,6 +255,10 @@ input[type="checkbox"] {
 	border: none;
 	height: 26px;
 	width: 100%;
+	margin: 4px 0 12px 0;
+}
+.tour-control button {
+	border-radius: 4px;
 }
 #tourList {
 	width: 70%;
@@ -256,7 +269,7 @@ input[type="checkbox"] {
 	color: black;
 }
 #tourFrame {
-	height: calc(100% - 55px);
+	height: calc(100% - 42px);
 	width: 100%;
 	border: none;
 }
@@ -277,7 +290,7 @@ input[type="checkbox"] {
 }
 
 /* marker popups */
-@media screen and (max-width: 767px) {
+@media (max-width: 767px) {
 	.popup-streetDesc {
 		max-height: 200px !important;
 	}
@@ -300,10 +313,23 @@ input[type="checkbox"] {
 	padding-right: 10px;
 	margin: 0 10px 10px 19px;
 }
-.popup-edit {
-	top: 11px;
-	right: 20px;
+.leaflet-popup-close-button {
+	color: #777 !important;
+}
+.popup-edit, .popup-direct {
+	top: 3px;
 	position: absolute;
+	color: #777 !important;
+}
+.popup-edit:hover, .popup-direct:hover, .leaflet-popup-close-button:hover {
+	color: #b05000 !important;
+}
+.popup-edit {
+	right: 25px;
+}
+.popup-direct {
+	right: 45px;
+	display: none;
 }
 .popup-header {
 	margin: auto -20px 10px -20px;
@@ -314,7 +340,7 @@ input[type="checkbox"] {
 	background-color: rgba(200,200,200,0.2);
 }
 .popup-header h3 {
-	padding-right: 35px;
+	padding-right: 55px;
 	margin: 0 auto 0;
 }
 .popup-header-tagName {
@@ -343,10 +369,10 @@ input[type="checkbox"] {
 	margin-bottom: -4px;
 	text-indent: 0;
 }
-.popup-streetDesc {
+.popup-longDesc {
 	display: block;
 	overflow-y: auto;
-	max-height: 250px;
+	max-height: 150px;
 	text-align: justify;
 	padding-right: 3px;
 }
@@ -368,9 +394,10 @@ input[type="checkbox"] {
 	margin-top: 10px;
 	text-align: center;
 }
-.popup-imgContainer a img {
+.popup-imgContainer img {
 	max-height: 256px;
 	border: 2px solid #ccc;
+	border-radius: 5px;
 }
 .popup-imgAttrib, .popup-imgAttrib a:link, .popup-imgAttrib a:visited, .popup-imgAttrib a:hover {
 	font-size: 75%;
@@ -386,12 +413,29 @@ input[type="checkbox"] {
 	margin-top: -5px;
 	margin-bottom: -5px;
 }
-.leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-tooltip {
-	background-color: rgba(244,244,244,0.9);
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+	background-color: rgba(244,244,244,0.95);
 }
 .leaflet-popup-content-wrapper {
 	padding: 0 1px 1px 1px;
 }
 .leaflet-tooltip {
 	font-size: 10pt;
+}
+
+.ui-tooltip {
+	padding: 3px;
+	position: absolute;
+	z-index: 9999;
+	max-width: 50px;
+	background-color: rgba(244,244,244,0.9);
+	font-size: 60%;
+	text-align: center;
+	border: 1px solid rgba(204,204,204,0.9);
+}
+.ui-widget-shadow {
+	box-shadow: 2px 2px 5px #666666;
+}
+.ui-helper-hidden-accessible {
+	display: none;
 }

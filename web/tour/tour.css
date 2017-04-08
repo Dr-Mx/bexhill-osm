@@ -4,13 +4,14 @@ body {
 	text-align: justify;
 	margin: 0;
 }
-
-strong {
-	font-size: 115%;
+@media (max-width: 310px) {
+	body {
+		font-size: 10pt;
+	}
 }
 
 sup {
-	font-size: 75%
+	font-size: 60%
 }
 
 ul, ol {
@@ -25,7 +26,7 @@ img {
 }
 
 .comment {
-	font-size: 9pt;
+	font-size: 85%;
 	margin-top: -8px;
 	text-align: center;
 	font-style: italic;
@@ -36,11 +37,14 @@ img {
 	cursor: pointer;
 	background:
 		url(show.png)
-		right top
+		right 5px
+		center
 		no-repeat;
 	position: relative;
-	padding-right: 20px;
+	padding-right: 30px;
 	text-align: left;
+	font-size: 115%;
+	border-radius: 3px;
 }
 .maplink:hover {
 	background-color: rgba(255,255,255,0.6);
