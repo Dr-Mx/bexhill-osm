@@ -7,6 +7,25 @@ function titleCase(str) {
 	else return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 
+// parse ISO 8601 dates
+function date_parser(dtStr, style) {
+	var dt, dtFrmt = dtStr.split('-').length - 1;
+	if (style === 'long') {
+		dt = new Date(dtStr);
+		if (dtFrmt === 2) dt = dt.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+		else if (dtFrmt === 1) dt = dt.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+		else dt = dtStr;
+		if (dt.indexOf('/') > -1) style = 'short';
+	}
+	if (style === 'short') {
+		if (dtFrmt === 2) dt = dtStr.split('-')[2] + '/' + dtStr.split('-')[1] + '/' + dtStr.split('-')[0];
+		else if (dtFrmt === 1) dt = dtStr.split('-')[1] + '/' + dtStr.split('-')[0];
+		else dt = dtStr;
+	}
+	if (dt === 'Invalid Date') dt = dtStr;
+	return dt;
+}
+
 // tag template
 var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon fa fa-{iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}: </strong>{value}</span></div>', state = '';
 function generic_tag_parser(element, tag, tagName, iconName) {
@@ -14,6 +33,7 @@ function generic_tag_parser(element, tag, tagName, iconName) {
 	if (tags[tag]) {
 		if (tags[tag] === 'yes') result = '<i class="fa fa-check"></i>';
 		else if (tags[tag] === 'no') result = '<i class="fa fa-remove"></i>';
+		else if (tag.split('_')[1] === 'date') result = date_parser(tags[tag], 'long');
 		else result = tags[tag].replace(/;/g, ', ');
 		markerPopup = L.Util.template(tagTmpl, { tag: tagName, value: result, iconName: iconName });
 	}
@@ -60,7 +80,7 @@ function phone_parser(element) {
 	var tagPhone = element.tags.phone ? element.tags.phone : element.tags['contact:phone'];
 	var markerPopup = '';
 	if (tagPhone) {
-		if (userCountry === 'GB') tagPhone = tagPhone.replace('+44 ', '0');
+		tagPhone = tagPhone.replace('+44 ', '0');
 		var link = '<a href="tel:' + tagPhone + '" title="Call now">' + tagPhone + '</a>';
 		markerPopup = L.Util.template(tagTmpl, { tag: 'Phone', value: link, iconName: 'phone' });
 	}
@@ -414,6 +434,8 @@ function cctv_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
+			{callback: generic_tag_parser, tag: 'highway', label: 'Type', iconName: 'eye'},
+			{callback: generic_tag_parser, tag: 'maxspeed', label: 'Max speed', iconName: 'video-camera'},
 			{callback: generic_tag_parser, tag: 'surveillance:type', label: 'Type', iconName: 'eye'},
 			{callback: generic_tag_parser, tag: 'surveillance:zone', label: 'Zone', iconName: 'eye'},
 			{callback: generic_tag_parser, tag: 'camera:mount', label: 'Camera mount', iconName: 'video-camera'},
@@ -592,7 +614,7 @@ function opening_hours_parser(tags) {
 		if (oh.getComment()) {
 			if (strNextChange === hours) state = 'depends';
 			else {
-				comment = " (" + oh.getComment() + ')';
+				comment = ' (' + oh.getComment() + ')';
 				state = true;
 			}
 		}
@@ -630,8 +652,7 @@ function popup_buttons(element) {
 	return markerPopup;
 }
 
-// get wikimedia image thumbnail
-var imgSize = 256;
+// get wikimedia image
 function image_parser(img) {
 	var markerPopup = '';
 	if (img && img.indexOf('File:') === 0) {
@@ -642,7 +663,7 @@ function image_parser(img) {
 		var url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/' + imgSize + 'px-' + imgSplit[1];
 		markerPopup =
 			'<div class="popup-imgContainer">' +
-				'<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img src="' + url + '"></a><br>' +
+				'<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img alt="Loading image..." style="max-height:' + imgSize + 'px;" src="' + url + '"></a><br>' +
 				'<span class="popup-imgAttrib">Loading attribution...</span>' +
 			'</div>';
 	}
@@ -657,6 +678,9 @@ function parse_tags(element, titlePopup, functions) {
 	markerPopup += '</div>';
 	functions = [
 		{callback: popup_buttons},
+		{callback: generic_tag_parser, tag: 'loc_name', label: 'Local name'},
+		{callback: generic_tag_parser, tag: 'alt_name', label: 'Alternative name'},
+		{callback: generic_tag_parser, tag: 'old_name', label: 'Old name'},
 		{callback: generic_tag_parser, tag: 'operator', label: 'Operator', iconName: 'building-o'},
 		{callback: address_parser},
 		{callback: phone_parser},
@@ -664,6 +688,7 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: contact_parser},
 		{callback: wikipedia_parser},
 		{callback: listed_parser},
+		{callback: generic_tag_parser, tag: 'opening_date', label: 'Opening date', iconName: 'calendar'},
 		{callback: generic_tag_parser, tag: 'start_date', label: 'Start date', iconName: 'calendar'},
 		{callback: generic_tag_parser, tag: 'end_date', label: 'End date', iconName: 'calendar'},
 		{callback: fhrs_parser},
@@ -692,7 +717,7 @@ var spinner = 0, markerId;
 function callback(data) {
 	var type, name, iconName, markerPopup, customOptions = {};
 	// popup maxwidth on mobile is image width
-	customOptions.maxWidth = ($(window).width() < 768) ? imgSize : 350;
+	customOptions.maxWidth = imgSize;
 	// padding so popup is not obfuscated by map controls
 	customOptions.autoPanPaddingTopLeft = ($(window).width() < 768 || !rQuery) ? [20, 40] : [sidebar.width() + 50, 5];
 	customOptions.autoPanPaddingBottomRight = [5, 50];
@@ -707,6 +732,10 @@ function callback(data) {
 		type = undefined;
 		if (siteDebug) console.debug(e);
 		if (e.tags.amenity) {
+			if (e.tags.waste === 'dog_excrement') {
+				name = 'Dog Waste-Bin';
+				type = e.tags.waste;
+			}
 			if (!name && (e.tags.amenity === 'restaurant' || e.tags.amenity === 'fast_food' || e.tags.amenity === 'cafe') && e.tags.cuisine) {
 				name = e.tags.cuisine;
 				if (e.tags.amenity === 'restaurant' && e.tags.takeaway === 'only') name += ' takeaway';
@@ -734,6 +763,7 @@ function callback(data) {
 			else if (!name) name = 'historic ' + e.tags.historic;
 			if (!type) type = 'historic';
 		}
+		if (e.tags.highway === 'speed_camera') type = 'surveillance';
 		if (e.tags.man_made) {
 			if (!name) name = e.tags.man_made;
 			if (!type) type = e.tags.man_made;
@@ -844,6 +874,7 @@ function callback(data) {
 			var toolTip = '<b>' + name + '</b>';
 			if (e.tags.name) toolTip += '<br><i>' + e.tags.name + '</i>';
 			else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
+			if (e.tags.image) toolTip += ' <i style="color:#808080;" class="fa fa-picture-o fa-fw"></i>';
 			marker.bindTooltip(toolTip, { direction: 'left', offset: [-15, -2] });
 		}
 		// check if already defined poi

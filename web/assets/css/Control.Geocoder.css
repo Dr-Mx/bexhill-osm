@@ -7,6 +7,7 @@
 .leaflet-control-geocoder a, .leaflet-control-geocoder .leaflet-control-geocoder-icon {
 	border-bottom: none;
 	display: inline-block;
+	cursor: pointer;
 }
 
 .leaflet-control-geocoder .leaflet-control-geocoder-alternatives a {
@@ -33,9 +34,8 @@
 
 .leaflet-control-geocoder-icon:after {
 	content: '\f002';
-	font-family: FontAwesome;
-	position: absolute;
-	left: 6px;
+	font: normal normal normal 14px/1 FontAwesome;
+	margin-left: -5px;
 }
 
 .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon:after, .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon {

@@ -85,11 +85,11 @@ hr {
 .leaflet-contextmenu {
 	display: none;
 	box-shadow: 0 1px 7px rgba(0,0,0,0.4);
-	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	padding: 4px 0;
 	background-color: white;
 	cursor: default;
+	-ms-user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
@@ -159,8 +159,6 @@ hr {
 }
 
 .leaflet-control-container > div:last-child > div {
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
 
@@ -196,7 +194,6 @@ hr {
 }
 input[type="checkbox"] {
 	transform: scale(1.2);
-	-webkit-transform: scale(1.2);
 }
 .poi-checkbox > label {
 	display: inline-block;
@@ -395,7 +392,6 @@ input[type="checkbox"] {
 	text-align: center;
 }
 .popup-imgContainer img {
-	max-height: 256px;
 	border: 2px solid #ccc;
 	border-radius: 5px;
 }
@@ -421,6 +417,7 @@ input[type="checkbox"] {
 }
 .leaflet-tooltip {
 	font-size: 10pt;
+	border-radius: 5px;
 }
 
 .ui-tooltip {

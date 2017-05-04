@@ -6,17 +6,20 @@ var siteDebug = false;
 var mapboxKey = 'pk.eyJ1IjoiZHJteCIsImEiOiJjaXpweXh1N2UwMDEwMzJud2g1cnJncHA4In0.4b_hzRykSVaiAWlnb0s6XA';
 var thuforKey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
 // overpass layer options
-var minOpZoom = ($(window).width() < 768) ? 14 : 15;
+var minOpZoom = 14;
 var email = 'info@bexhill-osm.org.uk';
 // map area
-var mapBounds = { lef: 0.3000, top: 50.8200, rig: 0.5350, bot: 50.8800 };
-var mapBbox = [mapBounds.top, mapBounds.lef, mapBounds.bot, mapBounds.rig];
+var mapBounds = { bot: 50.8150, lef: 0.3500, top: 50.8850, rig: 0.5400 };
+var mapBbox = [mapBounds.bot, mapBounds.lef, mapBounds.top, mapBounds.rig];
 // map open location
-var mapCentre = [50.8424, 0.4676], mapZoom = 15;
+var mapCentre = [50.8424, 0.4676];
+var mapZoom = ($(window).width() < 768) ? 14 : 15;
 // map base layer
-var defTileLayer = 'bosm', actTileLayer = defTileLayer;
+var defBaseTileLayer = 'bosm', actBaseTileLayer = defBaseTileLayer;
 // tab to open
 var defTab = 'home', actTab = defTab;
+// image size for popups
+var imgSize = ($(window).width() < 1024) ? 256 : 350;
 
 // hack to get safari to scroll iframe
 if (window.ontouchstart !== undefined && navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) {
@@ -46,19 +49,21 @@ $('.sidebar-tabs').click(function () {
 });
 // no sidebar-tab
 $('.sidebar-close').click(function () {	actTab = 'none'; });
+// hide sidebar on smaller devices when minimap clicked
+$('map').click(function () { if ($(window).width() < 768) sidebar.close(); });
 
-var userCountry = 'GB', areaOutline = '';
+var areaOutline = '';
 $(document).ready(function () {
 	// clear loading elements
 	$('#spinner').hide();
 	$('#map').css('background', '#e6e6e6');
+	// attribution
+	$('#home .sidebar-body').append('<hr><p><img style="margin-bottom:-2px;" src="favicon-16x16.png"> <i class="comment">&copy; Bexhill-OSM 2016-' + new Date().getFullYear() + '</i></p>');
 	// jquery ui tooltip
 	if (window.ontouchstart === undefined) $('.sidebar-tabs').tooltip({ hide: false, show: false, track: true, position: { my: 'left+15 top+10' } });
 	// https://github.com/davidjbradshaw/image-map-resizer
 	// add delay after load for sidebar to animate open to create minimap
 	setTimeout(function () { $('map').imageMapResize(); }, 500);
-	// get users location so we don't have to show country code on phone numbers
-	$.get('https://ipinfo.io', function (result) { userCountry = result.country; }, 'jsonp');
 	map.on('popupopen', function (e) {
 		// show directions button if user located within map
 		if (lc._active && map.options.maxBounds.contains(lc._event.latlng)) $('.popup-direct').show();
@@ -96,7 +101,7 @@ $(document).ready(function () {
 					headers: { 'x-api-version': 2 },
 					dataType: 'json',
 					success: function (result) {
-						$('.popup-fhrs').html('<img src="assets/img/fhrs/' + result.RatingKey + '.jpg">');
+						$('.popup-fhrs').html('<img alt="' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.jpg">');
 					}
 				});
 			}
@@ -119,7 +124,8 @@ $(document).ready(function () {
 			}
 		}, 200);
 		// fit popup on screen when image is fully loaded by triggering an autopan
-		if ($('.popup-imgContainer').length) $('.popup-imgContainer a img').load(function () { setTimeout(function () {
+		if ($('.popup-imgContainer').length) $('.popup-imgContainer img').load(function () { setTimeout(function () {
+			$('.popup-imgContainer img').attr('alt', 'Image of ' + $('.popup-header h3').text());
 			e.popup._adjustPan();
 		}, 200); });
 	});
@@ -190,7 +196,7 @@ function walkPoint (e) {
 	// drop a walk marker if one doesn't exist
 	var wp = routingControl.getWaypoints();
 	for (var c in wp) {
-		if(!wp[c].name){
+		if (!wp[c].name) {
 			routingControl.spliceWaypoints(c, 1, e.latlng);
 			return;
 		}
@@ -210,12 +216,6 @@ function centreMap (e) {
 function improveMap (e) {
 	// create a note on osm.org
 	window.open('https://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, '_blank');
-}
-
-// minimap click
-function minimap(latlng, zoom) {
-	if ($(window).width() < 768) sidebar.close();
-	map.flyTo(latlng, zoom);
 }
 
 // navigation controls for historic tour
@@ -240,12 +240,14 @@ $('#tour').on('swiperight', function () {
 $('#tourList').change(function () {
 	var tourNum = $(this).val();
 	if (tourNum.length === 1) tourNum = '0' + tourNum;
-	$('#tourFrame').attr('src', 'tour/tour' + tourNum + '.html');
+	$('#tourFrame').attr('src', 'tour/tour' + tourNum + '/index.html');
 });
 
 // https://github.com/Leaflet/Leaflet
 var iconLayer = new L.LayerGroup();
+var imageOverlay = new L.LayerGroup();
 map.addLayer(iconLayer);
+map.addLayer(imageOverlay);
 // leaflet icon image path
 L.Icon.Default.imagePath = 'assets/img/leaflet/';
 // bing satellite layer
@@ -279,79 +281,103 @@ var tileBaseLayer = {
 		name: 'Bexhill-OSM',
 		url: 'https://{s}.tiles.mapbox.com/v4/drmx.fa383e0e/{z}/{x}/{y}.png?access_token=' + mapboxKey,
 		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
-		zoom: 20
+		maxNativeZoom: 20
 	},
 	osmstd: {
 		name: 'OpenStreetMap (standard)',
 		url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-		zoom: 19
+		maxNativeZoom: 19
 	},
 	osmhot: {
 		name: 'OpenStreetMap (humanitarian)',
 		url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-		zoom: 19
+		maxNativeZoom: 19
 	},
 	antique: {
 		name: 'Antique',
 		url: 'https://{s}.tiles.mapbox.com/v4/lrqdo.me2bng9n/{z}/{x}/{y}.png?access_token=' + mapboxKey,
 		attribution: '<a href="https://laruchequiditoui.fr/" target="_blank">LRQDO</a>',
-		zoom: 20
+		maxNativeZoom: 20
 	},
 	mbxoutdr: {
 		name: 'Mapbox Outdoors',
 		url: 'https://{s}.tiles.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=' + mapboxKey,
 		attribution: '<a href="http://mapbox.com/" target="_blank">MapBox</a>',
-		zoom: 20
+		maxNativeZoom: 20
 	},
 	cycle: {
 		name: 'OpenCycleMap',
 		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + thuforKey,
 		attribution: '<a href="http://thunderforest.com/maps/opencyclemap/" target="_blank">ThunderForest</a>',
-		zoom: 20
+		maxNativeZoom: 20
 	},
 	trnsprt: {
 		name: 'Public Transport',
 		url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + thuforKey,
 		attribution: '<a href="http://thunderforest.com/maps/transport/" target="_blank">ThunderForest</a>',
-		zoom: 20
+		maxNativeZoom: 20
 	},
 	matlas: {
 		name: 'Mobile Atlas',
 		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=' + thuforKey,
 		attribution: '<a href="http://thunderforest.com/maps/mobile-atlas/" target="_blank">ThunderForest</a>',
-		zoom: 20
-	},
-	opnsrfr: {
-		name: 'OpenMapSurfer',
-		url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
-		attribution: '<a href="http://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
-		zoom: 19
+		maxNativeZoom: 20
 	}
 };
 var attribution = '&copy; <a href="http://openstreetmap.org/copyright" title="Copyright and License" target="_blank">OpenStreetMap contributors</a>';
-var tileBaseLayers = {}, tileOverlay = {}, imageOverlay = {};
-var tileList = {name: [], keyname: []};
+var tileBaseLayers = {}, tileOverlayLayers = {};
+var baseTileList = {name: [], keyname: []};
 for (var tile in tileBaseLayer) {
 	var subdomains = tileBaseLayer[tile].subdomains ? tileBaseLayer[tile].subdomains : 'abc';
 	var tileAttribution = (tileBaseLayer[tile].attribution) ? tileBaseLayer[tile].attribution + ' | ' + attribution : attribution;
-	tileBaseLayers[tileBaseLayer[tile].name] = L.tileLayer(tileBaseLayer[tile].url, { maxNativeZoom: tileBaseLayer[tile].zoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains });
+	tileBaseLayers[tileBaseLayer[tile].name] = L.tileLayer(tileBaseLayer[tile].url, { maxNativeZoom: tileBaseLayer[tile].maxNativeZoom, maxZoom: 20, attribution: tileAttribution, subdomains: subdomains });
 	// create object array for all basemap layers
-	tileList.name.push(tileBaseLayer[tile].name);
-	tileList.keyname.push(tile);
+	baseTileList.name.push(tileBaseLayer[tile].name);
+	baseTileList.keyname.push(tile);
 }
 // overlays
-tileOverlay.Hillshading = L.tileLayer('https://tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png', {
-	maxNativeZoom: 15,
-	maxZoom: 20
-});
-tileOverlay['Bing Satellite Overlay'] = new L.TileLayer.QuadKeyTileLayer('http://ecn.t{s}.tiles.virtualearth.net/tiles/a{q}?g=737&n=z', {
-	opacity: '0.5',
-	subdomains: '0123',
-	maxNativeZoom: 19,
-	maxZoom: 20,
-	attribution: '<a href="http://maps.bing.com/" target="_blank">Microsoft Bing</a>'
-});
-L.control.layers(tileBaseLayers, tileOverlay).addTo(map);
+var tileOverlayLayer = {
+	hshade: {
+		name: 'Hillshading',
+		url: 'https://tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',
+		maxNativeZoom: 15
+	},
+	bing: {
+		name: 'Bing Satellite',
+		url: 'http://ecn.t{s}.tiles.virtualearth.net/tiles/a{q}?g=737&n=z',
+		opacity: 0.5,
+		subdomains: '0123',
+		maxNativeZoom: 19,
+		attribution: '<a href="http://maps.bing.com/" target="_blank">Microsoft Bing</a>',
+		quadkey: true
+	},
+	os1955: {
+		name: 'Ordinance Survey, 1955',
+		url: 'assets/maptiles/os1955/{z}/{x}/{y}.png',
+		opacity: 0.7,
+		minNativeZoom: 13,
+		minZoom: 12,
+		maxNativeZoom: 15,
+		maxZoom: 20,
+		attribution: 'Contains OS data © Crown copyright and database right (' + new Date().getFullYear() + ')'
+	}/*,
+	bombmap: {
+		name: 'Observer Bomb Map, 1944',
+		url: 'assets/maptiles/bombmap/{z}/{x}/{y}.png',
+		minNativeZoom: 13,
+		minZoom: 12,
+		maxNativeZoom: 15,
+		maxZoom: 20,
+	}*/
+};
+for (var tile in tileOverlayLayer) {
+	var subdomains = tileOverlayLayer[tile].subdomains ? tileOverlayLayer[tile].subdomains : 'abc';
+	var opacity = tileOverlayLayer[tile].opacity ? tileOverlayLayer[tile].opacity : 1;
+	var options = { maxNativeZoom: tileOverlayLayer[tile].maxNativeZoom, maxZoom: 20, attribution: tileOverlayLayer[tile].attribution, subdomains: subdomains, opacity: opacity };
+	if (tileOverlayLayer[tile].quadkey) tileOverlayLayers[tileOverlayLayer[tile].name] = new L.TileLayer.QuadKeyTileLayer(tileOverlayLayer[tile].url, options);
+	else tileOverlayLayers[tileOverlayLayer[tile].name] = L.tileLayer(tileOverlayLayer[tile].url, options);
+}
+L.control.layers(tileBaseLayers, tileOverlayLayers).addTo(map);
 L.control.scale({ metric: false, position: 'bottomright' }).addTo(map);
 
 // xmas overlay
@@ -363,12 +389,13 @@ if ((new Date().getMonth() === 10 && new Date().getDate() >= 15) || new Date().g
 	L.imageOverlay('assets/img/xmas-tree.png', [[50.84545, 0.43400], [50.84510, 0.43350]], { opacity: 0.9 }).addTo(map);
 }
 
-// get basemap layer name on change
+// get layer names on change
 map.on('baselayerchange', function (e) {
-	for (var c in tileList.name) {
-		if (e.name === tileList.name[c]) actTileLayer = tileList.keyname[c];
+	for (var c in baseTileList.name) {
+		if (e.name === baseTileList.name[c]) actBaseTileLayer = baseTileList.keyname[c];
 	}
 });
+
 
 // https://github.com/domoritz/leaflet-locatecontrol
 var lc = L.control.locate({
@@ -379,7 +406,7 @@ var lc = L.control.locate({
 	metric: false,
 	showPopup: false,
 	strings: {
-		title: 'Locate me'
+		title: 'Locate'
 	},
 	locateOptions: {
 		enableHighAccuracy: true
@@ -394,11 +421,11 @@ var lc = L.control.locate({
 }).addTo(map);
 
 // https://github.com/perliedman/leaflet-control-geocoder
-L.Control.geocoder({
+var geocode = L.Control.geocoder({
 	geocoder: L.Control.Geocoder.nominatim({
 		geocodingQueryParams: {
 			bounded: 1,
-			viewbox: [mapBounds.lef, mapBounds.top, mapBounds.rig, mapBounds.bot],
+			viewbox: [mapBounds.lef, mapBounds.bot, mapBounds.rig, mapBounds.top],
 			email: email
 		}
 	}),
@@ -415,15 +442,11 @@ L.Control.geocoder({
 	if (siteDebug) console.debug(geoMarker);
 	if (map.getZoom() <= minOpZoom) map.setZoom(minOpZoom, { animate: false });
 	show_overpass_layer(geoMarker.properties.osm_type + '(' + geoMarker.properties.osm_id + ')(' + mapBbox + ');');
-	$('.leaflet-control-geocoder-form :input').blur();
+	$('.leaflet-control-geocoder-form input').blur();
 })
 .addTo(map);
-$('.leaflet-control-geocoder-icon').attr('title','Find address');
+$('.leaflet-control-geocoder-icon').attr('title','Address search');
 
-function geocoderLink() {
-	if ($(window).width() < 768) sidebar.close();
-	$('.leaflet-control-geocoder-icon').click();
-}
 function donateLink() {
 	$('a[href="#information"]').click();
 	$('#information .sidebar-body').scrollTop(0);
@@ -435,26 +458,27 @@ function donateLink() {
 L.easyButton({
 	id: 'btnPermalink',
 	states: [{
-		icon: 'fa fa-link',
-		title: 'Get map link',
+		icon: 'fa fa-share-square-o',
+		title: 'Share',
 		onClick: function () {
 			var uri = URI(window.location.href);
 			var selectedPois = '', walkCoords = '', tourPage, openNow;
 			var walkWayp = routingControl.getWaypoints();
 			if (actTab === defTab) actTab = undefined;
-			if (actTileLayer === defTileLayer) actTileLayer = undefined;
-			if (walkWayp[1].latLng !== null) {
+			if (actBaseTileLayer === defBaseTileLayer) actBaseTileLayer = undefined;
+			if (walkWayp[0].latLng && walkWayp[1].latLng) {
 				for (var c in walkWayp) {
 					walkCoords += Math.round(walkWayp[c].latLng.lat * 100000) / 100000 + 'x' + Math.round(walkWayp[c].latLng.lng * 100000) / 100000 + '_';
 				}
 			}
+			else if (walkWayp[0].latLng) walkCoords = Math.round(walkWayp[0].latLng.lat * 100000) / 100000 + 'x' + Math.round(walkWayp[0].latLng.lng * 100000) / 100000 + '_';
 			walkCoords = walkCoords ? walkCoords.slice(0, -1) : undefined;
 			if (actTab === 'tour' && $('#tourList option:selected').val() > 0) tourPage = $('#tourList option:selected').val();
 			if ($('.opennow input').is(':checked')) openNow = 1;
 			$('#pois input.poi-checkbox:checked').each(function (i, element) { selectedPois += element.dataset.key + '-'; });
 			selectedPois = selectedPois ? selectedPois.slice(0, -1) : undefined;
-			// M = basemap, T = tab, U = tour page, O = opennow, P = grouped pois, I = single poi, W = walkpoints
-			uri.query({ 'M': actTileLayer, 'T': actTab, 'U': tourPage, 'O': openNow, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
+			// M = basemap, T = tab, U = tour frame, G = image layer, O = opennow, P = grouped pois, I = single poi, W = walkpoints
+			uri.query({ 'M': actBaseTileLayer, 'T': actTab, 'U': tourPage, 'G': imgLayer, 'O': openNow, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
 			window.prompt('Copy this link to share current map:', uri.href());
 		}
 	}]
@@ -467,7 +491,8 @@ L.easyButton({
 		title: 'Clear map',
 		onClick: function () {
 			// clear overlay, clear walk points, collapse suggested walks, clear poi marker layers
-			map.removeLayer(imageOverlay);
+			imageOverlay.clearLayers();
+			imgLayer = undefined;
 			routingControl.setWaypoints([]);
 			$('#walkContainer').accordion({ active: false });
 			clear_map();
@@ -507,7 +532,7 @@ var routingControl = L.Routing.control({
 	geocoder: L.Control.Geocoder.nominatim({
 		geocodingQueryParams: {
 			bounded: 1,
-			viewbox: [mapBounds.lef, mapBounds.top, mapBounds.rig, mapBounds.bot]
+			viewbox: [mapBounds.lef, mapBounds.bot, mapBounds.rig, mapBounds.top]
 		}
 	})
 });
@@ -591,6 +616,18 @@ function populate_tabs() {
 }
 populate_tabs();
 
+// if user presses ENTER instead of selecting a category, do an address search with the value
+$('#autocomplete').keydown(function (e) { if (e.keyCode == $.ui.keyCode.ENTER && $('#autocomplete').val() && !$('#eac-container-autocomplete ul').is(':visible')) $(this).trigger('enterKey'); });
+$('#autocomplete').bind('enterKey', function (e) {
+	if ($(window).width() < 768) sidebar.close();
+	$('.leaflet-control-geocoder-icon').click();
+	$('.leaflet-control-geocoder-form input').val($(this).val());
+	geocode._geocode();
+});
+$('#autocomplete').on('focus', function () {
+	$(this).select();
+});
+
 // clear poi marker layers
 function clear_map() {
 	$('input.poi-checkbox').prop('checked', false);
@@ -654,7 +691,7 @@ function suggWalk(walkName) {
 			break;
 		case 'greenway':
 			routingControl.setWaypoints([
-				[50.85676, 0.47896],
+				[50.85676, 0.47898],
 				[50.87008, 0.52089]
 			]);
 			map.flyTo([50.8632, 0.4938], 15);
@@ -683,14 +720,15 @@ function suggWalk(walkName) {
 }
 
 // https://github.com/medialize/URI.js
-// M = basemap, T = tab, U = tour frame, O = opennow, P = grouped pois, I = single poi, W = walkpoints
+// M = basemap, T = tab, U = tour frame, G = image layer, O = opennow, P = grouped pois, I = single poi, Q = geocode query, W = walkpoints
 var uri = URI(window.location.href);
-if (uri.hasQuery('M')) actTileLayer = uri.search(true).M;
+if (uri.hasQuery('M')) actBaseTileLayer = uri.search(true).M;
 if (uri.hasQuery('T')) actTab = uri.search(true).T;
 if (uri.hasQuery('U')) {
 		$('#tourList').val(uri.search(true).U);
 		$('#tourList').trigger('change');
 }
+if (uri.hasQuery('G')) tour(uri.search(true).G);
 if (uri.hasQuery('O')) $('.opennow input').prop('checked', uri.search(true).O);
 if (uri.hasQuery('W')) {
 	var walkCoords = uri.search(true).W;
@@ -705,11 +743,11 @@ if (uri.hasQuery('P')) {
 	if (selectedPois.indexOf('-') > -1) selectedPois = selectedPois.split('-');
 	if (!$.isArray(selectedPois)) {
 		$('#pois input[data-key=' + selectedPois + ']').prop('checked', true);
-		// open tab when not on mobile, scroll to checkbox
+		// open tab on bigger devices, scroll to checkbox
 		if ($(window).width() >= 768 && actTab !== 'none') {
 			sidebar.open(actTab);
 			$('#pois .sidebar-body').scrollTop(0);
-			// add delay after load for sidebar to animate open to allow for scroll position
+			// add delay after load for sidebar to animate open, allows for scroll position
 			setTimeout(function () {
 				$('#pois .sidebar-body').scrollTop($('#pois input[data-key="' + selectedPois + '"]').parent().position().top - 50);
 			}, 500);
@@ -720,7 +758,7 @@ if (uri.hasQuery('P')) {
 			// the last poi has a "/" on it because leaflet-hash
 			var multiplePois = selectedPois[c].replace('/', '');
 			$('#pois input[data-key=' + multiplePois + ']').prop('checked', true);
-			// open tab when not on mobile
+			// open tab on bigger devices
 			if ($(window).width() >= 768 && actTab !== 'none') sidebar.open(actTab);
 		}
 	}
@@ -732,11 +770,16 @@ else if (uri.hasQuery('I')) {
 	var splitId = markerId.split('_');
 	show_overpass_layer(splitId[0] + '(' + splitId[1] + ')(' + mapBbox + ');');
 }
+else if (uri.hasQuery('Q')) {
+	$('.leaflet-control-geocoder-icon').click();
+	$('.leaflet-control-geocoder-form input').val(uri.search(true).Q);
+	geocode._geocode();
+}
 // if not returning from a permalink, give defaults
 if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
 	if (($(window).width() >= 768 || actTab === 'tour') && actTab !== 'none') sidebar.open(actTab);
 }
 
-tileBaseLayers[tileBaseLayer[actTileLayer].name].addTo(map);
-map.setMaxBounds([[mapBounds.top, mapBounds.lef], [mapBounds.bot, mapBounds.rig]]);
+tileBaseLayers[tileBaseLayer[actBaseTileLayer].name].addTo(map);
+map.setMaxBounds([[mapBounds.bot, mapBounds.lef], [mapBounds.top, mapBounds.rig]]);

@@ -335,6 +335,14 @@ var pois = {
 		tagKeyword: ['grit-bin', 'snow']
 	},
 
+	dog_excrement: {
+		name: 'Dog Waste-Bin',
+		query: '[waste=dog_excrement]',
+		iconName: 'dogs_waste',
+		catName: 'Amenities',
+		tagKeyword: ['dog', 'poo', 'excrement', 'waste-bin']
+	},
+
 	parking: {
 		name: 'Car-Parking',
 		query: '[amenity=parking]',
@@ -471,7 +479,7 @@ var pois = {
 
 	surveillance: {
 		name: 'Surveillance',
-		query: '[man_made=surveillance]',
+		query: '[~"."~"speed_camera|surveillance"]',
 		iconName: 'cctv',
 		catName: 'Services',
 		tagKeyword: ['surveillance', 'cctv', 'security', 'camera'],
@@ -492,7 +500,8 @@ var pois = {
 		query: '[amenity=kindergarten]',
 		iconName: 'daycare',
 		catName: 'Services',
-		tagKeyword: ['daycare', 'kindergarten', 'nursery']
+		tagKeyword: ['daycare', 'kindergarten', 'nursery'],
+		tagParser: school_parser
 	},
 
 	place_of_worship: {

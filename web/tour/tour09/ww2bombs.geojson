@@ -1,2112 +1,4075 @@
 {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.40974, 50.84765]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.41048, 50.84897]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.42674, 50.84716]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.42873, 50.83910]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43043, 50.83674]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43245, 50.83599]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43269, 50.83579]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43289, 50.83600]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43467, 50.83598]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43569, 50.83484]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43610, 50.83728]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43642, 50.83452]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43661, 50.83712]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43674, 50.83745]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43697, 50.83690]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43745, 50.83687]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43829, 50.83589]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43839, 50.83651]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43903, 50.83616]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43974, 50.83609]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44084, 50.83599]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44187, 50.83515]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44191, 50.85102]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44191, 50.83603]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44258, 50.83551]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44287, 50.83574]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44460, 50.86208]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44414, 50.84265]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44441, 50.84133]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.44991, 50.85357]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45048, 50.84018]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45317, 50.85512]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45333, 50.85468]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45475, 50.85401]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45731, 50.86287]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45764, 50.86242]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45797, 50.86199]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45823, 50.86160]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45842, 50.86116]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45939, 50.84689]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46077, 50.84255]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46332, 50.83611]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46345, 50.85687]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46434, 50.85167]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46441, 50.85181]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46446, 50.85195]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46447, 50.85513]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46451, 50.85116]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46457, 50.85130]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46458, 50.85104]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46469, 50.85151]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46492, 50.85095]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46493, 50.85140]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46505, 50.85120]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46507, 50.85075]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46515, 50.85055]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46537, 50.85141]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46567, 50.84464]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46613, 50.84245]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46698, 50.84415]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46706, 50.84327]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46706, 50.84469]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46707, 50.84378]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46710, 50.84443]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46713, 50.84300]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46720, 50.84266]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46789, 50.84547]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46793, 50.84595]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46821, 50.85129]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46860, 50.83732]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46873, 50.84282]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46881, 50.85113]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46957, 50.84240]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46982, 50.83740]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46997, 50.84471]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46998, 50.84689]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47007, 50.84590]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47017, 50.84616]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47028, 50.84519]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47039, 50.84478]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47040, 50.84650]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47051, 50.84670]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47051, 50.84180]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47052, 50.84724]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47054, 50.84599]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47056, 50.84448]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47060, 50.84785]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47066, 50.84850]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47069, 50.84807]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47082, 50.84021]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47090, 50.84491]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47108, 50.84234]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47170, 50.84395]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47183, 50.84474]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47190, 50.84417]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47203, 50.84499]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47204, 50.84122]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47208, 50.84565]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47208, 50.84262]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47210, 50.84436]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47215, 50.84030]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47228, 50.84706]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47241, 50.84110]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47245, 50.84687]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47259, 50.84570]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47264, 50.85069]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47265, 50.84771]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47283, 50.84094]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47286, 50.84826]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47288, 50.84895]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47310, 50.84803]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47320, 50.85087]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47327, 50.84439]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47335, 50.84901]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47387, 50.84028]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47411, 50.84370]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47412, 50.83926]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47423, 50.84313]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47440, 50.84816]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47470, 50.84613]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47475, 50.84413]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47477, 50.84740]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47503, 50.84600]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47508, 50.84394]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47514, 50.83991]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47526, 50.84955]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47534, 50.84370]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47539, 50.84588]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47546, 50.83949]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47570, 50.84575]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47580, 50.84959]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47580, 50.84041]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47589, 50.84993]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47599, 50.84678]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47605, 50.85175]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47608, 50.83911]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47626, 50.84649]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47633, 50.84612]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47643, 50.85193]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47644, 50.84571]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47662, 50.83890]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47694, 50.85307]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47697, 50.85378]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47699, 50.84317]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47706, 50.83872]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47736, 50.84516]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47739, 50.84357]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47758, 50.85399]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47759, 50.85463]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47764, 50.83860]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47767, 50.85080]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47768, 50.85496]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47769, 50.85050]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47830, 50.84073]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47863, 50.84103]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47881, 50.83958]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47906, 50.84463]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47923, 50.83788]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47930, 50.83932]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47944, 50.83898]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47947, 50.83765]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47965, 50.84474]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47970, 50.83830]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47981, 50.83750]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47988, 50.83799]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48009, 50.83772]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48016, 50.84501]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48058, 50.84530]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48080, 50.84549]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48083, 50.84324]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48112, 50.83939]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48133, 50.83863]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48243, 50.85687]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48298, 50.84293]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48340, 50.83884]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48340, 50.84289]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48347, 50.84598]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48366, 50.85224]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48375, 50.85566]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48390, 50.84277]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48396, 50.85121]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48438, 50.84608]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48455, 50.85079]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48499, 50.85107]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48520, 50.84617]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48535, 50.85047]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48547, 50.85079]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48548, 50.84075]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48582, 50.84063]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48600, 50.85065]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48615, 50.84990]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48689, 50.85030]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48756, 50.83973]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48769, 50.84346]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48840, 50.85201]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48943, 50.85258]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49010, 50.84843]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49018, 50.85153]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49267, 50.84164]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49284, 50.84100]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49335, 50.85305]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49336, 50.84971]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49338, 50.85739]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49350, 50.85625]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49391, 50.85347]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49423, 50.85728]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49489, 50.85577]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49526, 50.85523]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49557, 50.85476]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49583, 50.85437]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49631, 50.85375]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49740, 50.84732]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49851, 50.85212]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49939, 50.85127]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50083, 50.84971]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50155, 50.84849]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50163, 50.85793]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50198, 50.84426]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50218, 50.84813]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50228, 50.86838]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50249, 50.85325]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50268, 50.84832]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50290, 50.86792]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50322, 50.84873]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50331, 50.85276]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50342, 50.86722]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50343, 50.85284]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50350, 50.84423]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50379, 50.85280]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50403, 50.84410]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50410, 50.84712]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50428, 50.85278]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50467, 50.86182]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50480, 50.85287]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50523, 50.85286]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50562, 50.85291]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50575, 50.84992]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50582, 50.85136]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50603, 50.84582]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50611, 50.84796]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50618, 50.84900]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50621, 50.84746]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50621, 50.86361]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50644, 50.84673]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50653, 50.84989]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50710, 50.86023]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50753, 50.86057]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50768, 50.86013]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50812, 50.85987]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50850, 50.86002]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50887, 50.86001]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50931, 50.85946]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50985, 50.85926]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.50985, 50.85898]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.51019, 50.85871]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.51074, 50.85859]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.51109, 50.85827]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.51335, 50.85724]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.51361, 50.85671]
-            },
-			"type": "Feature"
-		},
-		{
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.51373, 50.85632]
-            },
-			"type": "Feature"
-		},
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.42615, 50.83713]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "07-1944",
-				"name": "Clavering Walk",
-                "description": "V1 damaged a residential dwelling named High Chimneys (now known as Maple House)."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.43413, 50.85251]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1944-07-19",
-				"name": "Wealden Way",
-                "description": "Home wrecked by a flying bomb.",
-				"image": "bomb-wealdenway.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45829, 50.83800]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1944-06-19, just before 23:00",
-				"name": "Richmond Road",
-                "description": "The first V1 that landed on the town. Damaged residential property and broke windows at St. Augustine's Church. Left a 30-ft-deep crater.",
-				"image": "bomb-richmondroad.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.45991, 50.84156]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1943-05-23",
-				"name": "Westville Road",
-                "description": "Two women killed when their houses were hit by bombs dropped from FW190s and ME109s. This same bombing run killed 11 Canadian soldiers at the Albany Hotel in Hastings."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46893, 50.84529]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-10-06",
-				"name": "The Gaiety Cinema",
-                "description": "94 London Road, destroyed and never reopened.",
-				"image": "bomb-gaietycinema.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47024, 50.83744]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-09-30",
-				"name": "Metropole Hotel",
-                "description": "Considerable damage to the front of the building, unoccupied at the time.",
-				"image": "bomb-metropolehotel.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47062, 50.83735]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-09-30",
-				"name": "De La Warr Pavilion",
-                "description": "Destroyed dressing rooms and some of the backstage area. The buildings foundations also suffered minor damage."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47131, 50.84158]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-09-26",
-				"name": "Town Hall",
-                "description": "Damage caused the Borough Accountant and Public Health Department to relocate."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47143, 50.84109]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-11-24",
-				"name": "Town Hall Square",
-                "description": "Damage to shops. Located where the building passage to Sainsbury's is today.",
-				"image": "bomb-townhallsquare.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47421, 50.83871]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1942-05-09",
-				"name": "57 Devonshire Road",
-                "description": "Longley Brothers shop and the Bexhill Observer office were destroyed. Today you can see these buildings were never rebuilt to their full height.",
-				"image": "bomb-57devonshireroad.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47447, 50.84003]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-09-26",
-				"name": "L.J. Collis & Co Chemist",
-                "description": "Shop destroyed and proprietor Mr. Leslie John Collis (44) killed."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47546, 50.85050]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1942-08-11",
-				"name": "Bexhill Hospital",
-                "description": "9 bombs dropped. 1 injury to a patient by flying glass."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47622, 50.84792]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-09-30",
-				"name": "Barrack Road Cemetery",
-                "description": "Bomb landed amongst the graves, elm trees were uprooted and a piece of tombstone was hurled at a motor vehicle.",
-				"image": "bomb-barrackroad.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47762, 50.84323]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-09-19",
-				"name": "Twinehams",
-                "description": "Direct hit. Two workmen were dug out alive, Mr John Croft (41) was killed."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.46820, 50.84857]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1940-09-19",
-				"name": "42 Bancroft Road",
-                "description": "Two elderly women injured and later died in hospital."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47770, 50.84455]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "07-1944",
-				"name": "The Grange",
-                "description": "V1 landed in the garden grounds partially wrecking the house, also caused damage to the Bell Hotel and other adjacent properties.",
-				"image": "bomb-thegrange.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47786, 50.83914]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1942-05-09",
-				"name": "St. Barnabas' Lodge",
-                "description": "The house was badly damaged and some stained glass windows on the church were blown in."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47858, 50.84031]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1943-01",
-				"name": "Jameson Road",
-                "description": "Residential damage.",
-				"image": "bomb-jamesonroad.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.47872, 50.83898]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1943-01",
-				"name": "Suffolk House",
-                "description": "Three elderly patients and one staff member was killed."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48694, 50.84209]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1943-01-08",
-				"name": "Bexhill Gas Works",
-                "description": "Mr Bertram G. Niner (39) and Mr William M. Day (59) seriously injured and died two days later."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48104, 50.83964]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1942-05-09",
-				"name": "Sackville Garage",
-                "description": "Completely destroyed."
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.48319, 50.83949]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1943-01-02",
-				"name": "Motcombe Court",
-                "description": "A 500kg bomb demolished three upper floors of the east wing. Only victim was the caretaker who suffered superficial injuries.",
-				"image": "bomb-motcombecourt.jpg"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [0.49626, 50.84517]
-            },
-            "type": "Feature",
-            "properties": {
-				"date": "1943-01-28",
-				"name": "De La Warr Road",
-                "description": "A bomb struck a house chimney on the opposite side of De La Warr Road, flew across the road to number 144. It entered the bedroom window, crossed the landing and exited the house at the rear before exploding on the open ground. The damage rendered the house inhabitable and adjacent houses had their windows blown in.",
-				"image": "bomb-delawarrroad.jpg"
-            }
-        }
-	]
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.40984,
+          50.84749
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49378,
+          50.84965
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46873,
+          50.84282
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49018,
+          50.85153
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50342,
+          50.86722
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43269,
+          50.83579
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46739,
+          50.85226
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47190,
+          50.84417
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47550,
+          50.83945
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46434,
+          50.85167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47764,
+          50.83860
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47259,
+          50.84570
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47599,
+          50.84678
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45331,
+          50.85450
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47580,
+          50.84959
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46469,
+          50.85151
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47411,
+          50.84370
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47767,
+          50.85080
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47507,
+          50.84567
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49399,
+          50.85326
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47470,
+          50.84613
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46447,
+          50.85513
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47028,
+          50.84519
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47739,
+          50.84357
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43289,
+          50.836
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43467,
+          50.83598
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50621,
+          50.84746
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.51099,
+          50.85816
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48009,
+          50.83772
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.486,
+          50.85065
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48298,
+          50.84293
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47440,
+          50.84816
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50322,
+          50.84873
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47769,
+          50.85050
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48547,
+          50.85079
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47539,
+          50.84588
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48520,
+          50.84617
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49740,
+          50.84732
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47228,
+          50.84706
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47286,
+          50.84826
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47412,
+          50.83926
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.51047,
+          50.85838
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47534,
+          50.84370
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44258,
+          50.83551
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50618,
+          50.849
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43610,
+          50.83510
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47930,
+          50.83932
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48582,
+          50.84063
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50249,
+          50.85325
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50163,
+          50.85793
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47589,
+          50.84993
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50644,
+          50.84673
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49851,
+          50.85212
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48396,
+          50.85121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48499,
+          50.85107
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47394,
+          50.84326
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47981,
+          50.83750
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49939,
+          50.85127
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47475,
+          50.84413
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.41778,
+          50.83150
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47051,
+          50.84180
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50871,
+          50.85971
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47605,
+          50.85175
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49583,
+          50.85437
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46567,
+          50.84464
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47923,
+          50.83788
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46983,
+          50.83741
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.51009,
+          50.85892
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50228,
+          50.86838
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50290,
+          50.86792
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48943,
+          50.85258
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47040,
+          50.84650
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46492,
+          50.85095
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43661,
+          50.83712
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50760,
+          50.86068
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43829,
+          50.83589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49344,
+          50.85288
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46457,
+          50.85130
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48083,
+          50.84324
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47863,
+          50.84103
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43245,
+          50.83599
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46493,
+          50.85140
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.51009,
+          50.85859
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50949,
+          50.85908
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48340,
+          50.83884
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48689,
+          50.85030
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49489,
+          50.85577
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47947,
+          50.83765
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47039,
+          50.84478
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47322,
+          50.85272
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.42313,
+          50.84720
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47608,
+          50.83911
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48112,
+          50.83939
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50897,
+          50.86000
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47988,
+          50.83799
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43745,
+          50.83687
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48840,
+          50.85201
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46451,
+          50.85116
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50931,
+          50.85946
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50786,
+          50.86017
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48535,
+          50.85047
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47830,
+          50.84073
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43974,
+          50.83609
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47514,
+          50.83991
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43610,
+          50.83728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50631,
+          50.86366
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.42312,
+          50.84753
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48615,
+          50.84990
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47208,
+          50.84262
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.41065,
+          50.84887
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50083,
+          50.84971
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44287,
+          50.83574
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47508,
+          50.84394
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47208,
+          50.84565
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.42873,
+          50.83910
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46507,
+          50.85075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50708,
+          50.86027
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48390,
+          50.84277
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48375,
+          50.85566
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48769,
+          50.84346
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46458,
+          50.85104
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49309,
+          50.84087
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45292,
+          50.85496
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50833,
+          50.86000
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46997,
+          50.84471
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47503,
+          50.846
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48455,
+          50.85079
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47626,
+          50.84649
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47526,
+          50.84955
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43903,
+          50.83616
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49526,
+          50.85523
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46957,
+          50.84240
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46537,
+          50.85141
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48747,
+          50.83963
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44520,
+          50.84182
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44464,
+          50.84274
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50575,
+          50.84992
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43839,
+          50.83651
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46505,
+          50.85120
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50653,
+          50.84989
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43674,
+          50.83745
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50467,
+          50.86182
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46821,
+          50.85129
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47056,
+          50.84448
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50582,
+          50.85136
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46793,
+          50.84595
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46789,
+          50.84547
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47051,
+          50.84670
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48347,
+          50.84598
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48340,
+          50.84289
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.51142,
+          50.85794
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49557,
+          50.85476
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50603,
+          50.84582
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47944,
+          50.83898
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44191,
+          50.83603
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "10 Woodsgate Avenue",
+        "date": "1940-09-29",
+        "description": "Ms Margaret Lawrence (25), Ms Margaret I. Lawrence (55) and Ms Caroline Massey (68) killed.",
+        "img": "woodsgateavenue"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47253,
+          50.85067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "11-13 St Davids Avenue",
+        "date": "1940-11-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47256,
+          50.84765
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "11 Sewell Avenue",
+        "date": "1940-10-18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47138,
+          50.84871
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "120-122 Buxton Drive",
+        "date": "1940-09-30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46889,
+          50.85093
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "14-16 St George's Road",
+        "date": "1940-11-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47270,
+          50.84903
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "144 De La Warr Road",
+        "date": "1943-01-28",
+        "description": "A bomb struck a house chimney on the opposite side of De La Warr Road, flew across the road to number 144. It entered the bedroom window, crossed the landing and exited the house at the rear before exploding on the open ground. The damage rendered the house inhabitable and adjacent houses had their windows blown in.",
+        "img": "delawarrroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49617,
+          50.84516
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "17 Westville Road",
+        "date": "1940-12-11"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46124,
+          50.84240
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "186-188-192 Cooden Drive",
+        "date": "1941-01-12"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44092,
+          50.83586
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "30 Cantelupe Road",
+        "date": "1940-09-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48621,
+          50.84083
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "31 Cornwall Road",
+        "date": "1940-09-30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46875,
+          50.83877
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "32 St James Road",
+        "date": "1940-09-10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47699,
+          50.85339
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "34 St Leonard's Road. L.J. Collis & Co Chemist",
+        "date": "1940-09-26",
+        "description": "Shop destroyed and proprietor Mr Leslie J. Collis (44) killed."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47565,
+          50.83963
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "35 Station Road",
+        "date": "1940-11-24",
+        "description": "Mr William G. Reeves (53) killed at his newsagent shop."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47185,
+          50.84118
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "4 Millfield Rise",
+        "date": "1940-10-13",
+        "description": "Unexploded bomb discovered, possibly dropped 08 October."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47318,
+          50.84421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "4 Wilton Road",
+        "date": "1940-09-30",
+        "img": "wiltonroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47600,
+          50.84061
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "42 Bancroft Road",
+        "date": "1940-09-19",
+        "description": "Sisters Ms Annie L Coverdale (75) and Ms Evelyn Coverdale (62) occupants of No 42 taken to Bexhill Hospital where they died. 2 others injured. No 40 also destroyed and 44 and 46 damaged.",
+        "img": "42bancroftroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46813,
+          50.84857
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "47 Sea Road",
+        "date": "1940-09-26"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45593,
+          50.83651
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "48 Belle Hill",
+        "date": "1940-11-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47337,
+          50.84588
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "5 Gloucester Avenue",
+        "date": "1943-12-22",
+        "description": "Approximately 23:00 hours. Considerable blast damage done.  The homes of Mrs Henrietta Watson, elderly, and next door, daughter in law Mrs Iris Watson and her daughter Ann Watson (4) were destroyed. All three taken to hospital by  ambulance. Ann died. Eight people injured. Residents of Gloucester Avenue evacuated."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50413,
+          50.84698
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "57 Amherst Road",
+        "date": "1940-10-08",
+        "description": "Heavy raid injuring five people. Mr Thomas Mepham (69) and his brother in law Mr William Turner (62) taken to hospital at Epsom where they both subsequently died.",
+        "img": "57amherstroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47107,
+          50.844931
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "57 Devonshire Road",
+        "date": "1942-05-09",
+        "description": "Longley Brothers shop and the Bexhill Observer office were destroyed. Today you can see these buildings were never rebuilt to their full height.",
+        "img": "57devonshireroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47421,
+          50.83871
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "7 Westville Road",
+        "date": "1943-05-23",
+        "description": "Ms Edith E. Few (65) and Ms Lily A. Smith (54) killed by a low level bomb that had sliced through numbers 9 and 11. 5 injured.",
+        "img": "westvilleroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46037,
+          50.84174
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "8-10 Cantelupe Road",
+        "date": "1940-09-12"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47918,
+          50.83974
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Actons Farm",
+        "date": "1940-11-12",
+        "description": "Unexploded bomb. 35 yards from viaduct."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48408,
+          50.86427
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Amherst Road",
+        "date": "1940-11-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47128,
+          50.84243
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Amherst Road",
+        "date": "1940-10-18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47176,
+          50.84395
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ancaster House, Penland Road",
+        "date": "1940-09-23"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49104,
+          50.84850
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barnhorn Road",
+        "date": "1940-08-15",
+        "description": "Three bombs dropped north of The Broadwalk in open country. The first bombs dropped on Bexhill."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.42308,
+          50.84785
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barrack Hall",
+        "date": "1940-09-12"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47658,
+          50.84580
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barrack Road",
+        "date": "1940-08-04"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47470,
+          50.84755
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barrack Road",
+        "date": "1940-10-04"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47477,
+          50.84740
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barrack Road",
+        "date": "1940-11-24",
+        "description": "Direct hit on Barrack Road air raid shelter. No casualties.",
+        "img": "barrackroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47258,
+          50.84674
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barrack Road",
+        "date": "1940-10-04"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47474,
+          50.84749
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barrack Road Cemetery",
+        "date": "1940-09-30",
+        "description": "Bomb landed amongst the graves, elm trees were uprooted and a piece of tombstone was hurled at a motor vehicle.",
+        "img": "barrackroadcemetery"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47622,
+          50.84792
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bayencourt North",
+        "date": "1940-10-18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47068,
+          50.84786
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bayencourt North",
+        "date": "1940-10-18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47069,
+          50.84807
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-10-18",
+        "name": "Bayencourt South"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47040,
+          50.84688
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bayencourt South",
+        "date": "1940-10-18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47054,
+          50.84739
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beach between Brockley Road and Richmond Road",
+        "date": "1940-12-11"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46164,
+          50.83575
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beach between Brockley Road and Richmond Road",
+        "date": "1940-12-11"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46098,
+          50.83567
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beach off Central Parade",
+        "date": "1940-10-08"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47327,
+          50.83688
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-10-08",
+        "name": "Beach off Central Parade"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47397,
+          50.83696
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beach south of Sea Road",
+        "date": "1940-11-11"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47671,
+          50.83744
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beach south of Sea Road",
+        "date": "1940-11-11"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47674,
+          50.83726
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Belle Hill",
+        "date": "1940-10-13"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47007,
+          50.84590
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Belle Hill",
+        "date": "1940-10-18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47054,
+          50.84599
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bexhill Golf Course",
+        "date": "1943-08-12"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48826,
+          50.84054
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bexhill golf course",
+        "date": "1944-07-07",
+        "description": "Flying Bomb. 7 injured."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48792,
+          50.84203
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bexhill Golf Course",
+        "date": "1940-09-06"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49421,
+          50.84151
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bexhill Hospital",
+        "date": "1942-08-11",
+        "description": "9 bombs dropped. 1 injury to a patient by flying glass."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47546,
+          50.85050
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Brassey Road",
+        "date": "1940-09-26"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47827,
+          50.83925
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Brassey Road, St Barnabas Vicarage",
+        "date": "1942-05-16"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47796,
+          50.83939
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Brassey Road, Suffolk House",
+        "date": "1943-01-02",
+        "description": "Bexhill's greatest loss of life in one incident. Ms Ada M. Adamson (75), Ms Jane C. Cana (84), Ms Edith L. Corke (39) and Ms Eleanor M. Coventry (65) killed. 2 other occupants seriously injured."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47850,
+          50.83882
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Buckhurst Road",
+        "date": "1940-09-19",
+        "description": "Unexploded bomb. Exploded 22 May 2009 during building work."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47730,
+          50.84312
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Buckhurst Road, Twinehams",
+        "date": "1940-09-19",
+        "description": "Mr John Croft (41) killed. Bexhill's first fatality. Two other workmen at premises injured.",
+        "img": "twinehams"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47756,
+          50.84315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Caffyn's Garage, Station Road",
+        "date": "1940-09-24",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47274,
+          50.84095
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Caffyn's Garage, Station Road",
+        "date": "1940-09-26",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47287,
+          50.84094
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cambridge Road",
+        "date": "1940-09-30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47321,
+          50.85096
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Clavering Walk",
+        "date": "1944-07",
+        "description": "V1 damaged a residential dwelling named High Chimneys (now known as Maple House)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.42615,
+          50.83713
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Collington Avenue, Collington Mansions",
+        "description": "Unexploded bomb.",
+        "date": "1940-09-30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46182,
+          50.84064
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Collington Wood",
+        "date": "1940-09-19",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44938,
+          50.83955
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Coniston, Hartfield Road",
+        "date": "1944-08-12",
+        "description": "Flying bomb.",
+        "img": "hartfieldroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44039,
+          50.83462
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cooden Drive",
+        "date": "1940-09-10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43664,
+          50.83472
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cooden Sea Road",
+        "date": "1941-01-12"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43009,
+          50.83682
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Crowmere Avenue",
+        "date": "1940-10-04"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47335,
+          50.84901
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "De La Warr Pavilion",
+        "date": "1940-09-30",
+        "description": "Destroyed dressing rooms and some of the backstage area. The buildings foundations also suffered minor damage."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47095,
+          50.83741
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Downlands Close",
+        "date": "1940-10-21"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46317,
+          50.84392
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Egerton Road, fishers Yard",
+        "date": "1940-09-29",
+        "description": "Unexploded bomb which set off two days later on the 30 September."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46876,
+          50.83732
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ellerslie Lane, Wheatfield",
+        "date": "1940-11-07"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44975,
+          50.85328
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fairmount Road",
+        "date": "1940-09-19"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48438,
+          50.84608
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1941-01-12",
+        "name": "Gillham Wood"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43697,
+          50.83690
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Glenleigh Park Road junction of Kingswood Avenue",
+        "date": "1940-11-07"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45481,
+          50.85380
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Glovers Farm",
+        "date": "1944-06-26",
+        "description": "Flying bomb. 8 injured.",
+        "img": "gloversfarm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48243,
+          50.85687
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-10-09",
+        "name": "Glyne Drive"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50218,
+          50.84813
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Glyne Drive",
+        "date": "1940-10-09"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50268,
+          50.84832
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Glyne Drive",
+        "date": "1940-10-09"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50155,
+          50.84849
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hastings Gas works",
+        "date": "1943-01-28",
+        "description": "Low level attack, three bombs. 15 injured, of which Mr Bertram G. Niner (39) of Bulverhythe died 3 days later and Mr William M. Day (59) - also of Bulverhythe - died a fortnight later."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50172,
+          50.84426
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hastings Gas Works",
+        "date": "1943-01-28",
+        "description": "Low level attack, three bombs. 15 injured, of which Mr Bertram G. Niner (39) of Bulverhythe died 3 days later and Mr William M. Day (59) - also of Bulverhythe - died a fortnight later."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50230,
+          50.84470
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hastings Gas Works",
+        "date": "1943-01-28",
+        "description": "Low level attack, three bombs. 15 injured, of which Mr Bertram G. Niner (39) of Bulverhythe died 3 days later and Mr William M. Day (59) - also of Bulverhythe - died a fortnight later."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50095,
+          50.84383
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "High Street",
+        "date": "1940-09-12"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47761,
+          50.84521
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Highwoods golf course",
+        "date": "1944-07-03",
+        "description": "Flying bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44133,
+          50.85108
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jameson Road",
+        "date": "1943-01",
+        "description": "Residential damage.",
+        "img": "jamesonroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47858,
+          50.84031
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Knole Road, Carlton Hotel",
+        "date": "1940-09-24",
+		"img": "carltonhotel"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47896,
+          50.83822
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Manor House Grounds",
+        "date": "1940-09-19"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48016,
+          50.84501
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-09-19",
+        "name": "Manor House grounds"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48058,
+          50.84530
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Metropole Hotel",
+        "date": "1940-09-30",
+        "description": "Considerable damage to the front of the building, unoccupied at the time.",
+        "img": "metropolehotel"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47039,
+          50.83749
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Metropolitan Convalescence Home",
+        "date": "1944-08-12",
+        "description": "Flying bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47891,
+          50.84443
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Metropolitan Convalescence Home",
+        "date": "1940-09-19"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47882,
+          50.84448
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-10-08",
+        "name": "Millfields Estate",
+        "description": "5 injured."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47192,
+          50.84518
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Millfields Estate",
+        "date": "1940-10-08",
+        "description": "5 injured."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47234,
+          50.84464
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Millfields Estate",
+        "date": "1940-10-08",
+        "description": "5 injured."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47211,
+          50.84489
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Morris House, Sackville Road",
+        "date": "1940-11-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46997,
+          50.83793
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Motcombe Court",
+        "date": "1943-01-02",
+        "description": "A 500kg bomb demolished three upper floors of the east wing. The building was unoccupied apart from the caretaker who suffered superficial injuries. Rebuilt in 1946.",
+        "img": "motcombecourt"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48319,
+          50.83949
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-10-18",
+        "name": "Ninfield Road area"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45731,
+          50.86287
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ninfield Road area",
+        "date": "1940-10-18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45842,
+          50.86116
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-10-18",
+        "name": "Ninfield Road area"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45764,
+          50.86242
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-10-18",
+        "name": "Ninfield Road area"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45797,
+          50.86199
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-10-18",
+        "name": "Ninfield Road area"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45823,
+          50.86160
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Open ground, Heights Estate",
+        "date": "1940-10-20"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50611,
+          50.84796
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Park Road",
+        "date": "1940-09-30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46797,
+          50.83868
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Peartree Lane near Highwoods",
+        "date": "1941-04-16"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44145,
+          50.86213
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Farm",
+        "date": "1944-03-24",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50906,
+          50.85264
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Farm",
+        "date": "1944-03-24",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50976,
+          50.85264
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Lane north side",
+        "date": "1940-11-10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49631,
+          50.85375
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Lane south side",
+        "date": "1940-11-05"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50522,
+          50.85249
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Lane south side",
+        "date": "1940-11-05"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50571,
+          50.85254
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Lane south side",
+        "date": "1940-11-05"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50427,
+          50.85228
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Lane south side",
+        "date": "1940-11-05"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50331,
+          50.85211
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Lane south side",
+        "date": "1940-11-05"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50477,
+          50.85242
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Lane south side",
+        "date": "1940-11-05"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50378,
+          50.85219
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Marsh",
+        "date": "1944-01-06",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.51352,
+          50.85692
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Marsh",
+        "date": "1944-01-06",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.51399,
+          50.85599
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Marsh",
+        "date": "1944-01-06",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.51378,
+          50.85637
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pebsham Marsh",
+        "date": "1944-07-11",
+        "description": "Flying bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50886,
+          50.85470
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Post Office rear",
+        "date": "1940-09-24",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47430,
+          50.84030
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Railway embankment, Hastings Gas Works",
+        "date": "1942-05-08"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.50408,
+          50.84392
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Railway siding near Bowles Yard, Reginald Road",
+        "date": "1940-10-04"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46717,
+          50.84358
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Reginald Road railway yard",
+        "date": "1940-11-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46672,
+          50.84452
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Reginald Road railway yard",
+        "date": "1940-11-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46629,
+          50.84371
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Reginald Road railway yard",
+        "date": "1940-11-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46689,
+          50.84489
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Reginald Road railway yard",
+        "date": "1940-11-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46612,
+          50.84321
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Reginald Road railway yard",
+        "date": "1940-11-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46613,
+          50.84245
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Reginald Road railway yard",
+        "date": "1940-11-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46648,
+          50.84413
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Reginald Road railway yard",
+        "date": "1940-11-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46610,
+          50.84284
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Richmond Road",
+        "date": "1944-06-19",
+        "description": "Just before 23:00 the first V1 that landed on the town. Damaged residential property and broke windows at St. Augustine's Church. Left a 30-ft-deep crater.",
+        "img": "richmondroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45829,
+          50.838
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rotherfield Avenue",
+        "date": "1940-10-08",
+        "description": "Unexploded bomb.",
+        "img": "rotherfieldavenue"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47894,
+          50.84335
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sackville Garage",
+        "date": "1942-05-16",
+        "description": "Completely destroyed.",
+        "img": "sackvillemews"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48104,
+          50.83964
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sackville Hotel",
+        "date": "1940-09-15",
+        "description": "4 small roof fires."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48129,
+          50.83871
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sackville Hotel",
+        "date": "1940-09-12"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48114,
+          50.83867
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sackville Hotel",
+        "date": "1940-09-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48140,
+          50.83876
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Salisbury Road",
+        "date": "1940-10-08"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47010,
+          50.84606
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sandhall Diary 80A London Road",
+        "date": "1940-10-18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46954,
+          50.84485
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sea Road",
+        "date": "1940-09-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47662,
+          50.83890
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Smiths Garage, Victoria Road",
+        "date": "1940-10-04",
+        "description": "Unexploded bomb."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46681,
+          50.84174
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Davids Avenue, south end",
+        "date": "1940-09-30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47218,
+          50.84755
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-09-10",
+        "name": "St James Avenue"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47768,
+          50.85496
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-09-10",
+        "name": "St James Road"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47643,
+          50.85193
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-09-10",
+        "name": "St James road"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47697,
+          50.85378
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-09-10",
+        "name": "St James Road"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47719,
+          50.85422
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "date": "1940-09-10",
+        "name": "St James Road"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47694,
+          50.85307
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Mary's Cottages by footpath from Highlands",
+        "date": "1940-09-30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45613,
+          50.86320
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Mary's Lane",
+        "date": "1940-11-07"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45119,
+          50.86317
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Broadwalk",
+        "date": "1940-09-08"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.42273,
+          50.84612
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Gaiety Cinema",
+        "date": "1940-10-06",
+        "description": "94 London Road, destroyed and never reopened.",
+        "img": "gaietycinema"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46893,
+          50.84529
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Grange",
+        "date": "1944-07-22",
+        "description": "V1 landed in the garden grounds partially wrecking the house, also caused damage to the Bell Hotel and other adjacent properties. 27 injured.",
+        "img": "thegrange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47803,
+          50.84438
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The New Club",
+        "date": "1940-10-10",
+        "description": "Unexploded bomb possibly dropped 09 October."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47421,
+          50.83719
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Town Hall",
+        "date": "1940-09-24",
+        "description": "Damage caused the Borough Accountant and Public Health Department to relocate to Garth Place."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47131,
+          50.84158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Town Hall Square",
+        "date": "1940-11-24",
+        "description": "Damage to shops. Located where the building passage to Sainsbury's is today.",
+        "img": "townhallsquare"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47143,
+          50.84109
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Turkey Road",
+        "date": "1943-12-22",
+        "description": "Approximately 23:00 hours. Bomb in front garden demolished bungalow and house next door. A terrace opposite (Arncliffe Terrace) was damaged. Families at Arncliffe Terrace and Camperdown Street evacuated.",
+        "img": "turkeyroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46464,
+          50.85703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Upper Sea Road (Buckhurst Road incident)",
+        "date": "1940-09-19"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47779,
+          50.84315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Victoria Road",
+        "date": "1940-09-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46768,
+          50.84196
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Waghorns Garage, Station Road",
+        "date": "1940-11-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47207,
+          50.84134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wealden Way",
+        "date": "1944-07-19",
+        "description": "Home wrecked by a flying bomb.",
+        "img": "wealdenway"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.43473,
+          50.85268
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "West Down Road",
+        "date": "1940-12-11"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45939,
+          50.84689
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Western Road, garage",
+        "date": "1940-11-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47118,
+          50.84049
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Western Road, rear of Co-Op",
+        "date": "1940-11-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47192,
+          50.84033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Woodsgate Park",
+        "date": "1940-09-24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46501,
+          50.85046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Woodsgate Place",
+        "date": "1940-09-30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46237,
+          50.85155
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Worsham Farm",
+        "date": "1940-11-10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49338,
+          50.85739
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Worsham Farm",
+        "date": "1944-02-03"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49423,
+          50.85728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Worsham Manor",
+        "description": "Flying bomb.",
+        "date": "1944-07-22"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.49350,
+          50.85625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wrestwood Road",
+        "date": "1940-09-23"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.48365,
+          50.85211
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wrestwood Road",
+        "date": "1940-11-10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47597,
+          50.85388
+        ]
+      }
+    }
+  ]
 }

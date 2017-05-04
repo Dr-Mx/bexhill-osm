@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## v2.8.0
+
+**Date:** 04/05/2017
+
+Updated js
+ - easy-button.min.js 2.2.0
+
+Site changes
+ - Date parser for ISO 8601 (en-gb)
+ - 'Get map link' changed to 'Share' button
+ - Tour image layers can now be shared
+ - Make a geocode query using a URI (e.g. '/?Q=bexhill police')
+ - Can now geocode search using the autocomplete input by hitting enter
+ - Changed wrongly named bounding box variables
+ - Changed directory structure for Tour
+ - Tour references now link and highlight on source page
+ - Surveillance now includes speed cameras
+ - Dog waste bin POI
+ - Larger images for desktop users
+
+
 ## v2.7.0
 
 **Date:** 08/04/2017

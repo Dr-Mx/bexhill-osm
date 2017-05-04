@@ -29,7 +29,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
+	<link rel="stylesheet" href="assets/css/leaflet.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/css/Control.Geocoder.css">
 	<link rel="stylesheet" href="assets/css/Control.Loading.css">
@@ -37,7 +37,7 @@
 	<link rel="stylesheet" href="assets/css/easy-button.css">
 	<link rel="stylesheet" href="assets/css/easy-autocomplete.css">
 	<link rel="stylesheet" href="assets/css/leaflet-routing-machine.css">
-	<link rel="stylesheet" href="assets/css/site.css?v2.7.0">
+	<link rel="stylesheet" href="assets/css/site.css">
  </head>
 
  <body>
@@ -61,40 +61,29 @@
 			<div class="sidebar-pane" id="home">
 				<h1 class="sidebar-header">Bexhill OpenStreetMap<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body">
-					<h3>Find an interest</h3>
-					<p><input id="autocomplete" class="autocomplete" placeholder="(e.g. artwork, coffee, doctor, hotel)"></p>
+					<h3>Search</h3>
+					<p><input id="autocomplete" class="autocomplete" placeholder="e.g. 'artwork', 'coffee', 'hotel' or 'western road'" title="Enter a keyword, or an address"></p>
 					<label class="opennow"><input type="checkbox"> Only facilities open right now</label>
 					<hr>
-						<h3>Tips to get started</h3>
-						<ul style="color:#143000;">
-							<ol style="list-style-type:circle; padding-left:20px;">
-								<li>Enter a keyword above to see a group of interests.</li>
-								<li>Find an address by using the <a onclick="geocoderLink();">(<i class="theme fa fa-search"></i>)</a> button.</li>
-								<li>Right-click the map to query specific details.</li>
-								<li>Fly to a suburb by clicking the minimap below.</li>
-							</ol>
-						</ul>
 						<p><img src="assets/img/minimap.png" id="minimap" alt="Minimap" usemap="#m_minimap"></p>
 						<map name="m_minimap">
-							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="minimap(mapCentre, mapZoom);" >
-							<area title="New Town" shape="rect" coords="236,187,324,245" onclick="minimap([50.8390, 0.4730], 17);">
-							<area title="Old Town" shape="rect" coords="265,131,348,186" onclick="minimap([50.8447, 0.4775], 17);">
-							<area title="Sidley" shape="rect" coords="238,21,336,97" onclick="minimap([50.8560, 0.4700], 17);">
-							<area title="Glyne Gap" shape="rect" coords="403,115,477,196" onclick="minimap([50.8445, 0.5005], 17);">
-							<area title="Pebsham" shape="rect" coords="379,55,477,114" onclick="minimap([50.8505, 0.4990], 17);">
-							<area title="Collington" shape="rect" coords="103,136,197,220" onclick="minimap([50.8410, 0.4515], 16);">
-							<area title="The Highlands" shape="rect" coords="110,1,237,46" onclick="minimap([50.8590, 0.4545], 17);">
-							<area title="Little Common" shape="rect" coords="1,102,101,184" onclick="minimap([50.8460, 0.4338], 17);">
-							<area title="Cooden" shape="rect" coords="1,185,101,270" onclick="minimap([50.8375, 0.4335], 16);">
-							<area title="Glenleigh Park" shape="rect" coords="110,48,237,118" onclick="minimap([50.8520, 0.4552], 16);">
+							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.flyTo(mapCentre, mapZoom);" >
+							<area title="New Town" shape="rect" coords="236,187,324,245" onclick="map.flyTo([50.8390, 0.4730], 17);">
+							<area title="Old Town" shape="rect" coords="265,131,348,186" onclick="map.flyTo([50.8447, 0.4775], 17);">
+							<area title="Sidley" shape="rect" coords="238,21,336,97" onclick="map.flyTo([50.8560, 0.4700], 17);">
+							<area title="Glyne Gap" shape="rect" coords="403,115,477,196" onclick="map.flyTo([50.8445, 0.5005], 17);">
+							<area title="Pebsham" shape="rect" coords="379,55,477,114" onclick="map.flyTo([50.8505, 0.4990], 17);">
+							<area title="Collington" shape="rect" coords="103,136,197,220" onclick="map.flyTo([50.8410, 0.4515], 16);">
+							<area title="The Highlands" shape="rect" coords="110,1,237,46" onclick="map.flyTo([50.8590, 0.4545], 17);">
+							<area title="Little Common" shape="rect" coords="1,102,101,184" onclick="map.flyTo([50.8460, 0.4338], 17);">
+							<area title="Cooden" shape="rect" coords="1,185,101,270" onclick="map.flyTo([50.8375, 0.4335], 16);">
+							<area title="Glenleigh Park" shape="rect" coords="110,48,237,118" onclick="map.flyTo([50.8520, 0.4552], 16);">
 						</map>
 						<p class="comment">Note: areas to the west are work-in-progress.</p>
 					<hr>
 						<p>Bexhill-OSM is a community based mapping project run entirely on your <a class="theme" onclick="donateLink();">donations</a>. It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
 						<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fa fa-question fa-fw"></i>]</a> for more assistance.
 						<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fa fa-info fa-fw"></i>]</a>.</p>
-					<hr>
-						<p><i class="comment">&copy; Bexhill-OSM 2016-2017</i></p>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="pois">
@@ -149,7 +138,7 @@
 					</div>
 					<hr>
 					<h3>Offsite walking tours</h3>
-					<p><a href="http://geotourist.com/users/454" target="_blank" title="GeoTourist walks by Bexhill Museum"><img src="assets/img/geotourist.png"></a></p>
+					<p><a href="http://geotourist.com/users/454" target="_blank" title="GeoTourist walks by Bexhill Museum"><img src="assets/img/geotourist.png" alt="GeoTourist"></a></p>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="tour">
@@ -173,7 +162,7 @@
 							</select>
 						<button type="button" id="tourNext" class="tour-control" title="Next"><i class="fa fa-chevron-right"></i></button>
 					</div>
-					<iframe id="tourFrame" src="tour/tour00.html"></iframe>
+					<iframe id="tourFrame" src="tour/tour00/index.html"></iframe>
 				</div>
 			</div>
 			<!-- Lower tabs -->
@@ -182,9 +171,9 @@
 				<div class="sidebar-body">
 					<a id="gototophelp"></a>
 					<p>
+						<a href="#gotosearch">Search</a><br>
 						<a href="#gotocontrols">Map Controls</a><br>
 						<a href="#gotocontext">Context-menu</a><br>
-						<a href="#gotointerest">Find Interest</a><br>
 						<a href="#gototabs">Tabs</a><br>
 						<a href="#gotopoi">Points of Interest (POI)</a><br>
 						<a href="#gotowalking">Walking Routes</a><br>
@@ -192,44 +181,46 @@
 					</p>
 					<hr>
 					<b><i style="color:#e52d27;" class="fa fa-youtube-play"></i> <a href="https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us" title="YouTube" target="_blank">View demonstration videos</a></b>
+					<a id="gotosearch"></a><hr>
+					<h3>Search</h3>
+						Type the first few letters of a keyword (e.g. 'police', 'bike', 'diy'), then click the word in the category you are interested in to display it on the map.<br>
+						To see only currently open facilities, check the box beneath.
+						<br><br>
+						Find an address or place-name by typing part of it and pressing the enter key.
+						<p><img src="assets/img/find.png" alt="Find interest Preview"></p>
 					<a id="gotocontrols"></a><hr>
 					<h3>Map Controls</h3>
-						The zoom controls (<i class="theme fa fa-plus"></i> / <i class="theme fa fa-minus"></i>) will enlarge and shrink the map.<br><br>
-						If you are in the area your current position can be located, just click the arrow icon (<i class="theme fa fa-location-arrow"></i>).<br><br>
-						Find an address on the map by entering part of it into the search box (<i class="theme fa fa-search"></i>). A selection will appear if multiple results are found.<br><br>
-						Share your current view and selected options by clicking the link icon (<i class="theme fa fa-link"></i>) and copying the text displayed.<br><br>
-						To clear all current layers on the map, click the bin (<i class="theme fa fa-trash"></i>). Right-click / long press will reload the website to defaults.<br><br>
+						<i class="theme fa fa-plus fa-fw"></i>/<i class="theme fa fa-minus fa-fw"></i> Zoom: Enlarge and shrink the map.<br><br>
+						<i class="theme fa fa-location-arrow fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map.<br><br>
+						<i class="theme fa fa-search fa-fw"></i> Address search: Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
+						<i class="theme fa fa-share-square-o fa-fw"></i> Share: Get current view and selected options copying the text link displayed.<br><br>
+						<i class="theme fa fa-trash fa-fw"></i> Clear map: Remove all current layers on the map. Right-click / long press will reload the website to defaults.<br><br>
 						Various map styles can be displayed using the overlay picker - located at the top-right of the page.
 						<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
 						<i class="fa fa-search fa-fw"></i> Query area/street/place: Display information on an item under the cursor depending on zoom level (middle-clicking the map acts as shortcut).<br><br>
-						<i class="fa fa-location-arrow fa-fw"></i> Walk to here: If location is turned on and you are within the bounds of the map, this will create walking directions from where you currently are to this location.<br><br>
-						<i class="fa fa-compass fa-fw"></i> Add walk point here: Plot a marker to create a walking route.<br><br>
+						<i class="fa fa-location-arrow fa-fw"></i> Walk to here: Create a route to this location. Locate needs to be turned on.<br><br>
+						<i class="fa fa-compass fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
 						<i class="fa fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
 						<i class="fa fa-sticky-note-o fa-fw"></i> Leave a note here: Report a mistake or something missing.
 						<p><img src="assets/img/context.png" alt="Context-menu preview"></p>
-					<a id="gotointerest"></a><hr>
-					<h3>Find Interest</h3>
-						Type the first few letters of a keyword (e.g. 'police', 'bike', 'diy'). Click the word in the category you are interested in to display it on the map.<br>
-						To see only currently open facilities, check the box beneath.
-						<p><img src="assets/img/find.png" alt="Find interest Preview"></p>
-						<a id="gototabs"></a><hr>
+					<a id="gototabs"></a><hr>
 					<h3>Tabs</h3>
-						[<i class="theme fa fa-map-marker fa-fw"></i>] Points of Interest: Select an interest to be displayed on the map.<br><br>
-						[<i class="theme fa fa-compass fa-fw"></i>] Walking Routes: Select from a few local walks, or create your own path through the many twittens.<br><br>
-						[<i class="theme fa fa-bank fa-fw"></i>] Historic Tour: Travel back in time and discover the history of the town.
+						<i class="theme fa fa-map-marker fa-fw"></i> Points of Interest: Select an interest to be displayed on the map.<br><br>
+						<i class="theme fa fa-compass fa-fw"></i> Walking Routes: Select from a few local walks, or create your own path through the many twittens.<br><br>
+						<i class="theme fa fa-bank fa-fw"></i> Historic Tour: Travel back in time and discover the history of the town.
 					<p></p>
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
-						To begin displaying POIs, zoom to an area on the map and click up to 3 POI groups. After a few 	moments 
+						To begin displaying POIs, zoom to an area on the map and click up to 3 POI groups. After a few moments 
 						the corresponding items will be displayed on the map as markers. Larger map areas may take longer to load.
 						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview"></p>
 						Click each marker to see a pop-up detailing more specific information.
 						<p><img src="assets/img/icons/star-3.png" alt="POI preview"></p>
-						Clicking edit (<i class="fa fa-pencil fa-fw"></i>) opens openstreetmap.org where you can make immediate changes to the POI.<br><br>
-						Create walking directions (<i class="fa fa-location-arrow"></i>) to this marker, your location needs to be turned on and be within the bounds of the map.<br>
+						<i style="color:#777;" class="fa fa-pencil fa-fw"></i> Edit: Opens openstreetmap.org where you can make immediate changes to the item.<br><br>
+						<i style="color:#777;" class="fa fa-location-arrow"></i> Walking directions: Create a route to this item. Locate needs to be turned on.<br>
 						<p><img src="assets/img/popup.png" alt="Marker popup preview"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
@@ -237,8 +228,9 @@
 						<p><img src="assets/img/walking.png" alt="Walking route preview"></p>
 					<a id="gototour"></a><hr>
 					<h3>Historic Tour</h3>
-						Navigate by either selecting from the list-box or using the arrows to jump between articles. Mobile users may also swipe the title-bar to navigate. Use the map-icon within an article to display related information on the map.
-						<img src="tour/show.png" alt="Show on map button">
+						Navigate by either selecting from the list-box or using the arrows to jump between articles. Mobile users may also swipe the title-bar to navigate.<br><br>
+						<img style="display:inline-block; padding:0; margin-bottom:-5px;" src="tour/show.png" alt="Show on map button"> Show on map: Displays an interactive layer related to the article.
+					<p></p>
 					<div class="anchor"><a href="#gototophelp" title="Back to top">| <i class="fa fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
@@ -256,8 +248,8 @@
 					<h3>About &amp; Contact</h3>
 						<p>Bexhill-OSM is part of a community of mappers that want to create a free, editable map of the world. You can learn about the global project at the official <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap website</a>.</p>
 						<p>This independent website was created to herald the community, unique shops and history of Bexhill-on-Sea in a informative, accessible form.</p>
-						<p>Although Bexhill-OSM is not a business directory, nor a place for advertising, we do welcome listings on all public visitable places.</p>
-						<p>Web-development and the underlying map data are managed by Alexis Markwick.</p>
+						<p>Although Bexhill-OSM is not a business directory, nor a place for direct advertising, we welcome listings on all public visitable places.</p>
+						<p>Web-development and the underlying map data are managed by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</p>
 						<p>If you have any enquiries I can be reached via:<br>
 						&nbsp;<a href="" onclick="this.href='mailto:' + 'info' + '@' + 'bexhill-osm.org.uk';" title="Email"><i class="fa fa-envelope fa-fw"></i> info [at] bexhill-osm.org.uk</a><br>
 						&nbsp;<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fa fa-facebook-official fa-fw"></i> fb.com/bexhillosm</a><br>
@@ -285,7 +277,7 @@
 							<tr><td><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 								<input type="hidden" name="cmd" value="_s-xclick">
 								<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
-								<input type="image" src="assets/img/paypal.png" style="padding-bottom:10px;" name="submit" title="PayPal – The safer, easier way to pay online!">
+								<input type="image" src="assets/img/paypal.png" style="padding-bottom:10px;" name="submit" alt="PayPal" title="PayPal – The safer, easier way to pay online!">
 							</form></td></tr>
 							<tr><td title="Bitcoin"><a href="https://bitcoin.org/en/" target="_blank"><i class="fa fa-btc"></i></a> <i class="comment">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</i></td></tr>
 						</table>
@@ -342,7 +334,7 @@
 	</div>
 
 	<!-- JavaScript | website plugins -->
-	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+	<script src="assets/js/leaflet.js"></script>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="assets/js/jquery-ui.min.js"></script>
 	<script src="assets/js/jquery.mobile.custom.min.js"></script>
@@ -364,10 +356,10 @@
 	<script src="assets/js/jquery.md5.min.js"></script>
 	<!-- JavaScript | main site code -->
 	<script src="assets/js/OverPassLayer.js"></script>
-	<script src="assets/js/tags-parsers.js?v2.7.0"></script>
-	<script src="assets/js/pois-type.js?v2.7.0"></script>
-	<script src="assets/js/site.js?v2.7.0"></script>
-	<script src="tour/tour.js?v2.7.0"></script>
+	<script src="assets/js/tags-parsers.js?v2.8.0"></script>
+	<script src="assets/js/pois-type.js?v2.8.0"></script>
+	<script src="tour/tour.js?v2.8.0"></script>
+	<script src="assets/js/site.js?v2.8.0"></script>
 
 	<!-- GoogleAnalytics -->
 	<script>
