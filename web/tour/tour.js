@@ -32,7 +32,6 @@ function tour(ti) {
 				show_overpass_layer('node(3192282124)(' + mapBbox + ');');
 				break;
 			case 'smugglingPanels':
-				map.setZoom(15);
 				show_overpass_layer('node["ref"~"^TST"](' + mapBbox + ');');
 				imgLayer = ti;
 				break;
@@ -45,7 +44,6 @@ function tour(ti) {
 				show_overpass_layer('way(397839677)(' + mapBbox + ');');
 				break;
 			case 'railwayWestbranch':
-				map.setZoom(15);
 				imageOverlay.addLayer(L.imageOverlay('tour/tour04/westbranchline.png', [[50.8860, 0.4625], [50.8400, 0.5100]], { opacity: 0.9 }));
 				imgLayer = ti;
 				break;
@@ -62,7 +60,6 @@ function tour(ti) {
 				show_overpass_layer('node(4033104292)(' + mapBbox + ');');
 				break;
 			case 'tramway':
-				map.setZoom(15);
 				imageOverlay.addLayer(L.imageOverlay('tour/tour05/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }));
 				imgLayer = ti;
 				break;
@@ -76,7 +73,8 @@ function tour(ti) {
 				show_overpass_layer('node(3592525934)(' + mapBbox + ');');
 				break;
 			case 'motorTrail':
-				suggWalk('tmt');
+				show_overpass_layer('node["ref"~"^TMT"](' + mapBbox + ');');
+				imgLayer = ti;
 				break;
 			case 'delawarr':
 				iconLayer.clearLayers();
@@ -179,7 +177,7 @@ function source(item) {
 	$('#tourList').val(99);
 	$('#tourList').trigger('change');
 	$('#tourFrame').one('load', function () {
-		$(this).contents().find('ol li').slice(item + 2, item + 3).css('background-color', 'khaki');
-		$(this).contents().scrollTop($(this).contents().find('ol li').slice(item + 2).offset().top - 20);
+		$(this).contents().find('ol li').eq(item + 2).css('background-color', 'khaki');
+		$(this).contents().scrollTop($(this).contents().find('ol li').eq(item + 2).offset().top - 20);
 	});
 }

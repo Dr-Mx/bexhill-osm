@@ -65,25 +65,27 @@
 					<p><input id="autocomplete" class="autocomplete" placeholder="e.g. 'artwork', 'coffee', 'hotel' or 'western road'" title="Enter a keyword, or an address"></p>
 					<label class="opennow"><input type="checkbox"> Only facilities open right now</label>
 					<hr>
-						<p><img src="assets/img/minimap.png" id="minimap" alt="Minimap" usemap="#m_minimap"></p>
-						<map name="m_minimap">
-							<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.flyTo(mapCentre, mapZoom);" >
-							<area title="New Town" shape="rect" coords="236,187,324,245" onclick="map.flyTo([50.8390, 0.4730], 17);">
-							<area title="Old Town" shape="rect" coords="265,131,348,186" onclick="map.flyTo([50.8447, 0.4775], 17);">
-							<area title="Sidley" shape="rect" coords="238,21,336,97" onclick="map.flyTo([50.8560, 0.4700], 17);">
-							<area title="Glyne Gap" shape="rect" coords="403,115,477,196" onclick="map.flyTo([50.8445, 0.5005], 17);">
-							<area title="Pebsham" shape="rect" coords="379,55,477,114" onclick="map.flyTo([50.8505, 0.4990], 17);">
-							<area title="Collington" shape="rect" coords="103,136,197,220" onclick="map.flyTo([50.8410, 0.4515], 16);">
-							<area title="The Highlands" shape="rect" coords="110,1,237,46" onclick="map.flyTo([50.8590, 0.4545], 17);">
-							<area title="Little Common" shape="rect" coords="1,102,101,184" onclick="map.flyTo([50.8460, 0.4338], 17);">
-							<area title="Cooden" shape="rect" coords="1,185,101,270" onclick="map.flyTo([50.8375, 0.4335], 16);">
-							<area title="Glenleigh Park" shape="rect" coords="110,48,237,118" onclick="map.flyTo([50.8520, 0.4552], 16);">
-						</map>
-						<p class="comment">Note: areas to the west are work-in-progress.</p>
+					<p><img src="assets/img/minimap.png" id="minimap" alt="Minimap" usemap="#m_minimap"></p>
+					<map name="m_minimap">
+						<area title="Bexhill" shape="rect" coords="216,161,264,186" onclick="map.flyTo(mapCentre, mapZoom);" >
+						<area title="New Town" shape="rect" coords="236,187,324,245" onclick="map.flyTo([50.8390, 0.4730], 17);">
+						<area title="Old Town" shape="rect" coords="265,131,348,186" onclick="map.flyTo([50.8447, 0.4775], 17);">
+						<area title="Sidley" shape="rect" coords="238,21,336,97" onclick="map.flyTo([50.8560, 0.4700], 17);">
+						<area title="Glyne Gap" shape="rect" coords="403,115,477,196" onclick="map.flyTo([50.8445, 0.5005], 17);">
+						<area title="Pebsham" shape="rect" coords="379,55,477,114" onclick="map.flyTo([50.8505, 0.4990], 17);">
+						<area title="Collington" shape="rect" coords="103,136,197,220" onclick="map.flyTo([50.8410, 0.4515], 16);">
+						<area title="The Highlands" shape="rect" coords="110,1,237,46" onclick="map.flyTo([50.8590, 0.4545], 17);">
+						<area title="Little Common" shape="rect" coords="1,102,101,184" onclick="map.flyTo([50.8460, 0.4338], 17);">
+						<area title="Cooden" shape="rect" coords="1,185,101,270" onclick="map.flyTo([50.8375, 0.4335], 16);">
+						<area title="Glenleigh Park" shape="rect" coords="110,48,237,118" onclick="map.flyTo([50.8520, 0.4552], 16);">
+					</map>
+					<p class="comment">Note: areas to the west are work-in-progress.</p>
 					<hr>
-						<p>Bexhill-OSM is a community based mapping project run entirely on your <a class="theme" onclick="donateLink();">donations</a>. It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
-						<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fa fa-question fa-fw"></i>]</a> for more assistance.
-						<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fa fa-info fa-fw"></i>]</a>.</p>
+					<p>Bexhill-OSM is a community based, open mapping project - run entirely on your <a class="theme" onclick="donateLink();">donations</a>. It aims to help people find and gather information on places in <a href="http://en.wikipedia.org/wiki/Bexhill-on-Sea" title="Wikipedia article" target="_blank">Bexhill-on-Sea</a>, UK.</p>
+					<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fa fa-question fa-fw"></i>]</a> for more assistance.
+					<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fa fa-info fa-fw"></i>]</a>.</p>
+					<hr>
+					<div id="feedRss"></div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="pois">
@@ -176,6 +178,7 @@
 						<a href="#gotocontext">Context-menu</a><br>
 						<a href="#gototabs">Tabs</a><br>
 						<a href="#gotopoi">Points of Interest (POI)</a><br>
+						<a href="#gotopopups">Pop-ups</a><br>
 						<a href="#gotowalking">Walking Routes</a><br>
 						<a href="#gototour">Historic Tour</a><br>
 					</p>
@@ -193,14 +196,14 @@
 						<i class="theme fa fa-plus fa-fw"></i>/<i class="theme fa fa-minus fa-fw"></i> Zoom: Enlarge and shrink the map.<br><br>
 						<i class="theme fa fa-location-arrow fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map.<br><br>
 						<i class="theme fa fa-search fa-fw"></i> Address search: Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
-						<i class="theme fa fa-share-square-o fa-fw"></i> Share: Get current view and selected options copying the text link displayed.<br><br>
+						<i class="theme fa fa-share-square-o fa-fw"></i> Share: Get current view and selected options by copying the text link displayed.<br><br>
 						<i class="theme fa fa-trash fa-fw"></i> Clear map: Remove all current layers on the map. Right-click / long press will reload the website to defaults.<br><br>
 						Various map styles can be displayed using the overlay picker - located at the top-right of the page.
 						<p><img src="assets/img/controls.png" alt="Map controls preview"></p>
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
-						<i class="fa fa-search fa-fw"></i> Query area/street/place: Display information on an item under the cursor depending on zoom level (middle-clicking the map acts as shortcut).<br><br>
+						<i class="fa fa-search fa-fw"></i> Query area/street/place: Display information on an item under the cursor depending on zoom level (middle-clicking the map also performs the same function).<br><br>
 						<i class="fa fa-location-arrow fa-fw"></i> Walk to here: Create a route to this location. Locate needs to be turned on.<br><br>
 						<i class="fa fa-compass fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
 						<i class="fa fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
@@ -209,14 +212,16 @@
 					<a id="gototabs"></a><hr>
 					<h3>Tabs</h3>
 						<i class="theme fa fa-map-marker fa-fw"></i> Points of Interest: Select an interest to be displayed on the map.<br><br>
-						<i class="theme fa fa-compass fa-fw"></i> Walking Routes: Select from a few local walks, or create your own path through the many twittens.<br><br>
-						<i class="theme fa fa-bank fa-fw"></i> Historic Tour: Travel back in time and discover the history of the town.
+						<i class="theme fa fa-compass fa-fw"></i> Walking Routes: Select from a few set walks, or create your own path through the many twittens.<br><br>
+						<i class="theme fa fa-bank fa-fw"></i> Historic Tour: Travel back in time and discover the history of the town with our interactive guide.
 					<p></p>
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
 						To begin displaying POIs, zoom to an area on the map and click up to 3 POI groups. After a few moments 
 						the corresponding items will be displayed on the map as markers. Larger map areas may take longer to load.
 						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview"></p>
+					<a id="gotopopups"></a><hr>
+					<h3>Pop-ups</h3>
 						Click each marker to see a pop-up detailing more specific information.
 						<p><img src="assets/img/icons/star-3.png" alt="POI preview"></p>
 						<i style="color:#777;" class="fa fa-pencil fa-fw"></i> Edit: Opens openstreetmap.org where you can make immediate changes to the item.<br><br>
@@ -287,7 +292,7 @@
 						<p>Source-code for Bexhill-OSM can be downloaded from <a href="https://github.com/Dr-Mx/osm-pois" target="_blank"><i class="fa fa-github"></i> GitHub</a>, as well as a <a href="https://github.com/Dr-Mx/osm-pois/blob/master/CHANGELOG.md" target="_blank">change-log</a> of continuing web developments.
 						<br>To see my recent map changes click <a href="http://www.openstreetmap.org/user/Dr-Mx/history" target="_blank">here</a>.</p>
 						<p>Special thanks to the developers below, for without them this website would not be where it is today:</p>
-						<ul>
+						<ul style="padding-left:20px;">
 							<li><a href="https://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> (founding project) &copy; Manuel Kaufmann</li>
 							<li><a href="http://leafletjs.com/" target="_blank">Leaflet</a> &copy; Vladimir Agafonkin</li>
 							<li>Leaflet Plugins:
@@ -302,7 +307,7 @@
 									<li><a href="https://github.com/perliedman/leaflet-routing-machine" target="_blank">leaflet-routing-machine</a> &copy; Per Liedman</li>
 									<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
 									<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
-									<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael Lawrence Evans</li>
+									<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael L. Evans</li>
 								</ol>
 							</li>
 							<li><a href="https://fortawesome.github.io/Font-Awesome/" target="_blank">Font-Awesome</a> &copy; Dave Gandy</li>
@@ -314,6 +319,7 @@
 							<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
 							<li><a href="https://github.com/placemarker/jQuery-MD5" target="_blank">jQuery MD5 Plugin</a> &copy; Christopher Casebeer</li>
 							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
+							<li><a href="https://github.com/enginkizil/FeedEk" target="_blank">FeedEk jQuery RSS/ATOM Feed</a> &copy; Engin Kizil</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
 					<div class="anchor"><a href="#gototopinfo" title="Back to top">| <i class="fa fa-arrow-up"></i> |</a></div>

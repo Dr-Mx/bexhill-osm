@@ -9,7 +9,7 @@ var thuforKey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
 var minOpZoom = 14;
 var email = 'info@bexhill-osm.org.uk';
 // map area
-var mapBounds = { bot: 50.8150, lef: 0.3500, top: 50.8850, rig: 0.5400 };
+var mapBounds = { bot: 50.8190, lef: 0.3770, top: 50.8790, rig: 0.5330 };
 var mapBbox = [mapBounds.bot, mapBounds.lef, mapBounds.top, mapBounds.rig];
 // map open location
 var mapCentre = [50.8424, 0.4676];
@@ -58,7 +58,7 @@ $(document).ready(function () {
 	$('#spinner').hide();
 	$('#map').css('background', '#e6e6e6');
 	// attribution
-	$('#home .sidebar-body').append('<hr><p><img style="margin-bottom:-2px;" src="favicon-16x16.png"> <i class="comment">&copy; Bexhill-OSM 2016-' + new Date().getFullYear() + '</i></p>');
+	$('#home .sidebar-body').append('<p><img style="margin-bottom:-2px;" src="favicon-16x16.png"> <i class="comment">&copy; Bexhill-OSM 2016-' + new Date().getFullYear() + '</i></p>');
 	// jquery ui tooltip
 	if (window.ontouchstart === undefined) $('.sidebar-tabs').tooltip({ hide: false, show: false, track: true, position: { my: 'left+15 top+10' } });
 	// https://github.com/davidjbradshaw/image-map-resizer
@@ -136,6 +136,9 @@ $(document).ready(function () {
 
 // https://github.com/aratcliffe/Leaflet.contextmenu
 var map = new L.map('map', {
+	maxBounds: L.latLngBounds([mapBounds.bot, mapBounds.lef], [mapBounds.top, mapBounds.rig]).pad(0.1),
+	maxBoundsViscosity: 1.0,
+	bounceAtZoomLimits: false,
 	contextmenu: true,
 	contextmenuItems: [{
 		text: '<i class="fa fa-search fa-fw"></i> <span class="contextmenu-query"></span>',
@@ -294,9 +297,9 @@ var tileBaseLayer = {
 		maxNativeZoom: 19
 	},
 	antique: {
-		name: 'Antique',
+		name: 'Pirate',
 		url: 'https://{s}.tiles.mapbox.com/v4/lrqdo.me2bng9n/{z}/{x}/{y}.png?access_token=' + mapboxKey,
-		attribution: '<a href="https://laruchequiditoui.fr/" target="_blank">LRQDO</a>',
+		attribution: '<a href="https://github.com/ajashton/pirate-map" target="_blank">AJ Ashton</a>',
 		maxNativeZoom: 20
 	},
 	mbxoutdr: {
@@ -389,7 +392,7 @@ if ((new Date().getMonth() === 10 && new Date().getDate() >= 15) || new Date().g
 	L.imageOverlay('assets/img/xmas-tree.png', [[50.84545, 0.43400], [50.84510, 0.43350]], { opacity: 0.9 }).addTo(map);
 }
 
-// get layer names on change
+// get layer name on change
 map.on('baselayerchange', function (e) {
 	for (var c in baseTileList.name) {
 		if (e.name === baseTileList.name[c]) actBaseTileLayer = baseTileList.keyname[c];
@@ -781,5 +784,34 @@ if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
 	if (($(window).width() >= 768 || actTab === 'tour') && actTab !== 'none') sidebar.open(actTab);
 }
 
+// https://github.com/enginkizil/FeedEk
+// show latest edits via rss feed
+(function ($) {
+	$.fn.FeedEk = function (opt) {
+		var id = '#' + $(this).attr('id'), s = '', ti, tiUser;
+		$(id).empty();
+		// use dates as a 1 hour cachebuster
+		var YQLstr = 'SELECT channel.item FROM feednormalizer WHERE output="rss_2.0" AND url="' + opt.FeedUrl + '&rnd=' + new Date().getDate() + '' + new Date().getHours() + '" LIMIT ' + 4;
+		$.ajax({
+			url: 'https://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent(YQLstr) + '&format=json&diagnostics=false',
+			dataType: 'json',
+			success: function (data) {
+				$(id).empty();
+				if (!(data.query.results.rss instanceof Array)) {
+					data.query.results.rss = [data.query.results.rss];
+				}
+				$.each(data.query.results.rss, function (e, itm) {
+					ti = itm.channel.item.title.split('changeset: ');
+					tiUser = ti[0].split('User ')[1].split(' has uploaded')[0];
+					s += '<li><a href="' + itm.channel.item.link + '" target="_blank" title="View changeset on OpenStreetMap"><i>' + ti[1].substring(1, ti[1].length - 1) + '</i></a>';
+					s += ' - <a href="https://www.openstreetmap.org/user/' + tiUser + '" target="_blank" title="View user on OpenStreetMap">' + tiUser + '</a>';
+					s += ' - ' + date_parser(itm.channel.item.date.split('T')[0], 'short') + '</span></li>';
+				});
+				$(id).append('Latest map edits:<ul>' + s + '</ul><p><hr>');
+			}
+		});
+	};
+})(jQuery);
+$('#feedRss').FeedEk({ FeedUrl: 'http://simon04.dev.openstreetmap.org/whodidit/scripts/rss.php?bbox=' + mapBounds.lef + ',' + mapBounds.bot + ',' + mapBounds.rig + ',' + mapBounds.top });
+
 tileBaseLayers[tileBaseLayer[actBaseTileLayer].name].addTo(map);
-map.setMaxBounds([[mapBounds.bot, mapBounds.lef], [mapBounds.top, mapBounds.rig]]);

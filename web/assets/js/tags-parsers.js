@@ -22,7 +22,7 @@ function date_parser(dtStr, style) {
 		else if (dtFrmt === 1) dt = dtStr.split('-')[1] + '/' + dtStr.split('-')[0];
 		else dt = dtStr;
 	}
-	if (dt === 'Invalid Date') dt = dtStr;
+	if (dt === 'Invalid Date' || dt === 'undefined') dt = dtStr;
 	return dt;
 }
 
@@ -108,8 +108,8 @@ function facility_parser(element) {
 	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen;"></i> ';
 	else if (tags.dog === 'no') tag += '<i class="fa fa-paw fa-fw" title="no dog access" style="color:red;"></i>(no) ';
 	if (tags.internet_access === 'wlan') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen;"></i> ';
-	if (tags.male === 'yes') tag += '<i class="fa fa-male fa-fw" title="male" style="color:darkgreen;"></i> ';
-	if (tags.female === 'yes') tag += '<i class="fa fa-female fa-fw" title="female" style="color:darkgreen;"></i> ';
+	if (tags.male === 'yes' || tags.unisex === 'yes') tag += '<i class="fa fa-male fa-fw" title="male" style="color:darkgreen;"></i> ';
+	if (tags.female === 'yes' || tags.unisex === 'yes') tag += '<i class="fa fa-female fa-fw" title="female" style="color:darkgreen;"></i> ';
 	if (tags.diaper === 'yes') tag += '<i class="fa fa-child fa-fw" title="baby changing" style="color:darkgreen;"></i> ';
 	if (tag) markerPopup = L.Util.template(tagTmpl, { tag: 'Facilities', value: tag, iconName: 'info-circle' });
 	return markerPopup;
@@ -333,13 +333,28 @@ function post_parser(element, titlePopup) {
 		element,
 		titlePopup,
 		[
+			{callback: generic_tag_parser, tag: 'ref', label: 'Ref', iconName: 'archive'},
 			{callback: generic_tag_parser, tag: 'post_box:type', label: 'Type', iconName: 'archive'},
-			{callback: generic_tag_parser, tag: 'ref', label: 'Post-Box ref', iconName: 'archive'},
-			{callback: generic_tag_parser, tag: 'royal_cypher', label: 'Royal cypher', iconName: 'archive'},
+			{callback: postcypher_parser},
 			{callback: generic_tag_parser, tag: 'collection_times', label: 'Collection times', iconName: 'clock-o'}
 		]
 	);
 }
+function postcypher_parser(element) {
+	var royalcypher = element.tags.royal_cypher;
+	var markerPopup = '';
+	if (royalcypher) {
+		if (royalcypher === 'VR') royalcypher += ': Victoria (1837 to 1901)';
+		else if (royalcypher === 'EVIIR') royalcypher += ': Edward VII (1901 to 1910)';
+		else if (royalcypher === 'GR') royalcypher += ': George V (1910 to 1936)';
+		else if (royalcypher === 'EVIIIR') royalcypher += ': Edward VIII (1936)';
+		else if (royalcypher === 'GVIR') royalcypher += ': George VI (1936 to 1952)';
+		else if (royalcypher === 'EIIR') royalcypher += ': Elizabeth II (1952 to present)';
+		markerPopup += L.Util.template(tagTmpl, { tag: 'Royal cypher', value: royalcypher, iconName: 'archive' });
+	}
+	return markerPopup;
+}	
+	
 
 function taxi_parser(element, titlePopup) {
 	return parse_tags(
@@ -771,6 +786,11 @@ function callback(data) {
 		if (e.tags.shop) {
 			if (!name && e.tags.craft) name = e.tags.craft;
 			else if (!name && e.tags.beauty) name = e.tags.beauty + ' ' + e.tags.shop;
+			else if (!name && e.tags.shop === 'hairdresser') {
+				if (e.tags.male === 'yes') name = 'male barber';
+				else if (e.tags.female === 'yes') name = 'female hairdresser';
+				else if (e.tags.unisex === 'yes') name = 'unisex hairdresser';
+			}
 			else if (!name) name = e.tags.shop;
 			if (!type) type = e.tags.shop;
 			// Group similar pois
@@ -792,6 +812,9 @@ function callback(data) {
 			else if (!name) name = e.tags.tourism;
 			if (!type) type = e.tags.tourism;
 			if (type === 'hotel') type = 'guest_house';
+			if (type === 'information') {
+				if (!e.tags.name && !e.tags.ref) type = undefined;
+			}
 		}
 		if (e.tags.landuse) {
 			if (!name) name = e.tags.landuse;
@@ -802,7 +825,8 @@ function callback(data) {
 			}
 		}
 		if (e.tags.leisure) {
-			if (!name) name = e.tags.leisure;
+			if (!name && e.tags.sport) name = e.tags.sport + ' ' + e.tags.leisure;
+			else if (!name) name = e.tags.leisure;
 			if (!type) type = e.tags.leisure;
 			if (type === 'common') type = 'park';
 			if (type === 'swimming_pool') {

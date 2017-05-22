@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v2.9.0 - RSS feed of latest edits
+
+**Date:** 22/05/2017
+
+Site changes
+ - Show latest edits on home tab through OSM's whodidit rss feed (simon04.dev.openstreetmap.org/whodidit)
+ - Prevent map bouncing on bounds, add 10% padding to map, keep overpass queries within original bounds
+ - Royal cypher parser for post-boxes
+ - Add pop-up help section
+
+
 ## v2.8.0
 
 **Date:** 04/05/2017

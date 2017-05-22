@@ -16,6 +16,7 @@
 .leaflet-control-zoomslider a.leaflet-control-loading.is-loading,
 .leaflet-control-layer-container.is-loading {
     display: block;
+    pointer-events: none;
 }
 
 /* Necessary for display consistency in Leaflet >= 0.6 */

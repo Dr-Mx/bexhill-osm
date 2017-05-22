@@ -113,17 +113,17 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		var requestZoomLevel= 14;
 		//get left tile index
 		var lidx = this.long2tile(l,requestZoomLevel);
+		var bidx = this.lat2tile(b,requestZoomLevel);
 		var ridx = this.long2tile(r,requestZoomLevel);
 		var tidx = this.lat2tile(t,requestZoomLevel);
-		var bidx = this.lat2tile(b,requestZoomLevel);
 		//var result;
 		var result = new Array();
 		for (var x=lidx; x<=ridx; x++) {
 			for (var y=tidx; y<=bidx; y++) {
-				var left = Math.round(this.tile2long(x,requestZoomLevel)*1000000)/1000000;
-				var right = Math.round(this.tile2long(x+1,requestZoomLevel)*1000000)/1000000;
-				var top = Math.round(this.tile2lat(y,requestZoomLevel)*1000000)/1000000;
-				var bottom = Math.round(this.tile2lat(y+1,requestZoomLevel)*1000000)/1000000;
+				var left = (this.tile2long(x,requestZoomLevel) < mapBounds.lef) ? mapBounds.lef : Math.round(this.tile2long(x,requestZoomLevel)*1000000)/1000000;
+				var bottom = (this.tile2lat(y+1,requestZoomLevel) < mapBounds.bot) ? mapBounds.bot : Math.round(this.tile2lat(y+1,requestZoomLevel)*1000000)/1000000;
+				var right = (this.tile2long(x+1,requestZoomLevel) > mapBounds.rig) ? mapBounds.rig : Math.round(this.tile2long(x+1,requestZoomLevel)*1000000)/1000000;
+				var top = (this.tile2lat(y,requestZoomLevel) > mapBounds.top) ? mapBounds.top : Math.round(this.tile2lat(y,requestZoomLevel)*1000000)/1000000;
 				result.push( new L.LatLngBounds(new L.LatLng(bottom, left),new L.LatLng(top, right)));
 			}
 		}

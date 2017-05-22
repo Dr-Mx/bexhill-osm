@@ -25,6 +25,19 @@ html, body, #map {
 	background: linear-gradient(#b05000, #e6e6e6);
 }
 
+#feedRss {
+	font-size: 85%;
+	color:#777;
+}
+#feedRss a:link, #feedRss a:hover, #feedRss a:visited {
+	color:#777;
+}
+#feedRss > ul {
+	padding-left: 10px;
+	margin-top: 5px;
+	list-style-type: circle;
+}
+
 .theme {
 	color: #b05000;
 }
@@ -40,7 +53,7 @@ a:hover {
 	text-decoration: underline;
 }
 
-ul {
+.sidebar-tabs > ul {
 	list-style: none;
 	padding: 0;
 }
@@ -247,6 +260,7 @@ input[type="checkbox"] {
 /* tour tab */
 .tour-control {
 	display: inline-block !important;
+	font-size: 10pt !important;
 	white-space: nowrap;
 	box-shadow: none;
 	border: none;
