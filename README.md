@@ -4,11 +4,11 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
 
 ![Image of Bexhill-OSM](http://bexhill-osm.org.uk/assets/img/preview.jpg)
 
-[YouTube Demo Videos](https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us)
+[Twitter Account](https://twitter.com/BexhillOSM)
 
 ## Features
  - Mobile and desktop friendly
- - Detailed POI markers through Overpass API
+ - Detailed POI markers through Overpass API with list of results
    - Facilities parser for wheelchair/wifi/pet access (key:wheelchair, key:internet_access, key:dog, key:male, key:female, key:diaper)
    - Payment parser (key:payment)
    - Diet parser (key:diet)
