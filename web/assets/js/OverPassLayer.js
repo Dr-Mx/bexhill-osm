@@ -92,7 +92,7 @@ L.LatLngBounds.prototype.toOverpassBBoxString = function (){
 L.OverPassLayer = L.FeatureGroup.extend({
 	options: {
 		beforeRequest: function() {	if (this.options.debug) console.debug('about to query the OverPassAPI'); },
-		afterRequest: function() { if (this.options.debug) console.debug('all queries have finished!');	}
+		afterRequest: function() { if (this.options.debug) console.debug('all queries have finished!'); }
 	},
 	initialize: function (options) {
 		L.Util.setOptions(this, options);
@@ -182,6 +182,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						if (++finishedCount == queryCount) self.options.afterRequest.call(self);
 						// show number of pois found
 						if ($('input.poi-checkbox:checked').length > 0) indicatorMsg = poiCounter();
+						if ($('.leaflet-marker-icon').length === 0) indicatorMsg = 'No POIs found, try another area';
 					}
 					else if (this.status >= 400 && this.status <= 504) {
 						indicatorMsg = '<i class="fa fa-exclamation-triangle fa-fw"></i> ERROR ' + this.status + ': ';

@@ -27,7 +27,7 @@ function date_parser(dtStr, style) {
 }
 
 // tag template
-var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon fa fa-{iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}: </strong>{value}</span></div>', state = '';
+var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon fa fa-{iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}: </strong>{value}</span></div>';
 function generic_tag_parser(element, tag, tagName, iconName) {
 	var tags = element.tags, markerPopup = '', result;
 	if (tags[tag]) {
@@ -70,7 +70,7 @@ function website_parser(element) {
 	var tags = element.tags, markerPopup = '';
 	var tagWebsite = tags.website ? tags.website : tags['contact:website'];
 	if (tagWebsite) {
-		var link = '<a class="popup-truncate" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank">' + tagWebsite + '</a>';
+		var link = '<a class="popup-truncate" style="max-width:' + (imgSize - 100) + 'px" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank">' + tagWebsite + '</a>';
 		markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: link, iconName: 'globe' });
 	}
 	return markerPopup;
@@ -107,7 +107,8 @@ function facility_parser(element) {
 	else if (tags.wheelchair === 'no') tag += '<i class="fa fa-wheelchair fa-fw" title="no wheelchair access" style="color:red;"></i>(no) ';
 	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen;"></i> ';
 	else if (tags.dog === 'no') tag += '<i class="fa fa-paw fa-fw" title="no dog access" style="color:red;"></i>(no) ';
-	if (tags.internet_access === 'wlan') tag += '<i class="fa fa-wifi fa-fw" title="internet access" style="color:darkgreen;"></i> ';
+	if (tags.internet_access === 'wlan') tag += '<i class="fa fa-wifi fa-fw" title="wireless internet access" style="color:darkgreen;"></i> ';
+	else if (tags.internet_access === 'terminal') tag += '<i class="fa fa-desktop fa-fw" title="terminal internet access" style="color:darkgreen;"></i> ';
 	if (tags.male === 'yes' || tags.unisex === 'yes') tag += '<i class="fa fa-male fa-fw" title="male" style="color:darkgreen;"></i> ';
 	if (tags.female === 'yes' || tags.unisex === 'yes') tag += '<i class="fa fa-female fa-fw" title="female" style="color:darkgreen;"></i> ';
 	if (tags.diaper === 'yes') tag += '<i class="fa fa-child fa-fw" title="baby changing" style="color:darkgreen;"></i> ';
@@ -135,7 +136,7 @@ function wikipedia_parser(element) {
 		var s = wikipedia.split(':');
 		var lang = s[0] + '.', subject = s[1];
 		var href = 'http://' + lang + 'wikipedia.com/wiki/' + subject;
-		var link = '<a class="popup-truncate" href="' + href + '" title="' + subject + '" target="_blank">' + subject + '</a>';
+		var link = '<a class="popup-truncate" style="max-width:' + (imgSize - 100) + 'px" href="' + href + '" title="' + subject + '" target="_blank">' + subject + '</a>';
 		markerPopup += L.Util.template(tagTmpl, { tag: 'Wikipedia', value: link, iconName: 'wikipedia-w' });
 	}
 	return markerPopup;
@@ -596,15 +597,14 @@ function street_parser(element) {
 }
 
 // https://github.com/ypid/opening_hours.js
+var state = '';
 function opening_hours_parser(tags) {
 	var openhrsState = [], openhrs = '', comment = '';
+	state = 'unknown';
 	try {
 		var opening_hours = require('opening_hours');
-		var hours = tags.opening_hours;
-		var oh = new opening_hours(hours);
+		var oh = new opening_hours(tags.opening_hours);
 		var strNextChange;
-		// return false state for no hours - opennow checkbox
-		if (!hours) state = false;
 		if (oh.getNextChange()) {
 			var dateTomorrow = new Date(), dateWeek = new Date();
 			dateTomorrow.setDate(new Date().getDate() + 1);
@@ -625,14 +625,14 @@ function opening_hours_parser(tags) {
 			else strNextChange = oh.getNextChange().toLocaleDateString('en-GB');
 		}
 		else strNextChange = oh.prettifyValue();
-		state = oh.getState();
 		if (oh.getComment()) {
-			if (strNextChange === hours) state = 'depends';
+			if (strNextChange === tags.opening_hours) state = 'depends';
 			else {
 				comment = ' (' + oh.getComment() + ')';
 				state = true;
 			}
 		}
+		else state = oh.getState();
 		// create readable table
 		var ohTable = oh.prettifyValue({ conf: { rule_sep_string: '<br>', print_semicolon: false } });
 		// show tag and collapsible accordion
@@ -651,7 +651,7 @@ function opening_hours_parser(tags) {
 		}
 	}
 	catch(err) {
-		if (hours) console.log('ERROR: Object "' + tags.name + '" cannot parse hours: ' + hours + '. ' + err);
+		if (tags.opening_hours) console.log('ERROR: Object "' + tags.name + '" cannot parse hours: ' + hours + '. ' + err);
 	}
 	return openhrs;
 }
@@ -671,11 +671,7 @@ function popup_buttons(element) {
 function image_parser(img) {
 	var markerPopup = '';
 	if (img && img.indexOf('File:') === 0) {
-		var imgSplit = img.split(':');
-		imgSplit[1] = imgSplit[1].replace(/ /gi, '_');
-		// get md5 hash from wikimedia filename
-		var md5 = $.md5(imgSplit[1]);
-		var url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + md5.substring(0, 1) + '/' + md5.substring(0, 2) + '/' + imgSplit[1] + '/' + imgSize + 'px-' + imgSplit[1];
+		var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + img.split(':')[1] + '&w=' + imgSize;
 		markerPopup =
 			'<div class="popup-imgContainer">' +
 				'<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img alt="Loading image..." style="max-height:' + imgSize + 'px;" src="' + url + '"></a><br>' +
@@ -728,7 +724,7 @@ function parse_tags(element, titlePopup, functions) {
 }
 
 // marker popup
-var spinner = 0, markerId;
+var spinner = 0, markerId, poiList = [];
 function callback(data) {
 	var type, name, iconName, markerPopup, customOptions = {};
 	// popup maxwidth on mobile is image width
@@ -897,6 +893,8 @@ function callback(data) {
 		if (name) {
 			var toolTip = '<b>' + name + '</b>';
 			if (e.tags.name) toolTip += '<br><i>' + e.tags.name + '</i>';
+			else if (e.tags['addr:housename']) toolTip += '<br><i>' + e.tags['addr:housename'] + '</i>';
+			else if (e.tags['addr:housenumber'] && e.tags['addr:street']) toolTip += '<br><i>' + e.tags['addr:housenumber'] + ' ' + e.tags['addr:street'] + '</i>';
 			else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
 			if (e.tags.image) toolTip += ' <i style="color:#808080;" class="fa fa-picture-o fa-fw"></i>';
 			marker.bindTooltip(toolTip, { direction: 'left', offset: [-15, -2] });
@@ -913,11 +911,10 @@ function callback(data) {
 				markerId = e.type + '_' + e.id;
 			}
 			else {
-				// display only open facilities on opennow checkbox
-				if ($('.opennow input').is(':checked')) {
-					if (state === true) marker.addTo(this.instance);
-				}
-				else marker.addTo(this.instance);
+				marker.addTo(this.instance);
+				// get list of markers with openhrs state
+				marker.state = state;
+				poiList.push(marker);
 			}
 		}
 		else if (rQuery) {
@@ -928,5 +925,36 @@ function callback(data) {
 			markerId = e.type + '_' + e.id;
 		}
 		rQuery = false;
+	}
+	// output multiple results in sidebar
+	if (poiList.length) {
+		$('.poi-results').css('height', 'calc(50% - 22px)');
+		$('.poi-icons').css('height', 'calc(50% - 35px)');
+		if ($(window).width() < 768) $('.poi-results button').show();
+		var openColour, poiResultsList = '<table>';
+		for (c = 0; c < poiList.length; c++) {
+			if (poiList[c].state === true) openColour = 'rgba(0,128,0,0.5);';
+			else if (poiList[c].state === false) openColour = 'rgba(255,0,0,0.5)';
+			else if (poiList[c].state === 'depends') openColour = 'rgba(128,128,128,0.5)';
+			else openColour = '';
+			poiResultsList += '<tr id="poi-result-' + c + '">' +
+				'<td style="background-color:' + openColour + ';"><img src="' + poiList[c]._icon.src + '"></td>' +
+				'<td>' + poiList[c]._tooltip._content + '</td>';
+			// add distance column if location on
+			if (lc._active) poiResultsList += '<td>' + Math.round((map.distance(lc._event.latlng, poiList[c]._latlng) / 1609.34) * 100) / 100 + ' miles</td>';
+			poiResultsList += '</tr>';
+		}
+		poiResultsList += '</table>';
+		$('.poi-results-list').html(poiResultsList);
+		// interact with map
+		$('.poi-results-list tr').hover(
+			function () { poiList[this.id.split('poi-result-')[1]].openTooltip(); },
+			function () { poiList[this.id.split('poi-result-')[1]].closeTooltip(); }
+		);
+		$('.poi-results-list tr').click(function () {
+			if ($(window).width() < 768) sidebar.close();
+			else map.flyTo(poiList[this.id.split('poi-result-')[1]]._latlng);
+			poiList[this.id.split('poi-result-')[1]].openPopup();
+		});
 	}
 }

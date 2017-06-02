@@ -1,11 +1,8 @@
 // links for tour pages
 var imgLayer;
 function tour(ti) {
+	clear_map();
 	if ($(window).width() < 768) sidebar.close();
-	imageOverlay.clearLayers();
-	iconLayer.clearLayers();
-	markerId = undefined;
-	imgLayer = undefined;
 	// timeout hack to stop iframe breaking on ff
 	setTimeout(function () {
 		switch (ti) {

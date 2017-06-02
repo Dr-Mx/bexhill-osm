@@ -19,7 +19,7 @@ var defBaseTileLayer = 'bosm', actBaseTileLayer = defBaseTileLayer;
 // tab to open
 var defTab = 'home', actTab = defTab;
 // image size for popups
-var imgSize = ($(window).width() < 1024) ? 256 : 350;
+var imgSize = ($(window).width() < 1024) ? 256 : 320;
 
 // hack to get safari to scroll iframe
 if (window.ontouchstart !== undefined && navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) {
@@ -465,7 +465,7 @@ L.easyButton({
 		title: 'Share',
 		onClick: function () {
 			var uri = URI(window.location.href);
-			var selectedPois = '', walkCoords = '', tourPage, openNow;
+			var selectedPois = '', walkCoords = '', tourPage;
 			var walkWayp = routingControl.getWaypoints();
 			if (actTab === defTab) actTab = undefined;
 			if (actBaseTileLayer === defBaseTileLayer) actBaseTileLayer = undefined;
@@ -477,11 +477,10 @@ L.easyButton({
 			else if (walkWayp[0].latLng) walkCoords = Math.round(walkWayp[0].latLng.lat * 100000) / 100000 + 'x' + Math.round(walkWayp[0].latLng.lng * 100000) / 100000 + '_';
 			walkCoords = walkCoords ? walkCoords.slice(0, -1) : undefined;
 			if (actTab === 'tour' && $('#tourList option:selected').val() > 0) tourPage = $('#tourList option:selected').val();
-			if ($('.opennow input').is(':checked')) openNow = 1;
-			$('#pois input.poi-checkbox:checked').each(function (i, element) { selectedPois += element.dataset.key + '-'; });
+			$('.poi-icons input.poi-checkbox:checked').each(function (i, element) { selectedPois += element.dataset.key + '-'; });
 			selectedPois = selectedPois ? selectedPois.slice(0, -1) : undefined;
-			// M = basemap, T = tab, U = tour frame, G = image layer, O = opennow, P = grouped pois, I = single poi, W = walkpoints
-			uri.query({ 'M': actBaseTileLayer, 'T': actTab, 'U': tourPage, 'G': imgLayer, 'O': openNow, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
+			// M = basemap, T = tab, U = tour frame, G = image layer, P = grouped pois, I = single poi, W = walkpoints
+			uri.query({ 'M': actBaseTileLayer, 'T': actTab, 'U': tourPage, 'G': imgLayer, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
 			window.prompt('Copy this link to share current map:', uri.href());
 		}
 	}]
@@ -493,9 +492,7 @@ L.easyButton({
 		icon: 'fa fa-trash',
 		title: 'Clear map',
 		onClick: function () {
-			// clear overlay, clear walk points, collapse suggested walks, clear poi marker layers
-			imageOverlay.clearLayers();
-			imgLayer = undefined;
+			// clear walk points, collapse suggested walks, clear poi marker layers
 			routingControl.setWaypoints([]);
 			$('#walkContainer').accordion({ active: false });
 			clear_map();
@@ -572,11 +569,11 @@ function populate_tabs() {
 				var catSplit = $('.eac-category')[$('#autocomplete').getSelectedItemIndex()].textContent.split(' - ');
 				clear_map();
 				$('a[href="#pois"]').click();
-				$('#pois input[id="' + catSplit[1] + '"]').prop('checked', true);
+				$('.poi-icons input[id="' + catSplit[1] + '"]').prop('checked', true);
 				// scroll to checkbox
 				if ($(window).width() >= 768) {
-					$('#pois .sidebar-body').scrollTop(0);
-					$('#pois .sidebar-body').scrollTop($('#pois input[id="' + catSplit[1] + '"]').parent().position().top - 50);
+					$('.poi-icons').scrollTop(0);
+					$('.poi-icons').scrollTop($('.poi-icons input[id="' + catSplit[1] + '"]').parent().position().top - 50);
 				}
 				setting_changed();
 				$('#autocomplete').val('');
@@ -615,7 +612,7 @@ function populate_tabs() {
 		checkboxContent += '</table>';
 		checkboxContent += '<div class="anchor"><a href="#gototoppois" title="Back to top">| <i class="fa fa-arrow-up"></i> |</a></div>';
 	}
-	$('#pois .sidebar-body').append(checkboxContent);
+	$('.poi-icons').append(checkboxContent);
 }
 populate_tabs();
 
@@ -631,8 +628,10 @@ $('#autocomplete').on('focus', function () {
 	$(this).select();
 });
 
-// clear poi marker layers
+// clear poi marker and overlay layers
 function clear_map() {
+	imageOverlay.clearLayers();
+	imgLayer = undefined;
 	$('input.poi-checkbox').prop('checked', false);
 	setting_changed();
 	spinner = 0;
@@ -642,14 +641,17 @@ function clear_map() {
 function setting_changed(newcheckbox) {
 	// limit number of active checkboxes
 	if ($('input.poi-checkbox:checked').length <= 3) {
-		// remove old poi markers
+		// remove old poi markers and results
 		iconLayer.clearLayers();
+		$('.poi-results').css('height', '');
+		$('.poi-icons').css('height', '');
+		$('.poi-results-list').html('');
+		poiList = [];
 		markerId = undefined;
 		if ($('input.poi-checkbox:checked').length > 0) {
-			if ($(window).width() < 768) sidebar.close();
 			//build overpass query
 			var query = '(';
-			$('#pois input.poi-checkbox:checked').each(function (i, element) {
+			$('.poi-icons input.poi-checkbox:checked').each(function (i, element) {
 				query += 'node' + pois[element.dataset.key].query + '(screenBbox);';
 				query += 'way' + pois[element.dataset.key].query + '(screenBbox);';
 			});
@@ -723,7 +725,7 @@ function suggWalk(walkName) {
 }
 
 // https://github.com/medialize/URI.js
-// M = basemap, T = tab, U = tour frame, G = image layer, O = opennow, P = grouped pois, I = single poi, Q = geocode query, W = walkpoints
+// M = basemap, T = tab, U = tour frame, G = image layer, P = grouped pois, I = single poi, Q = geocode query, W = walkpoints
 var uri = URI(window.location.href);
 if (uri.hasQuery('M')) actBaseTileLayer = uri.search(true).M;
 if (uri.hasQuery('T')) actTab = uri.search(true).T;
@@ -732,7 +734,6 @@ if (uri.hasQuery('U')) {
 		$('#tourList').trigger('change');
 }
 if (uri.hasQuery('G')) tour(uri.search(true).G);
-if (uri.hasQuery('O')) $('.opennow input').prop('checked', uri.search(true).O);
 if (uri.hasQuery('W')) {
 	var walkCoords = uri.search(true).W;
 	walkCoords = walkCoords.split('_');
@@ -745,14 +746,14 @@ if (uri.hasQuery('P')) {
 	var selectedPois = uri.search(true).P;
 	if (selectedPois.indexOf('-') > -1) selectedPois = selectedPois.split('-');
 	if (!$.isArray(selectedPois)) {
-		$('#pois input[data-key=' + selectedPois + ']').prop('checked', true);
-		// open tab on bigger devices, scroll to checkbox
-		if ($(window).width() >= 768 && actTab !== 'none') {
+		$('.poi-icons input[data-key=' + selectedPois + ']').prop('checked', true);
+		// scroll to checkbox
+		if (actTab !== 'none') {
 			sidebar.open(actTab);
-			$('#pois .sidebar-body').scrollTop(0);
+			$('.poi-icons').scrollTop(0);
 			// add delay after load for sidebar to animate open, allows for scroll position
 			setTimeout(function () {
-				$('#pois .sidebar-body').scrollTop($('#pois input[data-key="' + selectedPois + '"]').parent().position().top - 50);
+				$('.poi-icons').scrollTop($('.poi-icons input[data-key="' + selectedPois + '"]').parent().position().top - 50);
 			}, 500);
 		}
 	}
@@ -760,9 +761,8 @@ if (uri.hasQuery('P')) {
 		for (var c in selectedPois) {
 			// the last poi has a "/" on it because leaflet-hash
 			var multiplePois = selectedPois[c].replace('/', '');
-			$('#pois input[data-key=' + multiplePois + ']').prop('checked', true);
-			// open tab on bigger devices
-			if ($(window).width() >= 768 && actTab !== 'none') sidebar.open(actTab);
+			$('.poi-icons input[data-key=' + multiplePois + ']').prop('checked', true);
+			if (actTab !== 'none') sidebar.open(actTab);
 		}
 	}
 	setting_changed();
@@ -781,7 +781,7 @@ else if (uri.hasQuery('Q')) {
 // if not returning from a permalink, give defaults
 if (!uri.hasQuery('W') || !uri.hasQuery('P') || !uri.hasQuery('I')) {
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
-	if (($(window).width() >= 768 || actTab === 'tour') && actTab !== 'none') sidebar.open(actTab);
+	if (($(window).width() >= 768 || actTab !== 'home') && actTab !== 'none') sidebar.open(actTab);
 }
 
 // https://github.com/enginkizil/FeedEk

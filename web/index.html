@@ -63,7 +63,6 @@
 				<div class="sidebar-body">
 					<h3>Search</h3>
 					<p><input id="autocomplete" class="autocomplete" placeholder="e.g. 'artwork', 'coffee', 'hotel' or 'western road'" title="Enter a keyword, or an address"></p>
-					<label class="opennow"><input type="checkbox"> Only facilities open right now</label>
 					<hr>
 					<p><img src="assets/img/minimap.png" id="minimap" alt="Minimap" usemap="#m_minimap"></p>
 					<map name="m_minimap">
@@ -90,7 +89,12 @@
 			</div>
 			<div class="sidebar-pane" id="pois">
 				<h1 class="sidebar-header">Points of Interest<i class="sidebar-close" title="Hide sidebar"><i class="fa fa-caret-left"></i></i></h1>
-				<div class="sidebar-body">
+				<div class="sidebar-body poi-results">
+					<h3>Results</h3>
+					<button type="button" class="theme leaflet-bar" title="Clear results" onclick="clear_map();"><i class="fa fa-trash"></i></button>
+					<div class="poi-results-list"></div>
+				</div>
+				<div class="sidebar-body poi-icons">
 					<a id="gototoppois"></a>
 					<p>Make up to 3 selections at a time.</p>
 					<!-- this list auto-populates using pois-type.js as a reference -->
@@ -182,8 +186,6 @@
 						<a href="#gotowalking">Walking Routes</a><br>
 						<a href="#gototour">Historic Tour</a><br>
 					</p>
-					<hr>
-					<b><i style="color:#e52d27;" class="fa fa-youtube-play"></i> <a href="https://www.youtube.com/watch?v=w52FRp3j7i8&list=PLCDNbh8-AKI2u5jKcvbx1Q037UilYN5us" title="YouTube" target="_blank">View demonstration videos</a></b>
 					<a id="gotosearch"></a><hr>
 					<h3>Search</h3>
 						Type the first few letters of a keyword (e.g. 'police', 'bike', 'diy'), then click the word in the category you are interested in to display it on the map.<br>
@@ -218,8 +220,10 @@
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
 						To begin displaying POIs, zoom to an area on the map and click up to 3 POI groups. After a few moments 
-						the corresponding items will be displayed on the map as markers. Larger map areas may take longer to load.
+						the corresponding items will be displayed. Larger map areas may take longer to load.
 						<p><img src="assets/img/checkboxes.png" alt="Checkbox preview"></p>
+						Results will be displayed as a scrollable list and on the map as markers. Listed items will have a background colour showing if the place is currently open and the distance if location is turned on.
+						<p><img src="assets/img/results.png" alt="Result preview"></p>
 					<a id="gotopopups"></a><hr>
 					<h3>Pop-ups</h3>
 						Click each marker to see a pop-up detailing more specific information.
@@ -317,7 +321,6 @@
 							<li><a href="https://github.com/ypid/opening_hours.js" target="_blank">opening_hours.js</a> &copy; Robin Schneider</li>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
 							<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
-							<li><a href="https://github.com/placemarker/jQuery-MD5" target="_blank">jQuery MD5 Plugin</a> &copy; Christopher Casebeer</li>
 							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
 							<li><a href="https://github.com/enginkizil/FeedEk" target="_blank">FeedEk jQuery RSS/ATOM Feed</a> &copy; Engin Kizil</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
@@ -339,7 +342,7 @@
 		</i>
 	</div>
 
-	<!-- JavaScript | website plugins -->
+	<!-- JavaScript | site plugins -->
 	<script src="assets/js/leaflet.js"></script>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="assets/js/jquery-ui.min.js"></script>
@@ -359,13 +362,12 @@
 	<script src="assets/js/URI.min.js"></script>
 	<script src="assets/js/opening_hours+deps.min.js"></script>
 	<script src="assets/js/leaflet-hash.min.js"></script>
-	<script src="assets/js/jquery.md5.min.js"></script>
-	<!-- JavaScript | main site code -->
+	<!-- JavaScript | site code -->
 	<script src="assets/js/OverPassLayer.js"></script>
-	<script src="assets/js/tags-parsers.js?v2.8.0"></script>
-	<script src="assets/js/pois-type.js?v2.8.0"></script>
-	<script src="tour/tour.js?v2.8.0"></script>
-	<script src="assets/js/site.js?v2.8.0"></script>
+	<script src="assets/js/tags-parsers.js?v2.10.0"></script>
+	<script src="assets/js/pois-type.js?v2.10.0"></script>
+	<script src="tour/tour.js?v2.10.0"></script>
+	<script src="assets/js/site.js?v2.10.0"></script>
 
 	<!-- GoogleAnalytics -->
 	<script>

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v2.10.0 - POI result list
+
+**Date:** 02/06/2017
+
+Site changes
+ - Added list of results when selecting a group POI, colours show current open state.  Mouse-over an item to see tooltip, click to open popup.
+ - Removed 'facilities open right now' checkbox
+ - Use alternative method to get thumbnail from wikimedia without MD5 plugin
+
+
 ## v2.9.0 - RSS feed of latest edits
 
 **Date:** 22/05/2017
@@ -204,7 +214,7 @@ Site changes
  - Changed URL encoding to not use unsafe characters and less parameters, old links will no longer work.
  - Added a Historic Tour tab. Contains controls linking to an iframe containing various articles that interact with the map
  - Suggested walks now use switch statement
- - Wikipedia images now display proper attribution through their api
+ - Wikimedia images now display proper attribution through their api
  - Added 'shelter' POI
  - Customised 404 page
  - Various code improvements

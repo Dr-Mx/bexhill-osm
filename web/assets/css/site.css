@@ -27,10 +27,10 @@ html, body, #map {
 
 #feedRss {
 	font-size: 85%;
-	color:#777;
+	color: #777;
 }
 #feedRss a:link, #feedRss a:hover, #feedRss a:visited {
-	color:#777;
+	color: #777;
 }
 #feedRss > ul {
 	padding-left: 10px;
@@ -196,7 +196,49 @@ hr {
 }
 
 /* poi tab */
-#pois .sidebar-body > table {
+.poi-results {
+	height: 0;
+	transition: height 500ms;
+	box-shadow: -1px 0 5px rgba(0, 0, 0, 0.65) inset;
+}
+.poi-results button {
+	display: none;
+	position: absolute;
+	box-shadow: none;
+	border: none;
+	right: 20px;
+	top: 20px;
+	width: 26px;
+	height: 26px;
+	background-color: #fff;
+}
+.poi-results-list {
+	font-size: 10pt;
+}
+.poi-results-list img {
+	height: 26px;
+}
+.poi-results-list table {
+	width: 100%;
+}
+.poi-results-list td {
+	border-bottom: 1px solid #ccc;
+	padding: 3px;
+}
+.poi-results-list td:first-child {
+	text-align: center;
+	border-radius: 10px;
+	width: 10px;
+}
+.poi-results-list tr:hover {
+	background-color: rgba(255,255,255,0.6);
+	cursor: pointer;
+}
+.poi-icons {
+	transition: height 500ms;
+	bottom: 0;
+}
+.poi-icons table {
 	width: 100%;
 	table-layout: fixed;
 }
@@ -204,9 +246,6 @@ hr {
 	float: left;
 	height: 32px;
 	margin: 2px 3px;
-}
-input[type="checkbox"] {
-	transform: scale(1.2);
 }
 .poi-checkbox > label {
 	display: inline-block;
@@ -220,9 +259,6 @@ input[type="checkbox"] {
 }
 .poi-checkbox > label > input {
 	display: none;
-}
-.poi-checkbox > label > span, .opennow {
-	font-size: 90%;
 }
 .poi-checkbox > label > span {
 	line-height: 2.6;
@@ -275,7 +311,7 @@ input[type="checkbox"] {
 	width: 70%;
 	background-color: white;
 }
-#tourList:hover {
+#tourList:hover, .poi-results button:hover {
 	background-color: #f4f4f4;
 	color: black;
 }
@@ -304,9 +340,6 @@ input[type="checkbox"] {
 @media (max-width: 767px) {
 	.popup-streetDesc {
 		max-height: 200px !important;
-	}
-	.popup-truncate {
-		max-width: 170px !important;
 	}
 	.leaflet-control-layers-list, .leaflet-popup, .leaflet-control-minZoomIndicator, 
 	.leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-form-no-error {
@@ -373,7 +406,6 @@ input[type="checkbox"] {
 }
 .popup-truncate {
 	display: inline-block;
-	max-width: 220px;
 	overflow-x: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
