@@ -6,7 +6,7 @@ L.OSM.DataLayer = L.FeatureGroup.extend({
 		uninterestingTags: ['source', 'source_ref', 'source:ref', 'history', 'attribution', 'created_by', 'tiger:county', 'tiger:tlid', 'tiger:upload_uuid'],
 		styles: {
 			node: { stroke: false, fill: false, interactive: false },
-			area: { color: '#fff', opacity: 0.5, fillColor: '#000', fillOpacity: 0.2, interactive: false },
+			area: { color: '#000', opacity: 0.3, fillColor: '#000', fillOpacity: 0.2, interactive: false },
 			highway: { color: '#b05000', opacity: 0.5, weight: 10, interactive: false}
 		}
 	},

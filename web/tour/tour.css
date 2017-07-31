@@ -25,6 +25,20 @@ img {
 	display: block;
 }
 
+.person {
+	display: table;
+	width: 100%;
+	margin-bottom: 15px;
+}
+.person img {
+	float: left;
+	max-width: 35%;
+	margin: 0 5px 5px 0;
+}
+.person p {
+	margin-top: 0px;
+}
+	
 .comment {
 	font-size: 85%;
 	margin-top: -8px;
@@ -36,7 +50,7 @@ img {
 .maplink {
 	cursor: pointer;
 	background:
-		url(show.png)
+		url(tour-show.png)
 		right 5px
 		center
 		no-repeat;

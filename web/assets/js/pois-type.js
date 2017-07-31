@@ -1,11 +1,12 @@
 // all group POIs that show up on tab
 // comments below indicate group and colour-codes of icons, non-specific poi colour - eaecee (for use on mapicons.mapsmarker.com)
 // array name must be used in query key (e.g. VIEWPOINT: {query: '[tourism=VIEWPOINT]'})
+// specific relations can be used by prefixing the query with 'relation'
 
 var pois = {
 
 	// LEISURE-TOURISM - 99a3a4 - 874ea0 - 239b56 - 2e86c1 - e74d3c
-
+	
 	attraction: {
 		name: 'Attraction',
 		query: '["tourism"~"attraction|museum|gallery"]',
@@ -20,6 +21,14 @@ var pois = {
 		iconName: 'panoramicview',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'viewpoint']
+	},
+
+	bus: {
+		name: 'Community Bus',
+		query: 'relation[route=bus]',
+		iconName: 'bus',
+		catName: 'Leisure-Tourism',
+		tagKeyword: ['community', 'bus', 'route']
 	},
 
 	information: {
@@ -51,7 +60,7 @@ var pois = {
 	historic: {
 		name: 'Historic',
 		query: '["historic"~"."]',
-		iconName: 'ruins-2',
+		iconName: 'historic',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'historic', 'memorial'],
 		tagParser: historic_parser
@@ -67,10 +76,10 @@ var pois = {
 
 	park: {
 		name: 'Park',
-		query: '["leisure"~"park|common"]',
+		query: '["leisure"~"park|common|nature_reserve"]',
 		iconName: 'urbanpark',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['park', 'common', 'open-space', 'green']
+		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve']
 	},
 
 	recreation_ground: {
@@ -100,7 +109,7 @@ var pois = {
 	shelter: {
 		name: 'Shelter',
 		query: '[amenity=shelter]',
-		iconName: 'shelter_picnic',
+		iconName: 'shelter',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['picnic', 'rain-shelter']
 	},
@@ -123,8 +132,8 @@ var pois = {
 	},
 
 	fitness_centre: {
-		name: 'Fitness-Centre',
-		query: '[leisure=fitness_centre]',
+		name: 'Fitness',
+		query: '[leisure~"fitness_centre|fitness_station"]',
 		iconName: 'weights',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['fitness', 'leisure', 'gym', 'sport']
@@ -381,10 +390,11 @@ var pois = {
 
 	car_repair: {
 		name: 'Car-Repair/MOT',
-		query: '["shop"~"car_repair|tyres"]',
+		query: '[shop=car_repair]',
 		iconName: 'carrepair',
 		catName: 'Amenities',
-		tagKeyword: ['repair', 'garage', 'tyres', 'mechanic', 'motor', 'car']
+		tagKeyword: ['repair', 'garage', 'tyres', 'mechanic', 'motor', 'car', 'parts'],
+		tagParser: carshop_parser
 	},
 
 	car_rental: {
@@ -448,7 +458,7 @@ var pois = {
 	fire_station: {
 		name: 'Fire-Station',
 		query: '[amenity=fire_station]',
-		iconName: 'firemen',
+		iconName: 'firetruck',
 		catName: 'Services',
 		tagKeyword: ['fire', 'help', 'emergency']
 	},
@@ -662,9 +672,9 @@ var pois = {
 		tagKeyword: ['bakery', 'bread', 'cake']
 	},
 
-	butcher: {
+	deli: {
 		name: 'Butcher/Deli',
-		query: '["shop"~"butcher|deli"]',
+		query: '["shop"~"deli|butcher"]',
 		iconName: 'farmstand',
 		catName: 'Shops',
 		tagKeyword: ['butcher', 'meat', 'delicatessen']
@@ -673,7 +683,7 @@ var pois = {
 	seafood: {
 		name: 'Seafood',
 		query: '[shop=seafood]',
-		iconName: 'restaurant_fish',
+		iconName: 'shop_fish',
 		catName: 'Shops',
 		tagKeyword: ['seafood', 'fish']
 	},
@@ -800,9 +810,9 @@ var pois = {
 	},
 
 	curtain: {
-		name: 'Curtain/Blinds',
+		name: 'Curtain/Blind',
 		query: '["shop"~"curtain|window_blind"]',
-		iconName: 'road',
+		iconName: 'curtain',
 		catName: 'Shops',
 		tagKeyword: ['curtain', 'blinds', 'windows']
 	},
@@ -826,7 +836,7 @@ var pois = {
 	watches: {
 		name: 'Watches',
 		query: '[shop=watches]',
-		iconName: 'chronometer',
+		iconName: 'watch',
 		catName: 'Shops',
 		tagKeyword: ['watches', 'clock']
 	},
@@ -876,7 +886,7 @@ var pois = {
 		query: '["shop"~"dry_cleaning|laundry"]',
 		iconName: 'laundromat',
 		catName: 'Shops',
-		tagKeyword: ['laundry', 'dry-clean', 'wash']
+		tagKeyword: ['laundry', 'clean', 'wash']
 	},
 
 	travel_agency: {
@@ -898,7 +908,7 @@ var pois = {
 	art: {
 		name: 'Art',
 		query: '[shop=art]',
-		iconName: 'museum_art',
+		iconName: 'museum_paintings',
 		catName: 'Shops',
 		tagKeyword: ['art-gallery']
 	},
@@ -939,7 +949,7 @@ var pois = {
 	frame: {
 		name: 'Picture Framing',
 		query: '[shop=frame]',
-		iconName: 'beautifulview',
+		iconName: 'museum_art',
 		catName: 'Shops',
 		tagKeyword: ['picture', 'artwork', 'frame']
 	},

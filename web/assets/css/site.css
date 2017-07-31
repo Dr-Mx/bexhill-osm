@@ -58,6 +58,10 @@ a:hover {
 	padding: 0;
 }
 
+.sidebar-tabs img {
+	width: 30px;
+}
+
 hr {
 	height: 2px;
 	background-color: #ccc;
@@ -69,7 +73,7 @@ hr {
 }
 
 #minimap {
-	width: 100%;
+	max-width: 100%;
 	cursor: pointer;
 }
 
@@ -97,7 +101,7 @@ hr {
 
 .leaflet-contextmenu {
 	display: none;
-	box-shadow: 0 1px 7px rgba(0,0,0,0.4);
+	box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
 	border-radius: 4px;
 	padding: 4px 0;
 	background-color: white;
@@ -200,6 +204,7 @@ hr {
 	height: 0;
 	transition: height 500ms;
 	box-shadow: -1px 0 5px rgba(0, 0, 0, 0.65) inset;
+	background-color: rgba(0, 0, 0, 0.05);
 }
 .poi-results button {
 	display: none;
@@ -222,7 +227,7 @@ hr {
 	width: 100%;
 }
 .poi-results-list td {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #bbb;
 	padding: 3px;
 }
 .poi-results-list td:first-child {
@@ -231,7 +236,7 @@ hr {
 	width: 10px;
 }
 .poi-results-list tr:hover {
-	background-color: rgba(255,255,255,0.6);
+	background-color: rgba(255, 255, 255, 0.3);
 	cursor: pointer;
 }
 .poi-icons {
@@ -255,7 +260,7 @@ hr {
 	cursor: pointer;
 }
 .poi-checkbox > label:hover {
-	background-color: rgba(255,255,255,0.6);
+	background-color: rgba(255, 255, 255, 0.6);
 }
 .poi-checkbox > label > input {
 	display: none;
@@ -272,8 +277,15 @@ hr {
 }
 
 /* walking tab */
-#walking img {
-	margin-left: 5px;
+#walking a img {
+	margin: auto;
+	padding: 5px 10px 5px 10px;
+	display: block;
+	filter: saturate(50%);
+}
+#walking a img:hover {
+	background-color: rgba(255,255,255,0.6);
+	filter: saturate(100%);
 }
 #walkContainer {
 	display: block;
@@ -285,9 +297,7 @@ hr {
 .walkLink {
 	color: darkgreen;
 	text-indent: 3px;
-	cursor: pointer;
 	border-radius: 3px;
-	cursor: pointer;
 }
 .walkLink:hover {
 	background-color: rgba(255,255,255,0.6);
@@ -327,13 +337,133 @@ hr {
 	padding: 0;
 }
 
-/* help tab*/
+/* settings tab */
+#settings label {
+	font-size: 10pt;
+}
+input[type=range] {
+    -webkit-appearance: none;
+    width: 60%;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    background: #bbb;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #b05000;
+    margin-top: -4px;
+	cursor: e-resize;
+}
+input[type=range]:disabled::-webkit-slider-thumb {
+	background: #ccc;
+	cursor: default;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    background: #bbb;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #b05000;
+	cursor: e-resize;
+}
+input[type=range]:disabled::-moz-range-thumb {
+	background: #ccc;
+	cursor: default;
+}
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 5px;
+    background: transparent;
+    border-color: transparent;
+    border-width: 6px 0;
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #bbb;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #b05000;
+	cursor: e-resize;
+}
+input[type=range]:disabled::-ms-thumb {
+	background: #ccc;
+	cursor: default;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+#inputOverpass, #inputOpServer {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: #555;
+	width: calc(100% - 100px);
+	padding: 5px;
+	margin: 5px;
+}
+#devTools {
+	display: block;
+	position: relative;
+}
+.ui-accordion-header {
+	cursor: pointer;
+}
+
+/* help tab */
 #help img {
 	box-sizing: border-box;
 	max-width: 100%;
 	margin: auto;
 	display: block;
 	padding: 0 15px 0 15px;
+}
+#helptabs img {
+	float: left;
+	padding: 0 5px 0 5px;
+	width: 25px;
+}
+
+/* information tab */
+#information ul {
+	padding-left: 20px;
+	list-style-type: circle;
 }
 
 /* marker popups */
@@ -381,7 +511,7 @@ hr {
 	border-bottom: 2px solid #ddd;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
-	background-color: rgba(200,200,200,0.2);
+	background-color: rgba(200, 200, 200, 0.2);
 }
 .popup-header h3 {
 	padding-right: 55px;
@@ -437,7 +567,7 @@ hr {
 	margin-top: 10px;
 	text-align: center;
 }
-.popup-imgContainer img {
+.popup-imgContainer > a > img {
 	border: 2px solid #ccc;
 	border-radius: 5px;
 }
@@ -456,7 +586,7 @@ hr {
 	margin-bottom: -5px;
 }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-	background-color: rgba(244,244,244,0.95);
+	background-color: rgba(244, 244, 244, 0.95);
 }
 .leaflet-popup-content-wrapper {
 	padding: 0 1px 1px 1px;
@@ -469,12 +599,12 @@ hr {
 .ui-tooltip {
 	padding: 3px;
 	position: absolute;
-	z-index: 9999;
+	z-index: 1200;
 	max-width: 50px;
-	background-color: rgba(244,244,244,0.9);
+	background-color: rgba(244, 244, 244, 0.9);
 	font-size: 60%;
 	text-align: center;
-	border: 1px solid rgba(204,204,204,0.9);
+	border: 1px solid rgba(204, 204, 204, 0.9);
 }
 .ui-widget-shadow {
 	box-shadow: 2px 2px 5px #666666;

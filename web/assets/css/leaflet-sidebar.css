@@ -19,9 +19,10 @@
 		width: 450px; } }
 
 .sidebar.collapsed {
-	width: 40px; }
+	width: 35px; }
 @media (min-width: 768px) {
 	.sidebar.collapsed {
+		width: 40px;
 		opacity: 0.7;
 	}
 	.sidebar.collapsed:hover {
@@ -34,30 +35,28 @@
     .sidebar-left {
 		left: 10px; } }
 
-.sidebar-right {
-	right: 0; }
-@media (min-width: 768px) {
-    .sidebar-right {
-		right: 10px; } }
-
 .sidebar-tabs {
 	top: 0;
 	bottom: 0;
 	height: 100%; }
 .sidebar-left .sidebar-tabs {
 	left: 0; }
-.sidebar-right .sidebar-tabs {
-	right: 0; }
 .sidebar-tabs, .sidebar-tabs > ul {
 	position: absolute;
-	width: 40px;
+	width: 35px;
 	margin: 0;
 	padding: 0;
 	z-index: 1;
 	background-color: #ccc; }
+@media (min-width: 768px) {
+	.sidebar-tabs, .sidebar-tabs > ul {
+		width: 40px; } }
+@media (max-height: 350px) {
+	.sidebar-tabs > ul:last-child > li:nth-child(n+2) {
+		display: none; } }
 .sidebar-tabs > li, .sidebar-tabs > ul > li {
 	width: 100%;
-	height: 55px;
+	height: 50px;
 	color: #b05000;
 	overflow: hidden;
 	transition: all 80ms; }
@@ -76,14 +75,12 @@
 .sidebar-tabs > li.disabled > a, .sidebar-tabs > ul > li.disabled > a {
 	cursor: default; }
 .sidebar-tabs > li > a, .sidebar-tabs > ul > li > a {
-	display: block;
-	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	height: 100%;
-	line-height: 65px;
 	color: inherit;
-	text-decoration: none;
-	font-size: 11pt;
-	text-align: center; }
+	font-size: 11pt; }
 .sidebar-tabs > ul + ul {
 	z-index: 0;
 	bottom: 0; }
@@ -95,16 +92,17 @@
 	background-color: rgba(222, 222, 222, 0.9);
 	overflow: hidden; }
 .sidebar-left .sidebar-content {
-	left: 40px;
+	left: 35px;
 	right: 0; }
-.sidebar-right .sidebar-content {
-	left: 0;
-	right: 40px; }
+@media (min-width: 768px) {
+	.sidebar-left .sidebar-content {
+		left: 40px; } }
 .sidebar.collapsed > .sidebar-content {
     overflow-y: hidden; }
 	
 .sidebar-pane {
 	display: none;
+	height: 50px;
 	left: 0;
 	right: 0;
 	box-sizing: border-box; }
@@ -118,47 +116,38 @@
 		min-width: 405px; } }
 
 .sidebar-header {
+	display: flex;
+	align-items: center;
+	height: 100%;
 	overflow: hidden;
 	white-space: nowrap;
 	margin: 0;
-	height: 55px;
-	padding: 0 15px;
-	margin: 0;
-	font: normal 16pt/55px BerlinSans, "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font: normal 16pt BerlinSans, "Helvetica Neue", Arial, Helvetica, sans-serif;
 	color: #fff;
 	background-color: #b05000; }
-.sidebar-right .sidebar-header {
-	padding-left: 40px; }
+.sidebar-header-text {
+	width: 100%;
+	padding: 0 15px; }
+.sidebar-close {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	padding: 0 15px;
+	cursor: pointer; }
 .sidebar-body {
 	position: absolute;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: calc(100% - 55px);
+	height: calc(100% - 50px);
 	width: calc(100% - 30px);
 	padding: 0 15px; 
 	min-width: 250px; }
-.sidebar-close {
-	position: absolute;
-	top: 0;
-	width: 40px;
-	height: 55px;
-	text-align: center;
-	cursor: pointer;
-	background-color: #b05000; }
-.sidebar-left .sidebar-close {
-	right: 0; }
-.sidebar-right .sidebar-close {
-	left: 0; }
-		
+	
 .sidebar-left ~ .sidebar-map {
-	margin-left: 40px; }
+	margin-left: 35px; }
 @media (min-width: 768px) {
     .sidebar-left ~ .sidebar-map {
 		margin-left: 0; } }
-
-@media (min-width: 768px) {
-	.sidebar-right ~ .sidebar-map {
-		margin-right: 0; } }
 
 .sidebar {
 	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
@@ -188,25 +177,3 @@
 @media (min-width: 768px) {
 	.sidebar-left.collapsed ~ .sidebar-map .leaflet-left {
 		left: 50px; } }
-
-@media (min-width: 768px) {
-	.sidebar-right ~ .sidebar-map .leaflet-right {
-		transition: right 500ms; } }
-
-@media (min-width: 768px) and (max-width: 991px) {
-	.sidebar-right ~ .sidebar-map .leaflet-right {
-		right: 315px; } }
-
-@media (min-width: 992px) and (max-width: 1199px) {
-	.sidebar-right ~ .sidebar-map .leaflet-right {
-		right: 400px; } }
-
-@media (min-width: 1200px) {
-	.sidebar-right ~ .sidebar-map .leaflet-right {
-		right: 460px; } }
-
-.sidebar-right.collapsed ~ .sidebar-map .leaflet-right {
-	right: 40px; }
-@media (min-width: 768px) {
-	.sidebar-right.collapsed ~ .sidebar-map .leaflet-right {
-		right: 55px; } }

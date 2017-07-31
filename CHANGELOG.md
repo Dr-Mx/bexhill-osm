@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## v3.0.0 - Settings tab
+
+**Date:** 30/07/2017
+
+Updated js
+ - leaflet.js 1.1.0
+
+Site changes
+ - Rewrite of callback function to use switch cases
+ - Show all POIs within map bounds by default
+ - Settings tab: change system of unit, get results within screen bounds, hide images, adjust overlay opacity
+ - Development tools: outputs debug information console, input custom overpass queries, change overpass server
+ - listed_parser now parses data on architecture, architect and dates for all buildings
+ - Added carshop_parser for various car services
+ - Links to TheBexhillHistoryTrail on selected POIs
+ - Community bus POI
+ - Added a cross-origin server for food rating lookups on HTTPS
+ - New sidebar icons
+ - Custom POI icons for food cuisine and various other elements
+ - Adjusted sidebar sizes slightly
+ - Added Yeakell & Gardener 1776 overlay
+
+
 ## v2.10.0 - POI result list
 
 **Date:** 02/06/2017

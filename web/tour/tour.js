@@ -20,25 +20,27 @@ function tour(ti) {
 					'<span class="comment">50°50&#39;15.4"N 0°28&#39;57.1"E</span><br>' +
 					'View at low tide. Walk directly out onto the beach infront of Sackville Apartments. ' +
 					'The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>' +
-					'One footprint is about 18-inches long.',
-				{ maxWidth: 250 }).openPopup());
+					'One footprint is about 18-inches long.' +
+					'<p><div class="popup-imgContainer"><img alt="Loading image..." style="max-width:' + imgSize + 'px; max-height:' + imgSize + 'px;" src="tour/tour01/dinoprint.jpg"><br>' +
+					'<span class="popup-imgAttrib">&copy; Vicky Ballinger</span></div>',
+				{ maxWidth: imgSize }).openPopup());
 				imgLayer = ti;
 				break;
 			case 'shipwreck':
 				rQuery = true;
-				show_overpass_layer('node(3192282124)(' + mapBbox + ');');
+				show_overpass_layer('node(3192282124)(mapBbox);');
 				break;
 			case 'smugglingPanels':
-				show_overpass_layer('node["ref"~"^TST"](' + mapBbox + ');');
+				show_overpass_layer('node["ref"~"^TST"](mapBbox);');
 				imgLayer = ti;
 				break;
 			case 'smugglingGreen':
 				rQuery = true;
-				show_overpass_layer('way(263267372)(' + mapBbox + ');');
+				show_overpass_layer('way(263267372)(mapBbox);');
 				break;
 			case 'railwayBexhillstation':
 				rQuery = true;
-				show_overpass_layer('way(397839677)(' + mapBbox + ');');
+				show_overpass_layer('way(397839677)(mapBbox);');
 				break;
 			case 'railwayWestbranch':
 				imageOverlay.addLayer(L.imageOverlay('tour/tour04/westbranchline.png', [[50.8860, 0.4625], [50.8400, 0.5100]], { opacity: 0.9 }));
@@ -46,15 +48,15 @@ function tour(ti) {
 				break;
 			case 'railwayWeststation':
 				rQuery = true;
-				show_overpass_layer('node(318219478)(' + mapBbox + ');');
+				show_overpass_layer('node(318219478)(mapBbox);');
 				break;
 			case 'railwaySidleystation':
 				rQuery = true;
-				show_overpass_layer('node(3615179880)(' + mapBbox + ');');
+				show_overpass_layer('node(3615179880)(mapBbox);');
 				break;
 			case 'railwayGlynegap':
 				rQuery = true;
-				show_overpass_layer('node(4033104292)(' + mapBbox + ');');
+				show_overpass_layer('node(4033104292)(mapBbox);');
 				break;
 			case 'tramway':
 				imageOverlay.addLayer(L.imageOverlay('tour/tour05/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }));
@@ -67,23 +69,23 @@ function tour(ti) {
 				break;
 			case 'motorSerpollet':
 				rQuery = true;
-				show_overpass_layer('node(3592525934)(' + mapBbox + ');');
+				show_overpass_layer('node(3592525934)(mapBbox);');
 				break;
 			case 'motorTrail':
-				show_overpass_layer('node["ref"~"^TMT"](' + mapBbox + ');');
+				show_overpass_layer('node["ref"~"^TMT"](mapBbox);');
 				imgLayer = ti;
 				break;
 			case 'delawarr':
 				iconLayer.clearLayers();
 				rQuery = true;
-				show_overpass_layer('way(247116304)(' + mapBbox + ');');
+				show_overpass_layer('way(247116304)(mapBbox);');
 				break;
 			case 'manor':
 				rQuery = true;
-				show_overpass_layer('way(364593716)(' + mapBbox + ');');
+				show_overpass_layer('way(364593716)(mapBbox);');
 				break;
 			case 'ww2Buildings':
-				show_overpass_layer('(node["military"~"."](' + mapBbox + ');way["military"~"."](' + mapBbox + '););');
+				show_overpass_layer('(node["military"~"."](mapBbox);way["military"~"."](mapBbox););');
 				imgLayer = ti;
 				break;
 			case 'ww2Bombmap':
@@ -117,7 +119,7 @@ function tour(ti) {
 								}
 								else {
 									highlight = 'darkred';
-									interact = siteDebug ? true : false;
+									interact = $('#settings #inputDebug').is(':checked') ? true : false;
 								}
 								return true;
 							},
@@ -163,7 +165,27 @@ function tour(ti) {
 				break;
 			case 'northeye':
 				rQuery = true;
-				show_overpass_layer('way(28940913)(' + mapBbox + ');');
+				show_overpass_layer('way(28940913)(mapBbox);');
+				break;
+			case 'peopleNarayan':
+				rQuery = true;
+				show_overpass_layer('way(247118625)(mapBbox);');
+				break;
+			case 'peopleIxion':
+				rQuery = true;
+				show_overpass_layer('node(3989026714)(mapBbox);');
+				break;
+			case 'peopleBaird':
+				rQuery = true;
+				show_overpass_layer('node(3971492451)(mapBbox);');
+				break;
+			case 'peopleLlewelyn':
+				rQuery = true;
+				show_overpass_layer('way(393451834)(mapBbox);');
+				break;
+			case 'peopleMilligan':
+				rQuery = true;
+				show_overpass_layer('way(395641316)(mapBbox);');
 				break;
 		}
 	}, 50);

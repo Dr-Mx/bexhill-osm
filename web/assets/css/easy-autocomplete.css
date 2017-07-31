@@ -66,6 +66,7 @@
 }
 .eac-category {
 	border-width: 1px 1px 0 1px;
+	cursor: not-allowed;
 }
 .easy-autocomplete-container ul li {
 	  border-width: 0 1px;

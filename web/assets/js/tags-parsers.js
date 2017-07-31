@@ -22,7 +22,7 @@ function date_parser(dtStr, style) {
 		else if (dtFrmt === 1) dt = dtStr.split('-')[1] + '/' + dtStr.split('-')[0];
 		else dt = dtStr;
 	}
-	if (dt === 'Invalid Date' || dt === 'undefined') dt = dtStr;
+	if (dt === 'Invalid Date' || dt === undefined) dt = dtStr;
 	return dt;
 }
 
@@ -33,7 +33,7 @@ function generic_tag_parser(element, tag, tagName, iconName) {
 	if (tags[tag]) {
 		if (tags[tag] === 'yes') result = '<i class="fa fa-check"></i>';
 		else if (tags[tag] === 'no') result = '<i class="fa fa-remove"></i>';
-		else if (tag.split('_')[1] === 'date') result = date_parser(tags[tag], 'long');
+		else if (tag.indexOf('_date') > -1 || tag.indexOf('date_') > -1) result = date_parser(tags[tag], 'long');
 		else result = tags[tag].replace(/;/g, ', ');
 		markerPopup = L.Util.template(tagTmpl, { tag: tagName, value: result, iconName: iconName });
 	}
@@ -135,7 +135,7 @@ function wikipedia_parser(element) {
 	if (wikipedia) {
 		var s = wikipedia.split(':');
 		var lang = s[0] + '.', subject = s[1];
-		var href = 'http://' + lang + 'wikipedia.com/wiki/' + subject;
+		var href = 'https://' + lang + 'wikipedia.org/wiki/' + subject;
 		var link = '<a class="popup-truncate" style="max-width:' + (imgSize - 100) + 'px" href="' + href + '" title="' + subject + '" target="_blank">' + subject + '</a>';
 		markerPopup += L.Util.template(tagTmpl, { tag: 'Wikipedia', value: link, iconName: 'wikipedia-w' });
 	}
@@ -143,12 +143,22 @@ function wikipedia_parser(element) {
 }
 
 function listed_parser(element) {
-	var HEref = element.tags.HE_ref, markerPopup = '';
-	if (HEref) {
-		var listedStatus = element.tags.listed_status ? element.tags.listed_status : HEref;
-		var link = '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + HEref + '" title="Historic England entry" target="_blank">' + listedStatus + '</a>';
-		markerPopup = L.Util.template(tagTmpl, { tag: 'Listed status', value: link, iconName: 'file' });
+	var tags = element.tags, tag = '', label = '', markerPopup = '';
+	if (tags.building) {
+		label = 'Building';
+		if (tags['building:architecture']) tag += titleCase(tags['building:architecture']) + '; ';
+		if (tags.architect) tag += tags.architect + '; ';
+		if (tags.start_date) tag += date_parser(tags.start_date, 'short') + '; ';
 	}
+	else {
+		label = 'Listed';
+		if (tags.start_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Start date', value: date_parser(tags.start_date, 'long'), iconName: 'calendar' });
+	}
+	if (tags.HE_ref) {
+		var listedStatus = element.tags.listed_status ? element.tags.listed_status : tags.HE_ref;
+		tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank">' + listedStatus + '</a>';
+	}
+	if (tag) markerPopup = L.Util.template(tagTmpl, { tag: label + ' details', value: tag, iconName: 'file' }) + markerPopup;
 	return markerPopup;
 }
 
@@ -214,7 +224,8 @@ function school_parser(element, titlePopup) {
 function edubase_parser(element) {
 	var tag = element.tags['ref:edubase'], markerPopup = '';
 	if (tag) {
-		var link = '<a href="http://www.education.gov.uk/edubase/establishment/summary.xhtml?urn=' + tag + '" title="Department for Education" target="_blank">' + tag + '</a>';
+		var link = '<a href="https://www.education.gov.uk/edubase/establishment/summary.xhtml?urn=' + tag + '" title="Department for Education" target="_blank">' + tag + '</a> ' +
+			'/ <a href="https://reports.ofsted.gov.uk/inspection-reports/find-inspection-report/provider/ELS/' + tag + '" title="Ofstead" target="_blank">Ofstead</a>';
 		markerPopup += L.Util.template(tagTmpl, { tag: 'EduBase URN', value: link, iconName: 'file' });
 	}
 	return markerPopup;
@@ -345,12 +356,14 @@ function postcypher_parser(element) {
 	var royalcypher = element.tags.royal_cypher;
 	var markerPopup = '';
 	if (royalcypher) {
-		if (royalcypher === 'VR') royalcypher += ': Victoria (1837 to 1901)';
-		else if (royalcypher === 'EVIIR') royalcypher += ': Edward VII (1901 to 1910)';
-		else if (royalcypher === 'GR') royalcypher += ': George V (1910 to 1936)';
-		else if (royalcypher === 'EVIIIR') royalcypher += ': Edward VIII (1936)';
-		else if (royalcypher === 'GVIR') royalcypher += ': George VI (1936 to 1952)';
-		else if (royalcypher === 'EIIR') royalcypher += ': Elizabeth II (1952 to present)';
+		switch (royalcypher) {
+			case 'VR' : royalcypher += ': Victoria (1837-1901)'; break;
+			case 'EVIIR' : royalcypher += ': Edward VII (1901-1910)'; break;
+			case 'GR' : royalcypher += ': George V (1910-1936)'; break;
+			case 'EVIIIR' : royalcypher += ': Edward VIII (1936)'; break;
+			case 'GVIR' : royalcypher += ': George VI (1936-1952)'; break;
+			case 'EIIR' : royalcypher += ': Elizabeth II (1952+)'; break;
+		}
 		markerPopup += L.Util.template(tagTmpl, { tag: 'Royal cypher', value: royalcypher, iconName: 'archive' });
 	}
 	return markerPopup;
@@ -410,6 +423,16 @@ function fuel_parser(element) {
 		markerPopup = L.Util.template(tagTmpl, { tag: 'Fuel options', value: tag, iconName: 'tint' });
 	}
 	return markerPopup;
+}
+
+function carshop_parser(element, titlePopup) {
+	return parse_tags(
+		element,
+		titlePopup,
+		[
+			{callback: generic_tag_parser, tag: 'service', label: 'Services', iconName: 'car'}
+		]
+	);
 }
 
 function carpark_parser(element, titlePopup) {
@@ -540,7 +563,7 @@ function artwork_parser(element, titlePopup) {
 		titlePopup,
 		[
 			{callback: generic_tag_parser, tag: 'artwork_type', label: 'Artwork type', iconName: 'paint-brush'},
-			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist name', iconName: 'user'},
+			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'user'},
 			{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'cube'}
 		]
 	);
@@ -565,7 +588,7 @@ function historic_parser(element, titlePopup) {
 		[
 			{callback: generic_tag_parser, tag: 'historic', label: 'Historic type', iconName: 'bank'},
 			{callback: generic_tag_parser, tag: 'bunker_type', label: 'Military bunker type', iconName: 'fighter-jet'},
-			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist name', iconName: 'user'},
+			{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'user'},
 			{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'pencil-square-o'},
 			{callback: generic_tag_parser, tag: 'wreck:date_sunk', label: 'Date sunk', iconName: 'ship'},
 			{callback: generic_tag_parser, tag: 'wreck:visible_at_low_tide', label: 'Visible at low tide', iconName: 'ship'}
@@ -582,16 +605,30 @@ function street_parser(element) {
 			url: 'assets/xml/streetnames.xml',
 			dataType: 'xml',
 			success: function (xml) {
-				var $street = $(xml).find('name').filter(function () {
+				var street = $(xml).find('name').filter(function () {
 					return $(this).text() === element.tags.name;
 				}).closest('street');
-				var streetDate = $('date', $street).text();
-				var streetDesc = $('desc', $street).text();
+				var streetDate = $('date', street).text();
+				var streetDesc = $('desc', street).text();
 				if (streetDate) markerPopup += L.Util.template(tagTmpl, { tag: 'Street date', value: streetDate, iconName: 'calendar' });
 				if (streetDesc) markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'road' }) + '</span>';
-				if (markerPopup) markerPopup += '<span class="popup-streetSource"><a href="' + $(xml).find('source').text() + '" target="_blank" title="Source">&copy; ' + $(xml).find('author').text() + '</a></span>';
+				if (markerPopup) {
+					var sourceLink = $(xml).find('source').text();
+					var sourceAuthor = $(xml).find('author').text();
+					markerPopup += '<span class="popup-streetSource"><a href="' + sourceLink + '" target="_blank" title="' + sourceLink + '">&copy; ' + sourceAuthor + '</a></span>';
+				}
 			}
 		});
+	}
+	return markerPopup;
+}
+
+function historytrail_parser(element) {
+	var tags = element.tags, markerPopup = '';
+	var tagHistoryTrail = tags['url:bexhillhistorytrail'];
+	if (tagHistoryTrail) {
+		var link = '<a href="' + tagHistoryTrail + '" title="' + tagHistoryTrail + '" target="_blank">TheBexhillHistoryTrail</a>';
+		markerPopup += L.Util.template(tagTmpl, { tag: 'Futher reading', value: link, iconName: 'book' });
 	}
 	return markerPopup;
 }
@@ -622,7 +659,7 @@ function opening_hours_parser(tags) {
 				strNextChange = oh.getNextChange().toLocaleDateString('en-GB', { weekday: 'long', hour: '2-digit', minute: '2-digit' });
 			}
 			// otherwise display date
-			else strNextChange = oh.getNextChange().toLocaleDateString('en-GB');
+			else strNextChange = date_parser(oh.getNextChange(), 'short');
 		}
 		else strNextChange = oh.prettifyValue();
 		if (oh.getComment()) {
@@ -670,11 +707,11 @@ function popup_buttons(element) {
 // get wikimedia image
 function image_parser(img) {
 	var markerPopup = '';
-	if (img && img.indexOf('File:') === 0) {
-		var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + img.split(':')[1] + '&w=' + imgSize;
+	if (img && img.indexOf('File:') === 0 && !$('#settings #inputImage').is(':checked')) {
+		var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(img.split(':')[1]) + '&w=' + imgSize;
 		markerPopup =
 			'<div class="popup-imgContainer">' +
-				'<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img alt="Loading image..." style="max-height:' + imgSize + 'px;" src="' + url + '"></a><br>' +
+				'<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img alt="Loading image..." style="max-height:' + (imgSize - 50) + 'px;" src="' + url + '"></a><br>' +
 				'<span class="popup-imgAttrib">Loading attribution...</span>' +
 			'</div>';
 	}
@@ -700,15 +737,15 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: wikipedia_parser},
 		{callback: listed_parser},
 		{callback: generic_tag_parser, tag: 'opening_date', label: 'Opening date', iconName: 'calendar'},
-		{callback: generic_tag_parser, tag: 'start_date', label: 'Start date', iconName: 'calendar'},
 		{callback: generic_tag_parser, tag: 'end_date', label: 'End date', iconName: 'calendar'},
 		{callback: fhrs_parser},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
 		{callback: facility_parser},
-		{callback: generic_tag_parser, tag: 'fair_trade', label: 'Fair trade', iconName: 'pie-chart '},
+//		{callback: generic_tag_parser, tag: 'fair_trade', label: 'Fair trade', iconName: 'pie-chart '},
 		{callback: payment_parser},
-		{callback: street_parser}
+		{callback: street_parser},
+		{callback: historytrail_parser}
 	].concat(functions);
 	for (var c = 0; c < functions.length; c++) {
 		var data = functions[c];
@@ -736,97 +773,152 @@ function callback(data) {
 	if (spinner === 0) $('#spinner').hide();
 	for (var c in data.elements) {
 		var e = data.elements[c];
-		if (e.id in this.instance._ids) continue;
+		// check tags exist and limit number of results
+		if (!e.tags || e.id in this.instance._ids || c >= 500) continue;
 		this.instance._ids[e.id] = true;
 		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
-		name = undefined;
-		type = undefined;
-		if (siteDebug) console.debug(e);
+		name = type = iconName = undefined;
+		if ($('#settings #inputDebug').is(':checked')) console.debug(e);
 		if (e.tags.amenity) {
-			if (e.tags.waste === 'dog_excrement') {
-				name = 'Dog Waste-Bin';
-				type = e.tags.waste;
+			type = name = e.tags.amenity;
+			switch (e.tags.amenity) {
+				case 'animal_boarding' : type = 'animal_shelter'; break;
+				case 'arts_centre' : type = 'attraction'; iconName = 'theater'; break;
+				case 'cafe' :
+				case 'fast_food' :
+				case 'restaurant' :
+					if (e.tags.cuisine) {
+						name = e.tags.cuisine;
+						if (e.tags.amenity === 'restaurant' && e.tags.takeaway === 'only') name += ' takeaway';
+						else name += ' ' + e.tags.amenity;
+						switch (e.tags.cuisine) {
+							case 'chinese' : iconName = 'restaurant_chinese'; break;
+							case 'fish_and_chips' : iconName = 'fishchips'; break;
+							case 'indian' : iconName = 'restaurant_indian'; break;
+							case 'italian' : iconName = 'restaurant_italian'; break;
+							case 'kebab' : iconName = 'kebab'; break;
+							case 'pizza' : iconName = 'pizzaria'; break;
+							case 'seafood' : iconName = 'restaurant_fish'; break;
+							case 'spanish' : iconName = 'restaurant_tapas'; break;
+							case 'steak_house' : iconName = 'restaurant_steakhouse'; break;
+							case 'thai' : iconName = 'restaurant_thai'; break;
+							case 'vegetarian' : iconName = 'restaurant_vegetarian'; break;
+						}
+					}
+					break;
+				case 'clock' : type = name = undefined; break;
+				case 'club' : if (e.tags.club) name = e.tags.club + ' ' + e.tags.amenity; break;
+				case 'college' : type = (e.tags.name === undefined) ? undefined : 'school'; break;
+				case 'place_of_worship' : if (e.tags.religion) name = e.tags.religion; break;
+				case 'nightclub' : type = 'bar'; break;
+				case 'parking' : if (e.tags.access !== 'yes') type = undefined; break;
+				case 'post_office' : type = 'post_box'; iconName = 'postoffice'; break;
+				case 'recycling' :
+					if (e.tags.recycling_type) {
+						name = e.tags.amenity + ' ' + e.tags.recycling_type;
+						if (e.tags.recycling_type === 'container') iconName = 'recyclecon';
+					}
+					break;
+				case 'retirement_home' : type = 'social_facility'; break;
+				case 'school' : if (e.tags.name === undefined) type = undefined; break;
+				case 'taxi' : if (e.tags.capacity) name = e.tags.amenity + ' rank'; break;
+				case 'waste_basket' : if (e.tags.waste === 'dog_excrement') { name = 'Dog Waste-Bin'; type = 'dog_excrement'; } break;
 			}
-			if (!name && (e.tags.amenity === 'restaurant' || e.tags.amenity === 'fast_food' || e.tags.amenity === 'cafe') && e.tags.cuisine) {
-				name = e.tags.cuisine;
-				if (e.tags.amenity === 'restaurant' && e.tags.takeaway === 'only') name += ' takeaway';
-				else name += ' ' + e.tags.amenity;
-			}
-			else if (!name && e.tags.amenity === 'place_of_worship' && e.tags.religion) name = e.tags.religion;
-			else if (!name && e.tags.amenity === 'taxi' && e.tags.capacity) name = e.tags.amenity + ' rank';
-			else if (!name) name = e.tags.amenity;
-			if (!type) type = e.tags.amenity;
-			// Group similar pois
-			if (type === 'arts_centre') type = 'attraction';
-			if (type === 'nightclub') type = 'bar';
-			if (type === 'college') type = 'school';
-			if (type === 'school' && e.tags.name === undefined) type = undefined;
-			if (type === 'retirement_home') type = 'social_facility';
-			if (type === 'post_office') type = 'post_box';
-			// Hide non-public parking
-			if (type === 'parking') {
-				if (e.tags.access === 'private' || e.tags.access === 'permissive') type = undefined;
-			}
-			if (type === 'animal_boarding') type = 'animal_shelter';
 		}
 		if (e.tags.historic) {
-			if (!name && e.tags.memorial) name = 'historic ' + e.tags.memorial;
-			else if (!name) name = 'historic ' + e.tags.historic;
+			if (!name) name = 'historic ' + e.tags.historic;
 			if (!type) type = 'historic';
+			if (e.tags.military) iconName = 'war';
+			switch (e.tags.historic) {
+				case 'memorial' :
+				if (e.tags.memorial) {
+					name = 'historic ' + e.tags.memorial;
+					iconName = (e.tags.memorial === 'plaque' || e.tags.memorial === 'blue_plaque') ? 'plaque' : 'memorial';
+				}
+				break;
+				case 'ruins' : iconName = 'ruins-2'; break;
+				case 'wreck' : iconName = 'shipwreck'; break;
+			}
 		}
-		if (e.tags.highway === 'speed_camera') type = 'surveillance';
+		if (e.tags.highway) {
+			iconName = 'roadtype_tar';
+			switch (e.tags.highway) {
+				case 'bus_stop' : iconName = 'busstop'; break;
+				case 'construction' : iconName = 'construction'; break;
+				case 'footway' :
+				case 'path' :
+				case 'track' :
+				case 'pedestrian' : iconName = 'roadtype_track'; break;
+				case 'speed_camera' : type = 'surveillance'; break;
+			}
+		}
 		if (e.tags.man_made) {
 			if (!name) name = e.tags.man_made;
 			if (!type) type = e.tags.man_made;
 		}
 		if (e.tags.shop) {
-			if (!name && e.tags.craft) name = e.tags.craft;
-			else if (!name && e.tags.beauty) name = e.tags.beauty + ' ' + e.tags.shop;
-			else if (!name && e.tags.shop === 'hairdresser') {
-				if (e.tags.male === 'yes') name = 'male barber';
-				else if (e.tags.female === 'yes') name = 'female hairdresser';
-				else if (e.tags.unisex === 'yes') name = 'unisex hairdresser';
-			}
-			else if (!name) name = e.tags.shop;
+			if (!name) name = e.tags.shop;
 			if (!type) type = e.tags.shop;
-			// Group similar pois
-			if (type === 'deli') type = 'butcher';
-			if (type === 'e-cigarette') type = 'tobacco';
-			if (type === 'hardware') type = 'doityourself';
-			if (type === 'boutique') type = 'clothes';
-			if (type === 'department_store') type = 'clothes';
-			if (type === 'window_blind') type = 'curtain';
-			if (type === 'laundry') type = 'dry_cleaning';
-			if (type === 'garden_centre') type = 'florist';
-			if (type === 'tyres') type = 'car_repair';
-			if (type === 'hearing_aids') type = 'mobility';
-			if (type === 'interior_decoration' || type === 'bathroom_furnishing' || type === 'kitchen') type = 'houseware';
+			switch (e.tags.shop) {
+				case 'beauty' : if (e.tags.beauty) name = e.tags.beauty + ' ' + e.tags.shop; break;
+				case 'bathroom_furnishing' :
+				case 'interior_decoration' :
+				case 'kitchen' : type = 'houseware'; break;
+				case 'butcher' : type = 'deli'; iconName = 'butcher-2'; break;
+				case 'boutique' : type = 'clothes'; break;
+				case 'craft' : if (e.tags.craft) name = e.tags.craft; break;
+				case 'department_store' : type = 'clothes'; iconName = 'departmentstore'; break;
+				case 'e-cigarette' : type = 'tobacco'; break;
+				case 'garden_centre' : type = 'florist'; break;
+				case 'hairdresser' :
+					if (e.tags.male === 'yes') name = 'male barber';
+					else if (e.tags.female === 'yes') name = 'female hairdresser';
+					else if (e.tags.unisex === 'yes') name = 'unisex hairdresser';
+					break;
+				case 'hardware' : type = 'doityourself'; break;
+				case 'hearing_aids' : type = 'mobility'; iconName = 'hoergeraeteakustiker_22px'; break;
+				case 'laundry' : type = 'dry_cleaning'; break;
+				case 'trade' : if (e.tags.trade) name = e.tags.trade + ' ' + e.tags.shop; break;
+				case 'window_blind' : type = 'curtain'; break;
+			}
 		}
 		if (e.tags.tourism) {
-			if (!name && e.tags.artwork_type) name = e.tags.artwork_type + ' ' + e.tags.tourism;
-			else if (!name && e.tags.information) name = e.tags.tourism + ' ' + e.tags.information;
-			else if (!name) name = e.tags.tourism;
+			if (!name) name = e.tags.tourism;
 			if (!type) type = e.tags.tourism;
-			if (type === 'hotel') type = 'guest_house';
-			if (type === 'information') {
-				if (!e.tags.name && !e.tags.ref) type = undefined;
+			switch (e.tags.tourism) {
+				case 'artwork' : if (e.tags.artwork_type) name = e.tags.artwork_type + ' ' + e.tags.tourism; break;
+				case 'hotel' : type = 'guest_house'; iconName = 'hotel_0star'; break;
+				case 'information' :
+					if (e.tags.information) {
+						if (!e.tags.name && !e.tags.ref) type = undefined;
+						else {
+							name = e.tags.tourism + ' ' + e.tags.information;
+							switch (e.tags.information) {
+								case 'guidepost' : iconName = 'signpost-3'; break;
+								case 'board' : iconName = 'board'; break;
+								case 'map' : iconName = 'map'; break;
+							}
+						}
+					}
+					break;
 			}
 		}
 		if (e.tags.landuse) {
 			if (!name) name = e.tags.landuse;
 			if (!type) type = e.tags.landuse;
-			// Hide non-public grounds
-			if (type === 'recreation_ground') {
-				if (e.tags.access === 'private') type = undefined;
-			}
+			// hide non-public grounds
+			if (type === 'recreation_ground' && e.tags.access === 'private') type = undefined;
 		}
 		if (e.tags.leisure) {
-			if (!name && e.tags.sport) name = e.tags.sport + ' ' + e.tags.leisure;
-			else if (!name) name = e.tags.leisure;
+			if (!name) name = e.tags.leisure;
 			if (!type) type = e.tags.leisure;
-			if (type === 'common') type = 'park';
-			if (type === 'swimming_pool') {
-				if (e.tags.access === 'private') type = undefined;
+			switch (type) {
+				case 'common' :
+				case 'nature_reserve' : type = 'park'; break;
+				case 'fitness_station' : type = 'fitness_centre'; break;
+				case 'garden' : iconName = 'urbanpark'; break;
+				case 'sport' : if (e.tags.sport) name = e.tags.sport + ' ' + e.tags.leisure; break;
+				case 'swimming_pool' : if (e.tags.access === 'private') type = undefined; break;
 			}
 		}
 		if (e.tags.emergency) {
@@ -836,6 +928,7 @@ function callback(data) {
 		if (e.tags.office) {
 			if (!name) name = e.tags.office + ' office';
 			if (!type) type = e.tags.office;
+			// group similar pois
 			if (type === 'financial') type = 'accountant';
 		}
 		if (e.tags.healthcare) {
@@ -846,23 +939,29 @@ function callback(data) {
 		if (e.tags.listed_status) {
 			if (!type || type === 'shelter' || type === 'company') type = 'listed_status';
 		}
+		if (e.tags.route === 'bus') {
+			type = e.tags.route;
+			name = e.tags.route + ' route';
+			// show public transport basemap
+			if (actBaseTileLayer !== 'trnsprt') {
+				map.removeLayer(tileBaseLayers[tileBaseLayer[actBaseTileLayer].name]);
+				actBaseTileLayer = 'trnsprt';
+				map.addLayer(tileBaseLayers[tileBaseLayer[actBaseTileLayer].name]);
+			}
+		}
+		// set marker options
 		customOptions.minWidth = e.tags.image ? imgSize : '';
-
 		var poi = pois[type];
-		if (e.tags.military) iconName = 'war';
-		else if (poi) iconName = poi.iconName;
-		else if (e.tags.construction) iconName = 'construction';
-		else if (e.tags.highway) {
-			if (e.tags.highway === 'path' || e.tags.highway === 'footway' || e.tags.highway === 'track') iconName = 'roadtype_track';
-			else if (e.tags.highway === 'bus_stop') iconName = 'busstop';
-			else iconName = 'roadtype_tar';
+		if (!iconName) {
+			if (poi) iconName = poi.iconName;
+			else if (e.tags.construction) iconName = 'construction';
+			else if (e.tags.building) {
+				if (e.tags.building === 'house' || e.tags.building === 'bungalow') iconName = 'bighouse';
+				else if (e.tags.building === 'service') iconName = 'powersubstation';
+				else iconName = 'apartment-3';
+			}
+			else iconName = '000blank';
 		}
-		else if (e.tags.building) {
-			if (e.tags.building === 'house' || e.tags.building === 'bungalow') iconName = 'bighouse';
-			else if (e.tags.building === 'service') iconName = 'powersubstation';
-			else iconName = 'apartment-3';
-		}
-		else iconName = '000blank';
 		var markerIcon = L.icon({
 			iconUrl: 'assets/img/icons/' + iconName + '.png',
 			iconSize: [32, 37],
@@ -893,7 +992,7 @@ function callback(data) {
 		if (name) {
 			var toolTip = '<b>' + name + '</b>';
 			if (e.tags.name) toolTip += '<br><i>' + e.tags.name + '</i>';
-			else if (e.tags['addr:housename']) toolTip += '<br><i>' + e.tags['addr:housename'] + '</i>';
+			else if (e.tags['addr:housename'] && e.tags['addr:street']) toolTip += '<br><i>' + e.tags['addr:housename'] + ', ' + e.tags['addr:street'] + '</i>';
 			else if (e.tags['addr:housenumber'] && e.tags['addr:street']) toolTip += '<br><i>' + e.tags['addr:housenumber'] + ' ' + e.tags['addr:street'] + '</i>';
 			else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
 			if (e.tags.image) toolTip += ' <i style="color:#808080;" class="fa fa-picture-o fa-fw"></i>';
@@ -908,40 +1007,63 @@ function callback(data) {
 			// check if coming from reverseQuery
 			if (rQuery) {
 				marker.addTo(this.instance).openPopup();
-				markerId = e.type + '_' + e.id;
+				markerId = e.type.slice(0, 1) + e.id;
 			}
+			// marker from group poi
 			else {
 				marker.addTo(this.instance);
 				// get list of markers with openhrs state
 				marker.state = state;
+				// get distance if location on
+				if (lc._active) marker.distance = map.distance(lc._event.latlng, marker._origLatlng);
 				poiList.push(marker);
 			}
 		}
 		else if (rQuery) {
-			// use generic marker
+			// single generic marker
 			markerPopup = generic_poi_parser(e, name);
 			marker.bindPopup(markerPopup, customOptions);
 			marker.addTo(this.instance).openPopup();
-			markerId = e.type + '_' + e.id;
+			markerId = e.type.slice(0, 1) + e.id;
+		}
+		else if ($('#inputDebug').is(':checked')) {
+			// custom overpass query
+			markerPopup = generic_poi_parser(e, name);
+			marker.bindPopup(markerPopup, customOptions);
+			marker.addTo(this.instance);
+			poiList.push(marker);
 		}
 		rQuery = false;
 	}
-	// output multiple results in sidebar
+	// output list of pois in sidebar
 	if (poiList.length) {
+		// sort by distance or name
+		poiList.sort(function(a, b) {
+			if (a.distance) return (a.distance > b.distance) ? 1 : -1;
+			else return (a._tooltip._content > b._tooltip._content) ? 1 : -1;
+		});
 		$('.poi-results').css('height', 'calc(50% - 22px)');
 		$('.poi-icons').css('height', 'calc(50% - 35px)');
 		if ($(window).width() < 768) $('.poi-results button').show();
 		var openColour, poiResultsList = '<table>';
 		for (c = 0; c < poiList.length; c++) {
-			if (poiList[c].state === true) openColour = 'rgba(0,128,0,0.5);';
-			else if (poiList[c].state === false) openColour = 'rgba(255,0,0,0.5)';
-			else if (poiList[c].state === 'depends') openColour = 'rgba(128,128,128,0.5)';
+			if (poiList[c].state === true) openColour = 'background-color: rgba(0,128,0,0.5);';
+			else if (poiList[c].state === false) openColour = 'background-color: rgba(255,0,0,0.5);';
+			else if (poiList[c].state === 'depends') openColour = 'background-color: rgba(128,128,128,0.5);';
 			else openColour = '';
 			poiResultsList += '<tr id="poi-result-' + c + '">' +
-				'<td style="background-color:' + openColour + ';"><img src="' + poiList[c]._icon.src + '"></td>' +
+				'<td style="' + openColour + '"><img src="' + poiList[c]._icon.src + '"></td>' +
 				'<td>' + poiList[c]._tooltip._content + '</td>';
-			// add distance column if location on
-			if (lc._active) poiResultsList += '<td>' + Math.round((map.distance(lc._event.latlng, poiList[c]._latlng) / 1609.34) * 100) / 100 + ' miles</td>';
+			if (poiList[c].distance) {
+				if ($('#inputUnit').is(':checked')) {
+					if (poiList[c].distance < 1000) poiResultsList += '<td>' + Math.round(poiList[c].distance) + ' m</td>';
+					else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1000) * 100) / 100 + ' km</td>';
+				}
+				else {
+					if (poiList[c].distance < 800) poiResultsList += '<td>' + Math.round(poiList[c].distance / 0.9144) + ' yd</td>';
+					else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1609.34) * 100) / 100 + ' mi</td>';
+				}
+			}
 			poiResultsList += '</tr>';
 		}
 		poiResultsList += '</table>';
@@ -956,5 +1078,8 @@ function callback(data) {
 			else map.flyTo(poiList[this.id.split('poi-result-')[1]]._latlng);
 			poiList[this.id.split('poi-result-')[1]].openPopup();
 		});
+		if (poiList[0].distance) $('.poi-results h3').html($('.leaflet-marker-icon').length + ' results by distance');
+		else $('.poi-results h3').html($('.leaflet-marker-icon').length + ' results by name');
+		if (poiList.length === 500) $('.poi-results h3').append('<br>(too many results to show)');
 	}
 }
