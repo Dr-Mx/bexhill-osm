@@ -14,7 +14,7 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
    - Diet parser (key:diet)
    - Cuisine parser (key:cuisine, key:breakfast, key:lunch)
    - Ordering parser (key:takeaway, key:delivery, key:outdoor_searing, key:reservation)
-   - Listed building parser (key:listed_status, key:HE_ref)
+   - Building details (key:architect, key:building:architecture, key:start_date, key:HE_ref, key:listed_status)
    - Current open state with full hours table (key:opening_hours)
    - UK Food Hygiene Rating System API (key:fhrs:id)
    - Images through Wikimedia Commons API (key:image)
@@ -25,10 +25,12 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
  - Group POI result list with current open state
  - Detailed walking directions with Mapbox API
  - View suggested walking routes
- - Geolocate user and get walking directions from that point if within bounds of map
- - View a histoic tour that shows various overlays on the map
+ - Geolocate user and get walking directions from that point
+ - Histoic tour articles that link to various overlays on the map
  - Direct link to edit an element on OSM or leave a note
- - Share any current layer via a permalink
+ - Share map layers with permalink
+ - Various settings to adjust map display
+ - Debugging tools
 
 ## Attribution
 
