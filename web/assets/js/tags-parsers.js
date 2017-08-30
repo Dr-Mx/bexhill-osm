@@ -59,7 +59,6 @@ function address_parser(element) {
 		if (tags['addr:housenumber']) value += tags['addr:housenumber'] + ' ';
 		if (tags['addr:street']) value += tags['addr:street'];
 		else if (tags['addr:place']) value += tags['addr:place'];
-		if (tags['addr:city']) value += ', ' + tags['addr:city'];
 		if (tags['addr:postcode']) value += ', ' + tags['addr:postcode'];
 		markerPopup = L.Util.template(tagTmpl, { tag: 'Address', value: value, iconName: 'map-marker' });
 	}
@@ -104,9 +103,7 @@ function facility_parser(element) {
 	var markerPopup = '', tag = '';
 	if (tags.wheelchair === 'yes') tag += '<i class="fa fa-wheelchair fa-fw" title="wheelchair access" style="color:darkgreen;"></i> ';
 	else if (tags.wheelchair === 'limited') tag += '<i class="fa fa-wheelchair fa-fw" title="limited wheelchair access" style="color:teal;"></i>(limited) ';
-	else if (tags.wheelchair === 'no') tag += '<i class="fa fa-wheelchair fa-fw" title="no wheelchair access" style="color:red;"></i>(no) ';
 	if (tags.dog === 'yes') tag += '<i class="fa fa-paw fa-fw" title="dog friendly" style="color:darkgreen;"></i> ';
-	else if (tags.dog === 'no') tag += '<i class="fa fa-paw fa-fw" title="no dog access" style="color:red;"></i>(no) ';
 	if (tags.internet_access === 'wlan') tag += '<i class="fa fa-wifi fa-fw" title="wireless internet access" style="color:darkgreen;"></i> ';
 	else if (tags.internet_access === 'terminal') tag += '<i class="fa fa-desktop fa-fw" title="terminal internet access" style="color:darkgreen;"></i> ';
 	if (tags.male === 'yes' || tags.unisex === 'yes') tag += '<i class="fa fa-male fa-fw" title="male" style="color:darkgreen;"></i> ';
@@ -187,6 +184,8 @@ function hotelservices_parser(element) {
 	if (tags.balcony) tag += 'balcony; ';
 	if (tags.cooking) tag += 'self-catering; ';
 	if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'bed' });
+	// booking.com affiliate link
+	if (tags['url:booking-com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="' + tags['url:booking-com'] + '?aid=1335159&no_rooms=1&group_adults=1" title="booking.com" target="_blank"><img style="width:80px;" src="assets/img/booking-com.png"></a>', iconName: 'file' });
 	return markerPopup;
 }
 
@@ -286,9 +285,12 @@ function food_parser(element, titlePopup) {
 function cuisine_parser(element) {
 	var markerPopup = '', tag = '';
 	if (element.tags.cuisine) tag += element.tags.cuisine + ', ';
+	if (element.tags.fair_trade === 'yes') tag += 'fairtrade, ';
 	if (element.tags.breakfast === 'yes') tag += 'breakfast, ';
 	if (element.tags.lunch === 'yes') tag += 'lunch, ';
 	if (element.tags.ice_cream === 'yes') tag += 'ice cream, ';
+	if (element.tags.real_ale === 'yes') tag += 'real ale, ';
+	if (element.tags.real_cider === 'yes') tag += 'real cider, ';
 	for (var key in element.tags) {
 		if (key.indexOf('diet:') === 0 && (element.tags[key] === 'yes')) tag += key.split(':')[1] + ' options, ';
 	}
@@ -300,30 +302,16 @@ function cuisine_parser(element) {
 	return markerPopup;
 }
 
-function pub_parser(element, titlePopup) {
-	return parse_tags(
-		element,
-		titlePopup,
-		[
-			{callback: generic_tag_parser, tag: 'real_ale', label: 'Real ale', iconName: 'beer'},
-			{callback: generic_tag_parser, tag: 'real_cider', label: 'Real cider', iconName: 'beer'},
-			{callback: order_parser}
-		]
-	);
-}
-
 function order_parser(element) {
 	var tags = element.tags, tag = '', markerPopup = '';
-	var tagUrl = tags.url ? tags.url : tags['contact:url'];
 	if (tags.takeaway === 'yes') tag += 'takeaway, ';
 	else if (tags.takeaway === 'only') tag += 'takeaway only, ';
 	if (tags.delivery === 'yes') tag += 'delivery, ';
-	if (tags.outdoor_seating === 'yes') tag += 'outdoor seating, ';
+	if (tags.beer_garden === 'yes') tag += 'beer garden, ';
+	else if (tags.outdoor_seating === 'yes') tag += 'outdoor seating, ';
 	if (tags.reservation === 'yes') tag += 'takes reservation, ';
 	else if (tags.reservation === 'required') tag += 'needs reservation, ';
-	if (tagUrl && tagUrl.indexOf('just-eat.co.uk') >= 0) {
-		tag += '<a href="' + tagUrl + '" title="' + tagUrl + '" target="_blank">just-eat</a>, ';
-	}
+	if (tags['url:just-eat']) tag += '<a href="' + tags['url:just-eat'] + '" title="just-eat.com" target="_blank">just-eat</a>, ';
 	if (tag) markerPopup = L.Util.template(tagTmpl, { tag: 'Order options', value: tag.substring(0, tag.length - 2), iconName: 'shopping-bag' });
 	return markerPopup;
 }
@@ -659,7 +647,7 @@ function opening_hours_parser(tags) {
 				strNextChange = oh.getNextChange().toLocaleDateString('en-GB', { weekday: 'long', hour: '2-digit', minute: '2-digit' });
 			}
 			// otherwise display date
-			else strNextChange = date_parser(oh.getNextChange(), 'short');
+			else strNextChange = date_parser(oh.getNextChange().toLocaleDateString('en-GB'), 'short');
 		}
 		else strNextChange = oh.prettifyValue();
 		if (oh.getComment()) {
@@ -688,7 +676,7 @@ function opening_hours_parser(tags) {
 		}
 	}
 	catch(err) {
-		if (tags.opening_hours) console.log('ERROR: Object "' + tags.name + '" cannot parse hours: ' + hours + '. ' + err);
+		if (tags.opening_hours && $('#inputDebug').is(':checked')) console.debug('ERROR: Object "' + tags.name + '" cannot parse hours: ' + tags.opening_hours + '. ' + err);
 	}
 	return openhrs;
 }
@@ -704,21 +692,77 @@ function popup_buttons(element) {
 	return markerPopup;
 }
 
-// get wikimedia image
-function image_parser(img) {
+// get images
+function image_parser(tags) {
 	var markerPopup = '';
-	if (img && img.indexOf('File:') === 0 && !$('#settings #inputImage').is(':checked')) {
-		var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(img.split(':')[1]) + '&w=' + imgSize;
-		markerPopup =
-			'<div class="popup-imgContainer">' +
-				'<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank"><img alt="Loading image..." style="max-height:' + (imgSize - 50) + 'px;" src="' + url + '"></a><br>' +
-				'<span class="popup-imgAttrib">Loading attribution...</span>' +
-			'</div>';
+	if (tags.image && !$('#inputImage').is(':checked')) {
+		var displayImage = function (img, id, display) {
+			// check if wikimedia image
+			if (img.indexOf('File') === 0) {
+				var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(img.split(':')[1]) + '&w=' + imgSize;
+				markerPopup +=
+					'<div id="img' + id + '" class="popup-imgContainer" style="display:' + display + ';">' +
+						'<img data-url="' + img + '" alt="Loading image..." style="max-height:' + (imgSize - 50) + 'px;" src="' + url + '"><br>' +
+						'<span class="popup-imgAttrib">Loading attribution...</span>' +
+					'</div>';
+			}
+			else if (img.indexOf('http') === 0) {
+				markerPopup +=
+					'<div id="img' + id + '" class="popup-imgContainer">' +
+						'<img alt="Loading image..." style="max-width:' + imgSize + 'px; max-height:' + (imgSize - 50) + 'px;" src="' + img + '">' +
+					'</div>';
+			}
+			return markerPopup;
+		};
+		displayImage(tags.image, 0, 'inherit');
+		// support up to 5 extra images
+		if (tags.image_1) {
+			for (x = 1; x <= 5; x++) {
+				if (tags['image_' + x]) displayImage(tags['image_' + x], x, 'none');
+			}
+			// show navigation controls
+			markerPopup += '<span class="theme navigateItem prevItem"><a title="Previous image" onclick="navImg(0);"><i class="fa fa-caret-square-o-left"></i></a></span>' +
+				'<span class="navigateItem imgIcon"><i class="fa fa-picture-o"></i></span>' +
+				'<span class="theme navigateItem nextItem"><a title="Next image" onclick="navImg(1);"><i class="fa fa-caret-square-o-right"></i></a></span>';
+		}
 	}
 	return markerPopup;
 }
+// navigate through multiple images. 0 = previous, 1 = next
+function navImg(direction) {
+	// get the current and last image
+	var cID = parseInt($('.popup-imgContainer:visible').attr('id').split('img')[1]);
+	var lID = parseInt($('.popup-imgContainer:last').attr('id').split('img')[1]);
+	// get the next image
+	var swapImg = function(nID) {
+		$('.popup-imgContainer').hide([]).filter('.popup-imgContainer#img' + nID).show([]);
+		getWikiAttrib(nID);
+	};
+	if (direction === 0 && cID > 0) swapImg(cID - 1);
+	else if (direction === 1 && cID < lID) swapImg(cID + 1);
+}
+// wikimedia api for image attribution
+function getWikiAttrib(id) {
+	if ($('#img' + id).html() && $('#img' + id).html().indexOf('wikimedia.org') !== -1) {
+		var img = $('#img' + id + ' img').attr('data-url');
+		$.ajax({
+			url: 'https://commons.wikimedia.org/w/api.php',
+			data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata', titles: img, format: 'json' },
+			dataType: 'jsonp',
+			success: function (result) {
+				var imgAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
+				$('#img' + id + ' .popup-imgAttrib').html(
+					'&copy; ' + imgAttrib.Artist.value +
+					' | <a href="' + imgAttrib.LicenseUrl.value + '" title="Licence" target="_blank">' + imgAttrib.LicenseShortName.value + '</a>' +
+					' | <a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank">Full image</a>'
+				);
+				$('.popup-imgAttrib a').filter(':first').attr('target', '_blank').attr('title', 'Artist');
+			}
+		});
+	}
+}
 
-// parse all tags into variable
+// parse all tags into one variable
 function parse_tags(element, titlePopup, functions) {
 	var markerPopup = L.Util.template('<div class="popup-header"><h3>{title}</h3>', { title: titlePopup });
 	if (element.tags.name) markerPopup += L.Util.template('<span class="popup-header-tagName">{tagName}</span>', { tagName: element.tags.name });
@@ -726,6 +770,7 @@ function parse_tags(element, titlePopup, functions) {
 	markerPopup += '</div>';
 	functions = [
 		{callback: popup_buttons},
+		{callback: generic_tag_parser, tag: 'official_name', label: 'Official name'},
 		{callback: generic_tag_parser, tag: 'loc_name', label: 'Local name'},
 		{callback: generic_tag_parser, tag: 'alt_name', label: 'Alternative name'},
 		{callback: generic_tag_parser, tag: 'old_name', label: 'Old name'},
@@ -742,7 +787,6 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'sign-in'},
 		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'pencil-square-o'},
 		{callback: facility_parser},
-//		{callback: generic_tag_parser, tag: 'fair_trade', label: 'Fair trade', iconName: 'pie-chart '},
 		{callback: payment_parser},
 		{callback: street_parser},
 		{callback: historytrail_parser}
@@ -756,7 +800,7 @@ function parse_tags(element, titlePopup, functions) {
 		else markerPopup += data.callback(element);
 	}
 	markerPopup += opening_hours_parser(element.tags);
-	markerPopup += image_parser(element.tags.image);
+	markerPopup += image_parser(element.tags);
 	return markerPopup;
 }
 
@@ -770,15 +814,18 @@ function callback(data) {
 	customOptions.autoPanPaddingTopLeft = ($(window).width() < 768 || !rQuery) ? [20, 40] : [sidebar.width() + 50, 5];
 	customOptions.autoPanPaddingBottomRight = [5, 50];
 	if (spinner > 0) spinner--;
-	if (spinner === 0) $('#spinner').hide();
+	if (spinner === 0) {
+		$('#spinner').hide();
+		$('.poi-checkbox').removeClass('poi-loading');
+	}
 	for (var c in data.elements) {
 		var e = data.elements[c];
 		// check tags exist and limit number of results
-		if (!e.tags || e.id in this.instance._ids || c >= 500) continue;
+		if (!e.tags || e.id in this.instance._ids || c >= maxOpResults) continue;
 		this.instance._ids[e.id] = true;
 		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
 		name = type = iconName = undefined;
-		if ($('#settings #inputDebug').is(':checked')) console.debug(e);
+		if ($('#inputDebug').is(':checked')) console.debug(e);
 		if (e.tags.amenity) {
 			type = name = e.tags.amenity;
 			switch (e.tags.amenity) {
@@ -856,6 +903,11 @@ function callback(data) {
 			if (!name) name = e.tags.man_made;
 			if (!type) type = e.tags.man_made;
 		}
+		if (e.tags.natural) {
+			if (!name) name = e.tags.natural;
+			if (!type) type = e.tags.natural;
+			if (type === 'peak') iconName = 'hill';
+		}
 		if (e.tags.shop) {
 			if (!name) name = e.tags.shop;
 			if (!type) type = e.tags.shop;
@@ -887,6 +939,7 @@ function callback(data) {
 			if (!type) type = e.tags.tourism;
 			switch (e.tags.tourism) {
 				case 'artwork' : if (e.tags.artwork_type) name = e.tags.artwork_type + ' ' + e.tags.tourism; break;
+				case 'gallery' : type = 'artwork'; iconName = 'museum_paintings'; break;
 				case 'hotel' : type = 'guest_house'; iconName = 'hotel_0star'; break;
 				case 'information' :
 					if (e.tags.information) {
@@ -919,6 +972,7 @@ function callback(data) {
 				case 'garden' : iconName = 'urbanpark'; break;
 				case 'sport' : if (e.tags.sport) name = e.tags.sport + ' ' + e.tags.leisure; break;
 				case 'swimming_pool' : if (e.tags.access === 'private') type = undefined; break;
+				case 'golf_course': type = 'recreation_ground'; iconName = 'golfing'; break;
 			}
 		}
 		if (e.tags.emergency) {
@@ -972,6 +1026,7 @@ function callback(data) {
 		});
 		var marker = L.marker(pos, {
 			bounceOnAdd: !rQuery,
+			bounceOnAddOptions: {duration: 500, height: 200},
 			icon: markerIcon,
 			keyboard: false,
 			riseOnHover: true
@@ -979,7 +1034,6 @@ function callback(data) {
 		// find alternative poi name
 		if (!name || (poi && name === poi.name.toLowerCase())) {
 			if (poi) name = poi.name;
-			else if (e.tags.natural) name = e.tags.natural;
 			else if (e.tags.highway) name = (e.tags.highway === 'bus_stop') ? e.tags.highway : e.tags.highway + ' highway';
 			else if (e.tags.railway) name = 'railway ' + e.tags.railway;
 			else if (e.tags.ref) name = e.tags.ref;
@@ -995,6 +1049,7 @@ function callback(data) {
 			else if (e.tags['addr:housename'] && e.tags['addr:street']) toolTip += '<br><i>' + e.tags['addr:housename'] + ', ' + e.tags['addr:street'] + '</i>';
 			else if (e.tags['addr:housenumber'] && e.tags['addr:street']) toolTip += '<br><i>' + e.tags['addr:housenumber'] + ' ' + e.tags['addr:street'] + '</i>';
 			else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
+			else if (e.tags.operator) toolTip += '<br><i>' + e.tags.operator + '</i>';
 			if (e.tags.image) toolTip += ' <i style="color:#808080;" class="fa fa-picture-o fa-fw"></i>';
 			marker.bindTooltip(toolTip, { direction: 'left', offset: [-15, -2] });
 		}
@@ -1044,7 +1099,7 @@ function callback(data) {
 		});
 		$('.poi-results').css('height', 'calc(50% - 22px)');
 		$('.poi-icons').css('height', 'calc(50% - 35px)');
-		if ($(window).width() < 768) $('.poi-results button').show();
+		if ($(window).width() < 768) $('.poi-results-btn-clear').show();
 		var openColour, poiResultsList = '<table>';
 		for (c = 0; c < poiList.length; c++) {
 			if (poiList[c].state === true) openColour = 'background-color: rgba(0,128,0,0.5);';
@@ -1080,6 +1135,6 @@ function callback(data) {
 		});
 		if (poiList[0].distance) $('.poi-results h3').html($('.leaflet-marker-icon').length + ' results by distance');
 		else $('.poi-results h3').html($('.leaflet-marker-icon').length + ' results by name');
-		if (poiList.length === 500) $('.poi-results h3').append('<br>(too many results to show)');
+		if (poiList.length === maxOpResults) $('.poi-results h3').append('<br>(too many results to show)');
 	}
 }

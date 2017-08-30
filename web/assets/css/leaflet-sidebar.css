@@ -62,7 +62,7 @@
 	transition: all 80ms; }
 .sidebar-tabs > li:hover, .sidebar-tabs > ul > li:hover {
 	color: #000;
-	background-color: #dedede; }
+	filter: brightness(80%); }
 .sidebar-tabs > li.active, .sidebar-tabs > ul > li.active {
 	color: #dedede;
 	background-color: #b05000; }

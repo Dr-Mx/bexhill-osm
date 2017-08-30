@@ -1,17 +1,15 @@
 // query overpass server - based on https://github.com/kartenkarsten/leaflet-layer-overpass
 
 function show_overpass_layer(query) {
-	var screenBbox = (query.indexOf('screenBbox') !== -1) ? true : false;
-	if ($('#settings #inputDebug').is(':checked')) console.debug(query);
 	if (!query || query === '();') {
 		console.log('There is nothing selected to filter by.');
 		return;
 	}
 	var opl = new L.OverPassLayer({
-		debug: $('#settings #inputDebug').is(':checked'),
+		debug: $('#inputDebug').is(':checked'),
 		minzoom: minOpZoom,
-		screenBbox: screenBbox,
-		query: query + 'out center;&contact=' + email,
+		screenBbox: $('#inputRange').is(':checked'),
+		query: query + 'out center;',
 		endpoint: $('#inputOpServer').val(),
 		callback: callback,
 		minZoomIndicatorOptions: {
@@ -40,7 +38,7 @@ L.Control.MinZoomIndicator = L.Control.extend({
 	// adds a layer with minzoom information to this._layers
 	_addLayer: function(layer) {
 		var minzoom = 1;
-		if (layer.options.minzoom && $('#settings #inputRange').is(':checked')) minzoom = layer.options.minzoom;
+		if (layer.options.minzoom && layer.options.screenBbox) minzoom = layer.options.minzoom;
 		this._layers[layer._leaflet_id] = minzoom;
 		this._updateBox(null);
 	},
@@ -132,7 +130,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 	},
 	onMoveEnd: function () {
 		if (this.options.debug) console.debug('load Pois');
-		if (this._map.getZoom() >= this.options.minzoom || !$('#settings #inputRange').is(':checked')) {
+		if (this._map.getZoom() >= this.options.minzoom || !this.options.screenBbox) {
 			var bboxList = [], queryWithMapCoordinates;
 			if (this.options.screenBbox) {
 				bboxList = this._view2BBoxes(
@@ -160,11 +158,13 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						this._requested[x] = {};
 					}
 					this._requested[x][y] = true;
-					queryWithMapCoordinates = this.options.query.replace(/(screenBbox)/g, bbox.toOverpassBBoxString());
+					queryWithMapCoordinates = '[bbox:' + bbox.toOverpassBBoxString() + '];' + this.options.query;
 				}
-				else queryWithMapCoordinates = this.options.query.replace(/(mapBbox)/g, bbox.toOverpassBBoxString());
-				var url = this.options.endpoint + '?data=[out:json];' + queryWithMapCoordinates;
-				// show spinner
+				else queryWithMapCoordinates = '[bbox:' + bbox.toOverpassBBoxString() + '];' + this.options.query;
+				if (this.options.debug) console.debug(queryWithMapCoordinates);
+				var url = this.options.endpoint + '?data=[out:json]' + queryWithMapCoordinates +  '&contact=' + email;
+				// show spinner, disable poi checkboxes
+				$('.poi-checkbox').addClass('poi-loading');
 				$('#spinner').show();
 				spinner++;
 				if (beforeRequest) {
@@ -217,7 +217,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			this._zoomControl._addLayer(this);
 		}
 		this.onMoveEnd();
-		if (this.options.query.indexOf('(screenBbox)') != -1) map.on('moveend', this.onMoveEnd, this);
+		if (this.options.screenBbox) map.on('moveend', this.onMoveEnd, this);
 		if (this.options.debug) console.debug('add layer');
 	},
 	onRemove: function (map) {

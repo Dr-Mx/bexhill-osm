@@ -25,6 +25,36 @@ html, body, #map {
 	background: linear-gradient(#b05000, #e6e6e6);
 }
 
+#tips {
+	height: 45px;
+	vertical-align: middle;
+	display: table-cell;
+}
+.navigateItem {
+	position: absolute;
+	margin-top: -15px;
+	opacity: 0.5;
+}
+.navigateItem .fa {
+	width: 20px;
+}
+.navigateItem:hover {
+	opacity: 1;
+}
+.prevItem {
+	right: 50px;
+	text-align: left;
+}
+.nextItem {
+	width: 20px;
+	right: 20px;
+	text-align: right;
+}
+.imgIcon {
+	right: 32px;
+	pointer-events: none;
+}
+
 #feedRss {
 	font-size: 85%;
 	color: #777;
@@ -207,21 +237,27 @@ hr {
 	background-color: rgba(0, 0, 0, 0.05);
 }
 .poi-results button {
-	display: none;
 	position: absolute;
 	box-shadow: none;
 	border: none;
-	right: 20px;
 	top: 20px;
 	width: 26px;
 	height: 26px;
 	background-color: #fff;
 }
+.poi-results-btn-clear {
+	display: none;
+	right: 45px;
+}
+.poi-results-btn-view {
+	right: 15px;
+}
 .poi-results-list {
-	font-size: 10pt;
+	font-size: 90%;
 }
 .poi-results-list img {
 	height: 26px;
+	display: block;
 }
 .poi-results-list table {
 	width: 100%;
@@ -235,9 +271,13 @@ hr {
 	border-radius: 10px;
 	width: 10px;
 }
+.poi-results-list tr {
+	filter: saturate(70%);
+}
 .poi-results-list tr:hover {
 	background-color: rgba(255, 255, 255, 0.3);
 	cursor: pointer;
+	filter: saturate(100%);
 }
 .poi-icons {
 	transition: height 500ms;
@@ -258,9 +298,11 @@ hr {
 	border-radius: 5px;
 	white-space: nowrap;
 	cursor: pointer;
+	filter: saturate(70%);
 }
-.poi-checkbox > label:hover {
+.poi-checkbox-selected {
 	background-color: rgba(255, 255, 255, 0.6);
+	filter: saturate(100%) !important;
 }
 .poi-checkbox > label > input {
 	display: none;
@@ -275,17 +317,24 @@ hr {
 .poi-checkbox > label > input:checked + span {
 	font-weight: bold;
 }
+.poi-loading {
+	pointer-events: none;
+	opacity: 0.5;
+}
+.poi-checkbox > label:hover, .walkLink:hover {
+	filter: brightness(80%) saturate(100%);
+	background-color: rgba(255, 255, 255);
+}
 
 /* walking tab */
 #walking a img {
 	margin: auto;
 	padding: 5px 10px 5px 10px;
 	display: block;
-	filter: saturate(50%);
+	filter: saturate(70%);
 }
 #walking a img:hover {
-	background-color: rgba(255,255,255,0.6);
-	filter: saturate(100%);
+	filter: brightness(80%) saturate(100%);
 }
 #walkContainer {
 	display: block;
@@ -298,9 +347,6 @@ hr {
 	color: darkgreen;
 	text-indent: 3px;
 	border-radius: 3px;
-}
-.walkLink:hover {
-	background-color: rgba(255,255,255,0.6);
 }
 
 /* tour tab */
@@ -339,11 +385,17 @@ hr {
 
 /* settings tab */
 #settings label {
-	font-size: 10pt;
+	font-size: 90%;
+}
+#inputOpacity {
+	padding-top: 5px;
+	display: none;
+	text-align: center;
+	font-style: italic;
 }
 input[type=range] {
     -webkit-appearance: none;
-    width: 60%;
+    width: 90%;
 }
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
@@ -361,10 +413,6 @@ input[type=range]::-webkit-slider-thumb {
     background: #b05000;
     margin-top: -4px;
 	cursor: e-resize;
-}
-input[type=range]:disabled::-webkit-slider-thumb {
-	background: #ccc;
-	cursor: default;
 }
 input[type=range]:focus {
     outline: none;
@@ -386,10 +434,6 @@ input[type=range]::-moz-range-thumb {
     border-radius: 50%;
     background: #b05000;
 	cursor: e-resize;
-}
-input[type=range]:disabled::-moz-range-thumb {
-	background: #ccc;
-	cursor: default;
 }
 input[type=range]:-moz-focusring{
     outline: 1px solid white;
@@ -419,10 +463,6 @@ input[type=range]::-ms-thumb {
     border-radius: 50%;
     background: #b05000;
 	cursor: e-resize;
-}
-input[type=range]:disabled::-ms-thumb {
-	background: #ccc;
-	cursor: default;
 }
 input[type=range]:focus::-ms-fill-lower {
     background: #888;
@@ -464,6 +504,9 @@ input[type=range]:focus::-ms-fill-upper {
 #information ul {
 	padding-left: 20px;
 	list-style-type: circle;
+}
+#information td:hover {
+	filter: brightness(80%);
 }
 
 /* marker popups */
@@ -567,7 +610,7 @@ input[type=range]:focus::-ms-fill-upper {
 	margin-top: 10px;
 	text-align: center;
 }
-.popup-imgContainer > a > img {
+.popup-imgContainer > img {
 	border: 2px solid #ccc;
 	border-radius: 5px;
 }
@@ -582,8 +625,8 @@ input[type=range]:focus::-ms-fill-upper {
 	display: inline-block;
 }
 .leaflet-popup img {
-	margin-top: -5px;
-	margin-bottom: -5px;
+	margin-top: -4px;
+	margin-bottom: -4px;
 }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
 	background-color: rgba(244, 244, 244, 0.95);

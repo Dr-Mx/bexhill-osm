@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## v3.1.0 - Multiple images
+
+**Date:** 30/08/2017
+
+Updated js
+ - URI.js 1.18.12
+ - leaflet-locatecontrol 0.62.0
+ - easy-button.min.js 2.2.2
+
+Site changes
+ - Tag support for multiple images (image_1, image_2, etc)
+ - Tag support for url:booking-com and referrals
+ - Tag support for fair_trade
+ - Tag support for beer_garden
+ - Full screen button
+ - Centre map around POI results button
+ - Shortcut keys - ctrl-f, alt-enter, ctrl-del
+ - Mapbox API directions v5
+ - Include golf courses under recreation areas
+ - More uniform map loading spinner
+ - OverPass requests now use a single BBOX in header
+ - Disable POI checkboxes when performing a request
+ - Map overlay permalink support
+ - Show various website tips on home tab
+ - Historic tour article on notable people
+ - Various other improvements
+
+
 ## v3.0.0 - Settings tab
 
 **Date:** 30/07/2017

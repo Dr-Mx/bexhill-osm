@@ -9,7 +9,7 @@ var pois = {
 	
 	attraction: {
 		name: 'Attraction',
-		query: '["tourism"~"attraction|museum|gallery"]',
+		query: '["name"~"^De La Warr Pavilion$|^Bexhill Museum$|^Egerton Park$|^Murmurations Gallery$|^Manor Gardens$|^Galley Hill Open Space$"]',
 		iconName: 'star-3',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'attraction']
@@ -50,7 +50,7 @@ var pois = {
 
 	artwork: {
 		name: 'Public Artwork',
-		query: '[tourism=artwork]',
+		query: '["tourism"~"artwork|gallery"]',
 		iconName: 'publicart',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'artwork', 'sculpture'],
@@ -62,7 +62,7 @@ var pois = {
 		query: '["historic"~"."]',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'historic', 'memorial'],
+		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque'],
 		tagParser: historic_parser
 	},
 
@@ -83,11 +83,11 @@ var pois = {
 	},
 
 	recreation_ground: {
-		name: 'Recreation Ground',
-		query: '[landuse=recreation_ground]',
+		name: 'Recreation Area',
+		query: '[~"."~"recreation_ground|golf_course"]',
 		iconName: 'soccer',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['recreation-ground', 'sport', 'park', 'football', 'open-space', 'green']
+		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'park', 'open-space', 'green']
 	},
 
 	playground: {
@@ -95,7 +95,7 @@ var pois = {
 		query: '[leisure=playground]',
 		iconName: 'playground',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['playground', 'park', 'open-space', 'kids']
+		tagKeyword: ['playground', 'park', 'open-space', 'kids', 'children']
 	},
 
 	picnic_table: {
@@ -190,15 +190,7 @@ var pois = {
 	},
 
 	// AMENITIES - 85929e - 7e5109 - 2980b9 - d4ac0d - 45b39d
-/*
-	fairtrade: {
-		name: 'Fairtrade',
-		query: '[fair_trade=yes]',
-		iconName: 'fairtrade',
-		catName: 'Amenities',
-		tagKeyword: ['fairtrade']
-	},
-*/
+
 	wheelchair: {
 		name: 'Wheelchair Access',
 		query: '[wheelchair=yes]',
@@ -213,6 +205,14 @@ var pois = {
 		iconName: 'dogs_leash',
 		catName: 'Amenities',
 		tagKeyword: ['dog']
+	},
+
+	fairtrade: {
+		name: 'Fairtrade',
+		query: '[fair_trade=yes]',
+		iconName: 'fairtrade',
+		catName: 'Amenities',
+		tagKeyword: ['fairtrade']
 	},
 
 	cafe: {
@@ -256,7 +256,7 @@ var pois = {
 		iconName: 'bar',
 		catName: 'Amenities',
 		tagKeyword: ['pub', 'drink', 'beer', 'alcohol', 'food', 'snacks'],
-		tagParser: pub_parser
+		tagParser: food_parser
 	},
 
 	bar: {
@@ -323,7 +323,7 @@ var pois = {
 		query: '[amenity=recycling]',
 		iconName: 'recycle',
 		catName: 'Amenities',
-		tagKeyword: ['recycle', 'dump', 'refuse', 'rubbish'],
+		tagKeyword: ['recycle', 'dump', 'refuse', 'rubbish', 'waste'],
 		tagParser: recyclecentre_parser
 	},
 
