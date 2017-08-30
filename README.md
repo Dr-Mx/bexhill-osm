@@ -10,14 +10,14 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
  - Mobile and desktop friendly
  - Detailed POI markers through Overpass API
    - Facilities parser for wheelchair/wifi/pet access (key:wheelchair, key:internet_access, key:dog, key:male, key:female, key:diaper)
-   - Payment parser (key:payment)
-   - Diet parser (key:diet)
+   - Payment parser (key:payment:?)
+   - Diet parser (key:diet:?)
    - Cuisine parser (key:cuisine, key:breakfast, key:lunch)
-   - Ordering parser (key:takeaway, key:delivery, key:outdoor_searing, key:reservation)
+   - Ordering parser (key:takeaway, key:delivery, key:outdoor_searing, key:beer_garden, key:reservation)
    - Building details (key:architect, key:building:architecture, key:start_date, key:HE_ref, key:listed_status)
    - Current open state with full hours table (key:opening_hours)
    - UK Food Hygiene Rating System API (key:fhrs:id)
-   - Images through Wikimedia Commons API (key:image)
+   - Multiple image support including Wikimedia Commons API (key:image, key:image_1, key:image_2, etc)
  - Find an address by searching (Nominatim > Overpass)
  - Query a place by clicking on map (Nominatim > Overpass)
  - Selected place on map becomes highlighted (OpenStreetMap API)
