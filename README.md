@@ -1,4 +1,4 @@
-# Bexhill-OSM - http://bexhill-osm.org.uk/
+<h1> <img src="http://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill-OSM - http://bexhill-osm.org.uk/ </h1>
 
 Searchable OpenStreetMap data showing POIs and other information for the town of Bexhill, UK
 
