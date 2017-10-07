@@ -18,12 +18,12 @@
 	<meta http-equiv="Pragma" content="no-cache">
 
 	<!-- http://realfavicongenerator.net/ -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=oLaELXy3gr">
-	<link rel="icon" type="image/png" href="/favicon-32x32.png?v=oLaELXy3gr" sizes="32x32">
-	<link rel="icon" type="image/png" href="/favicon-16x16.png?v=oLaELXy3gr" sizes="16x16">
-	<link rel="manifest" href="/manifest.json?v=oLaELXy3gr">
-	<link rel="mask-icon" href="/safari-pinned-tab.svg?v=oLaELXy3gr" color="#b05000">
-	<link rel="shortcut icon" href="/favicon.ico?v=oLaELXy3gr">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2">
+	<link rel="manifest" href="/manifest.json?v=2">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg?v=2" color="#b05000">
+	<link rel="shortcut icon" href="/favicon.ico?v=2">
 	<meta name="apple-mobile-web-app-title" content="Bexhill-OSM">
 	<meta name="application-name" content="Bexhill-OSM">
 	<meta name="theme-color" content="#b05000">
@@ -38,7 +38,7 @@
 	<link rel="stylesheet" href="assets/css/easy-autocomplete.css">
 	<link rel="stylesheet" href="assets/css/leaflet-routing-machine.css">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v3.1.0">
+	<link rel="stylesheet" href="assets/css/site.css?v3.1.1">
  </head>
 
  <body>
@@ -84,10 +84,10 @@
 					</p>
 					<div class="comment">
 						<div id="tips"></div>
-						<span class="theme navigateItem nextItem"><a title="Random tip" onclick="getTips();"><i class="fa fa-caret-square-o-right"></i></a></span>
+						<span class="theme navigateItem navigateItemNext"><a title="Random tip" onclick="getTips();"><i class="fa fa-caret-square-o-right"></i></a></span>
 					</div>
 					<hr>
-					<p>Bexhill-OSM is a community based, open mapping project. It aims to help people discover a wealth of information on places in and around the seaside town of Bexhill-on-Sea, East Sussex, England.</p>
+					<p>Bexhill-OSM is a community based, open mapping, passion project. It aims to help people discover a wealth of information on places in and around the seaside town of Bexhill-on-Sea, East Sussex, England.</p>
 					<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fa fa-question fa-fw"></i>]</a> for more assistance.
 					<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fa fa-info fa-fw"></i>]</a>.</p>
 					<hr>
@@ -98,8 +98,8 @@
 				<h1 class="sidebar-header"><div class="sidebar-header-text">Points of Interest</div><i class="sidebar-close" title="Minimise sidebar"><i class="fa fa-caret-left"></i></i></h1>
 				<div class="sidebar-body poi-results">
 					<h3></h3>
-					<button type="button" class="theme leaflet-bar poi-results-btn-clear" title="Clear results" onclick="clear_map();"><i class="fa fa-trash"></i></button>
-					<button type="button" class="theme leaflet-bar poi-results-btn-view" title="Zoom to results" onclick="getMarkerBounds();"><i class="fa fa-eye"></i></button>
+					<button type="button" id="btnPoiResultsClear" class="theme leaflet-bar" title="Clear results" onclick="clear_map();"><i class="fa fa-trash"></i></button>
+					<button type="button" id="btnPoiResultsView" class="theme leaflet-bar" title="Zoom to results" onclick="getMarkerBounds();"><i class="fa fa-eye"></i></button>
 					<div class="poi-results-list"></div>
 				</div>
 				<div class="sidebar-body poi-icons">
@@ -123,24 +123,27 @@
 							The route of this walk is marked out by a series of 10 plaques along the promenade. Launched in 2011, it hopes to 
 							encourage people to regularly walk a specific distance along the promenade. Small plinths are placed at ground level 
 							opposite every third beach groyne between numbers 48 and 72. 
-							<a href="https://thebexhillhistorytrail.wordpress.com/2015/01/15/30-walking-the-way-to-health-plaques-west-parade/" target="_blank">Source</a>.
 						</div>
 						<p class="walkLink" onclick="suggestWalk('tmt');"><i class="fa fa-compass"></i> The Motor Trail (1.3mi / 2km)</p>
 						<div>
 							In May 1902 Bexhill-on-Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels and two galleries 
-							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel</a>).
+							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel <i class="theme fa fa-search"></i></a>).
+						</div>
+						<p class="walkLink" onclick="suggestWalk('highwoods');"><i class="fa fa-compass"></i> Little Common to Highwoods (1.6mi / 2.6km)</p>
+						<div>
+							Starting at the Wheatsheaf Inn, this walk takes you on a public right-of-way through wood, farmland and down country lanes.
+							You'll pass into Whydown and see the extraordinary early 20th century Gotham Wood House, before arriving at the east corner of ancient Highwoods.
 						</div>
 						<p class="walkLink" onclick="suggestWalk('greenway');"><i class="fa fa-compass"></i> Bexhill to Hastings Greenway (2.6mi / 4.5km)</p>
 						<div>
 							The Greenway runs alongside the Combe Valley Way, providing access for walkers, cyclists and horse riders between Bexhill and Hastings. 
 							It links up with public bridleways and footpaths in the area, including the 1066 Country Walk Bexhill Link, with two sections where horse 
 							riders take an alternative route to walkers and cyclists.
-							<a href="https://www.eastsussex.gov.uk/leisureandtourism/countryside/rightsofway/rights-of-way-in-east-sussex/bexhill-hastings-greenway/" target="_blank">Source</a>.
 						</div>
 						<p class="walkLink" onclick="suggestWalk('1066');"><i class="fa fa-compass"></i> 1066 Country Walk (3.0mi / 4.7km)</p>
 						<div>
 							The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time. This is a 
-							section of the Bexhill - Battle link, the full route can be found <a href="https://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">here</a>.
+							section of the Bexhill - Battle link, the full route can be found on <a href="https://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">waymarkedtrails.org <i class="theme fa fa-external-link fa-fw"></i></a>.
 						</div>
 						<p class="walkLink" onclick="suggestWalk('bc1');"><i class="fa fa-compass"></i> Bexhill Circular (6.3mi / 10.2km)</p>
 						<div>
@@ -196,9 +199,9 @@
 							<label><input id="inputDebug" type="checkbox"> Enable debug mode</label><br><br>
 							OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Introduction" title="Overpass Query Servers" target="_blank"><i class="theme fa fa-external-link fa-fw"></i></a> :<br>
 							<select id="inputOpServer">
-								<option value="https://overpass-api.de/api/interpreter">overpass-api.de</option>
+								<option selected value="https://overpass-api.de/api/interpreter">overpass-api.de</option>
 								<option value="http://overpass.osm.rambler.ru/cgi/interpreter">overpass.osm.rambler.ru</option>
-								<option value="https://api.openstreetmap.fr/oapi/interpreter">api.openstreetmap.fr</option>
+								<option value="https://overpass.openstreetmap.fr/api/interpreter">overpass.openstreetmap.fr</option>
 								<option value="https://overpass.osm.vi-di.fr/api/interpreter">overpass.osm.vi-di.fr</option>
 							</select>
 							<br><br>
@@ -260,7 +263,8 @@
 						To begin displaying POIs, zoom to an area on the map and click up to 3 POI groups. After a few moments 
 						the corresponding items will be displayed. Larger map areas may take longer to load.
 						<p><img src="assets/img/help-checkboxes.png" alt="Checkbox preview"></p>
-						Results will be displayed as a scrollable list and on the map as markers. Listed items will have a background colour showing if the place is currently open and the distance if location is turned on.
+						Results will be displayed as a scrollable list and on the map as markers. The buttons at the top allow you to clear the results, or zoom to their area on the map.<br>
+						Each listed item will have a background colour showing if the place is currently open, its facilities, and distance if location is turned on.
 						<p><img src="assets/img/help-results.png" alt="Result preview"></p>
 					<a id="gotopopups"></a><hr>
 					<h3>Pop-ups</h3>
@@ -294,10 +298,10 @@
 					<a id="gotoabout"></a><hr>
 					<h3>About &amp; Contact</h3>
 						<p>Bexhill-OSM is part of a community of mappers that want to create a free, editable map of the world. You can learn about the global project at the official <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap website</a>.</p>
-						<p>This independent website was created to herald the community, unique shops and history of Bexhill-on-Sea in a informative, accessible form.</p>
-						<p>Although Bexhill-OSM is not a business directory, nor a place for direct advertising, we welcome listings on all public visitable places.</p>
+						<p>This independent website looks to continuously archive Bexhill as it stands today; heralding history, community and business in an informative, accessible form.</p>
+						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we do welcome listings on all public visitable places.</p>
 						<p>Web-development and the underlying map data are managed by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</p>
-						<p>If you have any enquiries I can be reached via:<br>
+						<p>If you have any enquiries or feedback I can be reached via:<br>
 						&nbsp;<a href="" onclick="this.href='mailto:' + 'info' + '@' + 'bexhill-osm.org.uk';" title="Email"><i class="fa fa-envelope fa-fw"></i> info [at] bexhill-osm.org.uk</a><br>
 						&nbsp;<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fa fa-facebook-official fa-fw"></i> fb.com/bexhillosm</a><br>
 						&nbsp;<a href="https://www.twitter.com/bexhillosm" target="_blank" title="Twitter"><i style="color:#1da1f2;" class="fa fa-twitter fa-fw"></i> @bexhillosm</a></p>
@@ -317,10 +321,10 @@
 					<p>
 					<a id="gotodonate"></a><hr>
 					<h3>Donate</h3>
-						<p>Bexhill-OSM is advertisement and commercial free. If you found it useful, please e-mail me as I'd love to know your thoughts on the project.  Alternatively check out the links below.</p>
+						<p>Bexhill-OSM is self-funded in that it is completely advertisement and commercial free. If you so wish, you may support the project using the links below.</p>
 						<p>
 						<table style="text-align:center; width:100%;">
-							<tr><td><a href="http://amzn.eu/cEeSUjc" title="Amazon Wish List" target="_blank"><img src="assets/img/information-amazon.png"><br>My Amazon Wish List</a></td></tr>
+							<tr><td><a href="http://amzn.eu/cEeSUjc?sort=priority" title="Amazon Wish List" target="_blank"><img src="assets/img/information-amazon.png"><br>My Amazon Wish List</a></td></tr>
 							<tr><td><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 								<input type="hidden" name="cmd" value="_s-xclick">
 								<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
@@ -336,30 +340,28 @@
 						<ul>
 							<li><a href="https://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> (founding project) &copy; Manuel Kaufmann</li>
 							<li><a href="http://leafletjs.com/" target="_blank">Leaflet</a> &copy; Vladimir Agafonkin</li>
-							<li>Leaflet Plugins:
-								<ul>
-									<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank">sidebar-v2</a> &copy; Tobias Bieniek</li>
-									<li><a href="https://github.com/jfirebaugh/leaflet-osm" target="_blank">leaflet-osm</a> &copy; John Firebaugh</li>
-									<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu" target="_blank">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
-									<li><a href="https://github.com/maximeh/leaflet.bouncemarker" target="_blank">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
-									<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank">Leaflet.loading</a> &copy; Eric Brelsford</li>
-									<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton" target="_blank">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
-									<li><a href="https://github.com/perliedman/leaflet-control-geocoder" target="_blank">leaflet-control-geocoder</a> &copy; Per Liedman</li>
-									<li><a href="https://github.com/perliedman/leaflet-routing-machine" target="_blank">leaflet-routing-machine</a> &copy; Per Liedman</li>
-									<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
-									<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
-									<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael L. Evans</li>
-								</ul>
-							</li>
-							<li><a href="https://fortawesome.github.io/Font-Awesome/" target="_blank">Font-Awesome</a> &copy; Dave Gandy</li>
-							<li><a href="https://mapicons.mapsmarker.com" target="_blank">Map Icons Collection</a> &copy; Nicolas Mollet</li>
+							<ul>
+								<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank">sidebar-v2</a> &copy; Tobias Bieniek</li>
+								<li><a href="https://github.com/jfirebaugh/leaflet-osm" target="_blank">leaflet-osm</a> &copy; John Firebaugh</li>
+								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu" target="_blank">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
+								<li><a href="https://github.com/maximeh/leaflet.bouncemarker" target="_blank">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
+								<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank">Leaflet.loading</a> &copy; Eric Brelsford</li>
+								<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton" target="_blank">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
+								<li><a href="https://github.com/perliedman/leaflet-control-geocoder" target="_blank">leaflet-control-geocoder</a> &copy; Per Liedman</li>
+								<li><a href="https://github.com/perliedman/leaflet-routing-machine" target="_blank">leaflet-routing-machine</a> &copy; Per Liedman</li>
+								<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
+								<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
+								<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael L. Evans</li>
+							</ul>
 							<li><a href="https://jquery.com" target="_blank">jQuery</a> &copy; The jQuery Foundation</li>
-							<li><a href="https://github.com/davidjbradshaw/image-map-resizer" target="_blank">image-map-resizer</a> &copy; David J. Bradshaw</li>
+							<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
 							<li><a href="https://github.com/ypid/opening_hours.js" target="_blank">opening_hours.js</a> &copy; Robin Schneider</li>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
-							<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
-							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
+							<li><a href="https://github.com/davidjbradshaw/image-map-resizer" target="_blank">image-map-resizer</a> &copy; David J. Bradshaw</li>
 							<li><a href="https://github.com/enginkizil/FeedEk" target="_blank">FeedEk jQuery RSS/ATOM Feed</a> &copy; Engin Kizil</li>
+							<li><a href="https://mapicons.mapsmarker.com" target="_blank">Map Icons Collection</a> &copy; Nicolas Mollet</li>
+							<li><a href="https://fortawesome.github.io/Font-Awesome/" target="_blank">Font-Awesome</a> &copy; Dave Gandy</li>
+							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
 					<div class="anchor"><a href="#gototopinfo" title="Back to top">| <i class="fa fa-arrow-up"></i> |</a></div>
@@ -378,7 +380,7 @@
 			<i class="fa fa-spinner fa-pulse fa-stack-1x"></i>
 		</i>
 	</div>
-
+	
 	<!-- JavaScript | site plugins -->
 	<script src="assets/js/leaflet.js"></script>
 	<script src="assets/js/jquery-2.2.4.min.js"></script>
@@ -399,11 +401,11 @@
 	<script src="assets/js/opening_hours+deps.min.js"></script>
 	<script src="assets/js/leaflet-hash.min.js"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/OverPassLayer.js?v3.1.0"></script>
-	<script src="assets/js/tags-parsers.js?v3.1.0"></script>
-	<script src="assets/js/pois-type.js?v3.1.0"></script>
-	<script src="tour/tour.js?v3.1.0"></script>
-	<script src="assets/js/site.js?v3.1.0"></script>
+	<script src="assets/js/OverPassLayer.js?v3.1.1"></script>
+	<script src="assets/js/tags-parsers.js?v3.1.1"></script>
+	<script src="assets/js/pois-type.js?v3.1.1"></script>
+	<script src="tour/tour.js?v3.1.1"></script>
+	<script src="assets/js/site.js?v3.1.1"></script>
 
 	<!-- GoogleAnalytics -->
 	<script>

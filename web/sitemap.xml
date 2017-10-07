@@ -48,4 +48,8 @@
 		<loc>http://bexhill-osm.org.uk/tour/tour10</loc>
 		<changefreq>never</changefreq>
 	</url>
+	<url>
+		<loc>http://bexhill-osm.org.uk/tour/tour11</loc>
+		<changefreq>never</changefreq>
+	</url>
 </urlset>

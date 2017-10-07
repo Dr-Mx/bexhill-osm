@@ -4,7 +4,7 @@ function tour(ti) {
 	clear_map();
 	if ($(window).width() < 768) sidebar.close();
 	// timeout hack to stop iframe breaking on ff
-	setTimeout(function () {
+//	setTimeout(function () {
 		switch (ti) {
 			case 'fossils':
 				var dinoIcon = L.icon({
@@ -22,7 +22,7 @@ function tour(ti) {
 					'The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>' +
 					'One footprint is about 18-inches long.' +
 					'<p><div id="img0" class="popup-imgContainer"><img alt="Loading image..." style="max-width:' + imgSize + 'px; max-height:' + imgSize + 'px;" src="tour/tour01/dinoprint.jpg"><br>' +
-					'<span class="popup-imgAttrib">&copy; Vicky Ballinger</span></div>',
+					'<div class="popup-imgAttrib">&copy; Vicky Ballinger</div></div>',
 				{ maxWidth: imgSize }).openPopup());
 				imgLayer = ti;
 				break;
@@ -84,10 +84,6 @@ function tour(ti) {
 				rQuery = true;
 				show_overpass_layer('way(364593716);');
 				break;
-			case 'ww2Buildings':
-				show_overpass_layer('(node["military"~"."];way["military"~"."];);');
-				imgLayer = ti;
-				break;
 			case 'ww2Bombmap':
 				// bomb radius outline
 				var x = 1;
@@ -141,7 +137,7 @@ function tour(ti) {
 										customOptions.minWidth = imgSize;
 										markerPopup += '<p><div id="img0" class="popup-imgContainer">' +
 											'<img alt="Loading image..." style="max-width:' + imgSize + 'px; max-height:' + imgSize + 'px;" src="tour/tour09/bomb/' + feature.properties.img + '.jpg"><br>' +
-											'<span class="popup-imgAttrib">&copy; Bexhill Observer</span></div>';
+											'<div class="popup-imgAttrib">&copy; Bexhill Observer</div></div>';
 									}
 									layer.bindTooltip(toolTip, { direction: 'left', offset: [-5, 0] });
 									layer.bindPopup(markerPopup, customOptions);
@@ -161,6 +157,10 @@ function tour(ti) {
 						}));
 					}
 				});
+				imgLayer = ti;
+				break;
+			case 'ww2Structures':
+				show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"~"."];way["military"~"."];);');
 				imgLayer = ti;
 				break;
 			case 'northeye':
@@ -188,15 +188,14 @@ function tour(ti) {
 				show_overpass_layer('way(419719683);');
 				break;
 		}
-	}, 50);
+//	}, 50);
 }
 
 // load source frame, highlight and scroll to item
 function source(item) {
-	$('#tourList').val(99);
-	$('#tourList').trigger('change');
+	$('#tourList').val(99).trigger('change');
 	$('#tourFrame').one('load', function () {
-		$(this).contents().find('ol li').eq(item + 2).css('background-color', 'khaki');
-		$(this).contents().scrollTop($(this).contents().find('ol li').eq(item + 2).offset().top - 20);
+		$(this).contents().find('ol:nth(1) > li').eq(item - 1).css('background-color', 'khaki');
+		$(this).contents().scrollTop($(this).contents().find('ol:nth(1) > li').eq(item - 1).offset().top - 20);
 	});
 }

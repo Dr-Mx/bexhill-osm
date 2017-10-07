@@ -191,14 +191,6 @@ var pois = {
 
 	// AMENITIES - 85929e - 7e5109 - 2980b9 - d4ac0d - 45b39d
 
-	wheelchair: {
-		name: 'Wheelchair Access',
-		query: '[wheelchair=yes]',
-		iconName: 'disability',
-		catName: 'Amenities',
-		tagKeyword: ['wheelchair', 'disability']
-	},
-
 	dog: {
 		name: 'Dog Friendly',
 		query: '[dog=yes]',
@@ -431,6 +423,14 @@ var pois = {
 
 	// SERVICES - 2874a6 - a04000 - 1abc9c - af7ac5
 
+	police: {
+		name: 'Emergency',
+		query: '[~"."~"police|fire_station|ambulance_station"]',
+		iconName: 'police2',
+		catName: 'Services',
+		tagKeyword: ['police', 'fire', 'ambulance', 'help', 'emergency']
+	},
+
 	townhall: {
 		name: 'Town-Hall',
 		query: '[amenity=townhall]',
@@ -445,22 +445,6 @@ var pois = {
 		iconName: 'communitycentre',
 		catName: 'Services',
 		tagKeyword: ['community-centre', 'meet', 'events-venue', 'social']
-	},
-
-	police: {
-		name: 'Police',
-		query: '[amenity=police]',
-		iconName: 'police2',
-		catName: 'Services',
-		tagKeyword: ['police', 'help', 'emergency']
-	},
-
-	fire_station: {
-		name: 'Fire-Station',
-		query: '[amenity=fire_station]',
-		iconName: 'firetruck',
-		catName: 'Services',
-		tagKeyword: ['fire', 'help', 'emergency']
 	},
 
 	bank: {
@@ -726,6 +710,14 @@ var pois = {
 		iconName: 'mall',
 		catName: 'Shops',
 		tagKeyword: ['variety', 'pound', '99p', 'supplies', 'toys', 'confectionery']
+	},
+
+	copyshop: {
+		name: 'Printers',
+		query: '["shop"~"copyshop|signs"]',
+		iconName: 'printer-2',
+		catName: 'Shops',
+		tagKeyword: ['copyshop', 'printers', 'signs']
 	},
 
 	stationery: {

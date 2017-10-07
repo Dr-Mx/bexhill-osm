@@ -119,11 +119,11 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		var result = [];
 		for (var x=lidx; x<=ridx; x++) {
 			for (var y=tidx; y<=bidx; y++) {
-				var left = (this.tile2long(x,requestZoomLevel) < mapBounds.lef) ? mapBounds.lef : Math.round(this.tile2long(x,requestZoomLevel)*1000000)/1000000;
-				var bottom = (this.tile2lat(y+1,requestZoomLevel) < mapBounds.bot) ? mapBounds.bot : Math.round(this.tile2lat(y+1,requestZoomLevel)*1000000)/1000000;
-				var right = (this.tile2long(x+1,requestZoomLevel) > mapBounds.rig) ? mapBounds.rig : Math.round(this.tile2long(x+1,requestZoomLevel)*1000000)/1000000;
-				var top = (this.tile2lat(y,requestZoomLevel) > mapBounds.top) ? mapBounds.top : Math.round(this.tile2lat(y,requestZoomLevel)*1000000)/1000000;
-				result.push(new L.LatLngBounds(new L.LatLng(bottom, left), new L.LatLng(top, right)));
+				var west = (this.tile2long(x,requestZoomLevel) < mapBounds.west) ? mapBounds.west : Math.round(this.tile2long(x,requestZoomLevel)*1000000)/1000000;
+				var south = (this.tile2lat(y+1,requestZoomLevel) < mapBounds.south) ? mapBounds.south : Math.round(this.tile2lat(y+1,requestZoomLevel)*1000000)/1000000;
+				var east = (this.tile2long(x+1,requestZoomLevel) > mapBounds.east) ? mapBounds.east : Math.round(this.tile2long(x+1,requestZoomLevel)*1000000)/1000000;
+				var north = (this.tile2lat(y,requestZoomLevel) > mapBounds.north) ? mapBounds.north : Math.round(this.tile2lat(y,requestZoomLevel)*1000000)/1000000;
+				result.push(new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east)));
 			}
 		}
 		return result;
@@ -140,7 +140,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 					this._map.getBounds()._northEast.lat
 				);
 			}
-			else bboxList.push(new L.LatLngBounds(new L.LatLng(mapBounds.bot, mapBounds.lef), new L.LatLng(mapBounds.top, mapBounds.rig)));
+			else bboxList.push(new L.LatLngBounds(new L.LatLng(mapBounds.south, mapBounds.west), new L.LatLng(mapBounds.north, mapBounds.east)));
 			// controls the after/before (Request) callbacks
 			var finishedCount = 0;
 			var queryCount = bboxList.length;

@@ -2,17 +2,18 @@
     "name": "Bexhill-OSM",
     "icons": [
         {
-            "src": "/android-chrome-192x192.png?v=oLaELXy3gr",
+            "src": "/android-chrome-192x192.png?v=almg8BXjdQ",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/android-chrome-512x512.png?v=oLaELXy3gr",
+            "src": "/android-chrome-512x512.png?v=almg8BXjdQ",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
     "theme_color": "#b05000",
     "background_color": "#b05000",
+    "start_url": "http://bexhill-osm.org.uk",
     "display": "standalone"
 }

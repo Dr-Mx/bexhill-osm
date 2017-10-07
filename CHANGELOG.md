@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v3.2.0 - Permalink modal
+
+**Date:** 07/10/2017
+
+Updated js
+ - Control.Geocoder.js 1.5.5
+ - URI.js 1.19.0
+
+Site changes
+ - New modal to share permalink to clipboard in a click
+ - Redesigned favicon
+ - POI results list now shows items facilities
+ - Loop gallery of images within popups
+ - Improve POI tab population code
+ - Add emergency & copyshop/printer POIs
+ - Various other improvements
+
+
 ## v3.1.0 - Multiple images
 
 **Date:** 30/08/2017
