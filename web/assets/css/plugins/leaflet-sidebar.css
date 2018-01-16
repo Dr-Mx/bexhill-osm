@@ -4,17 +4,18 @@
 	bottom: 0;
 	width: 100%;
 	overflow: hidden;
-	z-index: 1100; }
+	z-index: 1100;
+	transition: width 200ms; }
 @media (min-width: 768px) {
 	.sidebar {
 		opacity: 1;
 		top: 10px;
 		bottom: 10px;
 		transition: width 500ms, opacity 250ms; } }
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 768px) and (max-width: 1299px) {
 	.sidebar {
 		width: 350px; } }
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
     .sidebar {
 		width: 450px; } }
 
@@ -46,7 +47,7 @@
 	width: 35px;
 	margin: 0;
 	padding: 0;
-	z-index: 1;
+	z-index: 2;
 	background-color: #ccc; }
 @media (min-width: 768px) {
 	.sidebar-tabs, .sidebar-tabs > ul {
@@ -108,10 +109,10 @@
 	box-sizing: border-box; }
 .sidebar-pane.active {
 	display: block; }
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 768px) and (max-width: 1299px) {
 	.sidebar-pane {
 		min-width: 265px; } }
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
 	.sidebar-pane {
 		min-width: 405px; } }
 
@@ -132,12 +133,14 @@
 	display: flex;
 	align-items: center;
 	height: 100%;
+	min-width: 8px;
 	padding: 0 15px;
-	cursor: pointer; }
+	cursor: pointer;
+	transition: color 200ms; }
 .sidebar-body {
 	position: absolute;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow-y: auto;
 	height: calc(100% - 50px);
 	width: calc(100% - 30px);
 	padding: 0 15px; 
@@ -164,11 +167,11 @@
 	.sidebar-left ~ .sidebar-map .leaflet-left {
 		transition: left 500ms; } }
 
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 768px) and (max-width: 1299px) {
 	.sidebar-left ~ .sidebar-map .leaflet-left {
 		left: 360px; } }
 
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
 	.sidebar-left ~ .sidebar-map .leaflet-left {
 		left: 460px; } }
 

@@ -1,0 +1,359 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Age UK",
+        "osmid": "way(366835724)",
+		"img": "2017/ageuk",
+		"winner": "3rd"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47535, 50.83971]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barby Keel",
+        "osmid": "way(247457244)",
+		"img": "2017/barbykeel",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47455, 50.83991]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Be Flawless",
+        "osmid": "way(385844635)",
+		"img": "2017/beflawless",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47280, 50.83966]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Bexhill Florist",
+        "osmid": "way(366835711)",
+		"img": "2017/bexhillflorist"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47680, 50.83972]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bloomers",
+        "osmid": "way(313485435)",
+		"img": "2017/bloomers"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47285, 50.84017]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Birkdale Nursery",
+        "osmid": "way(392770880)",
+		"img": "2017/birkdale",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.46994, 50.84197]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bexhill Caring Community",
+        "osmid": "way(313634222)",
+		"img": "2017/caringcommunity",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47009, 50.83883]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Deb N Hair",
+        "osmid": "way(392658140)",
+		"img": "2017/debnhair"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.46932, 50.84417]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dorothy Marchant Florists",
+        "osmid": "way(313485467)",
+		"img": "2017/dorothymarchant",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47034, 50.83995]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Emma Hellier",
+        "osmid": "way(313603607)",
+		"img": "2017/emmahellier",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.46974, 50.83919]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bexhill Hearing Centre",
+        "osmid": "way(369824231)",
+		"img": "2017/hearingcentre",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47741, 50.84081]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "In Perspective: Arts and Craft",
+        "osmid": "way(366835713)",
+		"img": "2017/inperspective"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47637, 50.83976]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "JellyBeans Toy Shop",
+        "osmid": "way(313603621)",
+		"img": "2017/jellybeans"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.46983, 50.83876]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "L.J. Collis & Co",
+        "osmid": "way(247457245)",
+		"img": "2017/ljcollis"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47420, 50.83995]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mad Expectations",
+        "osmid": "way(313485446)",
+		"img": "2017/madexpectations"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47196, 50.84010]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Milzar's Florist",
+        "osmid": "way(313634215)",
+		"img": "2017/milzarsflorist",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47001, 50.83923]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mind",
+        "osmid": "way(314484266)",
+		"img": "2017/mind",
+		"winner": "4th"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47419, 50.83799]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mummery",
+        "osmid": "way(314484216)",
+		"img": "2017/mummery",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47390, 50.83926]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Number10",
+        "osmid": "way(468742780)",
+		"img": "2017/number10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47530, 50.84066]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Salvridges",
+        "osmid": "way(385844599)",
+		"img": "2017/salvridges2",
+		"winner": "1st"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47271, 50.83965]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sara Lee Trust",
+        "osmid": "way(313485461)",
+		"img": "2017/saralee",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47079, 50.83999]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Thimble-Inas",
+        "osmid": "way(366835720)",
+		"img": "2017/thimbleinas",
+		"winner": "2nd"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47575, 50.83968]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rush Witt & Wilson",
+        "osmid": "way(247457236)",
+		"img": "2017/rushwittwilson",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47369, 50.84018]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St. Michael's Hospice",
+        "osmid": "way(313688243)",
+		"img": "2017/stmichaelshospice"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47378, 50.83833]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Top Dog Grooming",
+        "osmid": "way(364239800)",
+		"img": "2017/topdoggrooming"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47714, 50.84073]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wards Group",
+        "osmid": "way(314019578)",
+		"img": "2017/wards",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.47365, 50.83900]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The White Feather Card Company",
+        "osmid": "way(313558844)",
+		"img": "2017/whitefeather",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.46911, 50.83984]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wickham Bistro",
+        "osmid": "way(313558845)",
+		"img": "2017/wickhambistro",
+		"winner": "HighlyCommended"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.46920, 50.83985]
+      }
+    }
+  ]
+}

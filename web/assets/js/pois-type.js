@@ -1,7 +1,7 @@
 // all group POIs that show up on tab
-// comments below indicate group and colour-codes of icons, non-specific poi colour - eaecee (for use on mapicons.mapsmarker.com)
+// comments below indicate group and colour-codes of icons, non-specific poi colour - eaecee (all for use on mapicons.mapsmarker.com)
 // array name must be used in query key (e.g. VIEWPOINT: {query: '[tourism=VIEWPOINT]'})
-// specific relations can be used by prefixing the query with 'relation'
+// prefixing the query with 'relation', 'node' or 'way' bypasses the default of node and way
 
 var pois = {
 
@@ -9,7 +9,7 @@ var pois = {
 	
 	attraction: {
 		name: 'Attraction',
-		query: '["name"~"^De La Warr Pavilion$|^Bexhill Museum$|^Egerton Park$|^Murmurations Gallery$|^Manor Gardens$|^Galley Hill Open Space$"]',
+		query: 'way["name"~"^De La Warr Pavilion$|^Bexhill Museum$|^Egerton Park$|^Murmurations Gallery$|^Manor Gardens$|^Galley Hill Open Space$"]',
 		iconName: 'star-3',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'attraction']
@@ -17,7 +17,7 @@ var pois = {
 
 	viewpoint: {
 		name: 'Viewpoint',
-		query: '[tourism=viewpoint]',
+		query: 'node[tourism=viewpoint]',
 		iconName: 'panoramicview',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'viewpoint']
@@ -59,7 +59,7 @@ var pois = {
 
 	historic: {
 		name: 'Historic',
-		query: '["historic"~"."]',
+		query: '["historic"]',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque'],
@@ -68,7 +68,7 @@ var pois = {
 
 	listed_status: {
 		name: 'Heritage-Listed',
-		query: '["HE_ref"~"."]',
+		query: '["HE_ref"]',
 		iconName: 'house',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'listed', 'historic', 'heritage']
@@ -76,7 +76,7 @@ var pois = {
 
 	park: {
 		name: 'Park',
-		query: '["leisure"~"park|common|nature_reserve"]',
+		query: 'way["leisure"~"park|common|nature_reserve"]',
 		iconName: 'urbanpark',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve']
@@ -84,7 +84,7 @@ var pois = {
 
 	recreation_ground: {
 		name: 'Recreation Area',
-		query: '[~"."~"recreation_ground|golf_course"]',
+		query: 'way[~"."~"recreation_ground|golf_course"]',
 		iconName: 'soccer',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'park', 'open-space', 'green']
@@ -100,7 +100,7 @@ var pois = {
 
 	picnic_table: {
 		name: 'Picnic-Table',
-		query: '[leisure=picnic_table]',
+		query: 'node[leisure=picnic_table]',
 		iconName: 'picnic-2',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['picnic']
@@ -111,20 +111,22 @@ var pois = {
 		query: '[amenity=shelter]',
 		iconName: 'shelter',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['picnic', 'rain-shelter']
+		tagKeyword: ['picnic', 'shelter'],
+		tagParser: shelter_parser
 	},
 
 	allotments: {
 		name: 'Allotment',
-		query: '[landuse=allotments]',
+		query: 'way[landuse=allotments]',
 		iconName: 'soil',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['allotment', 'garden']
+		tagKeyword: ['allotment', 'garden'],
+		tagParser: allotment_parser
 	},
 
-	club: {
-		name: 'Organisation Club',
-		query: '[amenity=club]',
+	social_centre: {
+		name: 'Social Club',
+		query: '[amenity=social_centre]',
 		iconName: 'conversation-map-icon',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['organisation', 'social', 'events', 'venue', 'sport', 'club'],
@@ -278,7 +280,7 @@ var pois = {
 
 	atm: {
 		name: 'ATM',
-		query: '[amenity=atm]',
+		query: 'node[amenity=atm]',
 		iconName: 'atm_pound',
 		catName: 'Amenities',
 		tagKeyword: ['ATM', 'bank', 'money', 'cash-point'],
@@ -287,27 +289,29 @@ var pois = {
 
 	telephone: {
 		name: 'Telephone-Box',
-		query: '[amenity=telephone]',
+		query: 'node[amenity=telephone]',
 		iconName: 'telephone',
 		catName: 'Amenities',
-		tagKeyword: ['telephone', 'emergency', 'help']
+		tagKeyword: ['telephone', 'emergency', 'help'],
+		tagParser: telephone_parser
 	},
 
 	post_box: {
 		name: 'Post-Box/Office',
-		query: '[amenity~"post_box|post_office"]',
+		query: 'node[amenity~"post_box|post_office"]',
 		iconName: 'postal',
 		catName: 'Amenities',
 		tagKeyword: ['post', 'letter', 'mail'],
 		tagParser: post_parser
 	},
 
-	drinking_water: {
-		name: 'Drinking-Water',
-		query: '[amenity=drinking_water]',
+	water_tap: {
+		name: 'Water-Tap',
+		query: 'node[man_made=water_tap]',
 		iconName: 'drinkingwater',
 		catName: 'Amenities',
-		tagKeyword: ['drink', 'tap', 'water']
+		tagKeyword: ['drink', 'tap', 'water'],
+		tagParser: tap_parser
 	},
 
 	recycling: {
@@ -321,7 +325,7 @@ var pois = {
 
 	defibrillator: {
 		name: 'Defibrillator',
-		query: '[emergency=defibrillator]',
+		query: 'node[emergency=defibrillator]',
 		iconName: 'aed-2',
 		catName: 'Amenities',
 		tagKeyword: ['defibrillator', 'AED', 'emergency', 'help'],
@@ -330,7 +334,7 @@ var pois = {
 
 	grit_bin: {
 		name: 'Grit-Bin',
-		query: '[amenity=grit_bin]',
+		query: 'node[amenity=grit_bin]',
 		iconName: 'roadtype_gravel',
 		catName: 'Amenities',
 		tagKeyword: ['grit-bin', 'snow']
@@ -338,7 +342,7 @@ var pois = {
 
 	dog_excrement: {
 		name: 'Dog Waste-Bin',
-		query: '[waste=dog_excrement]',
+		query: 'node[waste=dog_excrement]',
 		iconName: 'dogs_waste',
 		catName: 'Amenities',
 		tagKeyword: ['dog', 'poo', 'excrement', 'waste-bin']
@@ -471,15 +475,6 @@ var pois = {
 		tagKeyword: ['job', 'employment']
 	},
 
-	surveillance: {
-		name: 'Surveillance',
-		query: '[~"."~"speed_camera|surveillance"]',
-		iconName: 'cctv',
-		catName: 'Services',
-		tagKeyword: ['surveillance', 'cctv', 'security', 'camera'],
-		tagParser: cctv_parser
-	},
-
 	school: {
 		name: 'Education',
 		query: '["amenity"~"school|college"]',
@@ -551,7 +546,7 @@ var pois = {
 
 	healthcare: {
 		name: 'Healthcare',
-		query: '["healthcare"~"."]',
+		query: '["healthcare"]',
 		iconName: 'medicalstore',
 		catName: 'Services',
 		tagKeyword: ['healthcare', 'medical', 'therapy', 'clinic', 'chiropractic', 'osteopathy'],
@@ -918,7 +913,7 @@ var pois = {
 		query: '[shop=antiques]',
 		iconName: 'gavel-auction-fw',
 		catName: 'Shops',
-		tagKeyword: ['antiques', 'furniture', 'second-hand']
+		tagKeyword: ['antiques', 'furniture', 'second-hand', 'thrift']
 	},
 
 	second_hand: {
@@ -926,7 +921,7 @@ var pois = {
 		query: '[shop=second_hand]',
 		iconName: '2hand',
 		catName: 'Shops',
-		tagKeyword: ['second-hand', 'clothes', 'books', 'toys', 'confectionery', 'furniture', 'crafts']
+		tagKeyword: ['second-hand', 'clothes', 'books', 'toys', 'confectionery', 'furniture', 'crafts', 'thrift', 'bric-a-brac']
 	},
 
 	craft: {
@@ -1015,7 +1010,7 @@ var pois = {
 		query: '[shop=games]',
 		iconName: 'poker',
 		catName: 'Shops',
-		tagKeyword: ['collectables', 'computer-games']
+		tagKeyword: ['collectables', 'games']
 	},
 
 	mobile_phone: {
@@ -1041,5 +1036,35 @@ var pois = {
 		iconName: 'car',
 		catName: 'Shops',
 		tagKeyword: ['car-sales', 'second-hand']
+	},
+	
+	// OTHER
+	
+	construction: {
+		name: 'Construction',
+		query: '[construction]',
+		iconName: 'construction',
+		catName: 'Other',
+		tagKeyword: ['construction'],
+		tagParser: construction_parser
+	},
+
+	surveillance: {
+		name: 'Surveillance',
+		query: 'node[~"."~"speed_camera|surveillance"]',
+		iconName: 'cctv',
+		catName: 'Other',
+		tagKeyword: ['surveillance', 'cctv', 'security', 'camera'],
+		tagParser: cctv_parser
+	},
+
+	// UNLISTED
+	
+	clock: {
+		name: 'Clock',
+		query: 'node[amenity=clock]',
+		iconName: 'clock',
+		tagParser: clock_parser
 	}
+	
 };

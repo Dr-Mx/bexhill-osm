@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## v4.0.0 - Opening hours table
+
+**Date:** 16/01/2018
+
+Updated js
+ - Control.Geocoder.js 1.5.8
+ - leaflet.js 1.3.0
+
+Site changes
+ - Font Awesome 5
+ - Complete week opening_hours table in popups
+ - Extended minimap to new areas
+ - Moved plugins to separate directory
+ - Tooltips are coloured depending on opening_hours state
+ - Customised loading spinner
+ - Move overlay opacity slider to below layers list
+ - Move FHRS ratings to popup header
+ - More dynamic, flexible POI results list
+ - Construction POI
+ - Parsers for allotment, telephone, tap
+ - Adjusted queries to only use specific elements (i.e. node, way) - more efficient for OverPass servers
+ - Xmas related items
+ - Smoother loading of tour iframes
+ - Historic tour article on lost heritage
+ - Various other improvements
+
+
 ## v3.2.0 - Permalink modal
 
 **Date:** 07/10/2017
@@ -252,7 +279,7 @@ Site changes
  - Spinner shows for initial website load
 
 
-## v2.1.0 - Food Hygine Rating Standards API
+## v2.1.0 - Food Hygiene Rating Standards API
 
 **Date:** 21/01/2017
 

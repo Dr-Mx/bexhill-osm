@@ -189,7 +189,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						}
 					}
 					else if (this.status >= 400 && this.status <= 504) {
-						indicatorMsg = '<i class="fa fa-exclamation-triangle fa-fw"></i> ERROR ' + this.status + ': ';
+						indicatorMsg = '<i class="fas fa-exclamation-triangle fa-fw"></i> ERROR ' + this.status + ': ';
 						if (this.status === 400) indicatorMsg += 'Bad Request.<br>Check the URL is correct or contact<br>' + email;
 						else if (this.status === 429) indicatorMsg += 'Too Many Requests.<br>Please try a smaller area';
 						else if (this.status === 504) indicatorMsg += 'Gateway Timeout.<br>Please try again later';

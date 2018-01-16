@@ -32,16 +32,10 @@
 	width: 200px;
 }
 
-.leaflet-control-geocoder-icon:after {
-	content: '\f002';
-	font: normal normal normal 14px/1 FontAwesome;
-	margin-left: -5px;
-}
-
-.leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon:after, .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon {
-    background-image: url('../img/loader.gif');
+.leaflet-control-geocoder-throbber .leaflet-control-geocoder-form {
+    background-image: url('../../img/loader.gif');
+	background-position: right center; 
     background-repeat: no-repeat;
-	content: '';
 }
 
 .leaflet-control-geocoder-form-no-error {
