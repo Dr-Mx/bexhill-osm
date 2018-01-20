@@ -15,7 +15,7 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
    - Cuisine parser (key:cuisine, key:breakfast, key:lunch)
    - Ordering parser (key:takeaway, key:delivery, key:outdoor_searing, key:beer_garden, key:reservation)
    - Building details (key:architect, key:building:architecture, key:start_date, key:HE_ref, key:listed_status)
-   - Current open state with full hours table (key:opening_hours)
+   - Current open state with 7 day opening hours table (key:opening_hours)
    - UK Food Hygiene Rating System API (key:fhrs:id)
    - Multiple image support including Wikimedia Commons API (key:image, key:image_1, key:image_2, etc)
  - Find an address by searching (Nominatim > Overpass)
@@ -26,9 +26,9 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
  - Detailed walking directions with Mapbox API
  - View suggested walking routes
  - Geolocate user and get walking directions from that point
- - Histoic tour articles that link to various overlays on the map
+ - Historic tour articles that link to various overlays on the map
  - Direct link to edit an element on OSM or leave a note
- - Share map layers with permalink
+ - Share current map state with permalink
  - Various settings to adjust map display
  - Debugging tools
 
