@@ -18,6 +18,7 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
    - Current open state with 7 day opening hours table (key:opening_hours)
    - UK Food Hygiene Rating System API (key:fhrs:id)
    - Multiple image support including Wikimedia Commons API (key:image, key:image_1, key:image_2, etc)
+   - 360 spherical panorama support using Wikimedia Commons (key:image:360)
  - Find an address by searching (Nominatim > Overpass)
  - Query a place by clicking on map (Nominatim > Overpass)
  - Selected place on map becomes highlighted (OpenStreetMap API)
