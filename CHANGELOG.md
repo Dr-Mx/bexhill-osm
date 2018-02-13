@@ -5,8 +5,7 @@
 **Date:** 13/02/2018
 
 Updated js
- - Control.Geocoder.js 1.5.8
- - leaflet.js 1.3.0
+ - URI.js 1.19.1
 
 Site changes
  - Support for 360 panoramas [image:360] using wikimedia popup
