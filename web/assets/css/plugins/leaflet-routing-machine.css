@@ -1,5 +1,5 @@
 .leaflet-routing-container, .leaflet-routing-error {
-    width: calc(100% - 20px);
+    width: 100%;
     transition: all 0.2s ease;
     box-sizing: border-box;
 	box-shadow: none;
@@ -149,7 +149,7 @@
 
 .leaflet-routing-reverse-waypoints, .leaflet-routing-add-waypoint {
 	border-bottom: inherit !important;
-	width: 35px !important;
+	width: 30px !important;
 }
 
 .leaflet-routing-geocoders input,.leaflet-routing-remove-waypoint,.leaflet-routing-geocoder {

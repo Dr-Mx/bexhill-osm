@@ -2313,7 +2313,8 @@
       "type": "Feature",
       "properties": {
         "name": "Brassey Road, St Barnabas Vicarage",
-        "date": "1942-05-16"
+        "date": "1942-05-16",
+        "description": "Adjacent church windows destroyed including an original depicting St. Luke called 'Good Physician'."
       },
       "geometry": {
         "type": "Point",

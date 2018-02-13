@@ -31,7 +31,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css">
@@ -40,35 +40,34 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.0.0">
+	<link rel="stylesheet" href="assets/css/site.css?v4.1.0">
  </head>
 
  <body>
-
 	<!-- Loading spinner -->
-	<img id="spinner" src="assets/img/spinner.gif">
+	<img id="spinner" alt="Loading..." src="assets/img/spinner.gif">
 	
  	<!-- Sidebar -->
 	<div id="sidebar" class="sidebar collapsed">
 		<!-- Navigation tabs -->
 		<div class="sidebar-tabs">
 			<ul role="tablist">
-				<li><a href="#home" title="Home" role="tab"><img src="assets/img/sb-home.png"></a></li>
-				<li><a href="#pois" title="Points of Interest" role="tab"><img src="assets/img/sb-pois.png"></a></li>
-				<li><a href="#walking" title="Walking Routes" role="tab"><img src="assets/img/sb-walking.png"></a></li>
-				<li><a href="#tour" title="Historic Tour" role="tab"><img src="assets/img/sb-tour.png"></a></li>
+				<li><a href="#home" title="Home" role="tab"><img alt="Home" src="assets/img/sb-home.png"></a></li>
+				<li><a href="#pois" title="Points of Interest" role="tab"><img alt="Points of Interest" src="assets/img/sb-pois.png"></a></li>
+				<li><a href="#walking" title="Walking Routes" role="tab"><img alt="Walking Routes" src="assets/img/sb-walking.png"></a></li>
+				<li><a href="#tour" title="Historic Tour" role="tab"><img alt="Historic Tour" src="assets/img/sb-tour.png"></a></li>
 			</ul>
 			<ul role="tablist">
-				<li><a href="#settings" title="Settings" role="tab"><img src="assets/img/sb-settings.png"></a></li>
-				<li><a href="#help" title="Help" role="tab"><img src="assets/img/sb-help.png"></a></li>
-				<li><a href="#information" title="Information" role="tab"><img src="assets/img/sb-information.png"></a></li>
+				<li><a href="#settings" title="Settings" role="tab"><img alt="Settings" src="assets/img/sb-settings.png"></a></li>
+				<li><a href="#help" title="Help" role="tab"><img alt="Help" src="assets/img/sb-help.png"></a></li>
+				<li><a href="#information" title="Information" role="tab"><img alt="Information" src="assets/img/sb-information.png"></a></li>
 			</ul>
 		</div>
 		<!-- Tab panes -->
 		<div class="sidebar-content">
 			<!-- Upper tabs -->
 			<div class="sidebar-pane" id="home">
-				<h1 class="sidebar-header"><div class="sidebar-header-text">Bexhill OpenStreetMap</div><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></h1>
+				<div class="sidebar-header"><span class="sidebar-header-text">Bexhill OpenStreetMap</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<h3>Search</h3>
 					<p><input id="autocomplete" class="autocomplete" placeholder="e.g. 'artwork', 'coffee', 'hotel' or 'western road'" title="Enter a keyword, or an address"></p>
@@ -91,36 +90,37 @@
 						</map>
 					</div>
 					<div class="comment">
-						<div id="tips"></div>
+						<span id="tips"></span>
 						<span class="theme navigateItem navigateItemNext"><a title="Random tip" onclick="getTips();"><i class="fas fa-caret-square-right"></i></a></span>
 					</div>
 					<hr>
-					<div id="xmas"></div>
+					<span id="xmas"></span>
 					<p>Bexhill-OSM is a community based, open mapping, passion project. It aims to help people discover a wealth of information on places in and around the seaside town of Bexhill-on-Sea, East Sussex, England.</p>
-					<p>View Help <a onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fas fa-question fa-fw"></i>]</a> for more assistance.
-					<br>Contact details can be found under Information <a onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fas fa-info fa-fw"></i>]</a>.</p>
+					<p>View Help <a style="white-space:nowrap;" onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fas fa-question fa-fw"></i>]</a> for more assistance.
+					<br>Contact details can be found under Information <a style="white-space:nowrap;" onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fas fa-info fa-fw"></i>]</a>.</p>
 					<hr>
-					<div id="feedRss"></div>
+					<span id="feedRss"></span>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="pois">
-				<h1 class="sidebar-header"><div class="sidebar-header-text">Points of Interest</div><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></h1>
+				<div class="sidebar-header"><span class="sidebar-header-text">Points of Interest</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<div class="poi-results">
 						<h3></h3>
-						<button type="button" id="btnPoiResultsClear" class="theme leaflet-bar" title="Clear results" onclick="clear_map();"><i class="fas fa-trash"></i></button>
-						<button type="button" id="btnPoiResultsView" class="theme leaflet-bar" title="Zoom to results" onclick="getMarkerBounds();"><i class="fas fa-eye"></i></button>
+						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map();"><i class="fas fa-trash"></i></button>
+						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="getMarkerBounds();"><i class="fas fa-eye"></i></button>
 						<div class="poi-results-list"></div>
 					</div>
 					<div class="poi-icons">
 						<a id="gototoppois"></a>
-						<p>You can make up to 3 selections at a time.</p>
+						<p>Make up to 3 selections at a time.
+						<label class="switch" title="Filter most popular" style="position:absolute; right:10px;"><input id="inputSimpl" type="checkbox"><span class="slider"></span></label></p>
 						<!-- this list auto-populates using pois-type.js as a reference -->
 					</div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="walking">
-				<h1 class="sidebar-header"><div class="sidebar-header-text">Walking Routes</div><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></h1>
+				<div class="sidebar-header"><span class="sidebar-header-text">Walking Routes</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<h3>Find a walking route</h3>
 					Use the map context-menu, or type an address:
@@ -132,39 +132,16 @@
 					<hr>
 					<h3>Suggested leisure walks</h3>
 					<div id="walkContainer">
-						<p class="walkLink" onclick="suggestWalk('wwh');"><i class="fas fa-compass"></i> Walking the Way to Health (0.7mi / 1km)</p>
-						<div>
-							The route of this walk is marked out by a series of 10 plaques along the promenade. Launched in 2011, it hopes to 
-							encourage people to regularly walk a specific distance along the promenade. Small plinths are placed at ground level 
-							opposite every third beach groyne between numbers 48 and 72. 
-						</div>
-						<p class="walkLink" onclick="suggestWalk('tmt');"><i class="fas fa-compass"></i> The Motor Trail (1.3mi / 2km)</p>
-						<div>
-							In May 1902 Bexhill-on-Sea became “The Birthplace of British Motor Racing”. Follow five seafront Motoring Heritage panels and two galleries 
-							dedicated to the story of those intrepid early motoring pioneers (the 5th panel is situated outside <a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel <i class="theme fas fa-search fa-sm"></i></a>).
-						</div>
-						<p class="walkLink" onclick="suggestWalk('highwoods');"><i class="fas fa-compass"></i> Little Common to Highwoods (1.6mi / 2.6km)</p>
-						<div>
-							Starting at the Wheatsheaf Inn, this walk takes you on a public right-of-way through wood, farmland and down country lanes.
-							You'll pass into Whydown and see the extraordinary early 20th century Gotham Wood House, before arriving at the west corner of ancient Highwoods.
-						</div>
-						<p class="walkLink" onclick="suggestWalk('greenway');"><i class="fas fa-compass"></i> Bexhill to Hastings Greenway (2.6mi / 4.5km)</p>
-						<div>
-							The Greenway runs alongside the Combe Valley Way, providing access for walkers, cyclists and horse riders between Bexhill and Hastings. 
-							It links up with public bridleways and footpaths in the area, including the 1066 Country Walk Bexhill Link, with two sections where horse 
-							riders take an alternative route to walkers and cyclists.
-						</div>
-						<p class="walkLink" onclick="suggestWalk('1066');"><i class="fas fa-compass"></i> 1066 Country Walk (3.0mi / 4.7km)</p>
-						<div>
-							The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time. This is a 
-							section of the Bexhill - Battle link, the full route can be found on <a href="https://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank">waymarkedtrails.org <i class="theme fas fa-external-link-alt fa-sm"></i></a>.
-						</div>
-						<p class="walkLink" onclick="suggestWalk('bc1');"><i class="fas fa-compass"></i> Bexhill Circular (6.3mi / 10.2km)</p>
-						<div>
-							This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient 
-							woodland, reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy 
-							areas. Refreshments and toilets are available at the start point - Bexhill railway station - and towards the end of the walk. 
-						</div>
+						<select id="walkList">
+							<option value = "ww2h">Walking the Way to Health (0.7mi / 1km)</option>
+							<option value = "tmrt">The Motor Trail (1.3mi / 2km)</option>
+							<option value = "hwds">Little Common to Highwoods (1.6mi / 2.6km)</option>
+							<option value = "gnwy">Bexhill to Hastings Greenway (2.6mi / 4.5km)</option>
+							<option value = "1066">1066 Country Walk (3.0mi / 4.7km)</option>
+							<option value = "bcr1">Bexhill Circular (6.3mi / 10.2km)</option>
+						</select>
+						<button type="button" id="walkSelect" title="Show on map"><i class="fas fa-map-marker"></i></button>
+						<div id="walkDesc"></div>
 					</div>
 					<hr>
 					<h3>Other local walking tours</h3>
@@ -174,11 +151,11 @@
 				</div>
 			</div>
 			<div class="sidebar-pane" id="tour">
-				<h1 class="sidebar-header"><div class="sidebar-header-text">Historic Tour</div><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></h1>
+				<div class="sidebar-header"><span class="sidebar-header-text">Historic Tour</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
-					<div class="theme tour-control leaflet-bar">
-						<button type="button" id="tourPrev" class="tour-control" title="Previous"><i class="fas fa-chevron-left"></i></button>
-							<select id="tourList" class="tour-control">
+					<div id="tourControls">
+						<button type="button" id="tourPrev" title="Previous"><i class="fas fa-chevron-left"></i></button>
+							<select id="tourList">
 								<option value = "0">&nbsp;Introduction</option>
 								<option value = "1">&nbsp;&nbsp; 1. Prehistoric Period</option>
 								<option value = "2">&nbsp;&nbsp; 2. The Amsterdam Shipwreck</option>
@@ -195,7 +172,7 @@
 								<option value = "13">&nbsp; 13. Lost Heritage</option>
 								<option value = "99">&nbsp;Sources &amp; further reading</option>
 							</select>
-						<button type="button" id="tourNext" class="tour-control" title="Next"><i class="fas fa-chevron-right"></i></button>
+						<button type="button" id="tourNext" title="Next"><i class="fas fa-chevron-right"></i></button>
 					</div>
 					<div id="tourLoading" class="comment"></div>
 					<iframe id="tourFrame" src="tour/tour00/index.html"></iframe>
@@ -203,18 +180,18 @@
 			</div>
 			<!-- Lower tabs -->
 			<div class="sidebar-pane" id="settings">
-				<h1 class="sidebar-header"><div class="sidebar-header-text">Settings</div><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></h1>
+				<div class="sidebar-header"><span class="sidebar-header-text">Settings</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<h3>Map display options</h3>
-					<label><input id="inputUnit" type="checkbox"> Use kilometres for measurements (metric)</label>
-					<label><input id="inputRange" type="checkbox"> Show POI results only within the viewable area</label>
-					<label><input id="inputImage" type="checkbox"> Don't display images within pop-ups</label>
-					<label><input id="inputOpen" type="checkbox"> Only show currently open POIs</label>
+					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Use kilometres for measurements (metric)</span>
+					<p><label class="switch"><input id="inputRange" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Show POI results only within the viewable area</span>
+					<p><label class="switch"><input id="inputImage" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Don't display images within pop-ups</span>
+					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Only show currently open POIs</span>
 					<hr>
 					<div id="devTools">
 						<h3>Development tools <i style="color:#b05000;" class="fas fa-caret-down fa-fw"></i></h3>
 						<div>
-							<label><input id="inputDebug" type="checkbox"> Debug mode</label><br>
+							<label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Debug mode</span><br><br>
 							OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Introduction" title="Overpass Query Servers" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
 							<select id="inputOpServer">
 								<option selected value="https://overpass-api.de/api/interpreter">overpass-api.de</option>
@@ -231,7 +208,7 @@
 				</div>
 			</div>
 			<div class="sidebar-pane" id="help">
-				<h1 class="sidebar-header"><div class="sidebar-header-text">Help</div><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></h1>
+				<div class="sidebar-header"><span class="sidebar-header-text">Help</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<a id="gototophelp"></a>
 					<p>
@@ -279,8 +256,8 @@
 					<p></p>
 					<a id="gotopoi"></a><hr>
 					<h3>Points of Interest (POI)</h3>
-						To begin displaying POIs, zoom to an area on the map and click up to 3 POI groups. After a few moments 
-						the corresponding items will be displayed. Larger map areas may take longer to load.
+						Select up to 3 POI items to be displayed, after a few moments the corresponding markers will appear on the map.<br>
+						You may also use the top-right switch to filter on the most popular items.
 						<p><img src="assets/img/help-checkboxes.png" alt="Checkbox preview"></p>
 						Results will be displayed as a scrollable list and on the map as markers. The buttons at the top allow you to clear the results, or zoom to their area on the map.<br>
 						Each listed item will have a background colour showing if the place is currently open, its facilities, and distance if location is turned on.
@@ -305,7 +282,7 @@
 				</div>
 			</div>
 			<div class="sidebar-pane" id="information">
-				<h1 class="sidebar-header"><div class="sidebar-header-text">Information</div><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></h1>
+				<div class="sidebar-header"><span class="sidebar-header-text">Information</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<a id="gototopinfo"></a>
 					<p>
@@ -319,7 +296,7 @@
 						<p>Bexhill-OSM is part of a community of mappers that want to create a free, editable map of the world. You can learn about the global project at the official <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap website</a>.</p>
 						<p>This independent website looks to continuously archive Bexhill as it stands today; heralding history, community and business in an informative, accessible form.</p>
 						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we do welcome listings on all public visitable places.</p>
-						<div id="myprofile"><img src="assets/img/me.jpg" title="The man himself">Web-development and the underlying map data are managed by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</div>
+						<span id="myprofile"><img alt="Alexis Markwick" title="Alexis Markwick" src="assets/img/me.jpg">Web-development and the underlying map data are managed by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</span>
 						<p style="padding-left:10px;">
 							<a href="" onclick="this.href='mailto:' + 'info' + '@' + 'bexhill-osm.org.uk';" title="Email"><i class="fas fa-envelope fa-fw"></i> info [at] bexhill-osm.org.uk</a><br>
 							<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fab fa-facebook fa-fw"></i> fb.com/bexhillosm</a><br>
@@ -343,7 +320,7 @@
 						<p>Bexhill-OSM is self-funded in that it is completely advertisement and commercial free. If you so wish, you may support the project using the links below.</p>
 						<p>
 						<table style="text-align:center; width:100%;">
-							<tr><td><a href="http://amzn.eu/cEeSUjc?sort=priority" title="Amazon Wish List" target="_blank"><img src="assets/img/information-amazon.png"><br>My Amazon Wish List</a></td></tr>
+							<tr><td><a href="http://amzn.eu/cEeSUjc?sort=priority" title="Amazon Wish List" target="_blank"><img alt="Amazon Wish List" src="assets/img/information-amazon.png"><br>My Amazon Wish List</a></td></tr>
 							<tr><td><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 								<input type="hidden" name="cmd" value="_s-xclick">
 								<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
@@ -359,7 +336,7 @@
 						<ul>
 							<li><a href="https://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> (founding project) &copy; Manuel Kaufmann</li>
 							<li><a href="http://leafletjs.com/" target="_blank">Leaflet</a> &copy; Vladimir Agafonkin</li>
-							<ul>
+							<li><ul>
 								<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank">sidebar-v2</a> &copy; Tobias Bieniek</li>
 								<li><a href="https://github.com/jfirebaugh/leaflet-osm" target="_blank">leaflet-osm</a> &copy; John Firebaugh</li>
 								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu" target="_blank">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
@@ -371,7 +348,7 @@
 								<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
 								<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
 								<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank">leaflet-hash</a> &copy; Michael L. Evans</li>
-							</ul>
+							</ul></li>
 							<li><a href="https://jquery.com" target="_blank">jQuery</a> &copy; The jQuery Foundation</li>
 							<li><a href="https://github.com/medialize/URI.js" target="_blank">URI.js</a> &copy; Medialize</li>
 							<li><a href="https://github.com/opening-hours/opening_hours.js" target="_blank">opening_hours.js</a> &copy; Robin Schneider</li>
@@ -393,7 +370,7 @@
 	<div id="map" class="sidebar-map"></div>
 
 	<!-- JavaScript | site plugins -->
-	<script src="assets/js/plugins/leaflet.js?v1.3.0"></script>
+	<script src="assets/js/plugins/leaflet.js?v1.3.1"></script>
 	<script src="assets/js/plugins/jquery-2.2.4.min.js"></script>
 	<script src="assets/js/plugins/jquery-ui.min.js?v1.12.1"></script>
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v1.4.5"></script>
@@ -404,7 +381,7 @@
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v1.3.4"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v3.2.5"></script>
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v0.4.0"></script>
-	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.5.6"></script>
+	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.5.8"></script>
 	<script src="assets/js/plugins/Control.Loading.min.js?v0.1.24"></script>
 	<script src="assets/js/plugins/easy-button.min.js?v2.2.4"></script>
 	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.62.0"></script>
@@ -413,11 +390,11 @@
 	<script src="assets/js/plugins/leaflet-hash.min.js?v0.2.1"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/OverPassLayer.js"></script>
-	<script src="assets/js/tags-parsers.js?v4.0.0"></script>
-	<script src="assets/js/pois-type.js?v4.0.0"></script>
+	<script src="assets/js/tags-parsers.js?v4.1.0"></script>
+	<script src="assets/js/pois-type.js?v4.1.0"></script>
 	<script src="assets/xmas/xmas.js"></script>
-	<script src="tour/tour.js?v4.0.0"></script>
-	<script src="assets/js/site.js?v4.0.0"></script>
+	<script src="tour/tour.js?v4.1.0"></script>
+	<script src="assets/js/site.js?v4.1.0"></script>
 
 	<!-- GoogleAnalytics -->
 	<script>

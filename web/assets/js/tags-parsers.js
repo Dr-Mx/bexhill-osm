@@ -222,9 +222,10 @@ function callback(data) {
 						else {
 							name = e.tags.tourism + ' ' + e.tags.information;
 							switch (e.tags.information) {
-								case 'guidepost' : iconName = 'signpost-3'; break;
 								case 'board' : iconName = 'board'; break;
+								case 'guidepost' : iconName = 'signpost-3'; name = e.tags.tourism + ' ' + e.tags.information; break; // [ascii 255] force to bottom of results
 								case 'map' : iconName = 'map'; break;
+								case 'office' : name = ' ' + name; break; // [ascii 32] force to top of results
 							}
 						}
 					}
@@ -279,6 +280,10 @@ function callback(data) {
 				actBaseTileLayer = 'trnsprt';
 				map.addLayer(tileBaseLayers[tileBaseLayer[actBaseTileLayer].name]);
 			}
+		}
+		if (e.tags.boundary) {
+			if (!name) name = e.tags.protection_title;
+			if (!type) type = e.tags.boundary;
 		}
 		if (e.tags.place) {
 			name = e.tags.place;
@@ -371,6 +376,7 @@ function callback(data) {
 				toolTip += ' <i style="color:#777; min-width:17px;" class="fas ';
 				toolTip += (e.tags.image_1) ? 'fa-images' : 'fa-image';
 				toolTip += ' fa-fw"></i>';
+				if (e.tags['image:360']) toolTip += ' <i style="color:#777; min-width:17px;" class="fa fa-street-view fa-fw"></i>';
 			}
 			marker.bindTooltip(toolTip, { direction: 'right', offset: [15, 2], className: 'openColor-' + marker.state });
 		}
@@ -523,7 +529,7 @@ function listed_parser(tags) {
 		var listedStatus = tags.listed_status ? tags.listed_status : tags.HE_ref;
 		tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank">' + listedStatus + '</a>';
 	}
-	if (tag) markerPopup += L.Util.template(tagTmpl, { tag: label + ' details', value: tag, iconName: icon }) + markerPopup;
+	if (tag) markerPopup = L.Util.template(tagTmpl, { tag: label + ' details', value: tag, iconName: icon }) + markerPopup;
 	return markerPopup;
 }
 function facility_parser(tags) {
@@ -744,7 +750,7 @@ function food_parser(tags, titlePopup) {
 		}
 		return markerPopup;
 	};
-	var order_parser = function (tags) {
+	var service_parser = function (tags) {
 		var tag = '', markerPopup = '';
 		if (tags.takeaway === 'yes') tag += 'takeaway, ';
 		else if (tags.takeaway === 'only') tag += 'takeaway only, ';
@@ -754,12 +760,12 @@ function food_parser(tags, titlePopup) {
 		if (tags.reservation === 'yes') tag += 'takes reservation, ';
 		else if (tags.reservation === 'required') tag += 'needs reservation, ';
 		if (tags['url:just-eat']) tag += '<a href="' + tags['url:just-eat'] + '" title="just-eat.com" target="_blank">just-eat</a>, ';
-		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Order options', value: tag.substring(0, tag.length - 2), iconName: 'fas fa-shopping-bag' });
+		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Service', value: tag.substring(0, tag.length - 2), iconName: 'fas fa-shopping-bag' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup, [
 		{callback: cuisine_parser},
-		{callback: order_parser}
+		{callback: service_parser}
 	]);
 }
 function fuelstation_parser(tags, titlePopup) {
@@ -812,7 +818,7 @@ function hotel_parser(tags, titlePopup) {
 		if (tags.cooking) tag += 'self-catering; ';
 		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'fas fa-bed' });
 		// booking.com affiliate link
-		if (tags['url:booking-com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="' + tags['url:booking-com'] + '?aid=1335159&no_rooms=1&group_adults=1" title="booking.com" target="_blank"><img class="popup-imgBooking" src="assets/img/booking-com.png"></a>', iconName: 'fas fa-file' });
+		if (tags['url:booking-com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="' + tags['url:booking-com'] + '?aid=1335159&no_rooms=1&group_adults=1" title="booking.com" target="_blank"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking-com.png"></a>', iconName: 'fas fa-file' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
@@ -1023,13 +1029,14 @@ function opening_hours_parser(tags) {
 		}
 		// create readable table
 		var ohTable = drawTable(oh, new Date());
+		var minWidth = ohTable ? '250px' : '100px';
 		if (tags.opening_hours.indexOf('PH ') === -1) ohTable += '<div class="comment" style="text-align:left; padding-top:5px;">Holiday periods may differ.</div>';
 		// show tag and collapsible accordion
 		if (state === true) openhrsState = [ '#008000', 'Open until' ]; // green
 		else if (state === false) openhrsState = [ '#ff0000', 'Closed until' ]; // red
 		else if (state === 'depends') openhrsState = [ '#808080', 'Depends on' ]; // grey
 		if (openhrsState) {	openhrs =
-			'<div class="popup-ohContainer">' +
+			'<div class="popup-ohContainer" style="min-width:' + minWidth + ';">' +
 				'<span class="popup-tagContainer" title="' + tags.opening_hours.replace(/"/g, '&quot;') + '">' +
 					'<i style="color:' + openhrsState[0] + ';" class="popup-tagIcon popup-openhrsState fas fa-circle fa-fw"></i>' +
 					'<span class="popup-tagValue"><strong>' + openhrsState[1] + ':</strong> ' + strNextChange + '&nbsp; </span>' +
@@ -1066,7 +1073,7 @@ function image_parser(tags) {
 		};
 		displayImage(tags.image, 0, 'inherit');
 		// support up to 5 additional images
-		if (tags.image_1) {
+		if (tags['image:360'] || tags.image_1) {
 			for (x = 1; x <= 5; x++) {
 				if (tags['image_' + x]) {
 					lID = x;
@@ -1074,11 +1081,14 @@ function image_parser(tags) {
 				}
 			}
 			// show navigation controls
-			markerPopup += '<div class="navigateItem">' +
+			markerPopup += '<div class="navigateItem">';
+			if (tags['image:360'] && tags['image:360'].indexOf('File') === 0) markerPopup += 
+				'<a title="360 Panorama" onclick="window.open(&quot;https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(tags['image:360'].split(':')[1]) + '&quot;, &quot;imgWindow&quot;, &quot;width=800, height=600, resizable=yes&quot;)"><i class="fas fa-street-view fa-fw jump"></i></a> ';
+			if (tags.image_1) markerPopup +=
 				'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
 				'<i class="fas fa-image fa-fw" title="1 of ' + parseInt(lID+1) + '"></i>' +
-				'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fas fa-caret-square-right fa-fw"></i></a></span>' +
-			'</div>';
+				'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fas fa-caret-square-right fa-fw"></i></a></span>';
+			markerPopup += '</div>';
 		}
 	}
 	return markerPopup;

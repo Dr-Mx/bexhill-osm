@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v4.1.0 - 360 panoramas
+
+**Date:** 13/02/2018
+
+Updated js
+ - Control.Geocoder.js 1.5.8
+ - leaflet.js 1.3.0
+
+Site changes
+ - Support for 360 panoramas [image:360] using wikimedia popup
+ - Overlay opacity permalink
+ - Group walks with a select list
+ - Change POI table to use inline-block
+ - Option to show only on most popular POI selections
+ - Style checkboxes into switches
+ - Map edit feed now links to OSMCha with a external website warning
+ - Various other improvements
+
+
 ## v4.0.0 - Opening hours table
 
 **Date:** 16/01/2018

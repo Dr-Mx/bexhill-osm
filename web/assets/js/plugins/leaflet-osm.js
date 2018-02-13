@@ -24,11 +24,11 @@ L.OSM.DataLayer = L.FeatureGroup.extend({
 			else {
 				var latLngs = new Array(feature.nodes.length);
 				for (var j = 0; j < feature.nodes.length; j++) { latLngs[j] = feature.nodes[j].latLng; }
-				if (this.isWayArea(feature)) {
+				if (feature.tags.highway) layer = L.polyline(latLngs, this.options.styles.highway);
+				else if (feature.nodes[0].id === feature.nodes[feature.nodes.length - 1].id) {
 					latLngs.pop(); // Remove last == first.
 					layer = L.polygon(latLngs, this.options.styles.area);
 				}
-				else if (feature.tags.highway) layer = L.polyline(latLngs, this.options.styles.highway);
 				else layer = L.polyline(latLngs, this.options.styles.area);
 			}
 			layer.addTo(this);
@@ -50,13 +50,6 @@ L.OSM.DataLayer = L.FeatureGroup.extend({
 		}
 		return features;
 	},
-	isWayArea: function (way) {
-		if (way.nodes[0] != way.nodes[way.nodes.length - 1]) return false;
-		for (var key in way.tags) {
-			if (~this.options.areaTags.indexOf(key)) return true;
-		}
-		return false;
-	},
 	interestingNode: function (node, ways, relations) {
 		var used = false;
 		for (var i = 0; i < ways.length; i++) {
@@ -66,7 +59,7 @@ L.OSM.DataLayer = L.FeatureGroup.extend({
 			}
 		}
 		if (!used) return true;
-		for (var i = 0; i < relations.length; i++) {
+		for (i = 0; i < relations.length; i++) {
 			if (relations[i].members.indexOf(node) >= 0)
 			return true;
 		}

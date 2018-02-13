@@ -216,7 +216,7 @@ function tour(ti) {
 			tourPopup('Marina', [50.83763, 0.47357], 'Marina Court', '1901-1970', '13/marinacourt-air-1920', '<a href="https://britainfromabove.org.uk/en/image/EPW000708" target="_blank">Historic England</a> | 1920', '');
 			tourPopup('Marine', [50.83798, 0.47435], 'Marine Hotel', '1895-1954', '13/robertsmarine-air-1929', '<a href="https://britainfromabove.org.uk/en/image/EPW026226" target="_blank">Historic England</a> | 1929', '');
 			tourPopup('Kursaa', [50.83759, 0.47714], 'Kursaal', '1896-1936', '13/kursaal-air-1926', '<a href="https://britainfromabove.org.uk/en/image/EPW016888" target="_blank">Historic England</a> | 1926', '');
-			tourPopup('Granvi', [50.84027, 0.47750], 'Granville Hotel', '1902-2003', '13/granville-1997', 'Frank Burtenshaw‎ | Brochure, 1997', '');
+			tourPopup('Granvi', [50.84027, 0.47750], 'Granville Hotel', '1902-2003', '13/granville-air-1980', 'Bexhill Museum | c1980', '');
 			tourPopup('Riposo', [50.83968, 0.48395], 'Hotel Riposo', '1901-1961', '13/riposo-air-1929', '<a href="https://britainfromabove.org.uk/en/image/EPW026230" target="_blank">Historic England</a> | 1929', '');
 			tourPopup('Ritzci', [50.84156, 0.47294], 'Ritz Cinema', '1937-1961', '13/ritz-air-1949', '<a href="https://britainfromabove.org.uk/en/image/EAW022974" target="_blank">Historic England</a> | 1949', '');
 			tourPopup('Conval', [50.84404, 0.47902], 'Metropolitan Convalescent Home', '1881-1988', '13/metropolitanconvalescent-air-1980', 'Bexhill Museum | c1980', '');
