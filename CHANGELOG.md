@@ -14,7 +14,7 @@ Site changes
  - Change POI table to use inline-block
  - Option to show only on most popular POI selections
  - Style checkboxes into switches
- - Map edit feed now links to OSMCha with a external website warning
+ - Map edit feed now links to OSMCha with an external website warning
  - Various other improvements
 
 
