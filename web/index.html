@@ -3,8 +3,10 @@
  <head>
 	<title>Bexhill-OSM</title>
 
-	<!-- Display, social network, search index info, disable cache -->
+	<!-- Display, disable cache, social network, search index info -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="application-name" content="Bexhill-OSM">
 	<meta name="description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
@@ -16,8 +18,6 @@
 	<meta property="og:url" content="http://bexhill-osm.org.uk/">
 	<meta property="og:image" content="http://bexhill-osm.org.uk/assets/img/preview.jpg">
 	<meta property="og:description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
-	<meta http-equiv="Cache-Control" content="no-cache">
-	<meta http-equiv="Pragma" content="no-cache">
 
 	<!-- http://realfavicongenerator.net/ -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
@@ -31,7 +31,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css">
@@ -40,11 +40,12 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.1.0">
+	<link rel="stylesheet" href="assets/css/site.css?v4.2.0">
  </head>
 
  <body>
-	<!-- Loading spinner -->
+	<!-- Loading items -->
+	<noscript>Sorry, you need to enable JavaScript to view the map.</noscript>
 	<img id="spinner" alt="Loading..." src="assets/img/spinner.gif">
 	
  	<!-- Sidebar -->
@@ -114,7 +115,7 @@
 					<div class="poi-icons">
 						<a id="gototoppois"></a>
 						<p>Make up to 3 selections at a time.
-						<label class="switch" title="Filter most popular" style="position:absolute; right:10px;"><input id="inputSimpl" type="checkbox"><span class="slider"></span></label></p>
+						<label class="switch" title="Filter most popular" style="position:absolute; right:10px;"><input id="inputHide" type="checkbox"><span class="slider"></span></label></p>
 						<!-- this list auto-populates using pois-type.js as a reference -->
 					</div>
 				</div>
@@ -132,7 +133,7 @@
 					<hr>
 					<h3>Suggested leisure walks</h3>
 					<div id="walkContainer">
-						<select id="walkList">
+						<select id="walkList" class="theme">
 							<option value = "ww2h">Walking the Way to Health (0.7mi / 1km)</option>
 							<option value = "tmrt">The Motor Trail (1.3mi / 2km)</option>
 							<option value = "hwds">Little Common to Highwoods (1.6mi / 2.6km)</option>
@@ -155,7 +156,7 @@
 				<div class="sidebar-body">
 					<div id="tourControls">
 						<button type="button" id="tourPrev" title="Previous"><i class="fas fa-chevron-left"></i></button>
-							<select id="tourList">
+							<select id="tourList" class="theme">
 								<option value = "0">&nbsp;Introduction</option>
 								<option value = "1">&nbsp;&nbsp; 1. Prehistoric Period</option>
 								<option value = "2">&nbsp;&nbsp; 2. The Amsterdam Shipwreck</option>
@@ -170,11 +171,12 @@
 								<option value = "11">&nbsp; 11. Notable People</option>
 								<option value = "12">&nbsp; 12. Street Clocks</option>
 								<option value = "13">&nbsp; 13. Lost Heritage</option>
+								<option value = "14">&nbsp; 14. Boundary Stones</option>
 								<option value = "99">&nbsp;Sources &amp; further reading</option>
 							</select>
 						<button type="button" id="tourNext" title="Next"><i class="fas fa-chevron-right"></i></button>
 					</div>
-					<div id="tourLoading" class="comment"></div>
+					<div id="tourLoading" class="comment">Loading...</div>
 					<iframe id="tourFrame" src="tour/tour00/index.html"></iframe>
 				</div>
 			</div>
@@ -192,6 +194,10 @@
 						<h3>Development tools <i style="color:#b05000;" class="fas fa-caret-down fa-fw"></i></h3>
 						<div>
 							<label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Debug mode</span><br><br>
+							Attic data (date) :<br>
+							<input id="inputAttic" type="date" min="2016-01-01"><br><br>
+							OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" title="Overpass Query Language" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
+							<input id="inputOverpass" placeholder="e.g. [shop=vacant], [dog=no]" title="Enter an OverpassAPI query"><br><br>
 							OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Introduction" title="Overpass Query Servers" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
 							<select id="inputOpServer">
 								<option selected value="https://overpass-api.de/api/interpreter">overpass-api.de</option>
@@ -199,9 +205,6 @@
 								<option value="https://overpass.openstreetmap.fr/api/interpreter">overpass.openstreetmap.fr</option>
 								<option value="https://overpass.kumi.systems/api/interpreter">overpass.kumi.systems</option>
 							</select>
-							<br><br>
-							OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" title="Overpass Query Language" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
-							<input id="inputOverpass" placeholder="e.g. [shop=vacant], [dog=no]" title="Enter an OverpassAPI query">
 						</div>
 					</div>
 					<hr>
@@ -354,9 +357,9 @@
 							<li><a href="https://github.com/opening-hours/opening_hours.js" target="_blank">opening_hours.js</a> &copy; Robin Schneider</li>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
 							<li><a href="https://github.com/davidjbradshaw/image-map-resizer" target="_blank">image-map-resizer</a> &copy; David J. Bradshaw</li>
-							<li><a href="https://github.com/enginkizil/FeedEk" target="_blank">FeedEk jQuery RSS/ATOM Feed</a> &copy; Engin Kizil</li>
+							<li><a href="https://github.com/enginkizil/FeedEk" target="_blank">FeedEk jQuery RSS Feed</a> &copy; Engin Kizil</li>
 							<li><a href="https://mapicons.mapsmarker.com" target="_blank">Map Icons Collection</a> &copy; Nicolas Mollet</li>
-							<li><a href="https://fortawesome.github.io/Font-Awesome/" target="_blank">Font-Awesome</a> &copy; Dave Gandy</li>
+							<li><a href="https://fontawesome.com/" target="_blank">Font Awesome</a> &copy; Dave Gandy</li>
 							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
@@ -371,9 +374,9 @@
 
 	<!-- JavaScript | site plugins -->
 	<script src="assets/js/plugins/leaflet.js?v1.3.1"></script>
-	<script src="assets/js/plugins/jquery-2.2.4.min.js"></script>
+	<script src="assets/js/plugins/jquery-3.3.1.min.js"></script>
 	<script src="assets/js/plugins/jquery-ui.min.js?v1.12.1"></script>
-	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v1.4.5"></script>
+	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v1.5.0a"></script>
 	<script src="assets/js/plugins/leaflet-osm.js?v0.1.0"></script>
 	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.0"></script>
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v1.5.0"></script>
@@ -383,18 +386,18 @@
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v0.4.0"></script>
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.5.8"></script>
 	<script src="assets/js/plugins/Control.Loading.min.js?v0.1.24"></script>
-	<script src="assets/js/plugins/easy-button.min.js?v2.2.4"></script>
+	<script src="assets/js/plugins/easy-button.min.js?v2.3.0"></script>
 	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.62.0"></script>
-	<script src="assets/js/plugins/URI.min.js?v1.19.0"></script>
+	<script src="assets/js/plugins/URI.min.js?v1.19.1"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v0.2.1"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/OverPassLayer.js"></script>
-	<script src="assets/js/tags-parsers.js?v4.1.0"></script>
-	<script src="assets/js/pois-type.js?v4.1.0"></script>
+	<script src="assets/js/tags-parsers.js?v4.2.0"></script>
+	<script src="assets/js/pois-type.js?v4.2.0"></script>
 	<script src="assets/xmas/xmas.js"></script>
-	<script src="tour/tour.js?v4.1.0"></script>
-	<script src="assets/js/site.js?v4.1.0"></script>
+	<script src="tour/tour.js?v4.2.0"></script>
+	<script src="assets/js/site.js?v4.2.0"></script>
 
 	<!-- GoogleAnalytics -->
 	<script>

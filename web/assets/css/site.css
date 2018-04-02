@@ -47,6 +47,7 @@ html, body, #map {
 }
 
 #feedRss {
+	display: none;
 	font-size: 85%;
 	color: #777;
 }
@@ -192,7 +193,18 @@ h3 {
 	line-height: 20px;
 }
 
+noscript {
+	color: white;
+	position: absolute;
+	width: 100%;
+	top: 50px;
+	text-align: center;
+	font-weight: bold;
+}
+
 #spinner {
+	color: white;
+	font-weight: bold;
 	opacity: 0.85;
 	width: 6em;
 	filter: drop-shadow(0px 0px 10px #808080);
@@ -212,6 +224,7 @@ h3 {
 	left: 30px;
 	padding: 15px;
 	font-weight: bold;
+	cursor: default;
 }
 .btnCloseModal {
 	position: absolute;
@@ -235,6 +248,7 @@ h3 {
 	font-weight: inherit;
 	height: 26px;
 	width: 100%;
+	cursor: pointer;
 }
 #btnCopyPermalink:hover {
 	background-color: #f4f4f4;
@@ -242,9 +256,9 @@ h3 {
 #inputOpacity {
 	padding-top: 5px;
 	display: none;
-	opacity: 0.7;
+	opacity: 0.6;
 	width: 150px;
-	height: 23px;
+	min-height: 23px;
 	text-align: center;
 }
 #inputOpacity:hover {
@@ -252,13 +266,14 @@ h3 {
 }
 #inputOpacity input[type=range] {
     -webkit-appearance: none;
-    width: 90%;
-	padding-top: 0px;
+    width: 80%;
+	margin: 0;
+	padding: 0 15px 0 0;
 	border: none;
 }
 #inputOpacity input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
-    height: 5px;
+    height: 10px;
     background: #bbb;
     border: none;
     border-radius: 3px;
@@ -266,8 +281,8 @@ h3 {
 #inputOpacity input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: none;
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     background: #b05000;
     margin-top: -4px;
@@ -281,30 +296,30 @@ h3 {
 }
 #inputOpacity input[type=range]::-moz-range-track {
     width: 100%;
-    height: 5px;
+    height: 10px;
     background: #bbb;
     border: none;
     border-radius: 3px;
 }
 #inputOpacity input[type=range]::-moz-range-thumb {
     border: none;
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     background: #b05000;
 	cursor: e-resize;
 }
-#inputOpacity input[type=range]:-moz-focusring{
+#inputOpacity input[type=range]:-moz-focusring {
     outline: 1px solid white;
     outline-offset: -1px;
 }
 
 #inputOpacity input[type=range]::-ms-track {
     width: 100%;
-    height: 5px;
+    height: 10px;
     background: transparent;
     border-color: transparent;
-    border-width: 6px 0;
+    border-width: 5px 0;
     color: transparent;
 }
 #inputOpacity input[type=range]::-ms-fill-lower {
@@ -317,8 +332,8 @@ h3 {
 }
 #inputOpacity input[type=range]::-ms-thumb {
     border: none;
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     background: #b05000;
 	cursor: e-resize;
@@ -329,6 +344,18 @@ h3 {
 #inputOpacity input[type=range]:focus::-ms-fill-upper {
     background: #ccc;
 }
+#inputOpacity input[type=range]::-ms-tooltip {
+    display: none;
+}
+#inputOpacity .leaflet-popup-close-button {
+	position: absolute;
+	right: 5px;
+	top: 2px;
+	width: 15px;
+	font-weight: bold;
+	font-size: 12pt;
+	cursor: pointer;
+}
 
 .sidebar-body button {
 	color: #b05000;
@@ -337,6 +364,7 @@ h3 {
 	height: 26px;
 	background-color: white;
 	border-radius: 4px;
+	cursor: pointer;
 }
 .sidebar-body button:hover {
 	background-color: #f4f4f4;
@@ -382,6 +410,7 @@ select {
 	border: 2px white solid;
 	border-radius: 4px;
 	height: 26px;
+	cursor: pointer;
 }
 select:hover:enabled, .poi-results button:hover {
 	background-color: #f4f4f4;
@@ -430,8 +459,9 @@ select:hover:enabled, .poi-results button:hover {
 	padding: 0;
 }
 .poi-checkbox {
-	width: 50%;
+	width: calc(50% - 4px);
 	display: inline-block;
+	margin: 2px;
 }
 .poi-checkbox > label {
 	display: inline-block;
@@ -442,8 +472,8 @@ select:hover:enabled, .poi-results button:hover {
 	filter: saturate(70%);
 }
 .poi-checkbox > label:hover {
-	filter: brightness(80%) saturate(100%);
-	background-color: rgba(255, 255, 255);
+	filter: saturate(100%);
+	background-color: rgba(204, 204, 204, 1);
 }
 .poi-checkbox > label > img {
 	float: left;
@@ -457,8 +487,8 @@ select:hover:enabled, .poi-results button:hover {
 	display: inline-block;
 	overflow: hidden;
 	width: calc(100% - 40px);
-	height: 30px;
-	line-height: 30px;
+	height: 28px;
+	line-height: 28px;
 }
 .poi-checkbox > label > input:checked + span {
 	font-weight: bold;
@@ -519,6 +549,13 @@ select:hover:enabled, .poi-results button:hover {
 	width: 100%;
 	border: none;
 }
+#tourLoading {
+	display: none;
+	margin-top: 20px;
+	position: absolute;
+	width: 100%;
+	font-weight: bold;
+}
 #tour .sidebar-body {
 	width: 100%;
 	text-align: center;
@@ -527,9 +564,6 @@ select:hover:enabled, .poi-results button:hover {
 }
 
 /* settings tab */
-#settings label {
-	margin-left: 10px;
-}
 .switch {
 	position: relative;
 	display: inline-block;
@@ -583,9 +617,11 @@ input:checked + .slider:before {
 }
 #inputOverpass, #inputOpServer {
 	width: calc(100% - 100px);
+}
+#inputAttic, #inputOverpass, #inputOpServer {
 	margin: 5px;
 }
-#inputOverpass {
+#inputOverpass, #inputAttic {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	padding: 5px;
@@ -645,7 +681,11 @@ input:checked + .slider:before {
 	transition: all 200ms;
 }
 .leaflet-control-layers-list, .leaflet-popup {
+	cursor: default;
 	font-size: 10pt;
+}
+.leaflet-control-layers label {
+	cursor: pointer;
 }
 .leaflet-popup-content {
 	padding-right: 10px;
@@ -688,6 +728,16 @@ input:checked + .slider:before {
 	padding-right: 10px;
 	width: 100%;
 	vertical-align: bottom;
+	line-height: 25px;
+}
+.popup-fhrs {
+	padding-right: 10px;
+	display: table-cell;
+	line-height: 0;
+}
+.popup-fhrs > a > img {
+	filter: drop-shadow(0 0 2px #808080);
+	white-space: nowrap;
 }
 .popup-tagContainer {
 	display: table;
@@ -753,16 +803,6 @@ input:checked + .slider:before {
 .popup-imgAttrib, .popup-imgAttrib a:link, .popup-imgAttrib a:visited, .popup-imgAttrib a:hover {
 	font-size: 6pt;
 	color: #808080;
-}
-.popup-fhrs, .popup-fhrs > a > img {
-	padding-right: 5px;
-	display: table-cell;
-	vertical-align: middle;
-}
-.popup-fhrs > a > img {
-	height: 20px;
-	filter: drop-shadow(0 0 2px #808080) saturate(50%);
-	white-space: nowrap;
 }
 
 .popup-imgBooking {

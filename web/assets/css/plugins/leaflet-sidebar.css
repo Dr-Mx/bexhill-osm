@@ -4,8 +4,7 @@
 	bottom: 0;
 	width: 100%;
 	overflow: hidden;
-	z-index: 1100;
-	transition: width 200ms; }
+	z-index: 1100; }
 @media (min-width: 768px) {
 	.sidebar {
 		opacity: 1;

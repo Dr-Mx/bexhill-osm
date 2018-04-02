@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v4.2.0 - Attic data
+
+**Date:** 02/04/2018
+
+Updated js
+ - jQuery 3.3.1
+ - jquery.mobile.custom.min.js 1.5.0a
+ - easy-button.min.js 3.0.0
+ 
+Site changes
+ - Larger overlay opacity slider with added close button
+ - Show Overpass 'attic data' for a certain date in development options
+ - Increase map padding area around bounds
+ - Historic tour article on boundary stones
+
+
 ## v4.1.0 - 360 panoramas
 
 **Date:** 13/02/2018

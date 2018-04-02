@@ -26,7 +26,7 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: facility_parser},
 		{callback: payment_parser},
 		{callback: street_parser},
-		{callback: historytrail_parser}
+		{callback: furtherreading_parser}
 	].concat(functions);
 	for (var c = 0; c < functions.length; c++) {
 		var data = functions[c];
@@ -110,6 +110,7 @@ function callback(data) {
 				case 'nightclub' : type = 'bar'; break;
 				case 'parking' : if (e.tags.access !== 'yes') type = undefined; break;
 				case 'post_office' : type = 'post_box'; iconName = 'postoffice'; break;
+				case 'pub' : if (e.tags.microbrewery) name = 'Microbrewery'; break;
 				case 'recycling' :
 					if (e.tags.recycling_type) {
 						name = e.tags.amenity + ' ' + e.tags.recycling_type;
@@ -124,7 +125,6 @@ function callback(data) {
 					break;
 				case 'school' : if (e.tags.name === undefined) type = undefined; break;
 				case 'taxi' : if (!e.tags.building) { name = e.tags.amenity + ' rank'; iconName = 'taxirank'; } break;
-				case 'waste_basket' : if (e.tags.waste === 'dog_excrement') { name = 'Dog Waste-Bin'; type = 'dog_excrement'; } break;
 			}
 		}
 		if (e.tags.highway) {
@@ -296,13 +296,15 @@ function callback(data) {
 			if (poi) iconName = poi.iconName;
 			else if (e.tags.building) {
 				if (e.tags.building === 'house' || e.tags.building === 'bungalow') iconName = 'bighouse';
+				else if (e.tags.building === 'hut') iconName = 'hut';
 				else if (e.tags.building === 'service') iconName = 'powersubstation';
 				else iconName = 'apartment-3';
 			}
 			else iconName = '000blank';
 		}
 		var marker = L.marker(pos, {
-			bounceOnAdd: (!rQuery && !$('#inputDebug').is(':checked')),
+			// do not bounce marker: when single poi, in debug mode, on small devices
+			bounceOnAdd: (!rQuery && !$('#inputDebug').is(':checked') && $(window).width() >= 768),
 			bounceOnAddOptions: {duration: 500, height: 200},
 			icon: L.icon({
 				iconUrl: 'assets/img/icons/' + iconName + '.png',
@@ -388,7 +390,7 @@ function callback(data) {
 			if (a.distance) return (a.distance > b.distance) ? 1 : -1;
 			else return (a._tooltip._content > b._tooltip._content) ? 1 : -1;
 		});
-		$('.poi-results').show('fast');
+		$('.poi-results').slideDown(200);
 		if ($(window).width() < 768) $('#btnPoiResultsClear').show();
 		var poiResultsList = '<table>';
 		for (c = 0; c < poiList.length; c++) {
@@ -426,7 +428,7 @@ function callback(data) {
 	}
 	if (spinner > 0) spinner--;
 	if (spinner === 0) {
-		$('#spinner').fadeOut('fast');
+		$('#spinner').fadeOut(200);
 		$('.poi-checkbox').removeClass('poi-loading');
 	}
 }
@@ -527,7 +529,7 @@ function listed_parser(tags) {
 	}
 	if (tags.HE_ref) {
 		var listedStatus = tags.listed_status ? tags.listed_status : tags.HE_ref;
-		tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank">' + listedStatus + '</a>';
+		tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank">' + listedStatus + '</a>; ';
 	}
 	if (tag) markerPopup = L.Util.template(tagTmpl, { tag: label + ' details', value: tag, iconName: icon }) + markerPopup;
 	return markerPopup;
@@ -589,13 +591,15 @@ function street_parser(tags) {
 	}
 	return markerPopup;
 }
-function historytrail_parser(tags) {
-	var markerPopup = '';
-	var tagHistoryTrail = tags['url:bexhillhistorytrail'];
-	if (tagHistoryTrail) {
-		var link = '<a href="' + tagHistoryTrail + '" title="' + tagHistoryTrail + '" target="_blank">TheBexhillHistoryTrail</a>';
-		markerPopup += L.Util.template(tagTmpl, { tag: 'Futher reading', value: link, iconName: 'fas fa-book' });
+function furtherreading_parser(tags) {
+	var tag = '', markerPopup = '';
+	if (tags['url:bexhillhistorytrail']) {
+		tag += '<a href="' + tags['url:bexhillhistorytrail'] + '" title="The Bexhill History Trail" target="_blank">History Trail</a>; ';
 	}
+	if (tags['ref:thekeep']) {
+		tag += '<a href="http://www.thekeep.info/collections/getrecord/' + tags['ref:thekeep'] + '" title="The Keep record" target="_blank">The Keep</a>; ';
+	}
+	if (tag) markerPopup = L.Util.template(tagTmpl, { tag: 'Futher reading', value: tag, iconName: 'fas fa-book' });
 	return markerPopup;
 }
 
@@ -1083,7 +1087,7 @@ function image_parser(tags) {
 			// show navigation controls
 			markerPopup += '<div class="navigateItem">';
 			if (tags['image:360'] && tags['image:360'].indexOf('File') === 0) markerPopup += 
-				'<a title="360 Panorama" onclick="window.open(&quot;https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(tags['image:360'].split(':')[1]) + '&quot;, &quot;imgWindow&quot;, &quot;width=800, height=600, resizable=yes&quot;)"><i class="fas fa-street-view fa-fw jump"></i></a> ';
+				'<a title="360 Panorama" onclick="window.open(&quot;https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(tags['image:360'].split(':')[1]) + '&quot;, &quot;imgWindow&quot;, &quot;width=800, height=600, resizable=yes&quot;)"><i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
 			if (tags.image_1) markerPopup +=
 				'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
 				'<i class="fas fa-image fa-fw" title="1 of ' + parseInt(lID+1) + '"></i>' +
@@ -1100,7 +1104,7 @@ function navImg(direction) {
 	// get the next image
 	var swapImg = function (nID) {
 		// empty array adds default animation
-		$('.popup-imgContainer').hide([]).filter('.popup-imgContainer#img' + nID).show([]);
+		$('.popup-imgContainer').hide(400).filter('.popup-imgContainer#img' + nID).show(400);
 		getWikiAttrib(nID);
 		$('.navigateItem > .fa-image > title').html(parseInt(nID+1) + ' of ' + parseInt(lID+1));
 	};

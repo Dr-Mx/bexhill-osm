@@ -225,6 +225,10 @@ function tour(ti) {
 			imageOverlay.addTo(map);
 			imgLayer = ti;
 			break;
+		case 'boundary':
+			show_overpass_layer('node[historic=boundary_stone];');
+			imgLayer = ti;
+			break;
 	}}, 50);
 }
 

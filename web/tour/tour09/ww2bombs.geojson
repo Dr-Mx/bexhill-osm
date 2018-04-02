@@ -1826,7 +1826,8 @@
         "description": "Longley Brothers shop and the Bexhill Observer office were destroyed. Today you can see these buildings were never rebuilt to their full height.",
         "img": "57devonshireroad(0)",
         "img_1": "57devonshireroad(1)",
-        "img_2": "57devonshireroad(2)"
+        "img_2": "57devonshireroad(2)",
+        "img_3": "57devonshireroad(3)"
       },
       "geometry": {
         "type": "Point",

@@ -265,7 +265,7 @@ var pois = {
 		query: '[amenity=pub]',
 		iconName: 'bar',
 		catName: 'Amenities',
-		tagKeyword: ['pub', 'drink', 'beer', 'alcohol', 'food', 'snacks'],
+		tagKeyword: ['pub', 'drink', 'beer', 'alcohol', 'food', 'snacks', 'microbrewery'],
 		tagParser: food_parser
 	},
 
@@ -360,15 +360,6 @@ var pois = {
 		iconName: 'roadtype_gravel',
 		catName: 'Amenities',
 		tagKeyword: ['grit-bin', 'snow'],
-		hide: 1
-	},
-
-	dog_excrement: {
-		name: 'Dog Waste-Bin',
-		query: 'node[waste=dog_excrement]',
-		iconName: 'dogs_waste',
-		catName: 'Amenities',
-		tagKeyword: ['dog', 'poo', 'excrement', 'waste-bin'],
 		hide: 1
 	},
 

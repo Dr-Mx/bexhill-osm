@@ -5,59 +5,63 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour00</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=0</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour01</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=1</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour02</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=2</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour03</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=3</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour04</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=4</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour05</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=5</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour06</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=6</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour07</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=7</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour08</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=8</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour09</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=9</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour10</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=10</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour11</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=11</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour12</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=12</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/tour/tour13</loc>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=13</loc>
+		<changefreq>never</changefreq>
+	</url>
+	<url>
+		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=14</loc>
 		<changefreq>never</changefreq>
 	</url>
 </urlset>

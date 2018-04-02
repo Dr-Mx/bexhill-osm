@@ -5,6 +5,8 @@ function show_overpass_layer(query) {
 		console.log('There is nothing selected to filter by.');
 		return;
 	}
+	if ($('#inputAttic').val()) query = '[date:"' + $('#inputAttic').val() + '"];(' + query + ');';
+	else query = ';' + query;
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
 		minzoom: minOpZoom,
@@ -25,6 +27,15 @@ function poiCounter() {
 	if (str === 1) str += ' POI';
 	else str += ' POIs';
 	return str + ' found';
+}
+
+function elementType(e) {
+	e = e.toLowerCase();
+	switch (e) {
+		case 'n' : return 'node';
+		case 'w' : return 'way';
+		case 'r': return 'relation';
+	}
 }
 
 L.Control.MinZoomIndicator = L.Control.extend({
@@ -158,9 +169,9 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						this._requested[x] = {};
 					}
 					this._requested[x][y] = true;
-					queryWithMapCoordinates = '[bbox:' + bbox.toOverpassBBoxString() + '];' + this.options.query;
+					queryWithMapCoordinates = '[bbox:' + bbox.toOverpassBBoxString() + ']' + this.options.query;
 				}
-				else queryWithMapCoordinates = '[bbox:' + bbox.toOverpassBBoxString() + '];' + this.options.query;
+				else queryWithMapCoordinates = '[bbox:' + bbox.toOverpassBBoxString() + ']' + this.options.query;
 				if (this.options.debug) console.debug(queryWithMapCoordinates);
 				var url = this.options.endpoint + '?data=[out:json]' + queryWithMapCoordinates +  '&contact=' + email;
 				// show spinner, disable poi checkboxes
