@@ -12,6 +12,7 @@ Updated js
  
 Site changes
  - Get next bus times from NaPTAN codes on bus-stops using API from Traveline
+ - Images show as thumbnails until hovered or tapped
  - Left single-click now does reverse lookup, with some workarounds to ignore double-clicks
  - Remove some unnecessary css filters causing slowdown
  - Move API keys to config.js file, see config.example.js
