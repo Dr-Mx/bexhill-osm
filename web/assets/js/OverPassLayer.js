@@ -22,22 +22,6 @@ function show_overpass_layer(query) {
 	iconLayer.addLayer(opl);
 }
 
-function poiCounter() {
-	var str = $('.leaflet-marker-icon').length;
-	if (str === 1) str += ' POI';
-	else str += ' POIs';
-	return str + ' found';
-}
-
-function elementType(e) {
-	e = e.toLowerCase();
-	switch (e) {
-		case 'n' : return 'node';
-		case 'w' : return 'way';
-		case 'r': return 'relation';
-	}
-}
-
 L.Control.MinZoomIndicator = L.Control.extend({
 	// map: layerId -> zoomlevel
 	_layers: {},
@@ -86,8 +70,7 @@ L.Control.MinZoomIndicator = L.Control.extend({
 		var minzoomlevel = this._getMinZoomLevel();
 		if (minzoomlevel === -1) $(this._container).html(this.options.minZoomMessageNoLayer);
 		else if (this._map.getZoom() < minzoomlevel) $(this._container).html(this.options.minZoomMessage.replace(/CURRENTZOOM/, this._map.getZoom()).replace(/MINZOOMLEVEL/, minzoomlevel));
-		else if ($('input.poi-checkbox:checked').length > 0) $(this._container).html(poiCounter());
-		if (this._map.getZoom() >= minzoomlevel && $('input.poi-checkbox:checked').length === 0) $(this._container).css('display', 'none');
+		if (this._map.getZoom() >= minzoomlevel) $(this._container).css('display', 'none');
 		else $(this._container).css('display', 'block');
 	},
 	className : 'theme leaflet-control-minZoomIndicator'
@@ -101,6 +84,14 @@ L.LatLngBounds.prototype.toOverpassBBoxString = function (){
 
 L.OverPassLayer = L.FeatureGroup.extend({
 	options: {
+		statusMsg: function(indicatorMsg, errCode) {
+			if (errCode) {
+				$('#spinner').fadeOut(200);
+				indicatorMsg = '<i class="fas fa-exclamation-triangle fa-fw"></i> ERROR ' + errCode + ': ' + indicatorMsg;
+			}
+			$('.leaflet-control-minZoomIndicator').html(indicatorMsg);
+			$('.leaflet-control-minZoomIndicator').css('display', 'block');
+		},
 		beforeRequest: function() {	if (this.options.debug) console.debug('about to query the OverPassAPI'); },
 		afterRequest: function() { if (this.options.debug) console.debug('all queries have finished'); }
 	},
@@ -186,30 +177,29 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				var request = new XMLHttpRequest();
 				var reference = {};
 				request.open('GET', url, true);
+				request.onerror = function() {
+					self.options.statusMsg('Data server not responding. Please try again later.', '0');
+				};
 				request.onload = function() {
-					var indicatorMsg;
 					if (this.status >= 200 && this.status < 400) {
 						reference = {instance: self};
 						self.options.callback.call(reference, JSON.parse(this.response));
 						if (self.options.debug) console.debug('finished ' + (finishedCount + 1) + ' out of ' + queryCount + ' queries');
 						// show number of pois found
-						if ($('input.poi-checkbox:checked').length > 0) indicatorMsg = poiCounter();
 						if (++finishedCount === queryCount) {
 							self.options.afterRequest.call(self);
-							if ($('.leaflet-marker-icon').length === 0 && !rQuery) indicatorMsg = 'No POIs found, try another area';
+							if ($('.leaflet-marker-icon').length === 0 && !rQuery) self.options.statusMsg('No POIs found, try another area or query.');
 						}
 					}
 					else if (this.status >= 400 && this.status <= 504) {
-						indicatorMsg = '<i class="fas fa-exclamation-triangle fa-fw"></i> ERROR ' + this.status + ': ';
-						if (this.status === 400) indicatorMsg += 'Bad Request.<br>Check the URL is correct or contact<br>' + email;
-						else if (this.status === 429) indicatorMsg += 'Too Many Requests.<br>Please try a smaller area';
-						else if (this.status === 504) indicatorMsg += 'Gateway Timeout.<br>Please try again later';
-						else indicatorMsg += 'UNKNOWN ERROR<br>We have no idea what just happened, but something went wrong';
+						var erMsg = 'Something unknown happened. Please try again later.';
+						switch (this.status) {
+							case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
+							case 429: erMsg = 'Too Many Requests. Please try a smaller area.'; break;
+							case 504: erMsg = 'Gateway Timeout. Please try again.'; break;
+						}
+						self.options.statusMsg(erMsg, this.status);
 						self.options.callback.call(reference, {elements: []});
-					}
-					if (indicatorMsg) {
-						$('.leaflet-control-minZoomIndicator').html(indicatorMsg);
-						$('.leaflet-control-minZoomIndicator').css('display', 'block');
 					}
 				};
 				request.send();

@@ -17,6 +17,7 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
    - Building details (key:architect, key:building:architecture, key:start_date, key:HE_ref, key:listed_status)
    - Current open state with 7 day opening hours table (key:opening_hours)
    - UK Food Hygiene Rating System API (key:fhrs:id)
+   - Real-time Traveline API information on bus-stops (key:naptan:AtcoCode)
    - Multiple image support including Wikimedia Commons API (key:image, key:image_1, key:image_2, etc)
    - 360 spherical panorama support using Wikimedia Commons (key:image:360)
  - Find an address by searching (Nominatim > Overpass)

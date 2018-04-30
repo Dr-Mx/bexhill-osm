@@ -17,3 +17,4 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+web/assets/js/config.js

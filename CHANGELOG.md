@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## v4.3.0 - Traveline bus times
+
+**Date:** 30/04/2018
+
+Added js
+ - config.js
+ 
+Updated js
+ - opening_hours+deps.min.js [removed other localisations]
+ 
+Site changes
+ - Get next bus times from NaPTAN codes on bus-stops using API from Traveline
+ - Left single-click now does reverse lookup, with some workarounds to ignore double-clicks
+ - Remove some unnecessary css filters causing slowdown
+ - Move API keys to config.js file, see config.example.js
+ - Add clearer error messages coming from the OverPassAPI
+ - Support for images using [wikipedia_commons]
+ - Added some generic templates for parsing data inside popups
+ - Modified some POI queries to better filter results
+ - Glazier POI
+ - More improvements and fixes
+
+
 ## v4.2.0 - Attic data
 
 **Date:** 02/04/2018

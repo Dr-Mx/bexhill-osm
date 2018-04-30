@@ -24,7 +24,7 @@ var pois = {
 	},
 
 	bus: {
-		name: 'Community Bus',
+		name: 'Bus Routes',
 		query: 'relation[route=bus]',
 		iconName: 'bus',
 		catName: 'Leisure-Tourism',
@@ -34,7 +34,7 @@ var pois = {
 
 	information: {
 		name: 'Information',
-		query: '[tourism=information]',
+		query: '[tourism=information][~"ref|name"~"."]',
 		iconName: 'information',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'information'],
@@ -87,7 +87,7 @@ var pois = {
 
 	recreation_ground: {
 		name: 'Recreation Area',
-		query: 'way[~"."~"recreation_ground|golf_course"]',
+		query: 'way[~"."~"recreation_ground|golf_course"]["access"!~"private"]',
 		iconName: 'soccer',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'park', 'open-space', 'green'],
@@ -96,7 +96,7 @@ var pois = {
 
 	playground: {
 		name: 'Playground',
-		query: '[leisure=playground]',
+		query: '[leisure=playground][name]',
 		iconName: 'playground',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['playground', 'park', 'open-space', 'kids', 'children'],
@@ -153,7 +153,7 @@ var pois = {
 
 	swimming_pool: {
 		name: 'Swimming-Pool',
-		query: '[leisure=swimming_pool]',
+		query: '[leisure=swimming_pool]["access"!~"private"]',
 		iconName: 'swimming2',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['swim', 'leisure', 'sport', 'pool'],
@@ -365,7 +365,7 @@ var pois = {
 
 	parking: {
 		name: 'Car-Parking',
-		query: '[amenity=parking]',
+		query: '[amenity=parking][access=yes]',
 		iconName: 'parking',
 		catName: 'Amenities',
 		tagKeyword: ['car-parking', 'motor'],
@@ -504,7 +504,7 @@ var pois = {
 
 	school: {
 		name: 'Education',
-		query: '["amenity"~"school|college"]',
+		query: '["amenity"~"school|college"][name]',
 		iconName: 'school2',
 		catName: 'Services',
 		tagKeyword: ['school', 'college', 'education'],
@@ -649,7 +649,7 @@ var pois = {
 		hide: 1
 	},
 
-	// SHOPS - 1b4f72 - e74c3c - 117864 - 8e44ad - 52be80 - b9770e
+	// SHOPS - 1b4f72 - e74c3c - 117864 - a06464 - 52be80 - b9770e
 
 	supermarket: {
 		name: 'Supermarket',
@@ -862,6 +862,15 @@ var pois = {
 		tagKeyword: ['curtain', 'blinds', 'windows'],
 		hide: 1
 	},
+	
+	glaziery: {
+		name: 'Glaziery',
+		query: '[shop=glaziery]',
+		iconName: 'glazer',
+		catName: 'Shops',
+		tagKeyword: ['windows', 'glazier'],
+		hide: 1
+	},
 
 	jewelry: {
 		name: 'Jewellery',
@@ -921,7 +930,7 @@ var pois = {
 		query: '[shop=optician]',
 		iconName: 'glasses',
 		catName: 'Shops',
-		tagKeyword: ['optician', 'glasses'],
+		tagKeyword: ['optician', 'glasses', 'spectacles'],
 		hide: 1
 	},
 
@@ -1084,8 +1093,8 @@ var pois = {
 	},
 
 	games: {
-		name: 'Games',
-		query: '[shop=games]',
+		name: 'Games/Collector',
+		query: '["shop"~"games|collector"]',
 		iconName: 'poker',
 		catName: 'Shops',
 		tagKeyword: ['collectables', 'games'],
@@ -1151,11 +1160,17 @@ var pois = {
 
 	// UNLISTED
 	
+	bus_stop: {
+		name: 'Bus Stop',
+		query: '[highway=bus_stop]',
+		tagParser: busstop_parser
+	},
+
 	clock: {
 		name: 'Clock',
 		query: 'node[amenity=clock]',
 		iconName: 'clock',
 		tagParser: clock_parser
 	}
-	
+
 };

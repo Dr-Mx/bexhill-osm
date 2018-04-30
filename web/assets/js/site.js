@@ -1,8 +1,5 @@
 // all main functions for site
 
-// personal api keys
-var mapboxKey = 'pk.eyJ1IjoiZHJteCIsImEiOiJjamN6OTFsYm0zdTZ0MnFuMG01ZHEwcm14In0.TXXlvpeY6QsliyB0a-2SDA';
-var thuforKey = '4fc2613fe5d34ca697a03ea1dc8f0b2b';
 // overpass layer options
 var maxOpResults = 500;
 var minOpZoom = 15;
@@ -56,6 +53,26 @@ $('.sidebar-close').click(function () {	actTab = 'none'; });
 // hide sidebar on smaller devices when minimap clicked
 $('#minimap > map').click(function () { if ($(window).width() < 768) sidebar.close(); });
 
+// ignore map single click (reverse lookup) in some cases
+L.Map.addInitHook(function () {
+	var that = this, h;
+	if (that.on) {
+		that.on('click', check_later);
+		that.on('dblclick', function () { setTimeout(clear_h, 0); } );
+	}
+	function check_later(e) {
+		clear_h();
+		if (!$('.leaflet-marker-icon, .leaflet-control-layers-expanded').length && !imgLayer && !spinner) h = setTimeout(check, 500);
+		function check() { that.fire('singleclick', L.Util.extend(e, { type : 'singleclick' } )); }
+	}
+    function clear_h() {
+		if (h !== null) {
+			clearTimeout(h);
+			h = null;
+		}
+	}
+});
+
 // initialise map
 var areaOutline = [];
 var map = new L.map('map', {
@@ -87,7 +104,7 @@ var map = new L.map('map', {
 	}]
 }).whenReady(function () {
 	// clear loading elements
-	if (spinner === 0) $('#spinner').fadeOut();
+	if (spinner === 0) $('#spinner').fadeOut(200);
 	$('#map').css('background', '#e6e6e6');
 	// sidebar information
 	$('#sidebar').fadeIn();
@@ -130,6 +147,14 @@ var map = new L.map('map', {
 	$('.leaflet-control-geocoder-form').click(function (e) { e.stopPropagation(); });
 	// add delay after load for sidebar to animate open to create minimap
 	setTimeout(function () { $('#minimap > map').imageMapResize(); }, 500);
+}).on('singleclick', function (e) {
+	// reverse lookup
+	if (map.getZoom() >= 15) reverseQuery(e);
+}).on('contextmenu.show', function () {
+	// https://github.com/aratcliffe/Leaflet.contextmenu
+	// show walkHere if user located within map
+	if (lc._active && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14) $('.leaflet-contextmenu-item').eq(1).show();
+	else $('.leaflet-contextmenu-item').eq(1).hide();
 }).on('popupopen', function (e) {
 	// show directions button if user located within map
 	if (lc._active && LBounds.contains(lc._event.latlng)) $('.popup-direct').show();
@@ -156,6 +181,7 @@ var map = new L.map('map', {
 				dataType: 'xml',
 				success: function (xml) {
 					if ($('#inputDebug').is(':checked')) console.debug(xml);
+					map.removeLayer(areaOutline);
 					areaOutline = new L.OSM.DataLayer(xml).addTo(map);
 				}
 			});
@@ -171,12 +197,61 @@ var map = new L.map('map', {
 				dataType: 'json',
 				success: function (result) {
 					$('.popup-fhrs').html(
-						'<a href="http://ratings.food.gov.uk/business/en-GB/' + fhrs + '" title="Food Standards Agency" target="_blank">' +
+						'<a href="http://ratings.food.gov.uk/business/en-GB/' + fhrs + '" title="Food Hygiene Rating" target="_blank">' +
 						'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"></a>'
 					);
+				},
+				error: function (xml, status, error) {
+					$('.popup-fhrs').empty();
+					if ($('#inputDebug').is(':checked')) console.debug('Error fetching fhrs data: ' + status + ' | ' + error); 
 				}
 			});
 		}
+		// nextbus api for showing bus times
+		if ($('.popup-bsTable').length) $.ajax({
+			type: 'POST',
+			url: 'https://cors-anywhere.herokuapp.com/http://nextbus.mxdata.co.uk/nextbuses/1.0/1',
+			dataType: 'xml',
+			data:
+				'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+				'<Siri version="1.0" xmlns="http://www.siri.org.uk/">' +
+				'<ServiceRequest>' +
+					'<RequestTimestamp>' + new Date().toISOString() + '</RequestTimestamp>' +
+					'<RequestorRef>' + BOSM.trvllneApi.u + '</RequestorRef>' +
+					'<StopMonitoringRequest version="1.0">' +
+						'<RequestTimestamp>' + new Date().toISOString() + '</RequestTimestamp>' +
+						'<MessageIdentifier>12345</MessageIdentifier>' +
+						'<MonitoringRef>' + $('.popup-bsTable').attr('naptan-key') + '</MonitoringRef>' +
+					'</StopMonitoringRequest>' +
+				'</ServiceRequest>' +
+				'</Siri>',
+			headers: {
+				Authorization: "Basic " + btoa(BOSM.trvllneApi.u + ':' + BOSM.trvllneApi.p)
+			},
+			contentType: 'text/xml',
+			success: function (xml) {
+				var numResults = $(xml).find('MonitoredVehicleJourney').length;
+				if (numResults) {
+					var maxResults = (numResults < 4) ? numResults : 4;
+					$('.popup-bsTable').empty();
+					for (var c = 0; c < maxResults; c++) {
+						var departTime = $(xml).find('ExpectedDepartureTime').eq(c).text() ? $(xml).find('ExpectedDepartureTime').eq(c).text() : $(xml).find('AimedDepartureTime').eq(c).text();
+						departTime = time_parser((new Date(departTime) - new Date()) / 60000);
+						$('.popup-bsTable').append(
+							'<tr><td>' + $(xml).find('PublishedLineName').eq(c).text() + '</td>' +
+							'<td>' + $(xml).find('DirectionName').eq(c).text() + '</td>' +
+							'<td>' + ((departTime === -1) ? 'Due' : departTime) + '</td></tr>'
+						);
+					}
+				}
+				else $('.popup-bsTable').html('<i>No buses due at this time.</i>');
+			},
+			error: function (xml, status, error) {
+				$('.popup-bsTable').empty();
+				if ($('#inputDebug').is(':checked')) console.debug('Error fetching bus data: ' + status + ' | ' + error); 
+			}
+		});
+
 	}, 200);
 	if ($('.popup-imgContainer').length) {
 		$('.popup-imgContainer')
@@ -203,18 +278,14 @@ var map = new L.map('map', {
 			})
 			.on('error', function () {
 				setTimeout(function () { $('.popup-imgContainer img').attr('alt', 'Error: Image not found'); }, 200);
+			})
+			.on('mouseover touchstart', function () {
+				// grow popup images
+				$('.popup-imgContainer img').css('max-width', '100%').css('max-height', imgSize);
 			});
 	}
 }).on('popupclose', function () {
 	map.removeLayer(areaOutline);
-}).on('contextmenu.show', function () {
-	// https://github.com/aratcliffe/Leaflet.contextmenu
-	// show walkHere if user located within map
-	if (lc._active && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14) $('.leaflet-contextmenu-item').eq(1).show();
-	else $('.leaflet-contextmenu-item').eq(1).hide();
-}).on('mouseup', function (e) {
-	// middle-mouse button reverseQuery on map layer
-	if (e.originalEvent.button === 1 && e.originalEvent.target.id === 'map' && map.getZoom() >= 15) reverseQuery(e);
 }).on('baselayerchange', function (e) {
 	// get layer name on change
 	for (var c in baseTileList.name) {
@@ -478,7 +549,7 @@ var attribution = '&copy; <a href="https://openstreetmap.org/copyright" title="C
 var tileBaseLayer = {
 	bosm: {
 		name: 'Bexhill-OSM',
-		url: 'https://{s}.tiles.mapbox.com/v4/drmx.fa383e0e/{z}/{x}/{y}.png?access_token=' + mapboxKey,
+		url: 'https://{s}.tiles.mapbox.com/v4/drmx.fa383e0e/{z}/{x}/{y}.png?access_token=' + BOSM.mapboxKey,
 		attribution: attribution + ', <a href="https://mapbox.com/" target="_blank">MapBox</a>',
 		maxNativeZoom: 20
 	},
@@ -487,34 +558,27 @@ var tileBaseLayer = {
 		url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 		maxNativeZoom: 19
 	},
-/*	
 	osmuk: {
 		name: 'OpenStreetMap UK',
 		url: 'https://map.atownsend.org.uk/hot/{z}/{x}/{y}.png',
-		maxNativeZoom: 20
-	},
-*/	
-	antique: {
-		name: 'Pirate',
-		url: 'https://{s}.tiles.mapbox.com/v4/lrqdo.me2bng9n/{z}/{x}/{y}.png?access_token=' + mapboxKey,
-		attribution: attribution + ', <a href="https://github.com/ajashton/pirate-map" target="_blank">AJ Ashton</a>',
-		maxNativeZoom: 20
+		attribution: attribution + ', <a href="https://map.atownsend.org.uk/maps/map/map.html" target="_blank">Andy Townsend</a>',
+		maxNativeZoom: 24
 	},
 	cycle: {
 		name: 'OpenCycleMap',
-		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + thuforKey,
+		url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + BOSM.thuforKey,
 		attribution: attribution + ', <a href="https://thunderforest.com/maps/opencyclemap/" target="_blank">ThunderForest</a>',
 		maxNativeZoom: 20
 	},
 	trnsprt: {
 		name: 'Public Transport',
-		url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + thuforKey,
+		url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + BOSM.thuforKey,
 		attribution: attribution + ', <a href="https://thunderforest.com/maps/transport/" target="_blank">ThunderForest</a>',
 		maxNativeZoom: 20
 	},
 	matlas: {
 		name: 'Mobile Atlas',
-		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=' + thuforKey,
+		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=' + BOSM.thuforKey,
 		attribution: attribution + ', <a href="https://thunderforest.com/maps/mobile-atlas/" target="_blank">ThunderForest</a>',
 		maxNativeZoom: 20
 	},
@@ -614,6 +678,14 @@ var tileOverlayLayer = {
 		attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank">NLS Maps API</a>',
 		opacity: 1,
 		maxNativeZoom: 19
+	},
+	arp1942: {
+		name: '1944 Air Raid Precautions',
+		url: 'assets/maptiles/arp1942/{z}/{x}/{y}.png',
+		attribution: '<a href="http://www.bexhillmuseum.co.uk" target="_blank">Bexhill Museum</a>',
+		bounds: L.latLngBounds([50.8292, 0.4157], [50.8713, 0.5098]),
+		opacity: 1,
+		maxNativeZoom: 18
 	},
 /*
 	ob1944: {
@@ -903,7 +975,7 @@ function setRoutingControl(units) {
 		reverseWaypoints: true,
 		routeWhileDragging: false,
 		showAlternatives: false,
-		router: L.Routing.mapbox(mapboxKey, {
+		router: L.Routing.mapbox(BOSM.mapboxKey, {
 			profile: 'mapbox/walking'
 		}),
 		lineOptions: {
@@ -1055,21 +1127,20 @@ $('#devTools').accordion({
 	collapsible: true,
 	active: false
 });
+$('#devTools h3').click(function () {
+	$('#inputAttic, #inputOverpass').val('');
+	if ($(this).attr('aria-expanded') === 'false') $('#inputDebug').prop('checked', false);
+});
 $('#inputDebug').change(function () {
-	if ($(this).is(':checked')) {
-		$('#inputAttic, #inputOverpass, #inputOpServer').prop('disabled', false);
-		map.setMaxBounds();
-	}
-	else {
-		$('#inputAttic, #inputOverpass').val('');
-		$('#inputAttic, #inputOverpass, #inputOpServer').prop('disabled', true);
-		map.setMaxBounds(LBounds.pad(0.5));
-	}
+	if ($(this).is(':checked')) map.setMaxBounds();
+	else map.setMaxBounds(LBounds.pad(0.5));
 });
 $('#inputDebug').trigger('change');
 $('#inputOverpass').keydown(function (e) {
 	if (e.keyCode == $.ui.keyCode.ENTER && $(this).val()) {
 		clear_map();
+		$('#inputDebug').prop('checked', true);
+		if ($(this).val().indexOf('[') !== 0) $(this).val('[' + $(this).val() + ']');
 		show_overpass_layer('(node' + $(this).val() + ';' + 'way' + $(this).val() + ';' + 'relation' + $(this).val() + ';);');
 	}
 });
@@ -1081,7 +1152,7 @@ function clear_map() {
 	$('.poi-icons .poi-checkbox input:checked').prop('checked', false);
 	poi_changed();
 	spinner = 0;
-	$('#spinner').fadeOut(200);
+	$('#spinner').hide();
 	$('.poi-checkbox').removeClass('poi-loading');
 	$('#modalPermalink').hide(200);
 }
@@ -1107,8 +1178,6 @@ function poi_changed(newcheckbox) {
 			show_overpass_layer(query);
 		}
 		else {
-			spinner = 0;
-			$('#spinner').fadeOut(200);
 			$('.poi-results h3').html('Results cleared.');
 			$('.poi-results').css('height', '').slideUp(400);
 		}
@@ -1126,11 +1195,11 @@ $('.poi-icons .poi-checkbox input').change(function () {
 // show random tip
 function getTips() {
 	var tips = [
-		'Areas to the west are currently a work-in-progress.',
 		'Click an area of the minimap to quickly zoom to that location.',
-		'You can zoom-in and middle-click almost any building to see its details.',
+		'You can zoom-in and click almost any building to see its details.',
 		'Find any address by entering part of it into search <i class="fas fa-search fa-sm"></i> and pressing enter.',
 		'Almost street in Bexhill has a history behind its name, search <i class="fas fa-search fa-sm"></i> for a road to learn more.',
+		'Zoom-in and click a bus-stop to see real-time information on bus arrivals.',
 		'Turn on your location to see POIs ordered by distance.',
 		'Choose between miles or kilometres in the <a onclick="switchTab(&quot;settings&quot;);">Settings tab</a>.',
 		'Click <i class="fas fa-trash fa-sm"></i> button to clear all layers from the map, right-clicking resets the map to defaults.',
@@ -1145,7 +1214,7 @@ function getTips() {
 		'Find your closest recycling container and the materials it recycles under <a onclick="switchTab(&quot;pois&quot;, &quot;Amenities&quot;);">Amenities</a>.',
 		'Have a look at the WW2 bomb-map over in the <a onclick="switchTab(&quot;tour&quot;, 9);">Historic Tour</a> section.',
 		'Notice something wrong or missing on the map? Right-click the area and leave a note.',
-		'Over 500 photos, 18,000 buildings + 250 miles of roads/paths within 15 miles&sup2; have been mapped thus far!',
+		'Over 700 photos, 19,000 buildings + 250 miles of roads/paths within 15 miles&sup2; have been mapped thus far!',
 		'The data behind Bexhill-OSM is completely open and free to use for anyone however they wish!',
 		'For a mobile, offline version of this map - give Maps.Me a try.',
 		'Anyone can help with building the map, visit OpenStreetMap.org on how to get started.'

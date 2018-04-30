@@ -177,6 +177,7 @@ h3 {
 	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 	font-size: 10pt;
 	font-weight: bold;
+	max-width: 200px;
 	border-radius: 5px;
 	padding: 10px;
 	z-index: 10;
@@ -207,7 +208,6 @@ noscript {
 	font-weight: bold;
 	opacity: 0.85;
 	width: 6em;
-	filter: drop-shadow(0px 0px 10px #808080);
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -435,13 +435,9 @@ select:hover:enabled, .poi-results button:hover {
 	border-radius: 10px;
 	width: 10px;
 }
-.poi-results-list tr {
-	filter: saturate(70%);
-}
 .poi-results-list tr:hover {
 	background-color: rgba(255, 255, 255, 0.3);
 	cursor: pointer;
-	filter: saturate(100%);
 }
 .poi-icons {
 	height: auto;
@@ -469,10 +465,8 @@ select:hover:enabled, .poi-results button:hover {
 	border-radius: 5px;
 	white-space: nowrap;
 	cursor: pointer;
-	filter: saturate(70%);
 }
 .poi-checkbox > label:hover {
-	filter: saturate(100%);
 	background-color: rgba(204, 204, 204, 1);
 }
 .poi-checkbox > label > img {
@@ -488,14 +482,11 @@ select:hover:enabled, .poi-results button:hover {
 	overflow: hidden;
 	width: calc(100% - 40px);
 	height: 28px;
-	line-height: 28px;
-}
-.poi-checkbox > label > input:checked + span {
-	font-weight: bold;
+	line-height: 30px;
 }
 .poi-checkbox-selected {
 	background-color: rgba(255, 255, 255, 0.6);
-	filter: saturate(100%) !important;
+	font-weight: bold;
 }
 .poi-loading {
 	pointer-events: none;
@@ -507,10 +498,9 @@ select:hover:enabled, .poi-results button:hover {
 	margin: auto;
 	padding: 5px 10px 5px 10px;
 	display: block;
-	filter: saturate(70%);
 }
 #walking a img:hover {
-	filter: brightness(80%) saturate(100%);
+	filter: brightness(80%);
 }
 #walkContainer {
 	padding: 5px;
@@ -736,7 +726,6 @@ input:checked + .slider:before {
 	line-height: 0;
 }
 .popup-fhrs > a > img {
-	filter: drop-shadow(0 0 2px #808080);
 	white-space: nowrap;
 }
 .popup-tagContainer {
@@ -799,6 +788,8 @@ input:checked + .slider:before {
 .popup-imgContainer > img {
 	border: 2px solid #ccc;
 	border-radius: 5px;
+	max-width: 50%;
+	transition: 300ms ease-out;
 }
 .popup-imgAttrib, .popup-imgAttrib a:link, .popup-imgAttrib a:visited, .popup-imgAttrib a:hover {
 	font-size: 6pt;
@@ -809,6 +800,21 @@ input:checked + .slider:before {
 	width: 80px;
 	vertical-align: bottom;
 }
+.popup-bsTable {
+	display: table;
+	border-collapse: collapse;
+	text-align: center;
+	min-width: 250px;
+	width: 100%;
+	margin: 5px 0;
+	font-size: 90%;
+	color: darkslateblue;
+}
+.popup-bsTable tr {	text-align: left; border: 1px solid white; }
+.popup-bsTable tr:nth-child(2n) { background-color: #ccc; }
+.popup-bsTable tr:nth-child(2n+1) {	background-color: #ddd }
+.popup-bsTable td { padding: 2px; }
+.popup-bsTable td:nth-child(3) { white-space: nowrap; text-align: right; }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
 	background-color: rgba(244, 244, 244, 0.95);

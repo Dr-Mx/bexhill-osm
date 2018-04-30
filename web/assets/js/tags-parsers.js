@@ -1,12 +1,7 @@
 // parse tags and marker popup
 
 function parse_tags(element, titlePopup, functions) {
-	var tags = element.tags;
-	var markerPopup = '<div class="popup-header"><h3>' + titlePopup + '</h3>';
-	if (tags.name) markerPopup += '<span class="popup-header-sub">' + tags.name + '</span>';
-	else if (tags.ref) markerPopup += '<span class="popup-header-sub">' + tags.ref + '</span>';
-	if (tags['fhrs:id']) markerPopup += '<span class="popup-fhrs" fhrs-key="' + tags['fhrs:id'] + '"></span>';
-	markerPopup += '</div>';
+	var markerPopup = generic_header_parser(titlePopup, (element.tags.name || element.tags.ref), element.tags['fhrs:id']);
 	functions = [
 		{callback: generic_tag_parser, tag: 'official_name', label: 'Official name'},
 		{callback: generic_tag_parser, tag: 'loc_name', label: 'Local name'},
@@ -32,12 +27,12 @@ function parse_tags(element, titlePopup, functions) {
 		var data = functions[c];
 		if (data.tag && data.label) {
 			var iconName = data.iconName ? data.iconName : 'fas fa-tag';
-			markerPopup += data.callback(tags, data.tag, data.label, iconName);
+			markerPopup += data.callback(element.tags, data.tag, data.label, iconName);
 		}
-		else markerPopup += data.callback(tags);
+		else markerPopup += data.callback(element.tags);
 	}
-	markerPopup += opening_hours_parser(tags);
-	markerPopup += image_parser(tags);
+	markerPopup += opening_hours_parser(element.tags);
+	markerPopup += image_parser(element.tags);
 	markerPopup += popup_buttons(element);
 	return markerPopup;
 }
@@ -104,11 +99,9 @@ function callback(data) {
 					break;
 				case 'clock' : if (e.tags.display) name = e.tags.display + ' ' + e.tags.amenity; type = 'clock'; break;
 				case 'social_centre' : if (e.tags.club) name = e.tags.club + ' club'; break;
-				case 'college' : type = (e.tags.name === undefined) ? undefined : 'school'; break;
 				case 'fire_station' : type = 'police'; iconName = 'firetruck'; break;
 				case 'place_of_worship' : if (e.tags.religion) name = e.tags.religion; break;
 				case 'nightclub' : type = 'bar'; break;
-				case 'parking' : if (e.tags.access !== 'yes') type = undefined; break;
 				case 'post_office' : type = 'post_box'; iconName = 'postoffice'; break;
 				case 'pub' : if (e.tags.microbrewery) name = 'Microbrewery'; break;
 				case 'recycling' :
@@ -123,14 +116,13 @@ function callback(data) {
 					name = e.tags.social_facility;
 					if (e.tags['social_facility:for']) name = e.tags['social_facility:for'] + ' ' + name; 
 					break;
-				case 'school' : if (e.tags.name === undefined) type = undefined; break;
 				case 'taxi' : if (!e.tags.building) { name = e.tags.amenity + ' rank'; iconName = 'taxirank'; } break;
 			}
 		}
 		if (e.tags.highway) {
 			iconName = 'roadtype_tar';
 			switch (e.tags.highway) {
-				case 'bus_stop' : iconName = 'busstop'; break;
+				case 'bus_stop' : iconName = 'busstop'; type = 'bus_stop'; break;
 				case 'footway' :
 				case 'path' :
 				case 'track' :
@@ -171,6 +163,7 @@ function callback(data) {
 				case 'railway_station' : iconName = 'steamtrain'; break;
 				case 'street_lamp' : iconName = 'streetlamp'; break;
 				case 'wreck' : iconName = 'shipwreck'; break;
+				case 'watering_place' : iconName = 'wateringplace'; break;
 			}
 		}
 		if (e.tags.man_made) {
@@ -192,6 +185,7 @@ function callback(data) {
 				case 'kitchen' : type = 'houseware'; break;
 				case 'butcher' : type = 'deli'; iconName = 'butcher-2'; break;
 				case 'boutique' : type = 'clothes'; break;
+				case 'collector' : type = 'games'; break;
 				case 'craft' : if (e.tags.craft) name = e.tags.craft; break;
 				case 'department_store' : type = 'clothes'; iconName = 'departmentstore'; break;
 				case 'e-cigarette' : type = 'tobacco'; break;
@@ -218,15 +212,12 @@ function callback(data) {
 				case 'hotel' : type = 'guest_house'; iconName = 'hotel_0star'; break;
 				case 'information' :
 					if (e.tags.information) {
-						if (!e.tags.name && !e.tags.ref) type = undefined;
-						else {
-							name = e.tags.tourism + ' ' + e.tags.information;
-							switch (e.tags.information) {
-								case 'board' : iconName = 'board'; break;
-								case 'guidepost' : iconName = 'signpost-3'; name = e.tags.tourism + ' ' + e.tags.information; break; // [ascii 255] force to bottom of results
-								case 'map' : iconName = 'map'; break;
-								case 'office' : name = ' ' + name; break; // [ascii 32] force to top of results
-							}
+						name = e.tags.tourism + ' ' + e.tags.information;
+						switch (e.tags.information) {
+							case 'board' : iconName = 'board'; break;
+							case 'guidepost' : iconName = 'signpost-3'; name = e.tags.tourism + ' ' + e.tags.information; break; // [ascii 255] force to bottom of results
+							case 'map' : iconName = 'map'; break;
+							case 'office' : name = ' ' + name; break; // [ascii 32] force to top of results
 						}
 					}
 					break;
@@ -235,9 +226,6 @@ function callback(data) {
 		if (e.tags.landuse) {
 			if (!name) name = e.tags.landuse;
 			if (!type) type = e.tags.landuse;
-			switch (type) {
-				case 'recreation_ground' : if (e.tags.access === 'private') type = undefined; break;
-			}
 		}
 		if (e.tags.leisure) {
 			if (!name) name = e.tags.leisure;
@@ -248,7 +236,6 @@ function callback(data) {
 				case 'fitness_station' : type = 'fitness_centre'; break;
 				case 'garden' : iconName = 'urbanpark'; break;
 				case 'sport' : if (e.tags.sport) name = e.tags.sport + ' ' + e.tags.leisure; break;
-				case 'swimming_pool' : if (e.tags.access === 'private') type = undefined; break;
 				case 'golf_course': type = 'recreation_ground'; iconName = 'golfing'; break;
 			}
 		}
@@ -290,7 +277,7 @@ function callback(data) {
 			iconName = 'smallcity';
 		}
 		// set marker options
-		customOptions.minWidth = e.tags.image ? imgSize : '';
+		customOptions.minWidth = (e.tags.image || e.tags.wikimedia_commons) ? imgSize : '';
 		var poi = pois[type];
 		if (!iconName) {
 			if (poi) iconName = poi.iconName;
@@ -374,7 +361,7 @@ function callback(data) {
 			}
 			else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
 			else if (e.tags.operator) toolTip += '<br><i>' + e.tags.operator + '</i>';
-			if (e.tags.image && !$('#inputImage').is(':checked')) {
+			if ((e.tags.image || e.tags.wikimedia_commons) && !$('#inputImage').is(':checked')) {
 				toolTip += ' <i style="color:#777; min-width:17px;" class="fas ';
 				toolTip += (e.tags.image_1) ? 'fa-images' : 'fa-image';
 				toolTip += ' fa-fw"></i>';
@@ -434,17 +421,47 @@ function callback(data) {
 }
 
 // templates
+function generic_header_parser(header, subheader, fhrs) {
+	var markerPopup = '<div class="popup-header"><h3>' + header + '</h3>';
+	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
+	if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading Food Hygiene Rating" src="assets/img/loader.gif"></span>';
+	return markerPopup + '</div>';
+}
 var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}:</strong> {value}</span></div>';
 function generic_tag_parser(tags, tag, label, iconName) {
 	var markerPopup = '', result;
-	if (tags[tag]) {
-		if (tags[tag] === 'yes') result = '<i class="fas fa-check"></i>';
-		else if (tags[tag] === 'no') result = '<i class="fas fa-times"></i>';
+	// ignore implied access
+	if (tags[tag] && tag === 'access' && tags[tag] === 'yes') return markerPopup;
+	else if (tags[tag]) {
+		if (tags[tag] === 'yes') result = '<i class="fas fa-check fa-fw"></i>';
+		else if (tags[tag] === 'no') result = '<i class="fas fa-times fa-fw"></i>';
 		else if (tag.indexOf('_date') > -1 || tag.indexOf('date_') > -1) result = date_parser(tags[tag], 'long');
 		else result = tags[tag].replace(/;/g, ', ');
 		markerPopup += L.Util.template(tagTmpl, { tag: label, value: result, iconName: iconName });
 	}
 	return markerPopup;
+}
+function generic_img_parser(img, id, display, attrib) {
+	var url = '', imgTmpl = '<div id="img{id}" class="popup-imgContainer" style="display:{display};">' +
+		'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}">';
+	if (img.indexOf('File') === 0) {
+		url = img;
+		attrib = 'Loading attribution...';
+		img = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(img.split(':')[1]) + '&w=' + imgSize;
+	}
+	if (attrib) imgTmpl += '<br><div class="popup-imgAttrib">{attrib}</div></div>';
+	return L.Util.template(imgTmpl, { id: id, display: display, url: url, maxheight: imgSize / 2, img: img, attrib: attrib });
+}
+function show_img_controls(imgMax, img360) {
+	var ctrlTmpl = '<div class="navigateItem">';
+	if (img360 && img360.indexOf('File') === 0) ctrlTmpl +=
+		'<a title="360 Panorama" onclick="nav360(&quot;' + img360 + '&quot;)">' +
+		'<i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
+	if (imgMax > 1) ctrlTmpl +=
+		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
+		'<i class="fas fa-image fa-fw" title="1 of ' + imgMax + '"></i>' +
+		'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fas fa-caret-square-right fa-fw"></i></a></span>';
+	return ctrlTmpl + '</div>';
 }
 function generic_poi_parser(tags, titlePopup) {
 	// used if poi has no parser
@@ -648,13 +665,37 @@ function bikeshop_parser(tags, titlePopup) {
 		{callback: bikeservices_parser}
 	]);
 }
+function busstop_parser(tags, titlePopup) {
+	var facility_parser = function (tags) {
+		var markerPopup = '', tag = '';
+		if (tags.shelter === 'yes') tag += 'shelter, ';
+		if (tags.bench === 'yes') tag += 'bench, ';
+		if (tags.bin === 'yes') tag += 'rubbish bin, ';
+		if (tags.wheelchair === 'yes') tag += 'wheelchair accessible, ';
+		if (tag) {
+			tag = tag.replace(/_/g, '-');
+			tag = tag.substring(0, tag.length - 2);
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Facilities', value: tag, iconName: 'fas fa-info-circle' });
+		}
+		return markerPopup;
+	};
+	var nextbus_parser = function (tags) {
+		var markerPopup = '';
+		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable" naptan-key="' + tags['naptan:AtcoCode'] + '"><img title="Loading next bus times" src="assets/img/loader.gif"></div>';
+		return markerPopup;
+	};
+	return parse_tags(tags, titlePopup,	[
+		{callback: generic_tag_parser, tag: 'ref', label: 'Stop ID', iconName: 'fas fa-bus'},
+		{callback: generic_tag_parser, tag: 'naptan:Street', label: 'Street', iconName: 'fas fa-road'},
+		{callback: generic_tag_parser, tag: 'naptan:Bearing', label: 'Bearing', iconName: 'fas fa-compass'},
+		{callback: facility_parser},
+		{callback: nextbus_parser}
+	]);
+}
 function carpark_parser(tags, titlePopup) {
 	var maxstay_parser = function (tags) {
-		var maxstay = tags.maxstay, markerPopup = '';
-		if (maxstay) {
-			maxstay = (maxstay >= 60) ? maxstay / 60 + ' hour(s)' : maxstay + ' minutes';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Max stay', value: maxstay, iconName: 'fas fa-clock' });
-		}
+		var markerPopup = '';
+		if (tags.maxstay) markerPopup += L.Util.template(tagTmpl, { tag: 'Max stay', value: time_parser(tags.maxstay), iconName: 'fas fa-clock' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup, [
@@ -863,7 +904,7 @@ function post_parser(tags, titlePopup) {
 		{callback: postcypher_parser},
 		{callback: generic_tag_parser, tag: 'post_box:type', label: 'Type', iconName: 'fas fa-archive'},
 		{callback: generic_tag_parser, tag: 'post_box:mounting', label: 'Mounting', iconName: 'fas fa-archive'},
-		{callback: generic_tag_parser, tag: 'ref', label: 'Ref', iconName: 'fas fa-hashtag'},
+		{callback: generic_tag_parser, tag: 'ref', label: 'Reference', iconName: 'fas fa-hashtag'},
 		{callback: generic_tag_parser, tag: 'collection_times', label: 'Collection times', iconName: 'fas fa-clock'}
 	]);
 }
@@ -958,7 +999,6 @@ function opening_hours_parser(tags) {
 		var date = new Date(date_today);
 		date.setDate(date.getDate() - 1);
 		var table = [];
-		function pad(n) { return n < 10 ? '0' + n : n; }
 		for (var row = 0; row < 7; row++) {
 			date.setDate(date.getDate() + 1);
 			var state = oh.getState(date);
@@ -1015,12 +1055,12 @@ function opening_hours_parser(tags) {
 			dateWeek.setDate(new Date().getDate() + 7);
 			// display 'today'
 			if (oh.getNextChange().toLocaleDateString('en-GB') === new Date().toLocaleDateString('en-GB')) {
-				strNextChange = 'Today ' + nextTime;
+				strNextChange = nextTime;
 			}
 			// display 'tomorrow'
 			else if (oh.getNextChange().toLocaleDateString('en-GB') === dateTomorrow.toLocaleDateString('en-GB')) {
-				strNextChange = 'Tomorrow';
-				if (nextTime !== '00:00') strNextChange += ' ' + nextTime;
+				if (nextTime === '00:00') strNextChange = 'Midnight';
+				else strNextChange = 'Tomorrow ' + nextTime;
 			}
 			// display day name if within a week
 			else if (oh.getNextChange().getTime() > dateTomorrow.getTime() && oh.getNextChange().getTime() < dateWeek.getTime()) {
@@ -1060,42 +1100,23 @@ function opening_hours_parser(tags) {
 function image_parser(tags) {
 	// get images
 	var markerPopup = '', lID;
-	if (tags.image && !$('#inputImage').is(':checked')) {
-		var displayImage = function (img, id, display) {
-			markerPopup += '<div id="img' + id + '" class="popup-imgContainer" style="display:' + display + ';">';
-			// check if wikimedia image
-			if (img.indexOf('File') === 0) {
-				var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(img.split(':')[1]) + '&w=' + imgSize;
-				markerPopup += '<img data-url="' + img + '" alt="Loading image..." style="max-height:' + (imgSize - 50) + 'px;" src="' + url + '"><br>' +
-					'<div class="popup-imgAttrib">Loading attribution...</div>';
-			}
-			else if (img.indexOf('http') === 0)
-				markerPopup += '<img alt="Loading image..." style="max-width:' + imgSize + 'px; max-height:' + (imgSize - 50) + 'px; margin-bottom:10px;" src="' + img + '">';
-			else
-				markerPopup += '<img alt="Error: unknown file format">';
-			return markerPopup += '</div>';
-		};
-		displayImage(tags.image, 0, 'inherit');
+	if ((tags.image || tags.wikimedia_commons) && !$('#inputImage').is(':checked')) {
+		markerPopup += generic_img_parser(tags.image || tags.wikimedia_commons, 0, 'inherit');
 		// support up to 5 additional images
 		if (tags['image:360'] || tags.image_1) {
 			for (x = 1; x <= 5; x++) {
 				if (tags['image_' + x]) {
 					lID = x;
-					displayImage(tags['image_' + x], x, 'none');
+					markerPopup += generic_img_parser(tags['image_' + x], x, 'none');
 				}
 			}
-			// show navigation controls
-			markerPopup += '<div class="navigateItem">';
-			if (tags['image:360'] && tags['image:360'].indexOf('File') === 0) markerPopup += 
-				'<a title="360 Panorama" onclick="window.open(&quot;https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(tags['image:360'].split(':')[1]) + '&quot;, &quot;imgWindow&quot;, &quot;width=800, height=600, resizable=yes&quot;)"><i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
-			if (tags.image_1) markerPopup +=
-				'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
-				'<i class="fas fa-image fa-fw" title="1 of ' + parseInt(lID+1) + '"></i>' +
-				'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fas fa-caret-square-right fa-fw"></i></a></span>';
-			markerPopup += '</div>';
+			markerPopup += show_img_controls(parseInt(lID+1), tags['image:360']);
 		}
 	}
 	return markerPopup;
+}
+function nav360(img) {
+	window.open('https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img.split(':')[1]), 'imgWindow', 'width=800, height=600, resizable=yes');
 }
 function navImg(direction) {
 	// get the current and last image
@@ -1181,4 +1202,23 @@ function date_parser(dtStr, style) {
 	}
 	if (dt === 'Invalid Date' || dt === undefined) dt = dtStr;
 	return dt + tm;
+}
+function time_parser(tmStr) {
+	// convert to hours and minutes
+	tmStr = Math.round(tmStr);
+	var m = tmStr % 60;
+	var h = (tmStr - m) / 60;
+	if (h < 1 && m < 1) return -1;
+	return (h) ? pad(h) + ':' + pad(m) + ' h:m' : m + ' m';
+}
+function pad(n) {
+	// pad single number
+	return n < 10 ? '0' + n : n;
+}
+function elementType(e) {
+	switch (e.toLowerCase()) {
+		case 'n' : return 'node';
+		case 'w' : return 'way';
+		case 'r': return 'relation';
+	}
 }

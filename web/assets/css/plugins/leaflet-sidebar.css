@@ -4,18 +4,19 @@
 	bottom: 0;
 	width: 100%;
 	overflow: hidden;
-	z-index: 1100; }
+	z-index: 1100;
+	transition: width 300ms ease-out; }
 @media (min-width: 768px) {
 	.sidebar {
 		opacity: 1;
 		top: 10px;
 		bottom: 10px;
-		transition: width 500ms, opacity 250ms; } }
+		transition: width 400ms ease-out, opacity 250ms; } }
 @media (min-width: 768px) and (max-width: 1299px) {
 	.sidebar {
 		width: 350px; } }
 @media (min-width: 1300px) {
-    .sidebar {
+	.sidebar {
 		width: 450px; } }
 
 .sidebar.collapsed {
@@ -32,7 +33,7 @@
 .sidebar-left {
 	left: 0; }
 @media (min-width: 768px) {
-    .sidebar-left {
+	.sidebar-left {
 		left: 10px; } }
 
 .sidebar-tabs {
@@ -50,7 +51,8 @@
 	z-index: 2;
 	background-color: #ccc; }
 .sidebar-tabs img {
-	width: 30px; }
+	width: 30px;
+	padding: 10px 0; }
 @media (min-width: 768px) {
 	.sidebar-tabs, .sidebar-tabs > ul {
 		width: 40px; } }
@@ -58,6 +60,7 @@
 	.sidebar-tabs > ul:last-child > li:nth-child(n+2) {
 		display: none; } }
 .sidebar-tabs > li, .sidebar-tabs > ul > li {
+	text-align: center;
 	width: 100%;
 	height: 50px;
 	overflow: hidden;
@@ -76,9 +79,6 @@
 .sidebar-tabs > li.disabled > a, .sidebar-tabs > ul > li.disabled > a {
 	cursor: default; }
 .sidebar-tabs > li > a, .sidebar-tabs > ul > li > a {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	height: 100%;
 	color: inherit;
 	font-size: 11pt; }
@@ -117,22 +117,20 @@
 		min-width: 405px; } }
 
 .sidebar-header {
-	display: flex;
-	align-items: center;
 	height: 100%;
 	overflow: hidden;
 	white-space: nowrap;
 	margin: 0;
 	font: normal 16pt BerlinSans, "Helvetica Neue", Arial, Helvetica, sans-serif;
 	color: #fff;
-	background-color: #b05000; }
+	background-color: #b05000;
+	line-height: 50px; }
 .sidebar-header-text {
 	width: 100%;
 	padding: 0 15px; }
 .sidebar-close {
-	display: flex;
-	align-items: center;
-	height: 100%;
+	position: absolute;
+	right: 0;
 	min-width: 8px;
 	padding: 0 15px;
 	cursor: pointer;
@@ -165,7 +163,7 @@
 
 @media (min-width: 768px) {
 	.sidebar-left ~ .sidebar-map .leaflet-left {
-		transition: left 500ms; } }
+		transition: left 400ms ease-out; } }
 
 @media (min-width: 768px) and (max-width: 1299px) {
 	.sidebar-left ~ .sidebar-map .leaflet-left {

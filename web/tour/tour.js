@@ -3,12 +3,10 @@ var imgLayer;
 function tour(ti) {
 	clear_map();
 	if ($(window).width() < 768) sidebar.close();
-	var tourPopup = function (name, pos, header, headerSub, img, imgCredit, markerPopup) {
+	var tourPopup = function (name, pos, header, headerSub, img, imgAttrib, markerPopup) {
 		var marker = L.circleMarker(pos, { interactive: true, radius: 15, weight: 2, color: '#b05000', opacity: 0.8, fillColor: '#fff', fillOpacity: 0.5 })
 			.bindPopup(
-				'<div class="popup-header"><h3>' + header + '</h3><span class="popup-header-sub">' + headerSub + '</span></div>' + markerPopup +
-				'<div id="img0" class="popup-imgContainer"><img alt="Loading image..." style="max-width:' + imgSize + 'px; max-height:' + imgSize + 'px;" src="tour/tour' + img + '.jpg"><br>' +
-				'<div class="popup-imgAttrib">&copy; ' + imgCredit + '</div></div>',
+				generic_header_parser(header, headerSub) + markerPopup + generic_img_parser('tour/tour' + img + '.jpg', 0, 'inherit', imgAttrib),
 				{ minWidth: imgSize, maxWidth: imgSize }
 			)
 			.bindTooltip('<b>' + header + '</b><br><i>' + headerSub + '</i>', { direction: 'right' });
@@ -21,11 +19,11 @@ function tour(ti) {
 			xmasShops();
 			break;
 		case 'fossils':
-			tourPopup(ti, [50.837617, 0.482517], 'Fossils', 'Iguanadon Tracks', '01/dinoprint', 'Vicky Ballinger',
-				'<span class="comment">50°50&#39;15.4"N 0°28&#39;57.1"E</span><br>' +
+			tourPopup(ti, [50.837617, 0.482517], 'Fossils', 'Iguanadon Tracks', '01/dinoprint', '',
+				'<span class="comment">50.83761°N 0.4825°E</span><br>' +
 				'View at low tide. Walk directly out onto the beach infront of Sackville Apartments. ' +
 				'The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>' +
-				'One footprint is about 18-inches long.<p>'
+				'One footprint is about 18-inches long.'
 			);
 			imageOverlay.addTo(map)._layers[ti].openPopup();
 			imgLayer = ti;
@@ -121,7 +119,7 @@ function tour(ti) {
 							if (feature.properties.name) {
 								var customOptions = {}, toolTip = '', markerPopup = '';
 								customOptions.maxWidth = imgSize;
-								markerPopup += '<div class="popup-header"><h3>' + feature.properties.name + '</h3></div>' +
+								markerPopup += generic_header_parser(feature.properties.name) +
 									L.Util.template(tagTmpl, { tag: 'Date', value: date_parser(feature.properties.date, 'long'), iconName: 'fas fa-calendar-alt' });
 								toolTip += '<b>' + feature.properties.name + '</b><br><i>' + date_parser(feature.properties.date, 'short') + '</i>';
 								if (feature.properties.description) {
@@ -130,26 +128,16 @@ function tour(ti) {
 								}
 								if (feature.properties.img) {
 									customOptions.minWidth = imgSize;
-									var imgAttrib = feature.properties.imgattrib ? feature.properties.imgattrib : "Bexhill Observer";
-									var displayImage = function (img, id, display) {
-										return markerPopup += '<div id="img' + id + '" class="popup-imgContainer" style="display:' + display + ';">' +
-											'<img alt="Loading image..." style="max-width:' + imgSize + 'px; max-height:' + (imgSize - 50) + 'px;" src="tour/tour09/bomb/' + img + '.jpg"><br>' +
-											'<div class="popup-imgAttrib">&copy; ' + imgAttrib + '</div></div>';
-									};
-									displayImage(feature.properties.img, 0, 'inherit');
+									var imgAttrib = feature.properties.imgattrib ? feature.properties.imgattrib : 'Bexhill Observer';
+									markerPopup += generic_img_parser('tour/tour09/bomb/' + feature.properties.img + '.jpg', 0, 'inherit', imgAttrib);
 									if (feature.properties.img_1) {
 										for (x = 1; x <= 5; x++) {
 											if (feature.properties['img_' + x]) {
 												lID = x;
-												displayImage(feature.properties['img_' + x], x, 'none');
+												markerPopup += generic_img_parser('tour/tour09/bomb/' + feature.properties['img_' + x] + '.jpg', x, 'none', imgAttrib);
 											}
 										}
-										// show navigation controls
-										markerPopup += '<div class="navigateItem">' +
-											'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
-											'<i class="fas fa-image fa-fw" title="1 of ' + parseInt(lID+1) + '"></i>' +
-											'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fas fa-caret-square-right fa-fw"></i></a></span>' +
-											'</div>';
+										markerPopup += show_img_controls(parseInt(lID+1));
 										toolTip += ' <i style="color:#808080;" class="fas fa-images fa-fw"></i>';
 									}
 									else toolTip += ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>';

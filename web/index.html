@@ -31,7 +31,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css">
@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.2.0">
+	<link rel="stylesheet" href="assets/css/site.css?v4.2.4">
  </head>
 
  <body>
@@ -197,7 +197,7 @@
 							Attic data (date) :<br>
 							<input id="inputAttic" type="date" min="2016-01-01"><br><br>
 							OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" title="Overpass Query Language" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
-							<input id="inputOverpass" placeholder="e.g. [shop=vacant], [dog=no]" title="Enter an OverpassAPI query"><br><br>
+							<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme]" title="Enter an OverpassAPI query"><br><br>
 							OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Introduction" title="Overpass Query Servers" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
 							<select id="inputOpServer">
 								<option selected value="https://overpass-api.de/api/interpreter">overpass-api.de</option>
@@ -237,12 +237,12 @@
 						<i class="theme fas fa-location-arrow fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map. You may click on the blue location marker to see what POIs are around you.<br><br>
 						<i class="theme fas fa-search fa-fw"></i> Address search: Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
 						<i class="theme fas fa-trash fa-fw"></i> Clear map: Remove all current layers on the map. Right-click / long press will reload the website to defaults.<br><br>
-						Various map styles and historic overlays can be displayed using the layer selector - located at the top-right of the page.
+						Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the page.
 						<p><img src="assets/img/help-controls.png" alt="Map controls preview"></p>
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
-						<i class="fas fa-search fa-fw"></i> Query area/street/place: Display information on an item under the cursor depending on zoom level (middle-clicking the map also performs the same function).<br><br>
+						<i class="fas fa-search fa-fw"></i> Query area/street/place: Display information on an item under the cursor depending on zoom level (single-clicking the map also performs the same function).<br><br>
 						<i class="fas fa-location-arrow fa-fw"></i> Walk to here: Create a route to this location. Locate needs to be turned on.<br><br>
 						<i class="far fa-compass fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
 						<i class="fas fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
@@ -392,21 +392,13 @@
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v0.2.1"></script>
 	<!-- JavaScript | site code -->
+	<script src="assets/js/config.js"></script>
 	<script src="assets/js/OverPassLayer.js"></script>
-	<script src="assets/js/tags-parsers.js?v4.2.0"></script>
-	<script src="assets/js/pois-type.js?v4.2.0"></script>
+	<script src="assets/js/tags-parsers.js?v4.2.4"></script>
+	<script src="assets/js/pois-type.js?v4.2.4"></script>
 	<script src="assets/xmas/xmas.js"></script>
-	<script src="tour/tour.js?v4.2.0"></script>
-	<script src="assets/js/site.js?v4.2.0"></script>
+	<script src="tour/tour.js?v4.2.4"></script>
+	<script src="assets/js/site.js?v4.2.4"></script>
 
-	<!-- GoogleAnalytics -->
-	<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		ga('create', 'UA-79665109-1', 'auto');
-		ga('send', 'pageview');
-	</script>
  </body>
 </html>
