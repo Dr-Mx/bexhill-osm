@@ -1,5 +1,6 @@
 maptiles/
 2017/
+web/assets/js/config.js
 
 #############
 ## Windows detritus
@@ -17,4 +18,3 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
-web/assets/js/config.js

@@ -5,13 +5,13 @@ function show_overpass_layer(query) {
 		console.log('There is nothing selected to filter by.');
 		return;
 	}
-	if ($('#inputAttic').val()) query = '[date:"' + $('#inputAttic').val() + '"];(' + query + ');';
+	if ($('#inputAttic').val()) query = '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"];(' + query + ');';
 	else query = ';' + query;
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
 		minzoom: minOpZoom,
 		screenBbox: $('#inputRange').is(':checked'),
-		query: query + 'out center;',
+		query: query,
 		endpoint: $('#inputOpServer').val(),
 		callback: callback,
 		minZoomIndicatorOptions: {
@@ -163,8 +163,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 					queryWithMapCoordinates = '[bbox:' + bbox.toOverpassBBoxString() + ']' + this.options.query;
 				}
 				else queryWithMapCoordinates = '[bbox:' + bbox.toOverpassBBoxString() + ']' + this.options.query;
-				if (this.options.debug) console.debug(queryWithMapCoordinates);
-				var url = this.options.endpoint + '?data=[out:json]' + queryWithMapCoordinates +  '&contact=' + email;
+				var url = this.options.endpoint + '?data=[out:json]' + queryWithMapCoordinates + 'out tags center qt ' + maxOpResults + ';&contact=' + email;
+				if (this.options.debug) console.debug(url);
 				// show spinner, disable poi checkboxes
 				$('.poi-checkbox').addClass('poi-loading');
 				$('#spinner').show();

@@ -193,7 +193,7 @@ function tour(ti) {
 			show_overpass_layer('way(419719683);');
 			break;
 		case 'clocks':
-			show_overpass_layer(pois.clock.query + ';');
+			show_overpass_layer(pois.clock.query);
 			imgLayer = ti;
 			break;
 		case 'lost':

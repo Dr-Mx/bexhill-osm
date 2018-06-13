@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## v4.4.0 - Tutorial modals
+
+**Date:** 13/06/2018
+
+Added js
+ - leaflet.wms.min.js
+
+Site changes
+ - Added a function to show tutorial modals on selected elements, sets flag in localstorage not to be shown once dismissed
+ - Option to get WMS overlays as one single tile
+ - Ward boundaries POI
+ - Update some fontawesome icons
+ - Add a Normans Bay walk
+ - Fix tooltips showing opening colours
+ - Option to keep tooltips permanent on certain POIs
+ - Post-box parser showing colour depending if last collection_time has passed
+ - Single clicking map shows POI
+ - Outline elements on POI load instead of popupopen
+ - Open map-editor and improve-map links in modal window instead of _blank
+ - Improve Overpass API queries
+ - Sundial icon
+
+
 ## v4.3.0 - Traveline bus times
 
 **Date:** 30/04/2018

@@ -140,7 +140,7 @@ h3 {
 	display: block;
 	color: #222;
 	font-size: 10pt;
-	line-height: 20px;
+	line-height: 22px;
 	text-decoration: none;
 	padding: 0 10px 0 7px;
 	border-top: 1px solid transparent;
@@ -216,12 +216,38 @@ noscript {
 	pointer-events: none;
 }
 
+.modalTutor {
+	position: absolute;
+	width: 150px;
+	background-color: #b05000;
+	padding: 8px;
+	margin: 10px;
+	color: white;
+	border-radius: 5px;
+	border: none;
+	box-shadow: 1 3px 5px rgba(0, 0, 0, 0.65);
+	font-size: 90%;
+	z-index: 1100;
+}
+.modalTutorArrow {
+	content: '';
+	top: 5px;
+	background: inherit;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	transform: rotate(45deg);
+	z-index: -1;
+}
+
 #modalPermalink {
 	position: absolute;
 	display: none;
 	background-color: rgba(222, 222, 222, 0.9);
+	border: 2px solid rgba(0,0,0,0.2);
+	border-radius: 5px;
 	top: 0;
-	left: 30px;
+	left: 40px;
 	padding: 15px;
 	font-weight: bold;
 	cursor: default;
@@ -239,34 +265,34 @@ noscript {
 	min-height: 55px;
 	word-break: break-all;
 }
-#btnCopyPermalink {
+.modalButton {
 	margin-top: 5px;
 	border: 0;
 	border-radius: 4px;
 	box-shadow: 1px 1px #ccc;
 	background-color: white;
-	font-weight: inherit;
-	height: 26px;
-	width: 100%;
+	font-weight: bold;
+	line-height: 26px !important;
+	height: 26px !important;
+	width: 100% !important;
 	cursor: pointer;
 }
-#btnCopyPermalink:hover {
+.modalButton:hover {
 	background-color: #f4f4f4;
 }
+
 #inputOpacity {
 	padding-top: 5px;
 	display: none;
-	opacity: 0.6;
-	width: 150px;
+	width: 125px;
 	min-height: 23px;
 	text-align: center;
-}
-#inputOpacity:hover {
-	opacity: 1;
+	background-color: white;
+	border-radius: 5px;
 }
 #inputOpacity input[type=range] {
     -webkit-appearance: none;
-    width: 80%;
+    width: 75%;
 	margin: 0;
 	padding: 0 15px 0 0;
 	border: none;
@@ -808,12 +834,11 @@ input:checked + .slider:before {
 	width: 100%;
 	margin: 5px 0;
 	font-size: 90%;
-	color: darkslateblue;
+	color: #555;
 }
-.popup-bsTable tr {	text-align: left; border: 1px solid white; }
-.popup-bsTable tr:nth-child(2n) { background-color: #ccc; }
-.popup-bsTable tr:nth-child(2n+1) {	background-color: #ddd }
+.popup-bsTable tr { text-align: left; border: 1px solid #ccc; background-color: white; }
 .popup-bsTable td { padding: 2px; }
+.popup-bsTable td:nth-child(1) { font-weight: bold; }
 .popup-bsTable td:nth-child(3) { white-space: nowrap; text-align: right; }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -827,14 +852,11 @@ input:checked + .slider:before {
 	border-radius: 5px;
 	color: #222;
 }
-.openColor-false {
-	background-color: #c89696;
-	background: linear-gradient(to right, #c89696, #ddd);
-}
-.openColor-true {
-	background-color: #96c896;
-	background: linear-gradient(to right, #96c896, #ddd);
-}
+.openColor-list-true { background-color: #96c896; background: linear-gradient(to right, #96c896, #ddd); }
+.openColor-list-false {	background-color: #c89696; background: linear-gradient(to right, #c89696, #ddd); }
+.openColor-true { color: #008000; }
+.openColor-false { color: #ff0000; }
+.openColor-depends { color: #808080; }
 
 .ui-tooltip {
 	padding: 3px;

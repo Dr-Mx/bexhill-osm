@@ -31,7 +31,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css">
@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.2.4">
+	<link rel="stylesheet" href="assets/css/site.css?v4.4.0">
  </head>
 
  <body>
@@ -137,11 +137,12 @@
 							<option value = "ww2h">Walking the Way to Health (0.7mi / 1km)</option>
 							<option value = "tmrt">The Motor Trail (1.3mi / 2km)</option>
 							<option value = "hwds">Little Common to Highwoods (1.6mi / 2.6km)</option>
+							<option value = "neye">Normans Bay Circular (2.5mi / 4.1km)</option>
 							<option value = "gnwy">Bexhill to Hastings Greenway (2.6mi / 4.5km)</option>
 							<option value = "1066">1066 Country Walk (3.0mi / 4.7km)</option>
 							<option value = "bcr1">Bexhill Circular (6.3mi / 10.2km)</option>
 						</select>
-						<button type="button" id="walkSelect" title="Show on map"><i class="fas fa-map-marker"></i></button>
+						<button type="button" id="walkSelect" title="Show on map"><i class="fas fa-map-marker-alt"></i></button>
 						<div id="walkDesc"></div>
 					</div>
 					<hr>
@@ -243,8 +244,8 @@
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
 						<i class="fas fa-search fa-fw"></i> Query area/street/place: Display information on an item under the cursor depending on zoom level (single-clicking the map also performs the same function).<br><br>
-						<i class="fas fa-location-arrow fa-fw"></i> Walk to here: Create a route to this location. Locate needs to be turned on.<br><br>
-						<i class="far fa-compass fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
+						<i class="fas fa-walking fa-fw"></i> Walk to here: Create a route to this location. Locate needs to be turned on.<br><br>
+						<i class="fas fa-map-marker-alt fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
 						<i class="fas fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
 						<i class="far fa-sticky-note fa-fw"></i> Leave a note here: Report a mistake or something missing.
 						<p><img src="assets/img/help-context.png" alt="Context-menu preview"></p>
@@ -270,7 +271,7 @@
 						Click each marker to see a pop-up detailing more specific information.
 						<p><img src="assets/img/icons/star-3.png" alt="POI preview"></p>
 						<i style="color:#777;" class="fas fa-edit fa-fw"></i> Edit: Opens openstreetmap.org where you can make immediate changes to the item.<br><br>
-						<i style="color:#777;" class="fas fa-location-arrow"></i> Walking directions: Create a route to this item. Locate needs to be turned on.<br>
+						<i style="color:#777;" class="fas fa-walking"></i> Walking directions: Create a route to this item. Locate needs to be turned on.<br>
 						<p><img src="assets/img/help-popup.png" alt="Marker popup preview"></p>
 					<a id="gotowalking"></a><hr>
 					<h3>Walking Routes</h3>
@@ -341,6 +342,7 @@
 							<li><a href="http://leafletjs.com/" target="_blank">Leaflet</a> &copy; Vladimir Agafonkin</li>
 							<li><ul>
 								<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank">sidebar-v2</a> &copy; Tobias Bieniek</li>
+								<li><a href="https://github.com/heigeo/leaflet.wms" target="_blank">leaflet-wms</a> &copy; hei geo</li>
 								<li><a href="https://github.com/jfirebaugh/leaflet-osm" target="_blank">leaflet-osm</a> &copy; John Firebaugh</li>
 								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu" target="_blank">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
 								<li><a href="https://github.com/maximeh/leaflet.bouncemarker" target="_blank">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
@@ -360,7 +362,6 @@
 							<li><a href="https://github.com/enginkizil/FeedEk" target="_blank">FeedEk jQuery RSS Feed</a> &copy; Engin Kizil</li>
 							<li><a href="https://mapicons.mapsmarker.com" target="_blank">Map Icons Collection</a> &copy; Nicolas Mollet</li>
 							<li><a href="https://fontawesome.com/" target="_blank">Font Awesome</a> &copy; Dave Gandy</li>
-							<li><a href="https://www.mapbox.com/directions/" target="_blank">Mapbox Directions API</a> &copy; Mapbox</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
 					<div class="anchor"><a href="#gototopinfo" title="Back to top">| <i class="fas fa-arrow-up"></i> |</a></div>
@@ -373,32 +374,33 @@
 	<div id="map" class="sidebar-map"></div>
 
 	<!-- JavaScript | site plugins -->
-	<script src="assets/js/plugins/leaflet.js?v1.3.1"></script>
 	<script src="assets/js/plugins/jquery-3.3.1.min.js"></script>
 	<script src="assets/js/plugins/jquery-ui.min.js?v1.12.1"></script>
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v1.5.0a"></script>
-	<script src="assets/js/plugins/leaflet-osm.js?v0.1.0"></script>
-	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.0"></script>
-	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v1.5.0"></script>
-	<script src="assets/js/plugins/bouncemarker-min.js?v1.1.0"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v1.3.4"></script>
-	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v3.2.5"></script>
-	<script src="assets/js/plugins/jquery-sidebar.min.js?v0.4.0"></script>
-	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.5.8"></script>
-	<script src="assets/js/plugins/Control.Loading.min.js?v0.1.24"></script>
-	<script src="assets/js/plugins/easy-button.min.js?v2.3.0"></script>
-	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.62.0"></script>
+	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.0"></script>
 	<script src="assets/js/plugins/URI.min.js?v1.19.1"></script>
-	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
+	<script src="assets/js/plugins/leaflet.js?v1.3.1"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v0.2.1"></script>
+	<script src="assets/js/plugins/jquery-sidebar.min.js?v0.4.0"></script>
+	<script src="assets/js/plugins/Control.Loading.min.js?v0.1.24"></script>
+	<script src="assets/js/plugins/leaflet.wms.min.js?v0.2.0"></script>
+	<script src="assets/js/plugins/leaflet-osm.min.js?v0.1.0"></script>
+	<script src="assets/js/plugins/easy-button.min.js?v2.3.0"></script>
+	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v1.5.0"></script>
+	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v3.2.5"></script>
+	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.5.8"></script>
+	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.62.0"></script>
+	<script src="assets/js/plugins/bouncemarker-min.js?v1.1.0"></script>
+	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/config.js"></script>
 	<script src="assets/js/OverPassLayer.js"></script>
-	<script src="assets/js/tags-parsers.js?v4.2.4"></script>
-	<script src="assets/js/pois-type.js?v4.2.4"></script>
+	<script src="assets/js/tags-parsers.js?v4.4.0"></script>
+	<script src="assets/js/pois-type.js?v4.4.0"></script>
 	<script src="assets/xmas/xmas.js"></script>
-	<script src="tour/tour.js?v4.2.4"></script>
-	<script src="assets/js/site.js?v4.2.4"></script>
+	<script src="tour/tour.js?v4.4.0"></script>
+	<script src="assets/js/site.js?v4.4.0"></script>
 
  </body>
 </html>

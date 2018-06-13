@@ -1,2 +1,3 @@
-CheckSpelling Off
+# CheckSpelling Off
 Header set Access-Control-Allow-Origin "*"
+Options -Indexes
