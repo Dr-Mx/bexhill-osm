@@ -13,9 +13,9 @@ Site changes
  - Ward boundaries POI
  - Update some fontawesome icons
  - Add a Normans Bay walk
- - Fix tooltips showing opening colours
+ - Fix tooltips showing opening_hours colour
  - Option to keep tooltips permanent on certain POIs
- - Post-box parser showing colour depending if last collection_time has passed
+ - Postbox parser showing colour depending on collection_times state
  - Single clicking map shows POI
  - Outline elements on POI load instead of popupopen
  - Open map-editor and improve-map links in modal window instead of _blank
