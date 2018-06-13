@@ -16,6 +16,7 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
    - Ordering parser (key:takeaway, key:delivery, key:outdoor_searing, key:beer_garden, key:reservation)
    - Building details (key:architect, key:building:architecture, key:start_date, key:HE_ref, key:listed_status)
    - Current open state with 7 day opening hours table (key:opening_hours)
+   - Last postbox collection time state (key:collection_times)
    - UK Food Hygiene Rating System API (key:fhrs:id)
    - Real-time Traveline API information on bus-stops (key:naptan:AtcoCode)
    - Multiple image support including Wikimedia Commons API (key:image, key:image_1, key:image_2, etc)
