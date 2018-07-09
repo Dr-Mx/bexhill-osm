@@ -61,7 +61,7 @@ var pois = {
 
 	historic: {
 		name: 'Historic',
-		query: 'nwr[historic];',
+		query: 'nwr[historic][historic!~boundary_stone];',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque'],
@@ -325,7 +325,7 @@ var pois = {
 
 	water_tap: {
 		name: 'Water-Tap',
-		query: 'node[man_made=water_tap];',
+		query: 'node[man_made=water_tap][access!~private];',
 		iconName: 'drinkingwater',
 		catName: 'Amenities',
 		tagKeyword: ['drink', 'tap', 'water'],
@@ -900,10 +900,9 @@ var pois = {
 	hairdresser: {
 		name: 'Hairdresser',
 		query: 'nwr[shop=hairdresser];',
-		iconName: 'barber',
+		iconName: 'hair',
 		catName: 'Shops',
-		tagKeyword: ['barber', 'hairdresser'],
-		hide: 1
+		tagKeyword: ['barber', 'hairdresser', 'trim', 'shave'],
 	},
 
 	beauty: {
@@ -1179,6 +1178,19 @@ var pois = {
 		query: 'node[amenity=clock];',
 		iconName: 'clock',
 		tagParser: clock_parser
+	},
+	
+	boundary_stone: {
+		name: 'Boundary Stone',
+		query: 'node[historic=boundary_stone];',
+		iconName: 'boundary'
+	},
+
+	survey_point: {
+		name: 'Survey Point',
+		query: 'node[man_made=survey_point];',
+		iconName: 'spbenchmark',
+		tagParser: surveyp_parser
 	}
 
 };

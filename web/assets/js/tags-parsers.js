@@ -19,7 +19,7 @@ function parse_tags(element, titlePopup, functions) {
 		{callback: generic_tag_parser, tag: 'opening_date', label: 'Opening date', iconName: 'fas fa-calendar-alt'},
 		{callback: generic_tag_parser, tag: 'end_date', label: 'End date', iconName: 'fas fa-calendar-alt'},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'fas fa-sign-in-alt'},
-		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'fas fa-pen-square'},
+		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'fas fa-clipboard'},
 		{callback: facility_parser},
 		{callback: payment_parser},
 		{callback: street_parser},
@@ -96,6 +96,8 @@ function callback(data) {
 							case 'indian' : iconName = 'restaurant_indian'; break;
 							case 'italian' : iconName = 'restaurant_italian'; break;
 							case 'kebab' : iconName = 'kebab'; break;
+							case 'latin_american' :
+							case 'mexican' : iconName = 'restaurant_mexican'; break;
 							case 'pizza' : iconName = 'pizzaria'; break;
 							case 'seafood' : iconName = 'restaurant_fish'; break;
 							case 'spanish' : iconName = 'restaurant_tapas'; break;
@@ -159,7 +161,7 @@ function callback(data) {
 			}
 			switch (e.tags.historic) {
 				case 'beacon' : iconName = 'landmark'; break;
-				case 'boundary_stone' : iconName = 'boundary'; break;
+				case 'boundary_stone' : iconName = pois.boundary_stone.iconName; break;
 				case 'memorial' :
 					if (e.tags.memorial) {
 						name = 'memorial ' + e.tags.memorial;
@@ -185,6 +187,15 @@ function callback(data) {
 		if (e.tags.man_made) {
 			if (!name) name = e.tags.man_made;
 			if (!type) type = e.tags.man_made;
+			if (type === 'survey_point') {
+				name = e.tags.survey_point;
+				switch (e.tags.survey_point) {
+					case 'triangulation_station' : iconName = 'sppillar'; break;
+					case 'flush_bracket' : iconName = 'spbracket'; break;
+					case 'pivot' :
+					case 'rivet' : iconName = 'sprivet'; break;
+				}
+			}
 		}
 		if (e.tags.natural) {
 			if (!name) name = e.tags.natural;
@@ -207,8 +218,8 @@ function callback(data) {
 				case 'e-cigarette' : type = 'tobacco'; break;
 				case 'garden_centre' : type = 'florist'; break;
 				case 'hairdresser' :
-					if (e.tags.male === 'yes') name = 'male barber';
-					else if (e.tags.female === 'yes') name = 'female hairdresser';
+					if (e.tags.male === 'yes') { name = 'male barber'; iconName = 'hairmale'; }
+					else if (e.tags.female === 'yes') { name = 'female hairdresser'; iconName = 'hairfemale'; }
 					else if (e.tags.unisex === 'yes') name = 'unisex hairdresser';
 					break;
 				case 'hardware' : type = 'doityourself'; break;
@@ -443,7 +454,7 @@ function callback(data) {
 function generic_header_parser(header, subheader, fhrs) {
 	var markerPopup = '<div class="popup-header"><h3>' + header + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
-	if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading Food Hygiene Rating" src="assets/img/loader.gif"></span>';
+	if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.gif"></span>';
 	return markerPopup + '</div>';
 }
 var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}:</strong> {value}</span></div>';
@@ -455,21 +466,26 @@ function generic_tag_parser(tags, tag, label, iconName) {
 		if (tags[tag] === 'yes') result = '<i class="fas fa-check fa-fw"></i>';
 		else if (tags[tag] === 'no') result = '<i class="fas fa-times fa-fw"></i>';
 		else if (tag.indexOf('_date') > -1 || tag.indexOf('date_') > -1) result = date_parser(tags[tag], 'long');
-		else result = tags[tag].replace(/;/g, ', ');
+		else result = tags[tag].replace(/;/g, ', ').replace(/_/g, ' ');
 		markerPopup += L.Util.template(tagTmpl, { tag: label, value: result, iconName: iconName });
 	}
 	return markerPopup;
 }
 function generic_img_parser(img, id, display, attrib) {
 	var url = '', imgTmpl = '<div id="img{id}" class="popup-imgContainer" style="display:{display};">' +
-		'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}">';
+		'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}">' + 
+		'<br><div class="popup-imgAttrib">';
 	if (img.indexOf('File') === 0) {
 		url = img;
 		attrib = 'Loading attribution...';
 		img = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(img.split(':')[1]) + '&w=' + imgSize;
+		imgTmpl += '{attrib}';
 	}
-	if (attrib) imgTmpl += '<br><div class="popup-imgAttrib">{attrib}</div>';
-	imgTmpl += '</div>';
+	else {
+		if (attrib) imgTmpl += '&copy; {attrib} | ';
+		imgTmpl += '<a onclick="$(img{id}).dblclick();">Full Image</a>';
+	}
+	imgTmpl += '</div></div>';
 	return L.Util.template(imgTmpl, { id: id, display: display, url: url, maxheight: imgSize / 2, img: img, attrib: attrib });
 }
 function show_img_controls(imgMax, img360) {
@@ -644,7 +660,7 @@ function furtherreading_parser(tags) {
 function allotment_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'user', label: 'Point of contact', iconName: 'fas fa-user-circle'},
-		{callback: generic_tag_parser, tag: 'plots', label: 'Plots', iconName: 'fas fa-cube'},
+		{callback: generic_tag_parser, tag: 'plots', label: 'Plots', iconName: 'fas fa-th-large'},
 	]);
 }
 function artwork_parser(tags, titlePopup) {
@@ -861,7 +877,7 @@ function healthcare_parser(tags, titlePopup) {
 function historic_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'historic', label: 'Historic type', iconName: 'fas fa-university'},
-		{callback: generic_tag_parser, tag: 'bunker_type', label: 'Military bunker type', iconName: 'fas fa-fighter-jet'},
+		{callback: generic_tag_parser, tag: 'bunker_type', label: 'Bunker type', iconName: 'fas fa-cube'},
 		{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'fas fa-user'},
 		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fas fa-pen-square'},
 		{callback: generic_tag_parser, tag: 'wreck:date_sunk', label: 'Date sunk', iconName: 'fas fa-ship'},
@@ -990,6 +1006,22 @@ function socialf_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: socialfservices_parser},
 		{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'fas fa-users'}
+	]);
+}
+function surveyp_parser(tags, titlePopup) {
+	var trigpointuk_parser = function (tags) {
+		var tag = tags.tpuk_ref, markerPopup = '';
+		if (tag) {
+			var link = '<a href="http://trigpointing.uk/trig/' + tag.split('TP')[1] + '" title="Trigpointing UK" target="_blank">' + tag + '</a>';
+			markerPopup += L.Util.template(tagTmpl, { tag: 'TrigpointingUK', value: link, iconName: 'fas fa-monument' });
+		}
+		return markerPopup;
+	};
+	return parse_tags(tags, titlePopup, [
+		{callback: trigpointuk_parser},
+		{callback: generic_tag_parser, tag: 'ref', label: 'Bracket number', iconName: 'fas fa-hashtag'},
+		{callback: generic_tag_parser, tag: 'ele', label: 'Elevation (m above sea)', iconName: 'fas fa-arrow-up'},
+		{callback: generic_tag_parser, tag: 'height', label: 'Height (m above ground)', iconName: 'fas fa-arrow-up'}
 	]);
 }
 function tap_parser(tags, titlePopup) {
@@ -1133,13 +1165,13 @@ function image_parser(tags) {
 	// get images
 	var markerPopup = '', lID;
 	if ((tags.image || tags.wikimedia_commons) && !$('#inputImage').is(':checked')) {
-		markerPopup += generic_img_parser(tags.image || tags.wikimedia_commons, 0, 'inherit');
+		markerPopup += generic_img_parser(tags.image || tags.wikimedia_commons, 0, 'inherit', tags['source:image'] || '');
 		// support up to 5 additional images
 		if (tags['image:360'] || tags.image_1) {
 			for (x = 1; x <= 5; x++) {
 				if (tags['image_' + x]) {
 					lID = x;
-					markerPopup += generic_img_parser(tags['image_' + x], x, 'none');
+					markerPopup += generic_img_parser(tags['image_' + x], x, 'none', tags['source:image_' + x] || '');
 				}
 			}
 			markerPopup += show_img_controls(parseInt(lID+1), tags['image:360']);
@@ -1148,7 +1180,7 @@ function image_parser(tags) {
 	return markerPopup;
 }
 function nav360(img) {
-	window.open('https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img.split(':')[1]), 'imgWindow', 'width=800, height=600, resizable=yes');
+	popupWindow('https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img.split(':')[1]), 'imgWindow', 800, 600);
 }
 function navImg(direction) {
 	// get the current and last image
@@ -1156,7 +1188,6 @@ function navImg(direction) {
 	var lID = parseInt($('.popup-imgContainer:last').attr('id').split('img')[1]);
 	// get the next image
 	var swapImg = function (nID) {
-		// empty array adds default animation
 		$('.popup-imgContainer').hide(400).filter('.popup-imgContainer#img' + nID).show(400);
 		if (!$('#img' + nID + ' .attribd').length) getWikiAttrib(nID);
 		$('.navigateItem > .fa-image > title').html(parseInt(nID+1) + ' of ' + parseInt(lID+1));
@@ -1198,9 +1229,7 @@ function getWikiAttrib(id) {
 
 // formatting parsers
 function titleCase(str) {
-	// convert a non-uppercase string to titlecase
-	str = str.replace(/;/g, ', ');
-	str = str.replace(/_/g, ' ');
+	str = str.replace(/;/g, ', ').replace(/_/g, ' ');
 	if (str === str.toUpperCase()) return str;
 	else return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
@@ -1241,6 +1270,6 @@ function elementType(e) {
 	switch (e.toLowerCase()) {
 		case 'n' : return 'node';
 		case 'w' : return 'way';
-		case 'r': return 'relation';
+		case 'r' : return 'relation';
 	}
 }

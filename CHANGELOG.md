@@ -1,6 +1,23 @@
 # CHANGELOG
 
-## v4.4.0 - Tutorial modals
+## v4.5.0 - Query features toggle
+
+**Date:** 09/07/2018
+
+Updated js
+ - OverPassLayer.js [remove screen bounding box option]
+
+Site changes
+ - Query features toggle button to allow single clicking on map to get POI
+ - Compress all POI icons
+ - Add gender distinguishable hairdresser POI icons
+ - Add Mexican restaurant POI icon
+ - Historic tour article on OS Survey Points
+ - Ability to swap POI images using mouse-wheel
+ - Ability to download complete bounding box area from Overpass
+
+
+ ## v4.4.0 - Tutorial modals
 
 **Date:** 13/06/2018
 

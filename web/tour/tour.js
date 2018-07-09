@@ -123,8 +123,8 @@ function tour(ti) {
 									L.Util.template(tagTmpl, { tag: 'Date', value: date_parser(feature.properties.date, 'long'), iconName: 'fas fa-calendar-alt' });
 								toolTip += '<b>' + feature.properties.name + '</b><br><i>' + date_parser(feature.properties.date, 'short') + '</i>';
 								if (feature.properties.description) {
-									markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Description', value: feature.properties.description, iconName: 'fas fa-pen-square' }) + '</span>';
-									toolTip += ' <i style="color:#808080;" class="fas fa-pen-square fa-fw"></i>';
+									markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Description', value: feature.properties.description, iconName: 'fas fa-clipboard' }) + '</span>';
+									toolTip += ' <i style="color:#808080;" class="fas fa-clipboard fa-fw"></i>';
 								}
 								if (feature.properties.img) {
 									customOptions.minWidth = imgSize;
@@ -199,7 +199,7 @@ function tour(ti) {
 		case 'lost':
 			tourPopup('Wshelt', [50.83651, 0.46601], 'West Parade Shelters', '1904-1977', '13/westparadeshelter-air-1931', '<a href="https://britainfromabove.org.uk/en/image/EPW035331" target="_blank">Historic England</a> | 1931', '');
 			tourPopup('Metrop', [50.83754, 0.47045], 'Metropole Hotel', '1897-1955', '13/metropolehotel-air-1929', 'Bexhill Museum | 1929', '');
-			tourPopup('Fount1', [50.83734, 0.47175], 'Memorial Fountain', '1913-1934', '13/memorialfountain-air-1929', '<a href="https://britainfromabove.org.uk/en/image/EPW026233" target="_blank">Historic England</a> | 1929', '');
+			tourPopup('Fount1', [50.83734, 0.47175], 'Memorial Fountain', '1913-1934', '13/memorialfountain-air-1929', '<a href="https://britainfromabove.org.uk/en/image/EPW026222" target="_blank">Historic England</a> | 1929', '');
 			tourPopup('Fount2', [50.83756, 0.46703], 'Memorial Fountain', '1934-1963', '13/memorialfountain-1956', '<a href="https://thebexhillhistorytrail.wordpress.com" target="_blank">Dr Paul Wright</a> | Postcard, 1956', '');
 			tourPopup('Marina', [50.83763, 0.47357], 'Marina Court', '1901-1970', '13/marinacourt-air-1920', '<a href="https://britainfromabove.org.uk/en/image/EPW000708" target="_blank">Historic England</a> | 1920', '');
 			tourPopup('Marine', [50.83798, 0.47435], 'Marine Hotel', '1895-1954', '13/robertsmarine-air-1929', '<a href="https://britainfromabove.org.uk/en/image/EPW026226" target="_blank">Historic England</a> | 1929', '');
@@ -214,7 +214,11 @@ function tour(ti) {
 			imgLayer = ti;
 			break;
 		case 'boundary':
-			show_overpass_layer('node[historic=boundary_stone];');
+			show_overpass_layer(pois.boundary_stone.query);
+			imgLayer = ti;
+			break;
+		case 'surveyPoint':
+			show_overpass_layer(pois.survey_point.query);
 			imgLayer = ti;
 			break;
 	}}, 50);

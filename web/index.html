@@ -31,7 +31,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css">
@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.4.0">
+	<link rel="stylesheet" href="assets/css/site.css?v4.5.0">
  </head>
 
  <body>
@@ -90,15 +90,15 @@
 							<area title="Sidley" shape="rect" coords="302,24,361,70">
 						</map>
 					</div>
-					<div class="comment">
-						<span id="tips"></span>
-						<span class="theme navigateItem navigateItemNext"><a title="Random tip" onclick="getTips();"><i class="fas fa-caret-square-right"></i></a></span>
+					<div class="comment" style="position:relative;">
+						<div id="tips"></div>
+						<span id="tipsButton" class="theme navigateItemNext"><a title="Random tip" onclick="getTips();"><i class="fas fa-caret-square-right"></i></a></span>
 					</div>
 					<hr>
 					<span id="xmas"></span>
 					<p>Bexhill-OSM is a community based, open mapping, passion project. It aims to help people discover a wealth of information on places in and around the seaside town of Bexhill-on-Sea, East Sussex, England.</p>
-					<p>View Help <a style="white-space:nowrap;" onclick="$('a[href=&quot;#help&quot;]').click();">[<i class="theme fas fa-question fa-fw"></i>]</a> for more assistance.
-					<br>Contact details can be found under Information <a style="white-space:nowrap;" onclick="$('a[href=&quot;#information&quot;]').click();">[<i class="theme fas fa-info fa-fw"></i>]</a>.</p>
+					<p>View Help <a style="white-space:nowrap;" onclick="$('a[href=&quot;#help&quot;]').click();"><i class="theme fas fa-question-circle fa-fw"></i></a> for more assistance.
+					<br>Contact details can be found under Information <a style="white-space:nowrap;" onclick="$('a[href=&quot;#information&quot;]').click();"><i class="theme fas fa-info-circle fa-fw"></i></a>.</p>
 					<hr>
 					<span id="feedRss"></span>
 				</div>
@@ -170,14 +170,15 @@
 								<option value = "9">&nbsp;&nbsp; 9. World War II</option>
 								<option value = "10">&nbsp; 10. Northeye Prison Site</option>
 								<option value = "11">&nbsp; 11. Notable People</option>
-								<option value = "12">&nbsp; 12. Street Clocks</option>
+								<option value = "12">&nbsp; 12. Public Clocks</option>
 								<option value = "13">&nbsp; 13. Lost Heritage</option>
 								<option value = "14">&nbsp; 14. Boundary Stones</option>
+								<option value = "15">&nbsp; 15. OS Surveying Points</option>
 								<option value = "99">&nbsp;Sources &amp; further reading</option>
 							</select>
 						<button type="button" id="tourNext" title="Next"><i class="fas fa-chevron-right"></i></button>
 					</div>
-					<div id="tourLoading" class="comment">Loading...</div>
+					<div id="tourLoading"><i class="fas fa-spinner fa-pulse"></i></div>
 					<iframe id="tourFrame" src="tour/tour00/index.html"></iframe>
 				</div>
 			</div>
@@ -187,7 +188,6 @@
 				<div class="sidebar-body">
 					<h3>Map display options</h3>
 					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Use kilometres for measurements (metric)</span>
-					<p><label class="switch"><input id="inputRange" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Show POI results only within the viewable area</span>
 					<p><label class="switch"><input id="inputImage" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Don't display images within pop-ups</span>
 					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Only show currently open POIs</span>
 					<hr>
@@ -201,11 +201,12 @@
 							<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme]" title="Enter an OverpassAPI query"><br><br>
 							OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Introduction" title="Overpass Query Servers" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
 							<select id="inputOpServer">
-								<option selected value="https://overpass-api.de/api/interpreter">overpass-api.de</option>
-								<option value="http://overpass.osm.rambler.ru/cgi/interpreter">overpass.osm.rambler.ru</option>
-								<option value="https://overpass.openstreetmap.fr/api/interpreter">overpass.openstreetmap.fr</option>
-								<option value="https://overpass.kumi.systems/api/interpreter">overpass.kumi.systems</option>
-							</select>
+								<option selected value="https://overpass-api.de/api/">overpass-api.de</option>
+								<option value="https://overpass.kumi.systems/api/">overpass.kumi.systems</option>
+								<option value="https://overpass.openstreetmap.fr/api/">overpass.openstreetmap.fr</option>
+								<option value="http://overpass.openstreetmap.ru/cgi/">overpass.openstreetmap.ru</option>
+							</select><br><br>
+							<button type="button" style="margin-left:5px;" title="OverpassAPI map query" onclick="downloadBB();"><i class="fas fa-download"></i></button><span class="switchLabel">Download all OSM data within bounding box</span>
 						</div>
 					</div>
 					<hr>
@@ -237,13 +238,14 @@
 						<i class="theme fas fa-share-square fa-fw"></i> Share: Get current view and selected options by copying the text link displayed.<br><br>
 						<i class="theme fas fa-location-arrow fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map. You may click on the blue location marker to see what POIs are around you.<br><br>
 						<i class="theme fas fa-search fa-fw"></i> Address search: Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
-						<i class="theme fas fa-trash fa-fw"></i> Clear map: Remove all current layers on the map. Right-click / long press will reload the website to defaults.<br><br>
+						<i class="theme fas fa-hand-pointer fa-fw"></i> Query features: Clicking the map with this enabled will display information on features under the cursor.<br><br>
+						<i class="theme fas fa-trash fa-fw"></i> Clear map: Remove all current layers on the map. Right-click will reload the website to defaults.<br><br>
 						Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the page.
 						<p><img src="assets/img/help-controls.png" alt="Map controls preview"></p>
 					<a id="gotocontext"></a><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
-						<i class="fas fa-search fa-fw"></i> Query area/street/place: Display information on an item under the cursor depending on zoom level (single-clicking the map also performs the same function).<br><br>
+						<i class="fas fa-hand-pointer fa-fw"></i> Query feature: Display information on the feature under the cursor.<br><br>
 						<i class="fas fa-walking fa-fw"></i> Walk to here: Create a route to this location. Locate needs to be turned on.<br><br>
 						<i class="fas fa-map-marker-alt fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
 						<i class="fas fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
@@ -395,12 +397,12 @@
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/config.js"></script>
-	<script src="assets/js/OverPassLayer.js"></script>
-	<script src="assets/js/tags-parsers.js?v4.4.0"></script>
-	<script src="assets/js/pois-type.js?v4.4.0"></script>
+	<script src="assets/js/OverPassLayer.js?v4.5.0"></script>
+	<script src="assets/js/tags-parsers.js?v4.5.0"></script>
+	<script src="assets/js/pois-type.js?v4.5.0"></script>
 	<script src="assets/xmas/xmas.js"></script>
-	<script src="tour/tour.js?v4.4.0"></script>
-	<script src="assets/js/site.js?v4.4.0"></script>
+	<script src="tour/tour.js?v4.5.0"></script>
+	<script src="assets/js/site.js?v4.5.0"></script>
 
  </body>
 </html>

@@ -30,14 +30,19 @@ html, body, #map {
 }
 
 #tips {
-	height: 45px;
-	vertical-align: middle;
-	display: table-cell;
+	vertical-align: sub;
+	padding-right: 15px;
+	min-height: 25px;
+}
+#tipsButton {
+	top:10px;
+	right:0;
+	position:absolute;
 }
 .navigateItem {
 	position: absolute;
 	right: 17px;
-	margin-top: -15px;
+	bottom: 6px;
 }
 .navigateItem .fa-image, .navigateItem a {
 	opacity: 0.7;
@@ -172,7 +177,8 @@ h3 {
 	a{color:#2074B6}
 .leaflet-control-locate.active.following
 	a{color:#20b674}
-.leaflet-control-minZoomIndicator {
+.leaflet-control-statusmsg {
+	display: none;
 	background-color: rgba(255, 255, 255, 0.8);
 	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 	font-size: 10pt;
@@ -192,6 +198,10 @@ h3 {
 	white-space: nowrap;
 	border-radius: 4px;
 	line-height: 20px;
+}
+#btnQuery.queryOn-active {
+	background-color: #b05000;
+	color: #fff;
 }
 
 noscript {
@@ -566,11 +576,11 @@ select:hover:enabled, .poi-results button:hover {
 	border: none;
 }
 #tourLoading {
-	display: none;
 	margin-top: 20px;
 	position: absolute;
 	width: 100%;
-	font-weight: bold;
+	font-size: 30pt;
+	color: #aaa;
 }
 #tour .sidebar-body {
 	width: 100%;
@@ -688,7 +698,7 @@ input:checked + .slider:before {
 	.popup-streetDesc {
 		max-height: 200px !important;
 	}
-	.leaflet-control-layers-list, .leaflet-popup, .leaflet-control-minZoomIndicator, 
+	.leaflet-control-layers-list, .leaflet-popup, .leaflet-control-statusmsg, 
 	.leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-form-no-error {
 		font-size: 9pt !important;
 	}
@@ -816,8 +826,9 @@ input:checked + .slider:before {
 	border-radius: 5px;
 	max-width: 50%;
 	transition: 300ms ease-out;
+	cursor: pointer;
 }
-.popup-imgAttrib, .popup-imgAttrib a:link, .popup-imgAttrib a:visited, .popup-imgAttrib a:hover {
+.popup-imgAttrib, .popup-imgAttrib a {
 	font-size: 6pt;
 	color: #808080;
 }

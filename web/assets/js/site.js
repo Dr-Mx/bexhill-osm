@@ -1,8 +1,7 @@
 // all main functions for site
 
 // overpass layer options
-var maxOpResults = 500;
-var minOpZoom = 15;
+var maxOpResults = 250;
 var email = 'info@bexhill-osm.org.uk';
 // map area
 var mapBounds = { south: 50.8025, west: 0.3724, north: 50.8785, east: 0.5290 };
@@ -30,8 +29,12 @@ $('.sidebar-header').on('swipeleft', function () { sidebar.close(); });
 // prev/next tour iframe
 $('#tour')
 	.on('swiperight', function () { $('#tourPrev').trigger('click'); })
-	.on('swipeleft', function () { $('#tourNext').trigger('click'); });
-
+	.on('swipeleft', function () { $('#tourNext').trigger('click'); })
+	.on('wheel', function (e) {
+		if (e.originalEvent.deltaY < 0) $('#tourNext').trigger('click');
+		else if (e.originalEvent.deltaY > 0) $('#tourPrev').trigger('click');
+		e.preventDefault();
+	});
 // smooth scrolling to anchor
 $(document).on('click', 'a[href*="#goto"]', function (e) {
 	var target = $('[id=' + this.hash.slice(1) + ']');
@@ -62,7 +65,7 @@ L.Map.addInitHook(function () {
 	}
 	function check_later(e) {
 		clear_h();
-		if (!$('.poi-checkbox-selected, .leaflet-popup, .leaflet-control-layers-expanded').length && !imgLayer && !spinner) h = setTimeout(check, 500);
+		if (!$('.queryOff-active, .leaflet-popup, .leaflet-control-layers-expanded').length && !spinner) h = setTimeout(check, 500);
 		function check() { that.fire('singleclick', L.Util.extend(e, { type : 'singleclick' } )); }
 	}
     function clear_h() {
@@ -81,7 +84,7 @@ var map = new L.map('map', {
 	bounceAtZoomLimits: false,
 	contextmenu: true,
 	contextmenuItems: [{
-		text: '<i class="fas fa-search fa-fw"></i> Query place',
+		text: '<i class="fas fa-hand-pointer fa-fw"></i> Query feature',
 		index: 0,
 		callback: reverseQuery
 	}, {
@@ -110,7 +113,7 @@ var map = new L.map('map', {
 	if (window.ontouchstart === undefined) $('.sidebar-tabs').tooltip({ hide: false, show: false, track: true, position: { my: 'left+15 top+10' } });
 	getTips();
 	if (actTab === defTab) showMapEditsRss();
-	$('#home .sidebar-body').append('<p><img style="vertical-align:text-top;" src="favicon-16x16.png"> <i class="comment">&copy; Bexhill-OSM 2016-' + new Date().getFullYear() + '</i></p>');
+	$('#home .sidebar-body').append('<p><img style="vertical-align:text-top;" src="favicon-16x16.png"> <span class="comment">&copy; Bexhill-OSM 2016-' + new Date().getFullYear() + '</span></p>');
 	$('#walkList, #tourList').trigger('change');
 	// tutorial modal
 	function showModalTutor(target, id, css, text, arrowcss) {
@@ -148,6 +151,8 @@ var map = new L.map('map', {
 			'<input type="range" min="0" max="1" step="0.05">' +
 			'<div class="leaflet-popup-close-button" title="Remove layer" onclick="map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);">×</div>' +
 		'</div>'
+	).append(
+		'<div class="theme leaflet-control leaflet-control-statusmsg"></div>'
 	);
 	setTimeout(function () { $('.leaflet-control-layers-overlays label').eq(4).after('<div class="leaflet-control-layers-separator"></div>'); }, 10);
 	// december xmas decorations
@@ -176,7 +181,7 @@ var map = new L.map('map', {
 	});
 	// edit on osm.org
 	$('.popup-edit').click(function () {
-		window.open('https://www.openstreetmap.org/edit?editor=id&' + $('.popup-edit').attr('id').replace('_', '=') + '#map=19/' + e.popup._latlng.lat + '/' + e.popup._latlng.lng, 'editWindow', 'width=1024, height=768, resizable=yes');
+		popupWindow('https://www.openstreetmap.org/edit?editor=id&' + $('.popup-edit').attr('id').replace('_', '=') + '#map=19/' + e.popup._latlng.lat + '/' + e.popup._latlng.lng, 'editWindow', 1024, 768);
 	});
 	// delay required when switching directly to another popup
 	setTimeout(function () {
@@ -257,30 +262,34 @@ var map = new L.map('map', {
 	if ($('.popup-imgContainer').length) {
 		$('.popup-imgContainer')
 			.on('swiperight', function () { navImg(0); })
-			.on('swipeleft', function () { navImg(1); });
+			.on('swipeleft', function () { navImg(1); })
+			.on('wheel', function (e) {
+				if (e.originalEvent.deltaY < 0) navImg(0);
+				else if (e.originalEvent.deltaY > 0) navImg(1);
+				e.preventDefault();
+			})
+			.on('dblclick', function () { popupWindow($(this).find('img').attr('src').replace('w=' + imgSize, 'w=1024'), 'imgWindow', 1034, 778); });
 		$('.popup-imgContainer, .navigateItem')
 			.on('dragstart', false)
 			.on('selectstart', false);
 		$('#img0 img')
-			.on('load', function () {
+			// timeouts needed if directly switching to another popup
+			.on('load', function () { setTimeout(function () {
 				$('.popup-imgContainer img').attr('alt', 'Image of ' + $('.popup-header h3').text());
-				// timeout needed if switching between multiple popups
-				setTimeout(function () {
-					getWikiAttrib(0);
-					// add padding on attribution for navigation buttons
-					if ($('.leaflet-popup .navigateItem').length) {
-						var rpad = 70;
-						if ($('.leaflet-popup .navigateItem a').length === 1) rpad = 20;
-						else if ($('.leaflet-popup .navigateItem a').length === 2) rpad = 45;
-						$('.popup-imgAttrib').css('text-align', 'left').css('padding-right', rpad + 'px');
-					}
-					e.popup._adjustPan(); 
-				}, 200); 
-			});
+				getWikiAttrib(0);
+				// add padding on attribution for navigation buttons
+				if ($('.leaflet-popup .navigateItem').length) {
+					var rpad = 70;
+					if ($('.leaflet-popup .navigateItem a').length === 1) rpad = 20;
+					else if ($('.leaflet-popup .navigateItem a').length === 2) rpad = 45;
+					$('.popup-imgAttrib').css('text-align', 'left').css('padding-right', rpad + 'px');
+				}
+				e.popup._adjustPan(); 
+			}, 200); });
 		$('.popup-imgContainer img')
-			.on('error', function () {
-				setTimeout(function () { $('.popup-imgContainer img').attr('alt', 'Error: Image not found'); }, 200);
-			})
+			.on('error', function () { setTimeout(function () {
+				$('.popup-imgContainer img').attr('alt', 'Error: Image not found');
+			}, 200); })
 			.on('mouseover touchstart', function () {
 				// grow popup images
 				$('.popup-imgContainer img').css('max-width', '100%').css('max-height', imgSize);
@@ -376,13 +385,19 @@ function centreMap (e) {
 }
 function improveMap (e) {
 	// create a note on osm.org
-	window.open('https://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, 'noteWindow', 'width=1024, height=768, resizable=yes');
+	popupWindow('https://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, 'noteWindow', 1024, 768);
 }
 
-$('#walkList').change(function () {
-	suggestWalk ($(this).val(), 1);
-	$('#walkDesc').append('<img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg">');
-});
+$('#walkList')
+	.change(function () {
+		suggestWalk ($(this).val(), 1);
+		$('#walkDesc').append('<img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg">');
+	})
+	.on('wheel', function (e) {
+		if (e.originalEvent.deltaY < 0) $('#walkList option:selected').next().prop('selected', true).trigger('change');
+		else if (e.originalEvent.deltaY > 0) $('#walkList option:selected').prev().prop('selected', true).trigger('change');
+		e.preventDefault();
+	});
 $('#walkSelect').click(function () {
 	suggestWalk ($('#walkList').val(), 0);
 	if ($(window).width() < 768) sidebar.close();
@@ -507,16 +522,10 @@ function suggestWalk (walkId, isDesc) {
 
 // navigation controls for historic tour
 $('#tourNext').click(function () {
-	if ($('#tourList option:selected').next().is(':enabled')) {
-		$('#tourList option:selected').next().prop('selected', 'selected');
-		$('#tourList').trigger('change');
-	}
+	if ($('#tourList option:selected').next().is(':enabled')) $('#tourList option:selected').next().prop('selected', true).trigger('change');
 });
 $('#tourPrev').click(function () {
-	if ($('#tourList option:selected').prev().is(':enabled')) {
-		$('#tourList option:selected').prev().prop('selected', 'selected');
-		$('#tourList').trigger('change');
-	}
+	if ($('#tourList option:selected').prev().is(':enabled')) $('#tourList option:selected').prev().prop('selected', true).trigger('change');
 });
 $('#tourList').change(function () {
 	var tourNum = $(this).val();
@@ -923,7 +932,6 @@ var geocode = L.Control.geocoder({
 	if (geoMarker.osm_id) {
 		clear_map();
 		rQuery = true;
-		if (map.getZoom() <= minOpZoom && $('#inputRange').is(':checked')) map.setZoom(minOpZoom, { animate: false });
 		show_overpass_layer(geoMarker.osm_type + '(' + geoMarker.osm_id + ');');
 		// hide geocoder controls
 		setTimeout(function () { 
@@ -945,6 +953,29 @@ function switchTab(tab, anchor) {
 		else $('a[href="#goto' + anchor + '"]').click();
 	}
 }
+
+// query map button
+L.easyButton({
+	id: 'btnQuery',
+	states: [{
+		stateName: 'queryOff',
+		icon: 'fas fa-hand-pointer',
+		title: 'Query features',
+		onClick: function (control) {
+			control.state('queryOn');
+			$('.leaflet-grab').css('cursor', 'help');
+		}
+	}, {
+		stateName: 'queryOn',
+		icon: 'fas fa-hand-pointer',
+		title: 'Query features',
+		onClick: function (control) {
+			console.log($(this));
+			control.state('queryOff');
+			$('.leaflet-grab').css('cursor', '');
+		}
+	}]
+}).addTo(map);
 
 // clear map button
 L.easyButton({
@@ -1093,6 +1124,11 @@ function getOsmOutline(type, id) {
 	});
 }
 
+// popup window
+function popupWindow(url, title, w, h) {
+	window.open(url, title, 'width=' + w + ', height=' + h + ', menubar=0, toolbar=0, resizable=1').focus();
+}
+
 // keyboard shortcuts
 $('#map').keydown(function (e) {
 	// ALT-ENTER: full screen
@@ -1169,6 +1205,9 @@ $('#inputOverpass').keydown(function (e) {
 		show_overpass_layer('(nwr' + $(this).val() + ';);');
 	}
 });
+function downloadBB() {
+    window.location = $('#inputOpServer').val() + '/map?bbox=' + [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(',');
+}
 
 // clear poi marker and overlay layers
 function clear_map() {
@@ -1217,11 +1256,12 @@ $('.poi-icons .poi-checkbox input').change(function () {
 function getTips() {
 	var tips = [
 		'Click an area of the minimap to quickly zoom to that location.',
-		'You can zoom-in and click almost any building to see its details.',
+		'You can zoom-in and right-click query almost any building to see its details.',
 		'Find any address by entering part of it into search <i class="fas fa-search fa-sm"></i> and pressing enter.',
 		'Almost street in Bexhill has a history behind its name, search <i class="fas fa-search fa-sm"></i> for a road to learn more.',
-		'Zoom-in and click a bus-stop to see real-time information on bus arrivals.',
-		'Zoom-in and click a letter-box to see if you still have time before the last post collection.',
+		'Zoom-in and right-click query a bus-stop to see real-time information on arrivals.',
+		'Zoom-in and right-click query a letter-box to see todays last post collection.',
+		'Use the mouse wheel or swipe to see the next image in a pop-up. Double-click the image to see it in a larger size.',
 		'Click <i class="fas fa-location-arrow fa-sm"></i> button to turn on your location and see POIs ordered by distance.',
 		'Choose between miles or kilometres in the <a onclick="switchTab(&quot;settings&quot;);">Settings tab</a>.',
 		'Click <i class="fas fa-trash fa-sm"></i> button to clear all layers from the map, right-clicking the button resets the map to defaults.',
