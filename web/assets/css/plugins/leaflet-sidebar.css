@@ -64,9 +64,9 @@
 	width: 100%;
 	height: 50px;
 	overflow: hidden;
-	transition: all 80ms; }
-.sidebar-tabs > li:hover, .sidebar-tabs > ul > li:hover {
-	filter: brightness(80%); }
+	transition: all 100ms; }
+.sidebar-tabs > ul > li:hover {
+	background-color: #bbb; }
 .sidebar-tabs > li.active, .sidebar-tabs > ul > li.active {
 	background-color: #b05000; }
 @media (min-width: 768px) {
@@ -134,7 +134,10 @@
 	min-width: 8px;
 	padding: 0 15px;
 	cursor: pointer;
-	transition: color 200ms; }
+	transition: color 100ms; }
+.sidebar-close:hover {
+	color: #ccc;
+}
 .sidebar-body {
 	position: absolute;
 	overflow-x: hidden;

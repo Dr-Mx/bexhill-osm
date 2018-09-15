@@ -6,12 +6,43 @@ function tour(ti) {
 	var tourPopup = function (name, pos, header, headerSub, img, imgAttrib, markerPopup) {
 		var marker = L.circleMarker(pos, { interactive: true, radius: 15, weight: 2, color: '#b05000', opacity: 0.8, fillColor: '#fff', fillOpacity: 0.5 })
 			.bindPopup(
-				generic_header_parser(header, headerSub) + markerPopup + generic_img_parser('tour/tour' + img + '.jpg', 0, 'inherit', imgAttrib),
+				generic_header_parser(header, headerSub) + markerPopup + (img ? generic_img_parser('tour/tour' + img + '.jpg', 0, 'inherit', imgAttrib) : ''),
 				{ minWidth: imgSize, maxWidth: imgSize }
 			)
-			.bindTooltip('<b>' + header + '</b><br><i>' + headerSub + '</i>', { direction: 'right' });
+			.bindTooltip('<b>' + header + '</b><br><i>' + headerSub + '</i>' + (img ? ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>' : ''), { direction: 'right' });
 		marker._leaflet_id = name;
 		imageOverlay.addLayer(marker);
+	};
+	var setMarker = function (feature, layer, dfltAttrib) {
+		var customOptions = {}, toolTip = '', markerPopup = '';
+		customOptions.maxWidth = imgSize;
+		markerPopup += generic_header_parser(feature.properties.name) +
+			L.Util.template(tagTmpl, { tag: 'Date', value: date_parser(feature.properties.date, 'long'), iconName: 'fas fa-calendar-alt' });
+		toolTip += '<b>' + feature.properties.name + '</b><br><i>' + date_parser(feature.properties.date, 'short') + '</i>';
+		if (feature.properties.description) {
+			markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Description', value: feature.properties.description, iconName: 'fas fa-clipboard' }) + '</span>';
+			toolTip += ' <i style="color:#808080;" class="fas fa-clipboard fa-fw"></i>';
+		}
+		if (feature.properties.img) {
+			customOptions.minWidth = imgSize;
+			var imgAttrib = feature.properties.imgattrib ? feature.properties.imgattrib : dfltAttrib;
+			markerPopup += generic_img_parser('tour/tour09/' + feature.properties.img + '.jpg', 0, 'inherit', imgAttrib);
+			if (feature.properties.img_1) {
+				for (x = 1; x <= 5; x++) {
+					if (feature.properties['img_' + x]) {
+						lID = x;
+						imgAttrib = feature.properties['imgattrib_' + x] ? feature.properties['imgattrib_' + x] : dfltAttrib;
+						markerPopup += generic_img_parser('tour/tour09/' + feature.properties['img_' + x] + '.jpg', x, 'none', imgAttrib);
+					}
+				}
+				markerPopup += show_img_controls(parseInt(lID+1));
+				toolTip += ' <i style="color:#808080;" class="fas fa-images fa-fw"></i>';
+			}
+			else toolTip += ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>';
+		}
+		layer
+			.bindPopup(markerPopup, customOptions)
+			.bindTooltip(toolTip, { direction: 'right', offset: [8, 0] });
 	};
 	// timeout hack to stop iframe breaking on ff
 	setTimeout(function () { switch (ti) {
@@ -19,13 +50,23 @@ function tour(ti) {
 			xmasShops();
 			break;
 		case 'fossils':
-			tourPopup(ti, [50.837617, 0.482517], 'Fossils', 'Iguanadon Tracks', '01/dinoprint', '',
-				'<span class="comment">50.83761°N 0.4825°E</span><br>' +
+			tourPopup('sackvillefos', [50.837617, 0.482517], 'Iguanadon Footprints', 'Sackville', '01/dinofoot-sackville', '',
+				'<span class="comment">50.837617°N 0.482517°E</span><br>' +
 				'View at low tide. Walk directly out onto the beach infront of Sackville Apartments. ' +
 				'The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>' +
 				'One footprint is about 18-inches long.'
 			);
-			imageOverlay.addTo(map)._layers[ti].openPopup();
+			tourPopup('centralfos', [50.836284, 0.473995], 'Iguanadon Footprints', 'Central Parade', '', '',
+				'<span class="comment">50.836284°N 0.4743995°E</span><br>' +
+				'Found in 1978. View at low tide. Walk directly out onto the beach behind Marina Court Avenue. ' +
+				'Impressions in light grey soft sand stone, about 4.5 inches thick lying on harder yellowish stone.<br>' +
+				'11 footprints in total.'
+			);
+			tourPopup('harfieldfos', [50.832998, 0.441865], 'Iguanadon Footprints', 'Hartfield Road', '01/dinofoot-hartfield', '',
+				'<span class="comment">50.832998°N 0.441865°E</span><br>' +
+				'Found in 1980. View at low tide. South of 27 Hartfield Road. ' +
+				'7 footprints in total.'
+			);
 			imgLayer = ti;
 			break;
 		case 'shipwreck':
@@ -55,12 +96,12 @@ function tour(ti) {
 			break;
 		case 'tramway':
 			imageOverlay.addLayer(L.imageOverlay('tour/tour05/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }));
-			map.flyToBounds(imageOverlay.getBounds());
+			getMarkerBounds(imageOverlay);
 			imgLayer = ti;
 			break;
 		case 'motorTrack':
 			imageOverlay.addLayer(L.imageOverlay('tour/tour06/racetrack.png', [[50.84135, 0.47991], [50.83772, 0.49508]], { opacity: 0.9 }));
-			map.flyTo([50.84027, 0.48898], 17);
+			getMarkerBounds(imageOverlay);
 			imgLayer = ti;
 			break;
 		case 'motorSerpollet':
@@ -101,64 +142,71 @@ function tour(ti) {
 				mimeType: 'application/json',
 				cache: false,
 				success: function (json) {
-					var highlight, interact;
+					var iconName, interact;
 					imageOverlay.addLayer(L.geoJSON(json, {
 						filter: function (feature) {
-							if (feature.properties.name) {
-								highlight = 'darkorange';
-								interact = true;
-							}
+							interact = true;
+							if (feature.properties.type === 'v1') iconName = 'v1';
+							else if (feature.properties.type === 'lndmn') iconName = 'lndmn';
+							else if (feature.properties.type === 'acrft') iconName = 'acrft';
+							else if (feature.properties.name) iconName = 'knwn';
 							else {
-								highlight = 'darkgray';
+								iconName = 'nknwn';
 								interact = $('#settings #inputDebug').is(':checked') ? true : false;
 							}
 							return true;
 						},
 						onEachFeature: function (feature, layer) {
 							// push any additional information into a popup
-							if (feature.properties.name) {
-								var customOptions = {}, toolTip = '', markerPopup = '';
-								customOptions.maxWidth = imgSize;
-								markerPopup += generic_header_parser(feature.properties.name) +
-									L.Util.template(tagTmpl, { tag: 'Date', value: date_parser(feature.properties.date, 'long'), iconName: 'fas fa-calendar-alt' });
-								toolTip += '<b>' + feature.properties.name + '</b><br><i>' + date_parser(feature.properties.date, 'short') + '</i>';
-								if (feature.properties.description) {
-									markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Description', value: feature.properties.description, iconName: 'fas fa-clipboard' }) + '</span>';
-									toolTip += ' <i style="color:#808080;" class="fas fa-clipboard fa-fw"></i>';
-								}
-								if (feature.properties.img) {
-									customOptions.minWidth = imgSize;
-									var imgAttrib = feature.properties.imgattrib ? feature.properties.imgattrib : 'Bexhill Observer';
-									markerPopup += generic_img_parser('tour/tour09/bomb/' + feature.properties.img + '.jpg', 0, 'inherit', imgAttrib);
-									if (feature.properties.img_1) {
-										for (x = 1; x <= 5; x++) {
-											if (feature.properties['img_' + x]) {
-												lID = x;
-												markerPopup += generic_img_parser('tour/tour09/bomb/' + feature.properties['img_' + x] + '.jpg', x, 'none', imgAttrib);
-											}
-										}
-										markerPopup += show_img_controls(parseInt(lID+1));
-										toolTip += ' <i style="color:#808080;" class="fas fa-images fa-fw"></i>';
-									}
-									else toolTip += ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>';
-								}
-								layer
-									.bindPopup(markerPopup, customOptions)
-									.bindTooltip(toolTip, { direction: 'right', offset: [8, 0] });
-							}
+							if (feature.properties.name) setMarker(feature, layer, 'Bexhill Observer'); 
 							else if (interact) layer.bindTooltip(feature.geometry.coordinates.toString());
 						},
 						pointToLayer: function (feature, latlng) {
-							return L.circle(latlng, {
-								color: 'firebrick',
-								fillColor: highlight,
-								fillOpacity: 0.5,
-								weight: 2,
-								radius: 15,
-								interactive: interact
+							return L.marker(latlng, {
+								icon: L.icon({
+									className: 'ww2Icon',
+									iconUrl: 'tour/tour09/mrkr_' + iconName + '.png',
+									iconSize: [28, 28]
+								}),
+								bounceOnAdd: false,
+								interactive: interact,
+								keyboard: false,
+								riseOnHover: true
 							});
 						}
 					}));
+					map.fireEvent('zoomend');
+					$('#spinner').fadeOut('fast');
+				}
+			});
+			imgLayer = ti;
+			break;
+		case 'ww2Shelters':
+			$('#spinner').show();
+			$.ajax({
+				url: 'tour/tour09/ww2shelters.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function (json) {
+					imageOverlay.addLayer(L.geoJSON(json, {
+						onEachFeature: function (feature, layer) {
+							setMarker(feature, layer, 'Bexhill Museum');
+						},
+						pointToLayer: function (feature, latlng) {
+							return L.marker(latlng, {
+								icon: L.icon({
+									className: 'ww2Icon',
+									iconUrl: 'tour/tour09/mrkr_shltr.png',
+									iconSize: [28, 28]
+								}),
+								bounceOnAdd: false,
+								keyboard: false,
+								riseOnHover: true
+							});
+						}
+					}));
+					map.fireEvent('zoomend');
 					$('#spinner').fadeOut('fast');
 				}
 			});

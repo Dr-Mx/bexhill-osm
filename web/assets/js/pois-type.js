@@ -33,7 +33,7 @@ var pois = {
 
 	information: {
 		name: 'Information',
-		query: 'nwr[tourism=information][~"ref|name"~"."];',
+		query: 'nwr[information][information!~guidepost][~"^ref$|^name$"~"."];',
 		iconName: 'information',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'information'],
@@ -52,7 +52,7 @@ var pois = {
 
 	artwork: {
 		name: 'Public Artwork',
-		query: 'nwr[tourism~"artwork|gallery"];',
+		query: 'nwr[tourism~"artwork|gallery"];nwr[map_type=toposcope];',
 		iconName: 'publicart',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'artwork', 'sculpture'],
@@ -86,7 +86,7 @@ var pois = {
 
 	recreation_ground: {
 		name: 'Recreation Area',
-		query: 'way[~"."~"recreation_ground|golf_course"][access!~private];',
+		query: 'way[~"."~"^recreation_ground$|^golf_course$"][access!~private];',
 		iconName: 'soccer',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'park', 'open-space', 'green'],
@@ -451,7 +451,7 @@ var pois = {
 
 	police: {
 		name: 'Emergency',
-		query: 'nwr[~"."~"police|fire_station|ambulance_station"];',
+		query: 'nwr[~"^amenity$|^emergency$"~"^police$|^fire_station$|^ambulance_station$"];',
 		iconName: 'police2',
 		catName: 'Services',
 		tagKeyword: ['police', 'fire', 'ambulance', 'help', 'emergency']
@@ -1129,7 +1129,7 @@ var pois = {
 	// OTHER
 	
 	political: {
-		name: 'Voting Ward',
+		name: 'Ward',
 		query: 'relation[political_division=ward];',
 		iconName: 'politicalboundary',
 		catName: 'Other',
@@ -1158,7 +1158,7 @@ var pois = {
 
 	surveillance: {
 		name: 'Surveillance',
-		query: 'node[~"."~"speed_camera|surveillance"];',
+		query: 'node[~"^highway$|^man_made$"~"^speed_camera$|^surveillance$"];',
 		iconName: 'cctv',
 		catName: 'Other',
 		tagKeyword: ['surveillance', 'cctv', 'security', 'camera'],

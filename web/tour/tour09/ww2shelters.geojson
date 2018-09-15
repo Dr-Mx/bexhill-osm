@@ -1,0 +1,1086 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "10 Cantelupe Road",
+		"date": "1941",
+        "description": "Basement. Capacity 150. Bunks 36."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.479262,
+          50.839718
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "17 & 18 Park Road",
+		"date": "1941",
+        "description": "Basement. Capacity 200. Bunks 75."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.468172,
+          50.838554
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "31 & 33 Sackville Road",
+		"date": "1941",
+        "description": "Basement. Capacity 200. Bunks 60."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.470245,
+          50.838637
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "36 & 40 Sackville Road",
+		"date": "1941",
+        "description": "Basement. Capacity 200. Bunks 41."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.469674,
+          50.839076
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "38 Salisbury Road",
+		"date": "1941",
+        "description": "Basement. Capacity 74.  Bunks 18."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.470567,
+          50.84612
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "4 & 5 Park Road",
+		"date": "1941",
+        "description": "Basement. Capacity 200. Bunks 75."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.467995,
+          50.839448
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "67 Devonshire Road",
+		"date": "1941",
+        "description": "Basement. Capacity 100. Bunks 27."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.474215,
+          50.838248
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "8 Buckhurst Place",
+		"date": "1941",
+        "description": "Basement. Capacity 75. Bunks 15."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46966,
+          50.840917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "All Saint's School",
+		"date": "1940",
+        "description": "School trench. Capacity 116."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.467992,
+          50.856724
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Amherst Road",
+		"date": "1939",
+        "description": "Surface. Capacity 40. Bunks 9."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.471672,
+          50.845554
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Arthur Road",
+		"date": "1941",
+        "description": "Surface. Capacity 50. Bunks 45."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.464323,
+          50.845229
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barrack Road",
+		"date": "1939",
+        "description": "School trench. Capacity 220. Bunks 48.",
+        "img": "bomb/barrackroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.4729,
+          50.846973
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Belle Hill junction",
+		"date": "1940",
+        "description": "Surface. Capacity 90. Bunks 44."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46808,
+          50.845854
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bending Crescent",
+		"date": "1939",
+        "description": "Surface. Capacity 50. Bunks 24.",
+        "img": "shelter/bendingcrescent"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.470685,
+          50.849713
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bexhill Grammar School",
+		"date": "1943",
+        "description": "Emergency shelters. Possibly x4. No other details known.",
+        "img": "shelter/bexhillgrammar"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.461351,
+          50.857052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bodle Crecent",
+		"date": "1941",
+        "description": "Surface. Capacity 50. Bunks 45."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.469617,
+          50.854289
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Buxton Drive",
+		"date": "1941",
+        "description": "Surface. Capacity 50. Bunks 45."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46966,
+          50.852115
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chantry Lane",
+		"date": "1939",
+        "description": "School trench. Capacity 102. Bunks 24."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.477235,
+          50.84757
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Collington Avenue - Mayfield School",
+		"date": "1941",
+        "description": "Basement."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.44809,
+          50.841218
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Collington Halt - Cooden Drive",
+		"date": "1939",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.457955,
+          50.838969
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Collington Mansions",
+		"date": "1941",
+        "description": "Basement. Capacity 24. Approximate position."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.461683,
+          50.840565
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Collington Mansions",
+		"date": "1943",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.461946,
+          50.840372
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Colonnade",
+		"date": "1939",
+        "description": "Surface. Capacity 150.",
+        "img": "shelter/thecolonnade"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.471774,
+          50.837086
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "De La Warr Road",
+		"date": "1939",
+        "description": "Surface. Capacity 35. Bunks 9."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.486118,
+          50.845419
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "De La Warr Road",
+		"date": "1939",
+        "description": "Existing bus shelter. Surface. Capacity 10.",
+        "img": "shelter/delawarrroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.491418,
+          50.845409
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Devonshire Square",
+		"date": "1940",
+        "description": "Surface. Capacity 80."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.474054,
+          50.84067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Down School",
+		"date": "1943",
+        "description": "Emergency shelters. Possibly x3.  No other details known."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.466189,
+          50.846652
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "East Parade",
+		"date": "1939",
+        "description": "Trench. Capacity 64.",
+        "img": "shelter/eastparade",
+		"imgattrib": "The Royal Windsor Website & Forum"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.477766,
+          50.837729
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Egerton Park - Wickham Avenue",
+		"date": "1939",
+        "description": "Surface. Capacity 92.",
+        "img": "shelter/wickhamavenue",
+		"imgattrib": "Bexhill Observer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.467552,
+          50.839748
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Glyne Ascent",
+		"date": "1941",
+        "description": "Surface. Capacity 20. Bunks 6."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.494782,
+          50.846411
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hamilton Terrace",
+		"date": "1941",
+        "description": "Surface. Capacity 50. Bunks 45."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.460696,
+          50.84425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Havelock Road",
+		"date": "1941",
+        "description": "Surface. Capacity 50.  Bunks 45.",
+        "img": "shelter/havelockroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.473737,
+          50.851732
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Holliers Hill - Chantry Avenue",
+		"date": "1939",
+        "description": "Surface. Capacity 40. Bunks 12.",
+        "img": "shelter/chantryavenue",
+        "imgattrib": "Bexhill-OSM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.476435,
+          50.850028
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "London Road - Corporation Depot",
+		"date": "1941",
+        "description": "Surface. Capacity 50.  Bunks 45."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.469344,
+          50.847587
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "London Road - Russell's Garage",
+		"date": "1941",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.469499,
+          50.842851
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "London Road -Thorpe's",
+		"date": "1941",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.469548,
+          50.844325
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Magdalen Road",
+		"date": "1939",
+        "description": "School trench. Capacity 110."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.478914,
+          50.841618
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Marina Arcade - Channel View",
+		"date": "1939",
+        "description": "Surface. Capacity 20.",
+        "img": "shelter/channelview"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.475212,
+          50.837428
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mitten Road",
+		"date": "1943",
+        "description": "Surface. Capacity 20. Approximate location."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.472391,
+          50.842885
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ninfield Road - Belmont Stores",
+		"date": "1941",
+        "description": "Basement. Capacity 75. Bunks 18."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.465937,
+          50.858034
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Parkhurst Road - Boots",
+		"date": "1943",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.473399,
+          50.839672
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Peartree Lane",
+		"date": "1940",
+        "description": "Surface. Capacity 70.",
+        "img": "shelter/peartreelane"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.434518,
+          50.846076
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Penland Road - Beacon School",
+		"date": "1941",
+        "description": "Basement."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.490887,
+          50.847349
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sea Road - Style & Winch",
+		"date": "1940",
+        "description": "Basement. Capacity 105. Bunks 27."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.476859,
+          50.839523
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Secondary School",
+		"date": "1943",
+        "description": "Emergency shelters. Possibly x5. No other details known."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.466855,
+          50.84741
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sedgwick Road",
+		"date": "1943",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.474027,
+          50.852443
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Short Lane",
+		"date": "1939",
+        "description": "Surface. Capacity 70.",
+        "img": "shelter/shortlane"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.477384,
+          50.846205
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sidley Green",
+		"date": "1939",
+        "description": "Rebuilt 1943. Trench. Capacity 135.",
+        "img": "shelter/sidleygreen(0)",
+        "img_1": "shelter/sidleygreen(1)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.473104,
+          50.855572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Springfield Road",
+		"date": "1941",
+        "description": "Surface. Capacity 50. Bunks 45."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.471865,
+          50.849761
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Barnabas School",
+		"date": "1943",
+        "description": "Emergency shelters. 2x. No other details known.",
+        "img": "shelter/stbarnabas"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.467973,
+          50.841156
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Leonards Road - Messrs Miller & Franklin",
+		"date": "1941",
+        "description": "Basement. Capacity 200. Bunks 99.",
+        "img": "shelter/millerfranklin"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.475856,
+          50.839867
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Leonards Road - Messrs Mence Smith",
+		"date": "1941",
+        "description": "Basement. Capacity 150. Bunks 51."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.474775,
+          50.839642
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Mark's School",
+		"date": "1939",
+        "description": "School trench. Capacity 125.",
+        "img": "shelter/stmarkstrench",
+		"imgattrib": "David Hatherell"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.438391,
+          50.846415
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Mark's School",
+		"date": "1939",
+        "description": "Emergency shelters. Possibly x3. No other details known."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.436599,
+          50.84563
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "St Peter's School",
+		"date": "1943",
+        "description": "Emergency shelters. Possibly x5. No other details known."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.473335,
+          50.847454
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station",
+		"date": "1941",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.477216,
+          50.841093
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station platform",
+		"date": "1941",
+        "description": "Surface. Capacity 20. Approximate position."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.475129,
+          50.840961
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station platform",
+		"date": "1941",
+        "description": "Surface. Capacity 20. Approximate position."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.475143,
+          50.840815
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station Road",
+		"date": "1941",
+        "description": "Surface. Capacity 62."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.475663,
+          50.841178
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Suffolk Road",
+		"date": "1941",
+        "description": "Surface. Capacity 50. Bunks 45."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.472219,
+          50.856507
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Terminus Road",
+		"date": "1943",
+        "description": "Surface. Capacity 152."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.467016,
+          50.840504
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Terminus Road",
+		"date": "1939",
+        "description": "School trench. Capacity 304. Bunks 34."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.467075,
+          50.840876
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Down",
+		"date": "1941",
+        "description": "School trench. Capacity 300.",
+        "img": "shelter/thedown"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.464918,
+          50.848582
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Town Hall Square",
+		"date": "1939",
+        "description": "Surface. Capacity 60. Bunks 18.",
+        "img": "shelter/townhallsquare(0)",
+        "img_1": "shelter/townhallsquare(1)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.470728,
+          50.841286
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Turkey Road",
+		"date": "1941",
+        "description": "Surface. Capacity 60."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46701,
+          50.856907
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Upper Sea Road",
+		"date": "1939",
+        "description": "Surface. Capacity 42. Bunks 12.",
+        "img": "shelter/uppersearoad(0)",
+        "img_1": "shelter/uppersearoad(1)",
+        "img_2": "shelter/uppersearoad(2)",
+        "imgattrib": "Bexhill-OSM",
+        "imgattrib_1": "Bexhill-OSM",
+        "imgattrib_2": "Bexhill-OSM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.47805,
+          50.84356
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Victoria Road",
+		"date": "1941",
+        "description": "Surface. Capacity 50. Bunks 45."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.467691,
+          50.841977
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Western Road - Garage",
+		"date": "1943",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.471205,
+          50.840128
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Western Road - School",
+		"date": "1943",
+        "description": "Surface. Capacity 20."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.469934,
+          50.840013
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wrestwood Road",
+		"date": "1939",
+        "description": "Surface. Capacity 70. Bunks 30.",
+        "img": "shelter/wrestwoodroad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.477369,
+          50.853561
+        ]
+      }
+    }
+  ]
+}

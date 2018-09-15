@@ -1,3 +1,5 @@
 # CheckSpelling Off
 Header set Access-Control-Allow-Origin "*"
 Options -Indexes
+
+Redirect /ww2 /?M=forte&T=tour&U=9&G=ww2Bombmap

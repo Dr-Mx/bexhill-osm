@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v4.6.0
+
+**Date:** 15/09/2018
+
+Updated js
+ - leaflet.js 1.3.4
+ - Control.Geocoder.min.js 1.6.0
+
+Site changes
+ - Toggle overlay transparency with CTRL key
+ - Support for using key:image and key:wikimedia_commons together
+ - Historic Tour geojson WW2 air-raid shelter map
+ - Change circles for icons on WW2 bomb map, resize on zoom
+ - More dinosaur footprints
+ - Remove inline Tour 'onclick' in favour of function
+ - Many bug fixes and improvements
+
+
 ## v4.5.0 - Query features toggle
 
 **Date:** 09/07/2018
@@ -17,7 +35,7 @@ Site changes
  - Ability to download complete bounding box area from Overpass
 
 
- ## v4.4.0 - Tutorial modals
+## v4.4.0 - Tutorial modals
 
 **Date:** 13/06/2018
 

@@ -300,7 +300,12 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "Glyne Gap Field",
+        "date": "1944-06-22",
+        "description": "V-1 flying bomb. 2 injured in Kent Close.",
+		"type": "v1"
+      },
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -1529,8 +1534,8 @@
       "properties": {
         "name": "10 Woodsgate Avenue",
         "date": "1940-09-29",
-        "description": "Ms Margaret Lawrence (25), Ms Margaret I. Lawrence (55) and Ms Caroline Massey (68) killed.",
-        "img": "woodsgateavenue"
+        "description": "Margaret Lawrence (25), Margaret I. Lawrence (55) and Caroline Massey (68) killed.",
+        "img": "bomb/woodsgateavenue"
       },
       "geometry": {
         "type": "Point",
@@ -1588,7 +1593,7 @@
         "name": "13-17 Jameson Road",
         "date": "1943-01-02 09:00",
         "description": "Three houses destroyed.",
-        "img": "13-17jamesonroad"
+        "img": "bomb/13-17jamesonroad"
       },
       "geometry": {
         "type": "Point",
@@ -1618,7 +1623,7 @@
         "name": "144 De La Warr Road",
         "date": "1943-01-28 09:00",
         "description": "A bomb struck a house chimney on the opposite side of De La Warr Road, flew across the road to number 144. It entered the bedroom window, crossed the landing and exited the house at the rear before exploding on the open ground. The damage rendered the house inhabitable and adjacent houses had their windows blown in.",
-        "img": "delawarrroad"
+        "img": "bomb/delawarrroad"
       },
       "geometry": {
         "type": "Point",
@@ -1661,7 +1666,9 @@
       "properties": {
         "name": "19 Dalehurst Road",
         "date": "1940-09-30",
-        "description": "Mrs Harriet R. Tidd (23) of number 30 Dalehurst Road killed."
+        "description": "Harriet R. Tidd (23) of number 30 Dalehurst Road killed.",
+        "img": "bomb/harriettidd",
+		"imgattrib": "Harriet Tidd's wedding, Bexhill Observer 1937"
       },
       "geometry": {
         "type": "Point",
@@ -1690,15 +1697,15 @@
       "properties": {
         "name": "27-31 Devonshire Road",
         "date": "1940-12-11 12:25",
-        "description": "Mid day raid. 6 bombs. Three buildings destroyed. 3 Killed, 22 injured. Shops destroyed: Perrett & Co chemist, Hilton & Sons boot makers, Flinn & Sons dyers and cleaners and H. Carter butcher. Mr Alfred V. Barker (19) delivery boy, Ms Violet B. Rose (27) shop assistant at Flinn's and Mr Frederick G. Kerley (70), a passer-by, were killed.",
-        "img": "27-31devonshireroad(0)",
-        "img_1": "27-31devonshireroad(1)"
+        "description": "Mid day raid. 6 bombs. Three buildings destroyed. 3 Killed, 22 injured. Shops destroyed: Perrett & Co chemist, Hilton & Sons boot makers, Flinn & Sons dyers and cleaners and H. Carter butcher. Alfred V. Barker (19) delivery boy, Violet B. Rose (27) shop assistant at Flinn's and Frederick G. Kerley (70), a passer-by, were killed.",
+        "img": "bomb/27-31devonshireroad(0)",
+        "img_1": "bomb/27-31devonshireroad(1)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          0.47412,
-          50.83926
+          0.47397,
+          50.83931
         ]
       }
     },
@@ -1748,9 +1755,9 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "34 St Leonard's Road. L.J. Collis & Co Chemist",
+        "name": "L.J. Collis & Co Chemist, 34 St Leonards Road",
         "date": "1940-09-26 16:40",
-        "description": "Shop destroyed and proprietor Mr Leslie J. Collis (44) killed."
+        "description": "Shop destroyed and proprietor Leslie J. Collis (44) killed."
       },
       "geometry": {
         "type": "Point",
@@ -1779,7 +1786,9 @@
       "properties": {
         "name": "35 Station Road",
         "date": "1940-11-24",
-        "description": "Mr William G. Reeves (53) killed at his newsagent shop."
+        "description": "William G. Reeves (53) killed at his newsagent shop.",
+        "img": "bomb/30stationroad",
+		"imgattrib": "Bexhill Museum"
       },
       "geometry": {
         "type": "Point",
@@ -1809,7 +1818,10 @@
       "properties": {
         "name": "4 Wilton Road",
         "date": "1940-09-30",
-        "img": "wiltonroad"
+        "description": "Gas main fracture.",
+        "img": "bomb/wiltonroad(0)",
+        "img_1": "bomb/wiltonroad(1)",
+        "img_2": "bomb/wiltonroad(2)"
       },
       "geometry": {
         "type": "Point",
@@ -1824,8 +1836,8 @@
       "properties": {
         "name": "42 Bancroft Road",
         "date": "1940-09-19 10:30",
-        "description": "Sisters Ms Annie L Coverdale (75) and Ms Evelyn Coverdale (62) occupants of No 42 taken to Bexhill Hospital where they died. 2 others injured. No 40 also destroyed and 44 and 46 damaged.",
-        "img": "42bancroftroad"
+        "description": "Sisters Annie L. Coverdale (75) and Evelyn Coverdale (62) occupants of No 42 taken to Bexhill Hospital where they died. 2 others injured. No 40 also destroyed and 44 and 46 damaged.",
+        "img": "bomb/42bancroftroad"
       },
       "geometry": {
         "type": "Point",
@@ -1868,7 +1880,7 @@
       "properties": {
         "name": "5 Gloucester Avenue",
         "date": "1943-12-22 23:00",
-        "description": "Considerable blast damage done.  The homes of Mrs Henrietta Watson, elderly, and next door, daughter in law Mrs Iris Watson and her daughter Ann Watson (4) were destroyed. All three taken to hospital by  ambulance. Ann died. Eight people injured. Residents of Gloucester Avenue evacuated."
+        "description": "Considerable blast damage done.  The homes of Henrietta Watson and next door, daughter in law Iris Watson and her daughter Muriel A. Watson (4) were destroyed. All three taken to hospital by ambulance, Muriel died, another eight people injured. Residents of Gloucester Avenue evacuated."
       },
       "geometry": {
         "type": "Point",
@@ -1883,8 +1895,8 @@
       "properties": {
         "name": "57 Amherst Road",
         "date": "1940-10-08",
-        "description": "Heavy raid injuring five people. Mr Thomas Mepham (69) and his brother in law Mr William Turner (62) taken to hospital at Epsom where they both subsequently died.",
-        "img": "57amherstroad"
+        "description": "Heavy raid injuring five people. Thomas Mepham (69) and his brother in law William Turner (62) taken to hospital at Epsom where they both subsequently died.",
+        "img": "bomb/57amherstroad"
       },
       "geometry": {
         "type": "Point",
@@ -1900,16 +1912,16 @@
         "name": "57 Devonshire Road",
         "date": "1942-05-09",
         "description": "Longley Brothers shop and the Bexhill Observer office were destroyed. Today you can see these buildings were never rebuilt to their full height.",
-        "img": "57devonshireroad(0)",
-        "img_1": "57devonshireroad(1)",
-        "img_2": "57devonshireroad(2)",
-        "img_3": "57devonshireroad(3)"
+        "img": "bomb/57devonshireroad(0)",
+        "img_1": "bomb/57devonshireroad(1)",
+        "img_2": "bomb/57devonshireroad(2)",
+        "img_3": "bomb/57devonshireroad(3)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          0.47421,
-          50.83871
+          0.47415,
+          50.83858
         ]
       }
     },
@@ -1918,8 +1930,8 @@
       "properties": {
         "name": "7 Westville Road",
         "date": "1943-05-23",
-        "description": "Ms Edith E. Few (65) and Ms Lily A. Smith (54) killed by a low level bomb that had sliced through numbers 9 and 11. 5 injured.",
-        "img": "westvilleroad"
+        "description": "Edith E. Few (65) and Lily A. Smith (54) killed by a low level bomb that had sliced through numbers 9 and 11. 5 injured.",
+        "img": "bomb/westvilleroad"
       },
       "geometry": {
         "type": "Point",
@@ -1934,7 +1946,7 @@
       "properties": {
         "name": "8-10 Cantelupe Road",
         "date": "1940-09-12",
-        "img": "8canteluperoad"
+        "img": "bomb/8canteluperoad"
       },
       "geometry": {
         "type": "Point",
@@ -1947,7 +1959,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Adams Farm",
+        "name": "Adams Farm, Sandrock Hill",
         "date": "1940-11-12"
       },
       "geometry": {
@@ -1961,7 +1973,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Adams Farm",
+        "name": "Adams Farm, Sandrock Hill",
         "date": "1940-11-12"
       },
       "geometry": {
@@ -1975,7 +1987,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Adams Farm",
+        "name": "Adams Farm, Sandrock Hill",
         "date": "1940-11-12",
         "description": "Unexploded bomb."
       },
@@ -2047,7 +2059,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Barrack Hall",
+        "name": "Barrack Hall, Belle Hill",
         "date": "1940-09-12"
       },
       "geometry": {
@@ -2106,7 +2118,7 @@
         "name": "Barrack Road",
         "date": "1940-11-24",
         "description": "Direct hit on Barrack Road air raid shelter. No casualties.",
-        "img": "barrackroad"
+        "img": "bomb/barrackroad"
       },
       "geometry": {
         "type": "Point",
@@ -2122,7 +2134,7 @@
         "name": "Barrack Road Cemetery",
         "date": "1940-09-30",
         "description": "Bomb landed amongst the graves, elm trees were uprooted and a piece of tombstone was hurled at a motor vehicle.",
-        "img": "barrackroadcemetery"
+        "img": "bomb/barrackroadcemetery"
       },
       "geometry": {
         "type": "Point",
@@ -2318,7 +2330,9 @@
       "type": "Feature",
       "properties": {
         "name": "Bexhill Golf Course",
-        "date": "1943-08-12"
+        "date": "1943-08-12",
+        "description": "Land mine.",
+		"type": "lndmn"
       },
       "geometry": {
         "type": "Point",
@@ -2331,9 +2345,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Bexhill golf course",
+        "name": "Bexhill Golf Course",
         "date": "1944-07-07",
-        "description": "Flying Bomb. 7 injured."
+        "description": "V-1 flying bomb. 7 injured.",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -2360,9 +2375,9 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Bexhill Hospital",
-        "date": "1942-08-11",
-        "description": "9 bombs dropped. 1 injury to a patient by flying glass."
+        "name": "Bexhill Hospital, Holliers Hill",
+        "date": "1942-08-11 10:00",
+        "description": "9 bombs dropped. All doors and windows were blown in and roof was damaged. 1 injury to a patient by flying glass."
       },
       "geometry": {
         "type": "Point",
@@ -2389,7 +2404,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Brassey Road, St Barnabas Vicarage",
+        "name": "St Barnabas Vicarage, Brassey Road",
         "date": "1942-05-16",
         "description": "Adjacent church windows destroyed including an original depicting St. Luke called 'Good Physician'."
       },
@@ -2404,9 +2419,9 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Brassey Road, Suffolk House",
+        "name": "Suffolk House, Brassey Road",
         "date": "1943-01-02 09:00",
-        "description": "Bexhill's greatest loss of life in one incident. Ms Ada M. Adamson (75), Ms Jane C. Cana (84), Ms Edith L. Corke (39) and Ms Eleanor M. Coventry (65) killed. 2 other occupants seriously injured."
+        "description": "Bexhill's greatest loss of life in one incident. Ada M. Adamson (75), Jane C. Cana (84), Edith L. Corke (39) and Eleanor M. Coventry (65) killed. 2 other occupants seriously injured."
       },
       "geometry": {
         "type": "Point",
@@ -2434,10 +2449,12 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Buckhurst Road, Twinehams",
+        "name": "Twinehams, Buckhurst Road",
         "date": "1940-09-19",
-        "description": "Mr John Croft (41) killed. Bexhill's first fatality. Two other workmen at premises injured.",
-        "img": "twinehams"
+        "description": "John Croft (41) killed. Bexhill's first fatality. Two other workmen at premises injured.",
+        "img": "bomb/twinehams",
+		"img_1": "bomb/johncroft",
+		"imgattrib_1": "John Croft"
       },
       "geometry": {
         "type": "Point",
@@ -2496,7 +2513,7 @@
         "name": "Cantelupe Road",
         "date": "1940-09-24",
         "description": "Landed on pavement but did not explode until five hours later.  Caused upheaval of the road and displacement of roof tiles on surrounding houses. No casualties.",
-        "img": "canteluperoad"
+        "img": "bomb/canteluperoad"
       },
       "geometry": {
         "type": "Point",
@@ -2509,7 +2526,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Collington Avenue, Collington Mansions",
+        "name": "Collington Mansions, Collington Avenue",
         "date": "1940-09-30",
         "description": "Unexploded bomb."
       },
@@ -2568,10 +2585,11 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Coniston, Hartfield Road",
+        "name": "Coniston, 7 Hartfield Road",
         "date": "1944-08-12",
-        "description": "Flying bomb.",
-        "img": "hartfieldroad"
+        "description": "V-1 flying bomb. Gunner William Lines 1085602 of the 150/71 Field Regiment Royal artillery killed in an adjoining property.",
+        "img": "bomb/hartfieldroad",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -2600,7 +2618,8 @@
       "properties": {
         "name": "Cooden Golf Links",
         "date": "1940-12-15",
-        "description": "Land mine."
+        "description": "Land mine.",
+		"type": "lndmn"
       },
       "geometry": {
         "type": "Point",
@@ -2669,7 +2688,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "De La Warr Pavilion",
+        "name": "De La Warr Pavilion, Marina",
         "date": "1940-09-30 08:10",
         "description": "Destroyed dressing rooms and some of the backstage area. The buildings foundations also suffered minor damage."
       },
@@ -2726,7 +2745,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Egerton Road, Fishers Yard",
+        "name": "Fishers Yard, Egerton Road",
         "date": "1940-09-30 08:10",
         "description": "Unexploded bomb which exploded 1st October at 01:15 hours."
       },
@@ -2741,7 +2760,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Ellerslie Lane, Wheatfield",
+        "name": "Wheatfield, Ellerslie Lane",
         "date": "1940-11-07"
       },
       "geometry": {
@@ -2812,10 +2831,11 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Glovers Farm",
+        "name": "Glovers Farm, Glovers Lane",
         "date": "1944-06-26",
-        "description": "Flying bomb. 8 injured.",
-        "img": "gloversfarm"
+        "description": "V-1 flying bomb. 8 injured, including 1 hospitalised, 5 cattle killed.",
+        "img": "bomb/gloversfarm",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -2872,7 +2892,7 @@
       "properties": {
         "name": "Hastings Gas Works",
         "date": "1943-01-28",
-        "description": "Low level attack, three bombs. 15 injured, of which Mr Bertram G. Niner (39) of Bulverhythe died 3 days later and Mr William M. Day (59) - also of Bulverhythe - died a fortnight later."
+        "description": "Low level attack, three bombs. 15 injured, of which Bertram G. Niner (39) of Bulverhythe died 3 days later and William M. Day (59), also of Bulverhythe, died a fortnight later."
       },
       "geometry": {
         "type": "Point",
@@ -2887,7 +2907,7 @@
       "properties": {
         "name": "Hastings Gas works",
         "date": "1943-01-28",
-        "description": "Low level attack, three bombs. 15 injured, of which Mr Bertram G. Niner (39) of Bulverhythe died 3 days later and Mr William M. Day (59) - also of Bulverhythe - died a fortnight later."
+        "description": "Low level attack, three bombs. 15 injured, of which Bertram G. Niner (39) of Bulverhythe died 3 days later and William M. Day (59), also of Bulverhythe, died a fortnight later."
       },
       "geometry": {
         "type": "Point",
@@ -2902,7 +2922,7 @@
       "properties": {
         "name": "Hastings Gas Works",
         "date": "1943-01-28",
-        "description": "Low level attack, three bombs. 15 injured, of which Mr Bertram G. Niner (39) of Bulverhythe died 3 days later and Mr William M. Day (59) - also of Bulverhythe - died a fortnight later."
+        "description": "Low level attack, three bombs. 15 injured, of which Bertram G. Niner (39) of Bulverhythe died 3 days later and William M. Day (59), also of Bulverhythe, died a fortnight later."
       },
       "geometry": {
         "type": "Point",
@@ -2915,7 +2935,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "High Street",
+        "name": "High Street, Old Town",
         "date": "1940-09-12"
       },
       "geometry": {
@@ -2929,9 +2949,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Highwoods golf course",
+        "name": "Highwoods Golf Course",
         "date": "1944-07-03",
-        "description": "Flying bomb."
+        "description": "V-1 flying bomb.",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -2944,7 +2965,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Jameson Road Gas Board workshops",
+        "name": "Gas Board Workshops, Jameson Road",
         "date": "1940-09-12"
       },
       "geometry": {
@@ -2958,10 +2979,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Knole Court",
+        "name": "Knole Court, Knole Road",
         "date": "1940-09",
         "description": "A bomb removed one of the gables and the two entrances.",
-        "img": "knolecourt",
+        "img": "bomb/knolecourt",
         "imgattrib": "Bexhill Observer | Arthur Fernandez"
       },
       "geometry": {
@@ -2975,9 +2996,9 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Knole Road, Carlton Hotel",
+        "name": "Carlton Hotel, Knole Road",
         "date": "1940-09-24",
-        "img": "carltonhotel"
+        "img": "bomb/carltonhotel"
       },
       "geometry": {
         "type": "Point",
@@ -3004,7 +3025,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Manor House Grounds",
+        "name": "Manor House grounds, De La Warr Road",
         "date": "1940-09-19"
       },
       "geometry": {
@@ -3018,7 +3039,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Manor House grounds",
+        "name": "Manor House grounds, De La Warr Road",
         "date": "1940-09-19"
       },
       "geometry": {
@@ -3033,8 +3054,9 @@
       "type": "Feature",
       "properties": {
         "name": "Maple Walk",
-        "date": "1944-07",
-        "description": "V1 damaged a residential dwelling named High Chimneys (now known as Maple House)."
+        "date": "1944-07-14",
+        "description": "V-1 flying bomb. Damaged a residential dwelling named High Chimneys (now known as Maple House). 2 injured, including 1 hospitalised.",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -3047,10 +3069,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Metropole Hotel",
+        "name": "Metropole Hotel, West Parade",
         "date": "1940-09-30 08:10",
         "description": "Considerable damage to the front of the building, although unoccupied at the time a postman was badly injured by falling rubble. Beach Towers Hotel opposite also sustained damage causing loss of one of its turrets.",
-        "img": "metropolehotel"
+        "img": "bomb/metropolehotel"
       },
       "geometry": {
         "type": "Point",
@@ -3063,7 +3085,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Metropolitan Convalescence Home",
+        "name": "Metropolitan Convalescent Home, Upper Sea Road",
         "date": "1940-09-19"
       },
       "geometry": {
@@ -3077,9 +3099,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Metropolitan Convalescence Home",
+        "name": "Metropolitan Convalescent Home, Upper Sea Road",
         "date": "1944-08-12",
-        "description": "Flying bomb."
+        "description": "V-1 flying bomb.",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -3151,10 +3174,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Motcombe Court",
+        "name": "Motcombe Court, Bedford Avenue",
         "date": "1943-01-02",
         "description": "A 500kg bomb demolished three upper floors of the east wing. The building was unoccupied apart from the caretaker who suffered superficial injuries. Rebuilt in 1946.",
-        "img": "motcombecourt"
+        "img": "bomb/motcombecourt"
       },
       "geometry": {
         "type": "Point",
@@ -3469,7 +3492,8 @@
       "properties": {
         "name": "Pebsham Marsh",
         "date": "1944-07-11",
-        "description": "Flying bomb."
+        "description": "V-1 flying bomb.",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -3482,7 +3506,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Post Office rear",
+        "name": "Post Office rear, Devonshire Square",
         "date": "1940-09-26 16:40",
         "description": "Unexploded bomb."
       },
@@ -3511,7 +3535,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Railway line",
+        "name": "Railway, Station Road",
         "date": "1940-09-26 16:40"
       },
       "geometry": {
@@ -3554,7 +3578,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Reginald Road railway yard",
+        "name": "Railway yard, Reginald Road",
         "date": "1940-11-01"
       },
       "geometry": {
@@ -3568,7 +3592,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Reginald Road railway yard",
+        "name": "Railway yard, Reginald Road",
         "date": "1940-11-01"
       },
       "geometry": {
@@ -3582,7 +3606,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Reginald Road railway yard",
+        "name": "Railway yard, Reginald Road",
         "date": "1940-11-01"
       },
       "geometry": {
@@ -3596,7 +3620,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Reginald Road railway yard",
+        "name": "Railway yard, Reginald Road",
         "date": "1940-11-01"
       },
       "geometry": {
@@ -3610,7 +3634,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Reginald Road railway yard",
+        "name": "Railway yard, Reginald Road",
         "date": "1940-11-01"
       },
       "geometry": {
@@ -3624,7 +3648,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Reginald Road railway yard",
+        "name": "Railway yard, Reginald Road",
         "date": "1940-11-01"
       },
       "geometry": {
@@ -3638,7 +3662,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Reginald Road railway yard",
+        "name": "Railway yard, Reginald Road",
         "date": "1940-11-01"
       },
       "geometry": {
@@ -3652,7 +3676,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Reginald Road, rear of, by allotments",
+        "name": "Rear of allotments, Reginald Road",
         "date": "1940-10-04",
         "description": "Unexploded bomb. Detonated 19 April 1941."
       },
@@ -3669,8 +3693,9 @@
       "properties": {
         "name": "Richmond Road",
         "date": "1944-06-19 23:00",
-        "description": "The first V1 that landed on the town. Damaged residential property and broke windows at St. Augustine's Church. Left a 30-ft-deep crater.",
-        "img": "richmondroad"
+        "description": "V-1 flying bomb. The first that landed on the town. Damaged residential property and broke windows at St. Augustine's Church. Left a 30-ft-deep crater. 20 injured, including 10 hospitalised.",
+        "img": "bomb/richmondroad",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -3686,7 +3711,7 @@
         "name": "Rotherfield Avenue",
         "date": "1940-10-08",
         "description": "Unexploded bomb.",
-        "img": "rotherfieldavenue"
+        "img": "bomb/rotherfieldavenue"
       },
       "geometry": {
         "type": "Point",
@@ -3699,10 +3724,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Sackville Garage",
+        "name": "Sackville Garage, Bolebrooke Road",
         "date": "1942-05-16",
         "description": "Completely destroyed.",
-        "img": "sackvillemews"
+        "img": "bomb/sackvillemews"
       },
       "geometry": {
         "type": "Point",
@@ -3715,7 +3740,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Sackville Hotel",
+        "name": "Sackville Hotel, De La Warr Parade",
         "date": "1940-09-26 16:40"
       },
       "geometry": {
@@ -3729,7 +3754,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Sackville Hotel",
+        "name": "Sackville Hotel, De La Warr Parade",
         "date": "1940-09-12"
       },
       "geometry": {
@@ -3743,7 +3768,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Sackville Hotel",
+        "name": "Sackville Hotel, De La Warr Parade",
         "date": "1940-09-15",
         "description": "4 small roof fires."
       },
@@ -3772,7 +3797,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Sandhall Diary 80A London Road",
+        "name": "Sandhall Dairy, 80A London Road",
         "date": "1940-10-18"
       },
       "geometry": {
@@ -3815,7 +3840,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "St Davids Avenue, south end",
+        "name": "South end St Davids Avenue",
         "date": "1940-09-30"
       },
       "geometry": {
@@ -3857,7 +3882,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "St James road",
+        "name": "St James Road",
         "date": "1940-09-10 18:22"
       },
       "geometry": {
@@ -3956,10 +3981,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "The Gaiety Cinema",
+        "name": "The Gaiety Cinema, 94 London Road",
         "date": "1940-10-06",
-        "description": "94 London Road, destroyed and never reopened.",
-        "img": "gaietycinema"
+        "description": "Destroyed and never reopened.",
+        "img": "bomb/gaietycinema"
       },
       "geometry": {
         "type": "Point",
@@ -3972,10 +3997,11 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "The Grange",
+        "name": "The Grange, Upper Sea Road",
         "date": "1944-07-22 16:35",
-        "description": "V1 landed in the garden grounds partially wrecking the house, also caused damage to the Bell Hotel and other adjacent properties. 27 injured.",
-        "img": "thegrange"
+        "description": "V-1 flying bomb. Landed in the garden grounds partially wrecking the house, also caused damage to the Bell Hotel and other adjacent properties. 27 injured, including 7 hospitalised, 1 horse killed.",
+        "img": "bomb/thegrange",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -3990,7 +4016,8 @@
       "properties": {
         "name": "The Mount",
         "date": "1944-07-03",
-        "description": "Flying bomb. 1 person injured."
+        "description": "V-1 flying bomb. 1 person injured.",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -4003,7 +4030,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "The New Club",
+        "name": "The New Club, Channel View West",
         "date": "1940-10-10",
         "description": "Unexploded bomb possibly dropped 09 October."
       },
@@ -4018,7 +4045,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Town Hall",
+        "name": "Town Hall, London Road",
         "date": "1940-09-26 16:40",
         "description": "Town Hall Borough Accountant and Public Health Department."
       },
@@ -4033,7 +4060,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Town Hall",
+        "name": "Town Hall, London Road",
         "date": "1940-09-26 16:40",
         "description": "Damage caused the Borough Accountant and Public Health Department to relocate to Garth Place."
       },
@@ -4051,7 +4078,7 @@
         "name": "Town Hall Square",
         "date": "1940-11-24",
         "description": "Damage to shops. Located where the building passage to Sainsbury's is today.",
-        "img": "townhallsquare"
+        "img": "bomb/townhallsquare"
       },
       "geometry": {
         "type": "Point",
@@ -4067,13 +4094,13 @@
         "name": "Turkey Road",
         "date": "1943-12-22 23:00",
         "description": "Bomb in front garden demolished bungalow and house next door. A terrace opposite (Arncliffe Terrace) was damaged. Families at Arncliffe Terrace and Camperdown Street evacuated.",
-        "img": "turkeyroad"
+        "img": "bomb/turkeyroad"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          0.46464,
-          50.85703
+          0.46517,
+          50.85700
         ]
       }
     },
@@ -4138,8 +4165,9 @@
       "properties": {
         "name": "Wealden Way",
         "date": "1944-07-19",
-        "description": "Home wrecked by a flying bomb.",
-        "img": "wealdenway"
+        "description": "V-1 flying bomb. House wrecked, 4 injured.",
+        "img": "bomb/wealdenway",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -4166,7 +4194,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Western Road, garage",
+        "name": "Garage, Western Road",
         "date": "1940-11-24"
       },
       "geometry": {
@@ -4180,7 +4208,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Western Road, rear of Co-Op",
+        "name": "Rear of 22-26 Western Road",
         "date": "1940-11-24"
       },
       "geometry": {
@@ -4348,7 +4376,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Worsham Farm",
+        "name": "Worsham Farm, Worsham Lane",
         "date": "1940-11-10"
       },
       "geometry": {
@@ -4362,7 +4390,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Worsham Farm",
+        "name": "Worsham Farm, Worsham Lane",
         "date": "1944-02-03"
       },
       "geometry": {
@@ -4376,9 +4404,10 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Worsham Manor",
+        "name": "Worsham Manor, Worsham Lane",
         "date": "1944-07-22",
-        "description": "Flying bomb."
+        "description": "V-1 flying bomb. 2 horses injured.",
+		"type": "v1"
       },
       "geometry": {
         "type": "Point",
@@ -4413,6 +4442,93 @@
         "coordinates": [
           0.47597,
           50.85388
+        ]
+      }
+    },
+	{
+      "type": "Feature",
+      "properties": {
+        "name": "B-17 Flying Fortress",
+		"date": "1943-09-06",
+        "description": "In sea south of Clock tower. B-17 ditched due to lack of petrol. Crew of 10 rescued from the sea.",
+		"type": "acrft",
+		"img": "aircraft/b17(0)",
+		"img_1": "aircraft/b17(1)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46662,
+          50.83025
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+		"name": "Junkers Ju 88",
+		"date": "1940-07-28 05:14",
+        "description": "Buckholt Farm. Forced landed due to petrol shortage. Crew of four made POW.",
+		"type": "acrft",
+		"img": "aircraft/ju88(0)",
+		"img_1": "aircraft/ju88(1)",
+		"imgattrib": "Andy Saunders"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46511,
+          50.87130
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Spitfire I",
+		"date": "1940-12-27 15:45",
+        "description": "100 yards east of Freezelands Farm building. Forced landing due to lack of petrol. Pilot hit hedge on landing and machine overturned. Sergeant Pilot Mills injured.",
+		"type": "acrft"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.45340,
+          50.86621
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Spitfire XIV + Tempest V",
+		"date": "1944-07-31",
+        "description": "Picknells Green, Hooe. Mid-air collision. On anti-V-1 patrol. Flying Officer Patrick Schade (pictured) and Flight Sergeant Archie Wilson both killed.",
+		"type": "acrft",
+		"img": "aircraft/spitfireXIV",
+		"imgattrib": "Ann Attewell"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.42117,
+          50.85387
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "B-24 Liberator",
+		"date": "1943-12-31",
+        "description": "Recreation ground, Bulverhythe. B-24 crashed on return from mission. Crew believed safe, no other details.",
+		"type": "acrft"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.52007,
+          50.85071
         ]
       }
     }

@@ -31,16 +31,16 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-	<link rel="stylesheet" href="assets/css/plugins/leaflet.css">
-	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css">
-	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css">
-	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css">
-	<link rel="stylesheet" href="assets/css/plugins/easy-button.css">
-	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css">
-	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v1.3.4">
+	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v1.6.0">
+	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css?v0.1.24">
+	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v0.4.0">
+	<link rel="stylesheet" href="assets/css/plugins/easy-button.css?v2.3.0">
+	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v1.3.4">
+	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v3.2.5">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.5.0">
+	<link rel="stylesheet" href="assets/css/site.css?v4.6.0">
  </head>
 
  <body>
@@ -109,7 +109,7 @@
 					<div class="poi-results">
 						<h3></h3>
 						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map();"><i class="fas fa-trash"></i></button>
-						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="getMarkerBounds();"><i class="fas fa-eye"></i></button>
+						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="getMarkerBounds(iconLayer);"><i class="fas fa-eye"></i></button>
 						<div class="poi-results-list"></div>
 					</div>
 					<div class="poi-icons">
@@ -201,10 +201,10 @@
 							<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme]" title="Enter an OverpassAPI query"><br><br>
 							OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Introduction" title="Overpass Query Servers" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
 							<select id="inputOpServer">
-								<option selected value="https://overpass-api.de/api/">overpass-api.de</option>
-								<option value="https://overpass.kumi.systems/api/">overpass.kumi.systems</option>
-								<option value="https://overpass.openstreetmap.fr/api/">overpass.openstreetmap.fr</option>
-								<option value="http://overpass.openstreetmap.ru/cgi/">overpass.openstreetmap.ru</option>
+								<option selected value="//overpass-api.de/api/">overpass-api.de</option>
+								<option value="//overpass.kumi.systems/api/">overpass.kumi.systems</option>
+								<option value="//overpass.openstreetmap.fr/api/">overpass.openstreetmap.fr</option>
+								<option value="//overpass.openstreetmap.ru/cgi/">overpass.openstreetmap.ru</option>
 							</select><br><br>
 							<button type="button" style="margin-left:5px;" title="OverpassAPI map query" onclick="downloadBB();"><i class="fas fa-download"></i></button><span class="switchLabel">Download all OSM data within bounding box</span>
 						</div>
@@ -382,7 +382,7 @@
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v1.3.4"></script>
 	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.0"></script>
 	<script src="assets/js/plugins/URI.min.js?v1.19.1"></script>
-	<script src="assets/js/plugins/leaflet.js?v1.3.1"></script>
+	<script src="assets/js/plugins/leaflet.js?v1.3.4"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v0.2.1"></script>
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v0.4.0"></script>
 	<script src="assets/js/plugins/Control.Loading.min.js?v0.1.24"></script>
@@ -391,18 +391,18 @@
 	<script src="assets/js/plugins/easy-button.min.js?v2.3.0"></script>
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v1.5.0"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v3.2.5"></script>
-	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.5.8"></script>
+	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.6.0"></script>
 	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.62.0"></script>
 	<script src="assets/js/plugins/bouncemarker-min.js?v1.1.0"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/config.js"></script>
-	<script src="assets/js/OverPassLayer.js?v4.5.0"></script>
-	<script src="assets/js/tags-parsers.js?v4.5.0"></script>
-	<script src="assets/js/pois-type.js?v4.5.0"></script>
+	<script src="assets/js/OverPassLayer.js?v4.6.0"></script>
+	<script src="assets/js/tags-parsers.js?v4.6.0"></script>
+	<script src="assets/js/pois-type.js?v4.6.0"></script>
 	<script src="assets/xmas/xmas.js"></script>
-	<script src="tour/tour.js?v4.5.0"></script>
-	<script src="assets/js/site.js?v4.5.0"></script>
+	<script src="tour/tour.js?v4.6.0"></script>
+	<script src="assets/js/site.js?v4.6.0"></script>
 
  </body>
 </html>

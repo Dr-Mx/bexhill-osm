@@ -34,7 +34,7 @@ function parse_tags(element, titlePopup, functions) {
 		else markerPopup += data.callback(element.tags);
 	}
 	markerPopup += opening_hours_parser(element.tags);
-	markerPopup += image_parser(element.tags);
+	if (!$('#inputImage').is(':checked')) markerPopup += image_parser(element.tags);
 	return markerPopup;
 }
 
@@ -243,7 +243,7 @@ function callback(data) {
 						switch (e.tags.information) {
 							case 'board' : iconName = 'board'; break;
 							case 'guidepost' : iconName = 'signpost-3'; name = e.tags.tourism + ' ' + e.tags.information; break; // [ascii 255] force to bottom of results
-							case 'map' : iconName = 'map'; break;
+							case 'map' : iconName = 'map'; if (e.tags.map_type && e.tags.map_type === 'toposcope') type = 'artwork'; break;
 							case 'office' : name = ' ' + name; break; // [ascii 32] force to top of results
 						}
 					}
@@ -352,7 +352,7 @@ function callback(data) {
 		else if (e.tags.operator) toolTip += '<br><i>' + e.tags.operator + '</i>';
 		if ((e.tags.image || e.tags.wikimedia_commons) && !$('#inputImage').is(':checked')) {
 			toolTip += ' <i style="color:#777; min-width:17px;" class="fas ';
-			toolTip += (e.tags.image_1) ? 'fa-images' : 'fa-image';
+			toolTip += ((e.tags.image && e.tags.wikimedia_commons) || e.tags.image_1) ? 'fa-images' : 'fa-image';
 			toolTip += ' fa-fw"></i>';
 			if (e.tags['image:360']) toolTip += ' <i style="color:#777; min-width:17px;" class="fa fa-street-view fa-fw"></i>';
 		}
@@ -573,6 +573,7 @@ function listed_parser(tags) {
 		if (tags['building:architecture']) tag += titleCase(tags['building:architecture']) + '; ';
 		if (tags.architect) tag += tags.architect + '; ';
 		if (tags.start_date) tag += date_parser(tags.start_date, 'short') + '; ';
+		if (tags.height) tag += tags.height + 'm; ';
 	}
 	else {
 		label = 'Listed';
@@ -837,6 +838,7 @@ function food_parser(tags, titlePopup) {
 		if (tags.takeaway === 'yes') tag += 'takeaway, ';
 		else if (tags.takeaway === 'only') tag += 'takeaway only, ';
 		if (tags.delivery === 'yes') tag += 'delivery, ';
+		if (tags.capacity) tag += 'seats ' + tags.capacity + ', ';
 		if (tags.beer_garden === 'yes') tag += 'beer garden, ';
 		else if (tags.outdoor_seating === 'yes') tag += 'outdoor seating, ';
 		if (tags.reservation === 'yes') tag += 'takes reservation, ';
@@ -859,7 +861,7 @@ function fuelstation_parser(tags, titlePopup) {
 		if (tag) {
 			tag = tag.replace(/_/g, '-');
 			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Fuel options', value: tag, iconName: 'fas fa-gas-pump' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Fuel options', value: tag, iconName: 'fas fa-oil-can' });
 		}
 		return markerPopup;
 	};
@@ -876,7 +878,7 @@ function healthcare_parser(tags, titlePopup) {
 }
 function historic_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'historic', label: 'Historic type', iconName: 'fas fa-university'},
+		{callback: generic_tag_parser, tag: 'historic', label: 'Historic type', iconName: 'fas fa-landmark'},
 		{callback: generic_tag_parser, tag: 'bunker_type', label: 'Bunker type', iconName: 'fas fa-cube'},
 		{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'fas fa-user'},
 		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fas fa-pen-square'},
@@ -1021,7 +1023,9 @@ function surveyp_parser(tags, titlePopup) {
 		{callback: trigpointuk_parser},
 		{callback: generic_tag_parser, tag: 'ref', label: 'Bracket number', iconName: 'fas fa-hashtag'},
 		{callback: generic_tag_parser, tag: 'ele', label: 'Elevation (m above sea)', iconName: 'fas fa-arrow-up'},
-		{callback: generic_tag_parser, tag: 'height', label: 'Height (m above ground)', iconName: 'fas fa-arrow-up'}
+		{callback: generic_tag_parser, tag: 'height', label: 'Height (m above ground)', iconName: 'fas fa-arrow-up'},
+		{callback: generic_tag_parser, tag: 'survey_point:levelling_date', label: 'Levelling date', iconName: 'fas fa-calendar-alt'},
+		{callback: generic_tag_parser, tag: 'survey_point:verified_date', label: 'Verified date', iconName: 'fas fa-calendar-alt'}
 	]);
 }
 function tap_parser(tags, titlePopup) {
@@ -1047,7 +1051,7 @@ function toilet_parser(tags, titlePopup) {
 }
 function worship_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'denomination', label: 'Denomination', iconName: 'fas fa-dot-circle'},
+		{callback: generic_tag_parser, tag: 'denomination', label: 'Denomination', iconName: 'fas fa-place-of-worship'},
 		{callback: generic_tag_parser, tag: 'service_times', label: 'Service times', iconName: 'fas fa-clock'}
 	]);
 }
@@ -1163,18 +1167,23 @@ function opening_hours_parser(tags) {
 // other popup box elements
 function image_parser(tags) {
 	// get images
-	var markerPopup = '', lID;
-	if ((tags.image || tags.wikimedia_commons) && !$('#inputImage').is(':checked')) {
-		markerPopup += generic_img_parser(tags.image || tags.wikimedia_commons, 0, 'inherit', tags['source:image'] || '');
+	var markerPopup = '', lID = 0;
+	if (tags.wikimedia_commons && tags.wikimedia_commons.indexOf('File') === 0) {
+		markerPopup += generic_img_parser(tags.wikimedia_commons, lID, 'inherit', '');
+		lID++;
+	}
+	if (tags.image) {
+		markerPopup += generic_img_parser(tags.image, lID, (lID > 0 ? 'none' : 'inherit'), tags['source:image'] || '');
 		// support up to 5 additional images
-		if (tags['image:360'] || tags.image_1) {
+		if (tags['image:360'] || tags.image_1 || lID > 0) {
+			lID++;
 			for (x = 1; x <= 5; x++) {
 				if (tags['image_' + x]) {
-					lID = x;
-					markerPopup += generic_img_parser(tags['image_' + x], x, 'none', tags['source:image_' + x] || '');
+					markerPopup += generic_img_parser(tags['image_' + x], lID, 'none', tags['source:image_' + x] || '');
+					lID++;
 				}
 			}
-			markerPopup += show_img_controls(parseInt(lID+1), tags['image:360']);
+			markerPopup += show_img_controls(lID, tags['image:360']);
 		}
 	}
 	return markerPopup;
@@ -1183,20 +1192,22 @@ function nav360(img) {
 	popupWindow('https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img.split(':')[1]), 'imgWindow', 800, 600);
 }
 function navImg(direction) {
-	// get the current and last image
-	var cID = parseInt($('.popup-imgContainer:visible').attr('id').split('img')[1]);
-	var lID = parseInt($('.popup-imgContainer:last').attr('id').split('img')[1]);
-	// get the next image
-	var swapImg = function (nID) {
-		$('.popup-imgContainer').hide(400).filter('.popup-imgContainer#img' + nID).show(400);
-		if (!$('#img' + nID + ' .attribd').length) getWikiAttrib(nID);
-		$('.navigateItem > .fa-image > title').html(parseInt(nID+1) + ' of ' + parseInt(lID+1));
-	};
-	// navigate through multiple images. 0 = previous, 1 = next
-	if (direction === 0 && cID > 0) swapImg(cID - 1);
-	else if (direction === 1 && cID < lID) swapImg(cID + 1);
-	else if (direction === 0 && cID === 0 && cID !== lID) swapImg(lID);
-	else if (direction === 1 && cID === lID && cID !== 0) swapImg(0);
+	if (!$('.popup-imgContainer').is(':animated')) {
+		// get the current and last image
+		var cID = parseInt($('.popup-imgContainer:visible').attr('id').split('img')[1]);
+		var lID = parseInt($('.popup-imgContainer:last').attr('id').split('img')[1]);
+		// get the next image
+		var swapImg = function (nID) {
+			$('.popup-imgContainer').hide(400).filter('.popup-imgContainer#img' + nID).show(400);
+			if (!$('#img' + nID + ' .attribd').length) getWikiAttrib(nID);
+			$('.navigateItem > .fa-image > title').html(parseInt(nID+1) + ' of ' + parseInt(lID+1));
+		};
+		// navigate through multiple images. 0 = previous, 1 = next
+		if (direction === 0 && cID > 0) swapImg(cID - 1);
+		else if (direction === 1 && cID < lID) swapImg(cID + 1);
+		else if (direction === 0 && cID === 0 && cID !== lID) swapImg(lID);
+		else if (direction === 1 && cID === lID && cID !== 0) swapImg(0);
+	}
 }
 function getWikiAttrib(id) {
 	// wikimedia api for image attribution

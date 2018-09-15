@@ -15,8 +15,12 @@ h3 {
 }
 
 sup {
-	font-size: 60%
+	font-size: 60%;
+	cursor: pointer;
 }
+sup:hover { color: #b05000; }
+sup::before { content: "["; }
+sup::after { content: "]"; }
 
 ul, ol {
 	padding-left: 20px;
@@ -71,10 +75,10 @@ img {
 a {
 	text-decoration: none;
 }
-a:link, a:visited, a:hover {
+a:link, a:visited, a:hover, a, sup {
 	color: #b05000;
 	cursor: pointer;
 }
-a:hover {
+a:hover, sup:hover {
 	text-decoration: underline;
 }

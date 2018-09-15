@@ -17,11 +17,7 @@ var defTab = 'home', actTab = defTab;
 var imgSize = ($(window).width() < 1024) ? 256 : 310;
 
 // hack to get safari to scroll tour iframe
-if (window.ontouchstart !== undefined && navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1) {
-	$('#tour .sidebar-body')
-		.css('-webkit-overflow-scrolling', 'touch')
-		.css('overflow', 'auto');
-}
+if (L.Browser.touch && L.Browser.safari) $('#tour .sidebar-body').css({ 'overflow-scrolling': 'touch', 'overflow': 'auto' });
 
 // set swipe triggers for touch devices
 // close sidebar
@@ -38,7 +34,7 @@ $('#tour')
 // smooth scrolling to anchor
 $(document).on('click', 'a[href*="#goto"]', function (e) {
 	var target = $('[id=' + this.hash.slice(1) + ']');
-	if (actTab === 'pois' && $('.poi-results').is(':visible')) $('.poi-icons').animate({ scrollTop: target.offset().top - 55 - $('.poi-results').css('height').replace('px', '') }, 1000);
+	if (actTab === 'pois' && $('.poi-results').is(':visible')) $('.poi-icons').animate({ scrollTop: target.offset().top - 55 - $('.poi-results').height() }, 1000);
 	else $('.poi-icons, .sidebar-body').animate({ scrollTop: target.offset().top - 55 }, 1000);
 	e.preventDefault();
 });
@@ -49,7 +45,7 @@ $('.sidebar-tabs').click(function () {
 	// resize links on minimap
 	if (actTab === 'home') setTimeout(function () { $('#minimap > map').imageMapResize(); }, 500);
 	// hack to stop iframe freezing on firefox android
-	else if (actTab === 'tour' && window.ontouchstart !== undefined) $('#tourList').trigger('change');
+	else if (actTab === 'tour' && L.Browser.mobileGecko) $('#tourList').trigger('change');
 });
 // no sidebar-tab
 $('.sidebar-close').click(function () {	actTab = 'none'; });
@@ -99,9 +95,13 @@ var map = new L.map('map', {
 		text: '<i class="fas fa-crosshairs fa-fw"></i> Centre map here',
 		index: 3,
 		callback: centreMap
+	}, {
+		text: '<i class="fas fa-street-view fa-fw"></i> Google Street View',
+		index: 4,
+		callback: gStreetview
 	}, '-', {
 		text: '<i class="far fa-sticky-note fa-fw"></i> Leave a note here',
-		index: 4,
+		index: 5,
 		callback: improveMap
 	}]
 }).whenReady(function () {
@@ -115,24 +115,6 @@ var map = new L.map('map', {
 	if (actTab === defTab) showMapEditsRss();
 	$('#home .sidebar-body').append('<p><img style="vertical-align:text-top;" src="favicon-16x16.png"> <span class="comment">&copy; Bexhill-OSM 2016-' + new Date().getFullYear() + '</span></p>');
 	$('#walkList, #tourList').trigger('change');
-	// tutorial modal
-	function showModalTutor(target, id, css, text, arrowcss) {
-		target.before(
-			'<div id="' + id + '" class="modalTutor leaflet-control" style="' + css + '">' + text +
-			'<button type="button" class="modalButton theme">Got it!</button>' +
-			'<div class="modalTutorArrow" style="' + arrowcss + '"></div></div>'
-		);
-		L.DomEvent.disableClickPropagation($('#' + id)[0]).disableScrollPropagation($('#' + id)[0]);
-		$('#' + id).on('click', function () {
-			$(this).fadeOut(100);
-			window.localStorage.tutorial = 0;
-		});
-	}
-	if (window.localStorage && !window.localStorage.tutorial && window.location.href.indexOf('?') === -1) {
-		showModalTutor($('.leaflet-control-layers'), 'modalT1', 'left:-190px;', 'Use the Layers Control to view various modern and historical maps.', 'right:-5px;');
-		showModalTutor($('#btnClearmap'), 'modalT2', 'left:40px;', 'You can click the map to find out more about a place, then use this Clear Map button to bin the markers.', 'left:-5px;');
-		showModalTutor($('.sidebar-tabs ul li').eq(3), 'modalT3', 'left:40px;', 'Explore the Historic Tour tab to view various articles relating to the history of Bexhill.', 'left:-5px;');
-	}
 	// add permalink modal to layer control
 	$('#btnPermalink').parent().append(
 		'<div id="modalPermalink">' +
@@ -155,6 +137,25 @@ var map = new L.map('map', {
 		'<div class="theme leaflet-control leaflet-control-statusmsg"></div>'
 	);
 	setTimeout(function () { $('.leaflet-control-layers-overlays label').eq(4).after('<div class="leaflet-control-layers-separator"></div>'); }, 10);
+	// tutorial modal
+	function showModalTutor(target, id, css, text, arrowcss) {
+		target.before(
+			'<div id="' + id + '" class="modalTutor leaflet-control" style="' + css + '">' + text +
+			'<button type="button" class="modalButton theme">Got it</button>' +
+			'<div class="modalTutorArrow" style="' + arrowcss + '"></div></div>'
+		);
+		L.DomEvent.disableClickPropagation($('#' + id)[0]).disableScrollPropagation($('#' + id)[0]);
+		$('#' + id).on('click', function () {
+			$(this).fadeOut(100);
+			window.localStorage.tutorial = 0;
+		});
+	}
+	if (top === self && window.localStorage && !window.localStorage.tutorial && window.location.href.indexOf('?') === -1) {
+		showModalTutor($('.leaflet-control-layers'), 'modalT1', 'left:-190px;', 'Use the Layers Control to view various modern and historical maps.', 'right:-5px;');
+		showModalTutor($('#btnClearmap'), 'modalT2', 'left:40px;', 'You can right-click query the map to find out more about a place, then use this Clear Map button to bin the markers.', 'left:-5px;');
+		showModalTutor($('.sidebar-tabs ul li').eq(3), 'modalT3', 'left:40px;', 'Explore the Historic Tour tab to view various articles relating to the history of Bexhill.', 'left:-5px;');
+		showModalTutor($('#inputOpacity input'), 'modalT4', 'left:-190px;', 'This slider changes the opacity of the overlay.  You can also press CTRL to quickly switch opacity.', 'right:-5px;');
+	}
 	// december xmas decorations
 	if (new Date().getMonth() === 11) xmasDecor();
 	// prevent click-through on map controls
@@ -185,7 +186,7 @@ var map = new L.map('map', {
 	});
 	// delay required when switching directly to another popup
 	setTimeout(function () {
-		var corsUrl = 'https://cryptic-headland-94862.herokuapp.com/';
+		var corsUrl = 'https://cors-anywhere.herokuapp.com/';
 		// opening-hours accordion
 		$('.popup-ohContainer').accordion({
 			heightStyle: 'content',
@@ -202,8 +203,9 @@ var map = new L.map('map', {
 				dataType: 'json',
 				success: function (result) {
 					if ($('#inputDebug').is(':checked')) console.debug(result);
+					var RatingDate = (result.RatingValue !== 'AwaitingInspection') ? new Date(result.RatingDate).toLocaleDateString('en-GB') : 'TBC';
 					$('.popup-fhrs').html(
-						'<a href="http://ratings.food.gov.uk/business/en-GB/' + result.FHRSID + '" title="Food Hygiene Rating (' + new Date(result.RatingDate).toLocaleDateString('en-GB') + ')" target="_blank">' +
+						'<a href="http://ratings.food.gov.uk/business/en-GB/' + result.FHRSID + '" title="Food Hygiene Rating (' + RatingDate + ')" target="_blank">' +
 						'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"></a>'
 					);
 				},
@@ -282,7 +284,7 @@ var map = new L.map('map', {
 					var rpad = 70;
 					if ($('.leaflet-popup .navigateItem a').length === 1) rpad = 20;
 					else if ($('.leaflet-popup .navigateItem a').length === 2) rpad = 45;
-					$('.popup-imgAttrib').css('text-align', 'left').css('padding-right', rpad + 'px');
+					$('.popup-imgAttrib').css({ 'text-align': 'left', 'padding-right': rpad + 'px' });
 				}
 				e.popup._adjustPan(); 
 			}, 200); });
@@ -292,7 +294,7 @@ var map = new L.map('map', {
 			}, 200); })
 			.on('mouseover touchstart', function () {
 				// grow popup images
-				$('.popup-imgContainer img').css('max-width', '100%').css('max-height', imgSize);
+				$('.popup-imgContainer img').css({ 'max-width': '100%', 'max-height': imgSize });
 			});
 	}
 }).on('baselayerchange', function (e) {
@@ -323,6 +325,14 @@ var map = new L.map('map', {
 		$('#inputOpacity').hide();
 	}
 	if ($('.leaflet-control-layers-separator').length === 1) $('.leaflet-control-layers-overlays label').eq(4).after('<div class="leaflet-control-layers-separator"></div>');
+}).on('zoomend', function () {
+	// resize ww2 markers depending on zoom
+	if (imgLayer === 'ww2Bombmap' || imgLayer === 'ww2Shelters') {
+		if (map.getZoom() >= 16) $('.ww2Icon').css({ 'margin-left': '-14px', 'margin-top': '-14px', 'height': '28px', 'width': '28px' });
+		else if (map.getZoom() === 15) $('.ww2Icon').css({ 'margin-left': '-10px', 'margin-top': '-10px', 'height': '20px', 'width': '20px' });
+		else if (map.getZoom() === 14) $('.ww2Icon').css({ 'margin-left': '-7px', 'margin-top': '-7px', 'height': '14px', 'width': '14px' });
+		else if (map.getZoom() <= 13) $('.ww2Icon').css({ 'margin-left': '-5px', 'margin-top': '-5px', 'height': '10px', 'width': '10px' });
+	}
 });
 
 // https://github.com/davidjbradshaw/image-map-resizer
@@ -349,15 +359,20 @@ $('#minimap > map > area').click(function () {
 var rQuery = false;
 function reverseQuery (e, source) {
 	// get location, look up id on photon and pass it to overpass
+	$('.leaflet-control-statusmsg').hide();
 	$('#spinner').show();
-	var geocoder = L.Control.Geocoder.photon({ geocodingQueryParams: { distance_sort: true } });
+	var geocoder = L.Control.Geocoder.photon({ reverseQueryParams: { distance_sort: true, radius: 0.05 } });
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function (results) {
-		if ($('#inputDebug').is(':checked')) console.debug(results[0]);
-		var geoMarker = results[0].properties;
+		var geoMarker = results[0] ? results[0].properties : '';
+		if ($('#inputDebug').is(':checked') && results[0]) console.debug(results[0]);
 		if (geoMarker.osm_id) {
 			clear_map();
 			rQuery = source ? source : true;
 			show_overpass_layer(elementType(geoMarker.osm_type) + '(' + geoMarker.osm_id + ');');
+		}
+		else {
+			$('#spinner').fadeOut(200);
+			$('.leaflet-control-statusmsg').html('<i class="fas fa-info-circle fa-fw"></i> Nothing found here, try another area.').show();
 		}
 	});
 }
@@ -383,6 +398,9 @@ function walkHere (e) {
 function centreMap (e) {
 	map.panTo(e.latlng);
 }
+function gStreetview (e) {
+	popupWindow('http://maps.google.com/?cbll=' + e.latlng.lat + ',' + e.latlng.lng + '&layer=c', 'noteWindow', 1024, 768);
+}
 function improveMap (e) {
 	// create a note on osm.org
 	popupWindow('https://www.openstreetmap.org/note/new#map=' + map.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng, 'noteWindow', 1024, 768);
@@ -392,11 +410,6 @@ $('#walkList')
 	.change(function () {
 		suggestWalk ($(this).val(), 1);
 		$('#walkDesc').append('<img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg">');
-	})
-	.on('wheel', function (e) {
-		if (e.originalEvent.deltaY < 0) $('#walkList option:selected').next().prop('selected', true).trigger('change');
-		else if (e.originalEvent.deltaY > 0) $('#walkList option:selected').prev().prop('selected', true).trigger('change');
-		e.preventDefault();
 	});
 $('#walkSelect').click(function () {
 	suggestWalk ($('#walkList').val(), 0);
@@ -537,11 +550,12 @@ $('#tourList').change(function () {
 		.one('load', function () {
 			$('#tourLoading').hide();
 			$(this).fadeIn();
+			$(this).contents().find('sup').click(function () { tourSource(this.innerText); });
 		});
 });
 
 // https://github.com/Leaflet/Leaflet
-var iconLayer = new L.LayerGroup(), imageOverlay = new L.featureGroup(), areaOutline = new L.featureGroup();
+var iconLayer = new L.featureGroup(), imageOverlay = new L.featureGroup(), areaOutline = new L.featureGroup();
 map.addLayer(iconLayer).addLayer(imageOverlay).addLayer(areaOutline);
 // leaflet icon image path
 L.Icon.Default.imagePath = 'assets/img/leaflet/';
@@ -584,6 +598,12 @@ var tileBaseLayer = {
 		url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 		maxNativeZoom: 19
 	},
+	forte: {
+		name: 'General Purpose',
+		url: 'https://{s}.tiles.quaidorsay.fr/tile/forteen/{z}/{x}/{y}.png',
+		attribution: attribution + ', <a href="https://github.com/tilery/pianoforte" target="_blank">Yohan Boniface</a>',
+		maxNativeZoom: 20
+	},
 	osmuk: {
 		name: 'OpenStreetMap UK',
 		url: 'https://map.atownsend.org.uk/hot/{z}/{x}/{y}.png',
@@ -600,12 +620,6 @@ var tileBaseLayer = {
 		name: 'Public Transport',
 		url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + BOSM.thuforKey,
 		attribution: attribution + ', <a href="https://thunderforest.com/maps/transport/" target="_blank">ThunderForest</a>',
-		maxNativeZoom: 20
-	},
-	matlas: {
-		name: 'Mobile Atlas',
-		url: 'https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=' + BOSM.thuforKey,
-		attribution: attribution + ', <a href="https://thunderforest.com/maps/mobile-atlas/" target="_blank">ThunderForest</a>',
 		maxNativeZoom: 20
 	},
 	bing: {
@@ -640,7 +654,7 @@ var tileOverlayLayer = {
 	hshade: {
 		name: 'Hillshading',
 		url: 'https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}',
-		attribution: '<a href="http://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
+		attribution: '<a href="https://giscience.uni-hd.de/" target="_blank">GIScience Heidelberg</a>',
 		opacity: 1,
 		maxNativeZoom: 18
 	},
@@ -677,6 +691,7 @@ var tileOverlayLayer = {
 			format: 'image/png',
 			transparent: true
 		},
+		attribution: '<a href="https://eservices.landregistry.gov.uk/eservices/FindAProperty/view/LrInspireIdInit.do" target="_blank">HM Land Registry</a>',
 		opacity: 0.7
 	},
 	bing: {
@@ -700,6 +715,7 @@ var tileOverlayLayer = {
 		name: '1955 Ordnance Survey',
 		url: 'https://geo.nls.uk/mapdata3/os/ldn_tile/{z}/{x}/{y}.png',
 		attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank">NLS Maps API</a>',
+		bounds: LBounds,
 		opacity: 1,
 		maxNativeZoom: 19
 	},
@@ -746,6 +762,14 @@ var tileOverlayLayer = {
 		opacity: 1,
 		maxNativeZoom: 17
 	},
+	os1878: {
+		name: '1878 Ordnance Survey',
+		url: 'assets/maptiles/os1878/{z}/{x}/{y}.png',
+		attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank">Crown Copyright Ordnance Survey</a>',
+		bounds: LBounds,
+		opacity: 1,
+		maxNativeZoom: 16
+	},
 	os1873: {
 		name: '1873 Ordnance Survey',
 		url: 'assets/maptiles/os1873/{z}/{x}/{y}.png',
@@ -757,11 +781,21 @@ var tileOverlayLayer = {
 	bt1839: {
 		name: '1839 Bexhill Tithe',
 		url: 'assets/maptiles/bt1839/{z}/{x}/{y}.png',
-		attribution: '<a href="https://apps.eastsussex.gov.uk/leisureandtourism/localandfamilyhistory/tithemaps/MapDetail.aspx?ID=112769" target="_blank">East Sussex County Council TDE141</a>',
+		attribution: '<a href="https://apps.eastsussex.gov.uk/leisureandtourism/localandfamilyhistory/tithemaps/MapDetail.aspx?ID=112769" target="_blank">ESRO TDE 141</a>',
 		bounds: L.latLngBounds([50.815, 0.351], [50.890, 0.536]),
 		opacity: 1,
 		maxNativeZoom: 17
 	},
+	
+	mb1805: {
+		name: '1805 Manor of Bexhill',
+		url: 'assets/maptiles/mb1805/{z}/{x}/{y}.png',
+		attribution: '<a href="http://www.thekeep.info/collections/getrecord/GB179_AMS5819" target="_blank">ESRO AMS 5819</a>',
+		bounds: L.latLngBounds([50.805, 0.376], [50.883, 0.511]),
+		opacity: 1,
+		maxNativeZoom: 17,
+	},
+
 	yg1778: {
 		name: '1778 Yeakell & Gardner',
 		url: 'assets/maptiles/yg1778/{z}/{x}/{y}.png',
@@ -804,9 +838,9 @@ L.easyButton({
 	states: [{
 		stateName: 'normalScreen',
 		icon: 'fas fa-expand',
-		title: 'Full screen (alt-enter)',
+		title: 'Full screen (ALT-ENTER)',
 		onClick: function (control) {
-			var viewer = $('html')[0];
+			var viewer = L.Browser.ie ? $('body')[0] : $('html')[0];
 			var rFS = viewer.requestFullScreen || viewer.webkitRequestFullscreen  || viewer.mozRequestFullScreen || viewer.msRequestFullscreen;
 			rFS.call(viewer);
 			control.state('fullScreen');
@@ -814,7 +848,7 @@ L.easyButton({
 	}, {
 		stateName: 'fullScreen',
 		icon: 'fas fa-compress',
-		title: 'Exit full screen (alt-enter)',
+		title: 'Exit full screen (ALT-ENTER)',
 		onClick: function (control) {
 			var cFS = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
 			cFS.call(document);
@@ -840,12 +874,10 @@ L.easyButton({
 					overlayOpacity = Math.floor(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].options.opacity * 100);
 					if (overlayOpacity === 0 || overlayOpacity === tileOverlayLayer[actOverlayLayer].opacity * 100) overlayOpacity = undefined;
 				}
-				if (walkWayp[0].latLng && walkWayp[1].latLng) {
-					for (c in walkWayp) {
-						walkCoords += Math.round(walkWayp[c].latLng.lat * 100000) / 100000 + 'x' + Math.round(walkWayp[c].latLng.lng * 100000) / 100000 + '_';
-					}
-				}
-				else if (walkWayp[0].latLng) walkCoords = Math.round(walkWayp[0].latLng.lat * 100000) / 100000 + 'x' + Math.round(walkWayp[0].latLng.lng * 100000) / 100000 + '_';
+				if (walkWayp[0].latLng && walkWayp[1].latLng)
+					for (c in walkWayp) { walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_'; }
+				else if (walkWayp[0].latLng)
+					walkCoords = L.Util.formatNum(walkWayp[0].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[0].latLng.lng, 5) + '_';
 				walkCoords = walkCoords ? walkCoords.slice(0, -1) : undefined;
 				if (actTab === 'tour' && $('#tourList option:selected').val() > 0) tourPage = $('#tourList option:selected').val();
 				$('.poi-icons .poi-checkbox input:checked').each(function (i, element) { selectedPois += element.id + '-'; });
@@ -941,7 +973,7 @@ var geocode = L.Control.geocoder({
 		}, 50);
 	}
 }).addTo(map);
-$('.leaflet-control-geocoder-icon').html('<i class="fas fa-search"></i>').attr('title','Address search (ctrl-f)');
+$('.leaflet-control-geocoder-icon').html('<i class="fas fa-search"></i>').attr('title','Address search (CTRL-F)');
 
 
 // switches to a tab and an optional link to tour or anchor
@@ -982,7 +1014,7 @@ L.easyButton({
 	id: 'btnClearmap',
 	states: [{
 		icon: 'fas fa-trash',
-		title: 'Clear map (ctrl-del)',
+		title: 'Clear map (CTRL-DEL)',
 		onClick: function () {
 			// clear walk points, collapse suggested walks, clear poi marker layers
 			routingControl.setWaypoints([]);
@@ -992,14 +1024,15 @@ L.easyButton({
 }).addTo(map);
 // full reload on right click
 $('#btnClearmap').bind('contextmenu', function () {
+	window.localStorage.clear();
 	$(location).attr('href', window.location.pathname);
 	return false;
 });
 
 // fly the map to the bounds of markers
-function getMarkerBounds() {
+function getMarkerBounds(fg) {
 	if ($(window).width() < 768) sidebar.close();
-	map.flyToBounds(L.featureGroup(poiList).getBounds().pad(0.2));
+	map.flyToBounds(fg.getBounds().pad(0.2));
 }
 
 // https://github.com/Turbo87/sidebar-v2/
@@ -1130,7 +1163,7 @@ function popupWindow(url, title, w, h) {
 }
 
 // keyboard shortcuts
-$('#map').keydown(function (e) {
+$('html').keydown(function (e) {
 	// ALT-ENTER: full screen
 	if (e.keyCode === $.ui.keyCode.ENTER && e.altKey) {
 		$('#btnFullscr').click();
@@ -1144,6 +1177,17 @@ $('#map').keydown(function (e) {
 	// CTRL-DEL: clear all layers
 	else if (e.keyCode === $.ui.keyCode.DELETE && e.ctrlKey) {
 		$('#btnClearmap').click();
+		e.preventDefault();
+	}
+	// CTRL down: switch overlay transparency on
+	else if (e.keyCode === 17 && actOverlayLayer) {
+		$('#inputOpacity input').val(0.1).trigger('change');
+		e.preventDefault();
+	}
+}).keyup(function (e) {
+	// CTRL up: switch overlay transparency off
+	if (e.keyCode === 17 && actOverlayLayer) {
+		$('#inputOpacity input').val(0.9).trigger('change');
 		e.preventDefault();
 	}
 });
@@ -1243,7 +1287,10 @@ function poi_changed(newcheckbox) {
 		}
 		$('.poi-results-list').empty();
 	}
-	else $('[id=' + newcheckbox + ']').prop('checked', false);
+	else {
+		$('.poi-checkbox-selected').fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
+		$('[id=' + newcheckbox + ']').prop('checked', false);
+	}
 	$('.poi-icons .poi-checkbox input').trigger('change');
 }
 // checkbox highlight

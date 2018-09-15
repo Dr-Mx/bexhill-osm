@@ -1,6 +1,8 @@
-maptiles/
-2017/
+web/assets/maptiles/
+web/assets/xmas/2017/
+web/assets/img/uploads/
 web/assets/js/config.js
+web/robots.txt
 
 #############
 ## Windows detritus

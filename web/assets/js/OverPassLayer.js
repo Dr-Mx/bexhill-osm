@@ -10,7 +10,7 @@ function show_overpass_layer(query) {
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
 		query: query,
-		endpoint: $('#inputOpServer').val() + 'interpreter',
+		endpoint: (window.location.protocol === 'file:' ? 'http:' : '') + $('#inputOpServer').val() + 'interpreter',
 		callback: callback
 	});
 	iconLayer.addLayer(opl);
