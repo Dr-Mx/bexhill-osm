@@ -22,7 +22,7 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
    - Multiple image support including Wikimedia Commons API (key:image, key:image_1, key:image_2, etc)
    - 360 spherical panorama support using Wikimedia Commons (key:image:360)
  - Find an address by searching (Nominatim > Overpass)
- - Query a place by clicking on map (Nominatim > Overpass)
+ - Query any feature on map (Nominatim > Overpass)
  - Selected place on map becomes highlighted (OpenStreetMap API)
  - Manually select groups of POIs from list or using a keyword
  - Group POI result list with current open state
