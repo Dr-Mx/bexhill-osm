@@ -9,7 +9,7 @@
 
 .easy-autocomplete {
   position: relative;
-  width: calc(100% - 30px);
+  width: calc(100% - 26px);
 }
 .easy-autocomplete input {
   border-color: #ccc;

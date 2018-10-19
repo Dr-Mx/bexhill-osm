@@ -1622,7 +1622,7 @@
       "properties": {
         "name": "144 De La Warr Road",
         "date": "1943-01-28 09:00",
-        "description": "A bomb struck a house chimney on the opposite side of De La Warr Road, flew across the road to number 144. It entered the bedroom window, crossed the landing and exited the house at the rear before exploding on the open ground. The damage rendered the house inhabitable and adjacent houses had their windows blown in.",
+        "description": "A bomb struck a house chimney on the opposite side of De La Warr Road, flew across the road to number 144. It entered the bedroom window, crossed the landing and exited the house at the rear before exploding on the open ground. The damage rendered the house uninhabitable and adjacent houses had their windows blown in.",
         "img": "bomb/delawarrroad"
       },
       "geometry": {
@@ -1787,8 +1787,9 @@
         "name": "35 Station Road",
         "date": "1940-11-24",
         "description": "William G. Reeves (53) killed at his newsagent shop.",
-        "img": "bomb/30stationroad",
-		"imgattrib": "Bexhill Museum"
+        "img": "bomb/35stationroad(0)",
+        "img_1": "bomb/35stationroad(1)",
+		"imgattrib_1": "Bexhill Museum"
       },
       "geometry": {
         "type": "Point",

@@ -47,7 +47,7 @@ function tour(ti) {
 	// timeout hack to stop iframe breaking on ff
 	setTimeout(function () { switch (ti) {
 		case 'xmas':
-			xmasShops();
+			xmasShops(2018);
 			break;
 		case 'fossils':
 			tourPopup('sackvillefos', [50.837617, 0.482517], 'Iguanadon Footprints', 'Sackville', '01/dinofoot-sackville', '',
@@ -269,7 +269,9 @@ function tour(ti) {
 			show_overpass_layer(pois.survey_point.query);
 			imgLayer = ti;
 			break;
-	}}, 50);
+	}
+	permalinkSet();
+	}, 50);
 }
 
 function tourFocus(ti, id) {

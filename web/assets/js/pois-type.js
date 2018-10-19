@@ -486,10 +486,10 @@ var pois = {
 
 	library: {
 		name: 'Library',
-		query: 'nwr[amenity=library];',
+		query: 'nwr[amenity~"library|public_bookcase"];',
 		iconName: 'library',
 		catName: 'Services',
-		tagKeyword: ['library', 'books', 'read']
+		tagKeyword: ['library', 'books', 'read', 'bookcase']
 	},
 
 	jobcentre: {

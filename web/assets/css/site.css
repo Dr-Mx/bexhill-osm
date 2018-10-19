@@ -29,15 +29,38 @@ html, body, #map {
 	background: linear-gradient(#b05000, #e6e6e6);
 }
 
+#homeBox {
+	max-width: 500px;
+	margin: 0 auto;
+	background: rgba(255, 255, 255, 0.4);
+	border-radius: 5px;
+}
+#weather {
+	display: table;
+	width: 100%;
+	color: #555;
+}
+#weather span {
+	display: table-cell;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+#weather span img {
+	width: 50px;
+	height: 50px;
+}
 #tips {
-	vertical-align: sub;
-	padding-right: 15px;
+	position: relative;
+	padding: 3px 0;
+}
+#tipsText {
+	padding-right: 17px;
 	min-height: 25px;
 }
 #tipsButton {
-	top:10px;
-	right:0;
-	position:absolute;
+	top: 10px;
+	right: 3px;
+	position: absolute;
 }
 .navigateItem {
 	position: absolute;
@@ -248,32 +271,6 @@ noscript {
 	height: 16px;
 	transform: rotate(45deg);
 	z-index: -1;
-}
-
-#modalPermalink {
-	position: absolute;
-	display: none;
-	background-color: rgba(222, 222, 222, 0.9);
-	border: 2px solid rgba(0,0,0,0.2);
-	border-radius: 5px;
-	top: 0;
-	left: 40px;
-	padding: 15px;
-	font-weight: bold;
-	cursor: default;
-}
-.btnCloseModal {
-	position: absolute;
-	right: 10px;
-	background-color: transparent;
-}
-#inputPermalink {
-	font: inherit;
-	font-weight: normal;
-	font-size: 10pt;
-	min-width: 200px;
-	min-height: 55px;
-	word-break: break-all;
 }
 .modalButton {
 	margin-top: 5px;
@@ -714,6 +711,15 @@ input:checked + .slider::before {
 	cursor: default;
 	font-size: 10pt;
 }
+.leaflet-control-layers-expanded {
+	background-color: rgba(255, 255, 255, 0.9);
+}
+.leaflet-control-layers-separator {
+	font-weight: bold;
+	color: #b05000;
+	border-color: #ccc;
+	margin: 7px 0 17px 0px;
+}
 .leaflet-control-layers label {
 	cursor: pointer;
 }
@@ -740,7 +746,7 @@ input:checked + .slider::before {
 	display: none;
 }
 .popup-header {
-	margin: auto -20px 10px -20px;
+	margin: auto -21px 10px -20px;
 	padding: 10px 0 5px 20px;
 	border-bottom: 2px solid #ddd;
 	border-top-right-radius: 10px;
@@ -890,7 +896,7 @@ input:checked + .slider::before {
 	display: none;
 }
 
-#xmasHat {
+#holidayImg {
 	z-index: 1;
 	position: absolute;
 	top: 5px;

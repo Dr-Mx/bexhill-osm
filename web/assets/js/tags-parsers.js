@@ -66,7 +66,7 @@ function callback(data) {
 	for (var c in data.elements) {
 		var e = data.elements[c];
 		// check tags exist
-		if (!e.tags || e.id in this.instance._ids) continue;
+		if (!e.tags || e.id in this.instance._ids || e.id === 604081690) continue;
 		this.instance._ids[e.id] = true;
 		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
 		// get and display the area outline through openstreetmap api
@@ -115,9 +115,9 @@ function callback(data) {
 					}
 					else if (e.tags.display) name = e.tags.display + ' ' + e.tags.amenity;
 					break;
-				case 'social_centre' : if (e.tags.club) name = e.tags.club + ' club'; break;
 				case 'fire_station' : type = 'police'; iconName = 'firetruck'; break;
 				case 'place_of_worship' : if (e.tags.religion) name = e.tags.religion; break;
+				case 'public_bookcase' : type = 'library'; break;
 				case 'nightclub' : type = 'bar'; break;
 				case 'post_box' : name = (e.tags['post_box:type'] || '') + ' ' + name; break;
 				case 'post_office' : type = 'post_box'; iconName = 'postoffice'; break;
@@ -129,6 +129,7 @@ function callback(data) {
 					}
 					break;
 				case 'retirement_home' :
+				case 'social_centre' : if (e.tags.club) name = e.tags.club + ' club'; break;
 				case 'social_facility' :
 					type = 'social_facility';
 					name = e.tags.social_facility;
@@ -203,6 +204,7 @@ function callback(data) {
 			if (type === 'peak') iconName = 'hill';
 		}
 		if (e.tags.shop) {
+			if (e.tags.shop === 'yes') name = 'shop';
 			if (!name) name = e.tags.shop;
 			if (!type) type = e.tags.shop;
 			switch (e.tags.shop) {
@@ -338,7 +340,7 @@ function callback(data) {
 		if (name != '&hellip;') name = titleCase(name);
 		marker._leaflet_id = e.type.slice(0, 1) + e.id;
 		// tooltip
-		customTOptions.permanent = poi ? poi.permTooltip : 0;
+		customTOptions.interactive = customTOptions.permanent = poi ? poi.permTooltip : 0;
 		var toolTip = '<b>' + name + '</b>';
 		if (e.tags.name) toolTip += '<br><i>' + e.tags.name + '</i>';
 		else if (e.tags['addr:street'])  {
@@ -448,6 +450,7 @@ function callback(data) {
 		$('#spinner').fadeOut(200);
 		$('.poi-checkbox').removeClass('poi-loading');
 	}
+	permalinkSet();
 }
 
 // templates
@@ -472,7 +475,7 @@ function generic_tag_parser(tags, tag, label, iconName) {
 	return markerPopup;
 }
 function generic_img_parser(img, id, display, attrib) {
-	var url = '', imgTmpl = '<div id="img{id}" class="popup-imgContainer" style="display:{display};">' +
+	var url = '', imgTmpl = '<div id="img{id}" class="popup-imgContainer" style="display:{display};" title="Click to expand, double-click for full image">' +
 		'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}">' + 
 		'<br><div class="popup-imgAttrib">';
 	if (img.indexOf('File') === 0) {
@@ -491,7 +494,7 @@ function generic_img_parser(img, id, display, attrib) {
 function show_img_controls(imgMax, img360) {
 	var ctrlTmpl = '<div class="navigateItem">';
 	if (img360 && img360.indexOf('File') === 0) ctrlTmpl +=
-		'<a title="360 Panorama" onclick="nav360(&quot;' + img360 + '&quot;)">' +
+		'<a title="360 Panorama" onclick="nav360(\'' + img360 + '\')">' +
 		'<i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
 	if (imgMax > 1) ctrlTmpl +=
 		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
@@ -593,8 +596,8 @@ function facility_parser(tags) {
 	if (tags.wheelchair === 'yes') tag += '<i class="fas fa-wheelchair fa-fw" title="wheelchair: yes" style="color:darkgreen;"></i>';
 	else if (tags.wheelchair === 'limited') tag += '<i class="fas fa-wheelchair fa-fw" title="wheelchair: limited" style="color:olive;"></i>';
 	else if (tags.wheelchair === 'no') tag += '<i class="fas fa-wheelchair fa-fw" title="wheelchair: no" style="color:red;"></i>';
-	if (tags.dog === 'yes') tag += '<i class="fas fa-paw fa-fw" title="dog: yes" style="color:darkgreen;"></i>';
-	else if (tags.dog === 'no') tag += '<i class="fas fa-paw fa-fw" title="dog: no" style="color:red;"></i>';
+	if (tags.dog === 'yes') tag += '<i class="fas fa-dog fa-fw" title="dog: yes" style="color:darkgreen;"></i>';
+	else if (tags.dog === 'no') tag += '<i class="fas fa-dog fa-fw" title="dog: no" style="color:red;"></i>';
 	if (tags.internet_access === 'wlan') tag += '<i class="fas fa-wifi fa-fw" title="wireless internet access" style="color:darkgreen;"></i>';
 	else if (tags.internet_access === 'terminal') tag += '<i class="fas fa-desktop fa-fw" title="terminal internet access" style="color:darkgreen;"></i>';
 	if (tags.amenity === 'toilets') {
@@ -1149,7 +1152,7 @@ function opening_hours_parser(tags) {
 		else if (ohState === 'depends') openhrsState = 'Depends on';
 		if (openhrsState) {	openhrs =
 			'<div class="popup-ohContainer" style="min-width:' + minWidth + ';">' +
-				'<span class="popup-tagContainer" title="' + tags.opening_hours.replace(/"/g, '&quot;') + '">' +
+				'<span class="popup-tagContainer" title="' + tags.opening_hours.replace(/"/g, '\'') + '">' +
 					'<i class="popup-tagIcon popup-openhrsState openColor-' + ohState + ' fas fa-circle fa-fw"></i>' +
 					'<span class="popup-tagValue"><strong>' + openhrsState + ':</strong> ' + strNextChange + '&nbsp; </span>' +
 					'<i title="See full opening hours" class="theme fas fa-caret-down fa-fw"></i>' +
@@ -1200,7 +1203,7 @@ function navImg(direction) {
 		var swapImg = function (nID) {
 			$('.popup-imgContainer').hide(400).filter('.popup-imgContainer#img' + nID).show(400);
 			if (!$('#img' + nID + ' .attribd').length) getWikiAttrib(nID);
-			$('.navigateItem > .fa-image > title').html(parseInt(nID+1) + ' of ' + parseInt(lID+1));
+			$('.navigateItem > .fa-image').attr('title', parseInt(nID+1) + ' of ' + parseInt(lID+1));
 		};
 		// navigate through multiple images. 0 = previous, 1 = next
 		if (direction === 0 && cID > 0) swapImg(cID - 1);

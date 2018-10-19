@@ -31,7 +31,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v1.6.0">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css?v0.1.24">
@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v3.2.5">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.6.0">
+	<link rel="stylesheet" href="assets/css/site.css?v4.7.0">
  </head>
 
  <body>
@@ -68,37 +68,38 @@
 		<div class="sidebar-content">
 			<!-- Upper tabs -->
 			<div class="sidebar-pane" id="home">
-				<div class="sidebar-header"><span class="sidebar-header-text">Bexhill OpenStreetMap</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
+				<div class="sidebar-header"><span class="sidebar-header-text" onclick="$(location).attr('href', window.location.pathname);">Bexhill OpenStreetMap</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<h3>Search</h3>
 					<p><input id="autocomplete" class="autocomplete" placeholder="e.g. 'artwork', 'coffee', 'hotel' or 'western road'" title="Enter a keyword, or an address"></p>
-					<hr>
-					<div id="minimap">
-						<img src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap">
-						<map name="m_minimap">
-							<area title="Bexhill" shape="rect" coords="246,158,314,177">
-							<area title="Barnhorn" shape="rect" coords="0,155,78,185">
-							<area title="Central" shape="rect" coords="301,177,351,227">
-							<area title="Collington" shape="rect" coords="141,151,211,212">
-							<area title="Cooden" shape="rect" coords="52,189,111,250">
-							<area title="Glenleigh Park" shape="rect" coords="170,45,259,100">
-							<area title="Glyne Gap" shape="rect" coords="473,108,523,158">
-							<area title="The Highlands" shape="rect" coords="154,0,266,35">
-							<area title="Little Common" shape="rect" coords="46,95,141,156">
-							<area title="Old Town" shape="rect" coords="314,118,384,173">
-							<area title="Pebsham" shape="rect" coords="437,70,496,108">
-							<area title="Sidley" shape="rect" coords="302,24,361,70">
-						</map>
+					<div id="homeBox">
+						<span id="weather"></span>
+						<div id="minimap">
+							<img src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap">
+							<map name="m_minimap">
+								<area title="Bexhill" shape="rect" coords="246,158,314,177">
+								<area title="Barnhorn" shape="rect" coords="0,155,78,185">
+								<area title="Central" shape="rect" coords="301,177,351,227">
+								<area title="Collington" shape="rect" coords="141,151,211,212">
+								<area title="Cooden" shape="rect" coords="52,189,111,250">
+								<area title="Glenleigh Park" shape="rect" coords="170,45,259,100">
+								<area title="Glyne Gap" shape="rect" coords="473,108,523,158">
+								<area title="The Highlands" shape="rect" coords="154,0,266,35">
+								<area title="Little Common" shape="rect" coords="46,95,141,156">
+								<area title="Old Town" shape="rect" coords="314,118,384,173">
+								<area title="Pebsham" shape="rect" coords="437,70,496,108">
+								<area title="Sidley" shape="rect" coords="302,24,361,70">
+							</map>
+						</div>
+						<div id="tips" class="comment">
+							<div id="tipsText"></div>
+							<span id="tipsButton" class="theme navigateItemNext"><a onclick="getTips();"><i class="fas fa-caret-square-right"></i></a></span>
+						</div>
 					</div>
-					<div class="comment" style="position:relative;">
-						<div id="tips"></div>
-						<span id="tipsButton" class="theme navigateItemNext"><a title="Random tip" onclick="getTips();"><i class="fas fa-caret-square-right"></i></a></span>
-					</div>
-					<hr>
 					<span id="xmas"></span>
 					<p>Bexhill-OSM is a community based, open mapping, passion project. It aims to help people discover a wealth of information on places in and around the seaside town of Bexhill-on-Sea, East Sussex, England.</p>
-					<p>View Help <a style="white-space:nowrap;" onclick="$('a[href=&quot;#help&quot;]').click();"><i class="theme fas fa-question-circle fa-fw"></i></a> for more assistance.
-					<br>Contact details can be found under Information <a style="white-space:nowrap;" onclick="$('a[href=&quot;#information&quot;]').click();"><i class="theme fas fa-info-circle fa-fw"></i></a>.</p>
+					<p>See <a style="white-space:nowrap;" onclick="$('a[href=\'#help\']').click();"><i class="theme fas fa-question-circle"></i></a> for more assistance.
+					<br>Contact details can be found under <a style="white-space:nowrap;" onclick="$('a[href=\'#information\']').click();"><i class="theme fas fa-info-circle"></i></a>.</p>
 					<hr>
 					<span id="feedRss"></span>
 				</div>
@@ -158,23 +159,23 @@
 					<div id="tourControls">
 						<button type="button" id="tourPrev" title="Previous"><i class="fas fa-chevron-left"></i></button>
 							<select id="tourList" class="theme">
-								<option value = "0">&nbsp;Introduction</option>
-								<option value = "1">&nbsp;&nbsp; 1. Prehistoric Period</option>
-								<option value = "2">&nbsp;&nbsp; 2. The Amsterdam Shipwreck</option>
-								<option value = "3">&nbsp;&nbsp; 3. Smuggling</option>
-								<option value = "4">&nbsp;&nbsp; 4. Railways</option>
-								<option value = "5">&nbsp;&nbsp; 5. Tramway &amp; Trolleybuses</option>
-								<option value = "6">&nbsp;&nbsp; 6. Motor Racing</option>
-								<option value = "7">&nbsp;&nbsp; 7. De La Warr Pavilion</option>
-								<option value = "8">&nbsp;&nbsp; 8. Old Town Manor</option>
-								<option value = "9">&nbsp;&nbsp; 9. World War II</option>
-								<option value = "10">&nbsp; 10. Northeye Prison Site</option>
-								<option value = "11">&nbsp; 11. Notable People</option>
-								<option value = "12">&nbsp; 12. Public Clocks</option>
-								<option value = "13">&nbsp; 13. Lost Heritage</option>
-								<option value = "14">&nbsp; 14. Boundary Stones</option>
-								<option value = "15">&nbsp; 15. OS Surveying Points</option>
-								<option value = "99">&nbsp;Sources &amp; further reading</option>
+								<option value = "0">Introduction</option>
+								<option value = "1">- Prehistoric Period</option>
+								<option value = "2">- The Amsterdam Shipwreck</option>
+								<option value = "3">- Smuggling</option>
+								<option value = "4">- Railways</option>
+								<option value = "5">- Tramway &amp; Trolleybuses</option>
+								<option value = "6">- Motor Racing</option>
+								<option value = "7">- De La Warr Pavilion</option>
+								<option value = "8">- Old Town Manor</option>
+								<option value = "9">- World War II</option>
+								<option value = "10">- Northeye Prison Site</option>
+								<option value = "11">- Notable People</option>
+								<option value = "12">- Public Clocks</option>
+								<option value = "13">- Lost Heritage</option>
+								<option value = "14">- Boundary Stones</option>
+								<option value = "15">- OS Surveying Points</option>
+								<option value = "99">Sources &amp; further reading</option>
 							</select>
 						<button type="button" id="tourNext" title="Next"><i class="fas fa-chevron-right"></i></button>
 					</div>
@@ -397,12 +398,12 @@
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/config.js"></script>
-	<script src="assets/js/OverPassLayer.js?v4.6.0"></script>
-	<script src="assets/js/tags-parsers.js?v4.6.0"></script>
-	<script src="assets/js/pois-type.js?v4.6.0"></script>
+	<script src="assets/js/OverPassLayer.js?v4.7.0"></script>
+	<script src="assets/js/tags-parsers.js?v4.7.0"></script>
+	<script src="assets/js/pois-type.js?v4.7.0"></script>
 	<script src="assets/xmas/xmas.js"></script>
-	<script src="tour/tour.js?v4.6.0"></script>
-	<script src="assets/js/site.js?v4.6.0"></script>
+	<script src="tour/tour.js?v4.7.0"></script>
+	<script src="assets/js/site.js?v4.7.0"></script>
 
  </body>
 </html>

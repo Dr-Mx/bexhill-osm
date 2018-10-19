@@ -3,23 +3,23 @@
 // xmas deco overlay
 function xmasDecor() {
 	// new town
-	L.imageOverlay('assets/xmas/tree.png', [[50.84090, 0.47320], [50.84055, 0.47370]], { opacity: 0.9 }).addTo(map);
-	L.imageOverlay('assets/xmas/lights.png', [[50.84037, 0.47415], [50.83800, 0.46980]], { opacity: 0.9 }).addTo(map);
+	L.imageOverlay('assets/img/holidays/xmasMapTree.png', [[50.84090, 0.47320], [50.84055, 0.47370]], { opacity: 0.9 }).addTo(map);
+	L.imageOverlay('assets/img/holidays/xmasMapLights.png', [[50.84037, 0.47415], [50.83800, 0.46980]], { opacity: 0.9 }).addTo(map);
 	// little common
-	L.imageOverlay('assets/xmas/tree.png', [[50.84545, 0.43400], [50.84510, 0.43350]], { opacity: 0.9 }).addTo(map);
-	$('#sidebar').append('<img id="xmasHat" src="assets/xmas/santahat.png">');
+	L.imageOverlay('assets/img/holidays/xmasMapTree.png', [[50.84545, 0.43400], [50.84510, 0.43350]], { opacity: 0.9 }).addTo(map);
+	$('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/xmasSb.png">');
 	$('#xmas').append(
-		'<div id="xmasTitle"><i class="fas fa-tree fa-fw"></i> <a onclick="xmasShops();">Christmas Window Display Competition</a> <i class="fas fa-tree fa-fw"></i></div>' +
-		'<div class="comment">2017 is "pantomime themed", in association with shininglightsbexhill.com and bexhillonline.net</div>' +
+		'<div id="xmasTitle"><i class="fas fa-tree fa-fw"></i> <a onclick="tour(\'xmas\');">Christmas Window Display Competition</a> <i class="fas fa-tree fa-fw"></i></div>' +
+		'<div class="comment">2018 is "carol and song themed", in association with shininglightsbexhill.com and bexhillcommunity.co.uk</div>' +
 		'<hr>'
 	);
 }
 
-function xmasShops() {
+function xmasShops(year) {
 	clear_map();
 	if ($(window).width() < 768) sidebar.close();
 	$.ajax({
-		url: 'assets/xmas/2017.geojson',
+		url: 'assets/xmas/' + year + '/shops.geojson',
 		dataType: 'json',
 		mimeType: 'application/json',
 		cache: false,
@@ -29,7 +29,7 @@ function xmasShops() {
 					var shopImg = 'soon', shopImgLink = '', shopImgIcon = '', winnerIconColor = '', winnerImgLink = '', winnerImgIcon = '';
 					if (feature.properties.img) {
 						shopImg = feature.properties.img;
-						shopImgLink = 'onclick="window.open(&quot;assets/xmas/' + shopImg + '.jpg&quot;, &quot;imgWindow&quot;, &quot;width=1024, height=768, resizable=yes&quot;)"';
+						shopImgLink = 'onclick="window.open(\'assets/xmas/' + shopImg + '.jpg\', \'imgWindow\', \'width=1024, height=768, resizable=yes\')"';
 						shopImgIcon += ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>';
 					}
 					if (feature.properties.winner) {
@@ -51,7 +51,7 @@ function xmasShops() {
 							'</a>' +
 							winnerImgLink +
 							'<div class="popup-imgAttrib" style="text-align:center;">' +
-								'<a style="color:darkgreen;" onclick="shopDetail(&quot;' + feature.properties.osmid + '&quot;)">(¯`·._.·(¯`·._.· &nbsp; Business Details &nbsp; ·._.·´¯)·._.·´¯)</a>' +
+								'<a style="color:darkgreen;" onclick="shopDetail(\'' + feature.properties.osmid + '\')">(¯`·._.·(¯`·._.· &nbsp; Business Details &nbsp; ·._.·´¯)·._.·´¯)</a>' +
 							'</div>',
 							{ maxWidth: imgSize, minWidth: imgSize }
 						)
@@ -89,6 +89,7 @@ function xmasShops() {
 // link to shop
 function shopDetail(osmid) {
 	iconLayer.clearLayers();
+	areaOutline.clearLayers();
 	rQuery = true;
 	show_overpass_layer(osmid + ';');
 }

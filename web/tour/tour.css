@@ -1,8 +1,14 @@
+html {
+	height: 100%;
+	overflow: hidden;
+}
 body {
 	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
-	padding: 0 15px 15px 15px;
+	padding: 0 15px 0 15px;
 	text-align: justify;
 	margin: 0;
+	overflow-y: auto;
+	height: 100%;
 }
 @media (max-width: 310px) {
 	body {

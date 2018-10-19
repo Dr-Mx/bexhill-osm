@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v4.7.0 - Dynamic URI
+
+**Date:** 15/10/2018
+
+Site changes
+ - Replace permalink button with a dynamic URI, permalink button removed
+ - Add homepage weather api from openweathermap.org
+ - Add more images for special holidays
+ - Add public bookcase to library poi
+ - Finally fix iFrame scrolling bug on some devices
+ - Better tip navigation
+ - Many other bug fixes and improvements
+
+
 ## v4.6.0
 
 **Date:** 15/09/2018
