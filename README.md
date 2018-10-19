@@ -31,8 +31,9 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
  - Geolocate user and get walking directions from that point
  - Historic tour articles that link to various overlays on the map
  - Direct link to edit an element on OSM or leave a note
- - Share current map state with permalink
+ - Share current map state with dynamic permalink
  - Various settings to adjust map display
+ - OpenWeatherMap API
  - Debugging tools
 
 ## Attribution
