@@ -25,8 +25,6 @@
 }
 
 .leaflet-routing-alt, .leaflet-routing-geocoders, .leaflet-routing-error {
-    padding-left: 5px;
-	margin-top: 5px;
     max-height: 310px;
     overflow-y: auto;
     transition: all 0.2s ease;
@@ -106,13 +104,11 @@
 .leaflet-routing-geocoders input {
     width: 303px;
     width: calc(100% - 40px);
-    line-height: 1.67;
+    line-height: 26px;
     border: 1px solid #ccc;
-	height: 23px;
 	border-radius: 4px;
-	padding-left: 12px;
-	padding-right: 25px;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	padding: 0 25px 0 12px;
+	height: 28px;
 }
 
 .leaflet-routing-geocoders input:hover, .leaflet-routing-geocoders input:focus {
@@ -120,7 +116,6 @@
 }
 
 .leaflet-routing-geocoders button {
-    font: bold 18px 'Lucida Console', Monaco, monospace;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: white;
@@ -129,22 +124,25 @@
     float: right;
     cursor: pointer;
     transition: background-color 0.2s ease;
+	font-weight: 900;
 }
 
-.leaflet-routing-geocoders button:hover:after {
+.leaflet-routing-geocoders button:hover::after {
 	color: black;
 }
 
-.leaflet-routing-add-waypoint:after {
+.leaflet-routing-add-waypoint::after {
 	color: #b05000;	
-    content: '+';
+    content: '\f067';
 	line-height: 1;
+	font-family: 'Font Awesome 5 Free';
 }
 
-.leaflet-routing-reverse-waypoints:after {
+.leaflet-routing-reverse-waypoints::after {
 	color: #b05000;	
-	content: '\21c5';
+	content: '\f079';
 	line-height: 1;
+	font-family: 'Font Awesome 5 Free';
 }
 
 .leaflet-routing-reverse-waypoints, .leaflet-routing-add-waypoint {
@@ -193,7 +191,7 @@
     cursor: pointer;
 }
 
-.leaflet-routing-remove-waypoint:after {
+.leaflet-routing-remove-waypoint::after {
     position: absolute;
     display: block;
     width: 15px;
@@ -217,7 +215,7 @@
     line-height: 1;
 }
 
-.leaflet-routing-remove-waypoint:hover:after {
+.leaflet-routing-remove-waypoint:hover::after {
     color: black;
 }
 
@@ -234,7 +232,7 @@
     font-weight: bold;
 }
 
-.leaflet-routing-collapse-btn:after {
+.leaflet-routing-collapse-btn::after {
     content: '\00d7';
 }
 
@@ -248,7 +246,7 @@
     background-image: url('../../img/leaflet/routing-icon.png');
 }
 
-.leaflet-routing-container-hide .leaflet-routing-collapse-btn:after {
+.leaflet-routing-container-hide .leaflet-routing-collapse-btn::after {
     content: none;
 }
 

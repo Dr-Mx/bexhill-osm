@@ -150,9 +150,9 @@ var pois = {
 		hide: 1
 	},
 
-	swimming_pool: {
+	sports_centre: {
 		name: 'Swimming-Pool',
-		query: 'nwr[leisure=swimming_pool][access!~private];',
+		query: 'nwr[leisure=sports_centre][sport=swimming];',
 		iconName: 'swimming2',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['swim', 'leisure', 'sport', 'pool'],
@@ -804,7 +804,7 @@ var pois = {
 		query: 'nwr[shop=charity];nwr[charity=yes];',
 		iconName: 'charity',
 		catName: 'Shops',
-		tagKeyword: ['charity', 'clothes', 'books', 'toys', 'confectionery', 'furniture', 'crafts', 'second-hand'],
+		tagKeyword: ['charity', 'clothes', 'books', 'toys', 'furniture', 'crafts', 'second-hand'],
 		hide: 1
 	},
 

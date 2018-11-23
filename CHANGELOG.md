@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## v4.8.0 - Cache API requests
+
+**Date:** 23/11/2018
+
+Site changes
+ - Cache Overpass API requests to localStorage and memory
+ - Cache OpenStreetMap API vectors to memory
+ - Developer tool for setting localStorage duration (default 48hrs)
+ - Keyword search for Historic Tour articles
+ - Push map attribution link to sidebar
+ - Use local navigator.language localisation
+ - Hide developer tools for iFrames
+ - Many other bug fixes and improvements
+
+
 ## v4.7.0 - Dynamic URI
 
 **Date:** 15/10/2018
@@ -231,7 +246,7 @@ Site changes
 **Date:** 02/06/2017
 
 Site changes
- - Added list of results when selecting a group POI, colours show current open state.  Mouse-over an item to see tooltip, click to open popup.
+ - Added list of results when selecting a group POI, colours show current open state. Mouse-over an item to see tooltip, click to open popup.
  - Removed 'facilities open right now' checkbox
  - Use alternative method to get thumbnail from wikimedia without MD5 plugin
 
@@ -436,7 +451,7 @@ Updated js
  - Minified all plugins
 
 Site changes
- - Re-write of creating POI checkbox tables, now a single tab with page jump links.  Complete automated import from pois-types.js
+ - Re-write of creating POI checkbox tables, now a single tab with page jump links. Complete automated import from pois-types.js
  - Changed URL encoding to not use unsafe characters and less parameters, old links will no longer work.
  - Added a Historic Tour tab. Contains controls linking to an iframe containing various articles that interact with the map
  - Suggested walks now use switch statement
@@ -521,7 +536,7 @@ Site changes
  - More code tidying
 
 
-## v1.5.0 -  Address Search Reverse Lookup
+## v1.5.0 - Address Search Reverse Lookup
 
 **Date:** 09/10/2016
 

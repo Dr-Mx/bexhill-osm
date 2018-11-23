@@ -17,9 +17,9 @@ function xmasDecor() {
 
 function xmasShops(year) {
 	clear_map();
-	if ($(window).width() < 768) sidebar.close();
+	if ($(window).width() < 768) $('.sidebar-close').click();
 	$.ajax({
-		url: 'assets/xmas/' + year + '/shops.geojson',
+		url: 'assets/xmas/' + year + '/' + year + '.geojson',
 		dataType: 'json',
 		mimeType: 'application/json',
 		cache: false,
@@ -28,8 +28,7 @@ function xmasShops(year) {
 				onEachFeature: function (feature, layer) {
 					var shopImg = 'soon', shopImgLink = '', shopImgIcon = '', winnerIconColor = '', winnerImgLink = '', winnerImgIcon = '';
 					if (feature.properties.img) {
-						shopImg = feature.properties.img;
-						shopImgLink = 'onclick="window.open(\'assets/xmas/' + shopImg + '.jpg\', \'imgWindow\', \'width=1024, height=768, resizable=yes\')"';
+						shopImg = year + '/' + feature.properties.img;
 						shopImgIcon += ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>';
 					}
 					if (feature.properties.winner) {
@@ -41,13 +40,13 @@ function xmasShops(year) {
 							case 'HighlyCommended': winnerIconColor = '#4682b4'; break;
 						}
 						winnerImgLink = '<img style="position:absolute; left:calc(75% - 20px); top:25px; filter:drop-shadow(0 0 10px #fff);" title="' + feature.properties.winner + '" src="assets/xmas/award-' + feature.properties.winner + '.png">';
-						winnerImgIcon = ' <i style="color:' + winnerIconColor + ';" class="fas fa-trophy fa-fw"></i>';
+						winnerImgIcon = ' <i style="text-shadow:1px 1px 2px black; color:' + winnerIconColor + ';" class="fas fa-trophy fa-lg fa-fw"></i>';
 					}
 					layer
 						.bindPopup(
 							'<div class="popup-header" style="background-color:rgb(150, 200, 150);"><h3>' + feature.properties.name + '</h3></div>' +
 							'<a ' + shopImgLink + '>' +
-								'<div id="img0" class="popup-imgContainer"><img alt="Loading image..." style="width:' + imgSize + 'px; border-color:darkred;" src="assets/xmas/' + shopImg + '.jpg"></div>' +
+								'<div id="img0" class="popup-imgContainer"><img alt="Loading image..." style="border-color:darkred;" src="assets/xmas/' + shopImg + '.jpg"></div>' +
 							'</a>' +
 							winnerImgLink +
 							'<div class="popup-imgAttrib" style="text-align:center;">' +
@@ -91,5 +90,5 @@ function shopDetail(osmid) {
 	iconLayer.clearLayers();
 	areaOutline.clearLayers();
 	rQuery = true;
-	show_overpass_layer(osmid + ';');
+	show_overpass_layer(elementType(osmid) + '(' + osmid.toLowerCase().slice(1, osmid.length) + ');', osmid);
 }

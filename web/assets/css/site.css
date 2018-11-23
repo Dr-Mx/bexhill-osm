@@ -12,12 +12,16 @@ body {
 
 html, body, #map {
 	height: 100%;
-	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font: 11pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 @media (min-width: 768px) and (max-width: 1299px), (max-width: 350px) {
 	body {
 		font-size: 10pt;
 	}
+}
+
+input[type=text], input[type=date], input[type=number] {
+	height: 28px;
 }
 
 #sidebar {
@@ -39,28 +43,35 @@ html, body, #map {
 	display: table;
 	width: 100%;
 	color: #555;
+	height: 55px;
 }
 #weather span {
 	display: table-cell;
 	vertical-align: middle;
-	white-space: nowrap;
+	padding: 2px 5px 2px 0;
 }
 #weather span img {
 	width: 50px;
-	height: 50px;
+	display: block;
+	margin: 0 auto;
+}
+#weather span .fas {
+	color: #777;
 }
 #tips {
-	position: relative;
-	padding: 3px 0;
+	display: table;
+	width: 100%;
+	height: 40px;
 }
 #tipsText {
-	padding-right: 17px;
-	min-height: 25px;
+	display: table-cell;
+	vertical-align: middle;
+	padding: 3px;
 }
 #tipsButton {
-	top: 10px;
-	right: 3px;
-	position: absolute;
+	display: table-cell;
+	text-align: right;
+	padding: 10px 3px;
 }
 .navigateItem {
 	position: absolute;
@@ -146,6 +157,23 @@ h3 {
 }
 .ui-accordion-header {
 	cursor: pointer;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+.ui-accordion-header:hover {
+	color: #b05000;
+}
+#devTools h3::after, .popup-ohContainer .popup-tagValue::after {
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	content: '\f0da';
+	margin-left: 10px;
+	color: #b05000;
+}
+#devTools h3.ui-accordion-header-active::after, .popup-ohContainer .ui-accordion-header-active .popup-tagValue::after {
+	content: '\f0d7';
 }
 
 .leaflet-control-layers-toggle {
@@ -227,7 +255,7 @@ h3 {
 	color: #fff;
 }
 
-noscript {
+#noscript {
 	color: white;
 	position: absolute;
 	width: 100%;
@@ -258,7 +286,7 @@ noscript {
 	color: white;
 	border-radius: 5px;
 	border: none;
-	box-shadow: 1 3px 5px rgba(0, 0, 0, 0.65);
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.65);
 	font-size: 90%;
 	z-index: 1100;
 }
@@ -298,87 +326,87 @@ noscript {
 	border-radius: 5px;
 }
 #inputOpacity input[type=range] {
-    -webkit-appearance: none;
-    width: 75%;
+	-webkit-appearance: none;
+	width: 75%;
 	margin: 0;
 	padding: 0 15px 0 0;
 	border: none;
 }
 #inputOpacity input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 10px;
-    background: #bbb;
-    border: none;
-    border-radius: 3px;
+	width: 100%;
+	height: 10px;
+	background: #bbb;
+	border: none;
+	border-radius: 3px;
 }
 #inputOpacity input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #b05000;
-    margin-top: -4px;
+	-webkit-appearance: none;
+	border: none;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	background: #b05000;
+	margin-top: -4px;
 	cursor: e-resize;
 }
 #inputOpacity input[type=range]:focus {
-    outline: none;
+	outline: none;
 }
 #inputOpacity input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #ccc;
+	background: #ccc;
 }
 #inputOpacity input[type=range]::-moz-range-track {
-    width: 100%;
-    height: 10px;
-    background: #bbb;
-    border: none;
-    border-radius: 3px;
+	width: 100%;
+	height: 10px;
+	background: #bbb;
+	border: none;
+	border-radius: 3px;
 }
 #inputOpacity input[type=range]::-moz-range-thumb {
-    border: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #b05000;
+	border: none;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	background: #b05000;
 	cursor: e-resize;
 }
 #inputOpacity input[type=range]:-moz-focusring {
-    outline: 1px solid white;
-    outline-offset: -1px;
+	outline: 1px solid white;
+	outline-offset: -1px;
 }
 
 #inputOpacity input[type=range]::-ms-track {
-    width: 100%;
-    height: 10px;
-    background: transparent;
-    border-color: transparent;
-    border-width: 5px 0;
-    color: transparent;
+	width: 100%;
+	height: 10px;
+	background: transparent;
+	border-color: transparent;
+	border-width: 5px 0;
+	color: transparent;
 }
 #inputOpacity input[type=range]::-ms-fill-lower {
-    background: #777;
-    border-radius: 10px;
+	background: #777;
+	border-radius: 10px;
 }
 #inputOpacity input[type=range]::-ms-fill-upper {
-    background: #bbb;
-    border-radius: 10px;
+	background: #bbb;
+	border-radius: 10px;
 }
 #inputOpacity input[type=range]::-ms-thumb {
-    border: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #b05000;
+	border: none;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	background: #b05000;
 	cursor: e-resize;
 }
 #inputOpacity input[type=range]:focus::-ms-fill-lower {
-    background: #888;
+	background: #888;
 }
 #inputOpacity input[type=range]:focus::-ms-fill-upper {
-    background: #ccc;
+	background: #ccc;
 }
 #inputOpacity input[type=range]::-ms-tooltip {
-    display: none;
+	display: none;
 }
 #inputOpacity .leaflet-popup-close-button {
 	position: absolute;
@@ -392,9 +420,9 @@ noscript {
 
 .sidebar-body button {
 	color: #b05000;
-	border: none;
+	border: 1px solid #ccc;
 	width: 30px;
-	height: 26px;
+	height: 30px;
 	background-color: white;
 	border-radius: 4px;
 	cursor: pointer;
@@ -402,6 +430,8 @@ noscript {
 .sidebar-body button:hover {
 	background-color: #f4f4f4;
 	color: black;
+	border: 1px solid #ccc;
+	height: 30px;
 }
 
 /* poi tab */
@@ -440,9 +470,9 @@ noscript {
 
 select {
 	background-color: white;
-	border: 2px white solid;
+	border: 1px solid #ccc;
 	border-radius: 4px;
-	height: 26px;
+	height: 30px;
 	cursor: pointer;
 }
 select:hover:enabled, .poi-results button:hover {
@@ -492,16 +522,21 @@ select:hover:enabled, .poi-results button:hover {
 	display: inline-block;
 	margin: 2px;
 }
+@media (min-width: 600px) and (max-width: 767px) {
+	.poi-checkbox {
+		width: calc(33% - 4px);
+	}
+}
 .poi-checkbox > label {
 	display: inline-block;
 	width: 100%;
 	border-radius: 5px;
 	white-space: nowrap;
 	cursor: pointer;
+	transition: background-color 100ms;
 }
 .poi-checkbox > label:hover {
-	background-color: rgba(204, 204, 204, 1);
-	transition: background-color 100ms;
+	background-color: rgba(170, 170, 170, 0.5);
 }
 .poi-checkbox > label > img {
 	float: left;
@@ -528,6 +563,10 @@ select:hover:enabled, .poi-results button:hover {
 }
 
 /* walking tab */
+#walking .comment {
+	padding-top: 5px;
+	font-size: 75%;
+}
 #walking a img {
 	margin: auto;
 	padding: 5px 10px 5px 10px;
@@ -538,10 +577,10 @@ select:hover:enabled, .poi-results button:hover {
 	transition: filter 100ms;
 }
 #walkContainer {
-	padding: 5px;
+	padding: 5px 0;
 }
 #walkList {
-	width: calc(100% - 35px);
+	width: calc(100% - 38px);
 	margin: 0 5px 10px 0;
 }
 #walkSelect {
@@ -564,7 +603,7 @@ select:hover:enabled, .poi-results button:hover {
 	font-size: 10pt;
 	white-space: nowrap;
 	width: 100%;
-	margin: 8px 0;
+	padding: 8px 0;
 }
 #tourList {
 	width: 70%;
@@ -578,7 +617,6 @@ select:hover:enabled, .poi-results button:hover {
 	margin-top: 20px;
 	position: absolute;
 	width: 100%;
-	font-size: 30pt;
 	color: #aaa;
 }
 #tour .sidebar-body {
@@ -615,7 +653,7 @@ select:hover:enabled, .poi-results button:hover {
 }
 .slider::before {
 	position: absolute;
-	content: "";
+	content: '';
 	height: 16px;
 	width: 16px;
 	left: 4px;
@@ -644,13 +682,17 @@ input:checked + .slider::before {
 #inputOverpass, #inputOpServer {
 	width: calc(100% - 100px);
 }
-#inputAttic, #inputOverpass, #inputOpServer {
+#inputAttic, #inputOverpass, #inputOpServer, #inputOpCache {
 	margin: 5px;
 }
-#inputOverpass, #inputAttic {
+#inputOverpass, #inputAttic, #inputOpCache {
 	border: 1px solid #ccc;
 	border-radius: 4px;
-	padding: 5px;
+	padding: 0 5px;
+	line-height: 28px;
+}
+#inputOpCache {
+	width: 50px;
 }
 #devTools {
 	display: block;
@@ -669,7 +711,11 @@ input:checked + .slider::before {
 	display: block;
 	padding: 0 15px 0 15px;
 }
-#helptabs img {
+#gotocontrols .fa-border {
+	border: 1px solid #aaa;
+	background-color: white;
+}
+#gototabs img {
 	float: left;
 	padding: 0 5px 0 5px;
 	width: 25px;
@@ -680,6 +726,7 @@ input:checked + .slider::before {
 	padding-left: 10px;
 	list-style-type: none;
 }
+#information #gotosoftware > ul { margin-top: 5px; }
 #information td:hover {
 	filter: brightness(80%);
 	transition: filter 100ms;
@@ -692,6 +739,12 @@ input:checked + .slider::before {
 	margin-right: 5px;
 	border: 1px solid #ccc;
 	border-radius: 20px;
+}
+#mylinks {
+	line-height: 25px;
+}
+#mylinks .fa-fw {
+	padding: 0 10px;
 }
 
 /* marker popups */
@@ -800,9 +853,14 @@ input:checked + .slider::before {
 .popup-longDesc {
 	display: block;
 	overflow-y: auto;
-	max-height: 150px;
+	max-height: 200px;
 	text-align: justify;
 	padding-right: 3px;
+}
+@media (max-height: 500px) {
+	.popup-longDesc {
+		max-height: 100px;
+	}
 }
 .popup-streetSource {
 	display: block;
@@ -861,6 +919,9 @@ input:checked + .slider::before {
 .popup-bsTable td { padding: 2px; }
 .popup-bsTable td:nth-child(1) { font-weight: bold; }
 .popup-bsTable td:nth-child(3) { white-space: nowrap; text-align: right; }
+.facYes { color: darkgreen; }
+.facLtd { color: olive; }
+.facNo { color: darkred; }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
 	background-color: rgba(244, 244, 244, 0.95);
@@ -920,18 +981,23 @@ input:checked + .slider::before {
 }
 
 @keyframes jump {
-	0%,to {
-		transform:translateZ(0);
-	}
-	10%,30%,50%,70%,90% {
-		transform:translate3d(0,-2px,0);
-	}
-	20%,40%,60%,80% {
-		transform:translate3d(0,2px,0);
-	}
+	0%,to { transform: translateZ(0); }
+	10%,30%,50%,70%,90% { transform: translate3d(0,-2px,0); }
+	20%,40%,60%,80% { transform: translate3d(0,2px,0); }
 }
 .jump {
 	animation-duration: 1.5s;
 	animation-name: jump;
 	animation-timing-function: ease-in-out;
+}
+@keyframes wobble {
+	0%,to { transform:translateX(0); }
+	10%,30%,50%,70%,90% { transform: translate3d(-2px,0,0); }
+	20%,40%,60%,80% { transform: translate3d(2px,0,0); }
+}
+.wobble {
+	animation-duration: 2s;
+	animation-name: wobble;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 4;
 }

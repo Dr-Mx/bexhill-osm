@@ -1,21 +1,20 @@
 // query overpass server - based on https://github.com/kartenkarsten/leaflet-layer-overpass
 
-function show_overpass_layer(query) {
-	if (!query || query === '();') {
-		console.log('There is nothing selected to filter by.');
-		return;
-	}
+function show_overpass_layer(query, cacheId) {
+	if (!query || query === '();') return;
 	if ($('#inputAttic').val()) query = '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"];(' + query + ');';
 	else query = ';' + query;
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
 		query: query,
-		endpoint: (window.location.protocol === 'file:' ? 'http:' : '') + $('#inputOpServer').val() + 'interpreter',
-		callback: callback
+		endpoint: 'https://' + $('#inputOpServer').val() + '/api/interpreter',
+		callback: callback,
+		cacheId: cacheId ? 'OPL' + cacheId : ''
 	});
 	iconLayer.addLayer(opl);
 }
 
+var eleCache = [];
 L.OverPassLayer = L.FeatureGroup.extend({
 	options: {
 		statusMsg: function(indicatorMsg, errCode) {
@@ -43,31 +42,53 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		$('#spinner').show();
 		if (this.options.debug) console.debug('About to query the OverPassAPI.');
 		var self = this;
-		var request = new XMLHttpRequest();
-		var reference = {};
-		request.open('GET', url, true);
-		request.onerror = function() {
-			self.options.statusMsg('Data server not responding. Please try again later.', '0');
-		};
-		request.onload = function() {
-			if (this.status >= 200 && this.status < 400) {
-				reference = {instance: self};
-				self.options.callback.call(reference, JSON.parse(this.response));
-				if (self.options.debug) console.debug('Finished queries.');
-				if ($('.leaflet-marker-icon').length === 0 && !rQuery) self.options.statusMsg('No POIs found, try another area or query.');
+		var reference = {instance: self};
+		// check if cached in variable
+		if (eleCache[self.options.cacheId] && !$('#inputAttic').val()) {
+			self.options.callback.call(reference, eleCache[self.options.cacheId]);
+			if (self.options.debug) console.debug('Finished queries (var cache ' + self.options.cacheId + ').');
+		}
+		// check if cached in localStorage
+		else if (noIframe && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId]) {
+			eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
+			if (new Date(eleCache[self.options.cacheId].osm3s.timestamp_osm_base).getTime() < new Date().getTime()+parseInt($('#inputOpCache').val())*60*60*1000) {
+				self.options.callback.call(reference, eleCache[self.options.cacheId]);
+				if (self.options.debug) console.debug('Finished queries (localStorage cache ' + self.options.cacheId + ').');
 			}
-			else if (this.status >= 400 && this.status <= 504) {
-				var erMsg = 'Something unknown happened. Please try again later.';
-				switch (this.status) {
-					case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
-					case 429: erMsg = 'Too Many Requests. Please try a smaller area.'; break;
-					case 504: erMsg = 'Gateway Timeout. Please try again.'; break;
+		}
+		else $.ajax({
+			url: url,
+			datatype: 'xml',
+			success: function (xml) {
+				self.options.callback.call(reference, xml);
+				if (self.options.debug) console.debug('Finished queries (api).');
+				if ($('#inputOpen').is(':checked')) self.options.statusMsg('<i class="fas fa-info-circle fa-fw"></i> No POIs found, try turning off "only show open" in options.');
+				else if ($('.leaflet-marker-icon').length === 0 && !rQuery) self.options.statusMsg('<i class="fas fa-info-circle fa-fw"></i> No POIs found, try another area or query.');
+				// if not in iframe cache to local storage
+				if (self.options.cacheId && !$('#inputAttic').val()) {
+					eleCache[self.options.cacheId] = xml;
+					if (noIframe && window.localStorage) window.localStorage[self.options.cacheId] = JSON.stringify(xml);
 				}
-				self.options.statusMsg(erMsg, this.status);
-				self.options.callback.call(reference, {elements: []});
+			},
+			complete: function (e) {
+				if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
+					erMsg = 'Something unknown happened. Please try again later.';
+					switch (e.status) {
+						case 0: erMsg = 'Data server not responding. Please try again later.'; e.status = 1; break;
+						case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
+						case 429: erMsg = 'Too Many Requests. Please try a smaller area.'; break;
+						case 504: erMsg = 'Gateway Timeout. Please try again.'; break;
+					}
+					self.options.statusMsg(erMsg, e.status);
+					self.options.callback.call(reference, {elements: []});
+					this.error();
+				}
+			},
+			error: function () {
+				if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS: ' + this.url);
+				rQuery = false;
 			}
-		};
-		request.send();
+		});
 	},
 	onAdd: function (map) {
 		this._map = map;

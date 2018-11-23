@@ -40,7 +40,7 @@ function parse_tags(element, titlePopup, functions) {
 
 var spinner = 0, markerId, ohState, ctState, poiList = [];
 function callback(data) {
-	if ($('#inputDebug').is(':checked')) console.debug(data);
+	if ($('#inputDebug').is(':checked') && data.elements.length) console.debug(data);
 	var type, name, iconName, markerPopup;
 	var customPOptions = {
 		maxWidth: imgSize,
@@ -69,8 +69,6 @@ function callback(data) {
 		if (!e.tags || e.id in this.instance._ids || e.id === 604081690) continue;
 		this.instance._ids[e.id] = true;
 		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
-		// get and display the area outline through openstreetmap api
-		if (e.type !== 'node') getOsmOutline(e.type, e.id);
 		name = type = iconName = ohState = ctState = undefined;
 		if (e.tags.construction && e.tags.ref) {
 			name = e.tags.construction + ' construction';
@@ -259,13 +257,14 @@ function callback(data) {
 		if (e.tags.leisure) {
 			if (!name) name = e.tags.leisure;
 			if (!type) type = e.tags.leisure;
+			if (e.tags.sport) name = e.tags.sport + ' ' + e.tags.leisure;
 			switch (type) {
 				case 'common' :
 				case 'nature_reserve' : type = 'park'; break;
 				case 'fitness_station' : type = 'fitness_centre'; break;
 				case 'garden' : iconName = 'urbanpark'; break;
-				case 'sport' : if (e.tags.sport) name = e.tags.sport + ' ' + e.tags.leisure; break;
 				case 'golf_course': type = 'recreation_ground'; iconName = 'golfing'; break;
+				case 'sports_centre': if (e.tags.sport !== 'swimming') iconName = 'indoor-arena'; break;
 			}
 		}
 		if (e.tags.emergency) {
@@ -343,7 +342,7 @@ function callback(data) {
 		customTOptions.interactive = customTOptions.permanent = poi ? poi.permTooltip : 0;
 		var toolTip = '<b>' + name + '</b>';
 		if (e.tags.name) toolTip += '<br><i>' + e.tags.name + '</i>';
-		else if (e.tags['addr:street'])  {
+		else if (e.tags['addr:street']) {
 			if (e.tags['addr:housename']) toolTip += '<br><i>' + e.tags['addr:housename'] + ', ' + e.tags['addr:street'] + '</i>';
 			else if (e.tags['addr:housenumber']) toolTip += '<br><i>' + e.tags['addr:housenumber'] + ' ' + e.tags['addr:street'] + '</i>';
 			else if (e.tags['addr:unit']) toolTip += '<br><i>Unit ' + e.tags['addr:unit'] + ', ' + e.tags['addr:street'] + '</i>';
@@ -371,12 +370,15 @@ function callback(data) {
 				if (rQuery === 'sclick') marker.openTooltip();
 				else marker.openPopup();
 				markerId = marker._leaflet_id;
+				// get and display the area outline through openstreetmap api
+				getOsmOutline(e.type, e.id);
 			}
 			// marker from group poi
 			// check for facilities on 'currently open' setting
 			else if (!$('#inputOpen').is(':checked') || ($('#inputOpen').is(':checked') && ohState === true)) {
 				marker.addTo(this.instance);
 				setPoiList();
+				getOsmOutline(e.type, e.id);
 			}
 		}
 		else if (rQuery) {
@@ -389,6 +391,7 @@ function callback(data) {
 			if (rQuery === 'sclick') marker.openTooltip();
 			else marker.openPopup();
 			markerId = marker._leaflet_id;
+			getOsmOutline(e.type, e.id);
 		}
 		else if ($('#inputDebug').is(':checked')) {
 			// custom overpass query
@@ -398,11 +401,12 @@ function callback(data) {
 			marker.bindTooltip(toolTip, customTOptions);
 			marker.addTo(this.instance);
 			setPoiList();
+			getOsmOutline(e.type, e.id);
 		}
 		rQuery = false;
 	}
 	// output list of pois in sidebar
-	if (poiList.length) {
+	if (poiList.length) setTimeout(function () {
 		// sort by distance or name
 		poiList.sort(function (a, b) {
 			if (a.distance) return (a.distance > b.distance) ? 1 : -1;
@@ -437,14 +441,14 @@ function callback(data) {
 			function () { if (!poiList[this.id]._tooltip.options.permanent) poiList[this.id].closeTooltip(); }
 		);
 		$('.poi-results-list tr').click(function () {
-			if ($(window).width() < 768) sidebar.close();
+			if ($(window).width() < 768) $('.sidebar-close').click();
 			else map.flyTo(poiList[this.id]._latlng);
 			poiList[this.id].closePopup().openPopup();
 		});
 		if (poiList[0].distance) $('.poi-results h3').html($('.leaflet-marker-icon').length + ' results <i style="color:#777;" class="fas fa-sort-numeric-down fa-fw"></i>');
 		else $('.poi-results h3').html($('.leaflet-marker-icon').length + ' results <i style="color:#777;" class="fas fa-sort-alpha-down fa-fw"></i>');
 		if (poiList.length === maxOpResults) $('.poi-results h3').append('<br>(too many results to show)');
-	}
+	}, 50);
 	if (spinner > 0) spinner--;
 	if (spinner === 0) {
 		$('#spinner').fadeOut(200);
@@ -472,6 +476,7 @@ function generic_tag_parser(tags, tag, label, iconName) {
 		else result = tags[tag].replace(/;/g, ', ').replace(/_/g, ' ');
 		markerPopup += L.Util.template(tagTmpl, { tag: label, value: result, iconName: iconName });
 	}
+	if (tag === 'description') markerPopup = '<span class="popup-longDesc">' + markerPopup + '</span>';
 	return markerPopup;
 }
 function generic_img_parser(img, id, display, attrib) {
@@ -494,7 +499,7 @@ function generic_img_parser(img, id, display, attrib) {
 function show_img_controls(imgMax, img360) {
 	var ctrlTmpl = '<div class="navigateItem">';
 	if (img360 && img360.indexOf('File') === 0) ctrlTmpl +=
-		'<a title="360 Panorama" onclick="nav360(\'' + img360 + '\')">' +
+		'<a title="360 Panorama" onclick="nav360(&quot;' + img360 + '&quot;)">' +
 		'<i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
 	if (imgMax > 1) ctrlTmpl +=
 		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
@@ -512,16 +517,16 @@ function address_parser(tags) {
 	var markerPopup = '';
 	if (tags['addr:street'] || tags['addr:place']) {
 		var value = '';
-		if (tags['addr:housename'] && tags['addr:housename'] !== tags.name) value += tags['addr:housename'] + ', ';
+		if (tags['addr:housename'] && tags['addr:housename'] !== tags.name) value += '<span title="House name">' + tags['addr:housename'] + '</span>, ';
 		if (tags['addr:flats']) value += 'Flats: ' + tags['addr:flats'] + ', ';
 		if (tags['addr:unit']) value += 'Unit ' + tags['addr:unit'] + ', ';
-		if (tags['addr:housenumber']) value += tags['addr:housenumber'] + ' ';
-		if (tags['addr:street']) value += tags['addr:street'];
-		else if (tags['addr:place']) value += tags['addr:place'];
-		if (tags['addr:suburb']) value += ', ' + tags['addr:suburb'];
-		else if (tags['addr:hamlet']) value += ', ' + tags['addr:hamlet'];
-		if (tags['addr:city'] && tags['addr:city'] !== 'Bexhill') value += ', ' + tags['addr:city'];
-		if (tags['addr:postcode']) value += ', ' + tags['addr:postcode'];
+		if (tags['addr:housenumber']) value += '<span title="House number">' + tags['addr:housenumber'] + '</span> ';
+		if (tags['addr:street']) value += '<span title="Street">' + tags['addr:street'] + '</span>';
+		else if (tags['addr:place']) value += '<span title="Place">' + tags['addr:place'] + '</span>';
+		if (tags['addr:suburb']) value += ', <span title="Suburb">' + tags['addr:suburb'] + '</span>';
+		else if (tags['addr:hamlet']) value += ', <span title="Hamlet">' + tags['addr:hamlet'] + '</span>';
+		if (tags['addr:city'] && tags['addr:city'] !== 'Bexhill') value += ', <span title="City">' + tags['addr:city'] + '</span>';
+		if (tags['addr:postcode']) value += ', <span title="Postcode">' + tags['addr:postcode'] + '</span>';
 		markerPopup += L.Util.template(tagTmpl, { tag: 'Address', value: value, iconName: 'fas fa-map-marker' });
 	}
 	return markerPopup;
@@ -530,7 +535,7 @@ function phone_parser(tags) {
 	var tagPhone = tags.phone ? tags.phone : tags['contact:phone'];
 	var markerPopup = '';
 	if (tagPhone) {
-		tagPhone = tagPhone.replace('+44 ', '0');
+		if (navigator.language === 'en-GB') tagPhone = tagPhone.replace('+44 ', '0');
 		var link = '<a href="tel:' + tagPhone + '" title="Call now">' + tagPhone + '</a>';
 		markerPopup += L.Util.template(tagTmpl, { tag: 'Phone', value: link, iconName: 'fas fa-phone' });
 	}
@@ -573,10 +578,11 @@ function listed_parser(tags) {
 	if (tags.building) {
 		label = 'Building';
 		icon = 'fas fa-building';
-		if (tags['building:architecture']) tag += titleCase(tags['building:architecture']) + '; ';
-		if (tags.architect) tag += tags.architect + '; ';
-		if (tags.start_date) tag += date_parser(tags.start_date, 'short') + '; ';
-		if (tags.height) tag += tags.height + 'm; ';
+		if (tags['building:architecture']) tag += '<span title="Architecture">' + titleCase(tags['building:architecture']) + '</span>, ';
+		if (tags.architect) tag += '<span title="Architect">' + tags.architect + '</span>, ';
+		if (tags.builder) tag += '<span title="Builder">' + tags.builder + '</span>, ';
+		if (tags.start_date) tag += '<span title="Start date">' + date_parser(tags.start_date, 'short') + '</span>, ';
+		if (tags.height) tag += '<span title="Height in metres">' + tags.height + 'm</span>, ';
 	}
 	else {
 		label = 'Listed';
@@ -586,24 +592,27 @@ function listed_parser(tags) {
 	}
 	if (tags.HE_ref) {
 		var listedStatus = tags.listed_status ? tags.listed_status : tags.HE_ref;
-		tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank">' + listedStatus + '</a>; ';
+		tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank">' + listedStatus + '</a>, ';
 	}
-	if (tag) markerPopup = L.Util.template(tagTmpl, { tag: label + ' details', value: tag, iconName: icon }) + markerPopup;
+	if (tag) {
+		tag = tag.substring(0, tag.length - 2);
+		markerPopup = L.Util.template(tagTmpl, { tag: label + ' details', value: tag, iconName: icon }) + markerPopup;
+	}
 	return markerPopup;
 }
 function facility_parser(tags) {
 	var markerPopup = '', tag = '';
-	if (tags.wheelchair === 'yes') tag += '<i class="fas fa-wheelchair fa-fw" title="wheelchair: yes" style="color:darkgreen;"></i>';
-	else if (tags.wheelchair === 'limited') tag += '<i class="fas fa-wheelchair fa-fw" title="wheelchair: limited" style="color:olive;"></i>';
-	else if (tags.wheelchair === 'no') tag += '<i class="fas fa-wheelchair fa-fw" title="wheelchair: no" style="color:red;"></i>';
-	if (tags.dog === 'yes') tag += '<i class="fas fa-dog fa-fw" title="dog: yes" style="color:darkgreen;"></i>';
-	else if (tags.dog === 'no') tag += '<i class="fas fa-dog fa-fw" title="dog: no" style="color:red;"></i>';
-	if (tags.internet_access === 'wlan') tag += '<i class="fas fa-wifi fa-fw" title="wireless internet access" style="color:darkgreen;"></i>';
-	else if (tags.internet_access === 'terminal') tag += '<i class="fas fa-desktop fa-fw" title="terminal internet access" style="color:darkgreen;"></i>';
+	if (tags.wheelchair === 'yes') tag += '<i class="facYes fas fa-wheelchair fa-fw" title="wheelchair: yes"></i>';
+	else if (tags.wheelchair === 'limited') tag += '<i class="facLtd fas fa-wheelchair fa-fw" title="wheelchair: limited"></i>';
+	else if (tags.wheelchair === 'no') tag += '<i class="facNo fas fa-wheelchair fa-fw" title="wheelchair: no"></i>';
+	if (tags.dog === 'yes') tag += '<i class="facYes fas fa-dog fa-fw" title="dog: yes"></i>';
+	else if (tags.dog === 'no') tag += '<i class="facNo fas fa-dog fa-fw" title="dog: no"></i>';
+	if (tags.internet_access === 'wlan') tag += '<i class="facYes fas fa-wifi fa-fw" title="wireless internet access"></i>';
+	else if (tags.internet_access === 'terminal') tag += '<i class="facYes fas fa-desktop fa-fw" title="terminal internet access"></i>';
 	if (tags.amenity === 'toilets') {
-		if (tags.male === 'yes' || tags.unisex === 'yes') tag += '<i class="fas fa-male fa-fw" title="male: yes" style="color:darkgreen;"></i>';
-		if (tags.female === 'yes' || tags.unisex === 'yes') tag += '<i class="fas fa-female fa-fw" title="female: yes" style="color:darkgreen;"></i>';
-		if (tags.diaper === 'yes') tag += '<i class="fas fa-child fa-fw" title="baby changing: yes" style="color:darkgreen;"></i>';
+		if (tags.male === 'yes' || tags.unisex === 'yes') tag += '<i class="facYes fas fa-male fa-fw" title="male: yes"></i>';
+		if (tags.female === 'yes' || tags.unisex === 'yes') tag += '<i class="facYes fas fa-female fa-fw" title="female: yes"></i>';
+		if (tags.diaper === 'yes') tag += '<i class="facYes fas fa-child fa-fw" title="baby changing: yes"></i>';
 	}
 	if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Facilities', value: '<span class="popup-facilities">' + tag + '</span>', iconName: 'fas fa-info-circle' });
 	return markerPopup;
@@ -628,6 +637,7 @@ function street_parser(tags) {
 			async: false,
 			url: 'assets/xml/streetnames.xml',
 			dataType: 'xml',
+			cache: true,
 			success: function (xml) {
 				var street = $(xml).find('name').filter(function () {
 					return $(this).text() === tags.name;
@@ -641,7 +651,8 @@ function street_parser(tags) {
 					var sourceAuthor = $(xml).find('author').text();
 					markerPopup += '<span class="popup-streetSource"><a href="' + sourceLink + '" target="_blank" title="' + sourceLink + '">&copy; ' + sourceAuthor + '</a></span>';
 				}
-			}
+			},
+			error: function () { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES: ' + this.url); }
 		});
 		if (tags.maxspeed) markerPopup += L.Util.template(tagTmpl, { tag: 'Max speed', value: tags.maxspeed, iconName: 'fas fa-tachometer-alt' });
 		if (tags.maxwidth) markerPopup += L.Util.template(tagTmpl, { tag: 'Max width', value: tags.maxwidth, iconName: 'fas fa-car' });
@@ -656,7 +667,10 @@ function furtherreading_parser(tags) {
 	if (tags['ref:thekeep']) {
 		tag += '<a href="http://www.thekeep.info/collections/getrecord/' + tags['ref:thekeep'] + '" title="The Keep record" target="_blank">The Keep</a>; ';
 	}
-	if (tag) markerPopup = L.Util.template(tagTmpl, { tag: 'Futher reading', value: tag, iconName: 'fas fa-book' });
+	if (tag) {
+		tag = tag.substring(0, tag.length - 2);
+		markerPopup = L.Util.template(tagTmpl, { tag: 'Futher reading', value: tag, iconName: 'fas fa-book' });
+	}
 	return markerPopup;
 }
 
@@ -711,7 +725,6 @@ function busstop_parser(tags, titlePopup) {
 		if (tags.shelter === 'yes') tag += 'shelter, ';
 		if (tags.bench === 'yes') tag += 'bench, ';
 		if (tags.bin === 'yes') tag += 'rubbish bin, ';
-		if (tags.wheelchair === 'yes') tag += 'wheelchair accessible, ';
 		if (tag) {
 			tag = tag.replace(/_/g, '-');
 			tag = tag.substring(0, tag.length - 2);
@@ -847,7 +860,10 @@ function food_parser(tags, titlePopup) {
 		if (tags.reservation === 'yes') tag += 'takes reservation, ';
 		else if (tags.reservation === 'required') tag += 'needs reservation, ';
 		if (tags['url:just_eat']) tag += '<a href="' + tags['url:just_eat'] + '" title="just-eat.com" target="_blank">just-eat</a>, ';
-		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Service', value: tag.substring(0, tag.length - 2), iconName: 'fas fa-shopping-bag' });
+		if (tag) {
+			tag = tag.substring(0, tag.length - 2);
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Service', value: tag, iconName: 'fas fa-shopping-bag' });
+		}
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup, [
@@ -900,10 +916,13 @@ function hotel_parser(tags, titlePopup) {
 			result += '</a>';
 			markerPopup += L.Util.template(tagTmpl, { tag: 'VisitEngland rating', value: result, iconName: 'fas fa-star' });
 		}
-		if (tags.view) tag += tags.view + ' view; ';
-		if (tags.balcony) tag += 'balcony; ';
-		if (tags.cooking) tag += 'self-catering; ';
-		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'fas fa-bed' });
+		if (tags.view) tag += tags.view + ' view, ';
+		if (tags.balcony) tag += 'balcony, ';
+		if (tags.cooking) tag += 'self-catering, ';
+		if (tag) {
+			tag = tag.substring(0, tag.length - 2);
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'fas fa-bed' });
+		}
 		// booking.com affiliate link
 		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="' + tags['url:booking_com'] + '?aid=1335159&no_rooms=1&group_adults=1" title="booking.com" target="_blank"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"></a>', iconName: 'fas fa-file' });
 		return markerPopup;
@@ -947,8 +966,8 @@ function post_parser(tags, titlePopup) {
 		if (tags.collection_times) {
 			var strNextChange, ct = new opening_hours(tags.collection_times, { 'address':{ 'state':'England', 'country_code':'gb' } }, 1).getNextChange();
 			if (ct.getDate() === new Date().getDate()) strNextChange = 'Today in ' + time_parser((ct - new Date()) / 60000);
-			else if (ct.getDate() === new Date().getDate() + 1) strNextChange = 'Tomorrow ' + ct.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-			else if (ct.getDate() > new Date().getDate() + 1) strNextChange = ct.toLocaleDateString('en-GB', { weekday: 'long' }) + ' ' + ct.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+			else if (ct.getDate() === new Date().getDate() + 1) strNextChange = 'Tomorrow ' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
+			else if (ct.getDate() > new Date().getDate() + 1) strNextChange = ct.toLocaleDateString(navigator.language, { weekday: 'long' }) + ' ' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 			ctState = ct.getDate() === new Date().getDate() && ct.getDate() >= new Date().getDate() ? true : false;
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Next collection', value: '<span title="' + tags.collection_times + '">' + strNextChange + '</span>', iconName: 'openColor-' + ctState + ' fas fa-circle' });
 		}
@@ -1063,7 +1082,7 @@ function worship_parser(tags, titlePopup) {
 function opening_hours_parser(tags) {
 	var openhrs = '';
 	var drawTable = function (oh, date_today) {
-		var months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 		var weekdays = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 		date_today = new Date(date_today);
 		date_today.setHours(0, 0, 0, 0);
@@ -1120,26 +1139,26 @@ function opening_hours_parser(tags) {
 		}
 		else strNextChange = oh.prettifyValue();
 		if (oh.getNextChange()) {
-			var nextTime = oh.getNextChange().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+			var nextTime = oh.getNextChange().toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 			var dateTomorrow = new Date(), dateWeek = new Date();
 			dateTomorrow.setDate(new Date().getDate() + 1);
 			dateWeek.setDate(new Date().getDate() + 7);
 			// display 'today'
-			if (oh.getNextChange().toLocaleDateString('en-GB') === new Date().toLocaleDateString('en-GB')) {
+			if (oh.getNextChange().toLocaleDateString(navigator.language) === new Date().toLocaleDateString(navigator.language)) {
 				strNextChange = nextTime;
 			}
 			// display 'tomorrow'
-			else if (oh.getNextChange().toLocaleDateString('en-GB') === dateTomorrow.toLocaleDateString('en-GB')) {
+			else if (oh.getNextChange().toLocaleDateString(navigator.language) === dateTomorrow.toLocaleDateString(navigator.language)) {
 				if (nextTime === '00:00') strNextChange = 'Midnight';
 				else strNextChange = 'Tomorrow ' + nextTime;
 			}
 			// display day name if within a week
 			else if (oh.getNextChange().getTime() > dateTomorrow.getTime() && oh.getNextChange().getTime() < dateWeek.getTime()) {
-				strNextChange = oh.getNextChange().toLocaleDateString('en-GB', { weekday: 'long' });
+				strNextChange = oh.getNextChange().toLocaleDateString(navigator.language, { weekday: 'long' });
 				if (nextTime !== '00:00') strNextChange += ' ' + nextTime;
 			}
 			// otherwise display date
-			else strNextChange = date_parser(oh.getNextChange().toLocaleDateString('en-GB'), 'short');
+			else strNextChange = date_parser(oh.getNextChange().toLocaleDateString(navigator.language), 'short');
 			if (comment) strNextChange += ' (' + comment + ')';
 		}
 		// create readable table
@@ -1154,8 +1173,7 @@ function opening_hours_parser(tags) {
 			'<div class="popup-ohContainer" style="min-width:' + minWidth + ';">' +
 				'<span class="popup-tagContainer" title="' + tags.opening_hours.replace(/"/g, '\'') + '">' +
 					'<i class="popup-tagIcon popup-openhrsState openColor-' + ohState + ' fas fa-circle fa-fw"></i>' +
-					'<span class="popup-tagValue"><strong>' + openhrsState + ':</strong> ' + strNextChange + '&nbsp; </span>' +
-					'<i title="See full opening hours" class="theme fas fa-caret-down fa-fw"></i>' +
+					'<span class="popup-tagValue"><strong>' + openhrsState + ':</strong> ' + strNextChange + '</span>' +
 				'</span>' +
 				'<div class="popup-ohTable">' + ohTable + '</div>' +
 			'</div>';
@@ -1215,11 +1233,12 @@ function navImg(direction) {
 function getWikiAttrib(id) {
 	// wikimedia api for image attribution
 	if ($('#img' + id).html() && $('#img' + id).html().indexOf('wikimedia.org') !== -1) {
-		var img = $('#img' + id + ' img').attr('data-url');
+		var img = $('#img' + id + ' img').data('url');
 		$.ajax({
 			url: 'https://commons.wikimedia.org/w/api.php',
 			data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata', titles: img, format: 'json' },
 			dataType: 'jsonp',
+			cache: true,
 			success: function (result) {
 				if (!result.query.pages[-1]) {
 					var imgAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
@@ -1236,7 +1255,8 @@ function getWikiAttrib(id) {
 				}
 				else $('#img' + id + ' .popup-imgAttrib').html('Error: Attribution not found');
 				$('#img' + id + ' .popup-imgAttrib').addClass('attribd');
-			}
+			},
+			error: function () { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKI-ATTRIB: ' + this.url); }
 		});
 	}
 }
@@ -1249,14 +1269,15 @@ function titleCase(str) {
 }
 function date_parser(dtStr, style) {
 	// parse ISO 8601 dates
+	if (dtStr.indexOf('T') === 10) dtStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
 	var tm, dt, dtFrmt = dtStr.split('-').length - 1;
 	// check for time
-	tm = (dtStr.indexOf(':') > -1) ? tm = ', ' + dtStr.split(' ')[1] : '';
+	tm = (dtStr.indexOf(':') > -1) ? tm = ', ' + new Date(dtStr).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) : '';
 	if (tm) dtStr = dtStr.split(' ')[0];
 	if (style === 'long') {
 		dt = new Date(dtStr);
-		if (dtFrmt === 2) dt = dt.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-		else if (dtFrmt === 1) dt = dt.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+		if (dtFrmt === 2) dt = dt.toLocaleDateString(navigator.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+		else if (dtFrmt === 1) dt = dt.toLocaleDateString(navigator.language, { month: 'long', year: 'numeric' });
 		else dt = dtStr;
 		if (dt.indexOf('/') > -1) style = 'short';
 	}
@@ -1281,7 +1302,7 @@ function pad(n) {
 	return n < 10 ? '0' + n : n;
 }
 function elementType(e) {
-	switch (e.toLowerCase()) {
+	switch (e.toLowerCase().slice(0, 1)) {
 		case 'n' : return 'node';
 		case 'w' : return 'way';
 		case 'r' : return 'relation';

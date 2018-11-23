@@ -1,8 +1,8 @@
 // links for tour pages
 var imgLayer;
-function tour(ti) {
+function tour(ti, fromPermalink) {
 	clear_map();
-	if ($(window).width() < 768) sidebar.close();
+	if ($(window).width() < 768 && !fromPermalink) $('.sidebar-close').click();
 	var tourPopup = function (name, pos, header, headerSub, img, imgAttrib, markerPopup) {
 		var marker = L.circleMarker(pos, { interactive: true, radius: 15, weight: 2, color: '#b05000', opacity: 0.8, fillColor: '#fff', fillOpacity: 0.5 })
 			.bindPopup(
@@ -71,55 +71,55 @@ function tour(ti) {
 			break;
 		case 'shipwreck':
 			rQuery = true;
-			show_overpass_layer('node(3192282124);');
+			show_overpass_layer('node(3192282124);', ti);
 			break;
 		case 'smugglingPanels':
-			show_overpass_layer('node["ref"~"^TST"];');
+			show_overpass_layer('node["ref"~"^TST"];', ti);
 			imgLayer = ti;
 			break;
 		case 'smugglingGreen':
 			rQuery = true;
-			show_overpass_layer('way(263267372);');
+			show_overpass_layer('way(263267372);', ti);
 			break;
 		case 'railwayBexhillstation':
 			rQuery = true;
-			show_overpass_layer('way(397839677);');
+			show_overpass_layer('way(397839677);', ti);
 			break;
 		case 'railwayWestbranch':
-			show_overpass_layer('(node(3615179880);node(318219478););');
+			show_overpass_layer('(node(3615179880);node(318219478););', ti);
 			if (actOverlayLayer !== 'br1959') map.addLayer(tileOverlayLayers[tileOverlayLayer.br1959.name]);
 			imgLayer = ti;
 			break;
 		case 'railwayGlynegap':
 			rQuery = true;
-			show_overpass_layer('node(4033104292);');
+			show_overpass_layer('node(4033104292);', ti);
 			break;
 		case 'tramway':
 			imageOverlay.addLayer(L.imageOverlay('tour/tour05/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }));
-			getMarkerBounds(imageOverlay);
+			map.flyToBounds(imageOverlay.getBounds().pad(0.2));
 			imgLayer = ti;
 			break;
 		case 'motorTrack':
 			imageOverlay.addLayer(L.imageOverlay('tour/tour06/racetrack.png', [[50.84135, 0.47991], [50.83772, 0.49508]], { opacity: 0.9 }));
-			getMarkerBounds(imageOverlay);
+			map.flyToBounds(imageOverlay.getBounds().pad(0.2));
 			imgLayer = ti;
 			break;
 		case 'motorSerpollet':
 			rQuery = true;
-			show_overpass_layer('node(3592525934);');
+			show_overpass_layer('node(3592525934);', ti);
 			break;
 		case 'motorTrail':
-			show_overpass_layer('(node["ref"~"^TMT"];node(5059264455);node(5059264456););');
+			show_overpass_layer('(node["ref"~"^TMT"];node(5059264455);node(5059264456););', ti);
 			imgLayer = ti;
 			break;
 		case 'delawarr':
 			iconLayer.clearLayers();
 			rQuery = true;
-			show_overpass_layer('way(247116304);');
+			show_overpass_layer('way(247116304);', ti);
 			break;
 		case 'manor':
 			rQuery = true;
-			show_overpass_layer('way(364593716);');
+			show_overpass_layer('way(364593716);', ti);
 			break;
 		case 'ww2Bombmap':
 			$('#spinner').show();
@@ -213,35 +213,35 @@ function tour(ti) {
 			imgLayer = ti;
 			break;
 		case 'ww2Structures':
-			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);');
+			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);', ti);
 			imgLayer = ti;
 			break;
 		case 'northeye':
 			rQuery = true;
-			show_overpass_layer('way(28940913);');
+			show_overpass_layer('way(28940913);', ti);
 			break;
 		case 'peopleNarayan':
 			rQuery = true;
-			show_overpass_layer('way(247118625);');
+			show_overpass_layer('way(247118625);', ti);
 			break;
 		case 'peopleIxion':
 			rQuery = true;
-			show_overpass_layer('node(3989026714);');
+			show_overpass_layer('node(3989026714);', ti);
 			break;
 		case 'peopleBaird':
 			rQuery = true;
-			show_overpass_layer('node(3971492451);');
+			show_overpass_layer('node(3971492451);', ti);
 			break;
 		case 'peopleLlewelyn':
 			rQuery = true;
-			show_overpass_layer('way(393451834);');
+			show_overpass_layer('way(393451834);', ti);
 			break;
 		case 'peopleMilligan':
 			rQuery = true;
-			show_overpass_layer('way(419719683);');
+			show_overpass_layer('way(419719683);', ti);
 			break;
 		case 'clocks':
-			show_overpass_layer(pois.clock.query);
+			show_overpass_layer(pois.clock.query, ti);
 			imgLayer = ti;
 			break;
 		case 'lost':
@@ -262,11 +262,11 @@ function tour(ti) {
 			imgLayer = ti;
 			break;
 		case 'boundary':
-			show_overpass_layer(pois.boundary_stone.query);
+			show_overpass_layer(pois.boundary_stone.query, ti);
 			imgLayer = ti;
 			break;
 		case 'surveyPoint':
-			show_overpass_layer(pois.survey_point.query);
+			show_overpass_layer(pois.survey_point.query, ti);
 			imgLayer = ti;
 			break;
 	}
@@ -275,7 +275,7 @@ function tour(ti) {
 }
 
 function tourFocus(ti, id) {
-	if ($(window).width() < 768) sidebar.close();
+	if ($(window).width() < 768) $('.sidebar-close').click();
 	if (imgLayer === ti) setTimeout(function () {
 		if (ti === 'lost') imageOverlay._layers[id].openPopup();
 		else iconLayer._layers[Object.keys(iconLayer._layers)[0]]._layers[id].openPopup();
@@ -295,7 +295,7 @@ function tourFocus(ti, id) {
 			}
 			clear_map();
 			rQuery = true;
-			show_overpass_layer(type + '(' + id.slice(1) + ');');
+			show_overpass_layer(type + '(' + id.slice(1) + ');', id);
 		}
 	}
 }
@@ -305,6 +305,6 @@ function tourSource(item) {
 	$('#tourList').val(99).trigger('change');
 	$('#tourFrame').one('load', function () {
 		$(this).contents().find('ol:nth(1) > li').eq(item - 1).css('background-color', 'khaki');
-		$(this).contents().scrollTop($(this).contents().find('ol:nth(1) > li').eq(item - 1).offset().top - 20);
+		$(this).contents().find('body').scrollTop($(this).contents().find('ol:nth(1) > li').eq(item - 1).offset().top - 20);
 	});
 }

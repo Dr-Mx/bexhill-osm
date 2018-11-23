@@ -5,21 +5,19 @@
 
 	<!-- Display, disable cache, social network, search index info -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="Cache-Control" content="no-cache">
-	<meta http-equiv="Pragma" content="no-cache">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="application-name" content="Bexhill-OSM">
 	<meta name="description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
 	<meta name="author" content="Alexis Markwick">
 	<meta name="twitter:site" content="@BexhillOSM">
 	<meta property="fb:app_id" content="170576080125364">
-	<meta property="og:title" content="Bexhill-OSM">
+	<meta property="og:title" content="Bexhill OpenStreetMap">
 	<meta property="og:type" content="website">
-	<meta property="og:url" content="http://bexhill-osm.org.uk/">
-	<meta property="og:image" content="http://bexhill-osm.org.uk/assets/img/preview.jpg">
+	<meta property="og:url" content="https://bexhill-osm.org.uk/">
+	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/preview.jpg">
 	<meta property="og:description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
 
-	<!-- http://realfavicongenerator.net/ -->
+	<!-- https://realfavicongenerator.net/ -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2">
@@ -31,7 +29,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v1.6.0">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css?v0.1.24">
@@ -40,12 +38,12 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v3.2.5">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.7.0">
+	<link rel="stylesheet" href="assets/css/site.css?v4.8.0">
  </head>
 
  <body>
 	<!-- Loading items -->
-	<noscript>Sorry, you need to enable JavaScript to view the map.</noscript>
+	<noscript><div id="noscript">Sorry, you need to enable JavaScript to view the map.</div></noscript>
 	<img id="spinner" alt="Loading..." src="assets/img/spinner.gif">
 	
  	<!-- Sidebar -->
@@ -71,9 +69,9 @@
 				<div class="sidebar-header"><span class="sidebar-header-text" onclick="$(location).attr('href', window.location.pathname);">Bexhill OpenStreetMap</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<h3>Search</h3>
-					<p><input id="autocomplete" class="autocomplete" placeholder="e.g. 'artwork', 'coffee', 'hotel' or 'western road'" title="Enter a keyword, or an address"></p>
+					<p><input id="autocomplete" type="text" class="autocomplete" placeholder="e.g. 'artwork', 'coffee', 'ww2' or 'western road'" title="Enter a keyword, or an address"></p>
 					<div id="homeBox">
-						<span id="weather"></span>
+						<div id="weather"><span class="comment">Loading weather...</span></div>
 						<div id="minimap">
 							<img src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap">
 							<map name="m_minimap">
@@ -98,8 +96,8 @@
 					</div>
 					<span id="xmas"></span>
 					<p>Bexhill-OSM is a community based, open mapping, passion project. It aims to help people discover a wealth of information on places in and around the seaside town of Bexhill-on-Sea, East Sussex, England.</p>
-					<p>See <a style="white-space:nowrap;" onclick="$('a[href=\'#help\']').click();"><i class="theme fas fa-question-circle"></i></a> for more assistance.
-					<br>Contact details can be found under <a style="white-space:nowrap;" onclick="$('a[href=\'#information\']').click();"><i class="theme fas fa-info-circle"></i></a>.</p>
+					<p>See <a style="white-space:nowrap;" onclick="switchTab('help');"><i class="theme fas fa-question-circle"></i></a> for more assistance.
+					<br>Contact details can be found under <a style="white-space:nowrap;" onclick="switchTab('information');"><i class="theme fas fa-info-circle"></i></a>.</p>
 					<hr>
 					<span id="feedRss"></span>
 				</div>
@@ -110,13 +108,14 @@
 					<div class="poi-results">
 						<h3></h3>
 						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map();"><i class="fas fa-trash"></i></button>
-						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="getMarkerBounds(iconLayer);"><i class="fas fa-eye"></i></button>
+						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="map.flyToBounds(iconLayer.getBounds().pad(0.2));"><i class="fas fa-eye"></i></button>
 						<div class="poi-results-list"></div>
 					</div>
 					<div class="poi-icons">
-						<a id="gototoppois"></a>
-						<p>Make up to 3 selections at a time.
-						<label class="switch" title="Filter most popular" style="position:absolute; right:10px;"><input id="inputHide" type="checkbox"><span class="slider"></span></label></p>
+						<div id="gototoppois"><p>
+							Make up to 3 selections at a time.
+							<label class="switch" title="Filter most popular" style="position:absolute; right:10px;"><input id="inputHide" type="checkbox"><span class="slider"></span></label>
+						</p></div>
 						<!-- this list auto-populates using pois-type.js as a reference -->
 					</div>
 				</div>
@@ -126,8 +125,8 @@
 				<div class="sidebar-body">
 					<h3>Find a walking route</h3>
 					Use the map context-menu, or type an address:
-					<p id="routingControl"></p>
-					<div class="comment" style="font-size:75%;">
+					<div id="routingControl"></div>
+					<div class="comment">
 						Directions courtesy of <a href="https://www.mapbox.com/directions/" target="_blank">Mapbox</a><br>
 						Tip: For more advanced routing, try <a href="http://brouter.de/brouter-web/#zoom=14&lat=50.8424&lon=0.4676" target="_blank">BRouter <i class="theme fas fa-external-link-alt fa-sm"></i></a>
 					</div>
@@ -135,20 +134,20 @@
 					<h3>Suggested leisure walks</h3>
 					<div id="walkContainer">
 						<select id="walkList" class="theme">
-							<option value = "ww2h">Walking the Way to Health (0.7mi / 1km)</option>
-							<option value = "tmrt">The Motor Trail (1.3mi / 2km)</option>
-							<option value = "hwds">Little Common to Highwoods (1.6mi / 2.6km)</option>
-							<option value = "neye">Normans Bay Circular (2.5mi / 4.1km)</option>
-							<option value = "gnwy">Bexhill to Hastings Greenway (2.6mi / 4.5km)</option>
-							<option value = "1066">1066 Country Walk (3.0mi / 4.7km)</option>
-							<option value = "bcr1">Bexhill Circular (6.3mi / 10.2km)</option>
+							<option value="ww2h">Walking the Way to Health (0.7mi / 1km)</option>
+							<option value="tmrt">The Motor Trail (1.3mi / 2km)</option>
+							<option value="hwds">Little Common to Highwoods (1.6mi / 2.6km)</option>
+							<option value="neye">Normans Bay Circular (2.5mi / 4.1km)</option>
+							<option value="gnwy">Bexhill to Hastings Greenway (2.7mi / 4.4km)</option>
+							<option value="1066">1066 Country Walk (3.0mi / 4.7km)</option>
+							<option value="bcr1">Bexhill Circular (6.3mi / 10.2km)</option>
 						</select>
 						<button type="button" id="walkSelect" title="Show on map"><i class="fas fa-map-marker-alt"></i></button>
 						<div id="walkDesc"></div>
 					</div>
 					<hr>
 					<h3>Other local walking tours</h3>
-					<p><a href="http://geotourist.com/users/454" target="_blank" title="GeoTourist walks by Bexhill Museum"><img src="assets/img/walking-geotourist.png" alt="GeoTourist"></a></p>
+					<p><a href="https://geotourist.com/users/454" target="_blank" title="GeoTourist walks by Bexhill Museum"><img src="assets/img/walking-geotourist.png" alt="GeoTourist"></a></p>
 					<p><a href="http://www.bexhillmuseum.co.uk/museum-pages/guided-walks-talks-52.html" target="_blank" title="Guided walks by Bexhill Museum"><img src="assets/img/walking-bexhillmuseum.png" alt="Bexhill Museum"></a></p>
 					<p><a href="https://u3asites.org.uk/hastings-rother" target="_blank" title="University of the Third Age Walking Group"><img src="assets/img/walking-u3a.png" alt="University of the Third Age"></a></p>
 				</div>
@@ -159,27 +158,27 @@
 					<div id="tourControls">
 						<button type="button" id="tourPrev" title="Previous"><i class="fas fa-chevron-left"></i></button>
 							<select id="tourList" class="theme">
-								<option value = "0">Introduction</option>
-								<option value = "1">- Prehistoric Period</option>
-								<option value = "2">- The Amsterdam Shipwreck</option>
-								<option value = "3">- Smuggling</option>
-								<option value = "4">- Railways</option>
-								<option value = "5">- Tramway &amp; Trolleybuses</option>
-								<option value = "6">- Motor Racing</option>
-								<option value = "7">- De La Warr Pavilion</option>
-								<option value = "8">- Old Town Manor</option>
-								<option value = "9">- World War II</option>
-								<option value = "10">- Northeye Prison Site</option>
-								<option value = "11">- Notable People</option>
-								<option value = "12">- Public Clocks</option>
-								<option value = "13">- Lost Heritage</option>
-								<option value = "14">- Boundary Stones</option>
-								<option value = "15">- OS Surveying Points</option>
-								<option value = "99">Sources &amp; further reading</option>
+								<option value="0">Introduction</option>
+								<option value="1" data-keyword="dinosaur, prehistoric, fossil">- Prehistoric Period</option>
+								<option value="2" data-keyword="amsterdam shipwreck">- The Amsterdam Shipwreck</option>
+								<option value="3" data-keyword="smuggling">- Smuggling</option>
+								<option value="4" data-keyword="railway, west branch line">- Railways</option>
+								<option value="5" data-keyword="tram, trollybus">- Tramway &amp; Trolleybuses</option>
+								<option value="6" data-keyword="motor racing">- Motor Racing</option>
+								<option value="7" data-keyword="de la warr pavilion">- De La Warr Pavilion</option>
+								<option value="8" data-keyword="old town manor house">- Old Town Manor</option>
+								<option value="9" data-keyword="ww2, bomb map, air-raid shelter, pillbox">- World War II</option>
+								<option value="10" data-keyword="northeye prison, royal air force">- Northeye Prison Site</option>
+								<option value="11" data-keyword="famous notable people">- Notable People</option>
+								<option value="12" data-keyword="public street clock">- Public Clocks</option>
+								<option value="13" data-keyword="lost heritage, ruin">- Lost Heritage</option>
+								<option value="14" data-keyword="boundary stone marker">- Boundary Stones</option>
+								<option value="15" data-keyword="ordnance survey, benchmark">- OS Surveying Points</option>
+								<option value="99">Sources &amp; further reading</option>
 							</select>
 						<button type="button" id="tourNext" title="Next"><i class="fas fa-chevron-right"></i></button>
 					</div>
-					<div id="tourLoading"><i class="fas fa-spinner fa-pulse"></i></div>
+					<div id="tourLoading"><i class="fas fa-spinner fa-3x fa-pulse"></i></div>
 					<iframe id="tourFrame" src="tour/tour00/index.html"></iframe>
 				</div>
 			</div>
@@ -191,33 +190,32 @@
 					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Use kilometres for measurements (metric)</span>
 					<p><label class="switch"><input id="inputImage" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Don't display images within pop-ups</span>
 					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Only show currently open POIs</span>
-					<hr>
 					<div id="devTools">
-						<h3>Development tools <i style="color:#b05000;" class="fas fa-caret-down fa-fw"></i></h3>
+						<hr>
+						<h3>Development tools</h3>
 						<div>
-							<label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Debug mode</span><br><br>
-							Attic data (date) :<br>
-							<input id="inputAttic" type="date" min="2016-01-01"><br><br>
-							OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" title="Overpass Query Language" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
-							<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme]" title="Enter an OverpassAPI query"><br><br>
-							OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Introduction" title="Overpass Query Servers" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
-							<select id="inputOpServer">
-								<option selected value="//overpass-api.de/api/">overpass-api.de</option>
-								<option value="//overpass.kumi.systems/api/">overpass.kumi.systems</option>
-								<option value="//overpass.openstreetmap.fr/api/">overpass.openstreetmap.fr</option>
-								<option value="//overpass.openstreetmap.ru/cgi/">overpass.openstreetmap.ru</option>
-							</select><br><br>
-							<button type="button" style="margin-left:5px;" title="OverpassAPI map query" onclick="downloadBB();"><i class="fas fa-download"></i></button><span class="switchLabel">Download all OSM data within bounding box</span>
+							<p><label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Debug mode</span></p>
+							<p>Attic data (date) :<br>
+								<input id="inputAttic" type="date" min="2016-01-01"></p>
+							<p>OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" title="Overpass Query Language" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
+								<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme]" title="Enter an OverpassAPI query" type="text"></p>
+							<p>OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Introduction" title="Overpass Query Servers" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
+								<select id="inputOpServer">
+									<option selected value="overpass-api.de">overpass-api.de</option>
+									<option value="overpass.kumi.systems">overpass.kumi.systems</option>
+									<option value="overpass.openstreetmap.fr">overpass.openstreetmap.fr</option>
+								</select></p>
+							<p>OverpassAPI localStorage cache duration :<br>
+								<input id="inputOpCache" min="0" max="240" type="number" value="48">hours</p>
+							<p><button type="button" title="OverpassAPI map query" onclick="downloadBB();"><i class="fas fa-download"></i></button><span class="switchLabel">Download all OSM data within bounding box</span></p>
 						</div>
 					</div>
-					<hr>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="help">
 				<div class="sidebar-header"><span class="sidebar-header-text">Help</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
-					<a id="gototophelp"></a>
-					<p>
+					<div id="gototophelp"><p>
 						<a href="#gotosearch">Search</a><br>
 						<a href="#gotocontrols">Map Controls</a><br>
 						<a href="#gotocontext">Context-menu</a><br>
@@ -226,42 +224,41 @@
 						<a href="#gotopopups">Pop-ups</a><br>
 						<a href="#gotowalking">Walking Routes</a><br>
 						<a href="#gototour">Historic Tour</a><br>
-					</p>
-					<a id="gotosearch"></a><hr>
+					</p></div>
+					<div id="gotosearch"><hr>
 					<h3>Search</h3>
 						Type the first few letters of a keyword (e.g. 'police', 'bike', 'diy'), then click the word in the category you are interested in to display it on the map.<br><br>
 						Find an address or place-name by typing part of it and pressing the enter key.
 						<p><img src="assets/img/help-find.png" alt="Find interest Preview"></p>
-					<a id="gotocontrols"></a><hr>
+					</div>
+					<div id="gotocontrols"><hr>
 					<h3>Map Controls</h3>
-						<i class="theme fas fa-plus fa-fw"></i>/<i class="theme fas fa-minus fa-fw"></i> Zoom: Enlarge and shrink the map.<br><br>
-						<i class="theme fas fa-expand fa-fw"></i> Full screen: Maximise the map to fit your whole screen.<br><br>
-						<i class="theme fas fa-share-square fa-fw"></i> Share: Get current view and selected options by copying the text link displayed.<br><br>
-						<i class="theme fas fa-location-arrow fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map. You may click on the blue location marker to see what POIs are around you.<br><br>
-						<i class="theme fas fa-search fa-fw"></i> Address search: Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
-						<i class="theme fas fa-hand-pointer fa-fw"></i> Query features: Clicking the map with this enabled will display information on features under the cursor.<br><br>
-						<i class="theme fas fa-trash fa-fw"></i> Clear map: Remove all current layers on the map. Right-click will reload the website to defaults.<br><br>
-						Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the page.
-						<p><img src="assets/img/help-controls.png" alt="Map controls preview"></p>
-					<a id="gotocontext"></a><hr>
+						<i class="theme fas fa-plus fa-border fa-fw"></i><i class="theme fas fa-minus fa-border fa-fw"></i> Zoom: Enlarge and shrink the map.<br><br>
+						<i class="theme fas fa-expand fa-border fa-fw"></i> Full screen: Maximise the map to fit your whole screen.<br><br>
+						<i class="theme fas fa-location-arrow fa-border fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map. You may click on the blue location marker to see what POIs are around you.<br><br>
+						<i class="theme fas fa-search fa-border fa-fw"></i> Address search: Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
+						<i class="theme fas fa-hand-pointer fa-border fa-fw"></i> Query features: Clicking the map with this enabled will display information on features under the cursor.<br><br>
+						<i class="theme fas fa-trash fa-border fa-fw"></i> Clear map: Remove all current layers on the map. Right-click will reload the website to defaults.<br><br>
+						<i class="fas fa-layer-group fa-border fa-lg fa-fw" style="color:#888;"></i> Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the page.
+					</div>
+					<div id="gotocontext"><hr>
 					<h3>Context-menu</h3>
 						Anywhere on the map, right-click (desktop) or long-press (mobile).<br><br>
 						<i class="fas fa-hand-pointer fa-fw"></i> Query feature: Display information on the feature under the cursor.<br><br>
-						<i class="fas fa-walking fa-fw"></i> Walk to here: Create a route to this location. Locate needs to be turned on.<br><br>
 						<i class="fas fa-map-marker-alt fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
 						<i class="fas fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
+						<i class="fas fa-street-view fa-fw"></i> Google Street View: Provides panoramic views from positions along many streets.<br><br>
 						<i class="far fa-sticky-note fa-fw"></i> Leave a note here: Report a mistake or something missing.
 						<p><img src="assets/img/help-context.png" alt="Context-menu preview"></p>
-					<a id="gototabs"></a><hr>
+					</div>
+					<div id="gototabs"><hr>
 					<h3>Tabs</h3>
-					<div id="helptabs">
 						<img src="assets/img/sb-pois.png"> Points of Interest: Select an interest to be displayed on the map.<br><br>
 						<img src="assets/img/sb-walking.png"> Walking Routes: Select from a few set walks, or create your own path through the many twittens.<br><br>
 						<img src="assets/img/sb-tour.png"> Historic Tour: Travel back in time and discover the history of the town with our interactive guide.<br><br>
 						<img src="assets/img/sb-settings.png"> Settings: Various options for how data on the map is displayed.
 					</div>
-					<p></p>
-					<a id="gotopoi"></a><hr>
+					<div id="gotopoi"><hr>
 					<h3>Points of Interest (POI)</h3>
 						Select up to 3 POI items to be displayed, after a few moments the corresponding markers will appear on the map.<br>
 						You may also use the top-right switch to filter on the most popular items.
@@ -269,80 +266,87 @@
 						Results will be displayed as a scrollable list and on the map as markers. The buttons at the top allow you to clear the results, or zoom to their area on the map.<br>
 						Each listed item will have a background colour showing if the place is currently open, its facilities, and distance if location is turned on.
 						<p><img src="assets/img/help-results.png" alt="Result preview"></p>
-					<a id="gotopopups"></a><hr>
+					</div>
+					<div id="gotopopups"><hr>
 					<h3>Pop-ups</h3>
 						Click each marker to see a pop-up detailing more specific information.
 						<p><img src="assets/img/icons/star-3.png" alt="POI preview"></p>
 						<i style="color:#777;" class="fas fa-edit fa-fw"></i> Edit: Opens openstreetmap.org where you can make immediate changes to the item.<br><br>
 						<i style="color:#777;" class="fas fa-walking"></i> Walking directions: Create a route to this item. Locate needs to be turned on.<br>
 						<p><img src="assets/img/help-popup.png" alt="Marker popup preview"></p>
-					<a id="gotowalking"></a><hr>
+					</div>
+					<div id="gotowalking"><hr>
 					<h3>Walking Routes</h3>
 						Find a route by either entering an address, or using the map context-menu. Add additional markers by dragging an existing path to a new location.
 						<p><img src="assets/img/help-walking.png" alt="Walking route preview"></p>
-					<a id="gototour"></a><hr>
+					</div>
+					<div id="gototour"><hr>
 					<h3>Historic Tour</h3>
 						Navigate by either selecting from the list-box or using the arrows to jump between articles. Mobile users may also swipe the title-bar to navigate.<br><br>
 						<img style="display:inline-block; padding:0; margin-bottom:-5px;" src="tour/tour-show.png" alt="Show on map button"> Show on map: Displays an interactive layer related to the article.
-					<p></p>
+					</div>
 					<div class="anchor"><a href="#gototophelp" title="Back to top">| <i class="fas fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="information">
 				<div class="sidebar-header"><span class="sidebar-header-text">Information</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
-					<a id="gototopinfo"></a>
+					<div id="gototopinfo">
 					<p>
 						<a href="#gotoabout">About &amp; Contact</a><br>
 						<a href="#gotolinks">Links</a><br>
 						<a href="#gotodonate">Donate</a><br>
 						<a href="#gotosoftware">Software</a><br>
 					</p>
-					<a id="gotoabout"></a><hr>
+					</div>
+					<div id="gotoabout"><hr>
 					<h3>About &amp; Contact</h3>
 						<p>Bexhill-OSM is part of a community of mappers that want to create a free, editable map of the world. You can learn about the global project at the official <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap website</a>.</p>
 						<p>This independent website looks to continuously archive Bexhill as it stands today; heralding history, community and business in an informative, accessible form.</p>
 						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we do welcome listings on all public visitable places.</p>
 						<span id="myprofile"><img alt="Alexis Markwick" title="Alexis Markwick" src="assets/img/me.jpg">Web-development and the underlying map data are managed by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</span>
-						<p style="padding-left:10px;">
-							<a href="" onclick="this.href='mailto:' + 'info' + '@' + 'bexhill-osm.org.uk';" title="Email"><i class="fas fa-envelope fa-fw"></i> info [at] bexhill-osm.org.uk</a><br>
-							<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fab fa-facebook fa-fw"></i> fb.com/bexhillosm</a><br>
-							<a href="https://www.twitter.com/bexhillosm" target="_blank" title="Twitter"><i style="color:#1da1f2;" class="fab fa-twitter fa-fw"></i> @bexhillosm</a>
+						<p id="mylinks">
+							<a href="" onclick="this.href='mailto:' + email;" title="Email"><i class="fas fa-envelope fa-fw fa-lg"></i> info [at] bexhill-osm.org.uk</a><br>
+							<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fab fa-facebook fa-fw fa-lg"></i> Bexhill-OSM</a><br>
+							<a href="https://www.twitter.com/bexhillosm" target="_blank" title="Twitter"><i style="color:#1da1f2;" class="fab fa-twitter fa-fw fa-lg"></i> @BexhillOSM</a><br>
+							<a href="https://osm.org/user/Dr-Mx" target="_blank" title="OpenStreetMap"><i style="color:#6aa755;" class="fas fa-map fa-fw fa-lg"></i> Dr-Mx (OSM)</a>
 						</p>
-					<a id="gotolinks"></a><hr>
+					</div>
+					<div id="gotolinks"><hr>
 					<h3>Links</h3>
 					<p>
-						<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a><br>&nbsp; - The map anyone can edit!<br>
-						<a href="http://maps.me/" target="_blank">MAPS.ME</a><br>&nbsp; - Use the data from this map offline on your mobile.<br>
-						<a href="http://demo.f4map.com/#lat=50.8390060&lon=0.4715886&zoom=17&camera.theta=53.021&camera.phi=34.95" target="_blank">F4Map</a><br>&nbsp; - A dynamic 3D version of this map.<br>
-						<a href="http://www.discoverbexhill.com/" target="_blank">Discover Bexhill-on-Sea</a><br>&nbsp; - Local visitor and tourist guide.<br>
+						<a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a><br>&nbsp; - The map anyone can edit!<br>
+						<a href="https://maps.me/" target="_blank">MAPS.ME</a><br>&nbsp; - Use the data from this map offline on your mobile.<br>
+						<a href="https://demo.f4map.com/#lat=50.8390060&lon=0.4715886&zoom=17&camera.theta=53.021&camera.phi=34.95" target="_blank">F4Map</a><br>&nbsp; - A dynamic 3D version of this map.<br>
+						<a href="https://www.discoverbexhill.com/" target="_blank">Discover Bexhill-on-Sea</a><br>&nbsp; - Local visitor and tourist guide.<br>
 						<a href="http://bexhillcommunity.co.uk" target="_blank">Bexhill Community</a><br>&nbsp; - Bexhill's Community Notice Board.<br>
-						<a href="http://www.bexhillheritage.org.uk/" target="_blank">Bexhill Heritage</a><br>&nbsp; - Caring for Bexhill's past, present and future.<br>
+						<a href="https://www.bexhillheritage.org.uk/" target="_blank">Bexhill Heritage</a><br>&nbsp; - Caring for Bexhill's past, present and future.<br>
 						<a href="http://www.bexhilloldtown.org/" target="_blank">The Old Town Preservation Society</a><br>&nbsp; - Maps and information from past to present.<br>
-						<a href="http://thebexhillhistorytrail.wordpress.com/" target="_blank">The Bexhill History Trail</a><br>&nbsp; - A guide to many of the historic gems.<br>
+						<a href="https://thebexhillhistorytrail.wordpress.com/" target="_blank">The Bexhill History Trail</a><br>&nbsp; - A guide to many of the historic gems.<br>
 					</p>
-					<p>
-					<a id="gotodonate"></a><hr>
+					</div>
+					<div id="gotodonate"><hr>
 					<h3>Donate</h3>
 						<p>Bexhill-OSM is self-funded in that it is completely advertisement and commercial free. If you so wish, you may support the project using the links below.</p>
 						<p>
 						<table style="text-align:center; width:100%;">
-							<tr><td><a href="http://amzn.eu/cEeSUjc?sort=priority" title="Amazon Wish List" target="_blank"><img alt="Amazon Wish List" src="assets/img/information-amazon.png"><br>My Amazon Wish List</a></td></tr>
+							<tr><td><a href="https://amzn.eu/cEeSUjc?sort=priority" title="Amazon Wish List" target="_blank"><img alt="My Amazon Wish List" src="assets/img/information-amazon.png"><br>My Amazon Wish List</a></td></tr>
 							<tr><td><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 								<input type="hidden" name="cmd" value="_s-xclick">
 								<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
-								<input type="image" src="assets/img/information-paypal.png" style="padding:10px;" name="submit" alt="PayPal" title="PayPal – The safer, easier way to pay online!">
+								<input type="image" src="assets/img/information-paypal.png" style="padding:10px;" name="submit" alt="PayPal" title="Donate to Bexhill-OSM">
 							</form></td></tr>
-							<tr><td title="Bitcoin"><a href="https://bitcoin.org/en/" target="_blank"><i class="fab fa-btc"></i></a> <i class="comment">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</i></td></tr>
+							<tr><td title="Bitcoin"><a href="bitcoin:1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi" target="_blank"><i class="fab fa-btc fa-fw fa-lg"></i><i class="comment">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</i></a></td></tr>
 						</table>
-					<p>
-					<a id="gotosoftware"></a><hr>
+					</div>
+					<div id="gotosoftware"><hr>
 					<h3>Software</h3>
-						<p>The complete source code for Bexhill-OSM can be downloaded from <a href="https://github.com/Dr-Mx/osm-pois" target="_blank"><i class="fab fa-github"></i> GitHub</a>.  It also includes a <a href="https://github.com/Dr-Mx/osm-pois/blob/master/CHANGELOG.md" target="_blank">change-log</a> of continuing web developments.
-						<p>Special thanks to the developers below, for without them this website would not be where it is today:</p>
+						<p>Bexhill-OSM is free and open-source, available below.</p>
+						<p><a href="https://github.com/Dr-Mx/osm-pois" target="_blank"><i class="fab fa-github fa-fw"></i>Bexhill-OSM</a> &copy; Alexis Markwick</p>
+						Thanks to these developers:
 						<ul>
-							<li><a href="https://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> (founding project) &copy; Manuel Kaufmann</li>
-							<li><a href="http://leafletjs.com/" target="_blank">Leaflet</a> &copy; Vladimir Agafonkin</li>
+							<li><a href="https://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> &copy; Manuel Kaufmann</li>
+							<li><a href="https://leafletjs.com/" target="_blank">Leaflet</a> &copy; Vladimir Agafonkin</li>
 							<li><ul>
 								<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank">sidebar-v2</a> &copy; Tobias Bieniek</li>
 								<li><a href="https://github.com/heigeo/leaflet.wms" target="_blank">leaflet-wms</a> &copy; hei geo</li>
@@ -367,6 +371,7 @@
 							<li><a href="https://fontawesome.com/" target="_blank">Font Awesome</a> &copy; Dave Gandy</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank">Favicon Generator</a> &copy; Philippe Bernard</li>
 						</ul>
+					</div>
 					<div class="anchor"><a href="#gototopinfo" title="Back to top">| <i class="fas fa-arrow-up"></i> |</a></div>
 				</div>
 			</div>
@@ -398,12 +403,12 @@
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/config.js"></script>
-	<script src="assets/js/OverPassLayer.js?v4.7.0"></script>
-	<script src="assets/js/tags-parsers.js?v4.7.0"></script>
-	<script src="assets/js/pois-type.js?v4.7.0"></script>
-	<script src="assets/xmas/xmas.js"></script>
-	<script src="tour/tour.js?v4.7.0"></script>
-	<script src="assets/js/site.js?v4.7.0"></script>
+	<script src="assets/js/OverPassLayer.js?v4.8.0"></script>
+	<script src="assets/js/tags-parsers.js?v4.8.0"></script>
+	<script src="assets/js/pois-type.js?v4.8.0"></script>
+	<script src="assets/xmas/xmas.js?v4.8.0"></script>
+	<script src="tour/tour.js?v4.8.0"></script>
+	<script src="assets/js/site.js?v4.8.0"></script>
 
  </body>
 </html>

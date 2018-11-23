@@ -68,14 +68,16 @@ img {
 		center
 		no-repeat;
 	position: relative;
-	padding-right: 30px;
-	margin-bottom: 10px;
+	padding: 5px 30px 5px 0;
+	margin-bottom: 5px;
 	text-align: left;
 	font-size: 115%;
 	border-radius: 3px;
+	transition: background-color 100ms;
 }
 .maplink:hover {
-	background-color: rgba(255,255,255,0.6);
+	background-color: rgba(170, 170, 170, 0.5);
+	color: #b05000;
 }
 
 a {
