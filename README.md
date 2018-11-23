@@ -8,6 +8,7 @@ Searchable OpenStreetMap data showing POIs and other information for the town of
 
 ## Features
  - Mobile and desktop friendly
+ - Local caching of API requests
  - Detailed POI markers through Overpass API
    - Facilities parser for wheelchair/wifi/pet access (key:wheelchair, key:internet_access, key:dog, key:male, key:female, key:diaper)
    - Payment parser (key:payment:?)
