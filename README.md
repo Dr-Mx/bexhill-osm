@@ -1,6 +1,6 @@
 <h1> <img src="http://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill-OSM - https://bexhill-osm.org.uk/ </h1>
 
-Searchable OpenStreetMap data showing POIs and other information for the town of Bexhill, UK
+Searchable OpenStreetMap data showing POIs, walking directions, overlays, history and other information for the town of Bexhill-on-Sea, UK
 
 ![Image of Bexhill-OSM](http://bexhill-osm.org.uk/assets/img/preview.jpg)
 
