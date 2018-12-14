@@ -9,11 +9,11 @@ Updated js
 
 Site changes
  - Global variables in CSS allow colour theme changes, for holiday seasons for example!
- - Expand / shrink images in popups by clicking, small icon size it can be interacted with
- - A 'View image' link that opens popup images in a new window
- - Setting option to expand images in popups by default
- - Better fullscreen detection for changing button state
- - Additional buttons to remove pois and walking directions separately
+ - Expand / shrink images in popups by clicking, overlayed small zoom icon to show interaction
+ - 'View image' link that opens popup images in a new window
+ - Setting checkbox to expand images in popups by default
+ - Better fullscreen detection for changing fullscreen button state
+ - Additional 'clear' buttons to remove pois and walking directions separately
  - Larger FontAwesome icons shown popup/results
  - Icons for recycling types shown in popup/results
  - Icons for telephone box features shown in popup/results
