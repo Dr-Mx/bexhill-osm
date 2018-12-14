@@ -84,15 +84,6 @@ var pois = {
 		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve']
 	},
 
-	recreation_ground: {
-		name: 'Recreation Area',
-		query: 'way[~"."~"^recreation_ground$|^golf_course$"][access!~private];',
-		iconName: 'soccer',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'park', 'open-space', 'green'],
-		hide: 1
-	},
-
 	playground: {
 		name: 'Playground',
 		query: 'nwr[leisure=playground][name];',
@@ -131,31 +122,31 @@ var pois = {
 		hide: 1
 	},
 
-	social_centre: {
-		name: 'Social Club',
-		query: 'nwr[amenity=social_centre];',
+	club: {
+		name: 'Club',
+		query: 'nwr[club];',
 		iconName: 'conversation-map-icon',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['organisation', 'social', 'events', 'venue', 'sport', 'club'],
+		tagKeyword: ['hobby', 'social', 'events', 'venue', 'sport', 'club'],
 		tagParser: club_parser,
 		hide: 1
 	},
 
-	fitness_centre: {
-		name: 'Fitness',
-		query: 'nwr[leisure~"fitness_centre|fitness_station"];',
-		iconName: 'weights',
+	recreation: {
+		name: 'Recreation',
+		query: 'way[~"."~"^recreation_ground$|^golf_course$|^sports_centre$|^horse_riding$"][name][!club][access!~private];',
+		iconName: 'recreation',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['fitness', 'leisure', 'gym', 'sport'],
+		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'cricket', 'swimming pool', 'horse riding', 'motocross', 'park', 'open-space', 'green'],
 		hide: 1
 	},
 
-	sports_centre: {
-		name: 'Swimming-Pool',
-		query: 'nwr[leisure=sports_centre][sport=swimming];',
-		iconName: 'swimming2',
+	fitness_centre: {
+		name: 'Fitness Gym',
+		query: 'nwr[leisure~"fitness_centre|fitness_station"];',
+		iconName: 'weights',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['swim', 'leisure', 'sport', 'pool'],
+		tagKeyword: ['fitness', 'leisure', 'gym', 'sport', 'weight-lifting'],
 		hide: 1
 	},
 

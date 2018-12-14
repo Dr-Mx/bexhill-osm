@@ -132,20 +132,27 @@
 }
 
 .leaflet-routing-add-waypoint::after {
-	color: #b05000;	
+	color: var(--main-color);	
     content: '\f067';
 	line-height: 1;
 	font-family: 'Font Awesome 5 Free';
 }
 
 .leaflet-routing-reverse-waypoints::after {
-	color: #b05000;	
+	color: var(--main-color);	
 	content: '\f079';
 	line-height: 1;
 	font-family: 'Font Awesome 5 Free';
 }
 
-.leaflet-routing-reverse-waypoints, .leaflet-routing-add-waypoint {
+.leaflet-routing-delete-waypoints::after {
+	color: var(--main-color);	
+	content: '\f1f8';
+	line-height: 1;
+	font-family: 'Font Awesome 5 Free';
+}
+
+.leaflet-routing-delete-waypoints, .leaflet-routing-reverse-waypoints, .leaflet-routing-add-waypoint {
 	border-bottom: inherit !important;
 	width: 30px !important;
 }
@@ -207,7 +214,7 @@
     content: "\00d7";
     text-align: center;
     cursor: pointer;
-    color: #b05000;
+    color: var(--main-color);
     background: transparent;
     padding-bottom: 16px;
     margin-top: -16px;

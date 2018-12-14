@@ -1,3 +1,6 @@
+:root {
+    --main-color: #b05000;
+}
 html {
 	height: 100%;
 	overflow: hidden;
@@ -24,7 +27,7 @@ sup {
 	font-size: 60%;
 	cursor: pointer;
 }
-sup:hover { color: #b05000; }
+sup:hover { color: #b05000; color: var(--main-color); }
 sup::before { content: "["; }
 sup::after { content: "]"; }
 
@@ -78,6 +81,7 @@ img {
 .maplink:hover {
 	background-color: rgba(170, 170, 170, 0.5);
 	color: #b05000;
+	color: var(--main-color);
 }
 
 a {
@@ -85,6 +89,7 @@ a {
 }
 a:link, a:visited, a:hover, a, sup {
 	color: #b05000;
+	color: var(--main-color);
 	cursor: pointer;
 }
 a:hover, sup:hover {

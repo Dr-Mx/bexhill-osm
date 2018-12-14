@@ -62,7 +62,8 @@
 .sidebar-tabs > ul > li:hover {
 	background-color: rgba(170, 170, 170, 0.5); }
 .sidebar-tabs > li.active, .sidebar-tabs > ul > li.active {
-	background-color: #b05000; }
+	background-color: #b05000;
+	background-color: var(--main-color); }
 @media (min-width: 768px) {
 	.sidebar-tabs > li.active, .sidebar-tabs > ul > li.active, .sidebar-tabs > ul > li:hover {
 		border-radius: 4px 0 0 4px; } }
@@ -115,6 +116,7 @@
 	font: normal 16pt BerlinSans, "Helvetica Neue", Arial, Helvetica, sans-serif;
 	color: #fff;
 	background-color: #b05000;
+	background-color: var(--main-color);
 	line-height: 50px; }
 .sidebar-header-text {
 	width: 100%;

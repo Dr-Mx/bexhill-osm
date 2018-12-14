@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## v4.9.0 - Colour themes
+
+**Date:** 14/12/2018
+
+Updated js
+ - leaflet-locatecontrol 0.65.1
+
+Site changes
+ - Global variables in CSS allow colour theme changes, for holiday seasons for example!
+ - Expand / shrink images in popups by clicking, small icon size it can be interacted with
+ - A 'View image' link that opens popup images in a new window
+ - Setting option to expand images in popups by default
+ - Better fullscreen detection for changing button state
+ - Additional buttons to remove pois and walking directions separately
+ - Larger FontAwesome icons shown popup/results
+ - Icons for recycling types shown in popup/results
+ - Icons for telephone box features shown in popup/results
+ - Icons for bus-stop features shown in popup/results
+ - Swapped key:social_centre for key:club in pois
+ - Recreation poi now includes horse_riding and sports_centre
+ - As always, many other bug fixes and improvements
+
+
 ## v4.8.0 - Cache API requests
 
 **Date:** 23/11/2018

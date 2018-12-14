@@ -107,7 +107,7 @@
 
 .eac-item {
 	margin-left: 23px;
-	color: #b05000;
+	color: var(--main-color);
 }
 
 .eac-icon-left .eac-item img {

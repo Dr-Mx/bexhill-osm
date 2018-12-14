@@ -29,7 +29,8 @@
 .leaflet-control-geocoder-form input {
 	border: 0;
 	background-color: transparent;
-	width: 200px;
+	width: 185px;
+	padding-right: 15px;
 }
 
 .leaflet-control-geocoder-throbber .leaflet-control-geocoder-form {

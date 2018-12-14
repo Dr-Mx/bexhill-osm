@@ -29,7 +29,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v1.6.0">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css?v0.1.24">
@@ -38,7 +38,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v3.2.5">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v4.8.0">
+	<link rel="stylesheet" href="assets/css/site.css?v4.9.0">
  </head>
 
  <body>
@@ -94,7 +94,7 @@
 							<span id="tipsButton" class="theme navigateItemNext"><a onclick="getTips();"><i class="fas fa-caret-square-right"></i></a></span>
 						</div>
 					</div>
-					<span id="xmas"></span>
+					<div id="xmasMsg"></div>
 					<p>Bexhill-OSM is a community based, open mapping, passion project. It aims to help people discover a wealth of information on places in and around the seaside town of Bexhill-on-Sea, East Sussex, England.</p>
 					<p>See <a style="white-space:nowrap;" onclick="switchTab('help');"><i class="theme fas fa-question-circle"></i></a> for more assistance.
 					<br>Contact details can be found under <a style="white-space:nowrap;" onclick="switchTab('information');"><i class="theme fas fa-info-circle"></i></a>.</p>
@@ -107,15 +107,15 @@
 				<div class="sidebar-body">
 					<div class="poi-results">
 						<h3></h3>
-						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map();"><i class="fas fa-trash"></i></button>
+						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map('poi');"><i class="fas fa-trash"></i></button>
 						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="map.flyToBounds(iconLayer.getBounds().pad(0.2));"><i class="fas fa-eye"></i></button>
 						<div class="poi-results-list"></div>
 					</div>
 					<div class="poi-icons">
-						<div id="gototoppois"><p>
-							Make up to 3 selections at a time.
-							<label class="switch" title="Filter most popular" style="position:absolute; right:10px;"><input id="inputHide" type="checkbox"><span class="slider"></span></label>
-						</p></div>
+						<div id="gototoppois">
+							<p>Make up to 3 selections at a time.
+							<label class="switch" title="Filter most popular" style="position:absolute; width:50px; right:10px;"><input id="inputHide" type="checkbox"><span class="slider"></span></label></p>
+						</div>
 						<!-- this list auto-populates using pois-type.js as a reference -->
 					</div>
 				</div>
@@ -138,7 +138,7 @@
 							<option value="tmrt">The Motor Trail (1.3mi / 2km)</option>
 							<option value="hwds">Little Common to Highwoods (1.6mi / 2.6km)</option>
 							<option value="neye">Normans Bay Circular (2.5mi / 4.1km)</option>
-							<option value="gnwy">Bexhill to Hastings Greenway (2.7mi / 4.4km)</option>
+							<option value="gnwy">Combe Valley Greenway (2.7mi / 4.4km)</option>
 							<option value="1066">1066 Country Walk (3.0mi / 4.7km)</option>
 							<option value="bcr1">Bexhill Circular (6.3mi / 10.2km)</option>
 						</select>
@@ -167,13 +167,13 @@
 								<option value="6" data-keyword="motor racing">- Motor Racing</option>
 								<option value="7" data-keyword="de la warr pavilion">- De La Warr Pavilion</option>
 								<option value="8" data-keyword="old town manor house">- Old Town Manor</option>
-								<option value="9" data-keyword="ww2, bomb map, air-raid shelter, pillbox">- World War II</option>
+								<option value="9" data-keyword="ww2, wwII, bomb map, air-raid shelter, pillbox">- World War II</option>
 								<option value="10" data-keyword="northeye prison, royal air force">- Northeye Prison Site</option>
 								<option value="11" data-keyword="famous notable people">- Notable People</option>
 								<option value="12" data-keyword="public street clock">- Public Clocks</option>
 								<option value="13" data-keyword="lost heritage, ruin">- Lost Heritage</option>
 								<option value="14" data-keyword="boundary stone marker">- Boundary Stones</option>
-								<option value="15" data-keyword="ordnance survey, benchmark">- OS Surveying Points</option>
+								<option value="15" data-keyword="ordnance survey point, benchmark">- OS Surveying Points</option>
 								<option value="99">Sources &amp; further reading</option>
 							</select>
 						<button type="button" id="tourNext" title="Next"><i class="fas fa-chevron-right"></i></button>
@@ -187,14 +187,13 @@
 				<div class="sidebar-header"><span class="sidebar-header-text">Settings</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<h3>Map display options</h3>
-					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Use kilometres for measurements (metric)</span>
-					<p><label class="switch"><input id="inputImage" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Don't display images within pop-ups</span>
-					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Only show currently open POIs</span>
+					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider"></span><span class="switchLabel">Use kilometres for measurements (metric)</span></label>
+					<p><label class="switch"><input id="inputImage" type="checkbox"><span class="slider"></span><span class="switchLabel">Always display large images in popups</span></label>
+					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider"></span><span class="switchLabel">Only show currently open POIs</span></label>
 					<div id="devTools">
-						<hr>
 						<h3>Development tools</h3>
 						<div>
-							<p><label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span></label><span class="switchLabel">Debug mode</span></p>
+							<p><label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span><span class="switchLabel">Debug mode</span></label></p>
 							<p>Attic data (date) :<br>
 								<input id="inputAttic" type="date" min="2016-01-01"></p>
 							<p>OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" title="Overpass Query Language" target="_blank"><i class="theme fas fa-external-link-alt fa-fw"></i></a> :<br>
@@ -206,8 +205,8 @@
 									<option value="overpass.openstreetmap.fr">overpass.openstreetmap.fr</option>
 								</select></p>
 							<p>OverpassAPI localStorage cache duration :<br>
-								<input id="inputOpCache" min="0" max="240" type="number" value="48">hours</p>
-							<p><button type="button" title="OverpassAPI map query" onclick="downloadBB();"><i class="fas fa-download"></i></button><span class="switchLabel">Download all OSM data within bounding box</span></p>
+								<input id="inputOpCache" min="0" max="240" type="number" value="48"><span class="buttonLabel">hours</span></p>
+							<p><button type="button" title="OverpassAPI map query" onclick="downloadBB();"><i class="fas fa-download"></i></button><div class="buttonLabel">Download all OSM data within bounding box</div></p>
 						</div>
 					</div>
 				</div>
@@ -342,7 +341,7 @@
 					<div id="gotosoftware"><hr>
 					<h3>Software</h3>
 						<p>Bexhill-OSM is free and open-source, available below.</p>
-						<p><a href="https://github.com/Dr-Mx/osm-pois" target="_blank"><i class="fab fa-github fa-fw"></i>Bexhill-OSM</a> &copy; Alexis Markwick</p>
+						<p><a href="https://github.com/Dr-Mx/bexhill-osm" target="_blank"><i class="fab fa-github fa-fw"></i>Bexhill-OSM</a> &copy; Alexis Markwick</p>
 						Thanks to these developers:
 						<ul>
 							<li><a href="https://github.com/humitos/osm-pois/" target="_blank">osm-pois</a> &copy; Manuel Kaufmann</li>
@@ -384,7 +383,7 @@
 	<!-- JavaScript | site plugins -->
 	<script src="assets/js/plugins/jquery-3.3.1.min.js"></script>
 	<script src="assets/js/plugins/jquery-ui.min.js?v1.12.1"></script>
-	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v1.5.0a"></script>
+	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v1.5.0a1"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v1.3.4"></script>
 	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.0"></script>
 	<script src="assets/js/plugins/URI.min.js?v1.19.1"></script>
@@ -398,17 +397,17 @@
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v1.5.0"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v3.2.5"></script>
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.6.0"></script>
-	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.62.0"></script>
+	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.65.1"></script>
 	<script src="assets/js/plugins/bouncemarker-min.js?v1.1.0"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/config.js"></script>
-	<script src="assets/js/OverPassLayer.js?v4.8.0"></script>
-	<script src="assets/js/tags-parsers.js?v4.8.0"></script>
-	<script src="assets/js/pois-type.js?v4.8.0"></script>
-	<script src="assets/xmas/xmas.js?v4.8.0"></script>
-	<script src="tour/tour.js?v4.8.0"></script>
-	<script src="assets/js/site.js?v4.8.0"></script>
+	<script src="assets/js/OverPassLayer.js?v4.9.0"></script>
+	<script src="assets/js/tags-parsers.js?v4.9.0"></script>
+	<script src="assets/js/pois-type.js?v4.9.0"></script>
+	<script src="assets/xmas/xmas.js?v4.9.0"></script>
+	<script src="tour/tour.js?v4.9.0"></script>
+	<script src="assets/js/site.js?v4.9.0"></script>
 
  </body>
 </html>

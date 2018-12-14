@@ -44,12 +44,12 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		var self = this;
 		var reference = {instance: self};
 		// check if cached in variable
-		if (eleCache[self.options.cacheId] && !$('#inputAttic').val()) {
+		if (eleCache[self.options.cacheId] && !$('#inputAttic').val() && $('#inputOpCache').val() > 0) {
 			self.options.callback.call(reference, eleCache[self.options.cacheId]);
 			if (self.options.debug) console.debug('Finished queries (var cache ' + self.options.cacheId + ').');
 		}
 		// check if cached in localStorage
-		else if (noIframe && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId]) {
+		else if (noIframe && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0) {
 			eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
 			if (new Date(eleCache[self.options.cacheId].osm3s.timestamp_osm_base).getTime() < new Date().getTime()+parseInt($('#inputOpCache').val())*60*60*1000) {
 				self.options.callback.call(reference, eleCache[self.options.cacheId]);

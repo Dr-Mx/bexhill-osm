@@ -14,6 +14,7 @@
 
 .leaflet-bar button {
   color: #b05000;
+  color: var(--main-color);
   background-position: 50% 50%;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -22,7 +23,7 @@
 }
 
 .leaflet-bar button:hover {
-  background-color: #f4f4f4;
+  background-color: var(--btn-hover-color);
 }
 
 .leaflet-bar button:first-of-type {

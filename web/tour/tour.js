@@ -1,21 +1,25 @@
-// links for tour pages
+// tour pages
+
 var imgLayer;
 function tour(ti, fromPermalink) {
-	clear_map();
+	clear_map('overlay');
 	if ($(window).width() < 768 && !fromPermalink) $('.sidebar-close').click();
+	// general markers for tour
+	// name | coordinates | popup-header | popup-subheader | image | image-attribution | marker body
 	var tourPopup = function (name, pos, header, headerSub, img, imgAttrib, markerPopup) {
-		var marker = L.circleMarker(pos, { interactive: true, radius: 15, weight: 2, color: '#b05000', opacity: 0.8, fillColor: '#fff', fillOpacity: 0.5 })
+		var marker = L.circleMarker(pos, { interactive: true, radius: 15, weight: 5, color: '#fff', opacity: 1, fillColor: '#b05000', fillOpacity: 0.25, className: 'mkrShadow' })
 			.bindPopup(
-				generic_header_parser(header, headerSub) + markerPopup + (img ? generic_img_parser('tour/tour' + img + '.jpg', 0, 'inherit', imgAttrib) : ''),
+				generic_header_parser(header, headerSub) + markerPopup + (img ? generic_img_parser('tour/tour' + img + '.jpg', 0, 'inherit', '&copy; ' + imgAttrib) : ''),
 				{ minWidth: imgSize, maxWidth: imgSize }
 			)
 			.bindTooltip('<b>' + header + '</b><br><i>' + headerSub + '</i>' + (img ? ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>' : ''), { direction: 'right' });
 		marker._leaflet_id = name;
 		imageOverlay.addLayer(marker);
 	};
+	// markers for geojson
 	var setMarker = function (feature, layer, dfltAttrib) {
-		var customOptions = {}, toolTip = '', markerPopup = '';
-		customOptions.maxWidth = imgSize;
+		var customPOptions = {}, toolTip = '', markerPopup = '';
+		customPOptions.maxWidth = imgSize;
 		markerPopup += generic_header_parser(feature.properties.name) +
 			L.Util.template(tagTmpl, { tag: 'Date', value: date_parser(feature.properties.date, 'long'), iconName: 'fas fa-calendar-alt' });
 		toolTip += '<b>' + feature.properties.name + '</b><br><i>' + date_parser(feature.properties.date, 'short') + '</i>';
@@ -24,15 +28,15 @@ function tour(ti, fromPermalink) {
 			toolTip += ' <i style="color:#808080;" class="fas fa-clipboard fa-fw"></i>';
 		}
 		if (feature.properties.img) {
-			customOptions.minWidth = imgSize;
+			customPOptions.minWidth = imgSize;
 			var imgAttrib = feature.properties.imgattrib ? feature.properties.imgattrib : dfltAttrib;
-			markerPopup += generic_img_parser('tour/tour09/' + feature.properties.img + '.jpg', 0, 'inherit', imgAttrib);
+			markerPopup += generic_img_parser('tour/tour09/' + feature.properties.img + '.jpg', 0, 'inherit', '&copy; ' + imgAttrib);
 			if (feature.properties.img_1) {
 				for (x = 1; x <= 5; x++) {
 					if (feature.properties['img_' + x]) {
 						lID = x;
 						imgAttrib = feature.properties['imgattrib_' + x] ? feature.properties['imgattrib_' + x] : dfltAttrib;
-						markerPopup += generic_img_parser('tour/tour09/' + feature.properties['img_' + x] + '.jpg', x, 'none', imgAttrib);
+						markerPopup += generic_img_parser('tour/tour09/' + feature.properties['img_' + x] + '.jpg', x, 'none', '&copy; ' + imgAttrib);
 					}
 				}
 				markerPopup += show_img_controls(parseInt(lID+1));
@@ -41,7 +45,7 @@ function tour(ti, fromPermalink) {
 			else toolTip += ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>';
 		}
 		layer
-			.bindPopup(markerPopup, customOptions)
+			.bindPopup(markerPopup, customPOptions)
 			.bindTooltip(toolTip, { direction: 'right', offset: [8, 0] });
 	};
 	// timeout hack to stop iframe breaking on ff
@@ -258,7 +262,6 @@ function tour(ti, fromPermalink) {
 			tourPopup('Conval', [50.84404, 0.47902], 'Metropolitan Convalescent Home', '1881-1988', '13/metropolitanconvalescent-air-1980', 'Bexhill Museum | c1980', '');
 			tourPopup('Mhouse', [50.84523, 0.47927], 'Manor House', '1250-1967', '13/manorhouse-air-1955', 'Bexhill Museum | 1955', '');
 			tourPopup('Sidley', [50.85407, 0.47485], 'Sidley Station', '1902-1971', '13/sidleystation-air-1959', '<a href="http://car57.zenfolio.com/" target="_blank">Michael Pannell</a> | 1959', '');
-			imageOverlay.addTo(map);
 			imgLayer = ti;
 			break;
 		case 'boundary':
@@ -274,6 +277,7 @@ function tour(ti, fromPermalink) {
 	}, 50);
 }
 
+// focus on individual pois
 function tourFocus(ti, id) {
 	if ($(window).width() < 768) $('.sidebar-close').click();
 	if (imgLayer === ti) setTimeout(function () {
@@ -282,25 +286,19 @@ function tourFocus(ti, id) {
 	}, 50);
 	else {
 		if (ti === 'lost') {
-			clear_map();
+			clear_map('overlay');
 			tour(ti);
 			setTimeout(function () { imageOverlay._layers[id].openPopup(); }, 50);
 		}
 		else {
-			var type;
-			switch (id.slice(0, 1)) {
-				case 'n': type = 'node'; break;
-				case 'w': type = 'way'; break;
-				case 'r': type = 'relation'; break;
-			}
-			clear_map();
+			clear_map('overlay');
 			rQuery = true;
-			show_overpass_layer(type + '(' + id.slice(1) + ');', id);
+			show_overpass_layer(elementType(id) + '(' + id.slice(1) + ');', id);
 		}
 	}
 }
 
-// load source frame, highlight and scroll to item
+// load sources page, highlight and scroll to item
 function tourSource(item) {
 	$('#tourList').val(99).trigger('change');
 	$('#tourFrame').one('load', function () {
