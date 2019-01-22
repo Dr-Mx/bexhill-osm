@@ -12,15 +12,14 @@ function holidayDecor() {
 		// little common
 		L.imageOverlay('assets/img/holidays/xmasMapTree.png', [[50.84545, 0.43400], [50.84510, 0.43350]], { opacity: 0.9 }).addTo(map);
 		$('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/xmasSb.png">');
-		$('#xmasMsg').append(
-			'<div id="xmasTitle"><i class="fas fa-tree fa-lg fa-fw"></i> <a onclick="tour(\'xmas\');">Christmas Window Display Competition</a> <i class="fas fa-snowman fa-lg fa-fw"></i></div>' +
-			'<div class="comment">2018 is carol and song themed, in association with Shining&nbsp;Lights and Bexhill&nbsp;Online</div>'
-		);
+		$('#homeBox').after('<div id="xmasMsg" title="Show on map" onclick="tour(\'xmas\')">' +
+			'<div id="xmasTitle">~ <span>Christmas Window Display Competition</span> ~</div>' +
+			'<div class="comment">2018 is carol and song themed, in association with Shining&nbsp;Lights and Bexhill&nbsp;Online</div>' +
+		'</div>');
 	}
 }
 
 function xmasShops(year) {
-	clear_map();
 	$('#spinner').show();
 	if ($(window).width() < 768) $('.sidebar-close').click();
 	$.ajax({
@@ -31,7 +30,7 @@ function xmasShops(year) {
 		success: function (json) {
 			imageOverlay.addLayer(L.geoJSON(json, {
 				onEachFeature: function (feature, layer) {
-					var shopImg = 'soon', shopImgLink = '', shopImgIcon = '', winnerIconColor = '', winnerImgLink = '', winnerImgIcon = '';
+					var shopImg = 'soon', shopImgIcon = '', winnerIconColor = '', winnerImgLink = '', winnerImgIcon = '', bLink = '';
 					if (feature.properties.img) {
 						shopImg = year + '/' + feature.properties.img;
 						shopImgIcon += ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>';
@@ -47,10 +46,12 @@ function xmasShops(year) {
 						winnerImgLink = '<img class="popup-xmas-award" title="' + feature.properties.winner + '" src="assets/xmas/award-' + feature.properties.winner + '.png">';
 						winnerImgIcon = ' <i style="text-shadow:1px 1px 2px black; color:' + winnerIconColor + ';" class="fas fa-trophy fa-lg fa-fw"></i>';
 					}
+					if (feature.properties.url) bLink = '<a onclick="popupWindow(\'' + feature.properties.url + '\', \'xmas\', 1024, 768);">Business details</a>';
+					else if (feature.properties.phone) bLink = feature.properties.phone;
 					layer
 						.bindPopup(
 							'<div class="popup-header"><h3>' + feature.properties.name + '</h3></div>' +
-							winnerImgLink + generic_img_parser('assets/xmas/' + shopImg + '.jpg', 0, 'inherit', '<a onclick="shopDetail(\'' + feature.properties.osmid + '\')">Business details</a>'),
+							winnerImgLink + generic_img_parser('assets/xmas/' + shopImg + '.jpg', 0, 'inherit', bLink),
 							{ maxWidth: imgSize, minWidth: imgSize, className: 'popup-xmas' }
 						)
 						.bindTooltip(
@@ -84,11 +85,4 @@ function xmasShops(year) {
 	});
 	imgLayer = 'xmas';
 	$('#spinner').fadeOut('fast');
-}
-
-// link to shop
-function shopDetail(osmid) {
-	clear_map('poi');
-	rQuery = true;
-	show_overpass_layer(elementType(osmid) + '(' + osmid.slice(1) + ');', osmid);
 }

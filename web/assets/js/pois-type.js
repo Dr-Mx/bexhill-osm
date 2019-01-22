@@ -4,7 +4,7 @@
 
 var pois = {
 
-	// LEISURE-TOURISM - 99a3a4 - 874ea0 - 239b56 - 2e86c1 - e74d3c
+	// LEISURE-TOURISM - 99a3a4 - 874ea0 - e74d3c - 239b56 - 2e86c1
 	
 	attraction: {
 		name: 'Attraction',
@@ -20,6 +20,14 @@ var pois = {
 		iconName: 'panoramicview',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'viewpoint']
+	},
+
+	webcam: {
+		name: 'Webcam',
+		query: 'node[surveillance=webcam];',
+		iconName: 'webcam',
+		catName: 'Leisure-Tourism',
+		tagKeyword: ['webcam', 'surveillance']
 	},
 
 	bus: {
@@ -39,6 +47,15 @@ var pois = {
 		tagKeyword: ['tourism', 'information'],
 		tagParser: info_parser,
 		hide: 1
+	},
+
+	guest_house: {
+		name: 'Where to stay',
+		query: 'nwr[tourism~"guest_house|hotel|apartment|caravan_site"];',
+		iconName: 'bed_breakfast1-2',
+		catName: 'Leisure-Tourism',
+		tagKeyword: ['tourism', 'apartment', 'self-cater', 'bed-and-breakfast', 'hotel', 'guest-house', 'lodge', 'sleep', 'caravan-site', 'camp'],
+		tagParser: hotel_parser
 	},
 
 	museum: {
@@ -165,33 +182,6 @@ var pois = {
 		iconName: 'casino-2',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['amusement-arcade', 'gamble'],
-		hide: 1
-	},
-
-	guest_house: {
-		name: 'Hotel/Guest-House',
-		query: 'nwr[tourism~"guest_house|hotel"];',
-		iconName: 'bed_breakfast1-2',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'bed-and-breakfast', 'hotel', 'guest-house', 'lodge', 'sleep'],
-		tagParser: hotel_parser
-	},
-
-	apartment: {
-		name: 'Rental Apartment',
-		query: 'nwr[tourism=apartment];',
-		iconName: 'villa',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'apartment', 'self-cater', 'lodge', 'sleep', 'bed'],
-		tagParser: hotel_parser
-	},
-
-	caravan_site: {
-		name: 'Caravan Site',
-		query: 'nwr[tourism=caravan_site];',
-		iconName: 'campingcar',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'caravan-site', 'camp', 'sleep'],
 		hide: 1
 	},
 
@@ -330,7 +320,6 @@ var pois = {
 		iconName: 'recycle',
 		catName: 'Amenities',
 		tagKeyword: ['recycle', 'dump', 'refuse', 'rubbish', 'waste'],
-		tagParser: recyclecentre_parser,
 		hide: 1
 	},
 
@@ -364,7 +353,7 @@ var pois = {
 
 	bicycle_parking: {
 		name: 'Bicycle-Parking',
-		query: 'nwr[amenity=bicycle_parking];',
+		query: 'node[amenity=bicycle_parking];',
 		iconName: 'parking_bicycle',
 		catName: 'Amenities',
 		tagKeyword: ['bike-parking', 'bicycle'],
@@ -604,8 +593,8 @@ var pois = {
 	},
 
 	estate_agent: {
-		name: 'Estate Agent',
-		query: 'nwr[office=estate_agent];',
+		name: 'Property',
+		query: 'nwr[office~"estate_agent|property_management"];',
 		iconName: 'apartment-2',
 		catName: 'Services',
 		tagKeyword: ['estate-agent', 'property'],
@@ -719,7 +708,7 @@ var pois = {
 	},
 
 	tobacco: {
-		name: 'Smoking',
+		name: 'Cigarettes',
 		query: 'nwr[shop~"tobacco|e-cigarette"];',
 		iconName: 'smoking',
 		catName: 'Shops',
@@ -1117,7 +1106,7 @@ var pois = {
 		hide: 1
 	},
 	
-	// OTHER
+	// OTHER - eaecee
 	
 	political: {
 		name: 'Ward',

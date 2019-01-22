@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## v5.0.0 - Permalink for open popups
+
+**Date:** 22/01/2019
+
+Updated js
+ - leaflet.js 1.4.0
+ - bouncemarker-min.js 1.2.0
+
+Site changes
+ - Set a new sidebar width for smaller devices to avoid overlap obscuring the map too much
+ - Combine guest_house, hotel, apartment, caravan_site to one POI
+ - Add webcam POI
+ - Icons for cemetery and speed_camera
+ - Move osm update feed to osmcha api
+ - Highlight POI in results list when opening popup
+ - Open popups now permalink
+ - Moved functions that didn't need to be globally accessible
+ - Improved some error messages so they display in a leaflet control instead of alert
+ - Cleaner return-to-top anchor points
+ - Add new animations of clearing results and scrolling
+ - As always, many other bug fixes and improvements
+
+
 ## v4.9.0 - Colour themes
 
 **Date:** 14/12/2018

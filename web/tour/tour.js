@@ -2,14 +2,14 @@
 
 var imgLayer;
 function tour(ti, fromPermalink) {
-	clear_map('overlay');
+	if (!fromPermalink) clear_map('markers');
 	if ($(window).width() < 768 && !fromPermalink) $('.sidebar-close').click();
 	// general markers for tour
 	// name | coordinates | popup-header | popup-subheader | image | image-attribution | marker body
 	var tourPopup = function (name, pos, header, headerSub, img, imgAttrib, markerPopup) {
 		var marker = L.circleMarker(pos, { interactive: true, radius: 15, weight: 5, color: '#fff', opacity: 1, fillColor: '#b05000', fillOpacity: 0.25, className: 'mkrShadow' })
 			.bindPopup(
-				generic_header_parser(header, headerSub) + markerPopup + (img ? generic_img_parser('tour/tour' + img + '.jpg', 0, 'inherit', '&copy; ' + imgAttrib) : ''),
+				generic_header_parser(header, headerSub) + markerPopup + (img ? generic_img_parser('tour/tour' + img + '.jpg', 0, 'inherit', imgAttrib ? '&copy; ' + imgAttrib : '') : ''),
 				{ minWidth: imgSize, maxWidth: imgSize }
 			)
 			.bindTooltip('<b>' + header + '</b><br><i>' + headerSub + '</i>' + (img ? ' <i style="color:#808080;" class="fas fa-image fa-fw"></i>' : ''), { direction: 'right' });
@@ -140,6 +140,7 @@ function tour(ti, fromPermalink) {
 					sticky: true
 				}));
 			}
+			// bomb markers
 			$.ajax({
 				url: 'tour/tour09/ww2bombs.geojson',
 				dataType: 'json',
@@ -187,6 +188,7 @@ function tour(ti, fromPermalink) {
 			break;
 		case 'ww2Shelters':
 			$('#spinner').show();
+			// shelter markers
 			$.ajax({
 				url: 'tour/tour09/ww2shelters.geojson',
 				dataType: 'json',
@@ -286,14 +288,14 @@ function tourFocus(ti, id) {
 	}, 50);
 	else {
 		if (ti === 'lost') {
-			clear_map('overlay');
+			clear_map('markers');
 			tour(ti);
 			setTimeout(function () { imageOverlay._layers[id].openPopup(); }, 50);
 		}
 		else {
-			clear_map('overlay');
-			rQuery = true;
-			show_overpass_layer(elementType(id) + '(' + id.slice(1) + ');', id);
+			clear_map('markers');
+			markerId = id;
+			tour(ti, true);
 		}
 	}
 }
@@ -303,6 +305,6 @@ function tourSource(item) {
 	$('#tourList').val(99).trigger('change');
 	$('#tourFrame').one('load', function () {
 		$(this).contents().find('ol:nth(1) > li').eq(item - 1).css('background-color', 'khaki');
-		$(this).contents().find('body').scrollTop($(this).contents().find('ol:nth(1) > li').eq(item - 1).offset().top - 20);
+		$(this).contents().find('body').animate({ scrollTop: $(this).contents().find('ol:nth(1) > li').eq(item - 1).offset().top - 20 }, 1000);
 	});
 }

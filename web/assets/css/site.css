@@ -1,6 +1,7 @@
 :root {
     --main-color: #b05000;
 	--btn-hover-color: #f4f4f4;
+	--popup-long-desc-height: 200px;
 }
 .theme {
 	color: #b05000;
@@ -20,7 +21,7 @@ html, body, #map {
 	height: 100%;
 	font: 11pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
-@media (min-width: 768px) and (max-width: 1299px), (max-width: 350px) {
+@media (min-width: 768px) and (max-width: 1299px), (max-width: 400px) {
 	body {
 		font-size: 10pt;
 	}
@@ -37,6 +38,7 @@ input[type=text], input[type=date], input[type=number] {
 #map {
 	background: #cb9b73;
 	background: linear-gradient(var(--main-color), #e6e6e6);
+	transition: background 2s;
 }
 
 #homeBox, #xmasMsg {
@@ -91,19 +93,22 @@ input[type=text], input[type=date], input[type=number] {
 	opacity: 1;
 }
 
-#feedRss {
-	display: none;
+#newFeed {
 	font-size: 85%;
-	color: #777;
+	color: #666;
 }
-#feedRss a:link, #feedRss a:hover, #feedRss a:visited {
-	color: #777;
-}
-#feedRss > ul {
+#newFeed ul {
 	margin-top: 5px;
+	color: #536862;
 }
-#feedRss ul > li {
+#newFeed ul > li {
 	left: -1em;
+}
+#newFeed a:link, #newFeed a:hover, #newFeed a:visited {
+	color: inherit;
+}
+#osmFeed {
+	display: none;
 }
 
 a {
@@ -129,7 +134,13 @@ h3 {
 }
 
 .anchor {
-	text-align: right;
+	position: sticky;
+	bottom: 10px;
+	margin-left: calc(100% - 15px);
+	padding: 3px;
+	background-color: white;
+	opacity: 0.5;
+	border-radius: 100%;
 }
 
 #minimap {
@@ -221,10 +232,6 @@ h3 {
 	background-color: inherit;
 	border-top: 1px solid transparent;
 	border-bottom: 1px solid transparent;
-}
-.leaflet-contextmenu-separator {
-	border-bottom: 1px solid #ccc;
-	margin: 5px 0;
 }
 .leaflet-control-locate
 	a{color: #b05000; color:var(--main-color); font-size:10pt;}
@@ -471,7 +478,6 @@ h3 {
 .poi-results {
 	display: none;
 	height: auto;
-	min-height: 10%;
 	max-height: 70%;
 	resize: vertical;
 	position: relative;
@@ -479,10 +485,11 @@ h3 {
 	overflow-y: auto;
 	box-shadow: -1px 0 5px rgba(0, 0, 0, 0.65) inset;
 	background-color: rgba(0, 0, 0, 0.05);
+	pointer-events: none;
 }
 .poi-results button {
 	float: right;
-	margin: -25px 0 0 5px;
+	margin: -25px 0 5px 5px;
 }
 
 select {
@@ -506,18 +513,36 @@ select:hover:enabled, .poi-results button:hover {
 }
 .poi-results-list table {
 	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 3px;
 }
 .poi-results-list td {
-	border-bottom: 1px solid #bbb;
 	padding: 3px 1px;
 }
 .poi-results-list td:first-child {
 	text-align: center;
-	border-radius: 10px;
+	border-radius: 5px 0 0 5px;
 	width: 10px;
 }
+.popup-tagValue .fa-fw, .poi-results-list td:last-child .fa-fw {
+	font-size: 115%;
+	width: 1.4em;
+}
+.poi-results-list td:last-child .fa-fw {
+	height: 1.4em;
+}
+.poi-results-list td span {
+	display: block;
+	padding: 0 !important;
+}
+.poi-results-list tr {
+	border-bottom: 2px solid #dedede;
+}
+.poi-results-list tr:last-child {
+	border-bottom: none;
+}
 .poi-results-list tr:hover {
-	background-color: rgba(255, 255, 255, 0.3);
+	background-color: rgba(170, 170, 170, 0.5);
 	cursor: pointer;
 }
 .poi-icons {
@@ -785,19 +810,17 @@ input:checked + .slider::before {
 .leaflet-control-layers-expanded {
 	background-color: rgba(255, 255, 255, 0.9);
 }
-.leaflet-control-layers-separator {
+.controlTitle {
 	font-weight: bold;
 	color: #b05000;
 	color: var(--main-color);
-	border-color: #ccc;
-	margin: 7px 0 17px 0px;
+	margin-top: 5px;
 }
 .leaflet-control-layers label {
 	cursor: pointer;
 }
 .leaflet-popup-content {
-	padding-right: 10px;
-	margin: 0 10px 10px 19px;
+	margin: 0 15px 10px 15px;
 }
 .leaflet-popup-close-button {
 	color: #777 !important;
@@ -819,8 +842,8 @@ input:checked + .slider::before {
 	display: none;
 }
 .popup-header {
-	margin: auto -21px 10px -20px;
-	padding: 10px 0 5px 20px;
+	margin: auto -16px 10px -16px;
+	padding: 10px 11px 5px 11px;
 	border-bottom: 2px solid #ddd;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
@@ -840,7 +863,6 @@ input:checked + .slider::before {
 	line-height: 25px;
 }
 .popup-fhrs {
-	padding-right: 10px;
 	display: table-cell;
 	line-height: 0;
 }
@@ -862,10 +884,6 @@ input:checked + .slider::before {
 	text-indent: -5px;
 	padding-left: 5px;
 }
-.popup-tagValue .fa-fw, .poi-results-list td .fa-fw {
-	font-size: 115%;
-	width: 1.4em;
-}
 .popup-truncate {
 	display: inline-block;
 	overflow-x: hidden;
@@ -874,19 +892,18 @@ input:checked + .slider::before {
 	margin-bottom: -4px;
 	text-indent: 0;
 }
-.popup-recyc {
-	color: #62745f;
-}
 .popup-longDesc {
 	display: block;
 	overflow-y: auto;
 	max-height: 200px;
+	max-height: var(--popup-long-desc-height);
 	text-align: justify;
 	padding-right: 3px;
 }
 @media (max-height: 500px) {
 	.popup-longDesc {
 		max-height: 100px;
+		max-height: calc(var(--popup-long-desc-height) / 2);
 	}
 }
 .popup-streetSource {
@@ -964,6 +981,9 @@ input:checked + .slider::before {
 	font-size: 90%;
 	color: #555;
 }
+.popup-facilities span {
+	display: inline-block;
+}
 .popup-bsTable tr { text-align: left; border: 1px solid #ccc; background-color: white; }
 .popup-bsTable td { padding: 2px; }
 .popup-bsTable td:nth-child(1) { font-weight: bold; }
@@ -971,6 +991,11 @@ input:checked + .slider::before {
 .facYes { color: darkgreen; }
 .facLtd { color: olive; }
 .facNo { color: darkred; }
+.facGen { padding-left: 5px; white-space: nowrap; }
+.facRecyc { padding-left: 5px; color: #62745f; }
+.facPay { padding-left: 5px; color: #714b83; }
+.facDiet { padding-left: 5px; color: #00a275; }
+	
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
 	background-color: rgba(244, 244, 244, 0.9);
@@ -982,12 +1007,16 @@ input:checked + .slider::before {
 	font-size: 10pt;
 	border-radius: 5px;
 	color: #222;
+	background-color: #fff !important;
 }
-.openColor-list-true { background-color: #96c896; background: linear-gradient(to right, #96c896, #ddd); }
-.openColor-list-false {	background-color: #c89696; background: linear-gradient(to right, #c89696, #ddd); }
+.openColor-list-true { background: linear-gradient(to right, rgba(0, 100, 0, 0.4), transparent); }
+.openColor-list-false { background: linear-gradient(to right, rgba(139, 0, 0, 0.4), transparent); }
 .openColor-true { color: #008000; }
 .openColor-false { color: #ff0000; }
 .openColor-depends { color: #808080; }
+.poi-results-list .openColor-list-depends, .poi-results-list .openColor-list-undefined {
+	background: linear-gradient(to right, rgba(153, 153, 153, 0.4), transparent);
+}
 
 .ui-tooltip {
 	padding: 3px;
@@ -1023,6 +1052,11 @@ input:checked + .slider::before {
 #xmasMsg {
 	padding: 5px;
 	margin-top: 10px;
+	background-color: rgba(255, 255, 255, 0.25);
+	cursor: pointer;
+}
+#xmasMsg:hover {
+	box-shadow: inset 0px 0px 5px darkred;
 }
 #xmasMsg > #xmasTitle {
 	display: flex;
@@ -1033,14 +1067,15 @@ input:checked + .slider::before {
 #xmasMsg > #xmasTitle, #xmasMsg > .comment {
 	color: darkgreen;
 }
-#xmasMsg > #xmasTitle > a {
+#xmasMsg > #xmasTitle > span {
 	color: darkred;
+	padding: 0 5px;
 }
-.popup-xmas .leaflet-popup-content-wrapper {
+.popup-xmas .leaflet-popup-content-wrapper, #xmasMsg {
 	background-image: url('../xmas/popup-bg.png');
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: content;
+	background-size: cover;
 }
 .popup-xmas .popup-header {
 	background-color: rgba(0, 175, 0, 0.3);
