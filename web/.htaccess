@@ -10,6 +10,6 @@ RewriteCond %{HTTPS} on
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
-Redirect /ww2 /?S=010&M=forte&T=tour&U=9&G=ww2Bombmap
-Redirect /xmas /?S=010&M=bosm&T=none&G=xmas
-Redirect /ext /?M=forte&T=none#14/50.8470/0.4670
+Redirect /ww2 /?S=010&M=general&T=tour&U=9&G=ww2Bombmap
+Redirect /xmas /?S=010&M=bosm&T=none&G=xmas2018
+Redirect /ext /?M=general&T=none#13/50.8470/0.4670

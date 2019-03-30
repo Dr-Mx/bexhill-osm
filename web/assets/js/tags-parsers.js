@@ -2,9 +2,11 @@
 
 var spinner = 0, markerId, ohState, ctState, poiList = [];
 function parse_tags(element, titlePopup, poiParser) {
-	var markerPopup = generic_header_parser(titlePopup, (element.tags.name || element.tags.ref), element.tags['fhrs:id']);
+	var eName = element.tags['name:en'] || element.tags.name || undefined;
+	if (eName && element.tags.ref) eName += ' (' + element.tags.ref + ')';
+	var markerPopup = generic_header_parser(titlePopup, (eName || element.tags.ref), element.tags['fhrs:id'], true);
 	// global callback parsers
-	var address_parser = function (tags) {
+	var address_parser = function(tags) {
 		markerPopup = '';
 		if (tags['addr:street'] || tags['addr:place']) {
 			var value = '', buildLvl;
@@ -18,7 +20,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				}
 				value += '<span title="Level">' + buildLvl + '</span>, ';
 			}
-			if (tags['addr:housename'] && tags['addr:housename'] !== tags.name) value += '<span title="House name">' + tags['addr:housename'] + '</span>, ';
+			if (tags['addr:housename'] && tags['addr:housename'] !== eName) value += '<span title="House name">' + tags['addr:housename'] + '</span>, ';
 			if (tags['addr:flats']) value += 'Flats: ' + tags['addr:flats'] + ', ';
 			if (tags['addr:unit']) value += 'Unit ' + tags['addr:unit'] + ', ';
 			if (tags['addr:housenumber']) value += '<span title="House number">' + tags['addr:housenumber'] + '</span> ';
@@ -32,7 +34,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		return markerPopup;
 	};
-	var phone_parser = function (tags) {
+	var phone_parser = function(tags) {
 		var tagPhone = tags.phone || tags['contact:phone'];
 		markerPopup = '';
 		if (tagPhone) {
@@ -42,7 +44,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		return markerPopup;
 	};
-	var website_parser = function (tags) {
+	var website_parser = function(tags) {
 		var tagWebsite = tags.website || tags['contact:website'] || tags['contact:webcam'];
 		markerPopup = '';
 		if (tagWebsite) {
@@ -51,7 +53,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		return markerPopup;
 	};
-	var contact_parser = function (tags) {
+	var contact_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
 		var tagMail = tags.email || tags['contact:email'];
@@ -65,7 +67,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Contact', value: tag, iconName: 'fas fa-user-circle' });
 		return markerPopup;
 	};
-	var wikipedia_parser = function (tags) {
+	var wikipedia_parser = function(tags) {
 		var wikipedia = tags.wikipedia || tags['site:wikipedia'];
 		markerPopup = '';
 		if (wikipedia) {
@@ -77,9 +79,11 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		return markerPopup;
 	};
-	var listed_parser = function (tags) {
-		var tag = '', label = '', icon = '';
+	var listed_parser = function(tags) {
+		var tag = '', label = '', icon = '', planningLink = '';
 		markerPopup = '';
+		if (tags['ref:planningapp']) planningLink = '<a href="http://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + tags['ref:planningapp'] + '" target="_blank">' + tags['ref:planningapp'] + '</a>';
+		else if (tags['ref:historicplanningapp']) planningLink = '<a href="http://planweb01.rother.gov.uk/OcellaWeb/historyDetails?reference=' + tags['ref:historicplanningapp'] + '" target="_blank">' + tags['ref:historicplanningapp'] + '</a>';
 		if (tags.building) {
 			label = 'Building';
 			icon = 'fas fa-building';
@@ -88,12 +92,14 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags.builder) tag += '<span title="Builder">' + tags.builder + '</span>, ';
 			if (tags.start_date) tag += '<span title="Start date">' + date_parser(tags.start_date, 'short') + '</span>, ';
 			if (tags.height) tag += '<span title="Height in metres">' + tags.height + 'm</span>, ';
+			if (planningLink) tag += '<span title="Planning application">' + planningLink + '</span>, ';
 		}
 		else {
 			label = 'Listed';
 			icon = 'fas fa-file';
 			if (tags.start_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Start date', value: date_parser(tags.start_date, 'long'), iconName: 'fas fa-calendar-alt' });
 			if (tags.architect) markerPopup += L.Util.template(tagTmpl, { tag: 'Architect', value: tags.architect, iconName: 'fas fa-user' });
+			if (planningLink) markerPopup += L.Util.template(tagTmpl, { tag: 'Planning application', value: planningLink, iconName: 'fas fa-file' });
 		}
 		if (tags.HE_ref) {
 			var listedStatus = tags.listed_status || tags.HE_ref;
@@ -105,16 +111,18 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		return markerPopup;
 	};
-	var facility_parser = function (tags) {
+	var facility_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
+		if (tags.disused === 'yes' && !tags.building) tag += '<i class="facNo fas fa-wrench fa-fw" title="disused: yes"></i>';
+		if (tags.indoor === 'yes') tag += '<i class="facYes fas fa-door-closed fa-fw" title="indoor: yes"></i>';
 		if (tags.wheelchair === 'yes') tag += '<i class="facYes fas fa-wheelchair fa-fw" title="wheelchair: yes"></i>';
 		else if (tags.wheelchair === 'limited') tag += '<i class="facLtd fas fa-wheelchair fa-fw" title="wheelchair: limited"></i>';
 		else if (tags.wheelchair === 'no') tag += '<i class="facNo fas fa-wheelchair fa-fw" title="wheelchair: no"></i>';
 		if (tags.dog === 'yes') tag += '<i class="facYes fas fa-dog fa-fw" title="dog: yes"></i>';
 		else if (tags.dog === 'no') tag += '<i class="facNo fas fa-dog fa-fw" title="dog: no"></i>';
-		if (tags.internet_access === 'wlan') tag += '<i class="facYes fas fa-wifi fa-fw" title="internet access: wireless"></i>';
-		else if (tags.internet_access === 'terminal') tag += '<i class="facYes fas fa-desktop fa-fw" title="internet access: terminal"></i>';
+		if (tags.internet_access === 'wlan') tag += '<i class="facYes fas fa-wifi fa-fw" title="internet: wireless"></i>';
+		else if (tags.internet_access === 'terminal') tag += '<i class="facYes fas fa-desktop fa-fw" title="internet: terminal"></i>';
 		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') tag += '<i class="facYes fas fa-umbrella fa-fw" title="shelter: yes"></i>';
 		if (tags.highway === 'bus_stop') {
 			if (tags.bench === 'yes') tag += '<i class="facYes fas fa-chair fa-fw" title="bench: yes"></i>';
@@ -182,7 +190,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (recycList) markerPopup += L.Util.template(tagTmpl, { tag: 'Recycling options', value: recycList.replace(/_/g, '-').substring(0, recycList.length - 2), iconName: 'fas fa-recycle' });
 			if (recycTag) tag += '<span class="facRecyc"' + (tag ? ' style="padding-left:10px;"' : '') + '>' + recycTag + '</span>';
 		}
-		if (Object.keys(tags).some(function (k){ return ~k.indexOf('payment:'); })) {
+		if (Object.keys(tags).some(function(k){ return ~k.indexOf('payment:'); })) {
 			var payTag = '', payList = '';
 			for (var payKey in tags) {
 				var pay = '', payIcon = '';
@@ -215,7 +223,17 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (payList) markerPopup += L.Util.template(tagTmpl, { tag: 'Payment options', value: payList.replace(/_/g, '-').substring(0, payList.length - 2), iconName: 'fas fa-cash-register' });
 			if (payTag) tag += '<span class="facPay"' + (tag ? ' style="padding-left:10px;"' : '') + '>' + payTag + '</span>';
 		}
-		if (Object.keys(tags).some(function (k){ return ~k.indexOf('diet:'); })) {
+		if (tags.fee) {
+			var feeTag = '';
+			if (tags.fee.indexOf(':') > 0 && tags.charge) feeTag = tags.fee + ': ' + tags.charge;
+			else {
+				feeTag = tags.charge || tags.fee;
+				if (feeTag === 'yes') feeTag = '<i class="fas fa-check fa-fw"></i>';
+				else if (feeTag === 'no') feeTag = '<i class="fas fa-times fa-fw"></i>';
+			}
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Fee', value: feeTag.replace(/;/g, ', '), iconName: 'fas fa-pound-sign' });
+		}
+		if (Object.keys(tags).some(function(k){ return ~k.indexOf('diet:'); })) {
 			var dietTag = '';
 			for (var dietKey in tags) {
 				var diet = '', dietIcon = '';
@@ -233,17 +251,18 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Facilities', value: '<span class="popup-facilities">' + tag + '</span>', iconName: 'fas fa-info-circle' });
 		return markerPopup;
 	};
-	var street_parser = function (tags) {
+	var street_parser = function(tags) {
+		var tag = '';
 		markerPopup = '';
-		if (tags.highway && tags.name) {
+		if (tags.highway && eName) {
 			// get street history through xml file lookup
 			$.ajax({
 				async: false,
 				url: 'assets/xml/streetnames.xml',
 				dataType: 'xml',
 				cache: true,
-				success: function (xml) {
-					var street = $(xml).find('name').filter(function () {
+				success: function(xml) {
+					var street = $(xml).find('name').filter(function() {
 						return $(this).text() === tags.name;
 					}).closest('street');
 					var streetDate = $('date', street).text();
@@ -256,14 +275,21 @@ function parse_tags(element, titlePopup, poiParser) {
 						markerPopup += '<span class="popup-streetSource"><a href="' + sourceLink + '" target="_blank" title="' + sourceLink + '">&copy; ' + sourceAuthor + '</a></span>';
 					}
 				},
-				error: function () { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES: ' + this.url); }
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES: ' + this.url); }
 			});
-			if (tags.maxspeed) markerPopup += L.Util.template(tagTmpl, { tag: 'Max speed', value: tags.maxspeed, iconName: 'fas fa-tachometer-alt' });
-			if (tags.maxwidth) markerPopup += L.Util.template(tagTmpl, { tag: 'Max width', value: tags.maxwidth, iconName: 'fas fa-car' });
+			if (tags.maxspeed) tag += tags.maxspeed + '; ';
+			if (tags.maxwidth) tag += tags.maxwidth + '; ';
+			if (tags.lit === 'yes') tag += 'lit; ';
+			if (tags.oneway === 'yes') tag += 'oneway; ';
+			if (tags.bridge === 'yes') tag += 'bridge; ';
+			if (tag) {
+				tag = tag.substring(0, tag.length - 2);
+				markerPopup += L.Util.template(tagTmpl, { tag: 'Highway details', value: tag, iconName: 'fas fa-tachometer-alt' });
+			}
 		}
 		return markerPopup;
 	};
-	var furtherreading_parser = function (tags) {
+	var furtherreading_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
 		if (tags['url:bexhillhistorytrail']) {
@@ -278,22 +304,22 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		return markerPopup;
 	};
-	var image_parser = function (tags) {
+	var image_parser = function(tags) {
 		// get images
 		var lID = 0;
 		markerPopup = '';
 		if (tags.wikimedia_commons && tags.wikimedia_commons.indexOf('File') === 0) {
-			markerPopup += generic_img_parser(tags.wikimedia_commons, lID, 'inherit', '');
+			markerPopup += generic_img_parser(tags.wikimedia_commons, lID, '');
 			lID++;
 		}
 		if (tags.image) {
-			markerPopup += generic_img_parser(tags.image, lID, ((lID > 0) ? 'none' : 'inherit'), tags['source:image'] ? '&copy; ' + tags['source:image'] : '');
+			markerPopup += generic_img_parser(tags.image, lID, tags['source:image'] ? '&copy; ' + tags['source:image'] : '');
 			// support up to 5 additional images
 			if (tags['image:360'] || tags.image_1 || lID > 0) {
 				lID++;
 				for (x = 1; x <= 5; x++) {
 					if (tags['image_' + x]) {
-						markerPopup += generic_img_parser(tags['image_' + x], lID, 'none', tags['source:image_' + x] ? '&copy; ' + tags['source:image_' + x] : '');
+						markerPopup += generic_img_parser(tags['image_' + x], lID, tags['source:image_' + x] ? '&copy; ' + tags['source:image_' + x] : '');
 						lID++;
 					}
 				}
@@ -303,9 +329,9 @@ function parse_tags(element, titlePopup, poiParser) {
 		return markerPopup;
 	};
 	// https://github.com/opening-hours/opening_hours.js
-	var opening_hours_parser = function (tags) {
+	var opening_hours_parser = function(tags) {
 		markerPopup = '';
-		var drawTable = function (oh, date_today) {
+		var drawTable = function(oh, date_today) {
 			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 			var weekdays = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 			date_today = new Date(date_today);
@@ -400,12 +426,10 @@ function parse_tags(element, titlePopup, poiParser) {
 			}
 		}
 		catch(err) {
-			if (tags.opening_hours && $('#inputDebug').is(':checked')) console.debug('ERROR: Object "' + tags.name + '" cannot parse hours: ' + tags.opening_hours + '. ' + err);
+			if (tags.opening_hours && $('#inputDebug').is(':checked')) console.debug('ERROR: Object "' + eName + '" cannot parse hours: ' + tags.opening_hours + '. ' + err);
 		}
 		return markerPopup;
 	};
-	markerPopup += '<a class="popup-direct" title="Walking directions"><i class="fas fa-walking fa-fw"></i></a>';
-	markerPopup += '<a id="' + element.type + '_' + element.id + '" class="popup-edit" title="Edit with OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
 	functions = [
 		{callback: generic_tag_parser, tag: 'official_name', label: 'Official name'},
 		{callback: generic_tag_parser, tag: 'loc_name', label: 'Local name'},
@@ -418,6 +442,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		{callback: contact_parser},
 		{callback: wikipedia_parser},
 		{callback: listed_parser},
+		{callback: generic_tag_parser, tag: 'date', label: 'Event date', iconName: 'fas fa-calendar-alt'},
 		{callback: generic_tag_parser, tag: 'opening_date', label: 'Opening date', iconName: 'fas fa-calendar-alt'},
 		{callback: generic_tag_parser, tag: 'end_date', label: 'End date', iconName: 'fas fa-calendar-alt'},
 		{callback: generic_tag_parser, tag: 'access', label: 'Access', iconName: 'fas fa-sign-in-alt'},
@@ -456,7 +481,7 @@ function callback(data) {
 	// padding so popup is not obfuscated by map controls
 	customPOptions.autoPanPaddingTopLeft = ($(window).width() < 1300 || !rQuery) ? [20, 40] : [sidebar.width() + 50, 5];
 	// push data to results list
-	var setPoiList = function () {
+	var setPoiList = function() {
 		// get openhrs colour
 		marker.ohState = ohState;
 		marker.ctState = ctState;
@@ -468,18 +493,18 @@ function callback(data) {
 	};
 	// https://github.com/jfirebaugh/leaflet-osm
 	// https://wiki.openstreetmap.org/wiki/API_v0.6
-	var getOsmOutline = function (type, id) {
+	var getOsmOutline = function(type, id) {
 		if (type !== 'node') {
 			// check if cached
 			if (eleCache['VEC' + type + id]) areaOutline.addLayer(new L.OSM.DataLayer(eleCache['VEC' + type + id])).addTo(map);
 			else $.ajax({
 				url: 'https://www.openstreetmap.org/api/0.6/' + type + '/' + id + '/full',
 				dataType: 'xml',
-				success: function (xml) {
+				success: function(xml) {
 					areaOutline.addLayer(new L.OSM.DataLayer(xml)).addTo(map);
 					eleCache['VEC' + type + id] = xml;
 				},
-				error: function () { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-OUTLINE: ' + this.url); }
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-OUTLINE: ' + this.url); }
 			});
 		}
 	};
@@ -490,10 +515,13 @@ function callback(data) {
 		if (!e.tags || e.id in this.instance._ids || e.id === 604081690) continue;
 		this.instance._ids[e.id] = true;
 		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
+		var eName = e.tags['name:en'] || e.tags.name || undefined;
+		if (eName && e.tags.ref) eName += ' (' + e.tags.ref + ')';
 		name = type = iconName = ohState = ctState = undefined;
-		if (e.tags.construction && e.tags.ref) {
+		if (e.tags.construction) {
 			name = e.tags.construction + ' construction';
 			type = 'construction';
+			if (!eName) eName = e.tags['ref:planningapp'];
 		}
 		if (e.tags.amenity) {
 			if (!name) name = e.tags.amenity;
@@ -522,6 +550,7 @@ function callback(data) {
 							case 'spanish': iconName = 'restaurant_tapas'; break;
 							case 'steak_house': iconName = 'restaurant_steakhouse'; break;
 							case 'thai': iconName = 'restaurant_thai'; break;
+							case 'turkish': iconName = 'restaurant_turkish'; break;
 							case 'vegetarian': iconName = 'restaurant_vegetarian'; break;
 						}
 					}
@@ -551,7 +580,7 @@ function callback(data) {
 				case 'social_facility':
 					type = 'social_facility';
 					name = e.tags.social_facility;
-					if (e.tags['social_facility:for']) name = e.tags['social_facility:for'] + ' ' + name; 
+					if (e.tags['social_facility:for']) name = e.tags['social_facility:for'] + ' ' + name;
 					break;
 				case 'social_centre':
 					if (e.tags.club) {
@@ -592,6 +621,7 @@ function callback(data) {
 			switch (e.tags.historic) {
 				case 'beacon': iconName = 'landmark'; break;
 				case 'boundary_stone': iconName = pois.boundary_stone.iconName; break;
+				case 'folly': iconName = 'tower'; break;
 				case 'memorial':
 					if (e.tags.memorial) {
 						name = 'memorial ' + e.tags.memorial;
@@ -659,7 +689,7 @@ function callback(data) {
 				case 'signs': type = 'copyshop'; break;
 				case 'trade': if (e.tags.trade) name = e.tags.trade + ' ' + e.tags.shop; break;
 				case 'window_blind': type = 'curtain'; break;
-				case 'vacant': name = e.tags.shop + ' shop';
+				case 'vacant': name = e.tags.shop + ' shop'; type = ''; break;
 			}
 		}
 		if (e.tags.tourism) {
@@ -697,7 +727,7 @@ function callback(data) {
 				case 'horse_riding': type = 'recreation'; iconName = 'horseriding'; break;
 				case 'sports_centre':
 					type = 'recreation';
-					if (e.tags.sport === 'swimming') iconName = 'swimming2'; 
+					if (e.tags.sport === 'swimming') iconName = 'swimming2';
 					else iconName = 'indoor-arena';
 					break;
 			}
@@ -755,6 +785,7 @@ function callback(data) {
 		var poi = pois[type];
 		if (!iconName) {
 			if (poi) iconName = poi.iconName;
+			else if (e.tags.shop) iconName = 'shop';
 			else if (e.tags.building) {
 				if (e.tags.building === 'house' || e.tags.building === 'bungalow') iconName = 'bighouse';
 				else if (e.tags.building === 'hut') iconName = 'hut';
@@ -764,13 +795,12 @@ function callback(data) {
 			else iconName = '000blank';
 		}
 		var marker = L.marker(pos, {
-			// do not bounce marker: when single poi, in debug mode, on small devices
-			bounceOnAdd: (!rQuery && $(window).width() >= 768 && !$('#inputDebug').is(':checked')),
-			bounceOnAddOptions: {duration: 500, height: 200},
+			// do not bounce marker: when single poi, in debug mode
+			bounceOnAdd: (!rQuery && !$('#inputDebug').is(':checked')),
 			icon: L.icon({
 				iconUrl: 'assets/img/icons/' + iconName + '.png',
 				iconSize: [32, 37],
-				iconAnchor: [16, 35],
+				iconAnchor: [16, 37],
 				shadowUrl: 'assets/img/icons/000shadow.png',
 				shadowAnchor: [16, 27],
 				popupAnchor: [0, -27]
@@ -793,7 +823,7 @@ function callback(data) {
 		// tooltip
 		customTOptions.permanent = poi ? poi.permTooltip : 0;
 		var toolTip = '<b>' + name + '</b>';
-		if (e.tags.name) toolTip += '<br><i>' + e.tags.name + '</i>';
+		if (eName) toolTip += '<br><i>' + eName + '</i>';
 		else if (e.tags['addr:street']) {
 			if (e.tags['addr:housename']) toolTip += '<br><i>' + e.tags['addr:housename'] + ', ' + e.tags['addr:street'] + '</i>';
 			else if (e.tags['addr:housenumber']) toolTip += '<br><i>' + e.tags['addr:housenumber'] + ' ' + e.tags['addr:street'] + '</i>';
@@ -804,9 +834,8 @@ function callback(data) {
 		else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
 		else if (e.tags.operator) toolTip += '<br><i>' + e.tags.operator + '</i>';
 		if (e.tags.image || e.tags.wikimedia_commons) {
-			toolTip += ' <i style="color:#777; min-width:17px;" class="fas ';
-			toolTip += ((e.tags.image && e.tags.wikimedia_commons) || e.tags.image_1) ? 'fa-images' : 'fa-image';
-			toolTip += ' fa-fw" title="Image"></i>';
+			var imgIcon = ((e.tags.image && e.tags.wikimedia_commons) || e.tags.image_1) ? 'images' : 'image';
+			toolTip += ' <i style="color:#777; min-width:17px;" class="fas fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
 			if (e.tags['image:360']) toolTip += ' <i style="color:#777; min-width:17px;" class="fa fa-street-view fa-fw" title="360 Panorama"></i>';
 		}
 		// check if already defined poi
@@ -846,7 +875,7 @@ function callback(data) {
 			markerId = marker._leaflet_id;
 			getOsmOutline(e.type, e.id);
 		}
-		else if ($('#inputDebug').is(':checked')) {
+		else if ($('.poi-checkbox input:checked#faves').is(':checked') || $('#inputDebug').is(':checked')) {
 			// custom overpass query
 			markerPopup = parse_tags(e, name, []);
 			customTOptions.className = (ohState !== undefined) ? 'openColor-list-' + ohState : 'openColor-list-' + ctState;
@@ -858,62 +887,7 @@ function callback(data) {
 		}
 	}
 	// output list of pois in sidebar
-	if (poiList.length) setTimeout(function () {
-		// sort by distance or name
-		poiList.sort(function (a, b) {
-			if (a.distance) return (a.distance > b.distance) ? 1 : -1;
-			else return (a._tooltip._content > b._tooltip._content) ? 1 : -1;
-		});
-		var poiResultsList = '<table>';
-		for (c = 0; c < poiList.length; c++) {
-			var state = (poiList[c].ohState !== undefined) ? poiList[c].ohState : poiList[c].ctState;
-			var openColorTitle = (state === true || state === false) ? ' title="' + ((state === true) ? 'Open' : 'Closed') + '"' : '';
-			poiResultsList += '<tr id="' + c + '">' +
-				'<td class="openColor-list-' + state + '"' + openColorTitle + '><img src="' + poiList[c]._icon.src + '"></td>' +
-				'<td>' + poiList[c]._tooltip._content + '</td>' +
-				'<td>' + poiList[c].facilities + '</td>';
-			if (poiList[c].distance) {
-				if ($('#inputUnit').is(':checked')) {
-					if (poiList[c].distance < 1000) poiResultsList += '<td>' + Math.round(poiList[c].distance) + ' m</td>';
-					else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1000) * 100) / 100 + ' km</td>';
-				}
-				else {
-					if (poiList[c].distance < 800) poiResultsList += '<td>' + Math.round(poiList[c].distance / 0.9144) + ' yd</td>';
-					else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1609.34) * 100) / 100 + ' mi</td>';
-				}
-			}
-			poiResultsList += '</tr>';
-		}
-		poiResultsList += '</table>';
-		$('.poi-results-list').html(poiResultsList).fadeTo(0, 1);
-		$('.poi-results').slideDown(400, function() {
-			// keep checkbox in view
-			if ($('.poi-checkbox input:checked').length === 1) $('.poi-icons')
-				.scrollTop(0)
-				.animate({ scrollTop: $('.poi-checkbox input:checked').parent().position().top - 50 }, 100);
-		}).css('pointer-events', 'auto');
-		// interact with map
-		$('.poi-results-list tr').hover(
-			function () { poiList[this.id].openTooltip(); },
-			function () { if (!poiList[this.id]._tooltip.options.permanent) poiList[this.id].closeTooltip(); }
-		);
-		$('.poi-results-list tr').click(function () {
-			if ($(window).width() < 768) $('.sidebar-close').click();
-			else {
-				// focus 150px above marker to allow room for popup
-				var px = map.project(poiList[this.id]._popup._latlng);
-				px.y -= 150;
-				map.flyTo(map.unproject(px));
-			}
-			poiList[this.id].closePopup().openPopup();
-		});
-		if (poiList[0].distance) $('.poi-results h3').html($('.leaflet-marker-icon').length + ' results <i style="color:#777;" class="fas fa-sort-numeric-down fa-fw"></i>');
-		else $('.poi-results h3').html($('.leaflet-marker-icon').length + ' results <i style="color:#777;" class="fas fa-sort-alpha-down fa-fw"></i>');
-		if (poiList.length === maxOpResults) {
-			$('.poi-results h3').append('<br>(maximum number of results)');
-			$('.leaflet-control-statusmsg').html('<i class="fas fa-info-circle fa-fw"></i> Maximum number of results shown (' + maxOpResults + ').').show();
-		}
-	}, 50);
+	if (poiList.length) setTimeout(pushPoiList, 250);
 	if (spinner > 0) spinner--;
 	if (spinner === 0) {
 		$('#spinner').fadeOut(200);
@@ -921,13 +895,79 @@ function callback(data) {
 	}
 	permalinkSet();
 }
+// push markers into poi list
+function pushPoiList() {
+	// sort by distance or name
+	poiList.sort(function(a, b) {
+		if (a.distance) return (a.distance > b.distance) ? 1 : -1;
+	else return (a._tooltip._content > b._tooltip._content) ? 1 : -1;
+	});
+	var poiResultsList = '<table>';
+	for (c = 0; c < poiList.length; c++) {
+		var state = (poiList[c].ohState !== undefined) ? poiList[c].ohState : poiList[c].ctState;
+		var openColorTitle = (state === true || state === false) ? ' title="' + ((state === true) ? 'Open' : 'Closed') + '"' : '';
+		var poiIcon = poiList[c]._icon ? poiList[c]._icon.src : '';
+		poiResultsList += '<tr id="' + c + '">' +
+			'<td class="openColor-list-' + state + '"' + openColorTitle + '><img src="' + poiIcon + '"></td>' +
+			'<td>' + poiList[c]._tooltip._content + '</td>' +
+			'<td>' + (poiList[c].facilities ? poiList[c].facilities : '') + '</td>';
+		if (poiList[c].distance) {
+			if ($('#inputUnit').is(':checked')) {
+				if (poiList[c].distance < 1000) poiResultsList += '<td>' + Math.round(poiList[c].distance) + ' m</td>';
+				else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1000) * 100) / 100 + ' km</td>';
+			}
+			else {
+				if (poiList[c].distance < 800) poiResultsList += '<td>' + Math.round(poiList[c].distance / 0.9144) + ' yd</td>';
+				else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1609.34) * 100) / 100 + ' mi</td>';
+			}
+		}
+		poiResultsList += '</tr>';
+	}
+	poiResultsList += '</table>';
+	$('#poi-results-list').html(poiResultsList).fadeTo(0, 1);
+	$('#poi-results-list td:nth-child(3) i').tooltip(tooltipDef);
+	$('#poi-results').slideDown(400, function() {
+		// keep checkbox in view
+		if ($('.poi-checkbox input:checked').length === 1) $('#poi-icons')
+			.scrollTop(0)
+			.animate({ scrollTop: $('.poi-checkbox input:checked').parent().position().top - 50 }, 100);
+	}).css('pointer-events', 'auto');
+	$('.sidebar-tabs ul li img').eq(1).addClass('notify');
+	// interact with map
+	$('#poi-results-list tr').hover(
+		function() { poiList[this.id].openTooltip(); },
+		function() { if (!poiList[this.id]._tooltip.options.permanent) poiList[this.id].closeTooltip(); }
+	);
+	$('#poi-results-list tr').click(function() {
+		if ($(window).width() < 768) $('.sidebar-close').click();
+		else {
+			// focus 150px above marker to allow room for popup
+			var px = map.project(poiList[this.id]._latlng);
+			px.y -= 150;
+			map.flyTo(map.unproject(px));
+		}
+		poiList[this.id].closePopup().openPopup();
+	});
+	$('#poi-results h3').html(
+		poiList.length + ' results' + ($('#inputOpen').is(':checked') ? ' (open)' : '') +
+		'<i style="color:#777;" class="fas fa-sort-' + (poiList[0].distance ? 'numeric' : 'alpha') + '-down fa-fw"></i>'
+	);
+	if (poiList.length === maxOpResults) {
+		$('#poi-results h3').append('<br>(maximum number of results)');
+		$('.leaflet-control-statusmsg').html('<i class="fas fa-info-circle fa-fw"></i> Maximum number of results shown (' + maxOpResults + ').').show();
+	}
+}
 
 // templates
 var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}:</strong> {value}</span></div>';
-function generic_header_parser(header, subheader, fhrs) {
+function generic_header_parser(header, subheader, fhrs, osmId) {
 	var markerPopup = '<div class="popup-header"><h3>' + header + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
 	if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.gif"></span>';
+	if (osmId) {
+		if (noIframe && window.localStorage) markerPopup += '<a class="popup-star" title="Favourite"><i class="far fa-star fa-fw"></i></a>';
+		markerPopup += '<a class="popup-edit" title="Edit with OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
+	}
 	return markerPopup + '</div>';
 }
 function generic_tag_parser(tags, tag, label, iconName) {
@@ -944,10 +984,10 @@ function generic_tag_parser(tags, tag, label, iconName) {
 	if ((tags.description || tags.inscription) && markerPopup) markerPopup = '<span class="popup-longDesc">' + markerPopup + '</span>';
 	return markerPopup;
 }
-function generic_img_parser(img, id, display, attrib) {
-	var url = '', imgTmpl = '<div id="img{id}" class="popup-imgContainer" style="display:{display};">' +
+function generic_img_parser(img, id, attrib) {
+	var url = '', imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
 		'<i class="imgZoom theme fas fa-search-plus fa-sm"></i>' +
-		'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}">' + 
+		'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}">' +
 		'<br><div class="popup-imgAttrib">';
 	if (img.indexOf('File') === 0) {
 		url = img;
@@ -956,11 +996,11 @@ function generic_img_parser(img, id, display, attrib) {
 		imgTmpl += '{attrib}';
 	}
 	else {
-		imgTmpl += '<a class="imgOpen" onclick="imgpopup($(img{id}).find(\'img\'));">View image</a>';
+		imgTmpl += '<a class="imgOpen" onclick="imgPopup($(img{id}).find(\'img\'));">View image</a>';
 		if (attrib) imgTmpl += ' | {attrib}';
 	}
 	imgTmpl += '</div></div>';
-	return L.Util.template(imgTmpl, { id: id, display: display, url: url, maxheight: imgSize / 2, img: img, attrib: attrib });
+	return L.Util.template(imgTmpl, { id: id, url: url, maxheight: imgSize / 2, img: img, attrib: attrib });
 }
 
 // poi callback parsers
@@ -977,13 +1017,6 @@ function artwork_parser(tags, titlePopup) {
 		{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'fas fa-cube'}
 	]);
 }
-function atm_parser(tags, titlePopup) {
-	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'brand', label: 'Brand'},
-		{callback: generic_tag_parser, tag: 'indoor', label: 'Enter building to access', iconName: 'fas fa-sign-in-alt'},
-		{callback: generic_tag_parser, tag: 'fee', label: 'Fee', iconName: 'fas fa-coins'}
-	]);
-}
 function bikepark_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'bicycle_parking', label: 'Type', iconName: 'fas fa-lock'},
@@ -991,7 +1024,7 @@ function bikepark_parser(tags, titlePopup) {
 	]);
 }
 function bikeshop_parser(tags, titlePopup) {
-	var bikeservices_parser = function (tags) {
+	var bikeservices_parser = function(tags) {
 		var markerPopup = '', tag = '';
 		for (var key in tags) {
 			if (key.indexOf('service:bicycle:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[2] + ', ';
@@ -1008,12 +1041,12 @@ function bikeshop_parser(tags, titlePopup) {
 	]);
 }
 function busstop_parser(tags, titlePopup) {
-	var nextbus_parser = function (tags) {
+	var nextbus_parser = function(tags) {
 		var markerPopup = '', bearing;
 		if (tags['naptan:Bearing']) {
-			switch(tags['naptan:Bearing']) {
+			switch (tags['naptan:Bearing']) {
 				case 'N': bearing = 'North'; break;
-				case 'E': bearing = 'East'; break; 
+				case 'E': bearing = 'East'; break;
 				case 'S': bearing = 'South'; break;
 				case 'W': bearing = 'West'; break;
 				case 'NE': bearing = 'North-east'; break;
@@ -1034,7 +1067,7 @@ function busstop_parser(tags, titlePopup) {
 	]);
 }
 function carpark_parser(tags, titlePopup) {
-	var maxstay_parser = function (tags) {
+	var maxstay_parser = function(tags) {
 		var markerPopup = '';
 		if (tags.maxstay) markerPopup += L.Util.template(tagTmpl, { tag: 'Max stay', value: time_parser(tags.maxstay), iconName: 'fas fa-clock' });
 		return markerPopup;
@@ -1043,7 +1076,6 @@ function carpark_parser(tags, titlePopup) {
 		{callback: generic_tag_parser, tag: 'capacity', label: 'Spaces', iconName: 'fas fa-car'},
 		{callback: generic_tag_parser, tag: 'capacity:disabled', label: 'Disabled spaces', iconName: 'fas fa-wheelchair'},
 		{callback: generic_tag_parser, tag: 'capacity:parent', label: 'Parent spaces', iconName: 'fas fa-child'},
-		{callback: generic_tag_parser, tag: 'fee', label: 'Fee', iconName: 'fas fa-coins'},
 		{callback: maxstay_parser}
 	]);
 }
@@ -1063,9 +1095,8 @@ function cctv_parser(tags, titlePopup) {
 	]);
 }
 function clock_parser(tags, titlePopup) {
-	var clockDetail = function (tags) {
+	var clockDetail = function(tags) {
 		var markerPopup = '', tag = '';
-		if (tags.disused === 'yes') tag += 'noncurrent, ';
 		if (tags.display) tag += tags.display + ', ';
 		if (tags.support) tag += tags.support + ', ';
 		if (tags.faces >= 2) tag += tags.faces + ' faces, ';
@@ -1093,19 +1124,6 @@ function club_parser(tags, titlePopup) {
 		{callback: generic_tag_parser, tag: 'sport', label: 'Sport type', iconName: 'fas fa-trophy'}
 	]);
 }
-function construction_parser(tags, titlePopup) {
-	var planningRef = function (tags) {
-		var markerPopup = '';
-		if (tags.ref && tags.ref.indexOf('RR/') === 0) {
-			var link = '<a href="http://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + tags.ref + '" title="Rother Planning Application" target="_blank">' + tags.ref + '</a>';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Planning ref', value: link, iconName: 'fas fa-file' });
-		}
-		return markerPopup;
-	};
-	return parse_tags(tags, titlePopup, [
-		{callback: planningRef}
-	]);
-}
 function craft_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'craft', label: 'Craft type', iconName: 'fas fa-shopping-bag'}
@@ -1114,11 +1132,10 @@ function craft_parser(tags, titlePopup) {
 function defib_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'fas fa-location-arrow'},
-		{callback: generic_tag_parser, tag: 'indoor', label: 'Enter building to access', iconName: 'fas fa-sign-in-alt'}
 	]);
 }
 function food_parser(tags, titlePopup) {
-	var cuisine_parser = function (tags) {
+	var cuisine_parser = function(tags) {
 		var markerPopup = '', tag = '';
 		if (tags.cuisine) tag += tags.cuisine + ', ';
 		if (tags.fair_trade === 'yes') tag += 'fairtrade, ';
@@ -1137,7 +1154,7 @@ function food_parser(tags, titlePopup) {
 		}
 		return markerPopup;
 	};
-	var service_parser = function (tags) {
+	var service_parser = function(tags) {
 		var tag = '', markerPopup = '';
 		if (tags.takeaway === 'yes') tag += 'takeaway, ';
 		else if (tags.takeaway === 'only') tag += 'takeaway only, ';
@@ -1160,7 +1177,7 @@ function food_parser(tags, titlePopup) {
 	]);
 }
 function fuelstation_parser(tags, titlePopup) {
-	var fuel_parser = function (tags) {
+	var fuel_parser = function(tags) {
 		var markerPopup = '', tag = '';
 		for (var key in tags) {
 			if (key.indexOf('fuel:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + ', ';
@@ -1179,7 +1196,7 @@ function fuelstation_parser(tags, titlePopup) {
 }
 function healthcare_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'healthcare', label: 'Healthcare type', iconName: 'fas fa-medkit'},
+		{callback: generic_tag_parser, tag: 'healthcare', label: 'Healthcare type', iconName: 'fas fa-clinic-medical'},
 		{callback: generic_tag_parser, tag: 'healthcare:speciality', label: 'Healthcare speciality', iconName: 'fas fa-medkit'}
 	]);
 }
@@ -1194,7 +1211,7 @@ function historic_parser(tags, titlePopup) {
 	]);
 }
 function hotel_parser(tags, titlePopup) {
-	var hotelservices_parser = function (tags) {
+	var hotelservices_parser = function(tags) {
 		var markerPopup = '', tag = '';
 		if (tags.stars) {
 			var result = '<a href="https://www.visitengland.com/plan-your-visit/quality-assessment-and-star-ratings/visitengland-star-ratings" title="' + tags.stars + ' stars" target="_blank">';
@@ -1229,11 +1246,10 @@ function info_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'board_type', label: 'Board type', iconName: 'fas fa-map-signs'},
 		{callback: generic_tag_parser, tag: 'map_size', label: 'Map size', iconName: 'fas fa-map-signs'},
-		{callback: generic_tag_parser, tag: 'ref', label: 'Reference', iconName: 'fas fa-hashtag'}
 	]);
 }
 function post_parser(tags, titlePopup) {
-	var postcypher_parser = function (tags) {
+	var postcypher_parser = function(tags) {
 		var royalcypher = tags.royal_cypher;
 		var markerPopup = '';
 		if (royalcypher) {
@@ -1249,7 +1265,7 @@ function post_parser(tags, titlePopup) {
 		}
 		return markerPopup;
 	};
-	var collection_parser = function (tags) {
+	var collection_parser = function(tags) {
 		var markerPopup = '';
 		if (tags.collection_times) {
 			var strNextChange, ct = new opening_hours(tags.collection_times, { 'address':{ 'state':'England', 'country_code':'gb' } }, 1).getNextChange();
@@ -1274,7 +1290,7 @@ function shelter_parser(tags, titlePopup) {
 	]);
 }
 function school_parser(tags, titlePopup) {
-	var edubase_parser = function (tags) {
+	var edubase_parser = function(tags) {
 		var tag = tags['ref:edubase'], markerPopup = '';
 		if (tag) {
 			var link = '<a href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + tag + '" title="Department for Education" target="_blank">' + tag + '</a>; ' +
@@ -1288,7 +1304,7 @@ function school_parser(tags, titlePopup) {
 	]);
 }
 function socialf_parser(tags, titlePopup) {
-	var socialfservices_parser = function (tags) {
+	var socialfservices_parser = function(tags) {
 		var markerPopup = '', tag = '';
 		if (tags['social_facility:for']) tag += tags['social_facility:for'] + ' ';
 		if (tags.social_facility) tag += tags.social_facility;
@@ -1304,7 +1320,7 @@ function socialf_parser(tags, titlePopup) {
 	]);
 }
 function surveyp_parser(tags, titlePopup) {
-	var trigpointuk_parser = function (tags) {
+	var trigpointuk_parser = function(tags) {
 		var tag = tags.tpuk_ref, markerPopup = '';
 		if (tag) {
 			var link = '<a href="http://trigpointing.uk/trig/' + tag.split('TP')[1] + '" title="Trigpointing UK" target="_blank">' + tag + '</a>';
@@ -1329,14 +1345,10 @@ function tap_parser(tags, titlePopup) {
 function taxi_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [ {callback: generic_tag_parser, tag: 'capacity', label: 'Taxi rank capacity', iconName: 'fas fa-taxi'} ]);
 }
-function telephone_parser(tags, titlePopup) {
+function vending_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'disused', label: 'Disused', iconName: 'fas fa-wrench'},
-	]);
-}
-function toilet_parser(tags, titlePopup) {
-	return parse_tags( tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'indoor', label: 'Enter building to access', iconName: 'fas fa-sign-in-alt'}
+		{callback: generic_tag_parser, tag: 'brand', label: 'Brand'},
+		{callback: generic_tag_parser, tag: 'biometric', label: 'Biometric', iconName: 'fas fa-fingerprint'},
 	]);
 }
 function worship_parser(tags, titlePopup) {
@@ -1350,30 +1362,30 @@ function worship_parser(tags, titlePopup) {
 function getWikiAttrib(id) {
 	// https://commons.wikimedia.org/wiki/Commons:API
 	// get image attribution
-	if ($('#img' + id).html() && $('#img' + id).html().indexOf('wikimedia.org') !== -1) {
-		var img = $('#img' + id + ' img').data('url');
+	if ($(id[0]).find('img').data('url') && $(id[0]).find('img').data('url').indexOf('File:') === 0) {
+		var img = $(id[0]).find('img').data('url');
 		$.ajax({
 			url: 'https://commons.wikimedia.org/w/api.php',
 			dataType: 'jsonp',
 			cache: true,
 			data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata', titles: img, format: 'json' },
-			success: function (result) {
+			success: function(result) {
+				if ($('#inputDebug').is(':checked')) console.debug(result);
 				if (!result.query.pages[-1]) {
 					var imgAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
-					if ($('#inputDebug').is(':checked')) console.debug(imgAttrib);
 					var imgArtist = (imgAttrib.Artist.value.indexOf('href=') > 0) ? $(imgAttrib.Artist.value).text() : imgAttrib.Artist.value;
 					var imgDate = imgAttrib.DateTimeOriginal.value || imgAttrib.DateTime.value;
-					imgDate = new Date(imgDate.split(' ')[0]).getFullYear() || imgDate;
-					$('#img' + id + ' .popup-imgAttrib').html(
-						'<a class="imgOpen" onclick="imgpopup($(\'#img' + id + '\').find(\'img\'));">View image</a>' +
+					imgDate = (new Date(imgDate.split(' ')[0]).getFullYear() || imgDate);
+					id.find($('.popup-imgAttrib')).html(
+						'<a class="imgOpen" onclick="imgPopup($(\'#' + id[0].id + '\').find(\'img\'));">View image</a>' +
 						' | <a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank">' +
-						'&copy; ' + imgArtist + ' ' + imgDate + ' [' + imgAttrib.LicenseShortName.value + ']</a>'
+						imgDate + ' | &copy; ' + imgArtist + ' [' + imgAttrib.LicenseShortName.value + ']</a>'
 					);
 				}
-				else $('#img' + id + ' .popup-imgAttrib').html('Error: Attribution not found');
-				$('#img' + id + ' .popup-imgAttrib').addClass('attribd');
+				else id.find($('.popup-imgAttrib')).html('Error: Attribution not found');
+				id.find($('.popup-imgAttrib')).addClass('attribd');
 			},
-			error: function () { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKI-ATTRIB: ' + this.url); }
+			error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKI-ATTRIB: ' + this.url); }
 		});
 	}
 }
@@ -1399,10 +1411,10 @@ function navImg(direction) {
 		var cID = parseInt($('.popup-imgContainer:visible').attr('id').split('img')[1]);
 		var lID = parseInt($('.popup-imgContainer:last').attr('id').split('img')[1]);
 		// get the next image
-		var swapImg = function (nID) {
+		var swapImg = function(nID) {
 			$('.popup-imgContainer#img' + cID).hide(300);
 			$('.popup-imgContainer#img' + nID).show(300);
-			if (!$('#img' + nID + ' .attribd').length) getWikiAttrib(nID);
+			if (!$('#img' + nID + ' .attribd').length) getWikiAttrib($('#img' + nID));
 			$('.navigateItem > .fa-image').attr('title', parseInt(nID+1) + ' of ' + parseInt(lID+1));
 		};
 		// navigate through multiple images. 0 = previous, 1 = next
@@ -1418,15 +1430,19 @@ function titleCase(str) {
 	// remove underscore, replace semi-colon with comma, convert to title-case
 	str = str.replace(/;/g, ', ').replace(/_/g, ' ');
 	if (str === str.toUpperCase()) return str;
-	else return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+	else return str.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 function date_parser(dtStr, style) {
 	// parse ISO 8601 dates
 	if (dtStr.indexOf('T') === 10) dtStr = new Date(dtStr).toISOString().replace('T', ' ').substring(0, 16);
 	var tm, dt, dtFrmt = dtStr.split('-').length - 1;
 	// check for time
-	tm = (dtStr.indexOf(':') > -1) ? tm = ', ' + new Date(dtStr).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) : '';
-	if (tm) dtStr = dtStr.split(' ')[0];
+	tm = (dtStr.indexOf(':') > -1) ? tm = new Date(dtStr).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) : '';
+	if (tm === 'Invalid Date') tm = '';
+	else if (tm) {
+		tm = ', ' + tm;
+		dtStr = dtStr.split(' ')[0];
+	}
 	if (style === 'long') {
 		dt = new Date(dtStr);
 		if (dtFrmt === 2) dt = dt.toLocaleDateString(navigator.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });

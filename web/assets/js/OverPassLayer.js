@@ -60,8 +60,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			success: function (xml) {
 				self.options.callback.call(reference, xml);
 				if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
-				if ($('#inputOpen').is(':checked')) self.options.statusMsg('<i class="fas fa-info-circle fa-fw"></i> No POIs found, try turning off "only show open" in options.');
-				else if ($('.leaflet-marker-icon').length === 0 && !rQuery) self.options.statusMsg('<i class="fas fa-info-circle fa-fw"></i> No POIs found, try another area or query.');
+				if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('<i class="fas fa-info-circle fa-fw"></i> No POIs found, try turning off "only show open" in options.');
+				else if (poiList.length === 0 && !rQuery) self.options.statusMsg('<i class="fas fa-info-circle fa-fw"></i> No POIs found, try another area or query.');
 				// if not in iframe cache to local storage
 				if (self.options.cacheId && !$('#inputAttic').val()) {
 					eleCache[self.options.cacheId] = xml;

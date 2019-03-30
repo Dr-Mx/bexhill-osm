@@ -127,7 +127,9 @@
 				"name": "Barrack Road",
 				"date": "1939",
 				"description": "School trench. Capacity 220. Bunks 48.",
-				"img": "bomb/barrackroad"
+				"img": {
+					"0": "09/bomb/barrackroad"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -150,7 +152,9 @@
 				"name": "Bending Crescent",
 				"date": "1939",
 				"description": "Surface. Capacity 50. Bunks 24.",
-				"img": "shelter/bendingcrescent"
+				"img": {
+					"0": "09/shelter/bendingcrescent"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -162,7 +166,9 @@
 				"name": "Bexhill Grammar School",
 				"date": "1943",
 				"description": "Emergency shelters. Possibly x4. No other details known.",
-				"img": "shelter/bexhillgrammar"
+				"img": {
+					"0": "09/shelter/bexhillgrammar"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -251,7 +257,11 @@
 				"name": "The Colonnade",
 				"date": "1939",
 				"description": "Surface. Capacity 150.",
-				"img": "shelter/thecolonnade"
+				"img": {
+					"0": "09/shelter/thecolonnade(0)",
+					"1": "09/shelter/thecolonnade(1)",
+					"2": "09/shelter/thecolonnade(2)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -274,7 +284,9 @@
 				"name": "De La Warr Road",
 				"date": "1939",
 				"description": "Existing bus shelter. Surface. Capacity 10.",
-				"img": "shelter/delawarrroad"
+				"img": {
+					"0": "09/shelter/delawarrroad"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -308,8 +320,12 @@
 				"name": "East Parade",
 				"date": "1939",
 				"description": "Trench. Capacity 64.",
-				"img": "shelter/eastparade",
-				"imgattrib": "The Royal Windsor Website & Forum"
+				"img": {
+					"0": "09/shelter/eastparade"
+				},
+				"imgattrib": {
+					"0": "The Royal Windsor Website & Forum"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -321,8 +337,12 @@
 				"name": "Egerton Park - Wickham Avenue",
 				"date": "1939",
 				"description": "Surface. Capacity 92.",
-				"img": "shelter/wickhamavenue",
-				"imgattrib": "Bexhill Observer"
+				"img": {
+					"0": "09/shelter/wickhamavenue"
+				},
+				"imgattrib": {
+					"0": "Bexhill Observer"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -356,7 +376,9 @@
 				"name": "Havelock Road",
 				"date": "1941",
 				"description": "Surface. Capacity 50. Bunks 45.",
-				"img": "shelter/havelockroad"
+				"img": {
+					"0": "09/shelter/havelockroad"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -368,8 +390,9 @@
 				"name": "Holliers Hill - Chantry Avenue",
 				"date": "1939",
 				"description": "Surface. Capacity 40. Bunks 12.",
-				"img": "shelter/chantryavenue",
-				"imgattrib": "Bexhill-OSM"
+				"img": {
+					"0": "File:Personnel Shelter, Chantry Avenue, Bexhill-on-Sea.jpg"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -425,7 +448,9 @@
 				"name": "Marina Arcade - Channel View",
 				"date": "1939",
 				"description": "Surface. Capacity 20.",
-				"img": "shelter/channelview"
+				"img": {
+					"0": "09/shelter/channelview"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -470,7 +495,9 @@
 				"name": "Peartree Lane",
 				"date": "1940",
 				"description": "Surface. Capacity 70.",
-				"img": "shelter/peartreelane"
+				"img": {
+					"0": "09/shelter/peartreelane"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -526,7 +553,9 @@
 				"name": "Short Lane",
 				"date": "1939",
 				"description": "Surface. Capacity 70.",
-				"img": "shelter/shortlane"
+				"img": {
+					"0": "09/shelter/shortlane"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -538,8 +567,10 @@
 				"name": "Sidley Green",
 				"date": "1939",
 				"description": "Rebuilt 1943. Trench. Capacity 135.",
-				"img": "shelter/sidleygreen(0)",
-				"img_1": "shelter/sidleygreen(1)"
+				"img": {
+					"0": "09/shelter/sidleygreen(0)",
+					"1": "09/shelter/sidleygreen(1)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -562,7 +593,9 @@
 				"name": "St Barnabas School",
 				"date": "1943",
 				"description": "Emergency shelters. 2x. No other details known.",
-				"img": "shelter/stbarnabas"
+				"img": {
+					"0": "09/shelter/stbarnabas"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -574,7 +607,9 @@
 				"name": "St Leonards Road - Messrs Miller & Franklin",
 				"date": "1941",
 				"description": "Basement. Capacity 200. Bunks 99.",
-				"img": "shelter/millerfranklin"
+				"img": {
+					"0": "09/shelter/millerfranklin"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -597,8 +632,12 @@
 				"name": "St Mark's School",
 				"date": "1939",
 				"description": "School trench. Capacity 125.",
-				"img": "shelter/stmarkstrench",
-				"imgattrib": "David Hatherell"
+				"img": {
+					"0": "09/shelter/stmarkstrench"
+				},
+				"imgattrib": {
+					"0": "David Hatherell"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -709,7 +748,9 @@
 				"name": "The Down",
 				"date": "1941",
 				"description": "School trench. Capacity 300.",
-				"img": "shelter/thedown"
+				"img": {
+					"0": "09/shelter/thedown"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -721,8 +762,12 @@
 				"name": "Town Hall Square",
 				"date": "1939",
 				"description": "Surface. Capacity 60. Bunks 18.",
-				"img": "shelter/townhallsquare(0)",
-				"img_1": "shelter/townhallsquare(1)"
+				"img": {
+					"0": "09/shelter/townhallsquare(0)",
+					"1": "09/shelter/townhallsquare(1)",
+					"2": "09/shelter/townhallsquare(2)",
+					"3": "09/shelter/townhallsquare(3)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -745,12 +790,11 @@
 				"name": "Upper Sea Road",
 				"date": "1939",
 				"description": "Surface. Capacity 42. Bunks 12.",
-				"img": "shelter/uppersearoad(0)",
-				"img_1": "shelter/uppersearoad(1)",
-				"img_2": "shelter/uppersearoad(2)",
-				"imgattrib": "Bexhill-OSM",
-				"imgattrib_1": "Bexhill-OSM",
-				"imgattrib_2": "Bexhill-OSM"
+				"img": {
+					"0": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (2).jpg",
+					"1": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor).jpg",
+					"2": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor) (2).jpg"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -795,7 +839,9 @@
 				"name": "Wrestwood Road",
 				"date": "1939",
 				"description": "Surface. Capacity 70. Bunks 30.",
-				"img": "shelter/wrestwoodroad"
+				"img": {
+					"0": "09/shelter/wrestwoodroad"
+				}
 			},
 			"geometry": {
 				"type": "Point",

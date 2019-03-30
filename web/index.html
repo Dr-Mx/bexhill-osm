@@ -9,12 +9,12 @@
 	<meta name="description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
 	<meta name="author" content="Alexis Markwick">
 	<meta name="twitter:site" content="@BexhillOSM">
-	<meta property="fb:app_id" content="170576080125364">
-	<meta property="og:title" content="Bexhill OpenStreetMap">
-	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://bexhill-osm.org.uk/">
-	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/preview.jpg">
+	<meta property="og:title" content="Bexhill OpenStreetMap">
 	<meta property="og:description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
+	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/preview.jpg">
+	<meta property="og:type" content="website">
+	<meta property="og:locale" content="en_GB">
 
 	<!-- https://realfavicongenerator.net/ -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
@@ -28,7 +28,7 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v1.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v1.6.0">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css?v0.1.24">
@@ -37,7 +37,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v3.2.5">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v5.0.0">
+	<link rel="stylesheet" href="assets/css/site.css?v5.1.0">
  </head>
 
  <body>
@@ -100,9 +100,9 @@
 					<span id="newFeed">
 						What's new:
 						<ul class="fa-ul">
-							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('pois', '', 'political');"><i>View the nine political wards</i></a> - 01/2019</li>
-							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('pois', '', 'recycling');"><i>Improved listing for recycling containers</i></a> - 01/2019</li>
-							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('pois', '', 'webcam');"><i>Links to three public webcams</i></a> - 12/2018</li>
+							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Martello Towers Historic Tour - in progress</i> - 02/2019</li>
+							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', '6', '');"><i>1902 Motor Track Map - completed</i></a> - 02/2019</li>
+							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>FixMyStreet - right-click the map to report local problems</i> - 02/2019</li>
 						</ul>
 						<span id="osmFeed"></span>
 					</span>
@@ -111,17 +111,14 @@
 			<div class="sidebar-pane" id="pois">
 				<div class="sidebar-header"><span class="sidebar-header-text">Points of Interest</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
-					<div class="poi-results">
+					<div id="poi-results">
 						<h3></h3>
 						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map('markers');"><i class="fas fa-trash"></i></button>
 						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="zoom_area();"><i class="fas fa-eye"></i></button>
-						<div class="poi-results-list"></div>
+						<div id="poi-results-list"></div>
 					</div>
-					<div class="poi-icons">
-						<p>
-							Make up to 3 selections at a time.
-							<label class="switch" title="Filter most popular" style="position:absolute; width:50px; right:10px;"><input id="inputHide" type="checkbox"><span class="slider"></span></label>
-						</p>
+					<div id="poi-icons">
+						<div id="poi-faves" class="poi-checkbox"><label title="Favourites"><img src="assets/img/icons/star-3.png"><input type="checkbox" id="faves"><span></span></label></div>
 						<!-- this list auto-populates using pois-type.js as a reference -->
 					</div>
 				</div>
@@ -148,7 +145,7 @@
 							<option value="1066">1066 Country Walk (3.0mi / 4.7km)</option>
 							<option value="bcr1">Bexhill Circular (6.3mi / 10.2km)</option>
 						</select>
-						<button type="button" id="walkSelect" title="Show on map"><i class="fas fa-map-marker-alt"></i></button>
+						<button type="button" id="walkSelect" title="Show walk"><i class="fas fa-map-marker-alt"></i></button>
 						<div id="walkDesc"></div>
 					</div>
 					<hr>
@@ -162,7 +159,7 @@
 				<div class="sidebar-header"><span class="sidebar-header-text">Historic Tour</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<div id="tourControls">
-						<button type="button" id="tourPrev" title="Previous"><i class="fas fa-chevron-left"></i></button>
+						<button type="button" id="tourPrev" title="Previous article"><i class="fas fa-chevron-left"></i></button>
 							<select id="tourList" class="theme">
 								<option value="0">Introduction</option>
 								<option value="1" data-keyword="dinosaur, prehistoric, fossil">- Prehistoric Period</option>
@@ -180,9 +177,10 @@
 								<option value="13" data-keyword="lost heritage, ruin">- Lost Heritage</option>
 								<option value="14" data-keyword="boundary stone marker">- Boundary Stones</option>
 								<option value="15" data-keyword="ordnance survey point, benchmark">- OS Surveying Points</option>
+								<option value="16" data-keyword="martello, tower, fort">- Martello Towers</option>
 								<option value="99">Sources &amp; further reading</option>
 							</select>
-						<button type="button" id="tourNext" title="Next"><i class="fas fa-chevron-right"></i></button>
+						<button type="button" id="tourNext" title="Next article"><i class="fas fa-chevron-right"></i></button>
 					</div>
 					<div id="tourLoading"><i class="fas fa-spinner fa-3x fa-pulse"></i></div>
 					<iframe id="tourFrame" src="tour/tour00/index.html"></iframe>
@@ -193,9 +191,9 @@
 				<div class="sidebar-header"><span class="sidebar-header-text">Settings</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<h3>Map display options</h3>
-					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider"></span><span class="switchLabel">Use kilometres for measurements (metric)</span></label>
-					<p><label class="switch"><input id="inputImage" type="checkbox"><span class="slider"></span><span class="switchLabel">Always display large images in popups</span></label>
-					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider"></span><span class="switchLabel">Only show currently open POIs</span></label>
+					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider" title="mi/ft or km/m"></span><span class="switchLabel">Use kilometres for measurements (metric)</span></label>
+					<p><label class="switch"><input id="inputImage" type="checkbox"><span class="slider" title="Expands images by default"></span><span class="switchLabel">Always display large images in popups</span></label>
+					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider" title="Filter results to open facilities"></span><span class="switchLabel">Only show currently open POIs</span></label>
 					<div id="devTools">
 						<h3>Development tools</h3>
 						<div>
@@ -209,11 +207,11 @@
 									<option value="overpass.openstreetmap.fr">overpass.openstreetmap.fr</option>
 								</select></p>
 							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" title="Overpass Query Language" target="_blank"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br>
-								<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme]" title="Enter an OverpassAPI query" type="text"></p>
-							<p>Attic data (date) <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" title="Attic data" target="_blank"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br>
+								<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme]" type="text"></p>
+							<p>Attic data (date) <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br>
 								<input id="inputAttic" type="date" min="2016-01-01"></p>
-							<p><button type="button" title="Export to Overpass Turbo" onclick="exportQuery();"><i class="fas fa-upload"></i></button><div class="buttonLabel">Export current query to Overpass Turbo</div></p>
-							<p><button type="button" title="Download raw XML file" onclick="downloadBB();"><i class="fas fa-download"></i></button><div class="buttonLabel">Download all OSM data within bounding box</div></p>
+							<p><button type="button" onclick="exportQuery();"><i class="fas fa-upload"></i></button><div class="buttonLabel">Export current query to Overpass Turbo</div>
+							<p><button type="button" onclick="downloadBB();"><i class="fas fa-download"></i></button><div class="buttonLabel">Download all OSM data within bounding box (xml)</div>
 						</div>
 					</div>
 				</div>
@@ -240,11 +238,11 @@
 					<div id="gotocontrols"><hr>
 					<h3>Map Controls</h3>
 						<i class="theme fas fa-plus fa-border fa-fw"></i><i class="theme fas fa-minus fa-border fa-fw"></i> Zoom: Enlarge and shrink the map.<br><br>
-						<i class="theme fas fa-expand fa-border fa-fw"></i> Full screen: Maximise the map to fit your whole screen.<br><br>
+						<i class="theme fas fa-expand fa-border fa-fw"></i> Full screen (ALT-ENTER): Maximise the map to fit your whole screen.<br><br>
 						<i class="theme fas fa-location-arrow fa-border fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map. You may click on the blue location marker to see what POIs are around you.<br><br>
-						<i class="theme fas fa-search fa-border fa-fw"></i> Address search: Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
+						<i class="theme fas fa-search fa-border fa-fw"></i> Address search (CTRL-F): Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
 						<i class="theme fas fa-hand-pointer fa-border fa-fw"></i> Query features: Clicking the map with this enabled will display information on features under the cursor.<br><br>
-						<i class="theme fas fa-trash fa-border fa-fw"></i> Clear map: Remove all current layers on the map. Right-click will reload the website to defaults.<br><br>
+						<i class="theme fas fa-trash fa-border fa-fw"></i> Clear layers (CTRL-DEL): Remove all current layers on the map. Right-click will reload the website to defaults.<br><br>
 						<i class="fas fa-layer-group fa-border fa-lg fa-fw" style="color:#888;"></i> Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the page.
 					</div>
 					<div id="gotocontext"><hr>
@@ -276,9 +274,9 @@
 					<div id="gotopopups"><hr>
 					<h3>Pop-ups</h3>
 						Click each marker to see a pop-up detailing more specific information.
-						<p><img src="assets/img/icons/star-3.png" alt="POI preview"></p>
+						<p><img src="assets/img/icons/pinother.png" alt="POI preview"></p>
 						<i style="color:#777;" class="fas fa-edit fa-fw"></i> Edit: Opens openstreetmap.org where you can make immediate changes to the item.<br><br>
-						<i style="color:#777;" class="fas fa-walking"></i> Walking directions: Create a route to this item. Locate needs to be turned on.<br>
+						<i style="color:#777;" class="far fa-star fa-fw"></i> Favourite: Click the star to add bookmark it, show all current bookmarks by clicking the Favourites button under POIs.<br>
 						<p><img src="assets/img/help-popup.png" alt="Marker popup preview"></p>
 					</div>
 					<div id="gotowalking"><hr>
@@ -313,7 +311,7 @@
 							<a href="" onclick="this.href='mailto:' + email;" title="Email"><i class="fas fa-envelope fa-fw fa-lg"></i> info [at] bexhill-osm.org.uk</a><br>
 							<a href="https://www.facebook.com/bexhillosm" target="_blank" title="Facebook"><i style="color:#3b5998;" class="fab fa-facebook fa-fw fa-lg"></i> Bexhill-OSM</a><br>
 							<a href="https://www.twitter.com/bexhillosm" target="_blank" title="Twitter"><i style="color:#1da1f2;" class="fab fa-twitter fa-fw fa-lg"></i> @BexhillOSM</a><br>
-							<a href="https://osm.org/user/Dr-Mx" target="_blank" title="OpenStreetMap"><i style="color:#6aa755;" class="fas fa-map fa-fw fa-lg"></i> Dr-Mx (OSM)</a>
+							<a href="https://osm.org/user/Bexhill-OSM" target="_blank" title="OpenStreetMap"><i style="color:#6aa755;" class="fas fa-map fa-fw fa-lg"></i> Bexhill-OSM (OpenStreetMap)</a>
 						</p>
 					</div>
 					<div id="gotolinks"><hr>
@@ -335,11 +333,7 @@
 						<p>
 						<table style="text-align:center; width:100%;">
 							<tr><td><a href="https://amzn.eu/cEeSUjc?sort=priority" title="Amazon Wish List" target="_blank"><img alt="My Amazon Wish List" src="assets/img/information-amazon.png"><br>My Amazon Wish List</a></td></tr>
-							<tr><td><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-								<input type="hidden" name="cmd" value="_s-xclick">
-								<input type="hidden" name="hosted_button_id" value="B3X9MHLW4W9TG">
-								<input type="image" src="assets/img/information-paypal.png" style="padding:10px;" name="submit" alt="PayPal" title="Donate to Bexhill-OSM">
-							</form></td></tr>
+							<tr><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3X9MHLW4W9TG&source=url" title="Donate to Bexhill-OSM" target="_blank"><img alt="Paypal" src="assets/img/information-paypal.png"></a></td></tr>
 							<tr><td title="Bitcoin"><a href="bitcoin:1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi" target="_blank"><i class="fab fa-btc fa-fw fa-lg"></i><i class="comment">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</i></a></td></tr>
 						</table>
 					</div>
@@ -389,7 +383,7 @@
 	<script src="assets/js/plugins/jquery-ui.min.js?v1.12.1"></script>
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v1.5.0a1"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v1.3.4"></script>
-	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.0"></script>
+	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.9"></script>
 	<script src="assets/js/plugins/URI.min.js?v1.19.1"></script>
 	<script src="assets/js/plugins/leaflet.js?v1.4.0"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v0.2.1"></script>
@@ -398,20 +392,19 @@
 	<script src="assets/js/plugins/leaflet.wms.min.js?v0.2.0"></script>
 	<script src="assets/js/plugins/leaflet-osm.min.js?v0.1.0"></script>
 	<script src="assets/js/plugins/easy-button.min.js?v2.3.0"></script>
-	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v1.5.0"></script>
+	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v1.5.1"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v3.2.5"></script>
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v1.6.0"></script>
-	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.65.1"></script>
+	<script src="assets/js/plugins/L.Control.Locate.min.js?v0.66.2"></script>
 	<script src="assets/js/plugins/bouncemarker.min.js?v1.2.0"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/config.js"></script>
-	<script src="assets/js/OverPassLayer.js?v5.0.0"></script>
-	<script src="assets/js/tags-parsers.js?v5.0.0"></script>
-	<script src="assets/js/pois-type.js?v5.0.0"></script>
-	<script src="assets/xmas/xmas.js?v5.0.0"></script>
-	<script src="tour/tour.js?v5.0.0"></script>
-	<script src="assets/js/site.js?v5.0.0"></script>
+	<script src="assets/js/OverPassLayer.js?v5.1.0"></script>
+	<script src="assets/js/tags-parsers.js?v5.1.0"></script>
+	<script src="assets/js/pois-type.js?v5.1.0"></script>
+	<script src="tour/tour.js?v5.1.0"></script>
+	<script src="assets/js/site.js?v5.1.0"></script>
 
  </body>
 </html>

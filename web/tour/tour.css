@@ -81,7 +81,7 @@ img {
 	transition: background-color 100ms;
 }
 .maplink:hover {
-	background-color: rgba(170, 170, 170, 0.5);
+	background-color: rgba(190, 190, 190, 0.5);
 	color: #b05000;
 	color: var(--main-color);
 }

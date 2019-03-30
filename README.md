@@ -1,15 +1,18 @@
 <h1> <img src="http://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill-OSM - https://bexhill-osm.org.uk/ </h1>
 
+![License](https://img.shields.io/badge/license-GPL-blue.svg)
+![Twitter](https://img.shields.io/twitter/follow/BexhillOSM.svg?label=Twitter)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3X9MHLW4W9TG&source=url)
+
 Searchable OpenStreetMap data showing POIs, walking directions, overlays, history and other information for the town of Bexhill-on-Sea, UK
 
 ![Image of Bexhill-OSM](http://bexhill-osm.org.uk/assets/img/preview.jpg)
-
-[Twitter Account](https://twitter.com/BexhillOSM)
 
 ## Features
 - Mobile and desktop friendly
 - Local caching of API requests
 - Detailed POI markers through Overpass API
+  - Bookmark favourite POIs
   - Facility icons
     - Wheelchair (key:wheelchair)
     - Internet (key:internet_access)

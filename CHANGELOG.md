@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## v5.1.0 - Bookmark favourites
+
+**Date:** 20/03/2019
+
+Updated js
+ - imageMapResizer.min.js 1.0.9
+ - leaflet-locatecontrol 0.66.2
+ - leaflet.contextmenu.min.js 1.5.1
+
+Site changes
+ - Ability to bookmark POIs (cached to localStorage)
+ - Highlight Points of Interest sidebar tab if results shown
+ - Highlight Walking Routes sidebar tab if directions shown
+ - Historic Tour markers now show in POI list
+ - Lightened sidebar colours slightly
+ - Remove POI filter switch
+ - Convert all Historic Tour markers to use geojson and function templates
+ - Add photobooth POI
+ - Generic shop icon
+
+
 ## v5.0.0 - Permalink for open popups
 
 **Date:** 22/01/2019
