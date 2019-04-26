@@ -279,7 +279,7 @@ var pois = {
 
 	post_box: {
 		name: 'Post-Box/Office',
-		query: 'node[amenity~"post_box|post_office"];',
+		query: 'nwr[amenity~"post_box|post_office"];',
 		iconName: 'postal',
 		catName: 'Amenities',
 		tagKeyword: ['post', 'letter', 'mail'],

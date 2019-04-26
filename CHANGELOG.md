@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v5.2.0 - Single click reverse-lookup
+
+**Date:** 26/04/2019
+
+Updated js
+ - imageMapResizer.min.js 1.0.10
+
+Site changes
+ - Edited status box control to display reverse-lookup information from photon.komoot.de when map is single clicked
+ - Favourites renamed to Bookmarks
+ - Highlights on sidebar now give a notification of the number of elements
+ - Sandwich cuisine icon
+ - Don't limit number of results for bus times
+ - Cleaner booking.com affilation link
+
+
 ## v5.1.0 - Bookmark favourites
 
 **Date:** 20/03/2019

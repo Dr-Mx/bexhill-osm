@@ -88,8 +88,8 @@ function parse_tags(element, titlePopup, poiParser) {
 			label = 'Building';
 			icon = 'fas fa-building';
 			if (tags['building:architecture']) tag += '<span title="Architecture">' + titleCase(tags['building:architecture']) + '</span>, ';
-			if (tags.architect) tag += '<span title="Architect">' + tags.architect + '</span>, ';
-			if (tags.builder) tag += '<span title="Builder">' + tags.builder + '</span>, ';
+			if (tags.architect) tag += '<span title="Architect">Arch. ' + tags.architect + '</span>, ';
+			if (tags.builder) tag += '<span title="Builder">Bldr. ' + tags.builder + '</span>, ';
 			if (tags.start_date) tag += '<span title="Start date">' + date_parser(tags.start_date, 'short') + '</span>, ';
 			if (tags.height) tag += '<span title="Height in metres">' + tags.height + 'm</span>, ';
 			if (planningLink) tag += '<span title="Planning application">' + planningLink + '</span>, ';
@@ -314,9 +314,9 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		if (tags.image) {
 			markerPopup += generic_img_parser(tags.image, lID, tags['source:image'] ? '&copy; ' + tags['source:image'] : '');
-			// support up to 5 additional images
 			if (tags['image:360'] || tags.image_1 || lID > 0) {
 				lID++;
+				// support up to 5 additional images
 				for (x = 1; x <= 5; x++) {
 					if (tags['image_' + x]) {
 						markerPopup += generic_img_parser(tags['image_' + x], lID, tags['source:image_' + x] ? '&copy; ' + tags['source:image_' + x] : '');
@@ -546,6 +546,7 @@ function callback(data) {
 							case 'latin_american':
 							case 'mexican': iconName = 'restaurant_mexican'; break;
 							case 'pizza': iconName = 'pizzaria'; break;
+							case 'sandwich': iconName = 'sandwich'; break;
 							case 'seafood': iconName = 'restaurant_fish'; break;
 							case 'spanish': iconName = 'restaurant_tapas'; break;
 							case 'steak_house': iconName = 'restaurant_steakhouse'; break;
@@ -568,7 +569,7 @@ function callback(data) {
 				case 'public_bookcase': type = 'library'; break;
 				case 'nightclub': type = 'bar'; break;
 				case 'post_box': name = (e.tags['post_box:type'] || '') + ' ' + name; break;
-				case 'post_office': type = 'post_box'; iconName = 'postoffice'; break;
+				case 'post_office': name = ' ' + e.tags.amenity; type = 'post_box'; iconName = 'postoffice'; break;  // [ascii 32] force to top of results
 				case 'pub': if (e.tags.microbrewery) name = 'Microbrewery'; break;
 				case 'recycling':
 					if (e.tags.recycling_type) {
@@ -875,7 +876,7 @@ function callback(data) {
 			markerId = marker._leaflet_id;
 			getOsmOutline(e.type, e.id);
 		}
-		else if ($('.poi-checkbox input:checked#faves').is(':checked') || $('#inputDebug').is(':checked')) {
+		else if ($('.poi-checkbox input:checked#bookm').is(':checked') || $('#inputDebug').is(':checked')) {
 			// custom overpass query
 			markerPopup = parse_tags(e, name, []);
 			customTOptions.className = (ohState !== undefined) ? 'openColor-list-' + ohState : 'openColor-list-' + ctState;
@@ -932,7 +933,7 @@ function pushPoiList() {
 			.scrollTop(0)
 			.animate({ scrollTop: $('.poi-checkbox input:checked').parent().position().top - 50 }, 100);
 	}).css('pointer-events', 'auto');
-	$('.sidebar-tabs ul li img').eq(1).addClass('notify');
+	if (actTab !== 'pois') $('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
 	// interact with map
 	$('#poi-results-list tr').hover(
 		function() { poiList[this.id].openTooltip(); },
@@ -954,7 +955,7 @@ function pushPoiList() {
 	);
 	if (poiList.length === maxOpResults) {
 		$('#poi-results h3').append('<br>(maximum number of results)');
-		$('.leaflet-control-statusmsg').html('<i class="fas fa-info-circle fa-fw"></i> Maximum number of results shown (' + maxOpResults + ').').show();
+		$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'Max Results', body: 'Maximum number of results shown (' + maxOpResults + ').' })).show();
 	}
 }
 
@@ -965,7 +966,7 @@ function generic_header_parser(header, subheader, fhrs, osmId) {
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
 	if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.gif"></span>';
 	if (osmId) {
-		if (noIframe && window.localStorage) markerPopup += '<a class="popup-star" title="Favourite"><i class="far fa-star fa-fw"></i></a>';
+		if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm" title="Bookmark"><i class="far fa-bookmark fa-fw"></i></a>';
 		markerPopup += '<a class="popup-edit" title="Edit with OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
 	}
 	return markerPopup + '</div>';
@@ -1056,7 +1057,7 @@ function busstop_parser(tags, titlePopup) {
 			}
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Bearing', value: bearing, iconName: 'fas fa-compass' });
 		}
-		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
+		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable" style="width:' + imgSize + 'px" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
 				'<img title="Loading next bus times" src="assets/img/loader.gif"></div>';
 		return markerPopup;
 	};
@@ -1228,8 +1229,8 @@ function hotel_parser(tags, titlePopup) {
 			tag = tag.substring(0, tag.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'fas fa-bed' });
 		}
-		// booking.com affiliate link
-		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="' + tags['url:booking_com'] + '?aid=1335159&no_rooms=1&group_adults=1" title="booking.com" target="_blank"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"></a>', iconName: 'fas fa-file' });
+		// set booking.com affiliate link in config.js
+		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="https://www.booking.com/hotel/gb/' + tags['url:booking_com'] + '.en.html?aid=' + BOSM.bookingCom + '&no_rooms=1&group_adults=1" title="booking.com" target="_blank"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"></a>', iconName: 'fas fa-file' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[

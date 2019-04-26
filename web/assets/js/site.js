@@ -22,7 +22,7 @@ var maxOpResults = 250;
 // website checks
 var noIframe = top === self;
 var noPermalink = !URI(window.location.href).search();
-// tooltip defaults
+// title tag tooltip defaults
 var tooltipDef = {
 	disabled: (window.ontouchstart === undefined) ? false : true,
 	hide: false,
@@ -59,6 +59,7 @@ $('.sidebar-tabs').click(function() {
 	// resize links on minimap
 	if (actTab === 'home') setTimeout(function() { $('#minimap > map').imageMapResize(); }, 500);
 	if ($(window).width() >= 768 && $(window).width() < 1300) setTimeout(function() { map.invalidateSize(); });
+	$('.sidebar-tabs ul li [href="#' + actTab + '"] .sidebar-notif').hide();
 	permalinkSet();
 });
 // no sidebar-tab
@@ -76,7 +77,7 @@ L.Map.addInitHook(function() {
 	}
 	function check_later(e) {
 		clear_h();
-		if (!$('.queryOff-active, .leaflet-popup, .leaflet-control-layers-expanded').length && !spinner) h = setTimeout(check, 500);
+		if (!$('.leaflet-popup, .leaflet-control-layers-expanded').length && !spinner) h = setTimeout(check, 500);
 		function check() { that.fire('singleclick', L.Util.extend(e, { type : 'singleclick' } )); }
 	}
 	function clear_h() {
@@ -130,12 +131,12 @@ var map = new L.map('map', {
 	$('#map').css('background', '#e6e6e6');
 	map.attributionControl.setPrefix('<a onclick="switchTab(\'information\', \'software\');" title="Attribution"><i class="fas fa-info-circle fa-fw"></i></a>');
 	if (!noIframe) {
-		$('#poi-faves').hide();
+		$('#poi-bookm').hide();
 		map.attributionControl.addAttribution('<a href="/" target="_blank">Bexhill-OSM</a>');
 	}
 	// sidebar information
 	$('#sidebar').fadeIn();
-	$('.sidebar-tabs, .sidebar-close, .leaflet-bar a, button, .switch, #poi-faves label').tooltip(tooltipDef);
+	$('.sidebar-tabs, .sidebar-close, .leaflet-bar a, button, .switch, #poi-bookm label').tooltip(tooltipDef);
 	getTips('rand');
 	if (actTab === defTab) {
 		showWeather();
@@ -150,9 +151,8 @@ var map = new L.map('map', {
 			'<input type="range" min="0.05" max="1" step="0.05">' +
 			'<div class="leaflet-popup-close-button" title="Remove overlay" onclick="map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);">×</div>' +
 		'</div>'
-	).append(
-		'<div class="theme leaflet-control leaflet-control-statusmsg"></div>'
 	);
+	$('.leaflet-bottom.leaflet-right').prepend('<div id="msgStatus" class="leaflet-control"></div>');
 	$('.anchor').click(function() { if ($(this).parent().scrollTop()) $(this).parent().stop().animate({ scrollTop: 0 }, 1000); });
 	setTimeout(setOverlayLabel, 10);
 	// tutorial modal
@@ -170,13 +170,13 @@ var map = new L.map('map', {
 	}
 	if (noPermalink && noIframe && window.localStorage && !window.localStorage.tutorial) {
 		showModalTutor($('.leaflet-control-layers'), 'modalT1', 'left:-190px;', '<i class="fas fa-layer-group"></i> allows you to choose from a growing number of modern and historical maps.', 'right:-5px;');
-		showModalTutor($('#btnClearmap'), 'modalT2', 'left:40px;', 'Right-clicking the map allows you to find information on any place. Then, to clean up just use <i class="fas fa-trash"></i>.', 'left:-5px;');
+		showModalTutor($('#btnClearmap'), 'modalT2', 'left:40px;', 'Zooming-in and clicking the map allows you to find information on any place. Then, to clean up just use <i class="fas fa-trash"></i>.', 'left:-5px;');
 		showModalTutor($('.sidebar-tabs ul li').eq(3), 'modalT3', 'left:40px;', '<i class="fas fa-landmark"></i> will display articles on the history of the area. From dinosaur footprints to WW2 bomb locations.', 'left:-5px;');
 		showModalTutor($('#inputOpacity input'), 'modalT4', 'left:-190px;', 'This slider changes the opacity of the overlay. Holding CTRL will also switch between opacity.', 'right:-5px;');
 	}
 	// holiday decorations overlay
-	if (new Date().getMonth() === 3 && new Date().getDate() >= 20) $('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/easterSb.png">');
-	else if (new Date().getMonth() === 9 && new Date().getDate() >= 20) $('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/halloweenSb.png">');
+	if (new Date().getMonth() === 3 && new Date().getDate() >= 10 && new Date().getDate() <= 13) $('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/easterSb.png">');
+	else if (new Date().getMonth() === 9 && new Date().getDate() === 31) $('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/halloweenSb.png">');
 	else if ((new Date().getMonth() === 10 && new Date().getDate() >= 25) || new Date().getMonth() === 11) {
 		$('html').css('--main-color', 'darkred');
 		// new town
@@ -192,6 +192,7 @@ var map = new L.map('map', {
 	}
 	// prevent click-through on map controls
 	L.DomEvent.disableClickPropagation($('#inputOpacity')[0]).disableScrollPropagation($('#inputOpacity')[0]);
+	L.DomEvent.disableClickPropagation($('#msgStatus')[0]).disableScrollPropagation($('#msgStatus')[0]);
 	$('.leaflet-control').bind('contextmenu', function(e) { e.stopPropagation(); });
 	$('.leaflet-control-geocoder-form').click(function(e) { e.stopPropagation(); });
 	// add delay after load for sidebar to animate open to create minimap
@@ -199,7 +200,18 @@ var map = new L.map('map', {
 	if ($(window).width() >= 768 && $(window).width() < 1300) { map.invalidateSize(); }
 }).on('singleclick', function(e) {
 	// reverse lookup
-	if (map.getZoom() >= 15) reverseQuery(e);
+	if (map.getZoom() >= 15) {
+		clickOutline.clearLayers().addLayer(L.circleMarker(e.latlng, {
+			radius: 10,
+			weight: 2,
+			color: $('html').css('--main-color') || '#777',
+			opacity: 1,
+			fillColor: '#fff',
+			fillOpacity: 0.5,
+			interactive: false
+		}));
+		reverseQuery(e, 1);
+	}
 }).on('contextmenu.show', function() {
 	// https://github.com/aratcliffe/Leaflet.contextmenu
 	// show walkHere if user located within map
@@ -209,17 +221,17 @@ var map = new L.map('map', {
 	var popupThis = $(e.popup._container);
 	var osmId = e.popup._source._leaflet_id;
 	// add/remove favourites
-	if ($('.popup-star').length) {
+	if ($('.popup-bookm').length) {
 		if (!window.localStorage.favourites) window.localStorage.favourites = '';
-		if (window.localStorage.favourites.indexOf(elementType(osmId) + '(' + osmId.slice(1) + ');') >= 0) popupThis.find($('.popup-star i').removeClass('far').addClass('fas'));
-		$('.popup-star').click(function() {
-			if ($('.popup-star i.fas').length) {
+		if (window.localStorage.favourites.indexOf(elementType(osmId) + '(' + osmId.slice(1) + ');') >= 0) popupThis.find($('.popup-bookm i').removeClass('far').addClass('fas'));
+		$('.popup-bookm').click(function() {
+			if ($('.popup-bookm i.fas').length) {
 				window.localStorage.favourites = window.localStorage.favourites.replace(elementType(osmId) + '(' + osmId.slice(1) + ');', '');
-				popupThis.find($('.popup-star i').removeClass('fas').addClass('far'));
+				popupThis.find($('.popup-bookm i').removeClass('fas').addClass('far'));
 			}
 			else {
 				window.localStorage.favourites = window.localStorage.favourites + elementType(osmId) + '(' + osmId.slice(1) + ');';
-				popupThis.find($('.popup-star i').removeClass('far').addClass('fas'));
+				popupThis.find($('.popup-bookm i').removeClass('far').addClass('fas'));
 			}
 		});
 	}
@@ -237,28 +249,26 @@ var map = new L.map('map', {
 	});
 	// http://ratings.food.gov.uk/open-data/en-GB
 	// show food hygiene ratings
+	// cors proxy for https users
 	var corsUrl = 'https://cors-anywhere.herokuapp.com/';
-	if (popupThis.find($('.popup-fhrs')).length) {
-		// cors proxy for https users
-		$.ajax({
-			url: ((window.location.protocol === 'https:') ? corsUrl : '') + 'http://api.ratings.food.gov.uk/establishments/' + $('.popup-fhrs').attr('fhrs-key'),
-			headers: { 'x-api-version': 2 },
-			dataType: 'json',
-			cache: true,
-			success: function(result) {
-				if ($('#inputDebug').is(':checked')) console.debug(result);
-				var RatingDate = (result.RatingValue !== 'AwaitingInspection') ? new Date(result.RatingDate).toLocaleDateString(navigator.language) : 'TBC';
-				popupThis.find($('.popup-fhrs')).html(
-					'<a href="https://ratings.food.gov.uk/business/en-GB/' + result.FHRSID + '" title="Food Hygiene Rating (' + RatingDate + ')" target="_blank">' +
-					'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"></a>'
-				);
-			},
-			error: function() {
-				popupThis.find($('.popup-fhrs')).empty();
-				if ($('#inputDebug').is(':checked')) console.debug('ERROR FHRS: ' + this.url);
-			}
-		});
-	}
+	if (popupThis.find($('.popup-fhrs')).length) $.ajax({
+		url: ((window.location.protocol === 'https:') ? corsUrl : '') + 'http://api.ratings.food.gov.uk/establishments/' + popupThis.find($('.popup-fhrs')).attr('fhrs-key'),
+		headers: { 'x-api-version': 2 },
+		dataType: 'json',
+		cache: true,
+		success: function(result) {
+			if ($('#inputDebug').is(':checked')) console.debug(result);
+			var RatingDate = (result.RatingValue !== 'AwaitingInspection') ? new Date(result.RatingDate).toLocaleDateString(navigator.language) : 'TBC';
+			popupThis.find($('.popup-fhrs')).html(
+				'<a href="https://ratings.food.gov.uk/business/en-GB/' + result.FHRSID + '" title="Food Hygiene Rating (' + RatingDate + ')" target="_blank">' +
+				'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"></a>'
+			);
+		},
+		error: function() {
+			popupThis.find($('.popup-fhrs')).empty();
+			if ($('#inputDebug').is(':checked')) console.debug('ERROR FHRS: ' + this.url);
+		}
+	});
 	// https://www.travelinedata.org.uk/traveline-open-data/nextbuses-api/
 	// show bus times
 	if (popupThis.find($('.popup-bsTable')).length) $.ajax({
@@ -285,9 +295,8 @@ var map = new L.map('map', {
 			var numResults = $(xml).find('MonitoredVehicleJourney').length;
 			if ($('#inputDebug').is(':checked')) console.debug(xml);
 			if (numResults) {
-				var maxResults = (numResults < 4) ? numResults : 4;
 				popupThis.find($('.popup-bsTable')).empty();
-				for (var c = 0; c < maxResults; c++) {
+				for (var c = 0; c < numResults; c++) {
 					var departTime = $(xml).find('ExpectedDepartureTime').eq(c).text() ? $(xml).find('ExpectedDepartureTime').eq(c).text() : $(xml).find('AimedDepartureTime').eq(c).text();
 					var departTimer = time_parser((new Date(departTime) - new Date()) / 60000);
 					popupThis.find($('.popup-bsTable')).append(
@@ -314,7 +323,7 @@ var map = new L.map('map', {
 	}
 	if (popupThis.find($('.popup-imgContainer')).length) {
 		// reduce height of long descriptions if image exists
-		if ($('.popup-longDesc').length) $('.popup-longDesc').last().css('--popup-long-desc-height', '150px');
+		if (popupThis.find($('.popup-longDesc')).length) popupThis.find($('.popup-longDesc')).css('--popup-long-desc-height', '150px');
 		$('.popup-imgContainer img')
 			.on('swiperight', function() { navImg(0); })
 			.on('swipeleft', function() { navImg(1); })
@@ -433,25 +442,36 @@ $('#minimap > map > area').click(function() {
 	}
 });
 
-var rQuery = false;
-function reverseQuery(e) {
-	// get location, look up id on https://photon.komoot.de and pass it to overpass
-	$('.leaflet-control-statusmsg').hide();
-	$('#spinner').show();
+var rQuery = false, msgStatusBox = '<div id="msgStatusHead"><i class="{headerIco} fa-lg fa-fw"></i> {headerTxt}<div class="leaflet-popup-close-button" onclick="clickOutline.clearLayers();$(\'#msgStatus\').fadeOut(200);">×</div></div><div id="msgStatusBody">{body}</div>';
+function reverseQuery(e, singlemapclick) {
+	// get location, look up id on https://photon.komoot.de
+	$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-spinner fa-pulse', headerTxt: '', body: '' }));
+	if (!singlemapclick) $('#spinner').show();
 	var geocoder = L.Control.Geocoder.photon({ reverseQueryParams: { distance_sort: true, radius: 0.05 } });
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
 		var geoMarker = results[0] ? results[0].properties : '';
 		if ($('#inputDebug').is(':checked') && results[0]) console.debug(results[0]);
 		if (geoMarker.osm_id) {
-			clear_map('markers');
-			rQuery = true;
-			show_overpass_layer(elementType(geoMarker.osm_type) + '(' + geoMarker.osm_id + ');', geoMarker.osm_type + geoMarker.osm_id);
+			if (singlemapclick)	$('#msgStatus').html(L.Util.template(msgStatusBox, {
+					headerIco: 'fas fa-search-location',
+					headerTxt: titleCase(geoMarker.osm_value !== 'yes' ? geoMarker.osm_value : geoMarker.osm_key),
+					body: '<a onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\')">' + (geoMarker.name ? '<b>' + geoMarker.name + '</b><br>' : '') +
+						(geoMarker.housenumber ? geoMarker.housenumber + ' ' : '') + (geoMarker.street ? geoMarker.street + ', ' : '') + (geoMarker.postcode ? geoMarker.postcode : '') + '</a>'
+				})).fadeIn(200);
+			else reverseQueryOP(geoMarker.osm_type, geoMarker.osm_id);
 		}
 		else {
 			$('#spinner').fadeOut(200);
-			$('.leaflet-control-statusmsg').html('<i class="fas fa-info-circle fa-fw"></i> Nothing found here, try another area.').show();
+			$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'No POIs found', body: 'Please try another area.' })).fadeIn(200);
 		}
 	});
+}
+function reverseQueryOP(type, id) {
+	// pass reverse lookup to overpass
+	clear_map('markers');
+	rQuery = true;
+	$('#msgStatus').fadeOut(200);
+	show_overpass_layer(elementType(type) + '(' + id + ');', type + id);
 }
 function walkPoint(e) {
 	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').click();
@@ -520,12 +540,12 @@ function suggestWalk(walkId, isDesc) {
 				'Follow five seafront Motoring Heritage panels and two galleries dedicated to the story of those intrepid ' +
 				'early motoring pioneers (the 5th panel is situated outside ' +
 				'<a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel <i class="theme fas fa-search fa-sm"></i></a>).';
-			else routingControl.setWaypoints([
+			else w = [
 				[50.84059, 0.49121],
 				[50.83729, 0.47612],
 				[50.83647, 0.46637],
 				[50.83732, 0.46639]
-			]);
+			];
 			break;
 		case 'neye':
 			if (isDesc) w =
@@ -616,11 +636,11 @@ $('#tourList').change(function() {
 });
 
 // https://github.com/Leaflet/Leaflet
-var iconLayer = new L.featureGroup(), imageOverlay = new L.featureGroup(), areaOutline = new L.featureGroup();
+var iconLayer = new L.featureGroup(), clickOutline = new L.featureGroup(), areaOutline = new L.featureGroup(), imageOverlay = new L.featureGroup();
 var tileBaseLayer = {}, tileBaseLayers = {}, baseTileList = {name: [], keyname: []};
 var tileOverlayLayer = {}, tileOverlayLayers = {}, overlayTileList = {name: [], keyname: []};
 function setLeaflet() {
-	map.addLayer(iconLayer).addLayer(imageOverlay).addLayer(areaOutline);
+	map.addLayer(iconLayer).addLayer(clickOutline).addLayer(imageOverlay).addLayer(areaOutline);
 	// leaflet icon image path
 	L.Icon.Default.imagePath = 'assets/img/leaflet/';
 	// quadkey layers
@@ -937,10 +957,10 @@ var lc = L.control.locate({
 		enableHighAccuracy: false
 	},
 	onLocationError: function() {
-		$('.leaflet-control-statusmsg').html('<i class="fas fa-exclamation-triangle fa-fw"></i> Sorry, there was an error while trying to locate you. Try switching to HTTPS.').show();
+		$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-exclamation-triangle', headerTxt: 'Location Error', body: 'Sorry, we could not locate you. Try switching to HTTPS.' })).fadeIn(200);
 	},
 	onLocationOutsideMapBounds: function() {
-		$('.leaflet-control-statusmsg').html('<i class="fas fa-info-circle fa-fw"></i> You appear to be located outside the map area. Come visit us!').show();
+		$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'Out of Bounds', body: 'You appear to be located outside the map area. Come visit us!' })).fadeIn(200);
 		lc.stop();
 	}
 }).addTo(map);
@@ -998,28 +1018,6 @@ function switchTab(tab, anchor, poi) {
 }
 
 // https://github.com/cliffcloud/Leaflet.EasyButton
-// query map button
-L.easyButton({
-	id: 'btnQuery',
-	states: [{
-		stateName: 'queryOff',
-		icon: 'fas fa-hand-pointer',
-		title: 'Query features',
-		onClick: function(control) {
-			control.state('queryOn');
-			$('.leaflet-grab').css('cursor', 'help');
-		}
-	}, {
-		stateName: 'queryOn',
-		icon: 'fas fa-hand-pointer',
-		title: 'Query features',
-		onClick: function(control) {
-			control.state('queryOff');
-			$('.leaflet-grab').css('cursor', '');
-		}
-	}]
-}).addTo(map);
-
 // clear map button
 L.easyButton({
 	id: 'btnClearmap',
@@ -1070,8 +1068,8 @@ function setRoutingControl(units) {
 			radius: 8,
 			color: 'darkgreen',
 			opacity: 0.6,
-			fillColor:'white',
-			fillOpacity:0.4
+			fillColor: 'white',
+			fillOpacity: 0.4
 		},
 		geocoder: L.Control.Geocoder.nominatim({
 			geocodingQueryParams: {
@@ -1082,8 +1080,10 @@ function setRoutingControl(units) {
 	})
 	.on('waypointschanged', function(e) {
 		permalinkSet();
-		if (e.waypoints[0].latLng) $('.sidebar-tabs ul li img').eq(2).addClass('notify');
-		else $('.sidebar-tabs ul li img').eq(2).removeClass('notify');
+		if (actTab !== 'walking') setTimeout(function() { 
+			if (e.waypoints[0].latLng) $('.sidebar-tabs ul li [href="#walking"] .sidebar-notif').text($('.leaflet-marker-draggable').length).show();
+			else $('.sidebar-tabs ul li [href="#walking"] .sidebar-notif').hide();
+		}, 50);
 	})
 	.on('routeselected', function() {
 		if (routingControl.zoomBounds) {
@@ -1256,11 +1256,11 @@ $('#devTools h3').click(function() {
 $('#inputDebug').change(function() {
 	if ($(this).is(':checked')) {
 		map.setMaxBounds();
-		$('.leaflet-control-statusmsg').html('<i class="fas fa-bug fa-fw"></i> Debug mode on. Output to console and boundary unlocked.').show();
+		$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-bug', headerTxt: 'Debug Mode', body: 'Output to console and boundary unlocked.' })).show();
 	}
 	else {
 		map.setMaxBounds(LBounds.pad(0.5));
-		$('.leaflet-control-statusmsg').hide();
+		$('#msgStatus').hide();
 	}
 });
 $('#inputDebug').trigger('change');
@@ -1281,7 +1281,7 @@ $('#inputOpCache').change(function() {
 function exportQuery() {
 	// https://wiki.openstreetmap.org/wiki/Overpass_turbo/Development
 	if (queryBbox) window.open('https://overpass-turbo.eu/?Q=' + encodeURIComponent(queryBbox) + 'out center;&C=' + mapCentre.join(';') + ';' + mapZoom + '&R', '_blank');
-	else $('.leaflet-control-statusmsg').html('<i class="fas fa-info-circle fa-fw"></i> Nothing to export. Select a query.').show();
+	else $('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'Nothing to export', body: 'Please select a query.' })).show();
 }
 function downloadBB() {
 	window.location = 'https://' + $('#inputOpServer').val() + '/api/map?bbox=' + [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(',');
@@ -1307,7 +1307,7 @@ function clear_map(layer) {
 	if (layer === 'all' && actOverlayLayer && tileOverlayLayer[actOverlayLayer].hide) map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);
 	spinner = 0;
 	$('#spinner').hide();
-	$('.leaflet-control-statusmsg').hide();
+	$('#msgStatus').hide();
 	permalinkSet();
 }
 
@@ -1319,7 +1319,7 @@ function zoom_area() {
 }
 
 function poi_changed(newcheckbox) {
-	var poiChk = $('.poi-checkbox input:checked').not('#faves');
+	var poiChk = $('.poi-checkbox input:checked').not('#bookm');
 	rQuery = false;
 	// limit number of active checkboxes
 	if (poiChk.length <= maxPOICheckbox) {
@@ -1327,21 +1327,22 @@ function poi_changed(newcheckbox) {
 		$('#poi-results').css('pointer-events', '');
 		map.closePopup();
 		iconLayer.clearLayers();
+		clickOutline.clearLayers();
 		areaOutline.clearLayers();
 		imageOverlay.clearLayers();
 		imgLayer = undefined;
 		setPageTitle();
 		poiList = [];
-		if (newcheckbox === 'faves' && $('.poi-checkbox input:checked#faves').is(':checked')) {
+		if (newcheckbox === 'bookm' && $('.poi-checkbox input:checked#bookm').is(':checked')) {
 			poiChk.prop('checked', false);
 			if (window.localStorage.favourites) show_overpass_layer('(' + window.localStorage.favourites + ');');
 			else {
 				clear_map('markers');
-				$('.leaflet-control-statusmsg').html('<i class="fas fa-info-circle fa-fw"></i> Bookmark your favourite places by clicking the star icon within a popup.').show();
+				$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'Bookmarks', body: 'Add your favourite places by clicking the bookmark icon within a popup.' })).fadeIn(200);
 			}
 		}
 		else if (poiChk.is(':checked')) {
-			$('.poi-checkbox input:checked#faves').prop('checked', false);
+			$('.poi-checkbox input:checked#bookm').prop('checked', false);
 			$('#poi-results h3').html('Results loading...');
 			$('#poi-results-list').fadeTo(250, 0.5);
 			//build overpass query
@@ -1358,7 +1359,7 @@ function poi_changed(newcheckbox) {
 			$('#poi-results h3').html('Results cleared.');
 			$('#poi-results').css('height', '').slideUp(500);
 			$('#poi-results-list').fadeOut(250);
-			$('.sidebar-tabs ul li img').eq(1).removeClass('notify');
+			$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').hide();
 			permalinkSet();
 		}
 	}
@@ -1384,11 +1385,11 @@ function setPageTitle(subTitle) {
 function getTips(tip) {
 	var nextTip, tips = [
 		'Click an area of the above minimap to quickly <i class="fas fa-search-plus fa-sm"></i> to that location.',
-		'You can zoom-in and right-click Query <i class="fas fa-hand-pointer fa-sm"></i> almost anything on the map to see more details.',
+		'You can zoom-in and click almost any place on the map to see more details.',
 		'Find any address by entering part of it into Search <i class="fas fa-search fa-sm"></i> and pressing enter.',
 		'Almost street in Bexhill has a history behind its name, Search <i class="fas fa-search fa-sm"></i> for a road to learn more.',
-		'Right-click Query <i class="fas fa-hand-pointer fa-sm"></i> a bus-stop <i class="fas fa-bus fa-sm"></i> to see real-time information on arrivals.',
-		'Right-click Query <i class="fas fa-hand-pointer fa-sm"></i> a letter-box <i class="fas fa-envelope fa-sm"></i> to see todays last post collection.',
+		'Click a bus-stop <i class="fas fa-bus fa-sm"></i> to see real-time information on arrivals.',
+		'Click a letter-box <i class="fas fa-envelope fa-sm"></i> to see todays last post collection.',
 		'Use the mouse wheel or swipe to see the next image in a pop-up. Click "View image" to see it in a larger size.',
 		'Click <i class="fas fa-location-arrow fa-sm"></i> to turn on your location and see POIs ordered by distance.',
 		'Choose between miles or kilometres in <a onclick="switchTab(\'settings\');">Settings <i class="fas fa-cog fa-sm"></i></a>.',
@@ -1396,6 +1397,7 @@ function getTips(tip) {
 		'Touch screen users can quickly close the sidebar by swiping <i class="fas fa-hand-point-up fa-sm"></i> the sidebar title.',
 		'See your what POIs are around you by turning on <i class="fas fa-location-arrow fa-sm"></i> and clicking on your blue marker.',
 		'Quickly create walking <i class="fas fa-walking fa-sm"></i> directions by turning on <i class="fas fa-location-arrow fa-sm"></i> and right-clicking the map.',
+		'Bookmark any place by clicking the <i class="far fa-bookmark fa-sm"></i> icon in a popup.',
 		'We have a number of historical map overlays, select them using the top-right layer control <i class="fas fa-layer-group fa-sm"></i> .',
 		'Colours in POI results indicate if that place is currently open (green) or closed (red).',
 		'You can find booking, location and ratings on all accommodation under <a onclick="switchTab(\'pois\', \'Leisure-Tourism\');">Leisure-Tourism</a>.',
@@ -1600,7 +1602,7 @@ permalinkReturn();
 
 // allow postMessage from certain websites when in an iFrame
 window.addEventListener('message', function(event) {
-    if (event.origin.indexOf('//bexhillheritage.org.uk') > 0) {
+    if (!noIframe && event.origin.indexOf('//bexhillheritage.org.uk') > 0) {
 		clear_map('markers');
 		switchTab('none', '', event.data);
 	}

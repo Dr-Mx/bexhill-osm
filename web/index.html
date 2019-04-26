@@ -9,10 +9,12 @@
 	<meta name="description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
 	<meta name="author" content="Alexis Markwick">
 	<meta name="twitter:site" content="@BexhillOSM">
+	<meta name="twitter:creator" content="@BexhillOSM">
+	<meta name="twitter:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg">
 	<meta property="og:url" content="https://bexhill-osm.org.uk/">
 	<meta property="og:title" content="Bexhill OpenStreetMap">
 	<meta property="og:description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
-	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/preview.jpg">
+	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg">
 	<meta property="og:type" content="website">
 	<meta property="og:locale" content="en_GB">
 
@@ -37,7 +39,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v3.2.5">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v5.1.0">
+	<link rel="stylesheet" href="assets/css/site.css?v5.2.0">
  </head>
 
  <body>
@@ -51,8 +53,8 @@
 		<div class="sidebar-tabs">
 			<ul role="tablist">
 				<li><a href="#home" title="Home" role="tab"><img alt="Home" src="assets/img/sb-home.png"></a></li>
-				<li><a href="#pois" title="Points of Interest" role="tab"><img alt="Points of Interest" src="assets/img/sb-pois.png"></a></li>
-				<li><a href="#walking" title="Walking Routes" role="tab"><img alt="Walking Routes" src="assets/img/sb-walking.png"></a></li>
+				<li><a href="#pois" title="Points of Interest" role="tab"><span class="sidebar-notif">0</span><img alt="Points of Interest" src="assets/img/sb-pois.png"></a></li>
+				<li><a href="#walking" title="Walking Routes" role="tab"><span class="sidebar-notif">0</span><img alt="Walking Routes" src="assets/img/sb-walking.png"></a></li>
 				<li><a href="#tour" title="Historic Tour" role="tab"><img alt="Historic Tour" src="assets/img/sb-tour.png"></a></li>
 			</ul>
 			<ul role="tablist">
@@ -100,7 +102,7 @@
 					<span id="newFeed">
 						What's new:
 						<ul class="fa-ul">
-							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Martello Towers Historic Tour - in progress</i> - 02/2019</li>
+							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', '16', '');"><i>Martello Towers Historic Tour - completed</i></a> - 03/2019</li>
 							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', '6', '');"><i>1902 Motor Track Map - completed</i></a> - 02/2019</li>
 							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>FixMyStreet - right-click the map to report local problems</i> - 02/2019</li>
 						</ul>
@@ -118,7 +120,7 @@
 						<div id="poi-results-list"></div>
 					</div>
 					<div id="poi-icons">
-						<div id="poi-faves" class="poi-checkbox"><label title="Favourites"><img src="assets/img/icons/star-3.png"><input type="checkbox" id="faves"><span></span></label></div>
+						<div id="poi-bookm" class="poi-checkbox"><label title="Bookmarks"><img src="assets/img/icons/bookm.png"><input type="checkbox" id="bookm"><span></span></label></div>
 						<!-- this list auto-populates using pois-type.js as a reference -->
 					</div>
 				</div>
@@ -170,7 +172,7 @@
 								<option value="6" data-keyword="motor racing">- Motor Racing</option>
 								<option value="7" data-keyword="de la warr pavilion">- De La Warr Pavilion</option>
 								<option value="8" data-keyword="old town manor house">- Old Town Manor</option>
-								<option value="9" data-keyword="ww2, wwII, bomb map, air-raid shelter, pillbox">- World War II</option>
+								<option value="9" data-keyword="world war, ww2, wwII, bomb map, air-raid shelter, pillbox">- World War II</option>
 								<option value="10" data-keyword="northeye prison, royal air force">- Northeye Prison Site</option>
 								<option value="11" data-keyword="famous notable people">- Notable People</option>
 								<option value="12" data-keyword="public street clock">- Public Clocks</option>
@@ -241,7 +243,6 @@
 						<i class="theme fas fa-expand fa-border fa-fw"></i> Full screen (ALT-ENTER): Maximise the map to fit your whole screen.<br><br>
 						<i class="theme fas fa-location-arrow fa-border fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map. You may click on the blue location marker to see what POIs are around you.<br><br>
 						<i class="theme fas fa-search fa-border fa-fw"></i> Address search (CTRL-F): Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
-						<i class="theme fas fa-hand-pointer fa-border fa-fw"></i> Query features: Clicking the map with this enabled will display information on features under the cursor.<br><br>
 						<i class="theme fas fa-trash fa-border fa-fw"></i> Clear layers (CTRL-DEL): Remove all current layers on the map. Right-click will reload the website to defaults.<br><br>
 						<i class="fas fa-layer-group fa-border fa-lg fa-fw" style="color:#888;"></i> Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the page.
 					</div>
@@ -251,8 +252,9 @@
 						<i class="fas fa-hand-pointer fa-fw"></i> Query feature: Display information on the feature under the cursor.<br><br>
 						<i class="fas fa-map-marker-alt fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
 						<i class="fas fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
+						<i class="far fa-sticky-note fa-fw"></i> Leave a note here: Report a mistake or something missing.<br><br>
 						<i class="fas fa-street-view fa-fw"></i> Google Street View: Provides panoramic views from positions along many streets.<br><br>
-						<i class="far fa-sticky-note fa-fw"></i> Leave a note here: Report a mistake or something missing.
+						<i class="fas fa-wrench fa-fw"></i> FixMyStreet: Opens a new window to report problems in our community.
 						<p><img src="assets/img/help-context.png" alt="Context-menu preview"></p>
 					</div>
 					<div id="gototabs"><hr>
@@ -276,7 +278,7 @@
 						Click each marker to see a pop-up detailing more specific information.
 						<p><img src="assets/img/icons/pinother.png" alt="POI preview"></p>
 						<i style="color:#777;" class="fas fa-edit fa-fw"></i> Edit: Opens openstreetmap.org where you can make immediate changes to the item.<br><br>
-						<i style="color:#777;" class="far fa-star fa-fw"></i> Favourite: Click the star to add bookmark it, show all current bookmarks by clicking the Favourites button under POIs.<br>
+						<i style="color:#777;" class="far fa-bookmark fa-fw"></i> Bookmark: Click the icon to bookmark it, show all current bookmarks by clicking the button under POIs.<br>
 						<p><img src="assets/img/help-popup.png" alt="Marker popup preview"></p>
 					</div>
 					<div id="gotowalking"><hr>
@@ -383,7 +385,7 @@
 	<script src="assets/js/plugins/jquery-ui.min.js?v1.12.1"></script>
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v1.5.0a1"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v1.3.4"></script>
-	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.9"></script>
+	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.10"></script>
 	<script src="assets/js/plugins/URI.min.js?v1.19.1"></script>
 	<script src="assets/js/plugins/leaflet.js?v1.4.0"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v0.2.1"></script>
@@ -400,11 +402,11 @@
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<!-- JavaScript | site code -->
 	<script src="assets/js/config.js"></script>
-	<script src="assets/js/OverPassLayer.js?v5.1.0"></script>
-	<script src="assets/js/tags-parsers.js?v5.1.0"></script>
-	<script src="assets/js/pois-type.js?v5.1.0"></script>
-	<script src="tour/tour.js?v5.1.0"></script>
-	<script src="assets/js/site.js?v5.1.0"></script>
+	<script src="assets/js/OverPassLayer.js?v5.2.0"></script>
+	<script src="assets/js/tags-parsers.js?v5.2.0"></script>
+	<script src="assets/js/pois-type.js?v5.2.0"></script>
+	<script src="tour/tour.js?v5.2.0"></script>
+	<script src="assets/js/site.js?v5.2.0"></script>
 
  </body>
 </html>

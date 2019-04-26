@@ -1055,7 +1055,8 @@
 				"date": "1943-01-28 09:00",
 				"description": "A bomb struck a house chimney on the opposite side of De La Warr Road, flew across the road to number 144. It entered the bedroom window, crossed the landing and exited the house at the rear before exploding on the open ground. The damage rendered the house uninhabitable and adjacent houses had their windows blown in.",
 				"img": {
-					"0": "09/bomb/delawarrroad"
+					"0": "09/bomb/delawarrroad(0)",
+					"1": "09/bomb/delawarrroad(1)"
 				}
 			},
 			"geometry": {

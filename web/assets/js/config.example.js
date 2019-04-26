@@ -5,5 +5,6 @@ window.BOSM = {
 	owmKey: '',						// https://openweathermap.org
 	mapboxKey: 'pk.',				// https://www.mapbox.com/pricing
 	thuforKey: '',					// https://thunderforest.com/pricing
-	trvllneApi: { u: '', p: '' }	// http://www.travelinedata.org.uk
+	trvllneApi: { u: '', p: '' },	// http://www.travelinedata.org.uk
+	bookingCom: ''			// https://spadmin.booking.com, affiliate links
 };

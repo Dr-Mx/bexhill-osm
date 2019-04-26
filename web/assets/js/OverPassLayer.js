@@ -23,9 +23,9 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		statusMsg: function(indicatorMsg, errCode) {
 			if (errCode) {
 				$('#spinner').fadeOut(200);
-				indicatorMsg = '<i class="fas fa-exclamation-triangle fa-fw"></i> ERROR ' + errCode + ': ' + indicatorMsg;
+				indicatorMsg = L.Util.template(msgStatusBox, { headerIco: 'fas fa-exclamation-triangle', headerTxt: 'ERROR #' + errCode, body: indicatorMsg });
 			}
-			$('.leaflet-control-statusmsg').html(indicatorMsg).show();
+			$('#msgStatus').html(indicatorMsg).show();
 		}
 	},
 	initialize: function (options) {
@@ -60,8 +60,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			success: function (xml) {
 				self.options.callback.call(reference, xml);
 				if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
-				if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('<i class="fas fa-info-circle fa-fw"></i> No POIs found, try turning off "only show open" in options.');
-				else if (poiList.length === 0 && !rQuery) self.options.statusMsg('<i class="fas fa-info-circle fa-fw"></i> No POIs found, try another area or query.');
+				if (poiList.length === 0 && $('#inputOpen').is(':checked')) $('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'No POIs found', body: 'Please try turning off "only show open" in options.' })).show();
+				else if (poiList.length === 0 && !rQuery) $('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'No POIs found', body: 'Please try another area or query.' })).show();
 				// if not in iframe cache to local storage
 				if (self.options.cacheId && !$('#inputAttic').val()) {
 					eleCache[self.options.cacheId] = xml;
@@ -96,7 +96,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		L.LayerGroup.prototype.onRemove.call(this, map);
 		this._ids = {};
 		this._requested = {};
-		$('.leaflet-control-statusmsg').hide();
+		$('#msgStatus').hide();
 		map.off({ 'moveend': this.onMoveEnd }, this);
 		this._map = null;
 	},
