@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## v5.3.0 - Lightbox library
+
+**Date:** 25/05/2019
+
+Added js
+ - jquery.fancybox.js
+
+Updated js
+ - leaflet.js 1.5.1
+ - Control.Geocoder.min.js 1.7.0
+ - leaflet-locatecontrol 0.67.0
+
+Site changes
+ - Replace window.open for lightbox library, opens popup images, 360 panoramas and tour videos as overlay
+ - Added a URI query 'data' for custom Overpass queries (e.g bexhill-osm.org.uk?data=[fixme])
+ - Better debug console messages
+ - Added 1962 OS overlay
+ - Support for 'hearing_impaired:induction_loop' tags for facilities parser
+ - Always many other bug fixes and improvements
+
+
 ## v5.2.0 - Single click reverse-lookup
 
 **Date:** 26/04/2019

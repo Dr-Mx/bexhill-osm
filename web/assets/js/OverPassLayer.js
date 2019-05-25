@@ -40,18 +40,18 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		var url = this.options.endpoint + '?data=[out:json]' + queryBbox + 'out tags center qt ' + maxOpResults + ';&contact=' + email;
 		var self = this;
 		var reference = { instance: self };
-		if (self.options.debug) console.debug('Query: ' + url);
+		if (self.options.debug) console.debug('Overpass query:', url);
 		// check if cached in variable
 		if (eleCache[self.options.cacheId] && !$('#inputAttic').val() && $('#inputOpCache').val() > 0) {
 			self.options.callback.call(reference, eleCache[self.options.cacheId]);
-			if (self.options.debug) console.debug('Query received from eleCache.' + self.options.cacheId);
+			if (self.options.debug) console.debug('Query received from eleCache.', self.options.cacheId);
 		}
 		// check if cached in localStorage
 		else if (noIframe && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0) {
 			eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
 			if (new Date(eleCache[self.options.cacheId].osm3s.timestamp_osm_base).getTime() < new Date().getTime()+parseInt($('#inputOpCache').val())*60*60*1000) {
 				self.options.callback.call(reference, eleCache[self.options.cacheId]);
-				if (self.options.debug) console.debug('Query received from localStorage.' + self.options.cacheId);
+				if (self.options.debug) console.debug('Query received from localStorage.', self.options.cacheId);
 			}
 		}
 		else $.ajax({
@@ -59,7 +59,6 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			datatype: 'xml',
 			success: function (xml) {
 				self.options.callback.call(reference, xml);
-				if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
 				if (poiList.length === 0 && $('#inputOpen').is(':checked')) $('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'No POIs found', body: 'Please try turning off "only show open" in options.' })).show();
 				else if (poiList.length === 0 && !rQuery) $('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'No POIs found', body: 'Please try another area or query.' })).show();
 				// if not in iframe cache to local storage
@@ -67,6 +66,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 					eleCache[self.options.cacheId] = xml;
 					if (noIframe && window.localStorage) window.localStorage[self.options.cacheId] = JSON.stringify(xml);
 				}
+				if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
 			},
 			complete: function (e) {
 				if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
@@ -83,8 +83,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				}
 			},
 			error: function () {
-				if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS: ' + this.url);
 				rQuery = false;
+				if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS:', this.url);
 			}
 		});
 	},
@@ -99,9 +99,5 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		$('#msgStatus').hide();
 		map.off({ 'moveend': this.onMoveEnd }, this);
 		this._map = null;
-	},
-	getData: function () {
-		if (this.options.debug) console.debug(this._data);
-		return this._data;
 	}
 });

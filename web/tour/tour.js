@@ -8,31 +8,41 @@ function tour(ti, fromPermalink) {
 	// general markers
 	// coordinates | clickable | icon
 	var setMarker = function(latlng, interactive, icon) {
-		if (icon) return L.marker(latlng, {
-			icon: L.icon({
-				className: icon.className,
-				iconUrl: dfltDir + icon.iconUrl + '.png',
-				iconSize: icon.iconSize,
-				iconAnchor: icon.iconAnchor || null,
-				shadowUrl: (icon.shadowUrl ? dfltDir + icon.shadowUrl + '.png' : null),
-				shadowAnchor: icon.shadowAnchor || null,
-				popupAnchor: icon.popupAnchor || null,
-				tooltipAnchor: [Math.round(icon.iconSize[0]/2)-8, 0]
-			}),
-			bounceOnAdd: true,
-			keyboard: false,
-			riseOnHover: true,
-			interactive: interactive
-		});
+		if (icon) {
+			if (icon.iconUrl) return L.marker(latlng, {
+				icon: L.icon({
+					className: icon.className,
+					iconUrl: dfltDir + icon.iconUrl + '.png',
+					iconSize: icon.iconSize,
+					iconAnchor: icon.iconAnchor || null,
+					shadowUrl: (icon.shadowUrl ? dfltDir + icon.shadowUrl + '.png' : null),
+					shadowAnchor: icon.shadowAnchor || null,
+					popupAnchor: icon.popupAnchor || null,
+					tooltipAnchor: [Math.round(icon.iconSize[0]/2)-8, 0]
+				}),
+				interactive: interactive,
+				bounceOnAdd: true,
+				keyboard: false,
+				riseOnHover: true
+			});
+			else return L.circle(latlng, {
+				interactive: interactive,
+				radius: 15,
+				weight: 2,
+				color: '#000',
+				opacity: 0.75,
+				fillColor: icon.fillColor,
+				fillOpacity: 0.5
+			});	
+		}
 		else return L.circleMarker(latlng, {
+			interactive: interactive,
 			radius: 15,
-			weight: 5,
-			color: '#fff',
+			weight: 4,
+			color: '#000',
 			opacity: 1,
 			fillColor: '#b05000',
-			fillOpacity: 0.25,
-			className: 'mkrShadow',
-			interactive: interactive
+			fillOpacity: 0.5
 		});
 	};
 	// tooltip and popup
@@ -45,6 +55,10 @@ function tour(ti, fromPermalink) {
 		if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc">' + feature.properties.description + '</span>';
 			toolTip +=  ' <i style="color:#777; min-width:17px;" class="fas fa-sticky-note fa-fw" title="Notes"></i>';
+		}
+		if (feature.properties.link) {
+			markerPopup += '<span class="popup-tagValue"><a class="popup-truncate" style="max-width:' + imgSize + 'px" href="' + feature.properties.link +
+				'" target="_blank" title="' + feature.properties.link + '">' + feature.properties.link + '</a></span>';
 		}
 		if (feature.properties.img) {
 			var imgIcon = 'image';
@@ -212,16 +226,16 @@ function tour(ti, fromPermalink) {
 				mimeType: 'application/json',
 				cache: false,
 				success: function(json) {
-					var iconName, interactive, x = 0;
+					var fillColor, interactive, x = 0;
 					imageOverlay.addLayer(L.geoJSON(json, {
 						filter: function(feature) {
 							interactive = true;
-							if (feature.properties.type === 'v1') iconName = 'v1';
-							else if (feature.properties.type === 'lndmn') iconName = 'lndmn';
-							else if (feature.properties.type === 'acrft') iconName = 'acrft';
-							else if (feature.properties.name) iconName = 'knwn';
+							if (feature.properties.type === 'V-1') fillColor = '#0060ff';
+							else if (feature.properties.type === 'landmine') fillColor = '#ff8c00';
+							else if (feature.properties.type === 'aircraft') fillColor = '#7f00ff';
+							else if (feature.properties.name) fillColor = '#ff0000';
 							else {
-								iconName = 'nknwn';
+								fillColor = '#777';
 								interactive = false;
 							}
 							return true;
@@ -231,14 +245,10 @@ function tour(ti, fromPermalink) {
 							if (feature.properties.name) setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], 'Bexhill Observer');
 						},
 						pointToLayer: function(feature, latlng) {
-							var marker = setMarker(latlng, interactive, {
-								className: 'ww2Icon',
-								iconUrl: '09/mrkr_' + iconName,
-								iconSize: [28, 28],
-								popupAnchor: [0, -10]
-							});
+							var marker = setMarker(latlng, interactive, { fillColor: fillColor });
 							if (interactive) {
 								marker._leaflet_id = 'bb' + x++;
+								marker.desc = feature.properties.type || '';
 								poiList.push(marker);
 							}
 							return marker;
@@ -267,13 +277,9 @@ function tour(ti, fromPermalink) {
 							setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], 'Bexhill Museum');
 						},
 						pointToLayer: function(feature, latlng) {
-							var marker = setMarker(latlng, true, {
-								className: 'ww2Icon',
-								iconUrl: '09/mrkr_shltr',
-								iconSize: [28, 28],
-								popupAnchor: [0, -10]
-							});
+							var marker = setMarker(latlng, true, { fillColor: '#008800' });
 							marker._leaflet_id = 'sr' + x++;
+							marker.desc = 'shelter';
 							poiList.push(marker);
 							return marker;
 						}
@@ -410,11 +416,19 @@ function tourFocus(ti, id) {
 	}
 }
 
-// load sources page, highlight and scroll to item
-function tourSource(item) {
+// load references page, highlight and scroll to item
+function tourRef(item) {
 	$('#tourList').val(99).trigger('change');
 	$('#tourFrame').one('load', function() {
 		$(this).contents().find('ol:nth(1) > li').eq(item - 1).css('background-color', 'khaki');
 		$(this).contents().find('body').animate({ scrollTop: $(this).contents().find('ol:nth(1) > li').eq(item - 1).offset().top - 20 }, 1000);
+	});
+}
+
+// play video
+function tourVideo(url) {
+	$.fancybox.open({
+		src: 'https://www.youtube.com/watch?v=' + url,
+		youtube: { modestbranding : 1 }
 	});
 }

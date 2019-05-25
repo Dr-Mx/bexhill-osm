@@ -42,6 +42,13 @@ img {
 	display: block;
 }
 
+.bombKey {
+	font-size: 20pt;
+	line-height: 10pt;
+	-webkit-text-stroke: 1px black;
+	opacity: 0.75;
+}
+
 .person {
 	display: table;
 	width: 100%;

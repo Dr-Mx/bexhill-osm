@@ -114,11 +114,12 @@ function parse_tags(element, titlePopup, poiParser) {
 	var facility_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
-		if (tags.disused === 'yes' && !tags.building) tag += '<i class="facNo fas fa-wrench fa-fw" title="disused: yes"></i>';
+		if (tags.disused === 'yes') tag += '<i class="facNo fas fa-house-damage fa-fw" title="disused: yes"></i>';
 		if (tags.indoor === 'yes') tag += '<i class="facYes fas fa-door-closed fa-fw" title="indoor: yes"></i>';
 		if (tags.wheelchair === 'yes') tag += '<i class="facYes fas fa-wheelchair fa-fw" title="wheelchair: yes"></i>';
 		else if (tags.wheelchair === 'limited') tag += '<i class="facLtd fas fa-wheelchair fa-fw" title="wheelchair: limited"></i>';
 		else if (tags.wheelchair === 'no') tag += '<i class="facNo fas fa-wheelchair fa-fw" title="wheelchair: no"></i>';
+		if (tags['hearing_impaired:induction_loop'] === 'yes') tag += '<i class="facYes fas fa-deaf fa-fw" title="Induction loop: yes"></i>';
 		if (tags.dog === 'yes') tag += '<i class="facYes fas fa-dog fa-fw" title="dog: yes"></i>';
 		else if (tags.dog === 'no') tag += '<i class="facNo fas fa-dog fa-fw" title="dog: no"></i>';
 		if (tags.internet_access === 'wlan') tag += '<i class="facYes fas fa-wifi fa-fw" title="internet: wireless"></i>';
@@ -274,8 +275,9 @@ function parse_tags(element, titlePopup, poiParser) {
 						var sourceAuthor = $(xml).find('author').text();
 						markerPopup += '<span class="popup-streetSource"><a href="' + sourceLink + '" target="_blank" title="' + sourceLink + '">&copy; ' + sourceAuthor + '</a></span>';
 					}
+					if ($('#inputDebug').is(':checked')) console.debug('Street-names:', xml);
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES: ' + this.url); }
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES:', this.url); }
 			});
 			if (tags.maxspeed) tag += tags.maxspeed + '; ';
 			if (tags.maxwidth) tag += tags.maxwidth + '; ';
@@ -316,8 +318,8 @@ function parse_tags(element, titlePopup, poiParser) {
 			markerPopup += generic_img_parser(tags.image, lID, tags['source:image'] ? '&copy; ' + tags['source:image'] : '');
 			if (tags['image:360'] || tags.image_1 || lID > 0) {
 				lID++;
-				// support up to 5 additional images
-				for (x = 1; x <= 5; x++) {
+				// support up to 9 additional images
+				for (x = 1; x <= 9; x++) {
 					if (tags['image_' + x]) {
 						markerPopup += generic_img_parser(tags['image_' + x], lID, tags['source:image_' + x] ? '&copy; ' + tags['source:image_' + x] : '');
 						lID++;
@@ -426,7 +428,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			}
 		}
 		catch(err) {
-			if (tags.opening_hours && $('#inputDebug').is(':checked')) console.debug('ERROR: Object "' + eName + '" cannot parse hours: ' + tags.opening_hours + '. ' + err);
+			if (tags.opening_hours && $('#inputDebug').is(':checked')) console.debug('ERROR: Object "' + eName + '" cannot parse hours:', tags.opening_hours + '. ' + err);
 		}
 		return markerPopup;
 	};
@@ -467,7 +469,7 @@ function parse_tags(element, titlePopup, poiParser) {
 }
 
 function callback(data) {
-	if ($('#inputDebug').is(':checked') && data.elements.length) console.debug(data);
+	if ($('#inputDebug').is(':checked') && data.elements.length) console.debug('Overpass callback:', data);
 	var type, name, iconName, markerPopup;
 	var customPOptions = {
 		maxWidth: imgSize,
@@ -503,8 +505,9 @@ function callback(data) {
 				success: function(xml) {
 					areaOutline.addLayer(new L.OSM.DataLayer(xml)).addTo(map);
 					eleCache['VEC' + type + id] = xml;
+					if ($('#inputDebug').is(':checked')) console.debug('OSM outline:', xml);
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-OUTLINE: ' + this.url); }
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-OUTLINE:', this.url); }
 			});
 		}
 	};
@@ -907,9 +910,12 @@ function pushPoiList() {
 	for (c = 0; c < poiList.length; c++) {
 		var state = (poiList[c].ohState !== undefined) ? poiList[c].ohState : poiList[c].ctState;
 		var openColorTitle = (state === true || state === false) ? ' title="' + ((state === true) ? 'Open' : 'Closed') + '"' : '';
-		var poiIcon = poiList[c]._icon ? poiList[c]._icon.src : '';
+		var poiIcon = '';
+		if (poiList[c]._icon) poiIcon = '<img src="' + poiList[c]._icon.src + '">';
+		else if (poiList[c].options.fillColor)
+			poiIcon = '<i style="color:' + poiList[c].options.fillColor + ';" class="fas fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
 		poiResultsList += '<tr id="' + c + '">' +
-			'<td class="openColor-list-' + state + '"' + openColorTitle + '><img src="' + poiIcon + '"></td>' +
+			'<td class="openColor-list-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
 			'<td>' + poiList[c]._tooltip._content + '</td>' +
 			'<td>' + (poiList[c].facilities ? poiList[c].facilities : '') + '</td>';
 		if (poiList[c].distance) {
@@ -933,7 +939,7 @@ function pushPoiList() {
 			.scrollTop(0)
 			.animate({ scrollTop: $('.poi-checkbox input:checked').parent().position().top - 50 }, 100);
 	}).css('pointer-events', 'auto');
-	if (actTab !== 'pois') $('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
+	$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
 	// interact with map
 	$('#poi-results-list tr').hover(
 		function() { poiList[this.id].openTooltip(); },
@@ -987,18 +993,21 @@ function generic_tag_parser(tags, tag, label, iconName) {
 }
 function generic_img_parser(img, id, attrib) {
 	var url = '', imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
-		'<i class="imgZoom theme fas fa-search-plus fa-sm"></i>' +
-		'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}">' +
-		'<br><div class="popup-imgAttrib">';
+		'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=1280 1280w, {img}&width=800 800w, {img}&width=640 640w">' +
+		'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}"></a>' +
+		'<div class="popup-imgAttrib">';
 	if (img.indexOf('File') === 0) {
 		url = img;
 		attrib = 'Loading attribution...';
-		img = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(img.split(':')[1]) + '&w=' + imgSize;
+		img = 'https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=' + encodeURIComponent(img) + '&width=' + imgSize;
 		imgTmpl += '{attrib}';
 	}
 	else {
-		imgTmpl += '<a class="imgOpen" onclick="imgPopup($(img{id}).find(\'img\'));">View image</a>';
-		if (attrib) imgTmpl += ' | {attrib}';
+		imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
+			'<a data-fancybox="gallery" data-caption="' + $('<span>' + attrib + '</span>').text() + '" href="{img}">' +
+			'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}"></a>' +
+			'<div class="popup-imgAttrib">';
+		if (attrib) imgTmpl += '{attrib}';
 	}
 	imgTmpl += '</div></div>';
 	return L.Util.template(imgTmpl, { id: id, url: url, maxheight: imgSize / 2, img: img, attrib: attrib });
@@ -1015,6 +1024,7 @@ function artwork_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'artwork_type', label: 'Artwork type', iconName: 'fas fa-paint-brush'},
 		{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'far fa-user'},
+		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fas fa-pen-square'},
 		{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'fas fa-cube'}
 	]);
 }
@@ -1270,7 +1280,7 @@ function post_parser(tags, titlePopup) {
 		var markerPopup = '';
 		if (tags.collection_times) {
 			var strNextChange, ct = new opening_hours(tags.collection_times, { 'address':{ 'state':'England', 'country_code':'gb' } }, 1).getNextChange();
-			if (ct.getDate() === new Date().getDate()) strNextChange = 'Today in ' + time_parser((ct - new Date()) / 60000);
+			if (ct.getDate() === new Date().getDate()) strNextChange = 'Today in ' + time_parser((ct - new Date()) / 60000) + ' (' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + ')';
 			else if (ct.getDate() === new Date().getDate() + 1) strNextChange = 'Tomorrow ' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 			else if (ct.getDate() > new Date().getDate() + 1) strNextChange = ct.toLocaleDateString(navigator.language, { weekday: 'long' }) + ' ' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 			ctState = (ct.getDate() === new Date().getDate() && ct.getDate() >= new Date().getDate()) ? true : false;
@@ -1371,22 +1381,20 @@ function getWikiAttrib(id) {
 			cache: true,
 			data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata', titles: img, format: 'json' },
 			success: function(result) {
-				if ($('#inputDebug').is(':checked')) console.debug(result);
 				if (!result.query.pages[-1]) {
 					var imgAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
 					var imgArtist = (imgAttrib.Artist.value.indexOf('href=') > 0) ? $(imgAttrib.Artist.value).text() : imgAttrib.Artist.value;
 					var imgDate = imgAttrib.DateTimeOriginal.value || imgAttrib.DateTime.value;
-					imgDate = (new Date(imgDate.split(' ')[0]).getFullYear() || imgDate);
-					id.find($('.popup-imgAttrib')).html(
-						'<a class="imgOpen" onclick="imgPopup($(\'#' + id[0].id + '\').find(\'img\'));">View image</a>' +
-						' | <a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank">' +
-						imgDate + ' | &copy; ' + imgArtist + ' [' + imgAttrib.LicenseShortName.value + ']</a>'
-					);
+					imgDate = $('<span>' + (new Date(imgDate.split(' ')[0]).getFullYear() || imgDate) + '</span>')[0].firstChild.data;
+					var imgAttribUrl = '<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank">' + imgDate + ' | &copy; ' + imgArtist;
+					id.find($('.popup-imgAttrib')).html(imgAttribUrl + ' | ' + imgAttrib.LicenseShortName.value + '</a>');
+					$(id[0]).find('a').data('caption', 'Wikimedia Commons: ' + imgAttribUrl + ' | ' + imgAttrib.UsageTerms.value + '</a>');
 				}
 				else id.find($('.popup-imgAttrib')).html('Error: Attribution not found');
 				id.find($('.popup-imgAttrib')).addClass('attribd');
+				if ($('#inputDebug').is(':checked')) console.debug('Wikimedia-attrib:', result);
 			},
-			error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKI-ATTRIB: ' + this.url); }
+			error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKIMEDIA-ATTRIB:', this.url); }
 		});
 	}
 }
@@ -1394,17 +1402,13 @@ function show_img_controls(imgMax, img360) {
 	// add image navigation controls to popup
 	var ctrlTmpl = '<div class="navigateItem">';
 	if (img360 && img360.indexOf('File') === 0) ctrlTmpl +=
-		'<a title="360 Panorama" onclick="nav360(&quot;' + img360 + '&quot;)">' +
+		'<a title="360 Panorama" data-fancybox data-type="iframe" data-animation-effect="circular" data-caption="Wikimedia Commons: Bexhill-OSM" data-src="https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img360.split(':')[1]) + '" href="javascript:;">' +
 		'<i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
 	if (imgMax > 1) ctrlTmpl +=
 		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
 		'<i class="fas fa-image fa-fw" title="1 of ' + imgMax + '"></i>' +
 		'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fas fa-caret-square-right fa-fw"></i></a></span>';
 	return ctrlTmpl + '</div>';
-}
-function nav360(img) {
-	// https://tools.wmflabs.org/admin/tool/panoviewer
-	popupWindow('https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img.split(':')[1]), 'imgWindow', 800, 600);
 }
 function navImg(direction) {
 	if (!$('.popup-imgContainer').is(':animated')) {
@@ -1415,7 +1419,6 @@ function navImg(direction) {
 		var swapImg = function(nID) {
 			$('.popup-imgContainer#img' + cID).hide(300);
 			$('.popup-imgContainer#img' + nID).show(300);
-			if (!$('#img' + nID + ' .attribd').length) getWikiAttrib($('#img' + nID));
 			$('.navigateItem > .fa-image').attr('title', parseInt(nID+1) + ' of ' + parseInt(lID+1));
 		};
 		// navigate through multiple images. 0 = previous, 1 = next

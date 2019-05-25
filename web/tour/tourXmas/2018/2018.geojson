@@ -5,14 +5,9 @@
 			"properties": {
 				"id": "afic",
 				"name": "aFic",
+				"link": "http://www.afic.co.uk/",
 				"img": {
 					"0": "Xmas/2018/afic(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.afic.co.uk/"
 				}
 			},
 			"geometry": {
@@ -24,14 +19,9 @@
 			"properties": {
 				"id": "ageuk",
 				"name": "Age UK",
+				"link": "https://directory.ageuk.org.uk/charity-shops/age-uk-east-sussex-bexhill-on-sea-shop",
 				"img": {
 					"0": "Xmas/2018/ageuk(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "https://directory.ageuk.org.uk/charity-shops/age-uk-east-sussex-bexhill-on-sea-shop"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -44,14 +34,9 @@
 			"properties": {
 				"id": "ark",
 				"name": "Ark Residential",
+				"link": "http://www.arkresidential.co.uk",
 				"img": {
 					"0": "Xmas/2018/ark(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.arkresidential.co.uk"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -64,14 +49,9 @@
 			"properties": {
 				"id": "barbykeel",
 				"name": "Barby Keel",
+				"link": "http://barbykeel.btck.co.uk/",
 				"img": {
 					"0": "Xmas/2018/barbykeel(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://barbykeel.btck.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -84,14 +64,9 @@
 			"properties": {
 				"id": "caringcommunity",
 				"name": "Bexhill Caring Community",
+				"link": "http://www.bexhillcaringcommunity.org",
 				"img": {
 					"0": "Xmas/2018/caringcommunity(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.bexhillcaringcommunity.org"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -104,14 +79,9 @@
 			"properties": {
 				"id": "bexhillflorist",
 				"name": "The Bexhill Florist",
+				"link": "http://www.thebexhillflorist.co.uk",
 				"img": {
 					"0": "Xmas/2018/bexhillflorist(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.thebexhillflorist.co.uk"
 				},
 				"winner": "<i class='xmasAward commendedThird fas fa-award'></i> Third Prize"
 			},
@@ -124,14 +94,9 @@
 			"properties": {
 				"id": "youthcentre",
 				"name": "Bexhill Youth and Community Centre",
+				"link": "http://www.bexhillyouthandcommunitycentre.co.uk/",
 				"img": {
 					"0": "Xmas/2018/youthcentre(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.bexhillyouthandcommunitycentre.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -144,14 +109,9 @@
 			"properties": {
 				"id": "birkdale",
 				"name": "Birkdale Nursery",
+				"link": "http://www.birkdalenursery.co.uk/",
 				"img": {
 					"0": "Xmas/2018/birkdale(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.birkdalenursery.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -164,14 +124,9 @@
 			"properties": {
 				"id": "carnegieloft",
 				"name": "Carnegie Loft",
+				"link": "http://carnegieloft.co.uk/",
 				"img": {
 					"0": "Xmas/2018/carnegieloft(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://carnegieloft.co.uk/"
 				}
 			},
 			"geometry": {
@@ -183,14 +138,9 @@
 			"properties": {
 				"id": "dorothymarchant",
 				"name": "Dorothy Marchant Florists",
+				"link": "http://www.dorothymarchant.co.uk/",
 				"img": {
 					"0": "Xmas/2018/dorothymarchant(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.dorothymarchant.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -203,14 +153,9 @@
 			"properties": {
 				"id": "esspa",
 				"name": "Esspa",
+				"link": "http://www.esspa.co.uk/",
 				"img": {
 					"0": "Xmas/2018/esspa(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.esspa.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -223,14 +168,9 @@
 			"properties": {
 				"id": "funnelperring",
 				"name": "Funnell & Perring Solicitors",
+				"link": "http://www.funnellandperring.co.uk",
 				"img": {
 					"0": "Xmas/2018/funnelperring(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.funnellandperring.co.uk"
 				}
 			},
 			"geometry": {
@@ -242,14 +182,9 @@
 			"properties": {
 				"id": "greenelliott",
 				"name": "Green & Elliott Optometrists",
+				"link": "http://www.greenandelliott.co.uk/",
 				"img": {
 					"0": "Xmas/2018/greenelliott(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.greenandelliott.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -262,14 +197,9 @@
 			"properties": {
 				"id": "hh",
 				"name": "H&H Confectionery",
+				"link": "https://www.facebook.com/HandHconfectionery.co.uk/",
 				"img": {
 					"0": "Xmas/2018/hh(0)"
-				},
-				"imgattrib": {
-					"0": "Facebook"
-				},
-				"imgattriburl": {
-					"0": "https://www.facebook.com/HandHconfectionery.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -282,14 +212,9 @@
 			"properties": {
 				"id": "honeybarrett",
 				"name": "Honey Barrett",
+				"link": "http://www.honeybarrett.co.uk/",
 				"img": {
 					"0": "Xmas/2018/honeybarrett(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.honeybarrett.co.uk/"
 				}
 			},
 			"geometry": {
@@ -301,14 +226,9 @@
 			"properties": {
 				"id": "inperspective",
 				"name": "In Perspective: Arts and Craft",
+				"link": "http://www.inperspectiveart.co.uk/",
 				"img": {
 					"0": "Xmas/2018/inperspective(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.inperspectiveart.co.uk/"
 				}
 			},
 			"geometry": {
@@ -320,14 +240,9 @@
 			"properties": {
 				"id": "lacollina",
 				"name": "La Collina Gardens",
+				"link": "http://www.lacollinagardens.co.uk/",
 				"img": {
 					"0": "Xmas/2018/lacollina(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.lacollinagardens.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -340,14 +255,9 @@
 			"properties": {
 				"id": "ljcollis",
 				"name": "L.J. Collis & Co",
+				"link": "http://www.paydenspharmacy.co.uk/pharmacy_l-j-collis-&-co-bexhill.asp",
 				"img": {
 					"0": "Xmas/2018/ljcollis(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.paydenspharmacy.co.uk/pharmacy_l-j-collis-&-co-bexhill.asp"
 				}
 			},
 			"geometry": {
@@ -359,14 +269,9 @@
 			"properties": {
 				"id": "makersloft",
 				"name": "Maker's Loft",
+				"link": "https://www.facebook.com/themakersloft",
 				"img": {
 					"0": "Xmas/2018/makersloft(0)"
-				},
-				"imgattrib": {
-					"0": "Facebook"
-				},
-				"imgattriburl": {
-					"0": "https://www.facebook.com/themakersloft"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -379,14 +284,9 @@
 			"properties": {
 				"id": "mind",
 				"name": "Mind",
+				"link": "https://www.mind.org.uk/",
 				"img": {
 					"0": "Xmas/2018/mind(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "https://www.mind.org.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -399,14 +299,9 @@
 			"properties": {
 				"id": "mummery",
 				"name": "Mummery",
+				"link": "http://www.mummeryfunerals.co.uk/",
 				"img": {
 					"0": "Xmas/2018/mummery(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.mummeryfunerals.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedFirst fas fa-award'></i> First Prize"
 			},
@@ -419,11 +314,9 @@
 			"properties": {
 				"id": "number10",
 				"name": "Number10",
+				"link": "01424 211498",
 				"img": {
 					"0": "Xmas/2018/number10(0)"
-				},
-				"imgattrib": {
-					"0": "01424 211498"
 				}
 			},
 			"geometry": {
@@ -435,14 +328,9 @@
 			"properties": {
 				"id": "oxfam",
 				"name": "Oxfam",
+				"link": "https://www.oxfam.org.uk/shop/local-shops/oxfam-shop-bexhillonsea",
 				"img": {
 					"0": "Xmas/2018/oxfam(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "https://www.oxfam.org.uk/shop/local-shops/oxfam-shop-bexhillonsea"
 				}
 			},
 			"geometry": {
@@ -454,14 +342,9 @@
 			"properties": {
 				"id": "premiertravel",
 				"name": "Premier Travel",
+				"link": "http://www.premiertravelbexhill.co.uk",
 				"img": {
 					"0": "Xmas/2018/premiertravel(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.premiertravelbexhill.co.uk"
 				}
 			},
 			"geometry": {
@@ -473,14 +356,9 @@
 			"properties": {
 				"id": "saralee1",
 				"name": "Sara Lee Trust",
+				"link": "http://www.saraleetrust.org",
 				"img": {
 					"0": "Xmas/2018/saralee(western)(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.saraleetrust.org"
 				},
 				"winner": "<i class='xmasAward commendedSecond fas fa-award'></i> Second Prize"
 			},
@@ -493,14 +371,9 @@
 			"properties": {
 				"id": "saralee2",
 				"name": "Sara Lee Trust",
+				"link": "http://www.saraleetrust.org",
 				"img": {
 					"0": "Xmas/2018/saralee(endwell)(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.saraleetrust.org"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -513,14 +386,9 @@
 			"properties": {
 				"id": "scope",
 				"name": "Scope",
+				"link": "https://www.scope.org.uk/Get-Involved/charity-shops/Charity-shops-directory/Bexhill-On-Sea-charity-shop",
 				"img": {
 					"0": "Xmas/2018/scope(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "https://www.scope.org.uk/Get-Involved/charity-shops/Charity-shops-directory/Bexhill-On-Sea-charity-shop"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -533,14 +401,9 @@
 			"properties": {
 				"id": "stmichaelshospice",
 				"name": "St. Michael's Hospice",
+				"link": "http://stmichaelshospice.com",
 				"img": {
 					"0": "Xmas/2018/stmichaelshospice(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://stmichaelshospice.com"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -553,14 +416,9 @@
 			"properties": {
 				"id": "thestudio",
 				"name": "The Studio",
+				"link": "http://www.thestudiobexhill.co.uk",
 				"img": {
 					"0": "Xmas/2018/thestudio(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.thestudiobexhill.co.uk"
 				}
 			},
 			"geometry": {
@@ -572,14 +430,9 @@
 			"properties": {
 				"id": "topdog",
 				"name": "Top Dog Grooming",
+				"link": "https://www.facebook.com/topdogbexhill2/",
 				"img": {
 					"0": "Xmas/2018/topdog(0)"
-				},
-				"imgattrib": {
-					"0": "Facebook"
-				},
-				"imgattriburl": {
-					"0": "https://www.facebook.com/topdogbexhill2/"
 				}
 			},
 			"geometry": {
@@ -591,14 +444,9 @@
 			"properties": {
 				"id": "wards",
 				"name": "Wards Group",
+				"link": "http://www.wardsgroup.co.uk/",
 				"img": {
 					"0": "Xmas/2018/wards(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "http://www.wardsgroup.co.uk/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},
@@ -611,14 +459,9 @@
 			"properties": {
 				"id": "wickhambistro",
 				"name": "Wickham Bistro",
+				"link": "http://www.wickhambistro.com/",
 				"img": {
 					"0": "Xmas/2018/wickhambistro(0)"
-				},
-				"imgattrib": {
-					"0": "Website"
-				},
-				"imgattriburl": {
-					"0": "ttp://www.wickhambistro.com/"
 				},
 				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
 			},

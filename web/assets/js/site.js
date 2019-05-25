@@ -31,6 +31,26 @@ var tooltipDef = {
 	position: { my: 'left+15 top+10' }
 };
 
+// https://fancyapps.com/fancybox/
+// show popup images in lightbox
+$.extend($.fancybox.defaults, {
+	spinnerTpl: '<img id="spinner" alt="Loading..." style="opacity:0.5;" src="assets/img/spinner.gif">',
+	btnTpl: {
+		close: '<button data-fancybox-close class="fancybox-button fancybox-close" title="{{CLOSE}}"><i class="fas fa-times-circle fa-2x"></i></button>',
+		arrowLeft: '<button data-fancybox-prev class="fancybox-button fancybox-button--arrow_left" title="{{PREV}}"><i class="fas fa-caret-square-left fa-2x"></i></button>',
+		arrowRight: '<button data-fancybox-next class="fancybox-button fancybox-button--arrow_right" title="{{NEXT}}"><i class="fas fa-caret-square-right fa-2x"></i></button>'
+	},
+	idleTime: false,
+	hash: false,
+	loop: true,
+	transitionEffect: 'slide',
+	mobile: {
+		clickContent: function() { return false; },
+		clickSlide: function() { return 'close'; },
+		dblclickContent: function(current) { return current.type === 'image' ? 'zoom' : false; }
+	}
+});
+
 // set swipe triggers for touch devices
 // close sidebar
 $('.sidebar-header').on('swipeleft', function() { $('.sidebar-close').click(); });
@@ -59,7 +79,6 @@ $('.sidebar-tabs').click(function() {
 	// resize links on minimap
 	if (actTab === 'home') setTimeout(function() { $('#minimap > map').imageMapResize(); }, 500);
 	if ($(window).width() >= 768 && $(window).width() < 1300) setTimeout(function() { map.invalidateSize(); });
-	$('.sidebar-tabs ul li [href="#' + actTab + '"] .sidebar-notif').hide();
 	permalinkSet();
 });
 // no sidebar-tab
@@ -77,7 +96,7 @@ L.Map.addInitHook(function() {
 	}
 	function check_later(e) {
 		clear_h();
-		if (!$('.leaflet-popup, .leaflet-control-layers-expanded').length && !spinner) h = setTimeout(check, 500);
+		if (!$('.leaflet-popup, .leaflet-control-layers-expanded').length && !spinner && !imageOverlay.getLayers().length) h = setTimeout(check, 500);
 		function check() { that.fire('singleclick', L.Util.extend(e, { type : 'singleclick' } )); }
 	}
 	function clear_h() {
@@ -181,7 +200,7 @@ var map = new L.map('map', {
 		$('html').css('--main-color', 'darkred');
 		// new town
 		L.imageOverlay('assets/img/holidays/xmasMapTree.png', [[50.84090, 0.47320], [50.84055, 0.47370]], { opacity: 0.9 }).addTo(map);
-		// L.imageOverlay('assets/img/holidays/xmasMapLights.png', [[50.84037, 0.47415], [50.83800, 0.46980]], { opacity: 0.9 }).addTo(map);
+		//L.imageOverlay('assets/img/holidays/xmasMapLights.png', [[50.84037, 0.47415], [50.83800, 0.46980]], { opacity: 0.9 }).addTo(map);
 		// little common
 		L.imageOverlay('assets/img/holidays/xmasMapTree.png', [[50.84545, 0.43400], [50.84510, 0.43350]], { opacity: 0.9 }).addTo(map);
 		$('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/xmasSb.png">');
@@ -257,16 +276,16 @@ var map = new L.map('map', {
 		dataType: 'json',
 		cache: true,
 		success: function(result) {
-			if ($('#inputDebug').is(':checked')) console.debug(result);
 			var RatingDate = (result.RatingValue !== 'AwaitingInspection') ? new Date(result.RatingDate).toLocaleDateString(navigator.language) : 'TBC';
 			popupThis.find($('.popup-fhrs')).html(
 				'<a href="https://ratings.food.gov.uk/business/en-GB/' + result.FHRSID + '" title="Food Hygiene Rating (' + RatingDate + ')" target="_blank">' +
 				'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"></a>'
 			);
+			if ($('#inputDebug').is(':checked')) console.debug('Food Hygiene Rating:', result);
 		},
 		error: function() {
 			popupThis.find($('.popup-fhrs')).empty();
-			if ($('#inputDebug').is(':checked')) console.debug('ERROR FHRS: ' + this.url);
+			if ($('#inputDebug').is(':checked')) console.debug('ERROR FHRS:', this.url);
 		}
 	});
 	// https://www.travelinedata.org.uk/traveline-open-data/nextbuses-api/
@@ -293,7 +312,6 @@ var map = new L.map('map', {
 			'</Siri>',
 		success: function(xml) {
 			var numResults = $(xml).find('MonitoredVehicleJourney').length;
-			if ($('#inputDebug').is(':checked')) console.debug(xml);
 			if (numResults) {
 				popupThis.find($('.popup-bsTable')).empty();
 				for (var c = 0; c < numResults; c++) {
@@ -302,17 +320,18 @@ var map = new L.map('map', {
 					popupThis.find($('.popup-bsTable')).append(
 						'<tr><td>' + $(xml).find('PublishedLineName').eq(c).text() + '</td>' +
 						'<td>' + $(xml).find('DirectionName').eq(c).text() + '</td>' +
-						'<td title="' + new Date(departTime).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '">' + ((departTimer === -1) ? 'Due' : departTimer) + '</td></tr>'
+						'<td>' + ((departTimer === -1) ? 'Due' : departTimer + ' (' + new Date(departTime).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })) + ')</td></tr>'
 					);
 				}
 				popupThis.find($('.popup-bsTable')).after('<div class="popup-imgAttrib">Data: <a href="https://www.travelinedata.org.uk/" target="_blank">Traveline NextBuses</div>');
 				e.popup._adjustPan();
 			}
 			else popupThis.find($('.popup-bsTable')).html('<span class="comment">No buses due at this time.</span>');
+			if ($('#inputDebug').is(':checked')) console.debug('Nextbus:', xml);
 		},
 		error: function() {
 			popupThis.find($('.popup-bsTable').empty());
-			if ($('#inputDebug').is(':checked')) console.debug('ERROR BUSES: ' + this.url);
+			if ($('#inputDebug').is(':checked')) console.debug('ERROR BUSES:', this.url);
 		}
 	});
 	// highlight in results list and add openpopup to permalink
@@ -324,6 +343,9 @@ var map = new L.map('map', {
 	if (popupThis.find($('.popup-imgContainer')).length) {
 		// reduce height of long descriptions if image exists
 		if (popupThis.find($('.popup-longDesc')).length) popupThis.find($('.popup-longDesc')).css('--popup-long-desc-height', '150px');
+		setTimeout(function() {	for (x = 0; x < popupThis.find($('.popup-imgContainer')).length; x++) {
+			if (!popupThis.find($('#img' + x + ' .attribd')).length) getWikiAttrib(popupThis.find($('#img' + x)));
+		}}, 500);
 		$('.popup-imgContainer img')
 			.on('swiperight', function() { navImg(0); })
 			.on('swipeleft', function() { navImg(1); })
@@ -336,18 +358,6 @@ var map = new L.map('map', {
 				// error if image not found
 				popupThis.find($('.popup-imgContainer img')).attr('alt', 'Error: Image not found');
 				popupThis.find($('.popup-imgAttrib')).empty();
-			})
-			.on('click', function() {
-				// resize popup images
-				if (popupThis.find($('.imgLarge')).length) {
-					popupThis.find($('.popup-imgContainer img')).css('max-height', imgSize / 2 + 'px').removeClass('imgLarge');
-					popupThis.find($('.popup-imgContainer .imgZoom')).slideDown(200);
-				}
-				else {
-					popupThis.find($('.popup-imgContainer img')).css('max-height', imgSize).addClass('imgLarge');
-					popupThis.find($('.popup-imgContainer .imgZoom')).slideUp(200);
-				}
-				setTimeout(function() { e.popup._adjustPan(); }, 250);
 			});
 		$('.popup-imgContainer, .navigateItem')
 			.on('dragstart', false)
@@ -355,9 +365,6 @@ var map = new L.map('map', {
 		$('#img0 img')
 			.on('load', function() {
 				popupThis.find($('.popup-imgContainer img')).attr('alt', 'Image of ' + popupThis.find($('.popup-header h3')).text());
-				if ($('#inputImage').is(':checked')) popupThis.find($('#img0 img')).click();
-				else popupThis.find($('.popup-imgContainer .imgZoom')).slideDown(200);
-				getWikiAttrib($(this).parent());
 				// add padding on attribution for navigation buttons
 				if (popupThis.find($('.navigateItem')).length) {
 					var rpad = 75;
@@ -403,18 +410,10 @@ var map = new L.map('map', {
 	}
 	setOverlayLabel();
 	permalinkSet();
-}).on('zoomend', function() {
-	// resize ww2 markers depending on zoom
-	if (imgLayer === 'ww2Bombmap' || imgLayer === 'ww2Shelters') {
-		if (map.getZoom() >= 16) $('.ww2Icon').css({ 'margin-left': '-14px', 'margin-top': '-14px', 'height': '28px', 'width': '28px' });
-		else if (map.getZoom() === 15) $('.ww2Icon').css({ 'margin-left': '-10px', 'margin-top': '-10px', 'height': '20px', 'width': '20px' });
-		else if (map.getZoom() === 14) $('.ww2Icon').css({ 'margin-left': '-7px', 'margin-top': '-7px', 'height': '14px', 'width': '14px' });
-		else if (map.getZoom() <= 13) $('.ww2Icon').css({ 'margin-left': '-5px', 'margin-top': '-5px', 'height': '10px', 'width': '10px' });
-	}
 });
 function setOverlayLabel() {
 	// adds a title and hides some labels in layers control
-	if (!$('.controlTitle').length) $('.leaflet-control-layers-overlays label:contains("West Branch")').before('<div class="controlTitle">Historic overlays</div>');
+	if (!$('.controlTitle').length) $('.leaflet-control-layers-overlays label:contains("1962")').before('<div class="controlTitle">Historic overlays</div>');
 	for (var tile in tileOverlayLayer) { if (tileOverlayLayer[tile].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tile].name + '")').hide(); }
 }
 
@@ -444,20 +443,24 @@ $('#minimap > map > area').click(function() {
 
 var rQuery = false, msgStatusBox = '<div id="msgStatusHead"><i class="{headerIco} fa-lg fa-fw"></i> {headerTxt}<div class="leaflet-popup-close-button" onclick="clickOutline.clearLayers();$(\'#msgStatus\').fadeOut(200);">×</div></div><div id="msgStatusBody">{body}</div>';
 function reverseQuery(e, singlemapclick) {
-	// get location, look up id on https://photon.komoot.de
+	// get location, look up id on Nominatim
 	$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-spinner fa-pulse', headerTxt: '', body: '' }));
 	if (!singlemapclick) $('#spinner').show();
-	var geocoder = L.Control.Geocoder.photon({ reverseQueryParams: { distance_sort: true, radius: 0.05 } });
-	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
+	var geocoder = L.Control.Geocoder.nominatim({ reverseQueryParams: { format: 'jsonv2', namedetails: 1, email: email } });
+	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom() > 16 ? 18 : 17), function(results) {
 		var geoMarker = results[0] ? results[0].properties : '';
-		if ($('#inputDebug').is(':checked') && results[0]) console.debug(results[0]);
+		if ($('#inputDebug').is(':checked') && results[0]) console.debug('Reverse search Nominatim', results[0]);
 		if (geoMarker.osm_id) {
-			if (singlemapclick)	$('#msgStatus').html(L.Util.template(msgStatusBox, {
+			if (singlemapclick)	{
+				var geoName = geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '';
+				var geoRoad = geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || '';
+				$('#msgStatus').html(L.Util.template(msgStatusBox, {
 					headerIco: 'fas fa-search-location',
-					headerTxt: titleCase(geoMarker.osm_value !== 'yes' ? geoMarker.osm_value : geoMarker.osm_key),
-					body: '<a onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\')">' + (geoMarker.name ? '<b>' + geoMarker.name + '</b><br>' : '') +
-						(geoMarker.housenumber ? geoMarker.housenumber + ' ' : '') + (geoMarker.street ? geoMarker.street + ', ' : '') + (geoMarker.postcode ? geoMarker.postcode : '') + '</a>'
+					headerTxt: titleCase(geoMarker.type !== 'yes' ? geoMarker.type : geoMarker.category),
+					body: '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\')">' + (geoName ? '<b>' + geoName + '</b><br>' : '') +
+						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + ', ' : '') + (geoMarker.address.postcode ? geoMarker.address.postcode : '') + '</a>'
 				})).fadeIn(200);
+			}
 			else reverseQueryOP(geoMarker.osm_type, geoMarker.osm_id);
 		}
 		else {
@@ -503,11 +506,16 @@ function fixMyStreet(e) {
 	popupWindow('https://osm.fixmystreet.com/around?zoom=4&latitude='  + e.latlng.lat + '&longitude=' + e.latlng.lng, 'fmsWindow', 1024, 768);
 }
 function gStreetview(e) {
-	popupWindow('https://maps.google.com/?cbll=' + e.latlng.lat + ',' + e.latlng.lng + '&layer=c', 'svWindow', 1024, 768);
-}
-function imgPopup(e) {
-	// large image in window
-	popupWindow($(e).attr('src').replace('w=' + imgSize, 'w=1024'), 'imgWindow', 1034, 778);
+	// popupWindow('https://maps.google.com/?cbll=' + e.latlng.lat + ',' + e.latlng.lng + '&layer=c', 'svWindow', 1024, 768);
+	$.fancybox.open([{
+		src: 'https://www.google.com/maps/embed/v1/streetview?location=' + e.latlng.lat + '%2C' + e.latlng.lng + '&fov=90&key=' + window.BOSM.googleKey,
+		type: 'iframe',
+		opts: {
+			caption : 'Google Street View',
+			animationEffect: 'circular',
+			smallBtn: true
+		}
+	}]);
 }
 
 $('#walkList').change(function() {
@@ -630,7 +638,8 @@ $('#tourList').change(function() {
 			$('#tourFrame').contents().find('html').css('--main-color', getComputedStyle($('html')[0],null).getPropertyValue('--main-color'));
 			$('#tourLoading').hide();
 			$(this).fadeIn();
-			$(this).contents().find('sup').click(function() { tourSource(this.innerText); });
+			$(this).contents().find('sup').click(function() { tourRef(this.innerText); });
+			$(this).contents().find('sup').attr('title', 'view reference');
 		});
 	permalinkSet();
 });
@@ -772,6 +781,14 @@ function setLeaflet() {
 			quadkey: true
 		},
 		// historic
+		os1962: {
+			name: '1962 Ordnance Survey',
+			url: 'https://geo.nls.uk/mapdata3/os/britain10knatgrid/{z}/{x}/{y}.png',
+			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank">NLS Maps API</a>',
+			bounds: LBounds,
+			opacity: 1,
+			maxNativeZoom: 16
+		},
 		br1959: {
 			name: '1959 West Branch Line',
 			url: 'assets/maptiles/br1959/{z}/{x}/{y}.png',
@@ -957,7 +974,10 @@ var lc = L.control.locate({
 		enableHighAccuracy: false
 	},
 	onLocationError: function() {
-		$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-exclamation-triangle', headerTxt: 'Location Error', body: 'Sorry, we could not locate you. Try switching to HTTPS.' })).fadeIn(200);
+		$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-exclamation-triangle', headerTxt: 'Location Error',
+			body: 'Sorry, we could not locate you.' +
+				(location.protocol !== 'https:' ? ' Try switching to <a href="https:' + window.location.href.substring(window.location.protocol.length) + '">HTTPS</a>.' : '')
+		})).fadeIn(200);
 	},
 	onLocationOutsideMapBounds: function() {
 		$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'Out of Bounds', body: 'You appear to be located outside the map area. Come visit us!' })).fadeIn(200);
@@ -976,7 +996,7 @@ var geocode = L.Control.geocoder({
 	geocoder: L.Control.Geocoder.nominatim({
 		geocodingQueryParams: {
 			bounded: 1,
-			viewbox: [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north],
+			viewbox: [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(','),
 			email: email
 		}
 	}),
@@ -987,7 +1007,7 @@ var geocode = L.Control.geocoder({
 	placeholder: 'Type address or place name...'
 }).on('markgeocode', function(e) {
 	// pass nominatim address query to overpass
-	if ($('#inputDebug').is(':checked')) console.debug(e.geocode);
+	if ($('#inputDebug').is(':checked')) console.debug('Search Nominatim:', e.geocode);
 	var geoMarker = e.geocode.properties;
 	if (geoMarker.osm_id) {
 		clear_map('markers');
@@ -1005,15 +1025,19 @@ $('.leaflet-control-geocoder-icon').html('<i class="fas fa-search"></i>').attr('
 
 // switches to a tab and an optional link to tour or anchor
 function switchTab(tab, anchor, poi) {
-	if (tab !== actTab) $('a[href="#' + tab + '"]').click();
-	$('#' + (tab === 'pois' ? tab + ' #poi-icons,' : tab) + ' .sidebar-body').scrollTop(0);
-	if ((tab === 'pois' || tab === 'none') && poi) {
-		$('#poi-icons input[id=' + poi + ']').prop('checked', true);
-		poi_changed();
+	if (tab) {
+		if (tab !== actTab) $('a[href="#' + tab + '"]').click();
+		$('#' + (tab === 'pois' ? tab + ' #poi-icons,' : tab) + ' .sidebar-body').scrollTop(0);
 	}
-	else if (anchor) {
+	if (anchor) {
 		if (tab === 'tour') $('#tourList').val(anchor).trigger('change');
 		else $('a[href="#goto' + anchor + '"]').click();
+	}
+	if (poi) {
+		if (!tab && $(window).width() < 768) $('.sidebar-close').click();
+		clear_map('markers');
+		$('#poi-icons input[id=' + poi + ']').prop('checked', true);
+		poi_changed();
 	}
 }
 
@@ -1074,14 +1098,17 @@ function setRoutingControl(units) {
 		geocoder: L.Control.Geocoder.nominatim({
 			geocodingQueryParams: {
 				bounded: 1,
-				viewbox: [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north]
+				viewbox: [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(',')
 			}
 		})
 	})
 	.on('waypointschanged', function(e) {
 		permalinkSet();
-		if (actTab !== 'walking') setTimeout(function() { 
-			if (e.waypoints[0].latLng) $('.sidebar-tabs ul li [href="#walking"] .sidebar-notif').text($('.leaflet-marker-draggable').length).show();
+		setTimeout(function() { 
+			if (e.waypoints[0].latLng) {
+				$('.sidebar-tabs ul li [href="#walking"] .sidebar-notif').text($('.leaflet-marker-draggable').length).show();
+				if ($('#inputDebug').is(':checked')) console.debug('Walkpoint Nominatim:', e.waypoints);
+			}
 			else $('.sidebar-tabs ul li [href="#walking"] .sidebar-notif').hide();
 		}, 50);
 	})
@@ -1247,27 +1274,27 @@ if (!noIframe) $('#devTools').hide();
 $('#devTools').accordion({
 	heightStyle: 'content',
 	collapsible: true,
-	active: $('#inputDebug').is(':checked') ? 0 : false
-});
-$('#devTools h3').click(function() {
-	$('#inputAttic, #inputOverpass').val('');
-	if ($(this).attr('aria-expanded') === 'false') $('#inputDebug').prop('checked', false);
+	active: $('#inputDebug').is(':checked') ? 0 : false,
+	activate: function(event, ui) { if (ui.oldPanel[0]) $('#inputDebug').prop('checked', false).trigger('change'); }
 });
 $('#inputDebug').change(function() {
 	if ($(this).is(':checked')) {
+		$('#devTools').accordion({ collapsible: false });
+		$('.sidebar-tabs ul li [href="#settings"] .sidebar-notif').show();
 		map.setMaxBounds();
-		$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-bug', headerTxt: 'Debug Mode', body: 'Output to console and boundary unlocked.' })).show();
 	}
 	else {
+		$('#devTools').accordion({ collapsible: true });
+		$('.sidebar-tabs ul li [href="#settings"] .sidebar-notif').hide();
+		$('#inputAttic, #inputOverpass').val('');
 		map.setMaxBounds(LBounds.pad(0.5));
-		$('#msgStatus').hide();
 	}
 });
 $('#inputDebug').trigger('change');
 $('#inputOverpass').keydown(function(e) {
 	if (e.keyCode == $.ui.keyCode.ENTER && $(this).val()) {
 		clear_map('all');
-		$('#inputDebug').prop('checked', true);
+		$('#inputDebug').prop('checked', true).trigger('change');
 		if ($(this).val().indexOf('[') !== 0) $(this).val('[' + $(this).val() + ']');
 		show_overpass_layer('(nwr' + $(this).val() + ';);', '');
 	}
@@ -1338,7 +1365,7 @@ function poi_changed(newcheckbox) {
 			if (window.localStorage.favourites) show_overpass_layer('(' + window.localStorage.favourites + ');');
 			else {
 				clear_map('markers');
-				$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'Bookmarks', body: 'Add your favourite places by clicking the bookmark icon within a popup.' })).fadeIn(200);
+				$('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'Bookmarks', body: 'Add your favourite places by clicking <i class="far fa-bookmark fa-fw"></i> within a popup.' })).fadeIn(200);
 			}
 		}
 		else if (poiChk.is(':checked')) {
@@ -1389,7 +1416,7 @@ function getTips(tip) {
 		'Find any address by entering part of it into Search <i class="fas fa-search fa-sm"></i> and pressing enter.',
 		'Almost street in Bexhill has a history behind its name, Search <i class="fas fa-search fa-sm"></i> for a road to learn more.',
 		'Click a bus-stop <i class="fas fa-bus fa-sm"></i> to see real-time information on arrivals.',
-		'Click a letter-box <i class="fas fa-envelope fa-sm"></i> to see todays last post collection.',
+		'Click a post-box <i class="fas fa-envelope fa-sm"></i> to see todays last post collection.',
 		'Use the mouse wheel or swipe to see the next image in a pop-up. Click "View image" to see it in a larger size.',
 		'Click <i class="fas fa-location-arrow fa-sm"></i> to turn on your location and see POIs ordered by distance.',
 		'Choose between miles or kilometres in <a onclick="switchTab(\'settings\');">Settings <i class="fas fa-cog fa-sm"></i></a>.',
@@ -1446,9 +1473,10 @@ function showWeather() {
 				).attr('title', 'Current weather in ' + data.name);
 			}
 			else this.error();
+			if ($('#inputDebug').is(':checked')) console.debug('Openweathermap:', data);
 		},
 		error: function() {
-			if ($('#inputDebug').is(':checked')) console.debug('ERROR WEATHER: ' + this.url);
+			if ($('#inputDebug').is(':checked')) console.debug('ERROR WEATHER:', this.url);
 			$('#weather').hide();
 		}
 	});
@@ -1482,15 +1510,17 @@ function showEditFeed() {
 				$('#osmFeed a')
 					.attr('onClick', 'return window.confirm("This link will open an external website to review, continue?")')
 					.attr('target', '_blank');
+				if ($('#inputDebug').is(':checked')) console.debug('OSM feed:', data);
 			}
 			else this.error();
 		},
-		error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-FEED: ' + this.url); }
+		error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-FEED:', this.url); }
 	});
 }
 
 // https://github.com/medialize/URI.js
-// M = basemap, O = overlay, OP = overlay opacity, S = settings, T = tab, U = tour frame, G = image layer, P = grouped pois, I = single poi, Q = geocode query, W = walkpoints
+// M = basemap, O = overlay, OP = overlay opacity, S = settings, T = tab, U = tour frame, G = image layer, P = grouped pois, I = single poi, W = walkpoints
+// search = geocode query, data = overpass query
 function permalinkSet() {
 	var uri = URI(window.location.href);
 	var selectedPois = '', walkCoords = '', settingChk, tourPage, overlayOpacity, c;
@@ -1579,10 +1609,16 @@ function permalinkReturn() {
 			rQuery = true;
 			setTimeout(function() { show_overpass_layer(elementType(singlePoi) + '(' + singlePoi.slice(1) + ');', singlePoi.toUpperCase()); }, 500);
 		}
-		else if (uri.hasQuery('Q')) {
+		else if (uri.hasQuery('search')) {
 			$('.leaflet-control-geocoder-icon').click();
-			$('.leaflet-control-geocoder-form input').val(uri.search(true).Q);
+			$('.leaflet-control-geocoder-form input').val(decodeURIComponent(uri.search(true).search));
 			geocode._geocode();
+		}
+		else if (uri.hasQuery('data')) {
+			$('#devTools').accordion({ active: 0 });
+			$('#inputDebug').prop('checked', true).trigger('change');
+			$('#inputOverpass').val(decodeURIComponent(uri.search(true).data));
+			setTimeout(function() { show_overpass_layer('(nwr' + decodeURIComponent(uri.search(true).data) + ';);', ''); }, 500);
 		}
 	}
 	else $('#inputUnit').trigger('change');

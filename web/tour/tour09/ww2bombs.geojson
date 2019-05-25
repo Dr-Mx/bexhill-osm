@@ -195,7 +195,7 @@
 				"name": "Glyne Gap Field",
 				"date": "1944-06-22",
 				"description": "V-1 flying bomb. 2 injured in Kent Close.",
-				"type": "v1"
+				"type": "V-1"
 			},
 			"geometry": {
 				"type": "Point",
@@ -1601,7 +1601,7 @@
 				"name": "Bexhill Golf Course",
 				"date": "1943-08-12",
 				"description": "Land mine.",
-				"type": "lndmn"
+				"type": "landmine"
 			},
 			"geometry": {
 				"type": "Point",
@@ -1613,7 +1613,7 @@
 				"name": "Bexhill Golf Course",
 				"date": "1944-07-07",
 				"description": "V-1 flying bomb. 7 injured.",
-				"type": "v1"
+				"type": "V-1"
 			},
 			"geometry": {
 				"type": "Point",
@@ -1795,7 +1795,7 @@
 				"name": "Coniston, 7 Hartfield Road",
 				"date": "1944-08-12",
 				"description": "V-1 flying bomb. Gunner William Lines 1085602 of the 150/71 Field Regiment Royal artillery killed in an adjoining property.",
-				"type": "v1",
+				"type": "V-1",
 				"img": {
 					"0": "09/bomb/hartfieldroad"
 				}
@@ -1820,7 +1820,7 @@
 				"name": "Cooden Golf Links",
 				"date": "1940-12-15",
 				"description": "Land mine.",
-				"type": "lndmn"
+				"type": "landmine"
 			},
 			"geometry": {
 				"type": "Point",
@@ -1975,7 +1975,7 @@
 				"name": "Glovers Farm, Glovers Lane",
 				"date": "1944-06-26",
 				"description": "V-1 flying bomb. 8 injured, including 1 hospitalised, 5 cattle killed.",
-				"type": "v1",
+				"type": "V-1",
 				"img": {
 					"0": "09/bomb/gloversfarm"
 				}
@@ -2063,7 +2063,7 @@
 				"name": "Highwoods Golf Course",
 				"date": "1944-07-03",
 				"description": "V-1 flying bomb.",
-				"type": "v1"
+				"type": "V-1"
 			},
 			"geometry": {
 				"type": "Point",
@@ -2145,7 +2145,7 @@
 				"name": "Maple Walk",
 				"date": "1944-07-14",
 				"description": "V-1 flying bomb. Damaged a residential dwelling named High Chimneys (now known as Maple House). 2 injured, including 1 hospitalised.",
-				"type": "v1"
+				"type": "V-1"
 			},
 			"geometry": {
 				"type": "Point",
@@ -2181,7 +2181,7 @@
 				"name": "Metropolitan Convalescent Home, Upper Sea Road",
 				"date": "1944-08-12",
 				"description": "V-1 flying bomb.",
-				"type": "v1"
+				"type": "V-1"
 			},
 			"geometry": {
 				"type": "Point",
@@ -2466,7 +2466,7 @@
 				"name": "Pebsham Marsh",
 				"date": "1944-07-11",
 				"description": "V-1 flying bomb.",
-				"type": "v1"
+				"type": "V-1"
 			},
 			"geometry": {
 				"type": "Point",
@@ -2611,7 +2611,7 @@
 				"name": "Richmond Road",
 				"date": "1944-06-19 23:00",
 				"description": "V-1 flying bomb. The first that landed on the town. Damaged residential property and broke windows at St. Augustine's Church. Left a 30-ft-deep crater. 20 injured, including 10 hospitalised.",
-				"type": "v1",
+				"type": "V-1",
 				"img": {
 					"0": "09/bomb/richmondroad"
 				}
@@ -2841,7 +2841,7 @@
 				"name": "The Grange, Upper Sea Road",
 				"date": "1944-07-22 16:35",
 				"description": "V-1 flying bomb. Landed in the garden grounds partially wrecking the house, also caused damage to the Bell Hotel and other adjacent properties. 27 injured, including 7 hospitalised, 1 horse killed.",
-				"type": "v1",
+				"type": "V-1",
 				"img": {
 					"0": "09/bomb/thegrange"
 				}
@@ -2856,7 +2856,7 @@
 				"name": "The Mount",
 				"date": "1944-07-03",
 				"description": "V-1 flying bomb. 1 person injured.",
-				"type": "v1"
+				"type": "V-1"
 			},
 			"geometry": {
 				"type": "Point",
@@ -2969,7 +2969,7 @@
 				"name": "Wealden Way",
 				"date": "1944-07-19",
 				"description": "V-1 flying bomb. House wrecked, 4 injured.",
-				"type": "v1",
+				"type": "V-1",
 				"img": {
 					"0": "09/bomb/wealdenway"
 				}
@@ -3144,7 +3144,7 @@
 				"name": "Worsham Manor, Worsham Lane",
 				"date": "1944-07-22",
 				"description": "V-1 flying bomb. 2 horses injured.",
-				"type": "v1"
+				"type": "V-1"
 			},
 			"geometry": {
 				"type": "Point",
@@ -3176,7 +3176,7 @@
 				"name": "B-17 Flying Fortress",
 				"date": "1943-09-06",
 				"description": "In sea south of Clock tower. B-17 ditched due to lack of petrol. Crew of 10 rescued from the sea.",
-				"type": "acrft",
+				"type": "aircraft",
 				"img": {
 					"0": "09/aircraft/b17(0)",
 					"1": "09/aircraft/b17(1)"
@@ -3192,7 +3192,7 @@
 				"name": "Junkers Ju 88",
 				"date": "1940-07-28 05:14",
 				"description": "Buckholt Farm. Forced landed due to petrol shortage. Crew of four made POW.",
-				"type": "acrft",
+				"type": "aircraft",
 				"img": {
 					"0": "09/aircraft/ju88(0)",
 					"1": "09/aircraft/ju88(1)"
@@ -3211,7 +3211,7 @@
 				"name": "Spitfire I",
 				"date": "1940-12-27 15:45",
 				"description": "100 yards east of Freezelands Farm building. Forced landing due to lack of petrol. Pilot hit hedge on landing and machine overturned. Sergeant Pilot Mills injured.",
-				"type": "acrft"
+				"type": "aircraft"
 			},
 			"geometry": {
 				"type": "Point",
@@ -3223,7 +3223,7 @@
 				"name": "Spitfire XIV + Tempest V",
 				"date": "1944-07-31",
 				"description": "Picknells Green, Hooe. Mid-air collision. On anti-V-1 patrol. Flying Officer Patrick Schade (pictured) and Flight Sergeant Archie Wilson both killed.",
-				"type": "acrft",
+				"type": "aircraft",
 				"img": {
 					"0": "09/aircraft/spitfireXIV"
 				},
@@ -3241,7 +3241,7 @@
 				"name": "B-24 Liberator",
 				"date": "1943-12-31",
 				"description": "Recreation ground, Bulverhythe. B-24 crashed on return from mission. Crew believed safe, no other details.",
-				"type": "acrft"
+				"type": "aircraft"
 			},
 			"geometry": {
 				"type": "Point",
