@@ -6,7 +6,7 @@
 
 Searchable OpenStreetMap data showing POIs, walking directions, overlays, history and other information for the town of Bexhill-on-Sea, UK
 
-![Image of Bexhill-OSM](http://bexhill-osm.org.uk/assets/img/preview.jpg)
+![Image of Bexhill-OSM](http://bexhill-osm.org.uk/assets/img/og-preview.jpg)
 
 ## Features
 - Mobile and desktop friendly
@@ -15,8 +15,10 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - Bookmark favourite POIs
   - Facility icons
     - Wheelchair (key:wheelchair)
+    - Hearing induction loop (key:hearing_impaired:induction_loop)
+    - Braille (key:tactile_writing:braille)
     - Internet (key:internet_access)
-    - Dog (key:dog)
+    - Dog friendly (key:dog)
     - Toilets (key:male, key:female, key:unisex, key:diaper)
     - Recycling types (key:recycling:\*)
     - Telephone (key:sms)
@@ -31,22 +33,21 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - Last postbox collection time state (key:collection_times)
   - UK Food Hygiene Rating System API (key:fhrs:id)
   - Real-time Traveline API information on bus-stops (key:naptan:AtcoCode)
-  - Multiple image support including Wikimedia Commons API (key:wikimedia_commons, key:image, key:image_1, key:image_2, etc)
+  - Multiple image support including Wikimedia Commons API (key:wikimedia_commons, key:image)
   - 360 spherical panorama support using Wikimedia Commons (key:image:360)
 - Find an address by searching (Nominatim > Overpass)
 - Query any feature on map (Nominatim > Overpass)
-- Selected place on map becomes highlighted (OpenStreetMap API)
+- Building highlight on select (OpenStreetMap API)
 - Manually select groups of POIs from list or using a keyword
-- Group POI result list with current open state
+- POI result list with current opening_hours / collection_times state
 - Detailed walking directions with Mapbox API
-- View suggested walking routes
-- Geolocate user and get walking directions from that point
-- Historic tour articles that link to various overlays on the map
+- Geolocate user
+- History Tour articles that link to various overlays on the map
 - Direct link to edit an element on OSM or leave a note
-- Share current map state with dynamic permalink
+- Share any current map state with dynamic permalink
 - Various settings to adjust map display
 - OpenWeatherMap API
-- Debugging tools
+- Various debugging tools
 
 ## Attribution
 
