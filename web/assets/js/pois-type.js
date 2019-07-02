@@ -78,7 +78,7 @@ var pois = {
 		query: 'nwr[historic][historic!~boundary_stone];',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque'],
+		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque', 'war'],
 		tagParser: historic_parser
 	},
 
@@ -162,7 +162,7 @@ var pois = {
 		query: 'nwr[amenity=boat_rental];',
 		iconName: 'rowboat',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['boat', 'rental']
+		tagKeyword: ['boat', 'rental', 'children']
 	},
 
 	amusement_arcade: {
@@ -170,7 +170,7 @@ var pois = {
 		query: 'nwr[leisure=amusement_arcade];',
 		iconName: 'casino-2',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['amusement-arcade', 'gamble']
+		tagKeyword: ['amusement-arcade', 'gamble', 'children']
 	},
 
 	// AMENITIES - 85929e - 7e5109 - 2980b9 - d4ac0d - 45b39d
@@ -452,8 +452,7 @@ var pois = {
 		query: 'nwr[amenity~"school|college"][name];',
 		iconName: 'school2',
 		catName: 'Services',
-		tagKeyword: ['school', 'college', 'education'],
-		tagParser: school_parser
+		tagKeyword: ['school', 'college', 'education']
 	},
 
 	kindergarten: {
@@ -461,8 +460,7 @@ var pois = {
 		query: 'nwr[amenity=kindergarten];',
 		iconName: 'daycare',
 		catName: 'Services',
-		tagKeyword: ['daycare', 'kindergarten', 'nursery'],
-		tagParser: school_parser
+		tagKeyword: ['daycare', 'kindergarten', 'nursery', 'children']
 	},
 
 	place_of_worship: {

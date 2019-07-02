@@ -1,3 +1,12 @@
+.spinner {
+	opacity: 0.85;
+	position: absolute;
+	z-index: 1500;
+	background: url('../../assets/img/spinner.gif') center no-repeat;
+	height: 100%;
+	width: 100%;
+	pointer-events: none;
+}
 :root {
     --main-color: #b05000;
 	--btn-hover-color: #f4f4f4;
@@ -6,6 +15,11 @@
 .theme {
 	color: #b05000;
 	color: var(--main-color);
+}
+#map {
+	background: #cb9b73;
+	background: linear-gradient(var(--main-color), #e6e6e6);
+	transition: background 3s;
 }
 @font-face {
 	font-family: BerlinSans;
@@ -25,6 +39,9 @@ html, body, #map {
 	body {
 		font-size: 10pt;
 	}
+}
+input, select, button {
+	font-size: 10pt;
 }
 
 input[type=text], input[type=date], input[type=number] {
@@ -47,13 +64,9 @@ input[type=text], input[type=date], input[type=number] {
 	padding: 1px 2px;
 	filter: drop-shadow(0px 0px 1px black);
 	display: none;
+	z-index: 1;
 }
 
-#map {
-	background: #cb9b73;
-	background: linear-gradient(var(--main-color), #e6e6e6);
-	transition: background 3s;
-}
 
 #homeBox, #xmasMsg {
 	max-width: 500px;
@@ -198,7 +211,7 @@ h3 {
 	color: var(--main-color);
 }
 #devTools h3::after, .popup-ohContainer .popup-tagValue::after {
-	font-family: 'Font Awesome 5 Free';
+	font-family: 'Font Awesome 5 Pro';
 	font-weight: 900;
 	content: '\f0da';
 	margin-left: 10px;
@@ -264,7 +277,7 @@ h3 {
 	display: none;
 	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 	font-size: 10pt;
-	width: 250px;
+	min-width: 250px;
 	max-width: calc(80vw - 50px);
 	border-radius: 10px;
 	margin-bottom: 15vh;
@@ -318,18 +331,6 @@ h3 {
 	font-weight: bold;
 }
 
-#spinner {
-	color: white;
-	font-weight: bold;
-	opacity: 0.85;
-	width: 6em;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 1500;
-	pointer-events: none;
-}
 #userLoc h3 {
 	text-align: center;
 	margin: 7px 0 14px 0;
@@ -585,6 +586,40 @@ select:hover:enabled, #poi-results button:hover {
 	background-color: rgba(190, 190, 190, 0.5);
 	cursor: pointer;
 }
+#poi-filter {
+	position: relative;
+	height: 28px;
+	margin: 14px 0;
+}
+#poi-filter-in {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	line-height: 28px;
+	padding: 0 25px 0 12px;
+	width: calc(100% - 38px);
+}
+#poi-filter-cl {
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+	cursor: pointer;
+}
+#poi-filter-cl::after {
+	position: absolute;
+	width: 20px;
+	height: 0;
+	right: 1px;
+	top: 5px;
+	font-size: 18px;
+	font-weight: bold;
+	content: "\00d7";
+	text-align: center;
+	color: var(--main-color);
+	padding-bottom: 20px;
+}
+#poi-group a {
+	display: none;
+}
 #poi-icons {
 	height: auto;
 	padding: 0 15px;
@@ -595,8 +630,9 @@ select:hover:enabled, #poi-results button:hover {
 #poi-bookm {
 	width: auto;
 	position: absolute;
-	margin: 8px;
-	right: 0;
+	margin: 12px;
+	right: 2px;
+	top: 36px;
 }
 #poi-bookm label {
 	width: auto;
@@ -826,14 +862,14 @@ input:checked + .slider::before {
 }
 
 /* information tab */
-#information ul {
+#info ul {
 	padding-left: 10px;
 	list-style-type: none;
 }
-#information #gotosoftware > ul {
+#info #gotosoftware > ul {
 	margin-top: 5px;
 }
-#information td:hover {
+#info td:hover {
 	filter: brightness(80%);
 	transition: filter 100ms;
 }
@@ -1025,6 +1061,7 @@ input:checked + .slider::before {
 	padding-top: 4px;
 	line-height: 6pt;
 	font-size: 6pt;
+	min-height: 5px;
 }
 .popup-imgAttrib, .popup-imgAttrib a {
 	color: #808080;
@@ -1150,7 +1187,6 @@ input:checked + .slider::before {
 }
 .popup-xmas .popup-imgContainer img {
 	border-color: #966464;
-	margin-bottom: 5px;
 }
 .popup-xmas .popup-imgAttrib, .popup-xmas .popup-imgAttrib a {
 	font-size: 8pt;

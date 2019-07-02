@@ -43,8 +43,10 @@ img {
 }
 
 .bombKey {
-	font-size: 20pt;
-	line-height: 10pt;
+	display: inline-block;
+	font-size: 35pt;
+	line-height: 11pt;
+	vertical-align: middle;
 	-webkit-text-stroke: 1px black;
 	opacity: 0.75;
 }

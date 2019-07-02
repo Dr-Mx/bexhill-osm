@@ -5,7 +5,7 @@ function show_overpass_layer(query, cacheId) {
 	if (!query || query === '();') return;
 	// show spinner, disable poi checkboxes
 	$('.poi-checkbox').addClass('poi-loading');
-	$('#spinner').show();
+	$('.spinner').show();
 	if ($('#inputAttic').val()) query = '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"];(' + query + ');';
 	else query = ';' + query;
 	var opl = new L.OverPassLayer({
@@ -21,11 +21,8 @@ function show_overpass_layer(query, cacheId) {
 L.OverPassLayer = L.FeatureGroup.extend({
 	options: {
 		statusMsg: function(indicatorMsg, errCode) {
-			if (errCode) {
-				$('#spinner').fadeOut(200);
-				indicatorMsg = L.Util.template(msgStatusBox, { headerIco: 'fas fa-exclamation-triangle', headerTxt: 'ERROR #' + errCode, body: indicatorMsg });
-			}
-			$('#msgStatus').html(indicatorMsg).show();
+			$('.spinner').fadeOut(200);
+			setMsgStatus('fas fa-exclamation-triangle', 'ERROR #' + errCode, indicatorMsg, 1);
 		}
 	},
 	initialize: function (options) {
@@ -59,8 +56,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			datatype: 'xml',
 			success: function (xml) {
 				self.options.callback.call(reference, xml);
-				if (poiList.length === 0 && $('#inputOpen').is(':checked')) $('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'No POIs found', body: 'Please try turning off "only show open" in options.' })).show();
-				else if (poiList.length === 0 && !rQuery) $('#msgStatus').html(L.Util.template(msgStatusBox, { headerIco: 'fas fa-info-circle', headerTxt: 'No POIs found', body: 'Please try another area or query.' })).show();
+				if (poiList.length === 0 && $('#inputOpen').is(':checked')) setMsgStatus('fas fa-info-circle', 'No POIs found', 'Please try turning off "only show open" in options.', 1);
+				else if (poiList.length === 0 && !rQuery) setMsgStatus('fas fa-info-circle', 'No POIs found', 'Please try another area or query.', 1);
 				// if not in iframe cache to local storage
 				if (self.options.cacheId && !$('#inputAttic').val()) {
 					eleCache[self.options.cacheId] = xml;

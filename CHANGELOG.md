@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v5.4.0 - Filter POIs
+
+**Date:** 02/07/2019
+
+Updated js
+ - jQuery 3.4.1
+
+Site changes
+ - Filter list of POIs based on keyword input
+ - Simplified message status box
+ - Move bookmarks button to map control
+ - Changed spinner to use background-image
+ - Add 'noopener' to links
+ - Updated icon for History Tour
+ - As always, many other bug fixes and improvements
+
+
 ## v5.3.0 - Lightbox library
 
 **Date:** 25/05/2019

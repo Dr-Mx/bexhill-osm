@@ -469,7 +469,7 @@
 	</street>
 	<street>
 		<name>Channel View</name>
-		<date>1905</date>
+		<date>1901</date>
 		<desc>Descriptive name from this wide pedestrian walkway's position on the seafront looking out over the English Channel. On some early maps it is described as part of Central Parade. Street directories up to about 1915 occasionally used the name Channel Side for this street.</desc>
 	</street>
 	<street>
@@ -1399,6 +1399,11 @@
 		<name>High Peartree Lane</name>
 		<date>road ~1841; name 1925</date>
 		<desc>Name sometimes used to describe Peartree Lane from the Turkey Road and Whydown Road crossroads to Ninfield Road. High Peartree Wood is at the southern end of High Woods. The outline of the lane can be seen on an Ordnance Survey map 1795 - 1825. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
+	</street>
+	<street>
+		<name>High Street</name>
+		<date>before 1841</date>
+		<desc>High streets were originally so named because they were in an elevated position, clear of flood water and likely to be easier to travel along, as is the case in Bexhill Old Town. Since these streets generally attracted shops and inns as a result, the name later became synonymous with the main street of a town.This is one of Bexhill’s old parish streets and its outline can be seen on an Ordnance Survey map 1795 –1825.(Adopted at an unknown date as a publicly maintainable highway [Trunk Road] under the 1835 Highways Act until the opening of King Offa Way in 1980).</desc>
 	</street>
 	<street>
 		<name>Highwoods Avenue</name>

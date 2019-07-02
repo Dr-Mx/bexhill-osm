@@ -58,7 +58,7 @@ function tour(ti, fromPermalink) {
 		}
 		if (feature.properties.link) {
 			markerPopup += '<span class="popup-tagValue"><a class="popup-truncate" style="max-width:' + imgSize + 'px" href="' + feature.properties.link +
-				'" target="_blank" title="' + feature.properties.link + '">' + feature.properties.link + '</a></span>';
+				'" target="_blank" rel="noopener" title="' + feature.properties.link + '">' + feature.properties.link + '</a></span>';
 		}
 		if (feature.properties.img) {
 			var imgIcon = 'image';
@@ -87,7 +87,7 @@ function tour(ti, fromPermalink) {
 			xmasYear = '2017';
 			/* falls through */
 		case 'xmas2018':
-			$('#spinner').show();
+			$('.spinner').show();
 			$.ajax({
 				url: 'tour/tourXmas/' + xmasYear + '/' + xmasYear + '.geojson',
 				dataType: 'json',
@@ -116,13 +116,13 @@ function tour(ti, fromPermalink) {
 					setTimeout(pushPoiList, 250);
 					setPageTitle('Xmas Window Competition ' + xmasYear);
 					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]]._layers[markerId].openPopup().stopBounce();
-					$('#spinner').fadeOut('fast');
+					$('.spinner').fadeOut('fast');
 				}
 			});
 			imgLayer = ti;
 			break;
 		case 'fossils':
-			$('#spinner').show();
+			$('.spinner').show();
 			$.ajax({
 				url: dfltDir + '01/dinofoot.geojson',
 				dataType: 'json',
@@ -144,7 +144,7 @@ function tour(ti, fromPermalink) {
 					setTimeout(pushPoiList, 250);
 					setPageTitle('Dinosaur Footprints');
 					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]]._layers[markerId].openPopup();
-					$('#spinner').fadeOut('fast');
+					$('.spinner').fadeOut('fast');
 				}
 			});
 			imgLayer = ti;
@@ -205,9 +205,9 @@ function tour(ti, fromPermalink) {
 			show_overpass_layer('way(364593716);', ti);
 			break;
 		case 'ww2Bombmap':
-			$('#spinner').show();
+			$('.spinner').show();
 			// bomb radius outline
-			for (var x = 1; x <= 5; x++) {
+/*			for (var x = 1; x <= 5; x++) {
 				imageOverlay.addLayer(L.circle([50.84150, 0.47150], {
 					color: 'darkred',
 					weight: 2,
@@ -219,7 +219,7 @@ function tour(ti, fromPermalink) {
 					sticky: true
 				}));
 			}
-			// bomb markers
+*/			// bomb markers
 			$.ajax({
 				url: dfltDir + '09/ww2bombs.geojson',
 				dataType: 'json',
@@ -258,13 +258,13 @@ function tour(ti, fromPermalink) {
 					setTimeout(pushPoiList, 250);
 					setPageTitle('WWII Bomb Map');
 					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[Object.keys(imageOverlay._layers).length - 1]]._layers[markerId].openPopup().stopBounce();
-					$('#spinner').fadeOut('fast');
+					$('.spinner').fadeOut('fast');
 				}
 			});
 			imgLayer = ti;
 			break;
 		case 'ww2Shelters':
-			$('#spinner').show();
+			$('.spinner').show();
 			$.ajax({
 				url: dfltDir + '09/ww2shelters.geojson',
 				dataType: 'json',
@@ -288,7 +288,7 @@ function tour(ti, fromPermalink) {
 					setTimeout(pushPoiList, 250);
 					setPageTitle('WWII Air-raid Shelters');
 					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]]._layers[markerId].openPopup().stopBounce();
-					$('#spinner').fadeOut('fast');
+					$('.spinner').fadeOut('fast');
 				}
 			});
 			imgLayer = ti;
@@ -328,7 +328,7 @@ function tour(ti, fromPermalink) {
 			imgLayer = ti;
 			break;
 		case 'lost':
-			$('#spinner').show();
+			$('.spinner').show();
 			$.ajax({
 				url: dfltDir + '13/lost.geojson',
 				dataType: 'json',
@@ -350,7 +350,7 @@ function tour(ti, fromPermalink) {
 					setTimeout(pushPoiList, 250);
 					setPageTitle('Lost Heritage');
 					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]]._layers[markerId].openPopup();
-					$('#spinner').fadeOut('fast');
+					$('.spinner').fadeOut('fast');
 				}
 			});
 			imgLayer = ti;
@@ -366,7 +366,7 @@ function tour(ti, fromPermalink) {
 			imgLayer = ti;
 			break;
 		case 'martello':
-			$('#spinner').show();
+			$('.spinner').show();
 			$.ajax({
 				url: dfltDir + '16/martello.geojson',
 				dataType: 'json',
@@ -394,7 +394,7 @@ function tour(ti, fromPermalink) {
 					setTimeout(pushPoiList, 250);
 					setPageTitle('Martello Towers');
 					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]]._layers[markerId].openPopup().stopBounce();
-					$('#spinner').fadeOut('fast');
+					$('.spinner').fadeOut('fast');
 				}
 			});
 			imgLayer = ti;
