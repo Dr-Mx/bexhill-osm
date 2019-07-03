@@ -68,7 +68,7 @@ $('#tour')
 
 // smooth scrolling to anchor
 $(document).on('click', 'a[href*="#goto"]', function(e) {
-	var target = $('[id=' + this.hash.slice(1) + ']');
+	var target = $('#' + this.hash.slice(1));
 	if (actTab === 'pois' && $('#poi-results').is(':visible')) $('#poi-icons').stop().animate({ scrollTop: target.offset().top - 55 - $('#poi-results').height() }, 1000);
 	else $('#poi-icons, .sidebar-body').stop().animate({ scrollTop: target.offset().top - 55 }, 1000);
 	e.preventDefault();
@@ -432,6 +432,18 @@ var map = new L.map('map', {
 	}
 	setOverlayLabel();
 	permalinkSet();
+}).on('moveend', function() {
+	// offset overlay, converts metres to pixels
+	if (actOverlayLayer && tileOverlayLayer[actOverlayLayer].offset) tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].on('load', function() {
+		setTimeout(function() {
+			var overlayContainer = tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]._container || tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]._currentOverlay._image;
+			var metresPerPixel = 40075017 * Math.cos(map.getCenter().lat * (Math.PI/180)) / Math.pow(2, map.getZoom()+8);
+			$(overlayContainer).css({
+				'left': Math.floor(tileOverlayLayer[actOverlayLayer].offset[0] / metresPerPixel) + 'px',
+				'top': Math.floor(tileOverlayLayer[actOverlayLayer].offset[1] / metresPerPixel) + 'px'
+			});
+		}, 0);
+	}); 
 });
 function setOverlayLabel() {
 	// adds a title and hides some labels in layers control
@@ -758,7 +770,7 @@ function setLeaflet() {
 		baseTileList.name.push(tileBaseLayer[tile].name);
 		baseTileList.keyname.push(tile);
 	}
-	// overlays
+	// overlays, you can set an offset by using metres (offset: [left, top])
 	tileOverlayLayer = {
 		lidar: {
 			name: 'Lidar DTM 2m',
@@ -793,7 +805,8 @@ function setLeaflet() {
 				transparent: true
 			},
 			attribution: '<a href="https://eservices.landregistry.gov.uk/eservices/FindAProperty/view/LrInspireIdInit.do" target="_blank" rel="noopener">HM Land Registry</a>',
-			opacity: 0.7
+			opacity: 0.7,
+			offset: [2, 2]
 		},
 		bing: {
 			name: 'Bing Satellite',
@@ -827,7 +840,8 @@ function setLeaflet() {
 			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
-			maxNativeZoom: 19
+			maxNativeZoom: 19,
+			offset: [2, 2]
 		},
 		arp1942: {
 			name: '1942 Air Raid Precautions',
@@ -851,7 +865,8 @@ function setLeaflet() {
 			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Crown Copyright Ordnance Survey</a>',
 			bounds: LBounds,
 			opacity: 1,
-			maxNativeZoom: 17
+			maxNativeZoom: 17,
+			offset: [-2, -2]
 		},
 		os1909: {
 			name: '1909 Ordnance Survey',
@@ -861,7 +876,8 @@ function setLeaflet() {
 			opacity: 1,
 			minZoom: 13,
 			minNativeZoom: 14,
-			maxNativeZoom: 17
+			maxNativeZoom: 17,
+			offset: [2, 2]
 		},
 		mt1902: {
 			name: '1902 Motor Track',
@@ -1108,7 +1124,7 @@ function switchTab(tab, anchor, poi) {
 	if (poi) {
 		if (!tab && $(window).width() < 768) $('.sidebar-close').click();
 		clear_map('markers');
-		$('#poi-icons input[id=' + poi + ']').prop('checked', true);
+		$('#' + poi).prop('checked', true);
 		poi_changed();
 	}
 }
@@ -1444,16 +1460,18 @@ function poi_changed(newcheckbox) {
 	else {
 		// flash selected pois when max number reached
 		poiChk.parent().fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
-		$('[id=' + newcheckbox + ']').prop('checked', false);
+		$('#' + newcheckbox).prop('checked', false);
 	}
 	$('.poi-checkbox input').trigger('change');
 }
 // checkbox highlight
 $('.poi-checkbox input').change(function() {
 	var that = this;
-	if ($(that).prop('checked')) $(that).parent().addClass('poi-checkbox-selected');
 	// timeout fix for chrome not redrawing poi list
-	else setTimeout(function() { $(that).parent().removeClass('poi-checkbox-selected'); }, 500);
+	setTimeout(function() {
+		if ($(that).prop('checked')) $(that).parent().addClass('poi-checkbox-selected');
+		else $(that).parent().removeClass('poi-checkbox-selected');
+	}, 500);
 });
 
 // sets the page title
@@ -1659,14 +1677,14 @@ function permalinkReturn() {
 			if (uri.hasQuery('I')) markerId = uri.search(true).I;
 			setTimeout(function() {
 				if (!$.isArray(groupedPoi)) {
-					$('#poi-icons input[id=' + groupedPoi + ']').prop('checked', true);
+					$('#' + groupedPoi).prop('checked', true);
 					if (actTab !== 'none') sidebar.open(actTab);
 				}
 				else {
 					for (c in groupedPoi) {
 						// the last poi has a "/" on it because leaflet-hash
 						var multiplePois = groupedPoi[c].replace('/', '');
-						$('#poi-icons input[id=' + multiplePois + ']').prop('checked', true);
+						$('#' + multiplePois).prop('checked', true);
 						if (actTab !== 'none') sidebar.open(actTab);
 					}
 				}

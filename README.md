@@ -45,7 +45,11 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
 - History Tour articles that link to various overlays on the map
 - Direct link to edit an element on OSM or leave a note
 - Share any current map state with dynamic permalink
-- Various settings to adjust map display
+- Map display
+  - Switch between metric and imperial
+  - Dark theme
+  - Adjust overlay opacity
+  - Set overlay offset
 - OpenWeatherMap API
 - Various debugging tools
 

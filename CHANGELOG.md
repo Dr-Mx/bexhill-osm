@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v5.4.1 - Offset overlay
+
+**Date:** 03/07/2019
+
+Updated js
+ - leaflet.wms.min.js (added load event)
+
+Site changes
+ - Set offsets of overlays using metres
+ - Experimental dark theme
+
+
 ## v5.4.0 - Filter POIs
 
 **Date:** 02/07/2019
