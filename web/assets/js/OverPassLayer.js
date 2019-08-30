@@ -1,16 +1,25 @@
 // query overpass server - based on https://github.com/kartenkarsten/leaflet-layer-overpass
 
 var eleCache = [], queryBbox = '';
-function show_overpass_layer(query, cacheId) {
+function show_overpass_layer(query, cacheId, bound) {
 	if (!query || query === '();') return;
+	else {
+		$('.poi-checkbox').addClass('poi-loading');
+		$('.spinner').show();
+		queryBbox = '[out:json]';
+		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
+		if (bound)
+			if (osmRelation) {
+				queryBbox += ';rel(' + osmRelation + ');map_to_area';
+				query = query.replace(/];/g, '](area);');
+			}
+			else queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
+		queryBbox += ';' + query + 'out tags center qt ' + maxOpResults + ';';
+	}
 	// show spinner, disable poi checkboxes
-	$('.poi-checkbox').addClass('poi-loading');
-	$('.spinner').show();
-	if ($('#inputAttic').val()) query = '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"];(' + query + ');';
-	else query = ';' + query;
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
-		query: query,
+		query: queryBbox,
 		endpoint: 'https://' + $('#inputOpServer').val() + '/api/interpreter',
 		callback: callback,
 		cacheId: cacheId ? 'OPL' + cacheId : ''
@@ -33,8 +42,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		this._requested = {};
 	},
 	onMoveEnd: function () {
-		queryBbox = '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']' + this.options.query;
-		var url = this.options.endpoint + '?data=[out:json]' + queryBbox + 'out tags center qt ' + maxOpResults + ';&contact=' + email;
+		var url = this.options.endpoint + '?data=' + this.options.query + '&contact=' + email;
 		var self = this;
 		var reference = { instance: self };
 		if (self.options.debug) console.debug('Overpass query:', url);
@@ -56,8 +64,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			datatype: 'xml',
 			success: function (xml) {
 				self.options.callback.call(reference, xml);
-				if (poiList.length === 0 && $('#inputOpen').is(':checked')) setMsgStatus('fas fa-info-circle', 'No POIs found', 'Please try turning off "only show open" in options.', 1);
-				else if (poiList.length === 0 && !rQuery) setMsgStatus('fas fa-info-circle', 'No POIs found', 'Please try another area or query.', 1);
+				if (poiList.length === 0 && $('#inputOpen').is(':checked')) setMsgStatus('fas fa-info-circle', 'No places found', 'Please try turning off "only show open" in options.', 1);
+				else if (poiList.length === 0 && !rQuery) setMsgStatus('fas fa-info-circle', 'No places found', 'Please try another area or query.', 1);
 				// if not in iframe cache to local storage
 				if (self.options.cacheId && !$('#inputAttic').val()) {
 					eleCache[self.options.cacheId] = xml;

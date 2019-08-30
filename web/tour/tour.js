@@ -1,4 +1,4 @@
-// tour pages
+// history tour pages
 
 var imgLayer;
 function tour(ti, fromPermalink) {
@@ -28,9 +28,9 @@ function tour(ti, fromPermalink) {
 			else return L.circle(latlng, {
 				interactive: interactive,
 				radius: 15,
-				weight: 2,
+				weight: 4,
 				color: '#000',
-				opacity: 0.75,
+				opacity: 0.8,
 				fillColor: icon.fillColor,
 				fillOpacity: 0.5
 			});	
@@ -40,7 +40,7 @@ function tour(ti, fromPermalink) {
 			radius: 15,
 			weight: 4,
 			color: '#000',
-			opacity: 1,
+			opacity: 0.8,
 			fillColor: '#b05000',
 			fillOpacity: 0.5
 		});
@@ -154,7 +154,7 @@ function tour(ti, fromPermalink) {
 			show_overpass_layer('node(3192282124);', ti);
 			break;
 		case 'smugglingPanels':
-			show_overpass_layer('node["ref"~"^TST"];', ti);
+			show_overpass_layer('node["ref"~"^TST"];', ti, true);
 			setPageTitle('Smuggling Trail');
 			imgLayer = ti;
 			break;
@@ -191,7 +191,7 @@ function tour(ti, fromPermalink) {
 			show_overpass_layer('node(3592525934);', ti);
 			break;
 		case 'motorTrail':
-			show_overpass_layer('(node["ref"~"^TMT"];node(5059264455);node(5059264456););', ti);
+			show_overpass_layer('(node["ref"~"^TMT"];node(5059264455);node(5059264456););', ti, true);
 			setPageTitle('The Motor Trail');
 			imgLayer = ti;
 			break;
@@ -207,7 +207,7 @@ function tour(ti, fromPermalink) {
 		case 'ww2Bombmap':
 			$('.spinner').show();
 			// bomb radius outline
-/*			for (var x = 1; x <= 5; x++) {
+			for (var x = 1; x <= 5; x++) {
 				imageOverlay.addLayer(L.circle([50.84150, 0.47150], {
 					color: 'darkred',
 					weight: 2,
@@ -219,7 +219,7 @@ function tour(ti, fromPermalink) {
 					sticky: true
 				}));
 			}
-*/			// bomb markers
+			// bomb markers
 			$.ajax({
 				url: dfltDir + '09/ww2bombs.geojson',
 				dataType: 'json',
@@ -294,7 +294,7 @@ function tour(ti, fromPermalink) {
 			imgLayer = ti;
 			break;
 		case 'ww2Structures':
-			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);', ti);
+			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(6757240221);node(4056582954);node["military"];way["military"];);', ti, true);
 			setPageTitle('WWII Existing Structures');
 			imgLayer = ti;
 			break;
@@ -323,7 +323,7 @@ function tour(ti, fromPermalink) {
 			show_overpass_layer('way(419719683);', ti);
 			break;
 		case 'clocks':
-			show_overpass_layer(pois.clock.query, ti);
+			show_overpass_layer(pois.clock.query, ti, true);
 			setPageTitle('Public Clocks');
 			imgLayer = ti;
 			break;
@@ -356,12 +356,12 @@ function tour(ti, fromPermalink) {
 			imgLayer = ti;
 			break;
 		case 'boundary':
-			show_overpass_layer(pois.boundary_stone.query, ti);
+			show_overpass_layer(pois.boundary_stone.query, ti, true);
 			setPageTitle('Boundary Stones');
 			imgLayer = ti;
 			break;
 		case 'surveyPoint':
-			show_overpass_layer(pois.survey_point.query, ti);
+			show_overpass_layer(pois.survey_point.query, ti, true);
 			setPageTitle('OS Surveying Points');
 			imgLayer = ti;
 			break;

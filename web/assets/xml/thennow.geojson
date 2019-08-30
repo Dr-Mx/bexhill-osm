@@ -1,0 +1,172 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+		"type": "Feature",
+		"properties": {
+			"id": "metropoletram",
+			"name": "Bexhill to Hastings Tram, Marina",
+			"desc": "Running from West Marina in St. Leonards to Marina roundabout, later extended to Cooden Beach from 1906-1928.",
+			"copyright": "Bexhill Museum",
+			"date": {
+				"now": "2019",
+				"then": "1906"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47072, 50.83793]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "beehive",
+			"name": "The Little Beehive, Old Town",
+			"desc": "A tobacconist and confectionery shop between 1903-1974 on High Street. Today a Grade II Listed residential dwelling.",
+			"date": {
+				"now": "2019",
+				"then": "1912"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47730, 50.84540]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "hoadsmill",
+			"name": "Hoad’s Windmill, Gunters Lane",
+			"desc": "Corn mill in use from 1735-1928. Replaced with an electric motor in 1928, and it finally collapsed in 1965 during a storm. Today a Grade II Listed ruin.",
+			"date": {
+				"now": "2019",
+				"then": "c1930"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46078, 50.85226]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "robmarine",
+			"name": "Marine Hotel, Marina",
+			"desc": "Later known as Roberts Marine Mansions, located on the corner of Devonshire Road between 1895-1954. Today demolished and replaced with Dalmore Court.",
+			"date": {
+				"now": "2019",
+				"then": "1903"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47368, 50.83776]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "memorial",
+			"name": "War Memorial, Marina",
+			"desc": "Designed by Louis Frederick Roslyn and unveiled by Brigadier General O’Donnell in 1920. The figure is of Victory grasping the sword of sacrifice and a wreath, looking out towards the Western Front.",
+			"date": {
+				"now": "2019",
+				"then": "1939"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47670, 50.83775]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "riposo",
+			"name": "Riposo Hotel, De La Warr Parade",
+			"desc": "This Neo-Gothic hotel sat on the corner of Dorset Road South between 1901-1961. It served 39 rooms, mostly to keen golfers on The Links course to the east. Today demolished and replaced with Cavendish Court.",
+			"date": {
+				"now": "2019",
+				"then": "c1930"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.48372, 50.83925]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "delawarrgate",
+			"name": "De La Warr Gates, De La Warr Parade",
+			"desc": "These gates were the entrance to the 8th Earl De La Warr's private estate from 1895-1913.",
+			"copyright": "Bexhill Museum",
+			"date": {
+				"now": "2019",
+				"then": "c1896"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47638, 50.83798]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "colonnade",
+			"name": "The Colonnade, Central Parade",
+			"desc": "The bandstand was an original feature of the now Grade II Listed Colonnade, it was lost in a storm in 1949.",
+			"date": {
+				"now": "2018",
+				"then": "1918"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47156, 50.83699]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "westparade",
+			"name": "West Parade",
+			"desc": "Note the Edwardian Bandstand built in 1903, lost in 1977.",
+			"date": {
+				"now": "2019",
+				"then": "c1950"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46675, 50.83651]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "sackvillearch",
+			"name": "Sackville Arch, Sackville Road",
+			"desc": "Henry Young upgrading the railway bridge from a cattle arch. Young supplied material from his foundry in Pimlico and was also responsible for the building of the East Parade shelter near The Sackville.",
+			"date": {
+				"now": "2019",
+				"then": "1892"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46964, 50.84028]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "churchst",
+			"name": "Church Street, Old Town",
+			"desc": "A newsagent sign was uncovered when the shop was being refurbished in 2019 (left). Notice how narrow the road is and the now demolished Manor House (right).",
+			"copyright": "Bexhill Museum",
+			"date": {
+				"now": "2019",
+				"then": "c1960"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47868, 50.84499]
+		}
+	}]
+}

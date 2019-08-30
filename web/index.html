@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v3.5.7">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v5.4.1">
+	<link rel="stylesheet" href="assets/css/site.css?v5.5.0">
  </head>
 
  <body>
@@ -54,9 +54,10 @@
 		<div class="sidebar-tabs">
 			<ul role="tablist">
 				<li><a href="#home" title="Home" role="tab"><img alt="Home" src="assets/img/sb-home.png"></a></li>
-				<li><a href="#pois" title="Points of Interest" role="tab"><span class="sidebar-notif">0</span><img alt="Points of Interest" src="assets/img/sb-pois.png"></a></li>
-				<li><a href="#walking" title="Walking Routes" role="tab"><span class="sidebar-notif">0</span><img alt="Walking Routes" src="assets/img/sb-walking.png"></a></li>
-				<li><a href="#tour" title="History Tour" role="tab"><img alt="History Tour" src="assets/img/sb-tour.png"></a></li>
+				<li><a href="#pois" title="Places" role="tab"><span class="sidebar-notif">0</span><img alt="Places" src="assets/img/sb-pois.png"></a></li>
+				<li><a href="#walking" title="Walking" role="tab"><span class="sidebar-notif">0</span><img alt="Walking" src="assets/img/sb-walking.png"></a></li>
+				<li><a href="#tour" title="History" role="tab"><img alt="History" src="assets/img/sb-tour.png"></a></li>
+				<li><a href="#thennow" title="Then and Now" role="tab"><img alt="Then and Now" src="assets/img/sb-thennow.png"></a></li>
 			</ul>
 			<ul role="tablist">
 				<li><a href="#settings" title="Settings" role="tab"><span class="sidebar-notif"><i class="fas fa-bug"></i></span><img alt="Settings" src="assets/img/sb-settings.png"></a></li>
@@ -71,7 +72,6 @@
 				<div class="sidebar-header"><span class="sidebar-header-text" onclick="$(location).attr('href', window.location.pathname);">Bexhill OpenStreetMap</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<p><input id="autocomplete" type="text" class="autocomplete" placeholder="Search, e.g. 'coffee', 'ww2', 'western road'" title="Enter a keyword, or an address"></p>
-					<hr>
 					<div id="homeBox">
 						<div id="weather"><span class="comment">Loading weather...</span></div>
 						<div id="minimap">
@@ -103,17 +103,18 @@
 					<span id="newFeed">
 						What's new:
 						<ul class="fa-ul">
-							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('pois');"><i>You can now filter POIs by keyword</i></a> - 06/2019</li>
+							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('thennow');"><i>Then and Now, see how places have changed</i></a> - 08/2019</li>
+							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span>Aerial imagery for 1967 and 1975</i> - 07/2019</li>
+							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('pois');"><i>You can now filter places by keyword</i></a> - 06/2019</li>
 							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('pois', 'Shops', 'charity');"><i>Links to Charity Commission stats</i></a> - 06/2019</li>
 							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Images and videos can now be viewed full screen</i> - 05/2019</li>
-							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', '16');"><i>Martello Towers History Tour</i></a> - 03/2019</li>
 						</ul>
 						<span id="osmFeed"></span>
 					</span>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="pois">
-				<div class="sidebar-header"><span class="sidebar-header-text">Points of Interest</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">Places</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<div id="poi-results">
 						<h3></h3>
@@ -122,12 +123,12 @@
 						<div id="poi-results-list"></div>
 					</div>
 					<div id="poi-icons">
-						<!-- this list auto-populates using pois-type.js as a reference -->
+						<!-- auto-populated using pois-type.js as a reference -->
 					</div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="walking">
-				<div class="sidebar-header"><span class="sidebar-header-text">Walking Routes</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">Walking</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<h3>Find a walking route</h3>
 					Use the map context-menu, or type an address:
@@ -159,7 +160,7 @@
 				</div>
 			</div>
 			<div class="sidebar-pane" id="tour">
-				<div class="sidebar-header"><span class="sidebar-header-text">History Tour</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">History</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
 					<div id="tourControls">
 						<button type="button" id="tourPrev" title="Previous article"><i class="fas fa-chevron-left"></i></button>
@@ -186,7 +187,13 @@
 						<button type="button" id="tourNext" title="Next article"><i class="fas fa-chevron-right"></i></button>
 					</div>
 					<div id="tourLoading"><i class="fas fa-spinner fa-3x fa-pulse"></i></div>
-					<iframe id="tourFrame" src="tour/tour00/index.html"></iframe>
+					<iframe id="tourFrame"></iframe>
+				</div>
+			</div>
+			<div class="sidebar-pane" id="thennow">
+				<div class="sidebar-header"><span class="sidebar-header-text">Then and Now</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
+				<div class="sidebar-body">
+					<!-- auto-populated using thennow.xml as a reference -->
 				</div>
 			</div>
 			<!-- Lower tabs -->
@@ -195,8 +202,8 @@
 				<div class="sidebar-body">
 					<h3>Map display options</h3>
 					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider" title="mi/ft or km/m"></span><span class="switchLabel">Use kilometres for measurements (metric)</span></label>
-					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider" title="Filter results to open facilities"></span><span class="switchLabel">Only show currently open POIs</span></label>
-					<p><label class="switch"><input id="inputDark" type="checkbox"><span class="slider" title="Dark mode"></span><span class="switchLabel">Experimental dark theme</span></label>
+					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider" title="Filter results to open facilities"></span><span class="switchLabel">Only show currently open places</span></label>
+					<p><label class="switch"><input id="inputDark" type="checkbox"><span class="slider" title="Dark mode"></span><span class="switchLabel">Experimental night theme</span></label>
 					<div id="devTools">
 						<h3>Development tools</h3>
 						<div>
@@ -228,14 +235,15 @@
 						<a href="#gotocontrols">Map Controls</a><br>
 						<a href="#gotocontext">Context-menu</a><br>
 						<a href="#gototabs">Tabs</a><br>
-						<a href="#gotopoi">Points of Interest (POI)</a><br>
+						<a href="#gotopoi">Places</a><br>
 						<a href="#gotopopups">Pop-ups</a><br>
-						<a href="#gotowalking">Walking Routes</a><br>
-						<a href="#gototour">History Tour</a><br>
+						<a href="#gotowalking">Walking</a><br>
+						<a href="#gototour">History</a><br>
+						<a href="#gotothennow">Then and Now</a><br>
 					</p>
 					<div id="gotosearch"><hr>
 					<h3>Search</h3>
-						Type the first few letters of a keyword (e.g. 'police', 'bike', 'diy'), then click the word in the category you are interested in to display it on the map.<br><br>
+						Located at the top of the home tab. Type the first few letters of a keyword (e.g. 'police', 'bike', 'diy'), then click the word in the category you are interested in to display it on the map.<br><br>
 						Find an address or place-name by typing part of it and pressing the enter key.
 						<p><img src="assets/img/help-find.png" alt="Find interest Preview"></p>
 					</div>
@@ -243,10 +251,10 @@
 					<h3>Map Controls</h3>
 						<i class="theme fas fa-plus fa-border fa-fw"></i><i class="theme fas fa-minus fa-border fa-fw"></i> Zoom: Enlarge and shrink the map.<br><br>
 						<i class="theme fas fa-expand fa-border fa-fw"></i> Full screen (ALT-ENTER): Maximise the map to fit your whole screen.<br><br>
-						<i class="theme fas fa-location-arrow fa-border fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map. You may click on the blue location marker to see what POIs are around you.<br><br>
+						<i class="theme fas fa-location-arrow fa-border fa-fw"></i> Locate: Shows your current location if you are within the bounds of the map. You may click on the blue location marker to see what places are around you.<br><br>
 						<i class="theme fas fa-search fa-border fa-fw"></i> Address search (CTRL-F): Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br><br>
 						<i class="theme fas fa-trash fa-border fa-fw"></i> Clear layers (CTRL-DEL): Remove all current layers on the map. Right-click will reload the website to defaults.<br><br>
-						<i class="fas fa-layer-group fa-border fa-lg fa-fw" style="color:#888;"></i> Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the page.
+						<i class="fas fa-layer-group fa-border fa-lg fa-fw" style="color:#888;"></i> Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the map.
 					</div>
 					<div id="gotocontext"><hr>
 					<h3>Context-menu</h3>
@@ -256,19 +264,20 @@
 						<i class="fas fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
 						<i class="far fa-sticky-note fa-fw"></i> Leave a note here: Report a mistake or something missing.<br><br>
 						<i class="fas fa-street-view fa-fw"></i> Google Street View: Provides panoramic views from positions along many streets.<br><br>
-						<i class="fas fa-wrench fa-fw"></i> FixMyStreet: Opens a new window to report problems in our community.
+						<i class="fas fa-wrench fa-fw"></i> FixMyStreet: Opens a new window to report problems in the community.
 						<p><img src="assets/img/help-context.png" alt="Context-menu preview"></p>
 					</div>
 					<div id="gototabs"><hr>
 					<h3>Tabs</h3>
-						<img src="assets/img/sb-pois.png"> Points of Interest: Select an interest to be displayed on the map.<br><br>
-						<img src="assets/img/sb-walking.png"> Walking Routes: Select from a few set walks, or create your own path through the many twittens.<br><br>
-						<img src="assets/img/sb-tour.png"> History Tour: Travel back in time and discover the history of the town with our interactive guide.<br><br>
+						<img src="assets/img/sb-pois.png"> Places: Select an interest to be displayed on the map.<br><br>
+						<img src="assets/img/sb-walking.png"> Walking: Select from a few set walks, or create your own path through the many twittens.<br><br>
+						<img src="assets/img/sb-tour.png"> History: Travel back in time and discover the history of the town with our interactive guide.<br><br>
+						<img src="assets/img/sb-thennow.png"> Then and Now: See how places have changed over the years and what they may have looked like today.<br><br>
 						<img src="assets/img/sb-settings.png"> Settings: Various options for how data on the map is displayed.
 					</div>
 					<div id="gotopoi"><hr>
-					<h3>Points of Interest (POI)</h3>
-						Select up to 3 POI items to be displayed, after a few moments the corresponding markers will appear on the map.<br>
+					<h3>Places</h3>
+						Select up to 3 groups to be displayed, after a few moments the corresponding markers will appear on the map.<br>
 						<p><img src="assets/img/help-checkboxes.png" alt="Checkbox preview"></p>
 						Results will be displayed as a scrollable list and on the map as markers. The buttons at the top allow you to clear the results, or zoom to their area on the map.<br>
 						Each listed item will have a colour showing if the place is currently open; its facilities and accessibility; and distance if location is turned on.
@@ -279,18 +288,22 @@
 						Click each marker to see a pop-up detailing more specific information.
 						<p><img src="assets/img/icons/pinother.png" alt="POI preview"></p>
 						<i style="color:#777;" class="fas fa-edit fa-fw"></i> Edit: Opens openstreetmap.org where you can make immediate changes to the item.<br><br>
-						<i style="color:#777;" class="far fa-bookmark fa-fw"></i> Bookmark: Click the icon to bookmark it, show all current bookmarks by clicking the button under POIs.<br>
+						<i style="color:#777;" class="far fa-bookmark fa-fw"></i> Bookmark: Click the icon to save an item.<br>
 						<p><img src="assets/img/help-popup.png" alt="Marker popup preview"></p>
 					</div>
 					<div id="gotowalking"><hr>
-					<h3>Walking Routes</h3>
+					<h3>Walking</h3>
 						Find a route by either entering an address, or using the map context-menu. Add additional markers by dragging an existing path to a new location.
 						<p><img src="assets/img/help-walking.png" alt="Walking route preview"></p>
 					</div>
 					<div id="gototour"><hr>
-					<h3>History Tour</h3>
+					<h3>History</h3>
 						Navigate by either selecting from the list-box or using the arrows to jump between articles. Mobile users may also swipe the list-box to navigate.<br><br>
 						<img style="display:inline-block; padding:0; margin-bottom:-5px;" src="tour/tour-show.png" alt="Show on map button"> Show on map: Displays an interactive layer related to the article.
+					</div>
+					<div id="gotothennow"><hr>
+					<h3>Then and Now</h3>
+						Click on an image or marker to enlarge it, the slideshow will automatically advance after a few seconds. You can pause or close the current image using the controls in the top right corner of the page.<br><br>
 					</div>
 					<a class="theme anchor"><i class="fas fa-arrow-up fa-fw"></i></a>
 				</div>
@@ -403,12 +416,12 @@
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v3.5.7"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v5.4.1"></script>
-	<script src="assets/js/OverPassLayer.js?v5.4.1"></script>
-	<script src="assets/js/tags-parsers.js?v5.4.1"></script>
-	<script src="assets/js/pois-type.js?v5.4.1"></script>
-	<script src="tour/tour.js?v5.4.1"></script>
-	<script src="assets/js/site.js?v5.4.1"></script>
+	<script src="assets/js/config.js?v5.5.0"></script>
+	<script src="assets/js/OverPassLayer.js?v5.5.0"></script>
+	<script src="assets/js/tags-parsers.js?v5.5.0"></script>
+	<script src="assets/js/pois-type.js?v5.5.0"></script>
+	<script src="tour/tour.js?v5.5.0"></script>
+	<script src="assets/js/site.js?v5.5.0"></script>
 
  </body>
 </html>

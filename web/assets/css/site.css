@@ -152,7 +152,7 @@ a:hover {
 
 hr {
 	height: 2px;
-	background-color: #ddd;
+	background-color: rgba(255, 255, 255, 0.6);
 	border: 0;
 }
 
@@ -161,13 +161,14 @@ h3 {
 }
 
 .anchor {
+	display: inline-block;
 	position: sticky;
 	bottom: 10px;
-	margin-left: calc(100% - 15px);
+	margin-left: calc(100% - 13px);
 	padding: 5px;
 	background-color: white;
 	opacity: 0.7;
-	border-radius: 100%;
+	border-radius: 100% 0 0 100%;
 }
 .anchor:hover {
 	opacity: 1;
@@ -281,7 +282,7 @@ h3 {
 	max-width: calc(80vw - 50px);
 	border-radius: 10px;
 	margin-bottom: 15vh;
-	transition: 400ms ease-out;
+	transition: margin-bottom 400ms ease-out;
 }
 #msgStatusHead {
 	font-family: 'BerlinSans';
@@ -379,6 +380,7 @@ h3 {
 .layerProw {
 	filter: blur(1px) hue-rotate(130deg);
 }
+
 #inputOpacity {
 	display: none;
 	height: 31px;
@@ -391,16 +393,13 @@ h3 {
 	display: block;
 	-webkit-appearance: none;
 	width: 75%;
-	margin: 0;
-	padding: 7px 15px 7px 7px;
-	border: none;
-}
-#inputOpacity input[type=range]::-webkit-slider-runnable-track {
-	width: 100%;
 	height: 10px;
-	background: #ccc;
+	margin: 10px 15px 0 7px;
+	padding: 0;
 	border: none;
+	background: #ccc;
 	border-radius: 3px;
+	cursor: e-resize;
 }
 #inputOpacity input[type=range]::-webkit-slider-thumb {
 	-webkit-appearance: none;
@@ -410,14 +409,9 @@ h3 {
 	border-radius: 50%;
 	background-color: #b05000;
 	background-color: var(--main-color);
-	margin-top: -4px;
-	cursor: e-resize;
 }
 #inputOpacity input[type=range]:focus {
 	outline: none;
-}
-#inputOpacity input[type=range]:focus::-webkit-slider-runnable-track {
-	background: #ddd;
 }
 #inputOpacity input[type=range]::-moz-range-track {
 	width: 100%;
@@ -438,38 +432,6 @@ h3 {
 #inputOpacity input[type=range]:-moz-focusring {
 	outline: 1px solid white;
 	outline-offset: -1px;
-}
-
-#inputOpacity input[type=range]::-ms-track {
-	width: 100%;
-	height: 10px;
-	background: transparent;
-	border-color: transparent;
-	border-width: 5px 0;
-	color: transparent;
-}
-#inputOpacity input[type=range]::-ms-fill-lower {
-	background: #777;
-	border-radius: 10px;
-}
-#inputOpacity input[type=range]::-ms-fill-upper {
-	background: #ccc;
-	border-radius: 10px;
-}
-#inputOpacity input[type=range]::-ms-thumb {
-	border: none;
-	height: 22px;
-	width: 22px;
-	border-radius: 50%;
-	background-color: #b05000;
-	background-color: var(--main-color);
-	cursor: e-resize;
-}
-#inputOpacity input[type=range]:focus::-ms-fill-lower {
-	background: #888;
-}
-#inputOpacity input[type=range]:focus::-ms-fill-upper {
-	background: #ddd;
 }
 #inputOpacity input[type=range]::-ms-tooltip {
 	display: none;
@@ -513,7 +475,7 @@ h3 {
 #poi-results {
 	display: none;
 	height: auto;
-	max-height: 70%;
+	max-height: 65%;
 	resize: vertical;
 	position: relative;
 	padding: 0 15px 15px;
@@ -588,6 +550,7 @@ select:hover:enabled, #poi-results button:hover {
 }
 #poi-filter {
 	position: relative;
+	top: 0px;
 	height: 28px;
 	margin: 14px 0;
 }
@@ -710,11 +673,24 @@ select:hover:enabled, #poi-results button:hover {
 #walkDesc {
 	color: darkgreen;
 }
-#walkDesc img {
-	max-width: 100%;
+#walkDesc img, #thennow img {
+	width: 100%;
+	max-width: 500px;
 	border: 2px solid #ddd;
 	margin: 5px auto auto auto;
 	display: block;
+}
+#thennow img {
+	cursor: zoom-in;
+}
+.thennowTip {
+	text-align: center;
+	max-width: 150px;
+	white-space: normal;
+}
+.thennowTip img {
+	width: 100px;
+	border-radius: 5px;
 }
 
 /* tour tab */
@@ -735,6 +711,7 @@ select:hover:enabled, #poi-results button:hover {
 	border: none;
 }
 #tourLoading {
+	display: none;
 	margin-top: 20px;
 	position: absolute;
 	width: 100%;
@@ -1107,7 +1084,10 @@ input:checked + .slider::before {
 .fancybox-button .fa-2x:hover {
 	opacity: 1;
 }
-	
+.fancybox-button--pause .fas:first-child, .fancybox-button--play .fas:nth-child(2) {
+	display: none;
+}
+
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
 	background-color: rgba(244, 244, 244, 0.9);
 }

@@ -8,7 +8,7 @@ var pois = {
 	
 	attraction: {
 		name: 'Attraction',
-		query: 'way[name~"^De La Warr Pavilion$|^Bexhill Museum$|^Egerton Park$|^Murmurations Gallery$|^Manor Gardens$|^Galley Hill Open Space$"];',
+		query: 'way[name~"^De La Warr Pavilion$|^Bexhill Museum$|^Egerton Park$|^Manor Gardens$|^Galley Hill Open Space$"];',
 		iconName: 'pinother',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'attraction']
@@ -75,7 +75,7 @@ var pois = {
 
 	historic: {
 		name: 'Historic',
-		query: 'nwr[historic][historic!~boundary_stone];',
+		query: 'nwr[historic][historic!~boundary_stone];node[board_type=history];',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque', 'war'],
@@ -286,12 +286,12 @@ var pois = {
 		tagParser: post_parser
 	},
 
-	water_tap: {
-		name: 'Water-Tap',
-		query: 'node[man_made=water_tap][access!~private];',
+	drinking_water: {
+		name: 'Drinking-Water',
+		query: 'node[amenity=drinking_water];node[drinking_water=yes];nwr["drinking_water:bexfill"="yes"];',
 		iconName: 'drinkingwater',
 		catName: 'Amenities',
-		tagKeyword: ['drink', 'tap', 'water'],
+		tagKeyword: ['drink', 'tap', 'water', 'bexfill'],
 		tagParser: tap_parser
 	},
 

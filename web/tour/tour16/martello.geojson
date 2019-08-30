@@ -77,10 +77,12 @@
 				"date": "1806-1869",
 				"description": "Culvercroft Bank.<br>Coastal Blockade men were considered fair game for bribery and in 1819 two smugglers offered £100 (over £5500 today) to bypass the guards as a loaded boat pulled to the shore, they were unsuccessful and the boat quickly turned and left.<br>Used as a blockade hospital from 1827.<br>Collapsed due to cliff erosion.",
 				"img": {
-					"0": "16/mt51(0)"
+					"0": "16/mt51(0)",
+					"1": "16/mt51(1)"
 				},
 				"imgattrib": {
-					"0": "1869 | &copy; Bexhill Museum"
+					"0": "&copy; Story of Bexhill, L.J. Bartley",
+					"1": "1869 | &copy; Bexhill Museum"
 				}
 			},
 			"geometry": {
@@ -202,7 +204,7 @@
 				},
 				"imgattrib": {
 					"0": "1895 | &copy; Bexhill Museum",
-					"1": "1890 | &copy; West Marina To Hastings Pier",
+					"1": "1895 | &copy; Bexhill Museum",
 					"2": "1870 | &copy; Bexhill Museum"
 				}
 			},

@@ -1,7 +1,11 @@
 web/assets/maptiles/
-web/assets/tour/tourXmas/*/
+web/tour/*/*.jpg
+web/tour/*/*.png
+web/tour/*/**/*.jpg
+web/tour/*/**/*.png
 web/assets/other/*
 web/assets/img/uploads/
+web/assets/img/thennow/
 web/assets/js/config.js
 web/robots.txt
 

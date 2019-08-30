@@ -52,7 +52,7 @@
 @media (min-width: 1300px) {
 	.sidebar-tabs, .sidebar-tabs > ul {
 		width: 40px; } }
-@media (max-height: 350px) {
+@media (max-height: 400px) {
 	.sidebar-tabs > ul:last-child > li:nth-child(n+2) {
 		display: none; } }
 .sidebar-tabs > li, .sidebar-tabs > ul > li {

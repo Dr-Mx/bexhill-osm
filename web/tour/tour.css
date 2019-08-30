@@ -36,10 +36,20 @@ ul, ol {
 }
 
 img {
-	max-width: 100%;
+	width: 100%;
+	max-width: 500px;
 	border: 2px solid #ccc;
 	margin: auto;
 	display: block;
+	cursor: zoom-in;
+}
+
+.float-left {
+	float: left;
+	width: auto;
+	max-width: 35%;
+	max-height: 200px;
+	margin: 0 5px 5px 0;
 }
 
 .bombKey {
@@ -54,11 +64,6 @@ img {
 .person {
 	display: table;
 	width: 100%;
-}
-.person img {
-	float: left;
-	max-width: 35%;
-	margin: 0 5px 5px 0;
 }
 .person p {
 	margin-top: 0px;
@@ -88,11 +93,16 @@ img {
 	font-size: 115%;
 	border-radius: 3px;
 	transition: background-color 100ms;
+	color: #b05000;
+	color: var(--main-color);
 }
 .maplink:hover {
 	background-color: rgba(190, 190, 190, 0.5);
-	color: #b05000;
-	color: var(--main-color);
+}
+.sm {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 90%;
 }
 
 a {

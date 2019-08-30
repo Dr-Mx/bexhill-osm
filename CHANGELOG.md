@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## v5.5.0 - Then and Now
+
+**Date:** 31/08/2019
+
+Site changes
+ - Add a new tab for showing slideshows of images past and present
+ - Experimental bounding using osm relation area
+ - Rename tabs: POI > Places, Walking Routes > Walking, History Tour > History
+ - Load website with location on by using 'loc' parameter
+ - Don't show Food Hygiene Ratings on attic data
+ - Larger and zoomable images in History tab
+
+
 ## v5.4.1 - Offset overlay
 
 **Date:** 03/07/2019

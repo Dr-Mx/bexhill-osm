@@ -48,7 +48,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		var tagWebsite = tags.website || tags['contact:website'] || tags['contact:webcam'];
 		markerPopup = '';
 		if (tagWebsite) {
-			var link = '<a class="popup-truncate" style="max-width:' + (imgSize - 100) + 'px" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + tagWebsite + '</a>';
+			var link = '<a class="popup-truncate" style="max-width:' + (imgSize - 100) + 'px" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + tagWebsite.split('://')[1] + '</a>';
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: link, iconName: 'fas fa-globe' });
 		}
 		return markerPopup;
@@ -119,6 +119,8 @@ function parse_tags(element, titlePopup, poiParser) {
 		else if (tags.dog === 'no') tag += '<i class="facNo fas fa-dog fa-fw" title="dog: no"></i>';
 		if (tags.internet_access === 'wlan') tag += '<i class="facYes fas fa-wifi fa-fw" title="internet: wireless"></i>';
 		else if (tags.internet_access === 'terminal') tag += '<i class="facYes fas fa-desktop fa-fw" title="internet: terminal"></i>';
+		if (tags['drinking_water:bexfill'] === 'yes') tag += '<i class="fas fa-tint fa-fw" style="color:#0082ff;" title="water bottle refills: yes"></i>';
+		if (tags.live_music === 'yes') tag += '<i class="facYes fas fa-music fa-fw" title="live music: yes"></i>';
 		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') tag += '<i class="facYes fas fa-umbrella fa-fw" title="shelter: yes"></i>';
 		if (tags.highway === 'bus_stop') {
 			if (tags.bench === 'yes') tag += '<i class="facYes fas fa-chair fa-fw" title="bench: yes"></i>';
@@ -414,10 +416,8 @@ function parse_tags(element, titlePopup, poiParser) {
 					strNextChange = nextTime;
 				}
 				// display 'tomorrow'
-				else if (oh.getNextChange().toLocaleDateString(navigator.language) === dateTomorrow.toLocaleDateString(navigator.language)) {
-					if (nextTime === '00:00') strNextChange = 'Midnight';
-					else strNextChange = 'Tomorrow ' + nextTime;
-				}
+				else if (oh.getNextChange().toLocaleDateString(navigator.language) === dateTomorrow.toLocaleDateString(navigator.language))
+					strNextChange = (nextTime === '00:00') ? 'Midnight' : 'Tomorrow ' + nextTime;
 				// display day name if within a week
 				else if (oh.getNextChange().getTime() > dateTomorrow.getTime() && oh.getNextChange().getTime() < dateWeek.getTime()) {
 					strNextChange = oh.getNextChange().toLocaleDateString(navigator.language, { weekday: 'long' });
@@ -550,8 +550,7 @@ function callback(data) {
 				case 'restaurant':
 					if (e.tags.cuisine) {
 						name = e.tags.cuisine;
-						if (e.tags.amenity === 'restaurant' && e.tags.takeaway === 'only') name += ' takeaway';
-						else name += ' ' + e.tags.amenity;
+						name += (e.tags.amenity === 'restaurant' && e.tags.takeaway === 'only') ? ' takeaway' : ' ' + e.tags.amenity;
 						switch (e.tags.cuisine) {
 							case 'chinese': iconName = 'restaurant_chinese'; break;
 							case 'fish_and_chips': iconName = 'fishchips'; break;
@@ -601,8 +600,7 @@ function callback(data) {
 					break;
 				case 'social_centre':
 					if (e.tags.club) {
-						if (e.tags.sport) name = e.tags.sport + ' club';
-						else name = e.tags.club + ' club';
+						name = ((e.tags.sport) ? e.tags.sport : e.tags.club) + ' club';
 						type = 'club';
 					}
 					break;
@@ -637,7 +635,8 @@ function callback(data) {
 			}
 			switch (e.tags.historic) {
 				case 'beacon': iconName = 'landmark'; break;
-				case 'boundary_stone': iconName = pois.boundary_stone.iconName; break;
+				case 'boundary_stone':
+				case 'milestone': iconName = pois.boundary_stone.iconName; break;
 				case 'folly': iconName = 'tower'; break;
 				case 'memorial':
 					if (e.tags.memorial) {
@@ -664,6 +663,7 @@ function callback(data) {
 		if (e.tags.man_made) {
 			if (!name) name = e.tags.man_made;
 			if (!type) type = e.tags.man_made;
+			if (type === 'water_tap') type = 'drinking_water';
 			if (type === 'survey_point') {
 				name = e.tags.survey_point;
 				switch (e.tags.survey_point) {
@@ -744,8 +744,7 @@ function callback(data) {
 				case 'horse_riding': type = 'recreation'; iconName = 'horseriding'; break;
 				case 'sports_centre':
 					type = 'recreation';
-					if (e.tags.sport === 'swimming') iconName = 'swimming2';
-					else iconName = 'indoor-arena';
+					iconName = (e.tags.sport === 'swimming') ? 'swimming2' : 'indoor-arena';
 					break;
 			}
 		}
@@ -918,7 +917,7 @@ function pushPoiList() {
 	// sort by distance or name
 	poiList.sort(function(a, b) {
 		if (a.distance) return (a.distance > b.distance) ? 1 : -1;
-	else return (a._tooltip._content > b._tooltip._content) ? 1 : -1;
+		else return (a._tooltip._content > b._tooltip._content) ? 1 : -1;
 	});
 	var poiResultsList = '<table>';
 	for (c = 0; c < poiList.length; c++) {
@@ -984,10 +983,12 @@ var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName
 function generic_header_parser(header, subheader, fhrs, osmId) {
 	var markerPopup = '<div class="popup-header"><h3>' + header + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
-	if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.gif"></span>';
-	if (osmId && !$('#inputAttic').val()) {
-		if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm" title="Bookmark"><i class="far fa-bookmark fa-fw"></i></a>';
-		markerPopup += '<a class="popup-edit" title="Edit with OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
+	if (!$('#inputAttic').val()) {
+		if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.gif"></span>';
+		if (osmId) {
+			if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm" title="Bookmark"><i class="far fa-bookmark fa-fw"></i></a>';
+			markerPopup += '<a class="popup-edit" title="Edit with OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
+		}
 	}
 	return markerPopup + '</div>';
 }
@@ -1037,6 +1038,7 @@ function allotment_parser(tags, titlePopup) {
 function artwork_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'artwork_type', label: 'Artwork type', iconName: 'fas fa-paint-brush'},
+		{callback: generic_tag_parser, tag: 'artwork_subject', label: 'Artwork subject', iconName: 'fas fa-pen-square'},
 		{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'far fa-user'},
 		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fas fa-pen-square'},
 		{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'fas fa-cube'}
@@ -1124,8 +1126,7 @@ function clock_parser(tags, titlePopup) {
 		var markerPopup = '', tag = '';
 		if (tags.display) tag += tags.display + ', ';
 		if (tags.support) tag += tags.support + ', ';
-		if (tags.faces >= 2) tag += tags.faces + ' faces, ';
-		else tag += '1 face, ';
+		tag += (tags.faces >= 2) ? tags.faces + ' faces, ' : '1 face, ';
 		if (tag) {
 			tag = tag.replace(/_/g, '-');
 			tag = tag.substring(0, tag.length - 2);
@@ -1294,7 +1295,6 @@ function post_parser(tags, titlePopup) {
 		var markerPopup = '';
 		if (tags.collection_times) {
 			var strNextChange, ct = new opening_hours(tags.collection_times, { 'address':{ 'state':'England', 'country_code':'gb' } }, 1).getNextChange();
-			console.log(ct.getDate());
 			if (ct.getDate() === new Date().getDate()) strNextChange = 'Today in ' + time_parser((ct - new Date()) / 60000) + ' (' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + ')';
 			else if (ct.getDate() === new Date(new Date().getDate() + 1).getDate()) strNextChange = 'Tomorrow ' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 			else if (ct.getDate() > new Date(new Date().getDate() + 1).getDate()) strNextChange = ct.toLocaleDateString(navigator.language, { weekday: 'long' }) + ' ' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
