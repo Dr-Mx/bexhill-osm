@@ -39,6 +39,9 @@ html, body, #map {
 	body {
 		font-size: 10pt;
 	}
+	#map {
+		transition: margin-left 400ms ease-out;
+	}
 }
 input, select, button {
 	font-size: 10pt;
@@ -73,17 +76,20 @@ input[type=text], input[type=date], input[type=number] {
 	margin: 0 auto;
 	background: rgba(255, 255, 255, 0.6);
 	border-radius: 5px;
+	transition: box-shadow 100ms linear;
 }
 #weather {
 	display: table;
 	width: 100%;
 	color: #536862;
 	height: 55px;
+	cursor: pointer;
 }
 #weather span {
 	display: table-cell;
 	vertical-align: middle;
 	padding: 2px 5px 2px 0;
+	text-align: left;
 }
 #weather span img {
 	width: 50px;
@@ -91,7 +97,10 @@ input[type=text], input[type=date], input[type=number] {
 	margin: 0 auto;
 }
 #weather span .fas {
-	color: #777;
+	color: #8795bd;
+}
+#weather .comment {
+	text-align: center;
 }
 #tips {
 	display: table;
@@ -113,7 +122,7 @@ input[type=text], input[type=date], input[type=number] {
 	right: 17px;
 	bottom: 6px;
 }
-.navigateItem .fa-image, .navigateItem a {
+.navigateItem .fa-images, .navigateItem a {
 	opacity: 0.7;
 }
 .navigateItem a:hover {
@@ -480,7 +489,7 @@ h3 {
 	position: relative;
 	padding: 0 15px 15px;
 	overflow-y: auto;
-	box-shadow: inset -1px 0 5px #555;
+	border: 2px solid #bbb;
 	background-color: rgba(0, 0, 0, 0.05);
 	pointer-events: none;
 }
@@ -710,13 +719,14 @@ select:hover:enabled, #poi-results button:hover {
 	width: 100%;
 	border: none;
 }
-#tourLoading {
+#tourLoading, #thennowLoading {
 	display: none;
 	margin-top: 20px;
 	position: absolute;
 	width: 100%;
 	color: #aaa;
 	font-size: 16px;
+	text-align: center;
 }
 #tour .sidebar-body {
 	width: 100%;
@@ -743,7 +753,7 @@ select:hover:enabled, #poi-results button:hover {
 	right: 0;
 	bottom: 0;
 	background-color: #bbb;
-	transition: .4s;
+	transition: 400ms;
 	border-radius: 24px;
 	width: 50px;
 }
@@ -755,7 +765,7 @@ select:hover:enabled, #poi-results button:hover {
 	left: 4px;
 	bottom: 4px;
 	background-color: white;
-	transition: .4s;
+	transition: 400ms;
 	border-radius: 50%;
 }
 .slider:hover {
@@ -805,7 +815,6 @@ input:checked + .slider::before {
 #devTools {
 	display: block;
 	position: relative;
-	border-top: 2px solid #ddd;
 	padding-bottom: 5px;
 }
 #devTools > div {
@@ -940,6 +949,9 @@ input:checked + .slider::before {
 	padding-right: 50px;
 	margin: 0 auto 0;
 }
+.popup-t .popup-header h3 {
+	padding-right: 0;
+}
 .popup-header-sub {
 	display: table-cell;
 	font-style: oblique;
@@ -1027,7 +1039,6 @@ input:checked + .slider::before {
 	border: 2px solid #ccc;
 	border-radius: 5px;
 	max-width: 75%;
-	transition: 300ms ease-out;
 	cursor: zoom-in;
 }
 .popup-imgContainer > a {
@@ -1156,7 +1167,7 @@ input:checked + .slider::before {
 	color: darkred;
 	padding: 0 5px;
 }
-.popup-xmas .leaflet-popup-content-wrapper, #xmasMsg {
+.popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {
 	background-image: url('../../tour/tourXmas/popup-bg.png');
 	background-position: center;
 	background-repeat: no-repeat;
@@ -1173,18 +1184,22 @@ input:checked + .slider::before {
 	color: green;
 }
 .xmasAward {
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 0.5px 0.5px 0 #555;
 }
-.popup-xmas .xmasAward {
+.leaflet-popup.popup-xmas .xmasAward {
 	position: absolute;
+	top: 25px;
 	right: 15px;
 	font-size: 45pt;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 15px white;
+	-webkit-text-stroke: 2px rgba(0, 0, 0, 0.2);
 }
-.xmasAward.commendedFirst { color: #ffd700; }
-.xmasAward.commendedSecond { color: #bbb; }
-.xmasAward.commendedThird { color: #d2b48c; }
-.xmasAward.commendedFourth { color: #345a55; }
-.xmasAward.commendedAward { color: #800080; }
+.xmasAward.commended0 { color: #800080; }
+.xmasAward.commended1 { color: #ffd700; }
+.xmasAward.commended2 { color: #bbb; }
+.xmasAward.commended3 { color: #d2b48c; }
+.xmasAward.commended4 { color: #4d7480; }
+.xmasAward.commended5 { color: #52804d; }
 
 @keyframes jump {
 	0%,to { transform: translateZ(0); }

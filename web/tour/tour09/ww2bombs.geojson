@@ -1654,8 +1654,14 @@
 			"type": "Feature",
 			"properties": {
 				"name": "St Barnabas Vicarage, Brassey Road",
-				"date": "1942-05-16",
-				"description": "Adjacent church windows destroyed including an original depicting St. Luke called 'Good Physician'."
+				"date": "1942-05-16 06:15",
+				"description": "Unoccupied vicarage destroyed. Lodge (37 Sea Rd) severely damaged. St. Barnabas Church south windows destroyed including an original depicting St. Luke called 'Good Physician'.",
+				"img": {
+					"0": "09/bomb/stbarnabasvicarage"
+				},
+				"imgattrib": {
+					"0": "St Barnabas' Bexhill 1891-1951, Gowing King Bros & Potts Ltd | C. Hollyfield"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -2237,7 +2243,18 @@
 				"date": "1943-01-02 09:00",
 				"description": "A 500kg bomb demolished three upper floors of the east wing. The building was unoccupied apart from the caretaker who suffered superficial injuries. Rebuilt in 1946.",
 				"img": {
-					"0": "09/bomb/motcombecourt"
+					"0": "09/bomb/motcombecourt(0)",
+					"1": "09/bomb/motcombecourt(1)",
+					"2": "09/bomb/motcombecourt(2)",
+					"3": "09/bomb/motcombecourt(3)",
+					"4": "09/bomb/motcombecourt(4)"
+				},
+				"imgattrib": {
+					"0": "Bexhill Observer",
+					"1": "National Archives HO 192/1016",
+					"2": "National Archives HO 192/1016",
+					"3": "National Archives HO 192/1016",
+					"4": "National Archives HO 192/1016"
 				}
 			},
 			"geometry": {
@@ -2249,7 +2266,13 @@
 			"properties": {
 				"name": "New Park Avenue",
 				"date": "1943-01-02 09:00",
-				"description": "In roadway. Damage to nearby houses."
+				"description": "In roadway. Damage to nearby houses.",
+				"img": {
+					"0": "09/bomb/newparkavenue"
+				},
+				"imgattrib": {
+					"0": "National Archives HO 192/1016"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -2638,7 +2661,7 @@
 			"type": "Feature",
 			"properties": {
 				"name": "Sackville Garage, Bolebrooke Road",
-				"date": "1942-05-16",
+				"date": "1942-05-16 06:15",
 				"description": "Completely destroyed.",
 				"img": {
 					"0": "09/bomb/sackvillemews"

@@ -30,8 +30,8 @@
 	<meta name="theme-color" content="#b05000">
 
 	<!-- CSS | site plugins -->
-	<script src="https://kit.fontawesome.com/7b0c8d62c7.js"></script>
-	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v1.5.1">
+	<script src="https://kit.fontawesome.com/7b0c8d62c7.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v1.6.0">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v1.7.0">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css?v0.1.24">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v0.4.0">
@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v3.5.7">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v5.5.0">
+	<link rel="stylesheet" href="assets/css/site.css?v5.5.3">
  </head>
 
  <body>
@@ -104,7 +104,7 @@
 						What's new:
 						<ul class="fa-ul">
 							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('thennow');"><i>Then and Now, see how places have changed</i></a> - 08/2019</li>
-							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span>Aerial imagery for 1967 and 1975</i> - 07/2019</li>
+							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Aerial imagery for 1967 and 1975</i> - 07/2019</li>
 							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('pois');"><i>You can now filter places by keyword</i></a> - 06/2019</li>
 							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('pois', 'Shops', 'charity');"><i>Links to Charity Commission stats</i></a> - 06/2019</li>
 							<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Images and videos can now be viewed full screen</i> - 05/2019</li>
@@ -193,7 +193,12 @@
 			<div class="sidebar-pane" id="thennow">
 				<div class="sidebar-header"><span class="sidebar-header-text">Then and Now</span><i class="sidebar-close" title="Minimise sidebar"><i class="fas fa-caret-left"></i></i></div>
 				<div class="sidebar-body">
-					<!-- auto-populated using thennow.xml as a reference -->
+					<p>Explore how buildings and places have changed over the years with these superimposed and colourised images. Click each one to see them fade from then to now.</p>
+					<div>
+						<div id="thennowLoading"><i class="fas fa-spinner fa-3x fa-pulse"></i></div>
+						<!-- auto-populated using thennow.geojson as a reference -->
+					</div>
+					<a class="theme anchor"><i class="fas fa-arrow-up fa-fw"></i></a>
 				</div>
 			</div>
 			<!-- Lower tabs -->
@@ -203,7 +208,8 @@
 					<h3>Map display options</h3>
 					<p><label class="switch"><input id="inputUnit" type="checkbox"><span class="slider" title="mi/ft or km/m"></span><span class="switchLabel">Use kilometres for measurements (metric)</span></label>
 					<p><label class="switch"><input id="inputOpen" type="checkbox"><span class="slider" title="Filter results to open facilities"></span><span class="switchLabel">Only show currently open places</span></label>
-					<p><label class="switch"><input id="inputDark" type="checkbox"><span class="slider" title="Dark mode"></span><span class="switchLabel">Experimental night theme</span></label>
+					<p><label class="switch"><input id="inputDark" type="checkbox"><span class="slider" title="Night mode"></span><span class="switchLabel">Dark theme</span></label>
+					<hr>
 					<div id="devTools">
 						<h3>Development tools</h3>
 						<div>
@@ -222,7 +228,7 @@
 							<p>Attic data (date) <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br>
 								<input id="inputAttic" type="date" min="2016-01-01"></p>
 							<p><button type="button" onclick="exportQuery();"><i class="fas fa-upload"></i></button><div class="buttonLabel">Export current query to Overpass Turbo</div>
-							<p><button type="button" onclick="downloadBB();"><i class="fas fa-download"></i></button><div class="buttonLabel">Download all OSM data within bounding box (xml)</div>
+							<p><button type="button" onclick="downloadBB();"><i class="fas fa-download"></i></button><div class="buttonLabel">Download all OSM data within map range (xml)</div>
 						</div>
 					</div>
 				</div>
@@ -263,8 +269,8 @@
 						<i class="fas fa-map-marker-alt fa-fw"></i> Add walk point: Plot a marker to create a walking route.<br><br>
 						<i class="fas fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br><br>
 						<i class="far fa-sticky-note fa-fw"></i> Leave a note here: Report a mistake or something missing.<br><br>
-						<i class="fas fa-street-view fa-fw"></i> Google Street View: Provides panoramic views from positions along many streets.<br><br>
-						<i class="fas fa-wrench fa-fw"></i> FixMyStreet: Opens a new window to report problems in the community.
+						<i class="fas fa-wrench fa-fw"></i> FixMyStreet: Opens a new window to report problems in the community.<br><br>
+						<i class="fas fa-street-view fa-fw"></i> Google Street View: Provides panoramic views from positions along many streets.
 						<p><img src="assets/img/help-context.png" alt="Context-menu preview"></p>
 					</div>
 					<div id="gototabs"><hr>
@@ -392,7 +398,7 @@
 	</div>
 
 	<!-- Map -->
-	<div id="map" class="sidebar-map"></div>
+	<div id="map" class="sidebar-map leaflet-touch"></div>
 
 	<!-- JavaScript | site plugins -->
 	<script src="assets/js/plugins/jquery-3.4.1.min.js"></script>
@@ -401,7 +407,7 @@
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v1.3.4"></script>
 	<script src="assets/js/plugins/imageMapResizer.min.js?v1.0.10"></script>
 	<script src="assets/js/plugins/URI.min.js?v1.19.1"></script>
-	<script src="assets/js/plugins/leaflet.js?v1.5.1"></script>
+	<script src="assets/js/plugins/leaflet.js?v1.6.0"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v0.2.1"></script>
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v0.4.0"></script>
 	<script src="assets/js/plugins/Control.Loading.min.js?v0.1.24"></script>
@@ -416,12 +422,12 @@
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v3.4.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v3.5.7"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v5.5.0"></script>
-	<script src="assets/js/OverPassLayer.js?v5.5.0"></script>
-	<script src="assets/js/tags-parsers.js?v5.5.0"></script>
-	<script src="assets/js/pois-type.js?v5.5.0"></script>
-	<script src="tour/tour.js?v5.5.0"></script>
-	<script src="assets/js/site.js?v5.5.0"></script>
+	<script src="assets/js/config.js?v5.5.3"></script>
+	<script src="assets/js/OverPassLayer.js?v5.5.3"></script>
+	<script src="assets/js/tags-parsers.js?v5.5.3"></script>
+	<script src="assets/js/pois-type.js?v5.5.3"></script>
+	<script src="tour/tour.js?v5.5.3"></script>
+	<script src="assets/js/site.js?v5.5.3"></script>
 
  </body>
 </html>

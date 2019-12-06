@@ -8,7 +8,7 @@
 				"img": {
 					"0": "Xmas/2017/ageuk(0)"
 				},
-				"winner": "<i class='xmasAward commendedThird fas fa-award'></i> Third Prize"
+				"winner": 3
 			},
 			"geometry": {
 				"type": "Point",
@@ -22,7 +22,7 @@
 				"img": {
 					"0": "Xmas/2017/barbykeel(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -36,7 +36,7 @@
 				"img": {
 					"0": "Xmas/2017/beflawless(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -76,7 +76,7 @@
 				"img": {
 					"0": "Xmas/2017/birkdale(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -90,7 +90,7 @@
 				"img": {
 					"0": "Xmas/2017/caringcommunity(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -117,7 +117,7 @@
 				"img": {
 					"0": "Xmas/2017/dorothymarchant(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -131,7 +131,7 @@
 				"img": {
 					"0": "Xmas/2017/emmahellier(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -145,7 +145,7 @@
 				"img": {
 					"0": "Xmas/2017/hearingcentre(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -211,7 +211,7 @@
 				"img": {
 					"0": "Xmas/2017/milzarsflorist(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -225,7 +225,7 @@
 				"img": {
 					"0": "Xmas/2017/mind(0)"
 				},
-				"winner": "<i class='xmasAward commendedFourth fas fa-award'></i> Fourth Prize"
+				"winner": 4
 			},
 			"geometry": {
 				"type": "Point",
@@ -239,7 +239,7 @@
 				"img": {
 					"0": "Xmas/2017/mummery(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -267,7 +267,7 @@
 					"0": "Xmas/2017/salvridges(0)",
 					"1": "Xmas/2017/salvridges(1)"
 				},
-				"winner": "<i class='xmasAward commendedFirst fas fa-award'></i> First Prize"
+				"winner": 1
 			},
 			"geometry": {
 				"type": "Point",
@@ -281,7 +281,7 @@
 				"img": {
 					"0": "Xmas/2017/saralee(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -295,7 +295,7 @@
 				"img": {
 					"0": "Xmas/2017/thimbleinas(0)"
 				},
-				"winner": "<i class='xmasAward commendedSecond fas fa-award'></i> Second Prize"
+				"winner": 2
 			},
 			"geometry": {
 				"type": "Point",
@@ -309,7 +309,7 @@
 				"img": {
 					"0": "Xmas/2017/rushwittwilson(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -349,7 +349,7 @@
 				"img": {
 					"0": "Xmas/2017/wards(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -363,7 +363,7 @@
 				"img": {
 					"0": "Xmas/2017/whitefeather(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -377,7 +377,7 @@
 				"img": {
 					"0": "Xmas/2017/wickhambistro(0)"
 				},
-				"winner": "<i class='xmasAward commendedAward fas fa-award'></i> Highly Commended"
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",

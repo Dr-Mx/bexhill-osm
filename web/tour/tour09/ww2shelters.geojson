@@ -297,7 +297,10 @@
 			"properties": {
 				"name": "Devonshire Square",
 				"date": "1940",
-				"description": "Surface. Capacity 80."
+				"description": "Surface. Capacity 80.",
+				"img": {
+					"0": "09/shelter/devonshiresquare"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -321,10 +324,12 @@
 				"date": "1939",
 				"description": "Trench. Capacity 64.",
 				"img": {
-					"0": "09/shelter/eastparade"
+					"0": "09/shelter/eastparade(0)",
+					"1": "09/shelter/eastparade(1)"
 				},
 				"imgattrib": {
-					"0": "The Royal Windsor Website & Forum"
+					"0": "The Royal Windsor Website & Forum",
+					"1": "ESRO CA/5/3B [40]"
 				}
 			},
 			"geometry": {
@@ -338,7 +343,8 @@
 				"date": "1939",
 				"description": "Surface. Capacity 92.",
 				"img": {
-					"0": "09/shelter/wickhamavenue"
+					"0": "09/shelter/wickhamavenue(0)",
+					"1": "09/shelter/wickhamavenue(1)"
 				},
 				"imgattrib": {
 					"0": "Bexhill Observer"
@@ -631,13 +637,7 @@
 			"properties": {
 				"name": "St Mark's School",
 				"date": "1939",
-				"description": "School trench. Capacity 125.",
-				"img": {
-					"0": "09/shelter/stmarkstrench"
-				},
-				"imgattrib": {
-					"0": "David Hatherell"
-				}
+				"description": "School trench. Capacity 125."
 			},
 			"geometry": {
 				"type": "Point",
@@ -767,6 +767,12 @@
 					"1": "09/shelter/townhallsquare(1)",
 					"2": "09/shelter/townhallsquare(2)",
 					"3": "09/shelter/townhallsquare(3)"
+				},
+				"imgattrib": {
+					"0": "Bexhill Observer",
+					"1": "Bexhill Observer",
+					"2": "Bexhill Observer",
+					"3": "Bexhill Observer"
 				}
 			},
 			"geometry": {
@@ -791,9 +797,10 @@
 				"date": "1939",
 				"description": "Surface. Capacity 42. Bunks 12.",
 				"img": {
-					"0": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (2).jpg",
-					"1": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor).jpg",
-					"2": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor) (2).jpg"
+					"0": "09/shelter/searoad",
+					"1": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (2).jpg",
+					"2": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor).jpg",
+					"3": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor) (2).jpg"
 				}
 			},
 			"geometry": {

@@ -3,6 +3,68 @@
 	"features": [{
 		"type": "Feature",
 		"properties": {
+			"id": "sydenham",
+			"name": "De La Warr Estate Office, Sea Road",
+			"desc": "The office where prospective developers could buy and let land from 8th De La Warr's Architect and Surveyor, George Herbert Gray. Today one of the buildings has been demolished, replaced with Sydenham Court apartments.",
+			"copyright": "Bexhill Museum",
+			"date": {
+				"now": "2019",
+				"then": "c1898"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47694, 50.83955]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "marinacourt",
+			"name": "Marina Court, Marina Court Avenue",
+			"desc": "Designed by Paul Hoffman and built by Mr Gold, it was used for residential apartments with letting for shops between the years of 1901-1970. One of the first places in Bexhill to have hydraulic lifts and electric lighting. Today demolished and used as an extension to the De La Warr Pavilion car park.",
+			"copyright": "Bexhill Museum",
+			"date": {
+				"now": "2019",
+				"then": "1965"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47469, 50.83789]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "bexhillstation",
+			"name": "Bexhill Railway Station, Sea Road",
+			"desc": "Horses and carriages await their passengers.",
+			"date": {
+				"now": "2019",
+				"then": "c1902"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47727, 50.84136]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "eastparade",
+			"name": "East Parade",
+			"desc": "Promenade refreshments tent and The Kursaal entertainment venue in the background.",
+			"date": {
+				"now": "2019",
+				"then": "1896"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47833, 50.83776]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
 			"id": "metropoletram",
 			"name": "Bexhill to Hastings Tram, Marina",
 			"desc": "Running from West Marina in St. Leonards to Marina roundabout, later extended to Cooden Beach from 1906-1928.",

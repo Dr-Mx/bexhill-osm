@@ -43,8 +43,7 @@ var pois = {
 		query: 'nwr[information][information!~guidepost][~"^ref$|^name$"~"."];',
 		iconName: 'information',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'information'],
-		tagParser: info_parser
+		tagKeyword: ['tourism', 'information']
 	},
 
 	guest_house: {
@@ -92,7 +91,7 @@ var pois = {
 
 	park: {
 		name: 'Park',
-		query: 'way[leisure~"park|common|nature_reserve"];',
+		query: 'way[leisure~"park|nature_reserve"];',
 		iconName: 'urbanpark',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve']
@@ -119,8 +118,7 @@ var pois = {
 		query: 'nwr[amenity=shelter];',
 		iconName: 'shelter',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['picnic', 'shelter'],
-		tagParser: shelter_parser
+		tagKeyword: ['picnic', 'shelter']
 	},
 
 	allotments: {
@@ -137,8 +135,7 @@ var pois = {
 		query: 'nwr[club];',
 		iconName: 'conversation-map-icon',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['hobby', 'social', 'events', 'venue', 'sport', 'club'],
-		tagParser: club_parser
+		tagKeyword: ['hobby', 'social', 'events', 'venue', 'sport', 'club']
 	},
 
 	recreation: {
@@ -162,7 +159,7 @@ var pois = {
 		query: 'nwr[amenity=boat_rental];',
 		iconName: 'rowboat',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['boat', 'rental', 'children']
+		tagKeyword: ['boat', 'hire', 'rental', 'children']
 	},
 
 	amusement_arcade: {
@@ -279,7 +276,7 @@ var pois = {
 
 	post_box: {
 		name: 'Post-Box/Office',
-		query: 'nwr[amenity~"post_box|post_office"];',
+		query: 'nwr[amenity~"post_box|post_depot|post_office"];',
 		iconName: 'postal',
 		catName: 'Amenities',
 		tagKeyword: ['post', 'letter', 'mail'],
@@ -288,7 +285,7 @@ var pois = {
 
 	drinking_water: {
 		name: 'Drinking-Water',
-		query: 'node[amenity=drinking_water];node[drinking_water=yes];nwr["drinking_water:bexfill"="yes"];',
+		query: 'node[amenity=drinking_water];node[drinking_water=yes];nwr["drinking_water:bexfill"=yes];',
 		iconName: 'drinkingwater',
 		catName: 'Amenities',
 		tagKeyword: ['drink', 'tap', 'water', 'bexfill'],
@@ -370,7 +367,7 @@ var pois = {
 		query: 'nwr[amenity=car_rental];',
 		iconName: 'carrental',
 		catName: 'Amenities',
-		tagKeyword: ['car-rental', 'motor']
+		tagKeyword: ['car-rental', 'hire', 'motor']
 	},
 
 	car_wash: {
@@ -436,7 +433,7 @@ var pois = {
 		query: 'nwr[amenity~"library|public_bookcase"];',
 		iconName: 'library',
 		catName: 'Services',
-		tagKeyword: ['library', 'books', 'read', 'bookcase']
+		tagKeyword: ['library', 'books', 'read']
 	},
 
 	jobcentre: {
@@ -519,8 +516,7 @@ var pois = {
 		query: 'nwr[healthcare];',
 		iconName: 'medicalstore',
 		catName: 'Services',
-		tagKeyword: ['healthcare', 'medical', 'therapy', 'clinic', 'chiropractic', 'osteopathy'],
-		tagParser: healthcare_parser
+		tagKeyword: ['healthcare', 'medical', 'therapy', 'clinic', 'chiropractic', 'osteopathy']
 	},
 
 	pharmacy: {
@@ -907,8 +903,7 @@ var pois = {
 		query: 'nwr[shop=craft];',
 		iconName: 'craftstore',
 		catName: 'Shops',
-		tagKeyword: ['crafts', 'photographer', 'handi', 'models', 'art'],
-		tagParser: craft_parser
+		tagKeyword: ['crafts', 'photographer', 'handi', 'models', 'art']
 	},
 
 	frame: {

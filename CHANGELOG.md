@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v5.5.3
+
+**Date:** 06/12/2019
+
+Updated js
+ - leaflet.js 1.6.0
+
+Site changes
+ - Cleaner transitions
+ - Removed some old POI parsers
+ - Xmas update
+ - Bug fixes and improvements
+
+
 ## v5.5.0 - Then and Now
 
 **Date:** 31/08/2019
