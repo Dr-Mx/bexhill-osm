@@ -11,6 +11,7 @@ body {
 	text-align: justify;
 	margin: 0;
 	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
 	height: 100%;
 }
 @media (min-width: 733px) and (max-width: 1264px), (max-width: 365px) {
@@ -52,7 +53,10 @@ img {
 	margin: 0 5px 5px 0;
 }
 
-.bombKey {
+#bombKey {
+	margin: -10px auto auto 10px;
+}
+#bombKey span {
 	display: inline-block;
 	font-size: 35pt;
 	line-height: 11pt;
@@ -84,13 +88,11 @@ img {
 		right 8px
 		center
 		no-repeat;
-	position: relative;
 	padding: 5px 30px 5px 5px;
 	margin-right: -5px;
 	margin-bottom: 5px;
 	margin-left: -5px;
 	text-align: left;
-	font-size: 115%;
 	border-radius: 3px;
 	transition: background-color 100ms;
 	color: #b05000;
@@ -100,9 +102,9 @@ img {
 	background-color: rgba(190, 190, 190, 0.5);
 }
 .sm {
-	margin-top: 0;
-	margin-bottom: 0;
-	font-size: 90%;
+	margin-top: 5px;
+	margin-bottom: 2px;
+	font-size: 95%;
 }
 
 a {

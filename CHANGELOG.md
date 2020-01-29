@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v5.6.0 - WW2 bomb-map timeline
+
+**Date:** 29/01/2020
+
+Site changes
+ - Add a slider for WW2 bomb map showing timeline
+ - Sort bomb map and arp shelter markers by date as default
+ - Fix a bug in caching of requests
+ - Better touch screen checks and experience
+ - If location active show distance for all types of markers in POI results
+ - Change diaper > changing_table
+ - Add frozen_food to supermarkets
+ - Add coast_guard to emergency
+ - As always, many other bug fixes and improvements
+
+
 ## v5.5.3
 
 **Date:** 06/12/2019

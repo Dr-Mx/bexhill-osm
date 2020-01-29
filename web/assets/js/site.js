@@ -18,16 +18,17 @@ var defBaseTileLayer = 'osmstd', actBaseTileLayer = defBaseTileLayer, actOverlay
 // tab to open
 var defTab = 'home', actTab = defTab;
 // image width for popups
-var imgSize = ($(window).width() < 1024) ? 256 : 310;
+var imgSize = ($(window).width() < 512) ? 256 : 310;
 // overpass layer options
 var maxPOICheckbox = 3;
 var maxOpResults = 250;
 // website checks
+var noTouch = window.ontouchstart === undefined;
 var noIframe = top === self;
 var noPermalink = !URI(window.location.href).search();
 // title tag tooltip defaults
 var tooltipDef = {
-	disabled: (window.ontouchstart === undefined) ? false : true,
+	disabled: noTouch ? false : true,
 	hide: false,
 	show: { delay: 200, duration: 50 },
 	track: true,
@@ -80,7 +81,7 @@ $(document).on('click', 'a[href*="#goto"]', function(e) {
 $('.sidebar-tabs').click(function() {
 	// get current sidebar-tab
 	actTab = ($('.sidebar.collapsed').length || actTab === 'closing') ? 'none' : $('.sidebar-pane.active').attr('id');
-	$('.sidebar-close i').removeClass('wobble');
+	$('.sidebar-close').removeClass('wobble');
 	// resize links on minimap
 	if (actTab === 'home') setTimeout(function() { $('#minimap > map').imageMapResize(); }, 400);
 	if (actTab === 'tour') $('#tourList').trigger('change');
@@ -89,7 +90,7 @@ $('.sidebar-tabs').click(function() {
 	if ($(window).width() >= 768 && $(window).width() < 1300) {
 		x = 0;
 		var timer = setInterval(function() {
-			map.invalidateSize({ animate: true }); 
+			map.invalidateSize({ animate: true });
 			if (++x === 4) clearInterval(timer);
 		}, 100);
 	}
@@ -124,7 +125,7 @@ L.Map.addInitHook(function() {
 // initialise map
 var map = new L.map('map', {
 	maxBounds: LBounds.pad(0.5),
-	maxBoundsViscosity: 1.0,
+	maxBoundsViscosity: 0.9,
 	minZoom: 10,
 	maxZoom: 20,
 	bounceAtZoomLimits: false,
@@ -188,11 +189,11 @@ var map = new L.map('map', {
 	setTimeout(setOverlayLabel, 10);
 	// tutorial modal
 	if (noPermalink && noIframe && window.localStorage && !window.localStorage.tutorial) {
-		var showModalTutor = function(target, id, css, text, arrowCss) {
+		var showModalTutor = function(target, id, dist, text, arrowDir) {
 			target.before(
-				'<div id="' + id + '" class="modalTutor leaflet-control" style="' + css + '">' + text +
+				'<div id="' + id + '" class="modalTutor leaflet-control" style="left:' + dist + 'px;">' + text +
 				'<button type="button" class="modalButton theme">Got it</button>' +
-				'<div class="modalTutorArrow" style="' + arrowCss + '"></div></div>'
+				'<div class="modalTutorArrow" style="' + arrowDir + ':-5px;"></div></div>'
 			);
 			L.DomEvent.disableClickPropagation($('#' + id)[0]).disableScrollPropagation($('#' + id)[0]);
 			$('.modalButton').on('click', function() {
@@ -200,10 +201,10 @@ var map = new L.map('map', {
 				window.localStorage.tutorial = 0;
 			});
 		};
-		showModalTutor($('.leaflet-control-layers'), 'modalT1', 'left:-190px;', '<i class="fas fa-layer-group"></i> allows you to choose from a growing number of modern and historical maps.', 'right:-5px;');
-		showModalTutor($('#btnClearmap'), 'modalT2', 'left:40px;', 'Zooming-in and clicking the map allows you to find information on any place. Then, to clean up just use <i class="fas fa-trash"></i>.', 'left:-5px;');
-		showModalTutor($('.sidebar-tabs ul li').eq(3), 'modalT3', 'left:40px;', '<i class="fas fa-book"></i> will display articles on the history of the area. From dinosaur footprints to WW2 bomb locations.', 'left:-5px;');
-		showModalTutor($('#inputOpacity input'), 'modalT4', 'left:-190px;', 'This slider changes the opacity of the overlay. Holding CTRL will also switch between opacity.', 'right:-5px;');
+		showModalTutor($('.leaflet-control-layers'), 'modalT1', '-190', 'Choose from a growing number of modern and historical maps to overlay.', 'right');
+		showModalTutor($('#btnClearmap'), 'modalT2', '40', 'Clicking the map allows you to find information on almost any place. To clean up any markers use this button.', 'left');
+		showModalTutor($('.sidebar-tabs ul li').eq(3), 'modalT3', '40', 'Display articles on the history of the area. From dinosaur footprints to WW2 bomb locations.', 'left');
+		showModalTutor($('#inputOpacity input'), 'modalT4', '-190', 'This slider changes the opacity of the overlay.' + (noTouch ? ' Holding CTRL will also toggle the opacity.' : ''), 'right');
 	}
 	// holiday decorations overlay
 	if (new Date().getMonth() === 3 && new Date().getDate() >= 10 && new Date().getDate() <= 13) $('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/easterSb.png">');
@@ -228,9 +229,11 @@ var map = new L.map('map', {
 	$('.leaflet-control-geocoder-form').click(function(e) { e.stopPropagation(); });
 	// refocus status message on mouseover
 	$('#msgStatus').on('mouseover tap', function() { if ($(this).is(':animated')) $(this).stop().css('opacity', 1); });
-	// add delay after load for sidebar to animate open to create minimap
-	setTimeout(function() { $('#minimap > map').imageMapResize(); }, 500);
-	if ($(window).width() >= 768 && $(window).width() < 1300) { map.invalidateSize(); }
+	// add delay after load for sidebar to animate open
+	setTimeout(function() {
+		$('#minimap > map').imageMapResize();
+		if ($(window).width() >= 768 && $(window).width() < 1300) map.invalidateSize();
+	}, 500);
 	// filter poi using keywords
 	$('#poi-filter-in').on('keyup', function() {
 		$('.poi-checkbox input').each(function() {
@@ -262,14 +265,17 @@ var map = new L.map('map', {
 			opacity: 1,
 			fillColor: '#fff',
 			fillOpacity: 0.5,
-			interactive: false
+			interactive: noTouch ? true : false,
+			bubblingMouseEvents: false
+		}).on('click' , function() {
+			if ($('#msgStatus .msgStatusBodyAddr').length) $('#msgStatus .msgStatusBodyAddr').click();
 		}));
 		reverseQuery(e, 1);
 	}
 }).on('contextmenu.show', function() {
 	// https://github.com/aratcliffe/Leaflet.contextmenu
 	// show walkHere if user located within map
-	if (lc._active && map.options.maxBounds && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14) $('.leaflet-contextmenu-item').eq(1).show();
+	if (lc._active && lc._event && map.options.maxBounds && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14) $('.leaflet-contextmenu-item').eq(1).show();
 	else $('.leaflet-contextmenu-item').eq(1).hide();
 }).on('popupopen', function(e) {
 	var popupThis = $(e.popup._container);
@@ -368,7 +374,7 @@ var map = new L.map('map', {
 		}
 	});
 	// highlight in results list and add openpopup to permalink
-	if (poiList.length && !$('#inputDebug').is(':checked')) {
+	if (poiList.length && !popupThis.find($('a#userLoc')).length && !$('#inputDebug').is(':checked')) {
 		popupThis.find($('#poi-results-list tr#' + $.map(poiList, function(o, i) { if (o._leaflet_id === osmId) return i; })).css('background-color', 'rgba(255, 255, 255, 0.5'));
 		markerId = osmId;
 		permalinkSet();
@@ -376,9 +382,9 @@ var map = new L.map('map', {
 	if (popupThis.find($('.popup-imgContainer')).length) {
 		// reduce height of long descriptions if image exists
 		if (popupThis.find($('.popup-longDesc')).length) popupThis.find($('.popup-longDesc')).css('--popup-long-desc-height', '150px');
-		setTimeout(function() {	for (x = 0; x < popupThis.find($('.popup-imgContainer')).length; x++) {
-			if (!popupThis.find($('#img' + x + ' .attribd')).length) getWikiAttrib(popupThis.find($('#img' + x)));
-		}}, 500);
+		setTimeout(function() {
+			for (x = 0; x < popupThis.find($('.popup-imgContainer')).length; x++) if (!popupThis.find($('#img' + x + ' .attribd')).length) getWikiAttrib(popupThis.find($('#img' + x)));
+		}, 500);
 		$('.popup-imgContainer img')
 			.on('swiperight', function() { navImg(0); })
 			.on('swipeleft', function() { navImg(1); })
@@ -416,7 +422,7 @@ var map = new L.map('map', {
 	}
 }).on('baselayerchange', function(e) {
 	// get layer name on change
-	for (var c in baseTileList.name) { if (e.name === baseTileList.name[c]) actBaseTileLayer = baseTileList.keyname[c]; }
+	for (var c in baseTileList.name) if (e.name === baseTileList.name[c]) actBaseTileLayer = baseTileList.keyname[c];
 	permalinkSet();
 }).on('overlayadd', function(e) {
 	loadingControl._showIndicator();
@@ -424,7 +430,7 @@ var map = new L.map('map', {
 	setTimeout(function() {
 		if ($('.leaflet-control-layers-overlays input:checked').length > 1) map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);
 		// get layer name on change
-		for (var c in overlayTileList.name) { if (e.name === overlayTileList.name[c]) actOverlayLayer = overlayTileList.keyname[c]; }
+		for (var c in overlayTileList.name) if (e.name === overlayTileList.name[c]) actOverlayLayer = overlayTileList.keyname[c];
 		// set overlay opacity controls
 		$('#inputOpacity').show(100);
 		$('#inputOpacity input')
@@ -459,7 +465,7 @@ var map = new L.map('map', {
 function setOverlayLabel() {
 	// adds a title and hides some labels in layers control
 	if (!$('.controlTitle').length) $('.leaflet-control-layers-overlays label:contains("1975")').before('<div class="controlTitle">Historic overlays</div>');
-	for (var tile in tileOverlayLayer) { if (tileOverlayLayer[tile].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tile].name + '")').hide(); }
+	for (var tile in tileOverlayLayer) if (tileOverlayLayer[tile].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tile].name + '")').hide();
 }
 
 // https://github.com/davidjbradshaw/image-map-resizer
@@ -489,14 +495,14 @@ $('#minimap > map > area').click(function() {
 var rQuery = false;
 function reverseQuery(e, singlemapclick) {
 	// get location, look up id on Nominatim
-	setMsgStatus('fas fa-spinner fa-pulse', '', '');
-	if (!singlemapclick) $('.spinner').show();
+	if (singlemapclick) setMsgStatus('fas fa-spinner fa-pulse', '', '');
+	else $('.spinner').show();
 	var geocoder = L.Control.Geocoder.nominatim({ reverseQueryParams: { format: 'jsonv2', namedetails: 1, email: email } });
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom() > 16 ? 18 : 17), function(results) {
 		var geoMarker = results[0] ? results[0].properties : '';
 		if ($('#inputDebug').is(':checked') && results[0]) console.debug('Reverse search Nominatim', results[0]);
 		if (geoMarker.osm_id) {
-			if (singlemapclick)	{
+			if (singlemapclick && $('#msgStatus:visible').length)	{
 				var geoName = geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '';
 				var geoRoad = geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || '';
 				setMsgStatus(
@@ -526,11 +532,9 @@ function walkPoint(e) {
 	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').click();
 	// drop a walk marker if one doesn't exist
 	var wp = routingControl.getWaypoints();
-	for (var c in wp) {
-		if (!wp[c].name) {
-			routingControl.spliceWaypoints(c, 1, e.latlng);
-			return;
-		}
+	for (var c in wp) if (!wp[c].name) {
+		routingControl.spliceWaypoints(c, 1, e.latlng);
+		return;
 	}
 	routingControl.spliceWaypoints(wp.length, 0, e.latlng);
 }
@@ -689,7 +693,7 @@ $('#tourList').change(function() {
 				$('#tourLoading').hide();
 				$(this).fadeIn();
 				$(this).contents().find('sup').click(function() { tourRef(this.innerText); });
-				$(this).contents().find('sup').attr('title', 'view reference');
+				$(this).contents().find('sup').attr('title', 'View reference');
 				$(this).contents().find('img').click(function() { $.fancybox.open([{ src: $(this)[0].currentSrc, caption: $(this).attr('alt') }]);
 				});
 			});
@@ -789,6 +793,13 @@ function setLeaflet() {
 	}
 	// overlays, you can set an offset by using metres (offset: [left, top])
 	tileOverlayLayer = {
+		osm2012: {
+			name: 'OpenStreetMap 2012',
+			url: 'http://map.fosm.org/default/{z}/{x}/{y}.png',
+			bounds: LBounds,
+			opacity: 1,
+			hide: 1
+		},
 		lidar: {
 			name: 'Lidar DTM 2m',
 			url: 'https://environment.data.gov.uk/spatialdata/lidar-composite-digital-surface-model-dtm-2m/wms',
@@ -839,7 +850,7 @@ function setLeaflet() {
 			name: '1975 Aerial (coast)',
 			url: 'https://tiles.bexhillheritage.org.uk/bm1975/{z}/{x}/{y}.png',
 			// url: 'assets/maptiles/bm1975/{z}/{x}/{y}.png',
-			attribution: 'Meridian Airmaps Ltd, <a href="http://bexhillmuseum.co.uk/" target="_blank" rel="noopener">Bexhill Museum</a>',
+			attribution: 'Meridian Airmaps Ltd, <a href="https://bexhillmuseum.org.uk/" target="_blank" rel="noopener">Bexhill Museum</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 18
@@ -848,7 +859,7 @@ function setLeaflet() {
 			name: '1967 Aerial',
 			url: 'https://tiles.bexhillheritage.org.uk/bm1967/{z}/{x}/{y}.png',
 			// url: 'assets/maptiles/bm1967/{z}/{x}/{y}.png',
-			attribution: 'BKS Surveys, <a href="http://bexhillmuseum.co.uk/" target="_blank" rel="noopener">Bexhill Museum</a>',
+			attribution: 'BKS Surveys, <a href="https://bexhillmuseum.org.uk/" target="_blank" rel="noopener">Bexhill Museum</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 18
@@ -864,7 +875,7 @@ function setLeaflet() {
 		br1959: {
 			name: '1959 Aerial (west branch)',
 			url: 'assets/maptiles/br1959/{z}/{x}/{y}.png',
-			attribution: 'British Rail, <a href="http://car57.zenfolio.com/" target="_blank" rel="noopener">Michael Pannell</a>',
+			attribution: 'British Rail, <a href="https://car57.zenfolio.com/" target="_blank" rel="noopener">Michael Pannell</a>',
 			bounds: L.latLngBounds([50.83722, 0.45732], [50.8907, 0.5134]),
 			opacity: 1,
 			maxNativeZoom: 18
@@ -881,7 +892,7 @@ function setLeaflet() {
 		bm1946: {
 			name: '1946 Aerial (p.levels)',
 			url: 'assets/maptiles/bm1946/{z}/{x}/{y}.png',
-			attribution: 'CPEUK, <a href="http://bexhillmuseum.co.uk/" target="_blank" rel="noopener">Bexhill Museum</a>',
+			attribution: 'CPEUK, <a href="https://bexhillmuseum.org.uk/" target="_blank" rel="noopener">Bexhill Museum</a>',
 			bounds: LBounds,
 			opacity: 1,
 			minNativeZoom: 14,
@@ -891,7 +902,7 @@ function setLeaflet() {
 		arp1942: {
 			name: '1942 Air Raid Precautions',
 			url: 'assets/maptiles/arp1942/{z}/{x}/{y}.png',
-			attribution: '<a href="http://www.bexhillmuseum.co.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
+			attribution: '<a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
 			bounds: L.latLngBounds([50.8292, 0.4157], [50.8713, 0.5098]),
 			opacity: 1,
 			maxNativeZoom: 18,
@@ -928,7 +939,7 @@ function setLeaflet() {
 		mt1902: {
 			name: '1902 Motor Track',
 			url: 'assets/maptiles/mt1902/{z}/{x}/{y}.png',
-			attribution: '<a href="http://www.bexhillmuseum.co.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
+			attribution: '<a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
 			bounds: L.latLngBounds([50.83645, 0.47571], [50.84225, 0.49826]),
 			opacity: 1,
 			minNativeZoom: 12,
@@ -970,7 +981,7 @@ function setLeaflet() {
 		mb1805: {
 			name: '1805 Manor of Bexhill',
 			url: 'assets/maptiles/mb1805/{z}/{x}/{y}.png',
-			attribution: '<a href="http://www.thekeep.info/collections/getrecord/GB179_AMS5819" target="_blank" rel="noopener">ESRO AMS 5819</a>',
+			attribution: '<a href="https://www.thekeep.info/collections/getrecord/GB179_AMS5819" target="_blank" rel="noopener">ESRO AMS 5819</a>',
 			bounds: L.latLngBounds([50.805, 0.376], [50.883, 0.511]),
 			opacity: 1,
 			maxNativeZoom: 17
@@ -1021,8 +1032,8 @@ var fcnFullscr = L.easyButton({
 		icon: 'fas fa-expand',
 		title: 'Full screen',
 		onClick: function(control) {
-			var viewer = L.Browser.ie ? $('body')[0] : $('html')[0];
-			var rFS = viewer.requestFullScreen || viewer.webkitRequestFullscreen || viewer.mozRequestFullScreen || viewer.msRequestFullscreen;
+			var viewer = $('html')[0];
+			var rFS = viewer.requestFullscreen || viewer.webkitRequestFullscreen;
 			rFS.call(viewer);
 			control.state('fullScreen');
 		}
@@ -1031,19 +1042,17 @@ var fcnFullscr = L.easyButton({
 		icon: 'fas fa-compress',
 		title: 'Exit full screen',
 		onClick: function(control) {
-			var cFS = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+			var cFS = document.exitFullscreen || document.webkitExitFullscreen;
 			cFS.call(document);
 			control.state('normalScreen');
 		}
 	}]
 }).addTo(map);
 $(document)
-	.on('MSFullscreenChange', btnFullscrState)
 	.on('fullscreenchange', btnFullscrState)
-	.on('mozfullscreenchange', btnFullscrState)
 	.on('webkitfullscreenchange', btnFullscrState);
 function btnFullscrState() {
-	var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+	var fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
 	if (!fullscreenElement) fcnFullscr.state('normalScreen');
 }
 
@@ -1060,7 +1069,7 @@ var lc = L.control.locate({
 	markerStyle: { radius: 8 },
 	strings: {
 		title: 'Show your location',
-		popup: '<a id="userLoc" onclick="userLoc();"><br><h3>What is around me?</h3></a>'
+		popup: '<a id="userLoc" onclick="userLoc();"><br><h3>What is around me?</h3></a><span class="comment">Accuracy: {distance} {unit}</span>'
 	},
 	locateOptions: {
 		enableHighAccuracy: false
@@ -1244,20 +1253,16 @@ function setRoutingControl(units) {
 
 function populatePoiTab() {
 	var poiTags = {}, category = [], categoryList = [], c;
-	for (var poi in pois) {
-		if (pois[poi].catName && pois[poi].tagKeyword) {
-			// get all keywords and put into categories
-			poiTags[poi] = pois[poi].tagKeyword;
-			category.push({ listLocation: poi, header: '<img data-key="poi" src="assets/img/icons/' + pois[poi].iconName + '.png">' + pois[poi].catName + ' - ' + pois[poi].name });
-			// get unique category label for poi checkbox tab
-			if (categoryList.indexOf(pois[poi].catName) === -1) categoryList.push(pois[poi].catName);
-		}
+	for (var poi in pois) if (pois[poi].catName && pois[poi].tagKeyword) {
+		// get all keywords and put into categories
+		poiTags[poi] = pois[poi].tagKeyword;
+		category.push({ listLocation: poi, header: '<img data-key="poi" src="assets/img/icons/' + pois[poi].iconName + '.png">' + pois[poi].catName + ' - ' + pois[poi].name });
+		// get unique category label for poi checkbox tab
+		if (categoryList.indexOf(pois[poi].catName) === -1) categoryList.push(pois[poi].catName);
 	}
-	for (c = 1; c < $('#tourList option').length - 1; c++) {
-		if ($('#tourList option').eq(c).data('keyword')) {
-			category.push({ listLocation: $('#tourList option').eq(c).text().split('- ')[1], header: '<img data-key="tour' + c + '" src="assets/img/sb-tour.png">Tour ' + $('#tourList option').eq(c).text() });
-			poiTags[$('#tourList option').eq(c).text().split('- ')[1]] = $('#tourList option').eq(c).data('keyword').split(', ');
-		}
+	for (c = 1; c < $('#tourList option').length - 1; c++) if ($('#tourList option').eq(c).data('keyword')) {
+		category.push({ listLocation: $('#tourList option').eq(c).text().split('- ')[1], header: '<img data-key="tour' + c + '" src="assets/img/sb-tour.png">Tour ' + $('#tourList option').eq(c).text() });
+		poiTags[$('#tourList option').eq(c).text().split('- ')[1]] = $('#tourList option').eq(c).data('keyword').split(', ');
 	}
 	// https://github.com/pawelczak/EasyAutocomplete
 	var options = {
@@ -1294,20 +1299,18 @@ function populatePoiTab() {
 			'<div class="comment" style="text-align:right;">Make up to ' + maxPOICheckbox + ' selections at a time.</div>';
 	for (c in categoryList) {
 		checkboxContent += '<div id="goto' + categoryList[c] + '" class="poi-group"><hr><h3>' + categoryList[c] + '</h3><a href="#goto' + categoryList[c] + '"></a>';
-		for (poi in pois) {
-			if (pois[poi].catName === categoryList[c]) checkboxContent += L.Util.template(
-				'<div class="poi-checkbox">' +
-					'<label title="{name}">' +
-						'<img src="assets/img/icons/{icon}.png"></img>' +
-						'<input type="checkbox" id="{key}" data-keyword="{keyword}"><span>{name}</span>' +
-					'</label>' +
-				'</div>',
-				{ key: poi, name: pois[poi].name, icon: pois[poi].iconName, keyword: pois[poi].tagKeyword.join(',') }
-			);
-		}
+		for (poi in pois) if (pois[poi].catName === categoryList[c]) checkboxContent += L.Util.template(
+			'<div class="poi-checkbox">' +
+				'<label title="{name}">' +
+					'<img src="assets/img/icons/{icon}.png"></img>' +
+					'<input type="checkbox" id="{key}" data-keyword="{keyword}"><span>{name}</span>' +
+				'</label>' +
+			'</div>',
+			{ key: poi, name: pois[poi].name, icon: pois[poi].iconName, keyword: pois[poi].tagKeyword.join(',') }
+		);
 		checkboxContent += '</div>';
 	}
-	$('#poi-icons').append(checkboxContent + '<a class="theme anchor"><i class="fas fa-arrow-up fa-fw"></i></a>');
+	$('#poi-icons').append(checkboxContent + '<a class="theme anchor"></a>');
 }
 populatePoiTab();
 
@@ -1340,14 +1343,14 @@ $('html').keydown(function(e) {
 	// CTRL down: switch overlay transparency on
 	else if (e.keyCode === 17 && actOverlayLayer && !keyDown) {
 		keyDown = true;
-		$('#inputOpacity input').val(0.1).trigger('change');
+		$('#inputOpacity input').val(0.05).trigger('change');
 		e.preventDefault();
 	}
 }).keyup(function(e) {
 	// CTRL up: switch overlay transparency off
 	if (e.keyCode === 17 && actOverlayLayer) {
 		keyDown = false;
-		$('#inputOpacity input').val(0.9).trigger('change');
+		$('#inputOpacity input').val(1).trigger('change');
 		e.preventDefault();
 	}
 });
@@ -1369,14 +1372,15 @@ $('#settings input').not('#inputDebug').change(function() {
 		if (routingControl) $('#btnClearmap').click();
 		if ($(this).is(':checked')) {
 			if (scaleControl) scaleControl.remove();
-			scaleControl = L.control.scale({ imperial: false, position: 'bottomright' }).addTo(map);
+			scaleControl = L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
 			setRoutingControl('metric');
 		}
 		else {
 			if (scaleControl) scaleControl.remove();
-			scaleControl = L.control.scale({ metric: false, position: 'bottomright' }).addTo(map);
+			scaleControl = L.control.scale({ metric: false, position: 'bottomleft' }).addTo(map);
 			setRoutingControl('imperial');
 		}
+		$('#msgStatus').prependTo('.leaflet-bottom.leaflet-right');
 	}
 	if ($(this).attr('id') === 'inputDark') {
 		if ($(this).is(':checked')) {
@@ -1447,6 +1451,7 @@ function clear_map(layer) {
 		rQuery = false;
 		imageOverlay.clearLayers();
 		imgLayer = undefined;
+		$('#inputWw2').remove();
 		setPageTitle();
 	}
 	if (layer === 'walk' || layer === 'all') routingControl.setWaypoints([]);
@@ -1555,7 +1560,7 @@ function getTips(tip) {
 		'Quickly create walking <i class="fas fa-walking fa-sm"></i> directions by turning on <i class="fas fa-location-arrow fa-sm"></i> and right-clicking the map.',
 		'Bookmark any place by clicking the <i class="far fa-bookmark fa-sm"></i> icon in a popup.',
 		'We have a number of historical map overlays, select them using the top-right layer control <i class="fas fa-layer-group fa-sm"></i> .',
-		'Colours in place results indicate if that item is currently open (green) or closed (red).',
+		'Results in Places are coloured to show currently open (green) or closed (red).',
 		'You can find booking, location and ratings on all accommodation under <a onclick="switchTab(\'pois\', \'Leisure-Tourism\');">Leisure-Tourism</a>.',
 		'Get the latest Food Hygiene Ratings on every business in the area under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
 		'Find your closest <i class="fas fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
@@ -1600,7 +1605,7 @@ function showWeather() {
 						(data.wind.speed * 2.236936).toFixed(1) + ' mph' +
 					'</span>'
 				).attr({
-					'title': 'Current weather in ' + data.name + ' | OpenWeather',
+					'title': 'Current weather in ' + data.name + '\nOpenWeather',
 					'onclick': 'popupWindow("https://openweathermap.org/city/' + data.id + '", "owWindow", 1024, 768);'
 				});
 			}
@@ -1632,7 +1637,7 @@ function showEditFeed() {
 			if (data.features) {
 				var s = '';
 				$.each(data.features, function(e, itm) {
-					s += '<li><span class="fa-li"><i class="fas fa-sync"></i></span><a href="https://openstreetmap.org/changeset/' + itm.id + '" title="View changeset"><i>' + itm.properties.comment + '</i></a>' +
+					s += '<li><span class="fa-li"><i class="fas fa-sync"></i></span><a href="https://overpass-api.de/achavi/?changeset=' + itm.id + '" title="View changeset"><i>' + itm.properties.comment + '</i></a>' +
 					' - <a href="https://www.openstreetmap.org/user/' + itm.properties.user + '" title="View user">' + itm.properties.user + '</a>' +
 					' - <span title="' + date_parser(itm.properties.date, 'long') + '">' + date_parser(itm.properties.date.split('T')[0], 'short') + '</span></li>';
 				});
@@ -1710,16 +1715,14 @@ function permalinkSet() {
 		overlayOpacity = Math.floor(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].options.opacity * 100);
 		if (overlayOpacity === tileOverlayLayer[actOverlayLayer].opacity * 100) overlayOpacity = undefined;
 	}
-	if (walkWayp) for (c in walkWayp) { if (walkWayp[c].latLng) walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_'; }
+	if (walkWayp) for (c in walkWayp) if (walkWayp[c].latLng) walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_';
 	walkCoords = walkCoords ? walkCoords.slice(0, -1) : undefined;
 	if (actTab === 'tour' && $('#tourList option:selected').val() > 0) tourPage = $('#tourList option:selected').val();
 	$('.poi-checkbox input:checked').each(function(i, element) { selectedPois += element.id + '-'; });
 	selectedPois = selectedPois ? selectedPois.slice(0, -1) : undefined;
 	if ($('#settings input:checkbox:checked').not('#inputDebug').length) {
 		settingChk = '';
-		for (c = 0; c < $('#settings input:checkbox').not('#inputDebug').length; c++) {
-			settingChk += $('#settings input:checkbox').eq(c).is(':checked') ? '1' : '0';
-		}
+		for (c = 0; c < $('#settings input:checkbox').not('#inputDebug').length; c++) settingChk += $('#settings input:checkbox').eq(c).is(':checked') ? '1' : '0';
 	}
 	uri.query({ 'M': baseLayer, 'O': actOverlayLayer, 'OP': overlayOpacity, 'S': settingChk, 'T': tab, 'U': tourPage, 'G': imgLayer, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
 	history.replaceState(null, null, uri.resource());
@@ -1740,9 +1743,7 @@ function permalinkReturn() {
 		}
 		if (uri.hasQuery('S')) {
 			var settingChk = uri.search(true).S;
-			for (c = 0; c < settingChk.length; c++) {
-				$('#settings input:checkbox').eq(c).prop('checked', parseInt(settingChk.charAt(c), 10));
-			}
+			for (c = 0; c < settingChk.length; c++) $('#settings input:checkbox').eq(c).prop('checked', parseInt(settingChk.charAt(c), 10));
 			if ($('#inputDebug').is(':checked')) $('#inputDebug').trigger('change');
 		}
 		$('#inputUnit, #inputDark').trigger('change');
@@ -1769,18 +1770,9 @@ function permalinkReturn() {
 			if (groupedPoi.indexOf('-') !== -1) groupedPoi = groupedPoi.split('-');
 			if (uri.hasQuery('I')) markerId = uri.search(true).I;
 			setTimeout(function() {
-				if (!$.isArray(groupedPoi)) {
-					$('#' + groupedPoi).prop('checked', true);
-					if (actTab !== 'none') sidebar.open(actTab);
-				}
-				else {
-					for (c in groupedPoi) {
-						// the last poi has a "/" on it because leaflet-hash
-						var multiplePois = groupedPoi[c].replace('/', '');
-						$('#' + multiplePois).prop('checked', true);
-						if (actTab !== 'none') sidebar.open(actTab);
-					}
-				}
+				if (!$.isArray(groupedPoi)) $('#' + groupedPoi).prop('checked', true);
+				// the last poi has a "/" on it because leaflet-hash
+				else for (c in groupedPoi) { $('#' + groupedPoi[c].replace('/', '')).prop('checked', true); }
 				poi_changed(groupedPoi);
 			}, 500);
 		}
@@ -1807,7 +1799,7 @@ function permalinkReturn() {
 	if (actTab !== 'none') sidebar.open(actTab);
 	// animate sidebar close button on smaller devices if layers underneath
 	if (actTab !== 'none' && $(window).width() < 768 && (uri.hasQuery('O') || uri.hasQuery('G') || uri.hasQuery('P') || uri.hasQuery('I') || uri.hasQuery('W')))
-		$('.sidebar-close i').addClass('wobble');
+		$('.sidebar-close').addClass('wobble');
 	if (noIframe && window.localStorage && parseInt(window.localStorage.OPLCacheDur) >= 0 && parseInt(window.localStorage.OPLCacheDur) <= 240)
 		$('#inputOpCache').val(parseInt(window.localStorage.OPLCacheDur));
 	else $('#inputOpCache').val(48);

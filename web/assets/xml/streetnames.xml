@@ -5,8 +5,9 @@
 
 <streetNames>
 	<copyright>
+		<name>The Story of Bexhill Street Names</name>
 		<author>Dr Paul Wright, Local History Group, 2014</author>
-		<source>http://www.bexhillmuseum.co.uk/museum-pages/research-104.html</source>
+		<source>https://bexhill-osm.org.uk/assets/xml/streetnames.xml</source>
 	</copyright>
 	<street>
 		<name>Abbey View</name>

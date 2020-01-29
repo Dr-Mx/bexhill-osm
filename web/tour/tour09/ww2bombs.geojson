@@ -89,13 +89,6 @@
 			"properties": {},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.47944, 50.83898]
-			}
-		}, {
-			"type": "Feature",
-			"properties": {},
-			"geometry": {
-				"type": "Point",
 				"coordinates": [0.51009, 50.85859]
 			}
 		}, {
@@ -745,7 +738,7 @@
 			"properties": {},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.48689, 50.8503]
+				"coordinates": [0.48763, 50.85027]
 			}
 		}, {
 			"type": "Feature",
@@ -865,13 +858,6 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [0.47475, 50.84413]
-			}
-		}, {
-			"type": "Feature",
-			"properties": {},
-			"geometry": {
-				"type": "Point",
-				"coordinates": [0.4793, 50.83932]
 			}
 		}, {
 			"type": "Feature",
@@ -1380,11 +1366,12 @@
 			"type": "Feature",
 			"properties": {
 				"name": "Ancaster House, Penland Road",
-				"date": "1940-09-23"
+				"date": "1940-09-23",
+				"description": "Tennis courts opposite to school."
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.49104, 50.8485]
+				"coordinates": [0.49006, 50.84845]
 			}
 		}, {
 			"type": "Feature",
@@ -1593,7 +1580,7 @@
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.49421, 50.84151]
+				"coordinates": [0.49433, 50.84163]
 			}
 		}, {
 			"type": "Feature",
@@ -1808,7 +1795,7 @@
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.44039, 50.83462]
+				"coordinates": [0.44248, 50.83443]
 			}
 		}, {
 			"type": "Feature",
@@ -2089,8 +2076,8 @@
 			"type": "Feature",
 			"properties": {
 				"name": "Knole Court, Knole Road",
-				"date": "1940-09",
-				"description": "A bomb removed one of the gables and the two entrances.",
+				"date": "1940-09-19",
+				"description": "A bomb removed one of the gables and the two entrances. The gable wasn't restored until the late 1950s - early 1960s  with  the  two  entrances  replaced  in  a  1950s  style  that  broke  the  symmetry  of  the northern elevation. These were restored to the original style in 2016.",
 				"img": {
 					"0": "09/bomb/knolecourt"
 				},
@@ -2105,8 +2092,31 @@
 		}, {
 			"type": "Feature",
 			"properties": {
+				"name": "Croquet Ground, Knole Road",
+				"date": "1940-09-19",
+				"description": "The second of two bombs exploding on the playing ground."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47950, 50.83938]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"name": "Croquet Ground, Knole Road",
+				"date": "1940-09-19",
+				"description": "The first of two bombs exploding on the playing ground."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47973, 50.83884]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
 				"name": "Carlton Hotel, Knole Road",
 				"date": "1940-09-24",
+				"description": "Gable destroyed, not restored until the late 1950s - early 1960s.",
 				"img": {
 					"0": "09/bomb/carltonhotel"
 				}
@@ -3231,9 +3241,9 @@
 		}, {
 			"type": "Feature",
 			"properties": {
-				"name": "Spitfire I",
+				"name": "Spitfire P9550 Mark I (converted to PR III)",
 				"date": "1940-12-27 15:45",
-				"description": "100 yards east of Freezelands Farm building. Forced landing due to lack of petrol. Pilot hit hedge on landing and machine overturned. Sergeant Pilot Mills injured.",
+				"description": "100 yards east of Freezelands Farm building. Serving with 1 Photographic Reconnaissance Unit, it force landed in bad visibility due to lack of petrol. Went through a hedge and ended up on its nose, Sergeant Pilot Mills injured.",
 				"type": "aircraft"
 			},
 			"geometry": {

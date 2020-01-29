@@ -575,7 +575,11 @@
 				"description": "Rebuilt 1943. Trench. Capacity 135.",
 				"img": {
 					"0": "09/shelter/sidleygreen(0)",
-					"1": "09/shelter/sidleygreen(1)"
+					"1": "09/shelter/sidleygreen(1)",
+					"2": "09/shelter/sidleygreen(2)"
+				},
+				"imgattrib": {
+					"2": "ESRO SPA 1944"
 				}
 			},
 			"geometry": {
@@ -746,15 +750,16 @@
 			"type": "Feature",
 			"properties": {
 				"name": "The Down",
-				"date": "1941",
+				"date": "1939",
 				"description": "School trench. Capacity 300.",
 				"img": {
-					"0": "09/shelter/thedown"
+					"0": "09/shelter/thedown(0)",
+					"1": "09/shelter/thedown(1)"
 				}
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.464918, 50.848582]
+				"coordinates": [0.46468, 50.84848]
 			}
 		}, {
 			"type": "Feature",

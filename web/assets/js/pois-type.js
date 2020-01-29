@@ -354,11 +354,11 @@ var pois = {
 	},
 
 	car_repair: {
-		name: 'Car-Repair/MOT',
-		query: 'nwr[shop=car_repair];',
+		name: 'Car-Repair/Parts',
+		query: 'nwr[shop~"car_repair|car_parts"];',
 		iconName: 'carrepair',
 		catName: 'Amenities',
-		tagKeyword: ['repair', 'garage', 'tyres', 'mechanic', 'motor', 'car', 'parts'],
+		tagKeyword: ['repair', 'garage', 'tyres', 'mechanic', 'motor', 'car', 'parts', 'MOT'],
 		tagParser: carshop_parser
 	},
 
@@ -398,10 +398,10 @@ var pois = {
 
 	police: {
 		name: 'Emergency',
-		query: 'nwr[~"^amenity$|^emergency$"~"^police$|^fire_station$|^ambulance_station$"];',
+		query: 'nwr[~"^amenity$|^emergency$"~"^police$|^fire_station$|^ambulance_station$|^coast_guard$"];',
 		iconName: 'police2',
 		catName: 'Services',
-		tagKeyword: ['police', 'fire', 'ambulance', 'help', 'emergency']
+		tagKeyword: ['police', 'fire', 'ambulance', 'help', 'emergency', 'coastguard']
 	},
 
 	townhall: {
@@ -579,7 +579,7 @@ var pois = {
 
 	supermarket: {
 		name: 'Supermarket',
-		query: 'nwr[shop=supermarket];',
+		query: 'nwr[shop~"supermarket|frozen_food"];',
 		iconName: 'supermarket',
 		catName: 'Shops',
 		tagKeyword: ['supermarket', 'food']
@@ -996,7 +996,7 @@ var pois = {
 
 	bicycle: {
 		name: 'Bicycle',
-		query: 'nwr[shop=bicycle];',
+		query: 'nwr[shop=bicycle];nwr["service:bicycle:retail"];',
 		iconName: 'bicycle_shop',
 		catName: 'Shops',
 		tagKeyword: ['bicycle', 'bike'],

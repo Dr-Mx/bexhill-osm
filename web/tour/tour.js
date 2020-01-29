@@ -26,8 +26,9 @@ function tour(ti, fromPermalink) {
 				riseOnHover: true
 			});
 			else return L.circle(latlng, {
+				className: icon.className,
 				interactive: interactive,
-				radius: 15,
+				radius: 20,
 				weight: 2,
 				color: '#000',
 				opacity: 0.8,
@@ -45,7 +46,7 @@ function tour(ti, fromPermalink) {
 			fillOpacity: 0.5
 		});
 	};
-	// tooltip and popup
+	// tooltip and pop-up
 	// data | layer | headings | image attribution | marker popup class
 	var setJsonPopup = function(feature, layer, header, dfltAttrib, pClass) {
 		var customPOptions = { maxWidth: imgSize, className: 'popup-t' + (pClass ? ' ' + pClass : '') }, toolTip = '', markerPopup = '';
@@ -80,7 +81,12 @@ function tour(ti, fromPermalink) {
 		}
 		layer
 			.bindPopup(markerPopup, customPOptions)
-			.bindTooltip(toolTip, { direction: 'right', offset: [8, 0], className: pClass });
+			.bindTooltip(toolTip, {
+				direction: 'right',
+				offset: [8, 0],
+				className: pClass,
+				opacity: noTouch ? 1 : 0
+			});
 	};
 	// timeout hack to stop iframe breaking on ff
 	setTimeout(function() { switch (ti) {
@@ -174,7 +180,7 @@ function tour(ti, fromPermalink) {
 			show_overpass_layer('way(397839677);', ti);
 			break;
 		case 'railwayWestbranch':
-			show_overpass_layer('(node(3615179880);node(318219478););', ti);
+			show_overpass_layer('(node(6528018966);node(318219478););', ti);
 			if (actOverlayLayer !== 'br1959') map.addLayer(tileOverlayLayers[tileOverlayLayer.br1959.name]);
 			imgLayer = ti;
 			break;
@@ -214,18 +220,17 @@ function tour(ti, fromPermalink) {
 		case 'ww2Bombmap':
 			$('.spinner').show();
 			// bomb radius outline
-			for (var x = 1; x <= 5; x++) {
-				imageOverlay.addLayer(L.circle([50.84150, 0.47150], {
-					color: 'darkred',
-					weight: 2,
-					opacity: 0.2,
-					fill: false,
-					radius: x * 804.672,
-					clickable: false
-				}).bindTooltip(x / 2 + ' miles', {
-					sticky: true
-				}));
-			}
+			for (var x = 1; x <= 5; x++) imageOverlay.addLayer(L.circle([50.84150, 0.47150], {
+				className: 'ww2radius',
+				color: 'darkred',
+				weight: 2,
+				opacity: 0.2,
+				fill: false,
+				radius: x * 804.672,
+				clickable: false
+			}).bindTooltip(x / 2 + ' miles', {
+				sticky: true
+			}));
 			// bomb markers
 			$.ajax({
 				url: dfltDir + '09/ww2bombs.geojson',
@@ -233,7 +238,7 @@ function tour(ti, fromPermalink) {
 				mimeType: 'application/json',
 				cache: false,
 				success: function(json) {
-					var fillColor, interactive, x = 0;
+					var fillColor, interactive, x = 0, dateRange = [];
 					imageOverlay.addLayer(L.geoJSON(json, {
 						filter: function(feature) {
 							interactive = true;
@@ -252,8 +257,9 @@ function tour(ti, fromPermalink) {
 							if (feature.properties.name) setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], 'Bexhill Observer');
 						},
 						pointToLayer: function(feature, latlng) {
-							var marker = setMarker(latlng, interactive, { fillColor: fillColor });
+							var marker = setMarker(latlng, interactive, { fillColor: fillColor, className: 'ww2bb' + (feature.properties.date ? ' ww2' + feature.properties.date.split(' ')[0] : '') });
 							if (interactive) {
+								dateRange[x] = feature.properties.date.split(' ')[0];
 								marker._leaflet_id = 'bb' + x++;
 								marker.desc = feature.properties.type || '';
 								poiList.push(marker);
@@ -261,10 +267,29 @@ function tour(ti, fromPermalink) {
 							return marker;
 						}
 					}));
+					dateRange = [...new Set(dateRange.sort())];
+					$('.leaflet-bottom.leaflet-right').prepend(
+						'<div id="inputWw2" class="leaflet-control leaflet-bar">' +
+							'<div><i>Incident timeline. Click markers for details.</i></div>' +
+							'<input value="' + dateRange.length + '" max="' + dateRange.length + '"type="range">' +
+						'</div>'
+					);
+					L.DomEvent.disableClickPropagation($('#inputWw2')[0]).disableScrollPropagation($('#inputWw2')[0]);
+					$('#inputWw2 input').on('input change', function() {
+						$('path.ww2bb').hide();
+						if (this.value == dateRange.length) {
+							$('#inputWw2 div').html('<i>All incidents ' + date_parser(dateRange[0], 'short') + ' to ' + date_parser(dateRange[dateRange.length-1], 'short') + '</i>');
+							$('path.ww2bb').show();
+						}
+						else {
+							$('#inputWw2 div').html('Incidents up to ' + date_parser(dateRange[this.value], 'long'));
+							for (var d = 0; d <= this.value; d++) $('path.ww2' + dateRange[d]).show();
+						}
+					});
 					map.fireEvent('zoomend');
-					setTimeout(pushPoiList, 250);
+					setTimeout(function() { pushPoiList('feature.properties.date'); }, 250);
 					setPageTitle('WWII Bomb Map');
-					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[Object.keys(imageOverlay._layers).length - 1]]._layers[markerId].openPopup();
+					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[Object.keys(imageOverlay._layers).length-1]]._layers[markerId].openPopup();
 					$('.spinner').fadeOut('fast');
 				}
 			});
@@ -292,7 +317,7 @@ function tour(ti, fromPermalink) {
 						}
 					}));
 					map.fireEvent('zoomend');
-					setTimeout(pushPoiList, 250);
+					setTimeout(function() { pushPoiList('feature.properties.date'); }, 250);
 					setPageTitle('WWII Air-raid Shelters');
 					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]]._layers[markerId].openPopup();
 					$('.spinner').fadeOut('fast');
@@ -304,7 +329,7 @@ function tour(ti, fromPermalink) {
 			if (actOverlayLayer !== 'arp1942') map.addLayer(tileOverlayLayers[tileOverlayLayer.arp1942.name]);
 			break;
 		case 'ww2Structures':
-			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(6757240221);node(4056582954);node["military"];way["military"];);', ti, true);
+			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);', ti, true);
 			setPageTitle('WWII Existing Structures');
 			imgLayer = ti;
 			break;

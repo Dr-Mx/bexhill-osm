@@ -18,7 +18,7 @@
 		width: 450px; } }
 .sidebar.collapsed {
 	width: 35px; }
-.sidebar.collapsed .sidebar-pane.active .sidebar-body {
+.sidebar.collapsed .sidebar-pane.active .sidebar-body, .sidebar.collapsed #holidayImg {
 	opacity : 0; }
 @media (min-width: 1300px) {
 	.sidebar.collapsed .sidebar-tabs {
@@ -128,6 +128,10 @@
 	padding: 0 15px; }
 #home .sidebar-header-text {
 	cursor: pointer; }
+.sidebar-close::before {
+	content: '\f0d9';
+	font-family: 'Font Awesome 5 Pro';
+	font-weight: 900; }
 .sidebar-close {
 	position: absolute;
 	right: 0;
@@ -141,6 +145,7 @@
 	position: absolute;
 	overflow-x: hidden;
 	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
 	text-align: justify;
 	height: calc(100% - 50px);
 	width: calc(100% - 30px);

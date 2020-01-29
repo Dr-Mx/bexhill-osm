@@ -1,5 +1,6 @@
 <h1> <img src="http://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill-OSM - https://bexhill-osm.org.uk/ </h1>
 
+[![Website](https://img.shields.io/website?down_color=lightgrey&down_message=red&up_color=green&up_message=online&url=https%3A%2F%2Fbexhill-osm.org.uk)](https://bexhill-osm.org.uk)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3X9MHLW4W9TG&source=url)
 [![Twitter](https://img.shields.io/twitter/follow/BexhillOSM.svg?label=Twitter)](https://twitter.com/BexhillOSM)
@@ -19,7 +20,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
     - Braille (key:tactile_writing:braille)
     - Internet (key:internet_access)
     - Dog friendly (key:dog)
-    - Toilets (key:male, key:female, key:unisex, key:diaper)
+    - Toilets (key:male, key:female, key:unisex, key:changing_table)
     - Recycling types (key:recycling:\*)
     - Telephone (key:sms)
     - Bus-stop (key:bin, key:bench)
@@ -41,7 +42,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
 - Manually select groups of POIs from list or using a keyword
 - POI result list with current opening_hours / collection_times state
 - Detailed walking directions with Mapbox API
-- Geolocate user
+- Geolocate user and show distances from markers
 - History Tour articles that link to various overlays on the map
 - Direct link to edit an element on OSM or leave a note
 - Share any current map state with dynamic permalink
