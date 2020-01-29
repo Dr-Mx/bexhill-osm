@@ -1,8 +1,8 @@
-<h1> <img src="http://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill-OSM - https://bexhill-osm.org.uk/ </h1>
+<h1> <img src="http://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill-OSM - https://bexhill-osm.org.uk </h1>
 
-[![Website](https://img.shields.io/website?down_color=lightgrey&down_message=red&up_color=green&up_message=online&url=https%3A%2F%2Fbexhill-osm.org.uk)](https://bexhill-osm.org.uk)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3X9MHLW4W9TG&source=url)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fbexhill-osm.org.uk)](https://bexhill-osm.org.uk)
 [![Twitter](https://img.shields.io/twitter/follow/BexhillOSM.svg?label=Twitter)](https://twitter.com/BexhillOSM)
 
 Searchable OpenStreetMap data showing POIs, walking directions, overlays, history and other information for the town of Bexhill-on-Sea, UK
