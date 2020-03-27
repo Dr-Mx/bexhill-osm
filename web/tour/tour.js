@@ -49,10 +49,15 @@ function tour(ti, fromPermalink) {
 	// tooltip and pop-up
 	// data | layer | headings | image attribution | marker popup class
 	var setJsonPopup = function(feature, layer, header, dfltAttrib, pClass) {
-		var customPOptions = { maxWidth: imgSize, className: 'popup-t' + (pClass ? ' ' + pClass : '') }, toolTip = '', markerPopup = '';
+		var toolTip = '', markerPopup = '', customPOptions = {
+			className: 'popup-t' + (pClass ? ' ' + pClass : ''),
+			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
+			minWidth: feature.properties.img ? imgSize : '',
+			autoPanPaddingBottomRight: [5, 50]
+		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long')));
 		toolTip += '<b>' + header[0] + '</b><br><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
-		markerPopup += '<span class="comment">' + layer._latlng.lat + '°N ' + layer._latlng.lng + '°E</span>';
+		markerPopup += '<span class="comment">' + layer._latlng.lat + '°N ' + layer._latlng.lng + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 3) + '</span>';
 		if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc">' + feature.properties.description + '</span>';
 			toolTip += ' <i style="color:#777; min-width:17px;" class="fas fa-sticky-note fa-fw" title="Notes"></i>';

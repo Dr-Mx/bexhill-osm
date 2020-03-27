@@ -9,28 +9,19 @@ function parse_tags(element, titlePopup, poiParser) {
 	var address_parser = function(tags) {
 		markerPopup = '';
 		if (tags['addr:street'] || tags['addr:place']) {
-			var value = '', buildLvl;
-			if (tags.level > 0) {
-				switch (tags.level) {
-					case '1': buildLvl = 'First-floor'; break;
-					case '2': buildLvl = 'Second-floor'; break;
-					case '3': buildLvl = 'Third-floor'; break;
-					case '4': buildLvl = 'Fourth-floor'; break;
-					case '5': buildLvl = 'Fifth-floor'; break;
-				}
-				value += '<span title="Level">' + buildLvl + '</span>, ';
-			}
-			if (tags['addr:housename'] && tags['addr:housename'] !== eName) value += '<span title="House name">' + tags['addr:housename'] + '</span>, ';
-			if (tags['addr:flats']) value += 'Flats: ' + tags['addr:flats'] + ', ';
-			if (tags['addr:unit']) value += 'Unit ' + tags['addr:unit'] + ', ';
-			if (tags['addr:housenumber']) value += '<span title="House number">' + tags['addr:housenumber'] + '</span> ';
-			if (tags['addr:street']) value += '<span title="Street">' + tags['addr:street'] + '</span>';
-			else if (tags['addr:place']) value += '<span title="Place">' + tags['addr:place'] + '</span>';
-			if (tags['addr:suburb']) value += ', <span title="Suburb">' + tags['addr:suburb'] + '</span>';
-			else if (tags['addr:hamlet']) value += ', <span title="Hamlet">' + tags['addr:hamlet'] + '</span>';
-			if (tags['addr:city'] && tags['addr:city'] !== 'Bexhill-on-Sea') value += ', <span title="City">' + tags['addr:city'] + '</span>';
-			if (tags['addr:postcode']) value += ', <span style="white-space:nowrap;" title="Postcode">' + tags['addr:postcode'] + '</span>';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Address', value: value, iconName: 'fas fa-map-marker' });
+			var addr = '';
+			if (tags.level <= 10) addr += '<span title="Level">' + ['Ground', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'][tags.level] + '-floor</span>, ';
+			if (tags['addr:unit']) addr += 'Unit ' + tags['addr:unit'] + ', ';
+			if (tags['addr:flats']) addr += 'Flats ' + tags['addr:flats'] + ', ';
+			if (tags['addr:housename'] && tags['addr:housename'] !== eName) addr += '<span title="House name">' + tags['addr:housename'] + '</span>, ';
+			if (tags['addr:housenumber']) addr += '<span title="House number">' + tags['addr:housenumber'] + '</span> ';
+			if (tags['addr:street']) addr += '<span title="Street">' + tags['addr:street'] + '</span>';
+			else if (tags['addr:place']) addr += '<span title="Place">' + tags['addr:place'] + '</span>';
+			if (tags['addr:suburb']) addr += ', <span title="Suburb">' + tags['addr:suburb'] + '</span>';
+			else if (tags['addr:hamlet']) addr += ', <span title="Hamlet">' + tags['addr:hamlet'] + '</span>';
+			if (tags['addr:city'] && tags['addr:city'] !== 'Bexhill-on-Sea') addr += ', <span title="City">' + tags['addr:city'] + '</span>';
+			if (tags['addr:postcode']) addr += ', <span class="nowrap" title="Postcode">' + tags['addr:postcode'] + '</span>';
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Address', value: addr, iconName: 'fas fa-map-marker' });
 		}
 		return markerPopup;
 	};
@@ -50,7 +41,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tagWebsite) {
 			var strWebsite = tagWebsite.split('://')[1];
 			if (strWebsite.slice(-1) === '/') strWebsite = strWebsite.slice(0, -1);
-			var link = '<a class="popup-truncate" style="max-width:' + (imgSize - 100) + 'px" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + strWebsite + '</a>';
+			var link = '<a class="popup-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + strWebsite + '</a>';
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: link, iconName: 'fas fa-globe' });
 		}
 		return markerPopup;
@@ -86,7 +77,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				tag += ', ';
 			}
 			if (tags.height) tag += '<span title="Height in metres">' + tags.height + 'm</span>, ';
-			if (planningLink) tag += '<span title="Planning application">' + planningLink + '</span>, ';
+			if (planningLink) tag += '<span class="nowrap" title="Planning application">' + planningLink + '</span>, ';
 		}
 		else {
 			label = 'Listed';
@@ -121,7 +112,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		else if (tags.dog === 'no') tag += '<i class="facNo fas fa-dog fa-fw" title="dog: no"></i>';
 		if (tags.internet_access === 'wlan') tag += '<i class="facYes fas fa-wifi fa-fw" title="internet: wireless"></i>';
 		else if (tags.internet_access === 'terminal') tag += '<i class="facYes fas fa-desktop fa-fw" title="internet: terminal"></i>';
-		if (tags['drinking_water:bexfill'] === 'yes') tag += '<i class="fas fa-tint fa-fw" style="color:#0082ff;" title="water bottle refills: yes"></i>';
+		if (tags['drinking_water:refill'] === 'yes') tag += '<i class="fas fa-tint fa-fw" style="color:#0082ff;" title="drinking water refills: yes"></i>';
 		if (tags.live_music === 'yes') tag += '<i class="facYes fas fa-music fa-fw" title="live music: yes"></i>';
 		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') tag += '<i class="facYes fas fa-umbrella fa-fw" title="shelter: yes"></i>';
 		if (tags.highway === 'bus_stop') {
@@ -268,7 +259,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					var streetDate = $('date', street).text();
 					var streetDesc = $('desc', street).text();
 					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Start date', value: streetDate, iconName: 'fas fa-calendar-alt' });
-					if (streetDesc) markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'fas fa-road' }) + '</span>';
+					if (streetDesc) markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'fas fa-book' }) + '</span>';
 					if (markerPopup) {
 						var sourceLink = $(xml).find('source').text();
 						var sourceAuthor = $(xml).find('author').text();
@@ -278,6 +269,8 @@ function parse_tags(element, titlePopup, poiParser) {
 				},
 				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES:', this.url); }
 			});
+			if (tags.unadopted === 'yes') tag += 'unadopted; ';
+			if (tags.surface) tag += tags.surface + '; ';
 			if (tags.maxspeed) tag += tags.maxspeed + '; ';
 			if (tags.maxwidth) tag += tags.maxwidth + '; ';
 			if (tags.lit === 'yes') tag += 'lit; ';
@@ -285,16 +278,16 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags.bridge === 'yes') tag += 'bridge; ';
 			if (tag) {
 				tag = tag.substring(0, tag.length - 2);
-				markerPopup += L.Util.template(tagTmpl, { tag: 'Highway details', value: tag, iconName: 'fas fa-tachometer-alt' });
+				markerPopup += L.Util.template(tagTmpl, { tag: 'Highway details', value: tag, iconName: 'fas fa-road' });
 			}
 		}
-		else if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'])
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Street history', value: '<a onclick="searchAddr(\'' + tags['addr:street'] + '\')" title="Lookup street">' + tags['addr:street'] + '</a>', iconName: 'fas fa-road' });
 		return markerPopup;
 	};
 	var furtherreading_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
+		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'])
+			tag += '<a onclick="searchAddr(\'' + tags['addr:street'] + '\');" title="Lookup street">Street history</a>; ';
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			var w = tags.wikipedia || tags['site:wikipedia'];
 			tag += '<a href="https://' + w.split(':')[0] + '.wikipedia.org/wiki/' + w.split(':')[1] + '" title="Wikipedia" target="_blank" rel="noopener">Wikipedia</a>; ';
@@ -304,15 +297,14 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['ref:thekeep'])
 			tag += '<a href="https://www.thekeep.info/collections/getrecord/' + tags['ref:thekeep'] + '" title="The Keep" target="_blank" rel="noopener">The Keep</a>; ';
 		if (tags['ref:edubase'])
-			tag += '<a href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + tags['ref:edubase'] + '" title="Department for Education" target="_blank" rel="noopener">Edubase</a>; ' +
-				'<a href="http://www.ofsted.gov.uk/oxedu_providers/full/(urn)/' + tags['ref:edubase'] + '" title="Ofstead" target="_blank" rel="noopener">Ofstead</a>; ';
+			tag += '<a href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + tags['ref:edubase'] + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
 		if (tags['ref:charity'])
-			tag += '<a href="https://beta.charitycommission.gov.uk/charity-details/?regId=' + tags['ref:charity'] + '" title="Charity Commission" target="_blank" rel="noopener">Charity Commission</a>; ';
+			tag += '<a href="https://beta.charitycommission.gov.uk/charity-details/?regId=' + tags['ref:charity'] + '" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
 		if (tags.tpuk_ref)
 			tag += '<a href="http://trigpointing.uk/trig/' + tags.tpuk_ref.split('TP')[1] + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
 		if (tag) {
 			tag = tag.substring(0, tag.length - 2);
-			markerPopup = L.Util.template(tagTmpl, { tag: 'Futher reading', value: tag, iconName: 'fas fa-book' });
+			markerPopup = L.Util.template(tagTmpl, { tag: 'Further reading', value: tag, iconName: 'fas fa-book' });
 		}
 		return markerPopup;
 	};
@@ -513,7 +505,7 @@ function callback(data) {
 	for (var c in data.elements) {
 		var e = data.elements[c];
 		// check tags exist
-		if (!e.tags || e.id in this.instance._ids || e.id === 604081690) continue;
+		if (!e.tags || e.id in this.instance._ids) continue;
 		this.instance._ids[e.id] = true;
 		var pos = (e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lon);
 		var eName = e.tags['name:en'] || e.tags.name || undefined;
@@ -678,6 +670,7 @@ function callback(data) {
 			if (e.tags.shop === 'yes') name = 'shop';
 			if (!name) name = e.tags.shop;
 			if (!type) type = e.tags.shop;
+			else if (e.tags.second_hand === 'yes') type = 'second_hand';
 			switch (e.tags.shop) {
 				case 'beauty': if (e.tags.beauty) name = e.tags.beauty + ' ' + e.tags.shop; break;
 				case 'bathroom_furnishing':
@@ -852,7 +845,7 @@ function callback(data) {
 			offset: [15, 2],
 			interactive: poi ? poi.permTooltip : 0,
 			permanent: poi ? poi.permTooltip : 0,
-			opacity: (noTouch || poi.permTooltip) ? 1 : 0
+			opacity: (noTouch || (poi && poi.permTooltip)) ? 1 : 0
 		};
 		var toolTip = '<b>' + name + '</b>';
 		if (eName) toolTip += '<br><i>' + eName + '</i>';
@@ -865,18 +858,13 @@ function callback(data) {
 		else if (e.tags['addr:place']) toolTip += '<br><i>' + e.tags['addr:place'] + '</i>';
 		else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
 		else if (e.tags.operator) toolTip += '<br><i>' + e.tags.operator + '</i>';
-		if (e.tags.image || e.tags.wikimedia_commons) {
-			var imgIcon = ((e.tags.image && e.tags.wikimedia_commons) || e.tags.image_1 || e.tags.wikimedia_commons_1) ? 'images' : 'image';
-			toolTip += ' <i style="color:#777; min-width:17px;" class="fas fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
-			if (e.tags['image:360']) toolTip += ' <i style="color:#777; min-width:17px;" class="fa fa-street-view fa-fw" title="360 Panorama"></i>';
-		}
+		if (e.tags.image || e.tags.wikimedia_commons) toolTip += ' <i class="tooltip-icons fas fa-image fa-fw" title="Image(s)"></i>';
+		if (e.tags['image:360']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="360 Panorama"></i>';
 		// popup
 		var customPOptions = {
-			maxWidth: imgSize,
+			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
 			minWidth: (e.tags.image || e.tags.wikimedia_commons) ? imgSize : '',
-			autoPanPaddingBottomRight: [5, 50],
-			// padding so popup is not obfuscated by map controls
-			autoPanPaddingTopLeft: ($(window).width() < 1300 || !rQuery) ? [20, 40] : [sidebar.width() + 50, 5]
+			autoPanPaddingBottomRight: [5, 50]
 		};
 		// check if already defined poi
 		if (poi) {
@@ -987,14 +975,13 @@ function pushPoiList(customSort) {
 	);
 	$('#poi-results-list tr').click(function() {
 		if ($('#inputWw2').length) $('#inputWw2 input').val($('#inputWw2 input')[0].max).change();
+		poiList[this.id].closePopup().openPopup();
 		if ($(window).width() < 768) $('.sidebar-close').click();
 		else {
 			// focus 150px above marker to allow room for popup
 			var px = map.project(poiList[this.id]._latlng);
-			px.y -= 150;
-			map.flyTo(map.unproject(px));
+			map.stop().flyTo(map.unproject([px.x, px.y -= 150]));
 		}
-		poiList[this.id].closePopup().openPopup();
 	});
 	$('#poi-results h3').html(
 		poiList.length + ' results' + ($('#inputOpen').is(':checked') ? ' (open)' : '') +
@@ -1050,7 +1037,7 @@ function generic_img_parser(img, id, attrib) {
 			'<img alt="Loading image..." style="max-height:{maxheight}px;" src="{img}"></a>' +
 			'<div class="popup-imgAttrib">{attrib}</div>' +
 		'</div>';
-	return L.Util.template(imgTmpl, { id: id, url: url, maxheight: imgSize / 2, img: img, attrib: attrib });
+	return L.Util.template(imgTmpl, { id: id, url: url, maxheight: Math.round(imgSize / 1.5), img: img, attrib: attrib });
 }
 
 // poi callback parsers

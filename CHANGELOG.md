@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## v5.7.0 - Support for National Grid Refs
+
+**Date:** 27/03/2020
+
+Added js
+ - geotools.min.js
+ 
+Updated js
+ - Control.Geocoder.min.js 1.12.0
+ - L.Control.Locate.min.js 0.70.0
+ 
+Site changes
+ - Right-click on the map to directly copy coordinates (LatLng & NationalGridRef)
+ - Direct links to property records on UK Land Registry
+ - Pop-up image sizes slightly larger
+ - Adjustment to location "what's around me" depending on accuracy
+ - Use location.replace rather than src to change iframes (stops back button breaking things)
+ - Reverse lookup server options in Development Tools
+ - As always, many other bug fixes and improvements
+
+
 ## v5.6.0 - WW2 bomb-map timeline
 
 **Date:** 29/01/2020

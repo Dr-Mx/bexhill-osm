@@ -1,5 +1,6 @@
 {
-    "name": "Bexhill-OSM",
+    "name": "Bexhill OpenStreetMap",
+    "short_name": "Bexhill-OSM",
     "icons": [
         {
             "src": "/android-chrome-192x192.png?v=almg8BXjdQ",

@@ -3,6 +3,22 @@
 	"features": [{
 		"type": "Feature",
 		"properties": {
+			"id": "metropole",
+			"name": "Metropole Hotel, West Parade",
+			"desc": "Architect Joseph Wall, opened in May 1900. 160 bedrooms, smoking-room, billiard-room, tennis courts and electric lifts. Damaged during WWII and demolished 1955.",
+			"copyright": "Bexhill Museum",
+			"date": {
+				"now": "2020",
+				"then": "c1910"
+			}
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46933, 50.83689]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
 			"id": "sydenham",
 			"name": "De La Warr Estate Office, Sea Road",
 			"desc": "The office where prospective developers could buy and let land from 8th De La Warr's Architect and Surveyor, George Herbert Gray. One of the buildings was demolished in the 1970's, replaced with Sydenham Court apartments.",

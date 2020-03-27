@@ -7,6 +7,13 @@
 	<copyright>
 		<name>The Story of Bexhill Street Names</name>
 		<author>Dr Paul Wright, Local History Group, 2014</author>
+		<introduction>In 1996 the Bexhill Museum Association published the first-ever attempt to explain how Bexhill-on-Sea’s street and road names had been acquired. That work was carried out by the Museum’s Local History Forum led by Alan Beecher. Eighteen years later their successors, the Local History Study Group, feel it was time for a second edition. We have drawn heavily on the work of our predecessors as well as including new research of our own. We have used the 1902 Borough of Bexhill boundary to define our study area but eagle-eyed readers will recognise that we have very occasionally crossed the border into neighbouring territory.
+		
+In this edition we have also included details of street names (shown in italics) which no longer exist but which researchers may come across on old maps or in the early censuses and street directories. Also included are some old and new place names which have yet to be associated with specific street names but which nonetheless are often found on maps eg Honies and Polegrove. We have used 1841 as our starting year as this coincides with the first national census. Another important date is 1886 when the first local street directory was published for Bexhill. Also an attempt has been made using the local street directories to include the date when a street first appears in the records. The date recorded is usually when property, houses or businesses were built on that street rather than when the street was laid out, and often named, which could be a few years earlier. It must also be appreciated that houses were often built in phases along a street rather than all at the same time. These dates have proved more difficult to obtain after the street directories ceased publication in 1974. The date of adoption of the street by the Borough of Bexhill, or later by Rother District Council, has also been included, when available.
+
+When consulting the early maps, census returns and street directories a significant number of inconsistencies of both names, dates and descriptions have been discovered, including some street names which have only been seen once, so a pragmatic approach has had to be adopted in this edition. As in most cities, towns and villages there are street names which are neologisms, in other words they have simply been made up by the builder or developer. In hindsight these can be difficult to identify and we accept we may have missed some or misinterpreted others. We have also found it very difficult to locate official documentation to help us discover the approved origin of many of the town’s street names. Hence some of the entries in this edition are, at best, informed guesswork. We hope our readers will understand and accept our difficulties.
+
+We would like to thank the many individuals who have helped us with the preparation of this new addition especially Julian Porter, Curator at Bexhill Museum, his staff and many museum volunteers and supporters as well as members of the public. Margaret Cullingworth has been particularly helpful with information regarding the streets around Sidley. Any errors are entirely our own responsibility. Finally we hope you enjoy reading the fruits of our endeavours.</introduction>
 		<source>https://bexhill-osm.org.uk/assets/xml/streetnames.xml</source>
 	</copyright>
 	<street>
@@ -1654,7 +1661,7 @@
 	<street>
 		<name>Lewis Avenue</name>
 		<date>tramway 1906; name c1990</date>
-		<desc>The origin of the name remains unknown. This avenue was part of the route taken by the Hastings Tramways between Bexhill and Hastings, a service which began on 9th April 1906 and ended during 1929. Maybe Lewis is a surname connected to the history of the tramways. At present a short section of this avenue leading east from De La Warr Road is tarmaced, the avenue then becomes a rough track over the Pebsham fields towards Bexhill Road where there is another short tarmaced section near the entrance to Hastings Household Waste site. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
+		<desc>The origin of the name remains unknown. This avenue was part of the route taken by the Hastings Tramways between Bexhill and Hastings, a service which began on 9th April 1906 and ended during 1929. Maybe Lewis is a surname connected to the history of the tramways. At present a short section of this avenue leading east from De La Warr Road is tarmacked, the avenue then becomes a rough track over the Pebsham fields towards Bexhill Road where there is another short tarmacked section near the entrance to Hastings Household Waste site. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
 	<street>
 		<name>Linden Road</name>
@@ -2102,7 +2109,7 @@
 	<street>
 		<name>Pebsham Lane</name>
 		<date>1930</date>
-		<desc>The former manor of Pebsham was on the eastern side of Bexhill. One of the first known tenants is John, son of John de Peplesham, in 1254. Although a long section of this lane from Wrestwood Road around the north side of Pebsham is tarmaced, the lane then divides into two rough tracks across Pebsham fields before joining Freshfields, a tarmaced road to the north and south of the Hastings Household Waste site. (Adopted by Borough of Bexhill, 1st part 3rd February 1964, 2nd part 7th November 1966 and 3rd part 16th August 1971. An unidentified cul-de-sac off this lane was adopted 30th April 1973).</desc>
+		<desc>The former manor of Pebsham was on the eastern side of Bexhill. One of the first known tenants is John, son of John de Peplesham, in 1254. Although a long section of this lane from Wrestwood Road around the north side of Pebsham is tarmacked, the lane then divides into two rough tracks across Pebsham fields before joining Freshfields, a tarmacked road to the north and south of the Hastings Household Waste site. (Adopted by Borough of Bexhill, 1st part 3rd February 1964, 2nd part 7th November 1966 and 3rd part 16th August 1971. An unidentified cul-de-sac off this lane was adopted 30th April 1973).</desc>
 	</street>
 	<street>
 		<name>Pembury Grove</name>

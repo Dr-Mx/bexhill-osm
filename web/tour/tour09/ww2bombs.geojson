@@ -3243,8 +3243,14 @@
 			"properties": {
 				"name": "Spitfire P9550 Mark I (converted to PR III)",
 				"date": "1940-12-27 15:45",
-				"description": "100 yards east of Freezelands Farm building. Serving with 1 Photographic Reconnaissance Unit, it force landed in bad visibility due to lack of petrol. Went through a hedge and ended up on its nose, Sergeant Pilot Mills injured.",
-				"type": "aircraft"
+				"description": "100 yards east of Freezelands Farm building. Serving with 1 Photographic Reconnaissance Unit, it force landed in bad visibility due to lack of petrol whilst returning from a sortie to Rennes, France. Went through a hedge and ended up on its nose, Sergeant Pilot Mills injured.",
+				"type": "aircraft",
+				"img": {
+					"0": "09/aircraft/P9550"
+				},
+				"imgattrib": {
+					"0": "P R Arnold collection via W Matusiak"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -3279,6 +3285,18 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [0.52007, 50.85071]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"name": "Avro Lancaster Mark I (ME676 CF-F)",
+				"date": "1944-08-31",
+				"description": "Part of 625 squadron. Came down about a quarter of a mile in fields south of the Black &amp; White Garage along Barnhorn Road. It was to have attacked V-weapon facilities at Raimbert, France. It returned with engine failure and its bomb load. The crew baled out and survived.",
+				"type": "aircraft"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.40890, 50.84162]
 			}
 		}
 	]

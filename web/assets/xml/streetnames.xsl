@@ -3,7 +3,10 @@
 <xsl:template match="/">
 <html> 
 <body>
-	<h2><xsl:value-of select="streetNames/copyright/name"/> - <xsl:value-of select="streetNames/copyright/author"/></h2>
+	<h2><xsl:value-of select="streetNames/copyright/name"/></h2>
+	<p style="white-space:break-spaces;"><xsl:value-of select="streetNames/copyright/introduction"/></p>
+	<p><i>- <xsl:value-of select="streetNames/copyright/author"/></i></p>
+	<hr/>
 	<xsl:for-each select="streetNames/street">
 		<table style="width:100%;margin-top:20px;">
 			<tr><b><xsl:value-of select="name"/> (<xsl:value-of select="date"/>)</b></tr>

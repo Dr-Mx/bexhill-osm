@@ -2,10 +2,6 @@
 // don't forget to create config.js with your api keys
 if (typeof BOSM === 'undefined') alert('Error: No API keys defined, please see config.example.js');
 
-// email
-var email = 'info' + '@' + 'bexhill-osm.org.uk';
-// dark mode css
-var darkMode = '<style>.spinner, #map, #sidebar, #minimap, img, .fancybox-content, .fancybox-content iframe { filter: hue-rotate(180deg) invert(100%); }</style>';
 // map area
 var osmRelation = ''; // 9825836 WIP leave blank if osm relation doesn't exist, we'll use bounds
 var mapBounds = { south: 50.8025, west: 0.3724, north: 50.8785, east: 0.5290 };
@@ -32,10 +28,15 @@ var tooltipDef = {
 	hide: false,
 	show: { delay: 200, duration: 50 },
 	track: true,
-	position: { my: 'left+15 top+10' }
+	position: { my: 'left+15 top+10' },
+	create: function () { $('.ui-helper-hidden-accessible').remove(); }
 };
+// dark mode css
+var darkMode = '<style>.spinner, #map, #sidebar, #minimap, img, .fancybox-content, .fancybox-content iframe { filter: hue-rotate(180deg) invert(100%); }</style>';
+// email
+var email = 'info' + '@' + 'bexhill-osm.org.uk';
 
-// https://fancyapps.com/fancybox/
+// https://fancyapps.com/fancybox/3/
 // show popup images in a lightbox
 $.extend($.fancybox.defaults, {
 	spinnerTpl: '<div class="spinner" style="position:relative;opacity:0.5;" title="Loading..."></div>',
@@ -55,7 +56,8 @@ $.extend($.fancybox.defaults, {
 		clickContent: function() { return false; },
 		clickSlide: function() { return 'close'; },
 		dblclickContent: function(current) { return current.type === 'image' ? 'zoom' : false; }
-	}
+	},
+	slideShow: { speed: 2000 }
 });
 
 // set swipe triggers for touch devices
@@ -83,7 +85,10 @@ $('.sidebar-tabs').click(function() {
 	actTab = ($('.sidebar.collapsed').length || actTab === 'closing') ? 'none' : $('.sidebar-pane.active').attr('id');
 	$('.sidebar-close').removeClass('wobble');
 	// resize links on minimap
-	if (actTab === 'home') setTimeout(function() { $('#minimap > map').imageMapResize(); }, 400);
+	if (actTab === 'home') {
+		if (!$('#weather:visible').length) { showWeather(); showEditFeed(); }
+		setTimeout(function() { $('#minimap > map').imageMapResize(); }, 400);
+	}
 	if (actTab === 'tour') $('#tourList').trigger('change');
 	if (actTab === 'thennow') showThenNow();
 	// animate map recentre on sidebar open/close
@@ -111,7 +116,9 @@ L.Map.addInitHook(function() {
 	}
 	function check_later(e) {
 		clear_h();
-		if (!$('.leaflet-marker-draggable, .leaflet-popup, .leaflet-control-layers-expanded').length && !spinner && !imageOverlay.getLayers().length) h = setTimeout(check, 500);
+		// ignore map click if dragging walk markers / overlay control is open / overlay displayed / spinner is shown / popup is open on screen
+		if (!$('.leaflet-marker-draggable, .leaflet-control-layers-expanded').length && !imageOverlay.getLayers().length && !spinner &&
+			!($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) h = setTimeout(check, 500);
 		function check() { that.fire('singleclick', L.Util.extend(e, { type: 'singleclick' } )); }
 	}
 	function clear_h() {
@@ -158,6 +165,10 @@ var map = new L.map('map', {
 		text: '<i class="fas fa-street-view fa-fw"></i> Google Street View',
 		index: 6,
 		callback: gStreetview
+	}, '-', {
+		text: '<i class="far fa-copy fa-fw" style="color:#808080"></i><span id="copyGeos" class="comment"></span>',
+		index: 7,
+		callback: copyGeos
 	}]
 }).whenReady(function() {
 	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'software\');" title="Attribution"><i class="fas fa-info-circle fa-fw"></i></a>');
@@ -217,7 +228,7 @@ var map = new L.map('map', {
 		// little common
 		L.imageOverlay('assets/img/holidays/xmasMapTree.png', [[50.84545, 0.43400], [50.84510, 0.43350]], { opacity: 0.9 }).addTo(map);
 		$('#sidebar').append('<img id="holidayImg" src="assets/img/holidays/xmasSb.png">');
-		$('#homeBox').after('<div id="xmasMsg" title="Show on map" onclick="tour(\'xmas\')">' +
+		$('#homeBox').after('<div id="xmasMsg" title="Show on map" onclick="tour(\'xmas\');">' +
 			'<div id="xmasTitle">~ <span>Christmas Window Display Competition</span> ~</div>' +
 			'<div class="comment">2019 is festive food and drink themed, in association with Light Up Bexhill</div>' +
 		'</div>');
@@ -272,14 +283,17 @@ var map = new L.map('map', {
 		}));
 		reverseQuery(e, 1);
 	}
-}).on('contextmenu.show', function() {
+}).on('contextmenu.show', function(e) {
 	// https://github.com/aratcliffe/Leaflet.contextmenu
-	// show walkHere if user located within map
-	if (lc._active && lc._event && map.options.maxBounds && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14) $('.leaflet-contextmenu-item').eq(1).show();
+	// show walkHere if user located within map and accuracy is high
+	if (lc._active && lc._event && map.options.maxBounds && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14 && lc._circle.getRadius() <= 100) $('.leaflet-contextmenu-item').eq(1).show();
 	else $('.leaflet-contextmenu-item').eq(1).hide();
+	$('#copyGeos').html(L.Util.formatNum(e.latlng.lat, 3) + ', ' + L.Util.formatNum(e.latlng.lng, 3) + ' | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 3));
 }).on('popupopen', function(e) {
 	var popupThis = $(e.popup._container);
 	var osmId = e.popup._source._leaflet_id;
+	// padding so popup is not obfuscated by map controls
+	e.popup.options.autoPanPaddingTopLeft = ($(window).width() < 1300) ? [20, 40] : [sidebar.width() + 50, 5];
 	// add/remove favourites
 	if ($('.popup-bookm').length) {
 		if (!window.localStorage.favourites) window.localStorage.favourites = '';
@@ -463,9 +477,10 @@ var map = new L.map('map', {
 	permalinkSet();
 });
 function setOverlayLabel() {
-	// adds a title and hides some labels in layers control
+	// adds a title and hides some layers in control
 	if (!$('.controlTitle').length) $('.leaflet-control-layers-overlays label:contains("1975")').before('<div class="controlTitle">Historic overlays</div>');
-	for (var tile in tileOverlayLayer) if (tileOverlayLayer[tile].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tile].name + '")').hide();
+	for (var tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').hide();
+	for (var tileOverlay in tileOverlayLayer) if (tileOverlayLayer[tileOverlay].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tileOverlay].name + '")').hide();
 }
 
 // https://github.com/davidjbradshaw/image-map-resizer
@@ -473,7 +488,7 @@ function setOverlayLabel() {
 $('#minimap > map > area').click(function() {
 	var mLoc = $(this).attr('title'), mBounds = [];
 	switch (mLoc) {
-		case 'Bexhill': mBounds = LBounds; break;
+		case 'Bexhill-on-Sea': mBounds = LBounds; break;
 		case 'Barnhorn': mBounds = [[50.8507, 0.4301], [50.8415, 0.4066]]; break;
 		case 'Central': mBounds = [[50.8425, 0.4801], [50.8351, 0.4649]]; break;
 		case 'Collington': mBounds = [[50.8472, 0.4604], [50.8352, 0.4406]]; break;
@@ -482,6 +497,7 @@ $('#minimap > map > area').click(function() {
 		case 'Glyne Gap': mBounds = [[50.8485, 0.5102], [50.8423, 0.4954]]; break;
 		case 'The Highlands': mBounds = [[50.8637, 0.4615], [50.8566, 0.4462]]; break;
 		case 'Little Common': mBounds = [[50.8501, 0.4424], [50.8399, 0.4244]]; break;
+		case 'Normans Bay': mBounds = [[50.8302, 0.4020], [50.8216, 0.3814]]; break;
 		case 'Old Town': mBounds = [[50.8484, 0.4841], [50.8419, 0.4706]]; break;
 		case 'Pebsham': mBounds = [[50.8589, 0.5140], [50.8472, 0.4882]]; break;
 		case 'Sidley': mBounds = [[50.8607, 0.4833], [50.8509, 0.4610]]; break;
@@ -494,26 +510,47 @@ $('#minimap > map > area').click(function() {
 
 var rQuery = false;
 function reverseQuery(e, singlemapclick) {
-	// get location, look up id on Nominatim
+	var geocoder, geoMarker;
 	if (singlemapclick) setMsgStatus('fas fa-spinner fa-pulse', '', '');
 	else $('.spinner').show();
-	var geocoder = L.Control.Geocoder.nominatim({ reverseQueryParams: { format: 'jsonv2', namedetails: 1, email: email } });
+	if ($('#inputRevServer').val() === 'nominatim') geocoder = L.Control.Geocoder.nominatim({ reverseQueryParams: { format: 'jsonv2', namedetails: 1, email: email } });
+	else if ($('#inputRevServer').val() === 'photon') geocoder = L.Control.Geocoder.photon({ reverseQueryParams: { distance_sort: true, radius: 0.05 } });
+	else if ($('#inputRevServer').val() === 'openrouteservice') geocoder = L.Control.Geocoder.openrouteservice(BOSM.orsKey, { reverseQueryParams: { 'boundary.circle.radius': 0.05, size: 1, sources: 'osm' } });
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom() > 16 ? 18 : 17), function(results) {
-		var geoMarker = results[0] ? results[0].properties : '';
-		if ($('#inputDebug').is(':checked') && results[0]) console.debug('Reverse search Nominatim', results[0]);
-		if (geoMarker.osm_id) {
-			if (singlemapclick && $('#msgStatus:visible').length)	{
-				var geoName = geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '';
-				var geoRoad = geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || '';
-				setMsgStatus(
-					'fas fa-search-location',
-					titleCase(geoMarker.type !== 'yes' ? geoMarker.type + ' ' + geoMarker.addresstype : geoMarker.category),
-					'<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\')">' + (geoName ? '<b>' + geoName + '</b><br>' : '') +
-						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + ', ' : '') + (geoMarker.address.postcode ? geoMarker.address.postcode : '') +
-					'</a>' + ($('#inputAttic').val() ? '<br><span class="comment">Result may differ to actual attic data.</span>' : '')
-				);
+		geoMarker = results[0] ? results[0].properties : '';
+		if ($('#inputDebug').is(':checked') && results[0]) console.debug('Reverse search ' + titleCase($('#inputRevServer').val()), results[0]);
+		if (geoMarker.osm_id || (geoMarker.source_id && geoMarker.source_id.indexOf('/')) > 0) {
+			if (singlemapclick && $('#msgStatus:visible').length) {
+				var msgStatusIcon = 'fas fa-search-location', msgStatusHead, msgStatusBody;
+				if ($('#inputRevServer').val() === 'nominatim') {
+					var geoName = geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '';
+					var geoRoad = geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || '';
+					msgStatusHead = titleCase(geoMarker.type !== 'yes' ? geoMarker.type + ' ' + geoMarker.addresstype : geoMarker.category);
+					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoName ? '<b>' + geoName + '</b><br>' : '') +
+						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + ', ' : '') + (geoMarker.address.postcode ? geoMarker.address.postcode : '') + '</a>';
+				}
+				else if ($('#inputRevServer').val() === 'photon') {
+					msgStatusHead = geoMarker.osm_value !== 'yes' ? titleCase(geoMarker.osm_key + ' ' + geoMarker.osm_value) : '';
+					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoMarker.name ? '<b>' + geoMarker.name + '</b><br>' : '') +
+						(geoMarker.housenumber ? geoMarker.housenumber + ' ' : '') + (geoMarker.street ? geoMarker.street + ', ' : '') + (geoMarker.postcode ? geoMarker.postcode : '') + '</a>';
+				}
+				else if ($('#inputRevServer').val() === 'openrouteservice') {
+					msgStatusHead = titleCase(geoMarker.layer);
+					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.source_id.charAt(0) + '\', \'' + geoMarker.source_id.split('/')[1] + '\');">' + '<b>' + geoMarker.name + '</b><br>' +
+						(geoMarker.postalcode ? geoMarker.postalcode : '') + '</a>';
+				}
+				if ($('#inputAttic').val()) msgStatusBody += '<br><span class="comment">Above result may differ to actual attic data.</span>';
+				if (actOverlayLayer === 'landreg') {
+					// query land registry by converting lat+lng to eastings+northings
+					var wgs84 = new GT_WGS84();
+					wgs84.setDegrees(e.latlng.lat, e.latlng.lng);
+					var osgb = wgs84.getOSGB();
+					var landRegUrl = 'https://eservices.landregistry.gov.uk/eservices/FindAProperty/view/MapEnquiryRadiusSearch.do?findPropertiesGroup=on&radius=5&mapType=r&ukMapX=' + osgb.eastings + '&ukMapY=' + osgb.northings + '&zoomLevel=' + map.getZoom();
+					msgStatusBody += '<hr><a onclick="popupWindow(\'' + landRegUrl + '\', \'editWindow\', 1024, 768);"><i>Land Registry Lookup</i></a>';
+				}
+				setMsgStatus(msgStatusIcon, msgStatusHead, msgStatusBody);
 			}
-			else reverseQueryOP(geoMarker.osm_type, geoMarker.osm_id);
+			else reverseQueryOP(geoMarker.osm_type || geoMarker.source_id.charAt(0), geoMarker.osm_id || geoMarker.source_id.split('/')[1]);
 		}
 		else {
 			$('.spinner').fadeOut(200);
@@ -565,6 +602,13 @@ function gStreetview(e) {
 			animationEffect: 'circular'
 		}
 	}]);
+}
+function copyGeos(e) {
+	navigator.clipboard.writeText(L.Util.formatNum(e.latlng.lat, 5) + '°N ' + L.Util.formatNum(e.latlng.lng, 5) + '°E | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 6))
+		.then(
+			function() { setMsgStatus('fas fa-copy', 'Clipboard', 'Coordinates copied successfully.', 1); },
+			function() { setMsgStatus('fas fa-exclamation-triangle', 'Clipboard Error', 'Could not copy coordinates.', 1); }
+		);
 }
 
 $('#walkList').change(function() {
@@ -674,29 +718,29 @@ function suggestWalk(walkId, isDesc) {
 
 // navigation controls for history tour
 $('#tourNext').click(function() {
-	if ($('#tourList option:selected').next().is(':enabled') && !$('#tourLoading').is(':visible')) $('#tourList option:selected').next().prop('selected', true).trigger('change');
+	if ($('#tourList option:selected').next().is(':enabled')) $('#tourList option:selected').next().prop('selected', true).trigger('change');
 });
 $('#tourPrev').click(function() {
-	if ($('#tourList option:selected').prev().is(':enabled') && !$('#tourLoading').is(':visible')) $('#tourList option:selected').prev().prop('selected', true).trigger('change');
+	if ($('#tourList option:selected').prev().is(':enabled')) $('#tourList option:selected').prev().prop('selected', true).trigger('change');
 });
 $('#tourList').change(function() {
 	var tourNum = ($(this).val().length === 1) ? '0' + $(this).val() : $(this).val();
 	// only load iframe on focus or a new item selected
 	if (actTab === 'tour' && (!$('#tourFrame').attr('src') || $('#tourFrame').attr('src').indexOf('tour' + tourNum) === -1)) {
+		$('#tourControls').children().prop('disabled', true);
 		$('#tourFrame').hide();
 		$('#tourLoading').show();
-		$('#tourFrame')
-			.attr('src', 'tour/tour' + tourNum + '/index.html')
-			.one('load', function() {
-				$('#tourFrame').contents().find('html').css('--main-color', getComputedStyle($('html')[0],null).getPropertyValue('--main-color'));
-				if ($('#inputDark').is(':checked')) $('#tourFrame').contents().find('head').append(darkMode);
-				$('#tourLoading').hide();
-				$(this).fadeIn();
-				$(this).contents().find('sup').click(function() { tourRef(this.innerText); });
-				$(this).contents().find('sup').attr('title', 'View reference');
-				$(this).contents().find('img').click(function() { $.fancybox.open([{ src: $(this)[0].currentSrc, caption: $(this).attr('alt') }]);
-				});
-			});
+		$('#tourFrame')[0].contentWindow.location.replace('tour/tour' + tourNum + '/index.html');
+		$('#tourFrame').one('load', function() {
+			$(this).contents().find('html').css('--main-color', getComputedStyle($('html')[0],null).getPropertyValue('--main-color'));
+			if ($('#inputDark').is(':checked')) $('#tourFrame').contents().find('head').append(darkMode);
+			$('#tourLoading').hide();
+			$(this).fadeIn();
+			$(this).contents().find('sup').click(function() { tourRef(this.innerText); });
+			$(this).contents().find('sup').attr('title', 'View reference');
+			$(this).contents().find('img').click(function() { $.fancybox.open([{ src: $(this)[0].currentSrc, caption: $(this).attr('alt') }]); });
+			$('#tourControls').children().prop('disabled', false);
+		});
 		permalinkSet();
 	}
 });
@@ -746,6 +790,13 @@ function setLeaflet() {
 			name: 'OpenStreetMap',
 			url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			maxNativeZoom: 19
+		},
+		mpsrfr: {
+			name: 'Mapsurfer',
+			url: 'https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png?api_key=' + BOSM.orsKey,
+			maxNativeZoom: 19,
+			atribution: attribution + ', <a href="https://openrouteservice.org/" target="_blank" rel="noopener">MapSurfer.NET</a>',
+			hide: 1
 		},
 		general: {
 			name: 'General Purpose',
@@ -834,6 +885,7 @@ function setLeaflet() {
 			},
 			attribution: '<a href="https://eservices.landregistry.gov.uk/eservices/FindAProperty/view/LrInspireIdInit.do" target="_blank" rel="noopener">HM Land Registry</a>',
 			opacity: 0.7,
+			minZoom: 17,
 			offset: [2, 2]
 		},
 		bing: {
@@ -1008,6 +1060,7 @@ function setLeaflet() {
 			bounds: tileOverlayLayer[tile].bounds,
 			opacity: tileOverlayLayer[tile].opacity,
 			maxZoom: map.getMaxZoom(),
+			minZoom: tileOverlayLayer[tile].minZoom || map.getMinZoom(),
 			maxNativeZoom: tileOverlayLayer[tile].maxNativeZoom,
 			minNativeZoom: tileOverlayLayer[tile].minNativeZoom,
 			className: tileOverlayLayer[tile].className || ''
@@ -1082,11 +1135,14 @@ var lc = L.control.locate({
 		lc.stop();
 	}
 }).addTo(map);
-// show pois within a radius
+// show pois within a radius if accuracy is high
 function userLoc() {
-	map.closePopup();
-	clear_map('markers');
-	show_overpass_layer('(nwr(around:100,' + lc._event.latlng.lat + ',' + lc._event.latlng.lng + ')[~"."~"."];);', '');
+	if (lc._circle.getRadius() <= 100) {
+		map.closePopup();
+		clear_map('markers');
+		show_overpass_layer('(nwr(around:100,' + lc._event.latlng.lat + ',' + lc._event.latlng.lng + ')[~"."~"."];);', '');
+	}
+	else setMsgStatus('fas fa-location-arrow', 'Accuracy Too Low', 'Sorry, we could not locate your exact location.', 1);
 }
 
 // https://github.com/perliedman/leaflet-control-geocoder
@@ -1169,12 +1225,15 @@ $('#btnClearmap').bind('contextmenu', function() {
 
 // switches to a tab and an optional link to tour or anchor
 function switchTab(tab, anchor, poi) {
-	if (tab) {
+	if (tab && tab !== 'tour') {
 		if (tab !== actTab) $('a[href="#' + tab + '"]').click();
 		$('#' + (tab === 'pois' ? tab + ' #poi-icons,' : tab) + ' .sidebar-body').scrollTop(0);
 	}
 	if (anchor) {
-		if (tab === 'tour') $('#tourList').val(anchor).trigger('change');
+		if (tab === 'tour') {
+			$('#tourList').val(anchor).trigger('change');
+			$('a[href="#tour"]').click();
+		}
 		else $('a[href="#goto' + anchor + '"]').click();
 	}
 	if (poi) {
@@ -1288,6 +1347,7 @@ function populatePoiTab() {
 				// select tour
 				else switchTab('tour', $('.eac-category').eq($('#autocomplete').getSelectedItemIndex()).find('img').data('key').split('tour')[1]);
 				$('#autocomplete').val('');
+				if ($('#poi-filter-in').val().length) $('#poi-filter-in').val('').trigger('keyup');
 			}
 		},
 		categories: category
@@ -1454,6 +1514,7 @@ function clear_map(layer) {
 		$('#inputWw2').remove();
 		setPageTitle();
 	}
+	if (layer === 'all' && $('#poi-filter-in').val().length) $('#poi-filter-in').val('').trigger('keyup');
 	if (layer === 'walk' || layer === 'all') routingControl.setWaypoints([]);
 	if (layer === 'all' && actOverlayLayer && tileOverlayLayer[actOverlayLayer].hide) map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);
 	spinner = 0;
@@ -1463,8 +1524,8 @@ function clear_map(layer) {
 }
 
 // fly to bounds of layer
-function zoom_area() {
-	if ($(window).width() < 768) $('.sidebar-close').click();
+function zoom_area(closeTab) {
+	if ($(window).width() < 768 && closeTab) $('.sidebar-close').click();
 	map.closePopup();
 	map.flyToBounds(areaOutline.getBounds().extend(iconLayer.getBounds()).extend(imageOverlay.getBounds()));
 }
@@ -1607,7 +1668,7 @@ function showWeather() {
 				).attr({
 					'title': 'Current weather in ' + data.name + '\nOpenWeather',
 					'onclick': 'popupWindow("https://openweathermap.org/city/' + data.id + '", "owWindow", 1024, 768);'
-				});
+				}).show();
 			}
 			else this.error();
 			if ($('#inputDebug').is(':checked')) console.debug('Openweather:', data);
@@ -1623,7 +1684,7 @@ function showWeather() {
 // display latest osm changesets
 function showEditFeed() {
 	$.ajax({
-		url: 'https://osmcha.mapbox.com/api/v1/changesets',
+		url: 'https://osmcha.org/api/v1/changesets',
 		headers: { 'Authorization': 'Token ' + BOSM.osmchaTok, },
 		dataType: 'json',
 		cache: false,
@@ -1642,11 +1703,11 @@ function showEditFeed() {
 					' - <span title="' + date_parser(itm.properties.date, 'long') + '">' + date_parser(itm.properties.date.split('T')[0], 'short') + '</span></li>';
 				});
 				$('#osmFeed')
-					.append('Recent map changes:<ul class="fa-ul">' + s + '</ul><p><hr>')
+					.html('Recent map changes:<ul class="fa-ul">' + s + '</ul><p><hr>')
 					.slideDown();
 				$('#osmFeed a')
 					.attr({
-						'onClick': 'return window.confirm("This link will open an external website to review, continue?")',
+						'onClick': 'return window.confirm("This link will open an external website to review, continue?");',
 						'target': '_blank',
 						'rel': 'noopener'
 					});
@@ -1658,7 +1719,8 @@ function showEditFeed() {
 	});
 }
 
-function showThenNow() {
+var slideshowAuto = true;
+function showThenNow(fromPermalink) {
 	$('#thennowLoading').show();
 	$.ajax({
 		url: 'assets/xml/thennow.geojson',
@@ -1673,7 +1735,7 @@ function showThenNow() {
 					$('#thennow .sidebar-body div').append(
 						'<hr><h3>' + feature.properties.name + ' (' + feature.properties.date.then + ')</h3>' +
 						'<p><a href="assets/img/thennow/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.name + '">' +
-							'<img id="img' + feature.properties.id + '" src="assets/img/thennow/' + feature.properties.id + '(0).jpg"></a>' +
+							'<img id="img-' + feature.properties.id + '" src="assets/img/thennow/' + feature.properties.id + '(0).jpg"></a>' +
 						'<a style="display:none;" href="assets/img/thennow/' + feature.properties.id + '(2).jpg" data-fancybox="' + feature.properties.id + '" data-caption="Then in ' +
 							feature.properties.date.then + (feature.properties.copyright ? ' | &copy; ' + feature.properties.copyright : '') + '"></a>' +
 						'<a style="display:none;" href="assets/img/thennow/' + feature.properties.id + '(3).jpg" data-fancybox="' + feature.properties.id + '" data-caption="Now in ' +
@@ -1684,7 +1746,8 @@ function showThenNow() {
 						protect: true,
 						transitionEffect: 'fade',
 						transitionDuration: 6000,
-						slideShow: { autoStart: true, speed: 2000 }
+						beforeLoad: function() { if (slideshowAuto) $.fancybox.getInstance().SlideShow.start(); },
+						beforeClose: function() { slideshowAuto = ($('.fancybox-button--play').length) ? false : true; }
 					});
 					return L.circleMarker(latlng, {
 						radius: 15,
@@ -1695,9 +1758,14 @@ function showThenNow() {
 						fillOpacity: 0.5
 					})
 					.bindTooltip(feature.properties.name + '<img src="assets/img/thennow/' + feature.properties.id + '(0).jpg">', { className: 'thennowTip' })
-					.on('click', function() { $('#img' + feature.properties.id).click(); });
+					.on('click', function() {
+						$('#thennow .sidebar-body').scrollTop(0);
+						$('#thennow .sidebar-body').scrollTop($('#img-' + feature.properties.id).offset().top - 120);
+						$('#thennow #img-' + feature.properties.id).click();
+					});
 				}
 			}));
+			if (!fromPermalink) zoom_area();
 		}
 	});
 }
@@ -1795,7 +1863,7 @@ function permalinkReturn() {
 	tileBaseLayers[tileBaseLayer[actBaseTileLayer].name].addTo(map);
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
 	if ($(window).width() < 768 && actTab === 'home') actTab = 'none';
-	if (actTab === 'thennow') showThenNow();
+	if (actTab === 'thennow') showThenNow(true);
 	if (actTab !== 'none') sidebar.open(actTab);
 	// animate sidebar close button on smaller devices if layers underneath
 	if (actTab !== 'none' && $(window).width() < 768 && (uri.hasQuery('O') || uri.hasQuery('G') || uri.hasQuery('P') || uri.hasQuery('I') || uri.hasQuery('W')))

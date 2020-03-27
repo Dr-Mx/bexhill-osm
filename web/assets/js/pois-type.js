@@ -892,10 +892,10 @@ var pois = {
 
 	second_hand: {
 		name: 'Second-Hand',
-		query: 'nwr[shop=second_hand];',
+		query: 'nwr[shop=second_hand];nwr[second_hand=yes];',
 		iconName: '2hand',
 		catName: 'Shops',
-		tagKeyword: ['second-hand', 'clothes', 'books', 'toys', 'confectionery', 'furniture', 'crafts', 'thrift', 'bric-a-brac']
+		tagKeyword: ['second-hand', 'clothes', 'books', 'toys', 'confectionery', 'furniture', 'crafts', 'thrift', 'bric-a-brac', 'appliance']
 	},
 
 	craft: {

@@ -16,6 +16,9 @@
 	color: #b05000;
 	color: var(--main-color);
 }
+.nowrap {
+	white-space: nowrap;
+}
 #map {
 	background: #cb9b73;
 	background: linear-gradient(var(--main-color), #e6e6e6);
@@ -132,6 +135,7 @@ input[type=text], input[type=date], input[type=number] {
 #newFeed {
 	font-size: 75%;
 	color: #666;
+	text-align: left;
 }
 #newFeed ul {
 	margin-top: 5px;
@@ -287,6 +291,13 @@ h3 {
 	border-bottom: 1px solid #ddd;
 	margin: 5px 0;
 }
+.leaflet-contextmenu .fa-fw {
+	pointer-events: none;
+}
+#copyGeos {
+	font-size: 70%;
+	pointer-events: none;
+}
 .leaflet-control-locate
 	a{color: #b05000; color:var(--main-color); font-size:10pt;}
 .leaflet-control-locate.active
@@ -426,8 +437,8 @@ input[type=range] {
 input[type=range]::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	border: none;
-	height: 20px;
-	width: 20px;
+	height: 25px;
+	width: 25px;
 	border: 2px solid #ccc;
 	border-radius: 50%;
 	background-color: #b05000;
@@ -721,6 +732,9 @@ select:hover:enabled, #poi-results button:hover {
 #walkDesc {
 	color: darkgreen;
 }
+#thennow .sidebar-body {
+	overflow-y: scroll;
+}
 #walkDesc img, #thennow img {
 	width: 100%;
 	max-width: 500px;
@@ -835,10 +849,10 @@ input:checked + .slider::before {
 	font-size: 90%;
 	line-height: 24px;
 }
-#inputOverpass, #inputOpServer {
+#inputOverpass, #inputOpServer, #inputRevServer {
 	width: calc(100% - 100px);
 }
-#inputAttic, #inputOverpass, #inputOpServer, #inputOpCache {
+#inputAttic, #inputOverpass, #inputOpServer, #inputOpCache, #inputRevServer {
 	margin: 5px 0 5px 5px;
 }
 #inputOverpass, #inputAttic, #inputOpCache {
@@ -924,9 +938,12 @@ input:checked + .slider::before {
 	.leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-form-no-error {
 		font-size: 9pt !important;
 	}
+	.popup-imgContainer > a > img {
+		max-width: 80% !important;
+	}
 }
 .leaflet-right .leaflet-control-layers {
-	transition: all 200ms;
+	transition: all 400ms;
 }
 .leaflet-control-layers-list, .leaflet-popup {
 	cursor: default;
@@ -1084,7 +1101,7 @@ input:checked + .slider::before {
 .popup-imgContainer > a > img {
 	border: 2px solid #ccc;
 	border-radius: 5px;
-	max-width: 80%;
+	max-width: 85%;
 }
 .popup-imgContainer > a {
 	display: block;
@@ -1166,6 +1183,10 @@ input:checked + .slider::before {
 #poi-results-list .openColor-list-depends, #poi-results-list .openColor-list-undefined {
 	background: linear-gradient(to right, rgba(153, 153, 153, 0.4), transparent);
 }
+.tooltip-icons {
+	color: #777;
+	min-width: 16px;
+}
 
 .ui-tooltip {
 	padding: 5px 10px;
@@ -1177,6 +1198,7 @@ input:checked + .slider::before {
 	font-size: 8pt;
 	text-align: center;
 	border-radius: 5px;
+	border: 1px solid #ccc;
 }
 .ui-helper-hidden-accessible {
 	display: none;
