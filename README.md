@@ -1,4 +1,4 @@
-<h1> <img src="https://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill-OpenStreetMap - https://bexhill-osm.org.uk </h1>
+<h1> <img src="https://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill OpenStreetMap - https://bexhill-osm.org.uk </h1>
 
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3X9MHLW4W9TG&source=url)
