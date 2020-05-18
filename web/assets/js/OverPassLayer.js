@@ -8,6 +8,7 @@ function show_overpass_layer(query, cacheId, bound) {
 		$('.spinner').show();
 		queryBbox = '[out:json]';
 		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
+		// select within relation - work in progress
 		if (bound)
 			if (osmRelation) {
 				queryBbox += ';rel(' + osmRelation + ');map_to_area';

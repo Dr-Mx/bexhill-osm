@@ -1,75 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9						 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9						 https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 	<url>
-		<loc>http://bexhill-osm.org.uk</loc>
+		<loc>https://bexhill-osm.org.uk</loc>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=0</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=0</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=1</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=1</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=2</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=2</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=3</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=3</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=4</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=4</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=5</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=5</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=6</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=6</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=7</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=7</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=8</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=8</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=9</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=9</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=10</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=10</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=11</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=11</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=12</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=12</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=13</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=13</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=14</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=14</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=15</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=15</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>http://bexhill-osm.org.uk/?T=tour&amp;U=16</loc>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=16</loc>
 		<changefreq>never</changefreq>
+	</url>
+	<url>
+		<loc>https://bexhill-osm.org.uk/streetnames</loc>
+		<changefreq>monthly</changefreq>
 	</url>
 </urlset>

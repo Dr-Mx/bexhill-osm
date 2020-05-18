@@ -63,8 +63,8 @@ function parse_tags(element, titlePopup, poiParser) {
 	var listed_parser = function(tags) {
 		var tag = '', label = '', icon = '', planningLink = '';
 		markerPopup = '';
-		if (tags['ref:planningapp']) planningLink = '<a href="http://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + tags['ref:planningapp'] + '" target="_blank" rel="noopener">' + tags['ref:planningapp'] + '</a>';
-		else if (tags['ref:historicplanningapp']) planningLink = '<a href="http://planweb01.rother.gov.uk/OcellaWeb/historyDetails?reference=' + tags['ref:historicplanningapp'] + '" target="_blank" rel="noopener">' + tags['ref:historicplanningapp'] + '</a>';
+		if (tags['ref:planningapp']) planningLink = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + tags['ref:planningapp'] + '" target="_blank" rel="noopener">' + tags['ref:planningapp'] + '</a>';
+		else if (tags['ref:historicplanningapp']) planningLink = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/historyDetails?reference=' + tags['ref:historicplanningapp'] + '" target="_blank" rel="noopener">' + tags['ref:historicplanningapp'] + '</a>';
 		if (tags.building) {
 			label = 'Building';
 			icon = 'fas fa-building';
@@ -73,7 +73,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags.builder) tag += '<span title="Builder">Bldr. ' + tags.builder + '</span>, ';
 			if (tags.start_date) {
 				tag += '<span title="Start date">' + date_parser(tags.start_date, 'short') + '</span>';
-				if (tags.end_date) tag += ' - <span title="End date">' + date_parser(tags.end_date, 'short') + '</span>';
+				if (tags.end_date) tag += ' to <span title="End date">' + date_parser(tags.end_date, 'short') + '</span>';
 				tag += ', ';
 			}
 			if (tags.height) tag += '<span title="Height in metres">' + tags.height + 'm</span>, ';
@@ -249,19 +249,17 @@ function parse_tags(element, titlePopup, poiParser) {
 			// get street history through xml file lookup
 			$.ajax({
 				async: false,
-				url: 'assets/xml/streetnames.xml',
+				url: 'assets/data/streetnames.xml',
 				dataType: 'xml',
 				cache: true,
 				success: function(xml) {
-					var street = $(xml).find('name').filter(function() {
-						return $(this).text() === tags.name;
-					}).closest('street');
+					var street = $(xml).find('name').filter(function() { return $(this).text() === tags.name; }).closest('street');
 					var streetDate = $('date', street).text();
 					var streetDesc = $('desc', street).text();
 					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Start date', value: streetDate, iconName: 'fas fa-calendar-alt' });
 					if (streetDesc) markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'fas fa-book' }) + '</span>';
 					if (markerPopup) {
-						var sourceLink = $(xml).find('source').text();
+						var sourceLink = $(xml).find('url').text();
 						var sourceAuthor = $(xml).find('author').text();
 						markerPopup += '<span class="popup-streetSource"><a href="' + sourceLink + '" target="_blank" rel="noopener" title="' + sourceLink + '">&copy; ' + sourceAuthor + '</a></span>';
 					}
@@ -293,13 +291,13 @@ function parse_tags(element, titlePopup, poiParser) {
 			tag += '<a href="https://' + w.split(':')[0] + '.wikipedia.org/wiki/' + w.split(':')[1] + '" title="Wikipedia" target="_blank" rel="noopener">Wikipedia</a>; ';
 		}
 		if (tags['url:bexhillhistorytrail'])
-			tag += '<a href="' + tags['url:bexhillhistorytrail'] + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
+			tag += '<a class="nowrap" href="' + tags['url:bexhillhistorytrail'] + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
 		if (tags['ref:thekeep'])
-			tag += '<a href="https://www.thekeep.info/collections/getrecord/' + tags['ref:thekeep'] + '" title="The Keep" target="_blank" rel="noopener">The Keep</a>; ';
+			tag += '<a class="nowrap" href="https://www.thekeep.info/collections/getrecord/' + tags['ref:thekeep'] + '" title="The Keep" target="_blank" rel="noopener">The Keep</a>; ';
 		if (tags['ref:edubase'])
-			tag += '<a href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + tags['ref:edubase'] + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
+			tag += '<a class="nowrap" href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + tags['ref:edubase'] + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
 		if (tags['ref:charity'])
-			tag += '<a href="https://beta.charitycommission.gov.uk/charity-details/?regId=' + tags['ref:charity'] + '" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
+			tag += '<a class="nowrap" href="https://beta.charitycommission.gov.uk/charity-details/?regId=' + tags['ref:charity'] + '" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
 		if (tags.tpuk_ref)
 			tag += '<a href="http://trigpointing.uk/trig/' + tags.tpuk_ref.split('TP')[1] + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
 		if (tag) {
@@ -556,6 +554,7 @@ function callback(data) {
 					}
 					else if (e.tags.display) name = e.tags.display + ' ' + e.tags.amenity;
 					break;
+				case 'college': type = 'school'; break;
 				case 'fire_station': type = 'police'; iconName = 'firetruck'; break;
 				case 'place_of_worship': if (e.tags.religion) name = e.tags.religion; break;
 				case 'public_bookcase': type = 'library'; break;
@@ -814,8 +813,8 @@ function callback(data) {
 			else iconName = '000blank';
 		}
 		var marker = L.marker(pos, {
-			// do not bounce marker: when single poi, in debug mode
-			bounceOnAdd: (!rQuery && !$('#inputDebug').is(':checked')),
+			// do not bounce marker: when single poi, in debug mode, over 50 markers
+			bounceOnAdd: (!rQuery && !$('#inputDebug').is(':checked') && (data.elements.length < 50)),
 			icon: L.icon({
 				iconUrl: 'assets/img/icons/' + iconName + '.png',
 				iconSize: [32, 37],
@@ -832,7 +831,8 @@ function callback(data) {
 			if (poi) name = poi.name;
 			else if (e.tags.highway) name = (e.tags.highway === 'bus_stop') ? e.tags.highway : e.tags.highway + ' highway';
 			else if (e.tags.railway) name = 'railway ' + e.tags.railway;
-			else if (e.tags.building && e.tags.building !== 'yes') name = e.tags.building;
+			else if (e.tags.building === 'yes') name = 'building';
+			else if (e.tags.building) name = e.tags.building;
 			else if (e.tags.ref) name = e.tags.ref;
 			else if (e.tags['addr:housename']) name = e.tags['addr:housename'];
 			else name = '&hellip;';
@@ -859,7 +859,7 @@ function callback(data) {
 		else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
 		else if (e.tags.operator) toolTip += '<br><i>' + e.tags.operator + '</i>';
 		if (e.tags.image || e.tags.wikimedia_commons) toolTip += ' <i class="tooltip-icons fas fa-image fa-fw" title="Image(s)"></i>';
-		if (e.tags['image:360']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="360 Panorama"></i>';
+		if (e.tags['image:360']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Panoramic view"></i>';
 		// popup
 		var customPOptions = {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
@@ -875,7 +875,7 @@ function callback(data) {
 			marker.bindPopup(markerPopup, customPOptions);
 			marker.bindTooltip(toolTip, customTOptions);
 			if (rQuery) {
-				if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close').click();
+				if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').click();
 				marker.addTo(this.instance).openPopup();
 				setPoiList();
 				markerId = marker._leaflet_id;
@@ -897,7 +897,7 @@ function callback(data) {
 			customTOptions.className = (ohState !== undefined) ? 'openColor-list-' + ohState : 'openColor-list-' + ctState;
 			marker.bindPopup(markerPopup, customPOptions);
 			marker.bindTooltip(toolTip, customTOptions);
-			if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close').click();
+			if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').click();
 			marker.addTo(this.instance).openPopup();
 			setPoiList();
 			markerId = marker._leaflet_id;
@@ -942,7 +942,7 @@ function pushPoiList(customSort) {
 		if (poiList[c]._icon) poiIcon = '<img src="' + poiList[c]._icon.src + '">';
 		else if (poiList[c].options.fillColor)
 			poiIcon = '<i style="color:' + poiList[c].options.fillColor + ';" class="fas fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
-		poiResultsList += '<tr id="' + c + '">' +
+		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
 			'<td class="openColor-list-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
 			'<td>' + poiList[c]._tooltip._content + '</td>' +
 			'<td>' + (poiList[c].facilities ? poiList[c].facilities : '') + '</td>';
@@ -969,17 +969,17 @@ function pushPoiList(customSort) {
 	}).css('pointer-events', 'auto');
 	$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
 	// interact with map
-	$('#poi-results-list tr').hover(
-		function() { poiList[this.id].openTooltip(); },
-		function() { if (!poiList[this.id]._tooltip.options.permanent) poiList[this.id].closeTooltip(); }
+	if (noTouch) $('#poi-results-list tr').hover(
+		function() { map._layers[this.id].openTooltip(); },
+		function() { if (!map._layers[this.id]._tooltip.options.permanent) map._layers[this.id].closeTooltip(); }
 	);
 	$('#poi-results-list tr').click(function() {
 		if ($('#inputWw2').length) $('#inputWw2 input').val($('#inputWw2 input')[0].max).change();
-		poiList[this.id].closePopup().openPopup();
-		if ($(window).width() < 768) $('.sidebar-close').click();
+		map._layers[this.id].closePopup().openPopup();
+		if ($(window).width() < 768) $('.sidebar-close:visible').click();
 		else {
 			// focus 150px above marker to allow room for popup
-			var px = map.project(poiList[this.id]._latlng);
+			var px = map.project(map._layers[this.id]._latlng);
 			map.stop().flyTo(map.unproject([px.x, px.y -= 150]));
 		}
 	});
@@ -1367,7 +1367,7 @@ function show_img_controls(imgMax, img360) {
 	// add image navigation controls to popup
 	var ctrlTmpl = '<div class="navigateItem">';
 	if (img360 && img360.indexOf('File') === 0) ctrlTmpl +=
-		'<a title="360 Panorama" data-fancybox data-type="iframe" data-animation-effect="circular" data-caption="Wikimedia Commons: Bexhill-OSM" data-src="https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img360.split(':')[1]) + '" href="javascript:;">' +
+		'<a title="Panoramic view" data-fancybox data-type="iframe" data-animation-effect="circular" data-caption="Wikimedia Commons: Bexhill-OSM" data-src="https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img360.split(':')[1]) + '" href="javascript:;">' +
 		'<i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
 	if (imgMax > 1) ctrlTmpl +=
 		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +

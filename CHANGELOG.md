@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v5.8.0 - Mapillary support
+
+**Date:** 18/05/2020
+
+Updated js
+ - L.Control.Locate.min.js 0.72.0
+ 
+Site changes
+ - Right-click 'Panoramic view' opens a panoramic Mapillary Street Level iframe, if not found use Google Street View
+ - Hide back-to-top anchor button when at top of tab
+ - Replace loading spinner gif with svg
+ - More uniform theme colour and add box-shadow on controls
+ - Remodel streetnames xml/xsl book
+ - Redo Tour references
+ - ww2bombs renamed to ww2incidents
+ - Tutorial modals remember which ones have been dismissed
+ - As always, many other bug fixes and improvements
+
+
 ## v5.7.0 - Support for National Grid Refs
 
 **Date:** 27/03/2020

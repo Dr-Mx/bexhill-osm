@@ -63,7 +63,13 @@
 				"id": "mt52",
 				"name": "Martello Tower 52",
 				"date": "1806-1875",
-				"description": "Pevensey Levels.<br>On the early hours of Saturday 28th February 1822, a large gang of smugglers tried to capture the Coastal Blockade guards at this tower as a boat arrived on the shore. When attacked the Blockade men shot one of the smugglers, killing him. Alarms were raised and one arrest was made.<br>Collapsed due to cliff erosion and subsequently dismantled."
+				"description": "Pevensey Levels.<br>On the early hours of Saturday 28th February 1822, a large gang of smugglers tried to capture the Coastal Blockade guards at this tower as a boat arrived on the shore. When attacked the Blockade men shot one of the smugglers, killing him. Alarms were raised and one arrest was made.<br>Collapsed due to cliff erosion and subsequently dismantled.<br>The landowner still has the pivoting stones for the gun platform.",
+				"img": {
+					"0": "16/mt52(0)"
+				},
+				"imgattrib": {
+					"0": "2020 | Derek Smith"
+				}
 			},
 			"geometry": {
 				"type": "Point",

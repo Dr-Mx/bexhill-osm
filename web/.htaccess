@@ -11,6 +11,8 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 Redirect /ww2 /?M=general&T=tour&U=9&G=ww2Bombmap
 Redirect /xmas /?M=bosm&T=none&G=xmas
 Redirect /ext /?M=general&T=none#13/50.8470/0.4670
+Redirect /assets/xml /assets/data
+Redirect /streetnames /assets/data/streetnames.xml
 
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php56” package as the default “PHP” programming language.

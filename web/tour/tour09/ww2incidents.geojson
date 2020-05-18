@@ -2082,7 +2082,7 @@
 					"0": "09/bomb/knolecourt"
 				},
 				"imgattrib": {
-					"0": "Bexhill Observer | Arthur Fernandez"
+					"0": "J. Stewart, 1952"
 				}
 			},
 			"geometry": {
@@ -3222,7 +3222,7 @@
 		}, {
 			"type": "Feature",
 			"properties": {
-				"name": "Junkers Ju 88",
+				"name": "Junkers Ju88A-1 Werke Nummer 7036 of 3/KG 51",
 				"date": "1940-07-28 05:14",
 				"description": "Buckholt Farm. Forced landed due to petrol shortage. Crew of four made POW.",
 				"type": "aircraft",
@@ -3266,7 +3266,7 @@
 				"img": {
 					"0": "09/aircraft/spitfireXIV"
 				},
-				"imgatrib": {
+				"imgattrib": {
 					"0": "Ann Attewell"
 				}
 			},
@@ -3297,6 +3297,24 @@
 			"geometry": {
 				"type": "Point",
 				"coordinates": [0.40890, 50.84162]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"name": "Focke Wulf Fw190 A-5 Werke Nummer 51353 of Stab IV/SKG10",
+				"date": "1943-06-04 11:30",
+				"description": "Hit by anti-aircraft fire. Attempted a force landing but crashed at Norman's Bay. Pilot Oberleutnant Kurt Hevler killed. Aircraft burnt out. One of 18 FW 190s attacking Eastbourne. Originally buried Bexhill Cemetery plot CD F 23 he was re-interred as part of the consolidation of German war graves at the Soldatenfriedhof, Cannock Chase, in 1967.",
+				"type": "aircraft",
+				"img": {
+					"0": "09/aircraft/fockewulf190"
+				},
+				"imgattrib": {
+					"0": "Andy Saunders"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.39903, 50.83193]
 			}
 		}
 	]

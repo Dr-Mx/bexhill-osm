@@ -163,11 +163,10 @@
     .sidebar-left ~ .sidebar-map {
 		margin-left: 0; } }
 .sidebar {
-	border-right: 2px solid rgba(0, 0, 0, 0.2); }
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
 @media (min-width: 1300px) {
 	.sidebar {
-		border-radius: 10px;
-		border: 2px solid rgba(0, 0, 0, 0.2); } }
+		border-radius: 10px; } }
 @media (min-width: 1300px) {
 	.sidebar-left ~ .sidebar-map .leaflet-left {
 		transition: left 400ms ease-out; } }

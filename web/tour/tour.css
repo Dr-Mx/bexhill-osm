@@ -20,6 +20,16 @@ body {
 	}
 }
 
+#reference {
+	text-align: left;
+}
+#reference ol {
+	margin-top: 5px;
+}
+#reference b {
+	color: black;
+}
+
 h3 {
 	margin-bottom: 10px;
 }
@@ -28,7 +38,7 @@ sup {
 	font-size: 60%;
 	cursor: pointer;
 }
-sup:hover { color: #b05000; color: var(--main-color); }
+sup:hover { color: var(--main-color); }
 sup::before { content: "["; }
 sup::after { content: "]"; }
 
@@ -95,7 +105,6 @@ img {
 	text-align: left;
 	border-radius: 3px;
 	transition: background-color 100ms;
-	color: #b05000;
 	color: var(--main-color);
 }
 .maplink:hover {
@@ -111,7 +120,6 @@ a {
 	text-decoration: none;
 }
 a:link, a:visited, a:hover, a, sup {
-	color: #b05000;
 	color: var(--main-color);
 	cursor: pointer;
 }
