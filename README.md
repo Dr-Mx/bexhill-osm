@@ -11,6 +11,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
 
 ## Features
 - Mobile and desktop friendly
+- Mapillary Street Level spherical panorama support
 - Local caching of API requests
 - Detailed POI markers through Overpass API
   - Bookmark favourite POIs
@@ -37,7 +38,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - UK Food Hygiene Rating System API (key:fhrs:id)
   - Real-time Traveline API information on bus-stops (key:naptan:AtcoCode)
   - Multiple image support including Wikimedia Commons API (key:wikimedia_commons, key:image)
-  - 360 spherical panorama support using Wikimedia Commons (key:image:360)
+  - Spherical panorama support using Wikimedia Commons (key:image:360)
 - Find an address by searching (Nominatim > Overpass)
 - Query any feature on map (Nominatim > Overpass)
 - Building highlight on select (OpenStreetMap API)
@@ -50,7 +51,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
 - Share any current map state with dynamic permalink
 - Map display
   - Switch between metric and imperial
-  - Dark theme
+  - Adjustable themes / Dark theme
   - Adjust overlay opacity
   - Set overlay offset
 - OpenWeatherMap API
