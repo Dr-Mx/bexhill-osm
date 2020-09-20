@@ -973,7 +973,7 @@
 				"date": "1940-09-29",
 				"description": "Margaret Lawrence (25), Margaret I. Lawrence (55) and Caroline Massey (68) killed.",
 				"img": {
-					"0": "09/bomb/woodsgateavenue"
+					"0": "09/bomb/woodsgateavenue(0)"
 				}
 			},
 			"geometry": {
@@ -1017,7 +1017,7 @@
 				"date": "1943-01-02 09:00",
 				"description": "Three houses destroyed.",
 				"img": {
-					"0": "09/bomb/13-17jamesonroad"
+					"0": "09/bomb/13-17jamesonroad(0)"
 				}
 			},
 			"geometry": {
@@ -1076,7 +1076,7 @@
 				"date": "1940-09-30",
 				"description": "Harriet R. Tidd (23) of number 30 Dalehurst Road killed.",
 				"img": {
-					"0": "09/bomb/harriettidd"
+					"0": "09/bomb/harriettidd(0)"
 				},
 				"imgattrib": {
 					"0": "Harriet Tidd's wedding, Bexhill Observer 1937"
@@ -1215,7 +1215,7 @@
 				"date": "1940-09-19 10:30",
 				"description": "Sisters Annie L. Coverdale (75) and Evelyn Coverdale (62) occupants of No 42 taken to Bexhill Hospital where they died. 2 others injured. No 40 also destroyed and 44 and 46 damaged.",
 				"img": {
-					"0": "09/bomb/42bancroftroad"
+					"0": "09/bomb/42bancroftroad(0)"
 				}
 			},
 			"geometry": {
@@ -1260,7 +1260,7 @@
 				"date": "1940-10-08",
 				"description": "Heavy raid injuring five people. Thomas Mepham (69) and his brother in law William Turner (62) taken to hospital at Epsom where they both subsequently died.",
 				"img": {
-					"0": "09/bomb/57amherstroad"
+					"0": "09/bomb/57amherstroad(0)"
 				}
 			},
 			"geometry": {
@@ -1291,7 +1291,7 @@
 				"date": "1943-05-23",
 				"description": "Edith E. Few (65) and Lily A. Smith (54) killed by a low level bomb that had sliced through numbers 9 and 11. 5 injured.",
 				"img": {
-					"0": "09/bomb/westvilleroad"
+					"0": "09/bomb/westvilleroad(0)"
 				}
 			},
 			"geometry": {
@@ -1304,7 +1304,7 @@
 				"name": "8-10 Cantelupe Road",
 				"date": "1940-09-12",
 				"img": {
-					"0": "09/bomb/8canteluperoad"
+					"0": "09/bomb/8canteluperoad(0)"
 				}
 			},
 			"geometry": {
@@ -1431,7 +1431,7 @@
 				"date": "1940-11-24",
 				"description": "Direct hit on Barrack Road air raid shelter. No casualties.",
 				"img": {
-					"0": "09/bomb/barrackroad"
+					"0": "09/bomb/barrackroad(0)"
 				}
 			},
 			"geometry": {
@@ -1445,7 +1445,7 @@
 				"date": "1940-09-30",
 				"description": "Bomb landed amongst the graves, elm trees were uprooted and a piece of tombstone was hurled at a motor vehicle.",
 				"img": {
-					"0": "09/bomb/barrackroadcemetery"
+					"0": "09/bomb/barrackroadcemetery(0)"
 				}
 			},
 			"geometry": {
@@ -1644,7 +1644,7 @@
 				"date": "1942-05-16 06:15",
 				"description": "Unoccupied vicarage destroyed. Lodge (37 Sea Rd) severely damaged. St. Barnabas Church south windows destroyed including an original depicting St. Luke called 'Good Physician'.",
 				"img": {
-					"0": "09/bomb/stbarnabasvicarage"
+					"0": "09/bomb/stbarnabasvicarage(0)"
 				},
 				"imgattrib": {
 					"0": "St Barnabas' Bexhill 1891-1951, Gowing King Bros & Potts Ltd | C. Hollyfield"
@@ -1683,8 +1683,8 @@
 				"date": "1940-09-19",
 				"description": "John Croft (41) killed. Bexhill's first fatality. Two other workmen at premises injured.",
 				"img": {
-					"0": "09/bomb/twinehams",
-					"1": "09/bomb/johncroft"
+					"0": "09/bomb/twinehams(0)",
+					"1": "09/bomb/johncroft(0)"
 				},
 				"imgattrib": {
 					"0": "John Croft"
@@ -1732,7 +1732,7 @@
 				"date": "1940-09-24",
 				"description": "Landed on pavement but did not explode until five hours later. Caused upheaval of the road and displacement of roof tiles on surrounding houses. No casualties.",
 				"img": {
-					"0": "09/bomb/canteluperoad"
+					"0": "09/bomb/canteluperoad(0)"
 				}
 			},
 			"geometry": {
@@ -1790,7 +1790,7 @@
 				"description": "V-1 flying bomb. Gunner William Lines 1085602 of the 150/71 Field Regiment Royal artillery killed in an adjoining property.",
 				"type": "V-1",
 				"img": {
-					"0": "09/bomb/hartfieldroad"
+					"0": "09/bomb/hartfieldroad(0)"
 				}
 			},
 			"geometry": {
@@ -1970,7 +1970,7 @@
 				"description": "V-1 flying bomb. 8 injured, including 1 hospitalised, 5 cattle killed.",
 				"type": "V-1",
 				"img": {
-					"0": "09/bomb/gloversfarm"
+					"0": "09/bomb/gloversfarm(0)"
 				}
 			},
 			"geometry": {
@@ -2079,7 +2079,7 @@
 				"date": "1940-09-19",
 				"description": "A bomb removed one of the gables and the two entrances. The gable wasn't restored until the late 1950s - early 1960s  with  the  two  entrances  replaced  in  a  1950s  style  that  broke  the  symmetry  of  the northern elevation. These were restored to the original style in 2016.",
 				"img": {
-					"0": "09/bomb/knolecourt"
+					"0": "09/bomb/knolecourt(0)"
 				},
 				"imgattrib": {
 					"0": "J. Stewart, 1952"
@@ -2118,7 +2118,7 @@
 				"date": "1940-09-24",
 				"description": "Gable destroyed, not restored until the late 1950s - early 1960s.",
 				"img": {
-					"0": "09/bomb/carltonhotel"
+					"0": "09/bomb/carltonhotel(0)"
 				}
 			},
 			"geometry": {
@@ -2174,7 +2174,7 @@
 				"date": "1940-09-30 08:10",
 				"description": "Considerable damage to the front of the building, although unoccupied at the time a postman was badly injured by falling rubble. Beach Towers Hotel opposite also sustained damage causing loss of one of its turrets.",
 				"img": {
-					"0": "09/bomb/metropolehotel"
+					"0": "09/bomb/metropolehotel(0)"
 				}
 			},
 			"geometry": {
@@ -2278,7 +2278,7 @@
 				"date": "1943-01-02 09:00",
 				"description": "In roadway. Damage to nearby houses.",
 				"img": {
-					"0": "09/bomb/newparkavenue"
+					"0": "09/bomb/newparkavenue(0)"
 				},
 				"imgattrib": {
 					"0": "National Archives HO 192/1016"
@@ -2646,7 +2646,7 @@
 				"description": "V-1 flying bomb. The first that landed on the town. Damaged residential property and broke windows at St. Augustine's Church. Left a 30-ft-deep crater. 20 injured, including 10 hospitalised.",
 				"type": "V-1",
 				"img": {
-					"0": "09/bomb/richmondroad"
+					"0": "09/bomb/richmondroad(0)"
 				}
 			},
 			"geometry": {
@@ -2660,7 +2660,7 @@
 				"date": "1940-10-08",
 				"description": "Unexploded bomb.",
 				"img": {
-					"0": "09/bomb/rotherfieldavenue"
+					"0": "09/bomb/rotherfieldavenue(0)"
 				}
 			},
 			"geometry": {
@@ -2674,7 +2674,7 @@
 				"date": "1942-05-16 06:15",
 				"description": "Completely destroyed.",
 				"img": {
-					"0": "09/bomb/sackvillemews"
+					"0": "09/bomb/sackvillemews(0)"
 				}
 			},
 			"geometry": {
@@ -2861,7 +2861,7 @@
 				"date": "1940-10-06",
 				"description": "Destroyed and never reopened.",
 				"img": {
-					"0": "09/bomb/gaietycinema"
+					"0": "09/bomb/gaietycinema(0)"
 				}
 			},
 			"geometry": {
@@ -2876,7 +2876,7 @@
 				"description": "V-1 flying bomb. Landed in the garden grounds partially wrecking the house, also caused damage to the Bell Hotel and other adjacent properties. 27 injured, including 7 hospitalised, 1 horse killed.",
 				"type": "V-1",
 				"img": {
-					"0": "09/bomb/thegrange"
+					"0": "09/bomb/thegrange(0)"
 				}
 			},
 			"geometry": {
@@ -2935,7 +2935,7 @@
 				"date": "1940-11-24",
 				"description": "Damage to shops. Located where the building passage to Sainsbury's is today.",
 				"img": {
-					"0": "09/bomb/townhallsquare"
+					"0": "09/bomb/townhallsquare(0)"
 				}
 			},
 			"geometry": {
@@ -2949,7 +2949,7 @@
 				"date": "1943-12-22 23:00",
 				"description": "Bomb in front garden demolished bungalow and house next door. A terrace opposite (Arncliffe Terrace) was damaged. Families at Arncliffe Terrace and Camperdown Street evacuated.",
 				"img": {
-					"0": "09/bomb/turkeyroad"
+					"0": "09/bomb/turkeyroad(0)"
 				}
 			},
 			"geometry": {
@@ -3004,7 +3004,7 @@
 				"description": "V-1 flying bomb. House wrecked, 4 injured.",
 				"type": "V-1",
 				"img": {
-					"0": "09/bomb/wealdenway"
+					"0": "09/bomb/wealdenway(0)"
 				}
 			},
 			"geometry": {
@@ -3246,7 +3246,7 @@
 				"description": "100 yards east of Freezelands Farm building. Serving with 1 Photographic Reconnaissance Unit, it force landed in bad visibility due to lack of petrol whilst returning from a sortie to Rennes, France. Went through a hedge and ended up on its nose, Sergeant Pilot Mills injured.",
 				"type": "aircraft",
 				"img": {
-					"0": "09/aircraft/P9550"
+					"0": "09/aircraft/p9550(0)"
 				},
 				"imgattrib": {
 					"0": "P R Arnold collection via W Matusiak"
@@ -3264,7 +3264,7 @@
 				"description": "Picknells Green, Hooe. Mid-air collision. On anti-V-1 patrol. Flying Officer Patrick Schade (pictured) and Flight Sergeant Archie Wilson both killed.",
 				"type": "aircraft",
 				"img": {
-					"0": "09/aircraft/spitfireXIV"
+					"0": "09/aircraft/spitfireXIV(0)"
 				},
 				"imgattrib": {
 					"0": "Ann Attewell"
@@ -3306,7 +3306,7 @@
 				"description": "Hit by anti-aircraft fire. Attempted a force landing but crashed at Norman's Bay. Pilot Oberleutnant Kurt Hevler killed. Aircraft burnt out. One of 18 FW 190s attacking Eastbourne. Originally buried Bexhill Cemetery plot CD F 23 he was re-interred as part of the consolidation of German war graves at the Soldatenfriedhof, Cannock Chase, in 1967.",
 				"type": "aircraft",
 				"img": {
-					"0": "09/aircraft/fockewulf190"
+					"0": "09/aircraft/fockewulf190(0)"
 				},
 				"imgattrib": {
 					"0": "Andy Saunders"

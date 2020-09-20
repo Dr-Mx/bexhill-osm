@@ -4,8 +4,9 @@ var eleCache = [], queryBbox = '';
 function show_overpass_layer(query, cacheId, bound) {
 	if (!query || query === '();') return;
 	else {
-		$('.poi-checkbox').addClass('poi-loading');
+		// show spinner, disable poi checkboxes
 		$('.spinner').show();
+		$('.poi-checkbox').addClass('poi-loading');
 		queryBbox = '[out:json]';
 		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
 		// select within relation - work in progress
@@ -17,7 +18,6 @@ function show_overpass_layer(query, cacheId, bound) {
 			else queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
 		queryBbox += ';' + query + 'out tags center qt ' + maxOpResults + ';';
 	}
-	// show spinner, disable poi checkboxes
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
 		query: queryBbox,

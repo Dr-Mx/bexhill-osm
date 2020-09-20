@@ -33,6 +33,7 @@
 	<link rel="stylesheet" href="streetnames.css"/>
 </head>
 <body>
+	<img id="header" src="street.png"/>
 	<h1><xsl:value-of select="copyright/name"/></h1>
 	<div id="intro">
 	<p>In 1996 the Bexhill Museum Association published the first-ever attempt to explain how Bexhill-on-Sea’s street and road names had been acquired. That work was carried out by the Museum’s Local History Forum led by Alan Beecher. Eighteen years later their successors, the Local History Study Group, feel it was time for a second edition. We have drawn heavily on the work of our predecessors as well as including new research of our own. We have used the 1902 Borough of Bexhill boundary to define our study area but eagle-eyed readers will recognise that we have very occasionally crossed the border into neighbouring territory.</p>
@@ -93,7 +94,7 @@
 	<span>East Sussex Records Office</span>
 	</div>
 	<hr/>
-	<script src="../js/plugins/jquery-3.4.1.min.js"></script>
+	<script src="../js/plugins/jquery.min.js"></script>
 	<script>
 	$(document).ready(function() {
 		$('#street-filter-in').on('keyup', function() { if ($('#street-filter-in').val().length >= 3 || $('#street-filter-in').val().length === 0) {

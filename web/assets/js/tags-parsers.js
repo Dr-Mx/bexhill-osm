@@ -49,14 +49,12 @@ function parse_tags(element, titlePopup, poiParser) {
 	var contact_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
-		var tagMail = tags.email || tags['contact:email'];
-		var tagFb = tags.facebook || tags['contact:facebook'];
-		var tagTwit = tags.twitter || tags['contact:twitter'];
-		var tagInstg = tags['contact:instagram'];
+		var tagMail = tags.email || tags['contact:email'], tagFb = tags.facebook || tags['contact:facebook'], tagTwit = tags.twitter || tags['contact:twitter'], tagInstg = tags['contact:instagram'], tagYtube = tags['contact:youtube'];
 		if (tagMail) tag += '<a href="mailto:' + tagMail + '"><i class="fas fa-envelope fa-fw" title="E-mail: ' + tagMail + '"></i></a> ';
 		if (tagFb) tag += '<a href="' + tagFb + '" target="_blank" rel="noopener nofollow"><i class="fab fa-facebook fa-fw" title="Facebook: ' + tagFb + '" style="color:#3b5998;"></i></a> ';
 		if (tagTwit) tag += '<a href="https://twitter.com/' + tagTwit + '" target="_blank" rel="noopener nofollow"><i class="fab fa-twitter fa-fw" title="Twitter: @' + tagTwit + '" style="color:#1da1f2;"></i></a> ';
 		if (tagInstg) tag += '<a href="https://instagram.com/' + tagInstg + '" target="_blank" rel="noopener nofollow"><i class="fab fa-instagram fa-fw" title="Instagram: ' + tagInstg + '" style="color:#d93175;"></i></a> ';
+		if (tagYtube) tag += '<a href="' + tagYtube + '" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube fa-fw" title="YouTube: ' + tagYtube + '" style="color:#ff0000;"></i></a> ';
 		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Contact', value: tag, iconName: 'fas fa-user-circle' });
 		return markerPopup;
 	};
@@ -310,14 +308,14 @@ function parse_tags(element, titlePopup, poiParser) {
 		// get images
 		var lID = 0;
 		markerPopup = '';
-		if (tags.wikimedia_commons && tags.wikimedia_commons.indexOf('File') === 0) {
+		if (tags.wikimedia_commons && tags.wikimedia_commons.indexOf('File:') === 0) {
 			// support semicolon separated commons images
 			var multiCommons =
 				(tags.wikimedia_commons +
 				(tags.wikimedia_commons_1 ? ';' + tags.wikimedia_commons_1 : '') +
 				(tags.wikimedia_commons_2 ? ';' + tags.wikimedia_commons_2 : '')
 			).split(';');
-			for (x = 0; x < multiCommons.length; x++) if (multiCommons[x].indexOf('File') === 0) {
+			for (x = 0; x < multiCommons.length; x++) if (multiCommons[x].indexOf('File:') === 0) {
 				markerPopup += generic_img_parser(multiCommons[x], lID, '');
 				lID++;
 			}
@@ -333,7 +331,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				}
 			}
 		}
-		if (lID > 1) markerPopup += show_img_controls(lID, tags['image:360']);
+		if (lID > 1) markerPopup += show_img_controls(lID, tags['image:pano']);
 		return markerPopup;
 	};
 	// https://github.com/opening-hours/opening_hours.js
@@ -696,6 +694,7 @@ function callback(data) {
 				case 'hardware': type = 'doityourself'; break;
 				case 'hearing_aids': type = 'mobility'; iconName = 'hoergeraeteakustiker_22px'; break;
 				case 'laundry': type = 'dry_cleaning'; break;
+				case 'pet_grooming': type = 'pet'; break;
 				case 'signs': type = 'copyshop'; break;
 				case 'trade': if (e.tags.trade) name = e.tags.trade + ' ' + e.tags.shop; break;
 				case 'window_blind': type = 'curtain'; break;
@@ -859,12 +858,13 @@ function callback(data) {
 		else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
 		else if (e.tags.operator) toolTip += '<br><i>' + e.tags.operator + '</i>';
 		if (e.tags.image || e.tags.wikimedia_commons) toolTip += ' <i class="tooltip-icons fas fa-image fa-fw" title="Image(s)"></i>';
-		if (e.tags['image:360']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Panoramic view"></i>';
+		if (e.tags['image:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Panoramic view"></i>';
 		// popup
 		var customPOptions = {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
 			minWidth: (e.tags.image || e.tags.wikimedia_commons) ? imgSize : '',
-			autoPanPaddingBottomRight: [5, 50]
+			autoPanPaddingBottomRight: [5, 50],
+			autoPan: noPermalink ? true : false
 		};
 		// check if already defined poi
 		if (poi) {
@@ -940,8 +940,8 @@ function pushPoiList(customSort) {
 		var openColorTitle = (state === true || state === false) ? ' title="' + (state === true ? 'Open' : 'Closed') + '"' : '';
 		var poiIcon = '';
 		if (poiList[c]._icon) poiIcon = '<img src="' + poiList[c]._icon.src + '">';
-		else if (poiList[c].options.fillColor)
-			poiIcon = '<i style="color:' + poiList[c].options.fillColor + ';" class="fas fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
+		else if (poiList[c].options.color)
+			poiIcon = '<i style="-webkit-text-stroke:3px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fas fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
 			'<td class="openColor-list-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
 			'<td>' + poiList[c]._tooltip._content + '</td>' +
@@ -1023,12 +1023,12 @@ function generic_tag_parser(tags, tag, label, iconName) {
 }
 function generic_img_parser(img, id, attrib) {
 	var url, imgTmpl;
-	if (img.indexOf('File') === 0) {
+	if (img.indexOf('File:') === 0) {
 		url = img;
-		img = 'https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=' + encodeURIComponent(img) + '&width=' + imgSize;
+		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(img);
 		imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
 			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=1280 1280w, {img}&width=800 800w, {img}&width=640 640w">' +
-			'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}"></a>' +
+			'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}&width=' + imgSize + '"></a>' +
 			'<div class="popup-imgAttrib">Loading attribution...</div>' +
 		'</div>';
 	}
@@ -1366,7 +1366,7 @@ function getWikiAttrib(id) {
 function show_img_controls(imgMax, img360) {
 	// add image navigation controls to popup
 	var ctrlTmpl = '<div class="navigateItem">';
-	if (img360 && img360.indexOf('File') === 0) ctrlTmpl +=
+	if (img360 && img360.indexOf('File:') === 0) ctrlTmpl +=
 		'<a title="Panoramic view" data-fancybox data-type="iframe" data-animation-effect="circular" data-caption="Wikimedia Commons: Bexhill-OSM" data-src="https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img360.split(':')[1]) + '" href="javascript:;">' +
 		'<i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
 	if (imgMax > 1) ctrlTmpl +=

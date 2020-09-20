@@ -719,7 +719,7 @@ var pois = {
 		query: 'nwr[shop=charity];nwr[charity=yes];',
 		iconName: 'charity',
 		catName: 'Shops',
-		tagKeyword: ['charity', 'clothes', 'books', 'toys', 'furniture', 'crafts', 'second-hand']
+		tagKeyword: ['charity', 'second-hand']
 	},
 
 	shoes: {
@@ -940,10 +940,10 @@ var pois = {
 
 	pet: {
 		name: 'Pet',
-		query: 'nwr[shop=pet];',
+		query: 'nwr[shop~"^pet"];',
 		iconName: 'pets',
 		catName: 'Shops',
-		tagKeyword: ['pet', 'cat', 'dog', 'animals']
+		tagKeyword: ['pet', 'cat', 'dog', 'animals', 'grooming']
 	},
 
 	music: {
@@ -1018,7 +1018,7 @@ var pois = {
 		query: 'relation[political_division=ward];',
 		iconName: 'politicalboundary',
 		catName: 'Other',
-		tagKeyword: ['ward', 'politcal-area', 'voting'],
+		tagKeyword: ['ward', 'politcal-area', 'voting', 'boundary'],
 		permTooltip: 1
 	},
 
@@ -1027,7 +1027,7 @@ var pois = {
 		query: 'way[boundary=protected_area];',
 		iconName: 'administrativeboundary',
 		catName: 'Other',
-		tagKeyword: ['conservation', 'protected-area'],
+		tagKeyword: ['conservation', 'protected-area', 'boundary'],
 		permTooltip: 1
 	},
 

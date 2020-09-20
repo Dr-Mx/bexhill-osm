@@ -2,9 +2,9 @@
 
 var actImgLayer, slideShow = { firstrun: true, auto: true };
 function tour(ti, fromPermalink) {
-	var lID, dfltDir = 'tour/tour', xmasYear = '2019';
+	var lID, dfltDir = 'tour/tour', xmasYear = '2020';
 	if (!fromPermalink) clear_map('markers');
-	if ($(window).width() < 768 && !fromPermalink) $('.sidebar-close:visible').click();
+	if ($(window).width() < 768 && !fromPermalink && ti !== 'thennow') $('.sidebar-close:visible').click();
 	// general markers
 	// coordinates | clickable | icon
 	var setMarker = function(latlng, interactive, icon) {
@@ -53,14 +53,15 @@ function tour(ti, fromPermalink) {
 			className: 'popup-t' + (pClass ? ' ' + pClass : ''),
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
 			minWidth: feature.properties.img ? imgSize : '',
-			autoPanPaddingBottomRight: [5, 50]
+			autoPanPaddingBottomRight: [5, 50],
+			autoPan: noPermalink ? true : false
 		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long')));
 		toolTip += '<b>' + header[0] + '</b><br><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
 		markerPopup += '<span class="comment">' + layer._latlng.lat + '°N ' + layer._latlng.lng + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 3) + '</span>';
 		if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc">' + feature.properties.description + '</span>';
-			toolTip += ' <i style="color:#777; min-width:17px;" class="fas fa-sticky-note fa-fw" title="Notes"></i>';
+			toolTip += ' <i style="color:#777; min-width:17px;" class="fas fa-bars fa-fw" title="Notes"></i>';
 		}
 		if (feature.properties.link) {
 			markerPopup += '<span class="popup-tagValue"><a class="popup-truncate" style="max-width:' + imgSize + 'px" href="' +
@@ -75,7 +76,7 @@ function tour(ti, fromPermalink) {
 					dfltAttrib = feature.properties.imgattrib[x];
 					if (feature.properties.imgattriburl && feature.properties.imgattriburl[x]) dfltAttrib = '<a href="' + feature.properties.imgattriburl[x] + '" target="blank">' + dfltAttrib + '</a>';
 				}
-				markerPopup += generic_img_parser((feature.properties.img[x].indexOf('File') === 0) ? feature.properties.img[x] : (dfltDir + feature.properties.img[x] + '.jpg'), x, dfltAttrib);
+				markerPopup += generic_img_parser((feature.properties.img[x].indexOf('File:') === 0) ? feature.properties.img[x] : (dfltDir + feature.properties.img[x] + '.jpg'), x, dfltAttrib);
 				lID = x;
 			});
 			if (feature.properties.img[1]) {
@@ -93,16 +94,112 @@ function tour(ti, fromPermalink) {
 				opacity: noTouch ? 1 : 0
 			});
 	};
+	// set active tour and notify sidebar if sidebar closed
+	var setTour = function(tourNum) {
+		actImgLayer = ti;
+		if (actTab === 'none' && fromPermalink) {
+			$('.sidebar-tabs ul li [href="#tour"] .sidebar-notif').show();
+			$('#tourList').val(tourNum).trigger('change');
+		}
+	};
 	// timeout hack to stop iframe breaking on ff
 	setTimeout(function() { switch (ti) {
+		case 'pano':
+			// https://www.mapillary.com/developer/api-documentation/#search-sequences
+			// get mapillary sequences
+			$('.spinner').show();
+			fcnStLvl.state('onStLvl');
+			$.ajax({
+				// downloaded daily via cron job
+				// url: 'https://a.mapillary.com/v3/sequences?bbox=' + [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(',') + '&usernames=bexhill_osm&client_id=' + window.BOSM.mpllryKey,
+				url: 'assets/data/panoramas.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function(json) {
+					imageOverlay.clearLayers().addLayer(L.geoJSON(json, {
+						onEachFeature: function (feature, layer) {
+							layer.on('click', function(e) { panoView(e, true); });
+						},
+						style: {
+							color: '#2074B6',
+							opacity: 0.7,
+							weight: noTouch ? 6 : 8
+						}
+					})).addLayer(L.geoJSON(json, {
+						interactive: false,
+						style: {
+							color: 'cyan',
+							opacity: 0.6,
+							weight: noTouch ? 1 : 3
+						}
+					}));
+					$('.spinner').fadeOut(200);
+				},
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR PANORAMAS:', this.url); }
+			});
+			actImgLayer = 'pano';
+			break;
+		case 'notes':
+			// https://wiki.openstreetmap.org/wiki/API_v0.6#Map_Notes_API
+			// get osm notes
+			$('.spinner').show();
+			$.ajax({
+				url: 'https://api.openstreetmap.org/api/0.6/notes.json?bbox=' + [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(','),
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: true,
+				success: function(json) {
+					imageOverlay.addLayer(L.geoJSON(json, {
+						onEachFeature: function (feature, layer) {
+							var fp = feature.properties;
+							fp.description = '<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
+								'openstreetmap.org/note/' + fp.id + '</a><hr>';
+							$.each(fp.comments, function(c) {
+								if (fp.comments[c].text) fp.description += L.Util.template(tagTmpl, {
+									tag: (fp.comments[c].user ? '<a href="' + fp.comments[c].user_url + '" target="_blank" rel="noopener">' + fp.comments[c].user + '</a>' : 'Anonymous'),
+									value: '<span title="' + fp.comments[c].date + '">' + fp.comments[c].text + '</span>',
+									iconName: 'far fa-comment'
+								});
+							});
+							fp.description += '<hr><span class="comment"><i class="fas fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + date_parser(fp.closed_at.split(' ')[0], 'long') : 'times"></i> Currently unresolved') + '</span>';
+							setJsonPopup(feature, layer, [titleCase(fp.status + ' note'), date_parser(fp.date_created.split(' ')[0], 'long')]);
+						},
+						pointToLayer: function (feature, latlng) {
+							var marker = setMarker(latlng, true, {
+								iconUrl: '/../../assets/img/leaflet/' + feature.properties.status + '_note_marker',
+								iconSize: [25, 41],
+								iconAnchor: [12, 41],
+								shadowUrl: '/../../assets/img/leaflet/marker-shadow',
+								shadowAnchor: [12, 41],
+								popupAnchor: [0, -35]
+							});
+							marker.ohState = (feature.properties.status === 'open' ? 'false' : 'true');
+							marker._leaflet_id = feature.properties.id;
+							poiList.push(marker);
+							return marker;
+						}
+					}));
+					if ($('#inputDebug').is(':checked')) console.debug('OSM Notes:', json);
+					map.fireEvent('zoomend');
+					setTimeout(function() { pushPoiList('feature.properties.id'); }, 250);
+					setPageTitle('OSM Notes');
+					if (markerId) map._layers[markerId].openPopup().stopBounce();
+					$('.spinner').fadeOut('fast');
+				},
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-NOTES:', this.url); }
+			});
+			actImgLayer = ti;
+			break;
 		case 'xmas2017': /* fall through */
 		case 'xmas2018': /* fall through */
+		case 'xmas2019': /* fall through */
 		case 'xmas':
 			$('.spinner').show();
 			if (ti.length > 4) xmasYear = ti.split('xmas')[1];
 			if (actOverlayLayer !== 'xmas') map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
-				url: 'tour/tourXmas/' + xmasYear + '/' + xmasYear + '.geojson',
+				url: dfltDir + 'Xmas/' + xmasYear + '/' + xmasYear + '.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -120,7 +217,7 @@ function tour(ti, fromPermalink) {
 								iconSize: [32, 37],
 								iconAnchor: [16, 37],
 								iconNoBounce: true,
-								shadowUrl: 'Xmas/../../assets/img/icons/000shadow',
+								shadowUrl: '/../../assets/img/icons/000shadow',
 								shadowAnchor: [16, 35],
 								popupAnchor: [0, -27]
 							});
@@ -143,24 +240,24 @@ function tour(ti, fromPermalink) {
 			if (actTab === 'thennow') $('#thennowLoading').show();
 			else $('.spinner').show();
 			$.ajax({
-				url: 'assets/data/thennow.geojson',
+				url: dfltDir + 'ThenNow/thennow.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
 				success: function(json) {
+					$('#thennowNum').html(json.features.length);
 					$('#thennow .sidebar-body div').empty();
 					imageOverlay.addLayer(L.geoJSON(json, {
 						pointToLayer: function(feature, latlng) {
-							$('#thennow .sidebar-body div').append(
-								'<hr><h3>' + feature.properties.name + ' (' + feature.properties.date.then + ')</h3>' +
-								'<p><a href="assets/img/thennow/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.name + '">' +
-									'<img id="' + feature.properties.id + '" src="assets/img/thennow/' + feature.properties.id + '(0).jpg"></a>' +
-								'<a style="display:none;" href="assets/img/thennow/' + feature.properties.id + '(2).jpg" data-fancybox="' + feature.properties.id + '" data-caption="Then in ' +
-									feature.properties.date.then + (feature.properties.copyright ? ' | &copy; ' + feature.properties.copyright : '') + '"></a>' +
-								'<a style="display:none;" href="assets/img/thennow/' + feature.properties.id + '(3).jpg" data-fancybox="' + feature.properties.id + '" data-caption="Now in ' +
-									feature.properties.date.now + '"></a>' +
-								'<span class="comment">' + feature.properties.desc + '</span></p>'
-							);
+							var tnBody = '<hr><h3>' + feature.properties.imgcaption['1'] + ' (' + feature.properties.date + ')</h3>' +
+								'<p><a href="' + dfltDir + 'ThenNow/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.imgcaption['1'] + '">' +
+								'<img id="' + feature.properties.id + '" src="' + dfltDir + 'ThenNow/' + feature.properties.id + '(0).jpg"></a>';
+							// find number of images based on caption count
+							$.each(feature.properties.imgcaption, function(x) {
+								if (+x > 1) tnBody += '<a style="display:none;" href="' + dfltDir + 'ThenNow/' + feature.properties.id + '(' + (x) + ').jpg" data-fancybox="' + feature.properties.id +
+								'" data-caption="' + feature.properties.imgcaption[x] + '"></a>';
+							});
+							$('#thennow .sidebar-body div').append(tnBody + '<span class="comment">' + feature.properties.desc + '</span></p>');
 							$('[data-fancybox="' + feature.properties.id + '"]').fancybox({
 								protect: true,
 								transitionEffect: 'fade',
@@ -184,14 +281,13 @@ function tour(ti, fromPermalink) {
 								}
 							});
 							var marker = setMarker(latlng, true);
-							marker.bindTooltip(feature.properties.name + '<img src="assets/img/thennow/' + feature.properties.id + '(0).jpg">', { className: 'thennowTip', opacity: noTouch ? 1 : 0 });
+							marker.bindTooltip(feature.properties.imgcaption['1'] + '<img src="' + dfltDir + 'ThenNow/' + feature.properties.id + '(0).jpg">', { className: 'thennowTip', opacity: noTouch ? 1 : 0 });
 							marker.on('click', function() {
 								$('#thennow .sidebar-body').scrollTop(0);
 								$('#thennow .sidebar-body').scrollTop($('#' + feature.properties.id).offset().top - 120);
 								$('#thennow #' + feature.properties.id).click();
 							});
 							marker._leaflet_id = feature.properties.id;
-							poiList.push(marker);
 							return marker;
 						}
 					}));
@@ -233,7 +329,7 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			actImgLayer = ti;
+			setTour('1');
 			break;
 		case 'shipwreck':
 			rQuery = true;
@@ -242,7 +338,7 @@ function tour(ti, fromPermalink) {
 		case 'smugglingPanels':
 			show_overpass_layer('node["ref"~"^TST"];', ti, true);
 			setPageTitle('Smuggling Trail');
-			actImgLayer = ti;
+			setTour('3');
 			break;
 		case 'smugglingGreen':
 			rQuery = true;
@@ -255,7 +351,7 @@ function tour(ti, fromPermalink) {
 		case 'railwayWestbranch':
 			show_overpass_layer('(node(6528018966);node(318219478););', ti);
 			if (actOverlayLayer !== 'br1959') map.addLayer(tileOverlayLayers[tileOverlayLayer.br1959.name]);
-			actImgLayer = ti;
+			setTour('4');
 			break;
 		case 'railwayGlynegap':
 			rQuery = true;
@@ -265,7 +361,7 @@ function tour(ti, fromPermalink) {
 			imageOverlay.addLayer(L.imageOverlay(dfltDir + '05/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }));
 			if (!fromPermalink) map.flyToBounds(imageOverlay.getBounds().pad(0.2));
 			setPageTitle('Tramway Route');
-			actImgLayer = ti;
+			setTour('5');
 			break;
 		case 'motorTrack':
 			if (actOverlayLayer !== 'mt1902') map.addLayer(tileOverlayLayers[tileOverlayLayer.mt1902.name]);
@@ -279,10 +375,9 @@ function tour(ti, fromPermalink) {
 		case 'motorTrail':
 			show_overpass_layer('(node["ref"~"^TMT"];node(5059264455);node(5059264456););', ti, true);
 			setPageTitle('The Motor Trail');
-			actImgLayer = ti;
+			setTour('6');
 			break;
 		case 'delawarr':
-			iconLayer.clearLayers();
 			rQuery = true;
 			show_overpass_layer('way(247116304);', ti);
 			break;
@@ -334,7 +429,7 @@ function tour(ti, fromPermalink) {
 							if (interactive) {
 								dateRange[x] = feature.properties.date.split(' ')[0];
 								marker._leaflet_id = 'bb' + x++;
-								marker.desc = feature.properties.type || '';
+								marker.desc = feature.properties.type ? titleCase(feature.properties.type) : 'HE/Incendiary';
 								poiList.push(marker);
 							}
 							return marker;
@@ -366,7 +461,7 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			actImgLayer = ti;
+			setTour('9');
 			break;
 		case 'ww2Shelters':
 			$('.spinner').show();
@@ -384,7 +479,7 @@ function tour(ti, fromPermalink) {
 						pointToLayer: function(feature, latlng) {
 							var marker = setMarker(latlng, true, { fillColor: '#008800' });
 							marker._leaflet_id = 'sr' + x++;
-							marker.desc = 'shelter';
+							marker.desc = 'Shelter';
 							poiList.push(marker);
 							return marker;
 						}
@@ -396,7 +491,7 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			actImgLayer = ti;
+			setTour('9');
 			break;
 		case 'ww2Arp':
 			if (actOverlayLayer !== 'arp1942') map.addLayer(tileOverlayLayers[tileOverlayLayer.arp1942.name]);
@@ -404,7 +499,7 @@ function tour(ti, fromPermalink) {
 		case 'ww2Structures':
 			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);', ti, true);
 			setPageTitle('WWII Existing Structures');
-			actImgLayer = ti;
+			setTour('9');
 			break;
 		case 'northeye':
 			rQuery = true;
@@ -433,7 +528,7 @@ function tour(ti, fromPermalink) {
 		case 'clocks':
 			show_overpass_layer(pois.clock.query, ti, true);
 			setPageTitle('Public Clocks');
-			actImgLayer = ti;
+			setTour('10');
 			break;
 		case 'lost':
 			$('.spinner').show();
@@ -461,17 +556,17 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			actImgLayer = ti;
+			setTour('13');
 			break;
 		case 'boundary':
 			show_overpass_layer(pois.boundary_stone.query, ti, true);
 			setPageTitle('Boundary Stones');
-			actImgLayer = ti;
+			setTour('14');
 			break;
 		case 'surveyPoint':
 			show_overpass_layer(pois.survey_point.query, ti, true);
 			setPageTitle('OS Surveying Points');
-			actImgLayer = ti;
+			setTour('15');
 			break;
 		case 'martello':
 			$('.spinner').show();
@@ -505,7 +600,7 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			actImgLayer = ti;
+			setTour('16');
 			break;
 	} permalinkSet(); }, 50);
 }

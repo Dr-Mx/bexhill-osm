@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v5.9.0 - OSM Notes
+
+**Date:** 20/09/2020
+
+Updated js
+ - leaflet.js 1.7.1
+ - jquery.js 3.5.1 
+ - L.Control.Locate.min.js 0.72.1
+ 
+Site changes
+ - Show OSM notes and comment history
+ - Added OpenCageData server for reverse lookups
+ - Notification icon to history tour if user opens historic overlay and sidebar closed from link
+ - Then and Now slideshow can now be any number of images
+ - Setting option to use Google Street View as default
+ - YouTube contact links for POIs
+ - Add contrast to Lidar layer
+
+
 ## v5.8.0 - Mapillary support
 
 **Date:** 18/05/2020

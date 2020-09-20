@@ -51,7 +51,13 @@
 				"id": "mt53",
 				"name": "Martello Tower 53",
 				"date": "1806-1875",
-				"description": "Pevensey Sluice. Built to protect the sluice together with No.54.<br>Like many of the towers, after the threat of Napoleon had vanished, married pensioners from the Royal Artillery were put in as peacekeepers here in 1817.<br>One night in 1830 when the tower was garrisoned by the Coast Blockade, smugglers attacked four of the men leaving them seriously injured.<br>Damaged by erosion in the 1870s and subsequently dismantled."
+				"description": "Pevensey Sluice. Built to protect the sluice together with No.54, the War Department put down boundary markers (pictured) to mark out the land.<br>Like many of the towers, after the threat of Napoleon had vanished, married pensioners from the Royal Artillery were put in as peacekeepers here in 1817.<br>One night in 1830 when the tower was garrisoned by the Coast Blockade, smugglers attacked four of the men leaving them seriously injured.<br>Damaged by erosion in the 1870s and subsequently dismantled.",
+				"img": {
+					"0": "16/mt53(0)"
+				},
+				"imgattrib": {
+					"0": "2020 | Derek Smith"
+				}
 			},
 			"geometry": {
 				"type": "Point",

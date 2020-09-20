@@ -1,0 +1,390 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+		"type": "Feature",
+		"properties": {
+			"id": "ritz",
+			"date": "1937",
+			"imgcaption": {
+				"1": "Ritz Cinema, Buckhurst Road",
+				"2": "Now in 2020",
+				"3": "Then in 1937 | dusashenka, via Flickr"
+			},
+			"desc": "Built on the site of a skating rink, this Art Deco design by Samuel Beverley,  B.A. Stevens and Frank T. Verity hosted a cinema screen with seating for 1142 people. Demolished in 1968 and replaced with the Telephone Exchange."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47247, 50.84178]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "walnuttree",
+			"date": "1900s",
+			"imgcaption": {
+				"1": "Old Walnut Tree, Old Town",
+				"2": "Now in 2020",
+				"3": "Then in c1900"
+			},
+			"desc": "This prominent tree stood for over 400 years in the grounds of the Manor House. It was made into a roundabout in 1890 when the road was widened, cut down around 1906 and the stump was removed in 1921.<br>A walnut silver mounted gavel was made from the tree engraved with 'Town Hall extension, 1908'. Sadly it was stolen with other historic silver items in 1982."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47869, 50.84496]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "wpbandstand",
+			"date": "1968",
+			"imgcaption": {
+				"1": "Bandstand and Shelter, West Parade",
+				"2": "Now in 2020",
+				"3": "Then in 1968 | Sykes Lock and Block, via Flickr"
+			},
+			"desc": "This once elegant Victorian structure was a functioning bandstand from 1899, then a shelter from about 1920. Demolished in 1977 due to lack of upkeep."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46595, 50.83638]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "manorhouse",
+			"date": "1960s",
+			"imgcaption": {
+				"1": "Manor House, De La Warr Road",
+				"2": "Manor House demolition",
+				"3": "Now in 2020",
+				"4": "Then in c1960 | Leonard James Bartley",
+				"5": "Then in 1967 | Bexhill Museum"
+			},
+			"desc": "The first manor on this land was built just after the Norman Conquest, first known as Bishops' Palace. Rebuilt in 1250 after storm damage, it remained under church ownership until 1590. Renamed Court Lodge, the estate passed through several high-profile owners until its demolition in 1967."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47890, 50.84531]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "clockhouse",
+			"date": "1888",
+			"imgcaption": {
+				"1": "Clock House, 21 Endwell Road",
+				"2": "Now in 2020",
+				"3": "Then in 1888 | Bexhill Museum"
+			},
+			"desc": "Built as two dwellings in 1886 by Thomas Todd. The ground floor was later converted to two shops, a Tobacconist and a Wine & Spirit Merchant, after Bexhill Central Railway Station opened in 1902."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47739, 50.84097]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "youthcentre",
+			"date": "1891",
+			"imgcaption": {
+				"1": "Bexhill Youth Centre, Station Road",
+				"2": "Now in 2020",
+				"3": "Then in 1891 | Francis Frith"
+			},
+			"desc": "Opened by the 7th Earl De La Warr in 1888 as the Jubilee Memorial Institute, to commemorate Queen Victoria’s Golden Jubilee. It contained a reading room, smoking room, committee room, card room, bar parlour and, later, a billiards room. Building alterations were made in 1965. Today used as a youth and community centre."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47446, 50.84106]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "stfrancis",
+			"date": "1920",
+			"imgcaption": {
+				"1": "The Lodge, St Francis Chase",
+				"2": "Now in 2020",
+				"3": "Then in c1920 | Bexhill Museum"
+			},
+			"desc": "Built in 1905 this was the lodge and stable house to Deutches Paedagogium, an independent school for German boys. After the First World War it became Garth Place Preparatory School until 1938. Bexhill Council took it over in 1946 as St Francis girl’s school which closed in 1972."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.45888, 50.84732]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "kursaal",
+			"date": "1914",
+			"imgcaption": {
+				"1": "The Kursaal, East Parade",
+				"2": "Now in 2020",
+				"3": "Then in 1914 | Bexhill Museum"
+			},
+			"desc": "Built in 1896 this was Bexhill's first premier entertainment venue. Demolished after the De La Warr Pavilion became established in 1936."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47681, 50.83789]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "crossways",
+			"date": "1929",
+			"imgcaption": {
+				"1": "The Crossways, Little Common",
+				"2": "Now in 2020",
+				"3": "Then in 1929 | Bexhill Museum"
+			},
+			"desc": "Little Common originated from 1588 when the Wheatsheaf Inn was built as a staging post between Brighton and Hastings. The village green It was made into a roundabout in the late 1930's."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.43401, 50.84533]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "metropole",
+			"date": "1910",
+			"imgcaption": {
+				"1": "Metropole Hotel, West Parade",
+				"2": "Now in 2020",
+				"3": "Then in c1910 | Bexhill Museum"
+			},
+			"desc": "Architect Joseph Wall, opened in May 1900. 160 bedrooms, smoking-room, billiard-room, tennis courts and electric lifts. Damaged during WWII and demolished 1955."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46933, 50.83689]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "sydenham",
+			"date": "1898",
+			"imgcaption": {
+				"1": "De La Warr Estate Office, Sea Road",
+				"2": "Now in 2019",
+				"3": "Then in c1898 | Bexhill Museum"
+			},
+			"desc": "The office where prospective developers could buy and let land from 8th De La Warr's Architect and Surveyor, George Herbert Gray. One of the buildings was demolished in the 1970's, replaced with Sydenham Court apartments."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47694, 50.83955]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "marinacourt",
+			"date": "1965",
+			"imgcaption": {
+				"1": "Marina Court, Marina Court Avenue",
+				"2": "Now in 2019",
+				"3": "Then in 1965 | Bexhill Museum"
+			},
+			"desc": "Designed by Paul Hoffman and built by Mr Gold, it was used for residential apartments with letting for shops between the years of 1901-1970. One of the first places in Bexhill to have hydraulic lifts and electric lighting. Today demolished and used as an extension to the De La Warr Pavilion car park."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47469, 50.83789]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "bexhillstation",
+			"date": "1902",
+			"imgcaption": {
+				"1": "Bexhill Railway Station, Sea Road",
+				"2": "Now in 2019",
+				"3": "Then in c1902 | Bexhill Museum"
+			},
+			"desc": "Built in 1902 by Charles Morgan, the long platforms are from when the main station was moved from Devonshire Square. Today a Grade II listed building."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47727, 50.84136]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "eastparade",
+			"date": "1896",
+			"imgcaption": {
+				"1": "East Parade",
+				"2": "Now in 2019",
+				"3": "Then in 1896 | Bexhill Museum"
+			},
+			"desc": "This eastern promenade was built in 1883, and became 8th Earl De La Warr's private estate from 1895-1913. It included the Kursaal entertainment venue, various hotels and kiosks, a golf course and a cycling boulevard."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47833, 50.83776]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "metropoletram",
+			"date": "1906",
+			"imgcaption": {
+				"1": "Bexhill to Hastings Tram, Marina",
+				"2": "Now in 2019",
+				"3": "Then in 1906 | Bexhill Museum"
+			},
+			"desc": "The tram ran from West Marina in St. Leonards to Marina roundabout, later extended to Cooden Beach from 1906-1928."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47072, 50.83793]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "beehive",
+			"date": "1912",
+			"imgcaption": {
+				"1": "The Little Beehive, Old Town",
+				"2": "Now in 2019",
+				"3": "Then in 1912 | Bexhill Museum"
+			},
+			"desc": "A tobacconist and confectionery shop between 1903-1974 on High Street. Today a Grade II Listed residential dwelling with the same name."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47730, 50.84540]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "hoadsmill",
+			"date": "1930",
+			"imgcaption": {
+				"1": "Hoad’s Windmill, Gunters Lane",
+				"2": "Now in 2019",
+				"3": "Then in c1930 | Bexhill Museum"
+			},
+			"desc": "Corn mill in use from 1735-1928. Replaced with an electric motor in 1928, and it finally collapsed in 1965 during a storm. Today a Grade II Listed ruin."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46078, 50.85226]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "robmarine",
+			"date": "1903",
+			"imgcaption": {
+				"1": "Marine Hotel, Marina",
+				"2": "Now in 2019",
+				"3": "Then in 1903 | Bexhill Museum"
+			},
+			"desc": "Later known as Roberts Marine Mansions, located on the corner of Devonshire Road between 1895-1954. Today demolished and replaced with Dalmore Court."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47368, 50.83776]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "memorial",
+			"date": "1939",
+			"imgcaption": {
+				"1": "War Memorial, Marina",
+				"2": "Now in 2019",
+				"3": "Then in 1939 | Bexhill Museum"
+			},
+			"desc": "Designed by Louis Frederick Roslyn and unveiled by Brigadier General O’Donnell in 1920. The figure is of Victory grasping the sword of sacrifice and a wreath, looking out towards the Western Front."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47670, 50.83775]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "riposo",
+			"date": "1930",
+			"imgcaption": {
+				"1": "Riposo Hotel, De La Warr Parade",
+				"2": "Now in 2019",
+				"3": "Then in c1930 | Bexhill Museum"
+			},
+			"desc": "This Neo-Gothic hotel sat on the corner of Dorset Road South between 1901-1961. It served 39 rooms, mostly to keen golfers on The Links course to the east. Today demolished and replaced with Cavendish Court."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.48372, 50.83925]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "delawarrgate",
+			"date": "1896",
+			"imgcaption": {
+				"1": "De La Warr Gates, De La Warr Parade",
+				"2": "Now in 2019",
+				"3": "Then in c1896 | Bexhill Museum"
+			},
+			"desc": "These gates were the entrance to the 8th Earl De La Warr's private estate from 1895-1913. Glyne Hall Hotel (left) was demolished in the early 1970's."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47638, 50.83798]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "westparade",
+			"date": "1950",
+			"imgcaption": {
+				"1": "West Parade",
+				"2": "Now in 2019",
+				"3": "Then in c1950 | Bexhill Museum"
+			},
+			"desc": "This promenade and adjacent road was laid out in 1886. The Edwardian Bandstand built in 1903 was lost in 1977."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46675, 50.83651]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "sackvillearch",
+			"date": "1892",
+			"imgcaption": {
+				"1": "Sackville Arch, Sackville Road",
+				"2": "Now in 2019",
+				"3": "Then in 1892 | Bexhill Museum"
+			},
+			"desc": "Henry Young upgrading the railway bridge from a cattle arch. Young supplied material from his foundry in Pimlico and was also responsible for the building of the East Parade shelter near The Sackville."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46964, 50.84028]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "colonnade",
+			"date": "1918",
+			"imgcaption": {
+				"1": "The Colonnade, Central Parade",
+				"2": "Now in 2018",
+				"3": "Then in 1918 | Bexhill Museum"
+			},
+			"desc": "Designed by Joseph Barker Wall and opened in 1911, this bandstand was an original feature of the now Grade II Listed Colonnade, it was lost in a storm in 1949."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47156, 50.83699]
+		}
+	}]
+}

@@ -63,10 +63,10 @@ input[type=text], input[type=date], input[type=number] {
 	border-radius: 5px;
 	right: 2px;
 	margin-top: 28px;
-	font-size: 10px;
+	font-size: 9px;
 	color: #fff;
 	padding: 1px 2px;
-	box-shadow: 0 0 2px black;
+	box-shadow: 0 0 5px black;
 	display: none;
 	z-index: 1;
 }
@@ -373,6 +373,10 @@ h3 {
 	margin: 7px 0 14px 0;
 }
 
+.state-onStLvl {
+	color: #2074B6;
+}
+
 .modalTutor {
 	position: absolute;
 	width: 115px;
@@ -413,6 +417,9 @@ h3 {
 	background-color: var(--btn-hover-color);
 }
 
+.layerLidar {
+	filter: contrast(1.5) grayscale(0.4);
+}
 .layerProw {
 	filter: blur(1px) hue-rotate(130deg);
 }
@@ -572,8 +579,7 @@ select:hover:enabled, #poi-results button:hover {
 	display: block;
 }
 #poi-results-list td:first-child .fa-lg {
-	opacity: 0.5;
-	-webkit-text-stroke: 2px black;
+	opacity: 0.75;
 }
 #poi-results-list table {
 	width: 100%;
@@ -756,6 +762,7 @@ select:hover:enabled, #poi-results button:hover {
 .thennowTip img {
 	width: 100px;
 	border-radius: 5px;
+	filter: grayscale(1) sepia(0.3);
 }
 
 /* tour tab */
@@ -869,10 +876,9 @@ input:checked + .slider::before {
 #devTools {
 	display: block;
 	position: relative;
-	padding-bottom: 5px;
 }
 #devTools > div {
-	padding: 5px 0 0 15px;
+	padding: 5px 0 15px 15px;
 }
 
 /* help tab */

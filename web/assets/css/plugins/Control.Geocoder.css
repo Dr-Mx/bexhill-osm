@@ -1,5 +1,6 @@
 .leaflet-control-geocoder {
 	border-radius: 4px;
+	background: #fff;
 }
 
 .leaflet-control-geocoder a, .leaflet-control-geocoder .leaflet-control-geocoder-icon {

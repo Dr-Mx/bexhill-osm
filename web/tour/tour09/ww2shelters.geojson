@@ -128,7 +128,7 @@
 				"date": "1939",
 				"description": "School trench. Capacity 220. Bunks 48.",
 				"img": {
-					"0": "09/bomb/barrackroad"
+					"0": "09/bomb/barrackroad(0)"
 				}
 			},
 			"geometry": {
@@ -153,7 +153,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 50. Bunks 24.",
 				"img": {
-					"0": "09/shelter/bendingcrescent"
+					"0": "09/shelter/bendingcrescent(0)"
 				}
 			},
 			"geometry": {
@@ -167,7 +167,7 @@
 				"date": "1943",
 				"description": "Emergency shelters. Possibly x4. No other details known.",
 				"img": {
-					"0": "09/shelter/bexhillgrammar"
+					"0": "09/shelter/bexhillgrammar(0)"
 				}
 			},
 			"geometry": {
@@ -285,7 +285,7 @@
 				"date": "1939",
 				"description": "Existing bus shelter. Surface. Capacity 10.",
 				"img": {
-					"0": "09/shelter/delawarrroad"
+					"0": "09/shelter/delawarrroad(0)"
 				}
 			},
 			"geometry": {
@@ -299,7 +299,7 @@
 				"date": "1940",
 				"description": "Surface. Capacity 80.",
 				"img": {
-					"0": "09/shelter/devonshiresquare"
+					"0": "09/shelter/devonshiresquare(0)"
 				}
 			},
 			"geometry": {
@@ -383,7 +383,7 @@
 				"date": "1941",
 				"description": "Surface. Capacity 50. Bunks 45.",
 				"img": {
-					"0": "09/shelter/havelockroad"
+					"0": "09/shelter/havelockroad(0)"
 				}
 			},
 			"geometry": {
@@ -455,7 +455,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 20.",
 				"img": {
-					"0": "09/shelter/channelview"
+					"0": "09/shelter/channelview(0)"
 				}
 			},
 			"geometry": {
@@ -502,7 +502,7 @@
 				"date": "1940",
 				"description": "Surface. Capacity 70.",
 				"img": {
-					"0": "09/shelter/peartreelane"
+					"0": "09/shelter/peartreelane(0)"
 				}
 			},
 			"geometry": {
@@ -560,7 +560,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 70.",
 				"img": {
-					"0": "09/shelter/shortlane"
+					"0": "09/shelter/shortlane(0)"
 				}
 			},
 			"geometry": {
@@ -604,7 +604,7 @@
 				"date": "1943",
 				"description": "Emergency shelters. 2x. No other details known.",
 				"img": {
-					"0": "09/shelter/stbarnabas"
+					"0": "09/shelter/stbarnabas(0)"
 				}
 			},
 			"geometry": {
@@ -618,7 +618,7 @@
 				"date": "1941",
 				"description": "Basement. Capacity 200. Bunks 99.",
 				"img": {
-					"0": "09/shelter/millerfranklin"
+					"0": "09/shelter/millerfranklin(0)"
 				}
 			},
 			"geometry": {
@@ -802,7 +802,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 42. Bunks 12.",
 				"img": {
-					"0": "09/shelter/searoad",
+					"0": "09/shelter/searoad(0)",
 					"1": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (2).jpg",
 					"2": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor).jpg",
 					"3": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor) (2).jpg"
@@ -852,7 +852,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 70. Bunks 30.",
 				"img": {
-					"0": "09/shelter/wrestwoodroad"
+					"0": "09/shelter/wrestwoodroad(0)"
 				}
 			},
 			"geometry": {

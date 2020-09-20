@@ -15,8 +15,5 @@ Redirect /assets/xml /assets/data
 Redirect /streetnames /assets/data/streetnames.xml
 
 # php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php56” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php56 .php .php5 .phtml
-</IfModule>
+# This domain inherits the “PHP” package.
 # php -- END cPanel-generated handler, do not edit

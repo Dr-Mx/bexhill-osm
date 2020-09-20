@@ -1,11 +1,14 @@
 // enter your personal api keys here, get your own (free) keys by using the links below
 
 window.BOSM = {
-	osmchaTok: '',					// https://osmcha.mapbox.com/user
-	owmKey: '',						// https://openweathermap.org
-	mapboxKey: 'pk.',				// https://www.mapbox.com/pricing
-	thuforKey: '',					// https://thunderforest.com/pricing
-	googleKey: '',					// https://cloud.google.com/maps-platform
-	trvllneApi: { u: '', p: '' },	// http://www.travelinedata.org.uk
-	bookingCom: ''					// https://spadmin.booking.com
+	osmchaTok: '',					// Get latest map changes			https://osmcha.mapbox.com/user			
+	owmKey: '',						// Weather							https://home.openweathermap.org/api_keys		
+	ocKey: '',						// Reverse geocoding				https://opencagedata.com/dashboard#api-keys
+	orsKey: '',						// Reverse geocoding				https://openrouteservice.org/dev/#/home
+	mapboxKey: '',					// Map tiles, directions			https://account.mapbox.com/access-tokens		
+	thuforKey: '',					// Map tiles						https://manage.thunderforest.com/dashboard
+	mpllryKey: '',					// Panoramic street level images	https://www.mapillary.com/dashboard/developers
+	googleKey: '',					// Panoramic street level images	https://cloud.google.com/maps-platform
+	trvllneApi: { u: '', p: '' },	// Bus times						http://www.travelinedata.org.uk
+	bookingCom: ''					// Affiliate number					https://spadmin.booking.com
 };
