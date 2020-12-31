@@ -38,14 +38,14 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - UK Food Hygiene Rating System API (key:fhrs:id)
   - Real-time Traveline API information on bus-stops (key:naptan:AtcoCode)
   - Multiple image support including Wikimedia Commons API (key:wikimedia_commons, key:image)
-  - Spherical panorama support using Wikimedia Commons (key:image:360)
+  - Spherical panorama support using Wikimedia Commons (key:wikimedia_commons:pano)
 - Find an address by searching (Nominatim > Overpass)
-- Query any feature on map (Nominatim > Overpass)
-- Building highlight on select (OpenStreetMap API)
+- Query any feature on map by clicking (Nominatim > Overpass)
+- Area highlight on select (OpenStreetMap API)
 - Manually select groups of POIs from list or using a keyword
 - POI result list with current opening_hours / collection_times state
 - Detailed walking directions with Mapbox API
-- Geolocate user and show distances from markers
+- Geolocate user and show distances from POIs
 - History Tour articles that link to various overlays on the map
 - Direct link to edit an element on OSM or leave a note
 - Share any current map state with dynamic permalink
