@@ -38,7 +38,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - UK Food Hygiene Rating System API (key:fhrs:id)
   - Real-time Traveline API information on bus-stops (key:naptan:AtcoCode)
   - Multiple image support including Wikimedia Commons API (key:wikimedia_commons, key:image)
-  - Spherical panorama support using Wikimedia Commons (key:wikimedia_commons:pano)
+  - Multiple spherical panorama support using Wikimedia Commons (key:wikimedia_commons:pano)
 - Find an address by searching (Nominatim > Overpass)
 - Query any feature on map by clicking (Nominatim > Overpass)
 - Area highlight on select (OpenStreetMap API)
