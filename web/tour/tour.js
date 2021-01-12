@@ -47,7 +47,7 @@ function tour(ti, fromPermalink) {
 		});
 	};
 	// tooltip and pop-up
-	// data | layer | headings | image attribution | marker popup class
+	// data | layer | [main header, subheader, date subheader] | image attribution | marker popup class
 	var setJsonPopup = function(feature, layer, header, dfltAttrib, pClass) {
 		var toolTip = '', markerPopup = '', customPOptions = {
 			className: 'popup-t' + (pClass ? ' ' + pClass : ''),
@@ -61,10 +61,10 @@ function tour(ti, fromPermalink) {
 		markerPopup += '<span class="comment">' + layer._latlng.lat + '°N ' + layer._latlng.lng + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 3) + '</span>';
 		if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc">' + feature.properties.description + '</span>';
-			toolTip += ' <i style="color:#777; min-width:17px;" class="fas fa-bars fa-fw" title="Notes"></i>';
+			toolTip += ' <i style="color:#777;min-width:17px;" class="fas fa-bars fa-fw" title="Notes"></i>';
 		}
 		if (feature.properties.link) {
-			markerPopup += '<span class="popup-tagValue"><a class="popup-truncate" style="max-width:' + imgSize + 'px" href="' +
+			markerPopup += '<span class="popup-tagValue"><a class="popup-truncate" style="max-width:' + imgSize + 'px;" href="' +
 				(feature.properties.link.indexOf('http') === 0 ? feature.properties.link : 'tel:' + feature.properties.link) +
 				'" target="_blank" rel="noopener" title="' + feature.properties.link + '">' + feature.properties.link + '</a></span>';
 		}
@@ -83,7 +83,7 @@ function tour(ti, fromPermalink) {
 				markerPopup += show_img_controls(parseInt(+lID+1));
 				imgIcon += 's';
 			}
-			if (feature.properties.img[0] !== 'Xmas/soon') toolTip += ' <i style="color:#777; min-width:17px;" class="fas fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
+			if (feature.properties.img[0].indexOf('000placehldr') === -1) toolTip += ' <i style="color:#777;min-width:17px;" class="fas fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
 		}
 		layer
 			.bindPopup(markerPopup, customPOptions)
@@ -136,7 +136,7 @@ function tour(ti, fromPermalink) {
 					}));
 					$('.spinner').fadeOut(200);
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR PANORAMAS:', this.url); }
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR PANORAMAS:', encodeURI(this.url)); }
 			});
 			actImgLayer = 'pano';
 			break;
@@ -187,7 +187,7 @@ function tour(ti, fromPermalink) {
 					if (markerId) map._layers[markerId].openPopup().stopBounce();
 					$('.spinner').fadeOut('fast');
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-NOTES:', this.url); }
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-NOTES:', encodeURI(this.url)); }
 			});
 			actImgLayer = ti;
 			break;
@@ -197,7 +197,7 @@ function tour(ti, fromPermalink) {
 		case 'xmas':
 			$('.spinner').show();
 			if (ti.length > 4) xmasYear = ti.split('xmas')[1];
-			if (actOverlayLayer !== 'xmas') map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
+			if (actOverlayLayer === undefined) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
 				url: dfltDir + 'Xmas/' + xmasYear + '/' + xmasYear + '.geojson',
 				dataType: 'json',
@@ -208,7 +208,8 @@ function tour(ti, fromPermalink) {
 						onEachFeature: function (feature, layer) {
 							var winner = feature.properties.winner, winnerTxt = ['Highly Commended', 'First Prize', 'Second Prize', 'Third Prize', 'Fourth Prize', 'Fifth Prize'],
 								winnerIco = ['award', 'trophy', 'medal', 'medal', 'medal', 'medal'], winnerEle = '';
-							if (winner >= 0) winnerEle = '<i class="xmasAward commended' + winner + ' fas fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner];
+							if (winner >= 0) winnerEle = '<i class="award commended' + winner + ' fas fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner];
+							if (!feature.properties.img) feature.properties.img = { '0': 'Xmas/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, winnerEle, ''], '', 'popup-xmas');
 						},
 						pointToLayer: function (feature, latlng) {
@@ -231,6 +232,57 @@ function tour(ti, fromPermalink) {
 					setPageTitle('Xmas Window Competition ' + xmasYear);
 					if (markerId) map._layers[markerId].openPopup().stopBounce();
 					else map.flyToBounds(imageOverlay.getBounds());
+					$('.spinner').fadeOut('fast');
+				}
+			});
+			actImgLayer = ti;
+			break;
+		case 'scarecrow':
+			$('.spinner').show();
+			// ward outlines
+			$.ajax({
+				url: dfltDir + 'Scarecrow/boundary.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: true,
+				success: function (json) { imageOverlay.addLayer(L.geoJSON(json, { style: { color: 'darkcyan', opacity: 0.5 }, interactive: false })); }
+			});
+			// markers
+			$.ajax({
+				url: dfltDir + 'Scarecrow/scarecrow.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function (json) {
+					imageOverlay.addLayer(L.geoJSON(json, {
+						onEachFeature: function (feature, layer) {
+							// console.log(feature.properties.name + '|' + feature.properties.ward + '|' + (feature.properties.img ? 'yes' : 'no'))
+							var winner = feature.properties.winner, winnerTxt = ['', 'First Prize', 'Second Prize'],
+								winnerIco = ['', 'trophy', 'medal'], subtitleEle = feature.properties.ward;
+							if (winner > 0) subtitleEle = '<i class="award commended' + winner + ' fas fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner] + ' - ' + subtitleEle;
+							if (!feature.properties.img) feature.properties.img = { '0': 'Scarecrow/000placehldr' };
+							setJsonPopup(feature, layer, [feature.properties.name, subtitleEle], '', 'popup-scarecrow');
+							feature.properties.sortby = feature.properties.winner ? feature.properties.ward + feature.properties.winner : feature.properties.ward + '9';
+						},
+						pointToLayer: function (feature, latlng) {
+							var marker = setMarker(latlng, true, {
+								iconUrl: 'Scarecrow/scarecrow' + (feature.properties.winner === 1 ? 'Win' : ''),
+								iconSize: [35, 37],
+								iconAnchor: [17, 37],
+								iconNoBounce: true,
+								shadowUrl: '/../../assets/img/icons/000shadow',
+								shadowAnchor: [20, 33],
+								popupAnchor: [0, -27]
+							});
+							marker._leaflet_id = feature.properties.id;
+							poiList.push(marker);
+							return marker;
+						}
+					}));
+					map.fireEvent('zoomend');
+					setTimeout(function() { pushPoiList('feature.properties.sortby'); }, 250);
+					setPageTitle('Christmas Scarecrow Competition');
+					if (markerId) map._layers[markerId].openPopup().stopBounce();
 					$('.spinner').fadeOut('fast');
 				}
 			});
@@ -602,6 +654,10 @@ function tour(ti, fromPermalink) {
 			});
 			setTour('16');
 			break;
+		case 'churches':
+			setPageTitle('Virtual Church Tours');
+			setTour('17');
+			break;
 	} permalinkSet(); }, 50);
 }
 
@@ -631,17 +687,33 @@ function tourRef(tourNum, item) {
 // play video
 function tourVideo(url) {
 	$.fancybox.open({
-		src: 'https://www.youtube.com/watch?v=' + url,
-		youtube: { modestbranding: 1 }
+		src: 'https://www.youtube.com/embed/' + url,
+		youtube: {
+			modestbranding: 1,
+			iv_load_policy: 3,
+			rel: 0
+		}
 	});
 }
 
 // view The Story of Bexhill Street Names book
 function streetNameBook() {
-	if ($(window).width() >= 512) $.fancybox.open([{
-		src: 'https://bexhill-osm.org.uk/streetnames',
+	var bookSrc = ((window.location.protocol !== 'file:') ? '../../' : '') + 'assets/data/streetnames.xml';
+	if ($(window).width() >= 1150 && noTouch) $.fancybox.open([{
+		src: bookSrc,
 		type: 'iframe',
-		opts: { caption: '<a href="https://bexhill-osm.org.uk/streetnames" target="_blank">https://bexhill-osm.org.uk/streetnames</a>' }
+		opts: {
+			caption: '<a href="' + bookSrc + '" target="_blank">https://bexhill-osm.org.uk/streetnames</a>',
+			iframe: {
+				preload: false,
+				css: {
+					'width': '1024px',
+					'height': '768px',
+					'max-width': '95%',
+					'max-height': '95%'
+				}
+			}
+		}
 	}]);
-	else popupWindow('https://bexhill-osm.org.uk/streetnames', 'streetWindow', 1024, 768);
+	else popupWindow(bookSrc, 'streetWindow', 1024, 768);
 }

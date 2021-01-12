@@ -1412,7 +1412,7 @@
 		<desc>Village in East Sussex, 7 miles south-west of Tunbridge Wells. Buckhurst Park, the ancestral home of the Sackville family since the 16th century, is near this village. (Adopted by Borough of Bexhill 13th March 1967).</desc>
 	</street>
 	<street>
-		<name>Hartfield Drive</name>
+		<name>Hartfield Place</name>
 		<date>2020</date>
 		<desc>Village in East Sussex, 7 miles south-west of Tunbridge Wells. Buckhurst Park, the ancestral home of the Sackville family since the 16th century, is near this village. (This road had not been adopted by East Sussex County Council by September 2020).</desc>
 	</street>
@@ -1607,6 +1607,11 @@
 		<desc>Leads to the front of St James House which was a convent, children's home and school run by the Sisters of Nazareth. There are two statues outside the building; one is St James, the other the Virgin Mary. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
 	<street>
+		<name>Jameson Mews</name>
+		<date>1897</date>
+		<desc>Probable a corruption of the name Jamestown. Thomas West, 3rd Baron De La Warr, brought food to the starving inhabitants of Jamestown, Virginia, USA. Later he was appointed Governor and Captain-General of the colony of Virginia in 1610 and died there in 1618. The state of Delaware, one of the 13 founding-members of the United States of America, is named after him. (This road had not been adopted by East Sussex County Council by December 2020).</desc>
+	</street>
+	<street>
 		<name>Jameson Road</name>
 		<date>1897</date>
 		<desc>Probable a corruption of the name Jamestown. Thomas West, 3rd Baron De La Warr, brought food to the starving inhabitants of Jamestown, Virginia, USA. Later he was appointed Governor and Captain-General of the colony of Virginia in 1610 and died there in 1618. The state of Delaware, one of the 13 founding-members of the United States of America, is named after him. (Adopted by Borough of Bexhill 26th September 1904).</desc>
@@ -1728,8 +1733,8 @@
 	</street>
 	<street>
 		<name>Landsdowne Way</name>
-		<date>after 1974 but before 1997</date>
-		<desc>The Marquess of Landsdowne (1845 to 1927) was a British politician and Irish peer. Amongst his many appointments he was Governor General of Canada, Viceroy of India and senior politician in both Liberal and Conservative governments. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<date>after 1985 but before 1997</date>
+		<desc>The Marquess of Lansdowne (1845 to 1927) was a British politician and Irish peer. Amongst his many appointments he was Governor General of Canada, Viceroy of India and senior politician in both Liberal and Conservative governments. An error on the development plan misspelt his name adding an extra D. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
 	<street>
 		<name>Langley Close</name>
@@ -2824,7 +2829,7 @@
 	<street>
 		<name>St James Road</name>
 		<date>1873</date>
-		<desc>The origin of the name remains uncertain. St James is one of Christ's twelve apostles. St James Road and St Johns Road were both developed at the same time. St John is another apostle but it is uncertain why these two saints, from the twelve, should have been chosen. (Adopted by Borough of Bexhill, 1st part 12th January 1885 and last part 24th May 1937).</desc>
+		<desc>The origin of the name remains uncertain. St James is one of Christ's twelve apostles. St James Road and St Johns Road were both developed at the same time. St John is another apostle but it is uncertain why these two saints, from the twelve, should have been chosen. An recent error on the road sign misspelt this road as St Jame's Road, the apostrophe had to be painted out. (Adopted by Borough of Bexhill, 1st part 12th January 1885 and last part 24th May 1937).</desc>
 	</street>
 	<street>
 		<name>St John's Road</name>
@@ -3154,7 +3159,7 @@
 	<street>
 		<name>Turkey Road</name>
 		<date>road ~1841; name 1913</date>
-		<desc>Turkey Wood was originally part of High Woods between Peartree Lane and St Marys Lane to the north of this road. Most of the wood has now been lost to the clay pits of the brickworks. There is still a Turkey Farm to the north-east of Bexhill Cemetery. It is unknown how the wood and farm acquired their name but the breeding of turkeys must be one possibility. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825 and, in early street directories, was included as part of Gunters Lane. (Taken over as a Public Highway by the Local Board of Bexhill in 1884. Also adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
+		<desc>Turkey Wood was originally part of High Woods between Peartree Lane and St Marys Lane to the north of this road. Named after the Turkey Oak trees that lined the road. Travelling West, beyond the brickworks, the road is still lined with Turkey Oaks. Turkey Oaks are recognisable from their knarled branches and twisted trunks, and generally much smaller than the magnificent English Oak. Most of the wood has now been lost to the clay pits of the brickworks. There is still a Turkey Farm to the north-east of Bexhill Cemetery. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825 and, in early street directories, was included as part of Gunters Lane. (Taken over as a Public Highway by the Local Board of Bexhill in 1884. Also adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
 	</street>
 	<street>
 		<name>Turner Close</name>
@@ -3310,6 +3315,11 @@
 		<name>Westcourt Drive</name>
 		<date>road 1908; name 1925</date>
 		<desc>The origin of the name remains uncertain. The road was developed at a similar time to Southcourt Avenue and maybe the two names are linked. However it is unclear what or where these two roads may be “south” and “west” of. The answer would be Collington Wood if the drive was called “Eastcourt Drive”. Originally Richmond Avenue ran from the cattle arch under the railway line, across Cooden Drive and then as far as its junction with Richmond Road. The section of present-day Westcourt Drive from the cattle arch to Collington Avenue was only a footpath until the early 1920s. Then during redevelopment the existing single-track cattle arch was enlarged to allow vehicles to pass under the line. This arch, as well as ones at Cooden Beach, Sackville Road and Glyne Gap, had been established to enable farmers north of the railway line to move their stock to summer grazing on the low-lying marshland to the south of the railway. (Adopted by Borough of Bexhill 30th June 1969).</desc>
+	</street>
+	<street>
+		<name>Western Mews</name>
+		<date>1886</date>
+		<desc>A small residential cul-de-sac on the north-east side of Western Road. (This road had not been adopted by East Sussex County Council by December 2020)</desc>
 	</street>
 	<street>
 		<name>Western Road</name>
@@ -3512,12 +3522,12 @@
 	<newstreet>
 		<name>Augers Crescent</name>
 		<date>2018</date>
-		<desc></desc>
+		<desc>Unadopted Dec 2020</desc>
 	</newstreet>
 	<newstreet>
 		<name>Barn Field Terrace</name>
-		<date></date>
-		<desc></desc>
+		<date>2017</date>
+		<desc>Unadopted Dec 2020</desc>
 	</newstreet>
 	<newstreet>
 		<name>Barnfield Close</name>
@@ -3532,22 +3542,22 @@
 	<newstreet>
 		<name>Bluebell View</name>
 		<date>2019</date>
-		<desc></desc>
+		<desc>Unadopted Dec 2020</desc>
 	</newstreet>
 	<newstreet>
 		<name>Boswell Mews</name>
 		<date></date>
-		<desc></desc>
+		<desc>Unadopted Dec 2020</desc>
 	</newstreet>
 	<newstreet>
 		<name>Brackerne Close</name>
 		<date></date>
-		<desc></desc>
+		<desc>Unadopted Dec 2020</desc>
 	</newstreet>
 	<newstreet>
 		<name>Brick Kiln Close</name>
-		<date></date>
-		<desc></desc>
+		<date>2016</date>
+		<desc>Unadopted Dec 2020</desc>
 	</newstreet>
 	<newstreet>
 		<name>Brinklehurst Drive</name>
@@ -3560,8 +3570,13 @@
 		<desc></desc>
 	</newstreet>
 	<newstreet>
-		<name>Cascades Way</name>
+		<name>Buttercup Close</name>
 		<date></date>
+		<desc></desc>
+	</newstreet>
+	<newstreet>
+		<name>Cascades Way</name>
+		<date>2020</date>
 		<desc></desc>
 	</newstreet>
 	<newstreet>
@@ -3576,6 +3591,11 @@
 	</newstreet>
 	<newstreet>
 		<name>Clervaux Close</name>
+		<date>2020</date>
+		<desc></desc>
+	</newstreet>
+	<newstreet>
+		<name>Clover Way</name>
 		<date></date>
 		<desc></desc>
 	</newstreet>
@@ -3590,6 +3610,16 @@
 		<desc></desc>
 	</newstreet>
 	<newstreet>
+		<name>Daffodil Way</name>
+		<date></date>
+		<desc></desc>
+	</newstreet>
+	<newstreet>
+		<name>Daisy Way</name>
+		<date></date>
+		<desc></desc>
+	</newstreet>
+	<newstreet>
 		<name>Filsham Lane</name>
 		<date></date>
 		<desc></desc>
@@ -3597,6 +3627,11 @@
 	<newstreet>
 		<name>Foxley Drive</name>
 		<date>2015</date>
+		<desc></desc>
+	</newstreet>
+	<newstreet>
+		<name>Foxglove Avenue</name>
+		<date></date>
 		<desc></desc>
 	</newstreet>
 	<newstreet>
@@ -3625,18 +3660,13 @@
 		<desc></desc>
 	</newstreet>
 	<newstreet>
-		<name>Jameson Mews</name>
-		<date></date>
-		<desc></desc>
-	</newstreet>
-	<newstreet>
 		<name>Juniper Place</name>
 		<date>2020</date>
 		<desc></desc>
 	</newstreet>
 	<newstreet>
 		<name>Levetts Wood</name>
-		<date></date>
+		<date>2019</date>
 		<desc></desc>
 	</newstreet>
 	<newstreet>
@@ -3652,7 +3682,7 @@
 	<newstreet>
 		<name>Mount View Street</name>
 		<date>2015</date>
-		<desc></desc>
+		<desc>The Mount is a topographic name for the hill west of this road. The hill can be found on early Ordnance Survey maps and referenced as Mount Field on the 1839 Bexhill Tithe. Today used as an underground reservoir and a communications mast. (Adopted by East Sussex County Council).</desc>
 	</newstreet>
 	<newstreet>
 		<name>Nickles Close</name>
@@ -3660,7 +3690,12 @@
 		<desc></desc>
 	</newstreet>
 	<newstreet>
-		<name>Pages Gap</name>
+		<name>Oak Tree Place</name>
+		<date>2020</date>
+		<desc></desc>
+	</newstreet>
+	<newstreet>
+		<name>Orchid Way</name>
 		<date></date>
 		<desc></desc>
 	</newstreet>
@@ -3695,6 +3730,11 @@
 		<desc></desc>
 	</newstreet>
 	<newstreet>
+		<name>Snowdrop Way</name>
+		<date></date>
+		<desc></desc>
+	</newstreet>
+	<newstreet>
 		<name>Spring Close</name>
 		<date></date>
 		<desc></desc>
@@ -3702,6 +3742,11 @@
 	<newstreet>
 		<name>Thorne Close</name>
 		<date>2018</date>
+		<desc></desc>
+	</newstreet>
+	<newstreet>
+		<name>Tulip Way</name>
+		<date></date>
 		<desc></desc>
 	</newstreet>
 	<newstreet>
@@ -3715,7 +3760,7 @@
 		<desc></desc>
 	</newstreet>
 	<newstreet>
-		<name>Western Mews</name>
+		<name>Wrestwood Parade</name>
 		<date></date>
 		<desc></desc>
 	</newstreet>

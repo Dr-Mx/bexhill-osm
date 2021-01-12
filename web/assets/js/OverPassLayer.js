@@ -16,11 +16,11 @@ function show_overpass_layer(query, cacheId, bound) {
 				query = query.replace(/];/g, '](area);');
 			}
 			else queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
-		queryBbox += ';' + query + 'out tags center qt ' + maxOpResults + ';';
+		queryBbox += ';' + query + 'out tags center qt';
 	}
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
-		query: queryBbox,
+		query: queryBbox + ' ' + maxOpResults + ';',
 		endpoint: 'https://' + $('#inputOpServer').val() + '/api/interpreter',
 		callback: callback,
 		cacheId: cacheId ? 'OPL' + cacheId : ''
@@ -47,7 +47,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		var url = this.options.endpoint + '?data=' + this.options.query + '&contact=' + email;
 		var self = this;
 		var reference = { instance: self };
-		if (self.options.debug) console.debug('Overpass query:', url);
+		if (self.options.debug) console.debug('Overpass query:', encodeURI(url));
 		// check if cached in variable
 		if (eleCache[self.options.cacheId] && !$('#inputOpen').is(':checked') && !$('#inputAttic').val() && $('#inputOpCache').val() > 0) {
 			self.options.callback.call(reference, eleCache[self.options.cacheId]);
@@ -92,7 +92,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				},
 				error: function () {
 					rQuery = false;
-					if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS:', this.url);
+					if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS:', encodeURI(this.url));
 				}
 			});
 		}

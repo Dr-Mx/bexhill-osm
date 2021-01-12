@@ -41,7 +41,7 @@
 	<p>When consulting the early maps, census returns and street directories a significant number of inconsistencies of both names, dates and descriptions have been discovered, including some street names which have only been seen once, so a pragmatic approach has had to be adopted in this edition. As in most cities, towns and villages there are street names which are neologisms, in other words they have simply been made up by the builder or developer. In hindsight these can be difficult to identify and we accept we may have missed some or misinterpreted others. We have also found it very difficult to locate official documentation to help us discover the approved origin of many of the town’s street names. Hence some of the entries in this edition are, at best, informed guesswork. We hope our readers will understand and accept our difficulties.</p>
 	<p>We would like to thank the many individuals who have helped us with the preparation of this new addition especially Julian Porter, Curator at Bexhill Museum, his staff and many museum volunteers and supporters as well as members of the public. Margaret Cullingworth has been particularly helpful with information regarding the streets around Sidley. Any errors are entirely our own responsibility. Finally we hope you enjoy reading the fruits of our endeavours.</p>
 	<p class="credit">&#169; <xsl:value-of select="copyright/author"/></p>
-	<p>This online edition is being currently being developed and updated with new roads and streets. If you have any additional information, suggestions or corrections, please contact info[at]bexhill-osm.org.uk.</p>
+	<p>This online edition is being currently being developed and updated with new roads and streets. If you have any additional information, suggestions or corrections, please contact <a href="mailto:info@bexhill-osm.org.uk">info@bexhill-osm.org.uk</a>.</p>
 	<p class="credit">&#169; Alexis Markwick, Bexhill-OSM, 2020</p>
 	</div>
 	<hr/>
@@ -50,9 +50,13 @@
 	<div id="streetNames"><xsl:for-each select="streetNames/street"><xsl:sort select="name"/>
 		<p class="street"><b><xsl:value-of select="name"/> (<xsl:value-of select="date"/>)</b><br/>
 		<xsl:value-of select="desc"/></p>
-	</xsl:for-each></div>
+	</xsl:for-each><a id="anchor"></a></div>
+	<p id="endresults">END OF RESULTS</p>
 	<hr/>
 	<div id="outro">
+	<h2>Work in Progress</h2>
+	<p><xsl:for-each select="streetNames/newstreet"><xsl:sort select="name"/><xsl:value-of select="name"/>; </xsl:for-each></p>
+	<hr/>
 	<h2>Appendix</h2>
 	<p>The routes and numbers of various trunk and county roads through Bexhill have changed over the years. Four examples are included here for comparison and interest.</p>
 	<p><b>1930</b><br/>
@@ -103,10 +107,15 @@
 				else $(this).parent().hide();
 			});
 			$('#street-results').html($('.street:visible').length + ' of ' + $('.street').length + ' records shown');
+			if ($('.street:visible').length > 10) $('#anchor').show();
+			else $('#anchor').hide();
 		} });
 		$('#street-filter-cl').on('click', function() { $('#street-filter-in').val('').trigger('keyup'); });
 		$('#street-filter-cl').trigger('click');
 		history.replaceState(null, null, '../../streetnames');
+		$('#anchor').on('click touchstart', function() {
+			$('html, body').stop().animate({ scrollTop: $('#street-filter').offset().top - 25 }, 500);
+		});
 	});
 	</script>
 </body>

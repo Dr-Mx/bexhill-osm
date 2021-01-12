@@ -1,6 +1,22 @@
 # CHANGELOG
 
-## v5.9.0 - OSM Notes
+## v5.10.0 - Offset baselayer
+
+**Date:** 12/01/2021
+
+Updated js
+ - URI.js 1.19.4
+ 
+Site changes
+ - Offsets for baselayers
+ - Add annual scarecrow competition to Tour
+ - Support semicolon separated wikimedia_commons images
+ - Support semicolon separated wikimedia_commons:pano images
+ - Swap headings/subheadings on popups
+ - Lots of the usual bug fixes and improvements
+
+
+## v5.9.0 - OSM notes
 
 **Date:** 20/09/2020
 

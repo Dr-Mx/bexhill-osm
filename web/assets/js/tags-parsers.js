@@ -4,7 +4,7 @@ var spinner = 0, markerId, ohState, ctState, poiList = [];
 function parse_tags(element, titlePopup, poiParser) {
 	var eName = element.tags['name:en'] || element.tags.name || undefined;
 	if (eName && element.tags.ref) eName += ' (' + element.tags.ref + ')';
-	var markerPopup = generic_header_parser(titlePopup, (eName || element.tags.ref), element.tags['fhrs:id'], true);
+	var markerPopup = generic_header_parser((eName || element.tags.ref), titlePopup, element.tags['fhrs:id'], true);
 	// global callback parsers
 	var address_parser = function(tags) {
 		markerPopup = '';
@@ -39,9 +39,9 @@ function parse_tags(element, titlePopup, poiParser) {
 		var tagWebsite = tags.website || tags['contact:website'] || tags['contact:webcam'];
 		markerPopup = '';
 		if (tagWebsite) {
-			var strWebsite = tagWebsite.split('://')[1];
+			var strWebsite = (tagWebsite.indexOf('://') > 0) ? tagWebsite.split('://')[1] : tagWebsite;
 			if (strWebsite.slice(-1) === '/') strWebsite = strWebsite.slice(0, -1);
-			var link = '<a class="popup-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + strWebsite + '</a>';
+			var link = '<a class="popup-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px;" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + strWebsite + '</a>';
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: link, iconName: 'fas fa-globe' });
 		}
 		return markerPopup;
@@ -263,7 +263,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					}
 					if ($('#inputDebug').is(':checked')) console.debug('Street-names:', xml);
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES:', this.url); }
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }
 			});
 			if (tags.unadopted === 'yes') tag += 'unadopted; ';
 			if (tags.surface) tag += tags.surface + '; ';
@@ -283,7 +283,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		var tag = '';
 		markerPopup = '';
 		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'])
-			tag += '<a onclick="searchAddr(\'' + tags['addr:street'] + '\');" title="Lookup street">Street history</a>; ';
+			tag += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="Lookup street">Street history</a>; ';
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			var w = tags.wikipedia || tags['site:wikipedia'];
 			tag += '<a href="https://' + w.split(':')[0] + '.wikipedia.org/wiki/' + w.split(':')[1] + '" title="Wikipedia" target="_blank" rel="noopener">Wikipedia</a>; ';
@@ -295,7 +295,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['ref:edubase'])
 			tag += '<a class="nowrap" href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + tags['ref:edubase'] + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
 		if (tags['ref:charity'])
-			tag += '<a class="nowrap" href="https://beta.charitycommission.gov.uk/charity-details/?regId=' + tags['ref:charity'] + '" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
+			tag += '<a class="nowrap" href="https://register-of-charities.charitycommission.gov.uk/charity-search?p_p_id=uk_gov_ccew_portlet_CharitySearchPortlet&_uk_gov_ccew_portlet_CharitySearchPortlet_priv_r_p_useSession=true&_uk_gov_ccew_portlet_CharitySearchPortlet_priv_r_p_mvcRenderCommandName=%2Fsearch-results&_uk_gov_ccew_portlet_CharitySearchPortlet_keywords=' + tags['ref:charity'] + '" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
 		if (tags.tpuk_ref)
 			tag += '<a href="http://trigpointing.uk/trig/' + tags.tpuk_ref.split('TP')[1] + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
 		if (tag) {
@@ -307,8 +307,9 @@ function parse_tags(element, titlePopup, poiParser) {
 	var image_parser = function(tags) {
 		// get images
 		var lID = 0;
+		var multiPano = [];
 		markerPopup = '';
-		if (tags.wikimedia_commons && tags.wikimedia_commons.indexOf('File:') === 0) {
+		if (tags.wikimedia_commons) {
 			// support semicolon separated commons images
 			var multiCommons =
 				(tags.wikimedia_commons +
@@ -321,17 +322,30 @@ function parse_tags(element, titlePopup, poiParser) {
 			}
 		}
 		if (tags.image) {
-			markerPopup += generic_img_parser(tags.image, lID, tags['source:image'] ? '&copy; ' + tags['source:image'] : '');
-			lID++;
-			if (tags.image_1) {
-				// support up to 5 additional image tags
-				for (x = 1; x <= 5; x++) if (tags['image_' + x]) {
-					markerPopup += generic_img_parser(tags['image_' + x], lID, tags['source:image_' + x] ? '&copy; ' + tags['source:image_' + x] : '');
-					lID++;
-				}
+			// support semicolon separated images
+			var multiImage =
+				(tags.image +
+				(tags.image_1 ? ';' + tags.image_1 : '') +
+				(tags.image_2 ? ';' + tags.image_2 : '')
+			).split(';');
+			var multiImageSource = tags['source:image'] ?
+				(tags['source:image'] +
+				(tags['source:image_1'] ? ';' + tags['source:image_1'] : '') +
+				(tags['source:image_2'] ? ';' + tags['source:image_2'] : '')
+			).split(';') : '';
+			for (x = 0; x < multiImage.length; x++) if (multiImage[x].indexOf('http') === 0) {
+				markerPopup += generic_img_parser(multiImage[x], lID, multiImageSource[x] ? '&copy; ' + multiImageSource[x] : '');
+				lID++;
 			}
 		}
-		if (lID > 1) markerPopup += show_img_controls(lID, tags['image:pano']);
+		if (tags['wikimedia_commons:pano']) {
+			multiPano =
+				(tags['wikimedia_commons:pano'] +
+				(tags['wikimedia_commons:pano_1'] ? ';' + tags['wikimedia_commons:pano_1'] : '') +
+				(tags['wikimedia_commons:pano_2'] ? ';' + tags['wikimedia_commons:pano_2'] : '')
+			).split(';');
+		}
+		if (lID > 1 || multiPano.length) markerPopup += show_img_controls(lID, multiPano);
 		return markerPopup;
 	};
 	// https://github.com/opening-hours/opening_hours.js
@@ -415,7 +429,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			}
 			// create readable table
 			var ohTable = drawTable(oh, new Date()), minWidth = ohTable ? '270px' : '100px';
-			if (tags.opening_hours.indexOf('PH ') === -1) ohTable += '<div class="comment" style="text-align:left; padding-top:5px;">Holiday periods may differ.</div>';
+			if (tags.opening_hours.indexOf('PH ') === -1) ohTable += '<div class="comment" style="text-align:left;padding-top:5px;">Holiday periods may differ.</div>';
 			// show tag and collapsible accordion
 			if (ohState === true) openhrsState = 'Open until';
 			else if (ohState === false) openhrsState = 'Closed until';
@@ -493,7 +507,7 @@ function callback(data) {
 					eleCache['VEC' + type + id] = xml;
 					if ($('#inputDebug').is(':checked')) console.debug('OSM outline:', xml);
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-OUTLINE:', this.url); }
+				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-OUTLINE:', encodeURI(this.url)); }
 			});
 		}
 	};
@@ -846,19 +860,20 @@ function callback(data) {
 			permanent: poi ? poi.permTooltip : 0,
 			opacity: (noTouch || (poi && poi.permTooltip)) ? 1 : 0
 		};
-		var toolTip = '<b>' + name + '</b>';
-		if (eName) toolTip += '<br><i>' + eName + '</i>';
+		var toolTip = '<div>';
+		if (eName) toolTip += '<b>' + eName + '</b>';
 		else if (e.tags['addr:street']) {
-			if (e.tags['addr:housename']) toolTip += '<br><i>' + e.tags['addr:housename'] + ', ' + e.tags['addr:street'] + '</i>';
-			else if (e.tags['addr:housenumber']) toolTip += '<br><i>' + e.tags['addr:housenumber'] + ' ' + e.tags['addr:street'] + '</i>';
-			else if (e.tags['addr:unit']) toolTip += '<br><i>Unit ' + e.tags['addr:unit'] + ', ' + e.tags['addr:street'] + '</i>';
-			else toolTip += '<br><i>' + e.tags['addr:street'] + '</i>';
+			if (e.tags['addr:housename']) toolTip += e.tags['addr:housename'] + ', ' + e.tags['addr:street'];
+			else if (e.tags['addr:housenumber']) toolTip += e.tags['addr:housenumber'] + ' ' + e.tags['addr:street'];
+			else if (e.tags['addr:unit']) toolTip += 'Unit ' + e.tags['addr:unit'] + ', ' + e.tags['addr:street'];
+			else toolTip += e.tags['addr:street'];
 		}
-		else if (e.tags['addr:place']) toolTip += '<br><i>' + e.tags['addr:place'] + '</i>';
-		else if (e.tags.ref) toolTip += '<br><i>' + e.tags.ref + '</i>';
-		else if (e.tags.operator) toolTip += '<br><i>' + e.tags.operator + '</i>';
+		else if (e.tags['addr:place']) toolTip += e.tags['addr:place'];
+		else if (e.tags.ref) toolTip += e.tags.ref;
+		else if (e.tags.operator) toolTip += e.tags.operator;
+		toolTip += '</div><i>' + name + '</i>';
 		if (e.tags.image || e.tags.wikimedia_commons) toolTip += ' <i class="tooltip-icons fas fa-image fa-fw" title="Image(s)"></i>';
-		if (e.tags['image:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Panoramic view"></i>';
+		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Panoramic view"></i>';
 		// popup
 		var customPOptions = {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
@@ -996,7 +1011,8 @@ function pushPoiList(customSort) {
 // templates
 var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}:</strong> {value}</span></div>';
 function generic_header_parser(header, subheader, fhrs, osmId) {
-	var markerPopup = '<div class="popup-header"><h3>' + header + '</h3>';
+	var markerPopup = '<div class="popup-header">';
+	if (header) markerPopup += '<h3>' + header + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
 	if (!$('#inputAttic').val()) {
 		if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.gif"></span>';
@@ -1092,7 +1108,7 @@ function busstop_parser(tags, titlePopup) {
 			}
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Bearing', value: bearing, iconName: 'fas fa-compass' });
 		}
-		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable" style="width:' + imgSize + 'px" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
+		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable" style="width:' + imgSize + 'px;" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
 				'<img title="Loading next bus times" src="assets/img/loader.gif"></div>';
 		return markerPopup;
 	};
@@ -1184,7 +1200,7 @@ function food_parser(tags, titlePopup) {
 		else if (tags.outdoor_seating === 'yes') tag += 'outdoor seating, ';
 		if (tags.reservation === 'yes') tag += 'takes reservation, ';
 		else if (tags.reservation === 'required') tag += 'needs reservation, ';
-		if (tags['url:just_eat']) tag += '<a href="' + tags['url:just_eat'] + '" title="just-eat.com" target="_blank" rel="noopener">just-eat</a>, ';
+		if (tags['url:ordering']) tag += '<a href="' + tags['url:ordering'] + '" title="Ordering" target="_blank" rel="noopener">online ordering</a>, ';
 		if (tag) {
 			tag = tag.substring(0, tag.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Service', value: tag, iconName: 'fas fa-shopping-bag' });
@@ -1359,16 +1375,20 @@ function getWikiAttrib(id) {
 				id.find($('.popup-imgAttrib')).addClass('attribd');
 				if ($('#inputDebug').is(':checked')) console.debug('Wikimedia-attrib:', result);
 			},
-			error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKIMEDIA-ATTRIB:', this.url); }
+			error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKIMEDIA-ATTRIB:', encodeURI(this.url)); }
 		});
 	}
 }
 function show_img_controls(imgMax, img360) {
 	// add image navigation controls to popup
 	var ctrlTmpl = '<div class="navigateItem">';
-	if (img360 && img360.indexOf('File:') === 0) ctrlTmpl +=
-		'<a title="Panoramic view" data-fancybox data-type="iframe" data-animation-effect="circular" data-caption="Wikimedia Commons: Bexhill-OSM" data-src="https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img360.split(':')[1]) + '" href="javascript:;">' +
-		'<i style="min-width:25px" class="fas fa-street-view fa-fw jump"></i></a>';
+	if (img360.length) for (x = 0; x < img360.length; x++) {
+		if (img360[x].indexOf('File:') === 0) ctrlTmpl +=
+			'<a class="pano" title="Panoramic views" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-preload="false" data-fancybox="pano"' +
+				'data-type="iframe" data-animation-effect="circular" data-src="https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img360[x].split(':')[1]) + '" href="javascript:;">' +
+				'<i style="min-width:25px;" class="fas fa-street-view fa-fw jump"></i>' +
+			'</a>';
+	}
 	if (imgMax > 1) ctrlTmpl +=
 		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
 		'<i class="fas fa-images fa-fw" title="Gallery (1 of ' + imgMax + ')"></i>' +

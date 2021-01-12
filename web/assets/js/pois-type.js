@@ -74,7 +74,7 @@ var pois = {
 
 	historic: {
 		name: 'Historic',
-		query: 'nwr[historic][historic!~boundary_stone];node[board_type=history];',
+		query: 'nwr[historic][historic!~boundary_stone][historic!~district];node[board_type=history];',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque', 'war'],

@@ -1009,7 +1009,7 @@ input:checked + .slider::before {
 	background-color: rgba(200, 200, 200, 0.2);
 }
 .popup-header h3 {
-	padding-right: 50px;
+	padding-right: 60px;
 	margin: 0 auto 0;
 }
 .popup-t .popup-header h3 {
@@ -1019,7 +1019,7 @@ input:checked + .slider::before {
 	display: table-cell;
 	font-style: oblique;
 	font-weight: bold;
-	padding-right: 10px;
+	padding-right: 60px;
 	width: 100%;
 	vertical-align: bottom;
 }
@@ -1243,6 +1243,9 @@ input:checked + .slider::before {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+.popup-scarecrow .popup-header {
+	background-color: rgba(0, 40, 175, 0.3);
+}
 .popup-xmas .popup-header {
 	background-color: rgba(0, 175, 0, 0.3);
 }
@@ -1253,23 +1256,23 @@ input:checked + .slider::before {
 	font-size: 8pt;
 	color: green;
 }
-.xmasAward {
+.award {
 	text-shadow: 0.5px 0.5px 0 #555;
 }
-.leaflet-popup.popup-xmas .xmasAward {
+.leaflet-popup .award {
 	position: absolute;
-	top: 25px;
+	top: 30px;
 	right: 15px;
-	font-size: 45pt;
+	font-size: 40pt;
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 15px white;
 	-webkit-text-stroke: 2px rgba(0, 0, 0, 0.2);
 }
-.xmasAward.commended0 { color: #800080; }
-.xmasAward.commended1 { color: #ffd700; }
-.xmasAward.commended2 { color: #bbb; }
-.xmasAward.commended3 { color: #d2b48c; }
-.xmasAward.commended4 { color: #4d7480; }
-.xmasAward.commended5 { color: #52804d; }
+.commended0 { color: #800080; }
+.commended1 { color: #ffd700; }
+.commended2 { color: #bbb; }
+.commended3 { color: #d2b48c; }
+.commended4 { color: #4d7480; }
+.commended5 { color: #52804d; }
 
 @keyframes jump {
 	0%,to { transform: translateZ(0); }

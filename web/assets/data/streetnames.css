@@ -1,3 +1,6 @@
+:root {
+    --main-color: #b05000;
+}
 body {
 	background-color: #ffffff;
 	font: 11pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -13,6 +16,19 @@ body {
 		padding: 5%;
 		box-shadow: 0 2px 10px #555555;
 	}
+	#anchor {
+		margin-left: 101% !important;
+	}
+}
+a {
+	text-decoration: none;
+}
+a:link, a:visited, a:hover, .leaflet-container a {
+	color: var(--main-color);
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: underline;
 }
 #header {
 	width: 110%;
@@ -21,13 +37,41 @@ body {
 	border-radius: 10px;
 }
 h1 {
-	color: #b05000;
+	color: var(--main-color);
 }
 hr {
 	height: 1px;
-	background-color: #b05000;
+	background-color: var(--main-color);
 	border: 0;
 	margin: 20px 0;
+}
+#anchor::before {
+	content: '\21E7';
+	font-weight: bold;
+	font-size: 14pt;
+}
+#anchor {
+	display: block;
+	position: sticky;
+	position: -webkit-sticky;
+	bottom: 10px;
+	margin-left: 95%;
+	padding: 5px;
+	width: 26px;
+	background-color: var(--main-color);
+	opacity: 0.5;
+	border-radius: 100%;
+	border-width: 1px;
+	border-color: #ccc;
+	border-style: solid;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+	transition: opacity 100ms linear;
+}
+#anchor:hover {
+	opacity: 1;
+	text-decoration: none;
 }
 #intro, #outro {
 	color: #333;
@@ -35,6 +79,12 @@ hr {
 .credit {
 	text-align: right;
 	font-style: italic;
+}
+#endresults {
+	text-align: center;
+	color: var(--main-color);
+	font-weight: bold;
+	margin-top: 0;
 }
 
 #street-filter {
@@ -68,11 +118,11 @@ hr {
 	font-weight: bold;
 	content: "\00d7";
 	text-align: center;
-	color: #b05000;
+	color: var(--main-color);
 	padding-bottom: 20px;
 }
 #street-results {
-	color: #b05000;
+	color: var(--main-color);
 	text-align: right;
 	font-weight: bold;
 	padding-bottom: 10px;
