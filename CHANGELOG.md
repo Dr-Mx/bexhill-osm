@@ -15,6 +15,7 @@ Site changes
  - Custom OverPass queries can now be parsed in the url using the 'data' query
  - Save map settings to localStorage
  - Converted some gif to svg
+ - Share all bookmarks in a permalink by right-clicking the 'Show bookmarks' button
  - Fixed a bug where bookmarks weren't all being loaded
  - Lots of the usual bug fixes and improvements
 
