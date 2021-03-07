@@ -30,10 +30,11 @@
 	background-color: transparent;
 	width: 185px;
 	padding-right: 15px;
+	padding-left: 5px;
 }
 
 .leaflet-control-geocoder-throbber .leaflet-control-geocoder-form {
-    background-image: url('../../img/loader.gif');
+    background-image: url('../../img/loader.svg');
 	background-position: right center; 
     background-repeat: no-repeat;
 }
@@ -54,7 +55,7 @@
 	margin-top: 8px;
 	margin-left: 8px;
 	display: block;
-	color: #444;
+	color: #777;
 }
 .leaflet-control-geocoder-alternatives {
 	display: block;
@@ -88,13 +89,10 @@
 }
 
 .leaflet-control-geocoder-alternatives li:last-child {
-	border-bottom: none;
+	border-bottom: none !important;
 }
 .leaflet-control-geocoder-alternatives li:hover, .leaflet-control-geocoder-selected {
 	background-color: #f5f5f5;
-}
-.leaflet-control-geocoder-address-detail {
-	
 }
 .leaflet-control-geocoder-address-context {
 	color: #666;

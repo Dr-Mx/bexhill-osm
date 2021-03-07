@@ -243,7 +243,7 @@ function parse_tags(element, titlePopup, poiParser) {
 	var street_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
-		if (tags.highway && eName) {
+		if (tags.highway && eName && element.type === 'way') {
 			// get street history through xml file lookup
 			$.ajax({
 				async: false,
@@ -373,7 +373,7 @@ function parse_tags(element, titlePopup, poiParser) {
 						var text = pad(prevdate.getHours()) + ':' + pad(prevdate.getMinutes()) + '-';
 						if (prevdate.getDay() !== curdate.getDay()) text += '24:00';
 						else text += pad(curdate.getHours()) + ':' + pad(curdate.getMinutes());
-						if (oh.getComment(prevdate)) text += '<br>' + oh.getComment(prevdate);
+						if (oh.getComment(prevdate)) text += '<br/>' + oh.getComment(prevdate);
 						table[row].text.push(text);
 					}
 					prevdate = curdate;
@@ -641,7 +641,6 @@ function callback(data) {
 						name = 'memorial ' + e.tags.memorial;
 						if (!iconName) {
 							switch (e.tags.memorial) {
-								case 'blue_plaque':
 								case 'plaque': iconName = 'plaque'; break;
 								case 'clock': iconName = 'clock'; break;
 								case 'statue': iconName = 'statue-2'; break;
@@ -671,11 +670,6 @@ function callback(data) {
 					case 'rivet': iconName = 'sprivet'; break;
 				}
 			}
-		}
-		if (e.tags.natural) {
-			if (!name) name = e.tags.natural;
-			if (!type) type = e.tags.natural;
-			if (type === 'peak') iconName = 'hill';
 		}
 		if (e.tags.shop) {
 			if (e.tags.shop === 'yes') name = 'shop';
@@ -760,6 +754,11 @@ function callback(data) {
 					iconName = (e.tags.sport === 'swimming') ? 'swimming2' : 'indoor-arena';
 					break;
 			}
+		}
+		if (e.tags.natural) {
+			if (!name) name = e.tags.natural;
+			if (!type) type = e.tags.natural;
+			if (type === 'peak') iconName = 'hill';
 		}
 		if (e.tags.surveillance) {
 			if (!type) type = e.tags.surveillance;
@@ -927,9 +926,9 @@ function callback(data) {
 			marker.addTo(this.instance);
 			setPoiList();
 			getOsmOutline(e.type, e.id);
-			oQuery = false;
 		}
 	}
+	oQuery = false;
 	// output list of pois in sidebar
 	if (poiList.length) setTimeout(pushPoiList, 250);
 	if (spinner > 0) spinner--;
@@ -954,7 +953,7 @@ function pushPoiList(customSort) {
 		var state = (poiList[c].ohState !== undefined) ? poiList[c].ohState : poiList[c].ctState;
 		var openColorTitle = (state === true || state === false) ? ' title="' + (state === true ? 'Open' : 'Closed') + '"' : '';
 		var poiIcon = '';
-		if (poiList[c]._icon) poiIcon = '<img src="' + poiList[c]._icon.src + '">';
+		if (poiList[c]._icon) poiIcon = '<img src="' + poiList[c]._icon.src + '"/>';
 		else if (poiList[c].options.color)
 			poiIcon = '<i style="-webkit-text-stroke:3px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fas fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
@@ -1003,7 +1002,7 @@ function pushPoiList(customSort) {
 			(customSort ? '' : '<i style="color:#777;" class="fas fa-sort-' + (poiList[0].distance ? 'numeric' : 'alpha') + '-down fa-fw"></i>')
 	);
 	if (poiList.length === maxOpResults) {
-		$('#poi-results h3').append('<br>(maximum number of results)');
+		$('#poi-results h3').append('<br/>(maximum number of results)');
 		setMsgStatus('fas fa-info-circle', 'Max Results', 'Maximum number of results shown (' + maxOpResults + ').', 1);
 	}
 }
@@ -1015,7 +1014,7 @@ function generic_header_parser(header, subheader, fhrs, osmId) {
 	if (header) markerPopup += '<h3>' + header + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
 	if (!$('#inputAttic').val()) {
-		if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.gif"></span>';
+		if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.svg"/></span>';
 		if (osmId) {
 			if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm" title="Bookmark"><i class="far fa-bookmark fa-fw"></i></a>';
 			markerPopup += '<a class="popup-edit" title="Edit with OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
@@ -1044,13 +1043,13 @@ function generic_img_parser(img, id, attrib) {
 		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(img);
 		imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
 			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=1280 1280w, {img}&width=800 800w, {img}&width=640 640w">' +
-			'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}&width=' + imgSize + '"></a>' +
+			'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;" src="{img}&width=' + imgSize + '"/></a>' +
 			'<div class="popup-imgAttrib">Loading attribution...</div>' +
 		'</div>';
 	}
 	else imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
 			'<a data-fancybox="gallery" data-caption="' + $('<span>' + attrib + '</span>').text() + '" href="{img}">' +
-			'<img alt="Loading image..." style="max-height:{maxheight}px;" src="{img}"></a>' +
+			'<img alt="Loading image..." style="max-height:{maxheight}px;" src="{img}"/></a>' +
 			'<div class="popup-imgAttrib">{attrib}</div>' +
 		'</div>';
 	return L.Util.template(imgTmpl, { id: id, url: url, maxheight: Math.round(imgSize / 1.5), img: img, attrib: attrib });
@@ -1109,7 +1108,7 @@ function busstop_parser(tags, titlePopup) {
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Bearing', value: bearing, iconName: 'fas fa-compass' });
 		}
 		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable" style="width:' + imgSize + 'px;" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
-				'<img title="Loading next bus times" src="assets/img/loader.gif"></div>';
+				'<img title="Loading next bus times" src="assets/img/loader.svg"/></div>';
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
@@ -1255,7 +1254,7 @@ function hotel_parser(tags, titlePopup) {
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'fas fa-bed' });
 		}
 		// set booking.com affiliate link in config.js
-		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="https://www.booking.com/hotel/gb/' + tags['url:booking_com'] + '.en.html?aid=' + BOSM.bookingCom + '&no_rooms=1&group_adults=1" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"></a>', iconName: 'fas fa-file' });
+		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="https://www.booking.com/hotel/gb/' + tags['url:booking_com'] + '.en.html?aid=' + BOSM.bookingCom + '&no_rooms=1&group_adults=1" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"/></a>', iconName: 'fas fa-file' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
@@ -1382,7 +1381,7 @@ function getWikiAttrib(id) {
 function show_img_controls(imgMax, img360) {
 	// add image navigation controls to popup
 	var ctrlTmpl = '<div class="navigateItem">';
-	if (img360.length) for (x = 0; x < img360.length; x++) {
+	if (img360 && img360.length) for (x = 0; x < img360.length; x++) {
 		if (img360[x].indexOf('File:') === 0) ctrlTmpl +=
 			'<a class="pano" title="Panoramic views" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-preload="false" data-fancybox="pano"' +
 				'data-type="iframe" data-animation-effect="circular" data-src="https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img360[x].split(':')[1]) + '" href="javascript:;">' +

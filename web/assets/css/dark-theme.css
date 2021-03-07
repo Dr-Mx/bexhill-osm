@@ -1,0 +1,105 @@
+:root {
+	--text-color: #aaa;
+	--hover-color: #ccc;
+	--bg-color: #111;
+	--bg-color2: rgba(20, 20, 20, 0.9);
+}
+.spinner {
+	filter: invert(100%) hue-rotate(180deg);
+}
+html, body, input, select, #map, .leaflet-control-layers-expanded, #msgStatusHead, .leaflet-control-attribution, .leaflet-tooltip, 
+.leaflet-contextmenu a.leaflet-contextmenu-item, .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+	color: var(--text-color) !important;
+}
+.anchor:hover, select:hover:enabled, #poi-results button:hover, #home .sidebar-body a i:hover, #inputWw2 div, .leaflet-control-attribution .fa-info-circle:hover, 
+button:hover, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.leaflet-popup-close-button:hover, .popup-edit:hover, .popup-bookm:hover, 
+.leaflet-routing-geocoders button:hover::after {
+	color: var(--hover-color) !important;
+}
+.sidebar-tabs, .anchor, input:not([type="range"]), select, button, .leaflet-bar > a, .leaflet-tooltip, .leaflet-control-geocoder input, .slider::before, #inputOpacity, .leaflet-control-geocoder, .leaflet-contextmenu, #msgStatusHead, 
+.leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-alternatives li:hover, .leaflet-control-geocoder-selected {
+	background-color: var(--bg-color) !important;
+}
+.poi-checkbox-selected, #poi-results-list tr:hover, #msgStatusBody, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, 
+.leaflet-control-layers-expanded, #homeBox, #xmasMsg, hr, .poi-checkbox > label:hover, .leaflet-control-layers, .leaflet-control-attribution, 
+.sidebar.collapsed .sidebar-tabs, .leaflet-control-geocoder {
+	background-color: var(--bg-color2) !important;
+}
+
+.sidebar-body, #poi-icons, #poi-results {
+	scrollbar-color: var(--text-color) var(--bg-color) !important;
+}
+.baselayer {
+	opacity: 0.85 !important;
+}
+.sidebar-header {
+	color: #ddd;
+}
+.leaflet-control-layers-separator {
+	border-top: 2px solid var(--bg-color);
+}
+#poi-results, #walkDesc img, #thennow img, .popup-imgContainer > a > img, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+	border: 2px solid var(--bg-color);
+}
+#poi-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li {
+	border-bottom: 2px solid var(--bg-color) !important;
+}
+.poi-result-selected {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.anchor, .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
+	border-color: #666;
+}
+input, select, button, .leaflet-bar a, .leaflet-tooltip {
+	border: 1px solid #666 !important;
+}
+.leaflet-control-geocoder input, .leaflet-control-geocoder-alternatives a, .fancybox-button, .modalButton {
+	border: none !important;
+}
+.easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
+	background: #222;
+}
+.easy-autocomplete-container ul li.selected {
+	background: none repeat scroll 0 0 #000;
+}
+.sidebar-tabs > ul > li:hover, .slider {
+	background-color: #555;
+}
+.slider:hover {
+	background-color: #666;
+}
+.popup-header {
+	background-color: rgba(55, 55, 55, 0.5);
+}
+.leaflet-container a.leaflet-popup-close-button {
+	border: 3px solid #333;
+}
+.leaflet-tooltip-right::before {
+	border-right-color: var(--bg-color);
+}
+#newFeed ul, #weather {
+	color: #72958b;
+}
+.modalTutor {
+	color: black;
+}
+.modalButton {
+	box-shadow: 1px 1px #000;
+	background-color: #222 !important;
+}
+.leaflet-contextmenu a.leaflet-contextmenu-item.over {
+	background-color: #222;
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
+}
+.popup-ohTable tr, .popup-bsTable tr { border: 1px solid black; }
+.popup-bsTable tr { background-color: #111; }
+.popup-ohTable td.times { background-color: #222; }
+.popup-ohTable td.workday { background-color: #333; }
+.popup-ohTable td.weekend { background-color: #444; }
+.sidebar-close:hover {
+	color: #bbb;
+}
+.popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {
+	background-blend-mode: soft-light;
+}

@@ -57,7 +57,7 @@ function tour(ti, fromPermalink) {
 			autoPan: noPermalink ? true : false
 		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long')));
-		toolTip += '<b>' + header[0] + '</b><br><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
+		toolTip += '<b>' + header[0] + '</b><br/><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
 		markerPopup += '<span class="comment">' + layer._latlng.lat + '°N ' + layer._latlng.lng + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 3) + '</span>';
 		if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc">' + feature.properties.description + '</span>';
@@ -154,7 +154,7 @@ function tour(ti, fromPermalink) {
 						onEachFeature: function (feature, layer) {
 							var fp = feature.properties;
 							fp.description = '<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
-								'openstreetmap.org/note/' + fp.id + '</a><hr>';
+								'openstreetmap.org/note/' + fp.id + '</a><hr/>';
 							$.each(fp.comments, function(c) {
 								if (fp.comments[c].text) fp.description += L.Util.template(tagTmpl, {
 									tag: (fp.comments[c].user ? '<a href="' + fp.comments[c].user_url + '" target="_blank" rel="noopener">' + fp.comments[c].user + '</a>' : 'Anonymous'),
@@ -162,7 +162,7 @@ function tour(ti, fromPermalink) {
 									iconName: 'far fa-comment'
 								});
 							});
-							fp.description += '<hr><span class="comment"><i class="fas fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + date_parser(fp.closed_at.split(' ')[0], 'long') : 'times"></i> Currently unresolved') + '</span>';
+							fp.description += '<hr/><span class="comment"><i class="fas fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + date_parser(fp.closed_at.split(' ')[0], 'long') : 'times"></i> Currently unresolved') + '</span>';
 							setJsonPopup(feature, layer, [titleCase(fp.status + ' note'), date_parser(fp.date_created.split(' ')[0], 'long')]);
 						},
 						pointToLayer: function (feature, latlng) {
@@ -301,13 +301,13 @@ function tour(ti, fromPermalink) {
 					$('#thennow .sidebar-body div').empty();
 					imageOverlay.addLayer(L.geoJSON(json, {
 						pointToLayer: function(feature, latlng) {
-							var tnBody = '<hr><h3>' + feature.properties.imgcaption['1'] + ' (' + feature.properties.date + ')</h3>' +
+							var tnBody = '<hr/><h3>' + feature.properties.imgcaption['1'] + ' (' + feature.properties.date + ')</h3>' +
 								'<p><a href="' + dfltDir + 'ThenNow/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.imgcaption['1'] + '">' +
-								'<img id="' + feature.properties.id + '" src="' + dfltDir + 'ThenNow/' + feature.properties.id + '(0).jpg"></a>';
+								'<img id="' + feature.properties.id + '" src="' + dfltDir + 'ThenNow/' + feature.properties.id + '(0).jpg"/></a>';
 							// find number of images based on caption count
 							$.each(feature.properties.imgcaption, function(x) {
 								if (+x > 1) tnBody += '<a style="display:none;" href="' + dfltDir + 'ThenNow/' + feature.properties.id + '(' + (x) + ').jpg" data-fancybox="' + feature.properties.id +
-								'" data-caption="' + feature.properties.imgcaption[x] + '"></a>';
+								'" data-caption="' + feature.properties.imgcaption[x] + '"/></a>';
 							});
 							$('#thennow .sidebar-body div').append(tnBody + '<span class="comment">' + feature.properties.desc + '</span></p>');
 							$('[data-fancybox="' + feature.properties.id + '"]').fancybox({
@@ -333,7 +333,7 @@ function tour(ti, fromPermalink) {
 								}
 							});
 							var marker = setMarker(latlng, true);
-							marker.bindTooltip(feature.properties.imgcaption['1'] + '<img src="' + dfltDir + 'ThenNow/' + feature.properties.id + '(0).jpg">', { className: 'thennowTip', opacity: noTouch ? 1 : 0 });
+							marker.bindTooltip(feature.properties.imgcaption['1'] + '<img src="' + dfltDir + 'ThenNow/' + feature.properties.id + '(0).jpg"/>', { className: 'thennowTip', opacity: noTouch ? 1 : 0 });
 							marker.on('click', function() {
 								$('#thennow .sidebar-body').scrollTop(0);
 								$('#thennow .sidebar-body').scrollTop($('#' + feature.properties.id).offset().top - 120);
@@ -654,10 +654,6 @@ function tour(ti, fromPermalink) {
 			});
 			setTour('16');
 			break;
-		case 'churches':
-			setPageTitle('Virtual Church Tours');
-			setTour('17');
-			break;
 	} permalinkSet(); }, 50);
 }
 
@@ -679,7 +675,7 @@ function tourFocus(ti, id) {
 function tourRef(tourNum, item) {
 	$('#tourList').val('99').trigger('change');
 	$('#tourFrame').one('load', function() {
-		$(this).contents().find('ol:nth(' + (+tourNum + 1) + ') > li').eq(item - 1).css('background-color', 'khaki');
+		$(this).contents().find('ol:nth(' + (+tourNum + 1) + ') > li').eq(item - 1).css('background-color', $('html').css('--main-color') + '55');
 		$(this).contents().find('body').animate({ scrollTop: $(this).contents().find('ol:nth(' + (+tourNum + 1) + ') > li').eq(item - 1).offset().top - 20 }, 1000);
 	});
 }

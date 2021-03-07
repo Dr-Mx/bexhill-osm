@@ -1,5 +1,5 @@
 .leaflet-control-loading:empty {
-    background-image: url('../../img/loader.gif');
+    background-image: url('../../img/loader.svg');
     background-repeat: no-repeat;
 }
 

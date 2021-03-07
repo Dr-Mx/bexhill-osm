@@ -1,9 +1,13 @@
 :root {
-    --main-color: #b05000;
+	--main-color: #b05000;
+	--text-color: black;
+	--bg-color: inherit;
+	--bg-color2: rgba(190, 190, 190, 0.5);
 }
 html {
 	height: 100%;
 	overflow: hidden;
+	color: var(--text-color);
 }
 body {
 	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -13,6 +17,8 @@ body {
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	height: 100%;
+	scrollbar-color: var(--text-color) var(--bg-color);
+	scrollbar-width: thin;
 }
 @media (min-width: 733px) and (max-width: 1264px), (max-width: 365px) {
 	body {
@@ -27,7 +33,7 @@ body {
 	margin-top: 5px;
 }
 #reference b {
-	color: black;
+	color: var(--text-color);
 }
 
 h3 {
@@ -49,7 +55,7 @@ ul, ol {
 img {
 	width: 100%;
 	max-width: 500px;
-	border: 2px solid #ccc;
+	border: 2px solid var(--bg-color);
 	margin: auto;
 	display: block;
 	cursor: zoom-in;
@@ -68,10 +74,11 @@ img {
 }
 #bombKey span {
 	display: inline-block;
+	margin-right: 5px;
 	font-size: 35pt;
 	line-height: 11pt;
 	vertical-align: middle;
-	-webkit-text-stroke: 1px black;
+	-webkit-text-stroke: 2px black;
 	opacity: 0.75;
 }
 
@@ -94,11 +101,12 @@ img {
 .maplink {
 	cursor: pointer;
 	background:
-		url(tour-show.png)
-		right 8px
+		url(tour-show.svg)
+		right 5px
 		center
+		/20px 20px
 		no-repeat;
-	padding: 5px 30px 5px 5px;
+	padding: 5px 28px 5px 5px;
 	margin-right: -5px;
 	margin-bottom: 5px;
 	margin-left: -5px;
@@ -108,12 +116,20 @@ img {
 	color: var(--main-color);
 }
 .maplink:hover {
-	background-color: rgba(190, 190, 190, 0.5);
+	background-color: var(--bg-color2);
+}
+.vidlink {
+	display: block;
+	padding: 5px 0;
+}
+.vidlink::before {
+	content: "\25BA\0020";
 }
 .sm {
 	margin-top: 5px;
 	margin-bottom: 2px;
 	font-size: 95%;
+	background-size: 18px 18px;
 }
 
 a {

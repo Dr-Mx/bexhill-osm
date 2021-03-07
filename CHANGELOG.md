@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v5.11.0 - Dark theme
+
+**Date:** 07/03/2021
+
+Updated js
+ - jquery.mobile.custom.min.js 1.5.0rc1
+ - URI.js 1.19.6
+ - L.Control.Locate.min.js 0.72.2
+ 
+Site changes
+ - Proper support for a dark theme, auto switching if user prefers a dark colour scheme
+ - Custom OverPass queries can now include osm elements
+ - Custom OverPass queries can now be parsed in the url using the 'data' query
+ - Save map settings to localStorage
+ - Converted some gif to svg
+ - Fixed a bug where bookmarks weren't all being loaded
+ - Lots of the usual bug fixes and improvements
+
+
 ## v5.10.0 - Offset baselayer
 
 **Date:** 12/01/2021

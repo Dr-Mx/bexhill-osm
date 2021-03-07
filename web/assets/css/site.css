@@ -1,5 +1,11 @@
+:root {
+    --main-color: #b05000;
+	--second-color: #be6f2e;
+	--bg-hover-color: #f4f4f4;
+	--popup-long-desc-height: 200px;
+}
 .spinner {
-	opacity: 0.85;
+	opacity: 0.75;
 	position: absolute;
 	z-index: 1500;
 	background: url('../../assets/img/spinner.svg') center no-repeat;
@@ -7,14 +13,8 @@
 	width: 100%;
 	pointer-events: none;
 }
-:root {
-    --main-color: #b05000;
-	--second-color: #be6f2e;
-	--btn-hover-color: #f4f4f4;
-	--popup-long-desc-height: 200px;
-}
 .theme {
-	color: var(--main-color);
+	color: var(--main-color) !important;
 }
 .nowrap {
 	white-space: nowrap;
@@ -75,7 +75,7 @@ input[type=text], input[type=date], input[type=number] {
 #homeBox, #xmasMsg {
 	max-width: 500px;
 	margin: 0 auto;
-	background: rgba(255, 255, 255, 0.6);
+	background-color: rgba(255, 255, 255, 0.6);
 	border-radius: 5px;
 	transition: box-shadow 100ms linear;
 }
@@ -113,6 +113,9 @@ input[type=text], input[type=date], input[type=number] {
 	vertical-align: middle;
 	padding: 3px;
 }
+#tipsText a {
+	color: inherit;
+}
 #tipsButton {
 	display: table-cell;
 	text-align: right;
@@ -137,7 +140,7 @@ input[type=text], input[type=date], input[type=number] {
 }
 #newFeed ul {
 	margin-top: 5px;
-	color: #536862;
+	color: #596e68;
 }
 #newFeed ul > li {
 	left: -1em;
@@ -147,6 +150,9 @@ input[type=text], input[type=date], input[type=number] {
 }
 #osmFeed {
 	display: none;
+}
+#osmFeed > ul > li > a > i {
+	line-break: anywhere;
 }
 
 a {
@@ -245,6 +251,9 @@ h3 {
 	transform: rotate(90deg);
 }
 
+.baselayer {
+	transition: opacity 300ms linear;
+}
 .leaflet-control-layers-toggle {
 	width: 40px !important;
 	height: 40px !important;
@@ -345,8 +354,8 @@ h3 {
 .leaflet-control-attribution .fa-info-circle:hover {
 	color: #333;
 }
-.leaflet-bar a:hover {
-	background-color: var(--btn-hover-color);
+.leaflet-bar a:hover, .leaflet-bar button:hover {
+	background-color: var(--bg-hover-color);
 }
 .leaflet-control-layers-toggle {
 	background-image: url(../img/leaflet/layers.png);
@@ -380,13 +389,13 @@ h3 {
 .modalTutor {
 	position: absolute;
 	width: 115px;
-	background-color: rgba(75, 75, 75, 0.95);
+	background-color: var(--main-color);
 	padding: 8px;
 	margin: 10px;
 	color: white;
 	border-radius: 5px;
 	border: none;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
 	font-size: 90%;
 	text-align: left;
 	z-index: 1100;
@@ -414,7 +423,8 @@ h3 {
 	cursor: pointer;
 }
 .modalButton:hover {
-	background-color: var(--btn-hover-color);
+	background-color: var(--bg-hover-color);
+	color: black;
 }
 
 .layerLidar {
@@ -441,7 +451,7 @@ input[type=range] {
 	margin: 10px 15px 0 7px;
 	padding: 0;
 	border: none;
-	background: #ccc;
+	background-color: #ccc;
 	border-radius: 3px;
 	cursor: e-resize;
 }
@@ -455,12 +465,11 @@ input[type=range]::-webkit-slider-thumb {
 	background-color: var(--main-color);
 }
 input[type=range]:focus {
-	outline: none;
+	outline: none !important;
 }
 input[type=range]::-moz-range-track {
 	width: 100%;
 	height: 10px;
-	background: #ccc;
 	border: none;
 	border-radius: 3px;
 }
@@ -494,7 +503,7 @@ input[type=range]::-ms-tooltip {
 	width: 800px;
 	height: 44px;
 	text-align: center;
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.4);
 	border: none;
 }
 #inputWw2 div {
@@ -514,7 +523,7 @@ input[type=range]::-ms-tooltip {
 
 .sidebar-body button {
 	color: var(--main-color);
-	border: 1px solid #ccc !important;
+	border: 1px solid #ccc;
 	width: 30px;
 	height: 30px;
 	background-color: white;
@@ -523,7 +532,7 @@ input[type=range]::-ms-tooltip {
 	padding: 0 6px;
 }
 .sidebar-body button:hover {
-	background-color: var(--btn-hover-color);
+	background-color: var(--bg-hover-color);
 	color: black;
 	border: 1px solid #ccc;
 	height: 30px;
@@ -547,7 +556,7 @@ input[type=range]::-ms-tooltip {
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	border: 2px solid #bbb;
-	background-color: rgba(0, 0, 0, 0.05);
+	background-color: rgba(0, 0, 0, 0.1);
 	pointer-events: none;
 }
 #poi-results button {
@@ -568,7 +577,7 @@ select {
 	cursor: pointer;
 }
 select:hover:enabled, #poi-results button:hover {
-	background-color: var(--btn-hover-color);
+	background-color: var(--bg-hover-color);
 	color: black;
 }
 #poi-results-list {
@@ -615,6 +624,9 @@ select:hover:enabled, #poi-results button:hover {
 	background-color: rgba(190, 190, 190, 0.5);
 	cursor: pointer;
 }
+.poi-result-selected {
+	background-color: rgba(255, 255, 255, 0.5);
+}
 #poi-filter {
 	position: relative;
 	top: 0px;
@@ -657,6 +669,9 @@ select:hover:enabled, #poi-results button:hover {
 	-webkit-overflow-scrolling: touch;
 	flex: 1;
 	position: relative;
+}
+.sidebar-body, #poi-icons, #poi-results {
+	scrollbar-width: thin;
 }
 #poi-bookm {
 	width: auto;
@@ -816,7 +831,6 @@ select:hover:enabled, #poi-results button:hover {
 	right: 0;
 	bottom: 0;
 	background-color: #bbb;
-	transition: 400ms;
 	border-radius: 24px;
 	width: 50px;
 }
@@ -828,20 +842,21 @@ select:hover:enabled, #poi-results button:hover {
 	left: 4px;
 	bottom: 4px;
 	background-color: white;
-	transition: 400ms;
 	border-radius: 50%;
+	transition: transform 200ms linear;
 }
-.slider:hover {
+.switch:hover > .slider {
 	background-color: #999;
 }
 input:checked + .slider {
 	background-color: var(--main-color);
 }
-input:focus + .slider {
-	box-shadow: 0 0 1px var(--main-color);
-}
 input:checked + .slider::before {
 	transform: translateX(26px);
+}
+input:indeterminate + .slider::before {
+	transform: translateX(13px);
+	opacity: 0.5;
 }
 .switchLabel {
 	font-size: 90%;
@@ -849,13 +864,14 @@ input:checked + .slider::before {
 	display: inline-block;
 	margin-left: 60px;
 }
-#devTools button {
+#settings button {
 	float: left;
 	margin-right: 5px;
 }
 .buttonLabel {
 	font-size: 90%;
-	line-height: 24px;
+	line-height: 20px;
+	padding-top: 5px;
 }
 #inputOverpass, #inputOpServer, #inputRevServer {
 	width: calc(100% - 100px);
@@ -1088,9 +1104,9 @@ input:checked + .slider::before {
 .popup-ohTable tr { border: 1px solid white; }
 .popup-ohTable td { padding: 2px 0; }
 .popup-ohTable tr.today { font-weight: bold; }
-.popup-ohTable td.weekend { background: #ccc; }
-.popup-ohTable td.workday { background: #ddd; }
-.popup-ohTable td.times { background: #eee; }
+.popup-ohTable td.weekend { background-color: #ccc; }
+.popup-ohTable td.workday { background-color: #ddd; }
+.popup-ohTable td.times { background-color: #eee; }
 #img0 {
 	display: inherit;
 }

@@ -154,7 +154,7 @@
 }
 
 .leaflet-routing-delete-waypoints, .leaflet-routing-reverse-waypoints, .leaflet-routing-add-waypoint {
-	border-bottom: inherit !important;
+	border-bottom: inherit;
 	width: 30px !important;
 }
 

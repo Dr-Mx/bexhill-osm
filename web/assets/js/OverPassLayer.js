@@ -16,11 +16,11 @@ function show_overpass_layer(query, cacheId, bound) {
 				query = query.replace(/];/g, '](area);');
 			}
 			else queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
-		queryBbox += ';' + query + 'out tags center qt';
+		queryBbox += ';' + query;
 	}
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
-		query: queryBbox + ' ' + maxOpResults + ';',
+		query: queryBbox + 'out tags center qt ' + maxOpResults + ';',
 		endpoint: 'https://' + $('#inputOpServer').val() + '/api/interpreter',
 		callback: callback,
 		cacheId: cacheId ? 'OPL' + cacheId : ''
