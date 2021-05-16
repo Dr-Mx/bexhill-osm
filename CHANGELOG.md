@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v6.0.0 - Visual click
+
+**Date:** 17/05/2021
+
+Added js
+ - L.VisualClick.js 1.1.0
+
+Updated js
+ - jquery.js 3.6.0
+ - opening_hours+deps.min.js 3.6.0
+
+Site changes
+ - Animated single click on map when querying places
+ - Complete overhaul of the History Tour to move away from numbering conventions
+ - Custom scrollbar styling
+ - Add tide data to weather box
+ - Lots of the usual bug fixes and code improvements
+
+
 ## v5.11.0 - Dark theme
 
 **Date:** 07/03/2021
@@ -42,7 +61,7 @@ Site changes
 
 Updated js
  - leaflet.js 1.7.1
- - jquery.js 3.5.1 
+ - jquery.js 3.5.1
  - L.Control.Locate.min.js 0.72.1
  
 Site changes

@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5"/>
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7"/>
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=5.11.0"/>
+	<link rel="stylesheet" href="assets/css/site.css?v=6.0.0"/>
 	<link rel="stylesheet" id="darkcss"/>
  </head>
 
@@ -71,7 +71,7 @@
 			<!-- Upper tabs -->
 			<div class="sidebar-pane" id="home">
 				<div class="sidebar-header"><span class="sidebar-header-text" onclick="$(window.location).attr('href', window.location.pathname);">Bexhill OpenStreetMap</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
-				<div class="sidebar-body">
+				<div class="sidebar-body custscroll">
 					<p><input id="autocomplete" type="text" class="autocomplete" placeholder="Search, e.g. 'coffee', 'ww2', 'western road'" title="Enter a keyword, or an address"></p>
 					<div id="homeBox">
 						<div id="weather"><span class="comment">Loading weather...</span></div>
@@ -105,11 +105,11 @@
 					<span id="newFeed">
 						<span>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Add tide times to weather widget</i></a> - 04/2021</li>
+								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('settings');"><i>Add dark theme</i></a> - 02/2021</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'scarecrow');"><i>Xmas Scarecrow Competition 2020</i></a> - 12/2020</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'xmas');"><i>Xmas Window Display Competition 2020</i></a> - 11/2020</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'pano');"><i>360&deg; panoramic street level views (in progress)</i></a> - 07/2020</li>
-								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'notes');"><i>Display OSM Notes as layer</i></a> - 06/2020</li>
-								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', '0');"><i>Published online version of The Story of Bexhill Street Names</i></a> - 05/2020</li>
 							</ul>
 						</span>
 						<span id="osmFeed"><!-- auto-populated --></span>
@@ -118,19 +118,19 @@
 			</div>
 			<div class="sidebar-pane" id="pois">
 				<div class="sidebar-header"><span class="sidebar-header-text">Places</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
-				<div class="sidebar-body">
-					<div id="poi-results">
+				<div class="sidebar-body custscroll">
+					<div id="poi-results" class="custscroll">
 						<h3></h3>
 						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map('markers');"><i class="fas fa-trash"></i></button>
 						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="zoom_area(true);"><i class="fas fa-eye"></i></button>
 						<div id="poi-results-list"></div>
 					</div>
-					<div id="poi-icons"><!-- auto-populated using pois-type.js as a reference --></div>
+					<div id="poi-icons" class="custscroll"><!-- auto-populated using pois-type.js as a reference --></div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="walking">
 				<div class="sidebar-header"><span class="sidebar-header-text">Walking</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
-				<div class="sidebar-body">
+				<div class="sidebar-body custscroll">
 					<h3>Find a walking route</h3>
 					Use the map context-menu, or type an address:
 					<div id="routingControl"></div>
@@ -160,28 +160,28 @@
 			</div>
 			<div class="sidebar-pane" id="tour">
 				<div class="sidebar-header"><span class="sidebar-header-text">History</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
-				<div class="sidebar-body">
+				<div class="sidebar-body custscroll">
 					<div id="tourControls">
 						<button type="button" id="tourPrev" title="Previous article"><i class="fas fa-chevron-left"></i></button>
 							<select id="tourList" class="theme">
-								<option value="0" data-keyword="bexhill, history">Bexhill-on-Sea</option>
-								<option value="1" data-keyword="dinosaur, prehistoric, fossil">Prehistoric Period</option>
-								<option value="2" data-keyword="amsterdam shipwreck">The Amsterdam Shipwreck</option>
-								<option value="3" data-keyword="smuggling, sidley green">Smuggling</option>
-								<option value="4" data-keyword="railway, west branch line">Railways</option>
-								<option value="5" data-keyword="tram, trollybus">Tramway &amp; Trolleybuses</option>
-								<option value="6" data-keyword="motor racing">Motor Racing</option>
-								<option value="7" data-keyword="de la warr pavilion dlwp">De La Warr Pavilion</option>
-								<option value="8" data-keyword="old town manor house, manor gardens">Old Town Manor</option>
-								<option value="9" data-keyword="world war ww2 wwii, bomb map, air-raid shelter, pillbox">World War II</option>
-								<option value="10" data-keyword="northeye prison, royal air force raf">Northeye Prison Site</option>
-								<option value="11" data-keyword="famous notable people">Notable People</option>
-								<option value="12" data-keyword="public street clock">Public Clocks</option>
-								<option value="13" data-keyword="lost heritage, ruin">Lost Heritage</option>
-								<option value="14" data-keyword="boundary stone marker">Boundary Stones</option>
-								<option value="15" data-keyword="ordnance survey point, benchmark">OS Surveying Points</option>
-								<option value="16" data-keyword="martello tower fort">Martello Towers</option>
-								<option value="99">References &amp; further reading</option>
+								<option value="bexhill" data-keyword="bexhill, history">Bexhill-on-Sea</option>
+								<option value="prehistory" data-keyword="dinosaur, prehistoric, fossil">Prehistoric Period</option>
+								<option value="manor" data-keyword="old town manor house, manor gardens">Old Town Manor</option>
+								<option value="amsterdam" data-keyword="amsterdam shipwreck">The Amsterdam Shipwreck</option>
+								<option value="smuggling" data-keyword="smuggling, sidley green">Smuggling</option>
+								<option value="martello" data-keyword="martello tower fort">Martello Towers</option>
+								<option value="racing" data-keyword="motor racing">Motor Racing</option>
+								<option value="railways" data-keyword="railway, west branch line">Railways</option>
+								<option value="trams" data-keyword="tram, trollybus">Tramway &amp; Trolleybuses</option>
+								<option value="dlwp" data-keyword="de la warr pavilion dlwp">De La Warr Pavilion</option>
+								<option value="ww2" data-keyword="world war ww2 wwii, bomb map, air-raid shelter, pillbox">World War II</option>
+								<option value="northeye" data-keyword="northeye prison, royal air force raf">Northeye Prison Site</option>
+								<option value="heritage" data-keyword="lost heritage, ruin">Lost Heritage</option>
+								<option value="boundary" data-keyword="boundary stone marker">Boundary Stones</option>
+								<option value="people" data-keyword="famous notable people">Notable People</option>
+								<option value="clocks" data-keyword="public street clock">Public Clocks</option>
+								<option value="surveying" data-keyword="ordnance survey point, benchmark">OS Surveying Points</option>
+								<option value="zrefs">~ References &amp; further reading</option>
 							</select>
 						<button type="button" id="tourNext" title="Next article"><i class="fas fa-chevron-right"></i></button>
 					</div>
@@ -191,7 +191,7 @@
 			</div>
 			<div class="sidebar-pane" id="thennow">
 				<div class="sidebar-header"><span class="sidebar-header-text">Then and Now</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
-				<div class="sidebar-body">
+				<div class="sidebar-body custscroll">
 					<p>Explore how buildings and places have changed over the years with <span id="thennowNum">these</span> superimposed and colourised images. Click each one to see them fade from then to now.</p>
 					<span class="comment">"Beauty is vanishing from our world because we live as though it did not matter." - Sir Roger Scruton.</span>
 					<div>
@@ -204,7 +204,7 @@
 			<!-- Lower tabs -->
 			<div class="sidebar-pane" id="settings">
 				<div class="sidebar-header"><span class="sidebar-header-text">Settings</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
-				<div class="sidebar-body">
+				<div class="sidebar-body custscroll">
 					<h3>Map display options</h3>
 					<p><label class="switch"><input id="inputOpen" data="uri" type="checkbox"><span class="slider" title="Filter results to open facilities"></span><span class="switchLabel">Only show currently open places</span></label></p>
 					<p><label class="switch"><input id="inputUnit" data="cache" type="checkbox"><span class="slider" title="mi/ft or km/m"></span><span class="switchLabel">Use kilometres for measurements (metric)</span></label></p>
@@ -221,7 +221,7 @@
 								<select id="inputRevServer" class="theme">
 									<option selected value="nominatim">nominatim.openstreetmap.org</option>
 									<option value="opencage">api.opencagedata.com</option>
-									<option value="photon">photon.komoot.de</option>
+									<option value="photon">photon.komoot.io</option>
 									<option value="openrouteservice">api.openrouteservice.org</option>
 								</select></p>
 							<p>OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Overpass Query Servers"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br/>
@@ -244,16 +244,16 @@
 			</div>
 			<div class="sidebar-pane" id="help">
 				<div class="sidebar-header"><span class="sidebar-header-text">Help</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
-				<div class="sidebar-body">
+				<div class="sidebar-body custscroll">
 					<p>
 						<a href="#gotosearch">Search</a><br/>
 						<a href="#gotocontrols">Map Controls</a><br/>
 						<a href="#gotocontext">Context-menu</a><br/>
-						<a href="#gototabs">Tabs</a><br/>
-						<a href="#gotopoi">Places Tab</a><br/>
+						<a href="#gotoplaces">Places Tab</a><br/>
 						<a href="#gotowalking">Walking Tab</a><br/>
 						<a href="#gototour">History Tab</a><br/>
 						<a href="#gotothennow">Then and Now Tab</a><br/>
+						<a href="#gotosettings">Settings Tab</a>
 					</p>
 					<div id="gotosearch"><hr/>
 					<h3>Search</h3>
@@ -284,17 +284,9 @@
 						<i class="far fa-copy fa-fw"></i> Coordinates: Copy the GPS and Grid Reference to clipboard.
 						<p><img src="assets/img/help-context.png" alt="Context-menu preview"/></p>
 					</div>
-					<div id="gototabs"><hr/>
-					<h3>Tabs</h3>
-						<img src="assets/img/sb-pois.png"/> Places: Select an interest to be displayed on the map.<br/><br/>
-						<img src="assets/img/sb-walking.png"/> Walking: Select from a few set walks, or create your own path through the many twittens.<br/><br/>
-						<img src="assets/img/sb-tour.png"/> History: Travel back in time and discover the history of the town with our interactive guide.<br/><br/>
-						<img src="assets/img/sb-thennow.png"/> Then and Now: See how places have changed over the years and what they may have looked like today.<br/><br/>
-						<img src="assets/img/sb-settings.png"/> Settings: Various options for how data on the map is displayed. Debugging and development tools.
-					</div>
-					<div id="gotopoi"><hr/>
+					<div id="gotoplaces"><hr/>
 					<h3>Places Tab</h3>
-						Select up to 3 groups to be displayed, after a few moments the corresponding markers will appear on the map.<br/>
+						<img class="floatleft" src="assets/img/sb-pois.png"/> Select an interest to be displayed on the map. Up to 3 groups can be displayed, after a few moments the corresponding markers will appear on the map.<br/>
 						<p><img src="assets/img/help-checkboxes.png" alt="Checkbox preview"/></p>
 						Results will be displayed as a scrollable list and on the map as markers. The buttons at the top allow you to clear the results, or zoom to their area on the map.<br/>
 						Each listed item will have a colour showing if the place is currently open; its facilities and accessibility; and distance if location is turned on.
@@ -302,29 +294,34 @@
 						Each marker on the map can be clicked showing a pop-up detailing more specific information.
 						<p><img src="assets/img/icons/pinother.png" alt="POI preview"/></p>
 						<i style="color:#777;" class="fas fa-edit fa-fw"></i> Edit with OpenStreetMap: Opens a new window where you can make immediate changes to the place using the OSM iD editor.<br/><br/>
-						<i style="color:#777;" class="far fa-bookmark fa-fw"></i> Bookmark: This will save/delete the place to your computer's memory.<br/>
+						<i style="color:#777;" class="far fa-bookmark fa-fw"></i> Bookmark: This will save/delete the place on your browser's memory.<br/>
 						<p><img src="assets/img/help-popup.png" alt="Marker popup preview"/></p>
 					</div>
 					<div id="gotowalking"><hr/>
 					<h3>Walking Tab</h3>
-						Find a route by either entering an address, or using the map context-menu. Add additional markers by dragging an existing path to a new location.
+						<img class="floatleft" src="assets/img/sb-walking.png"/> Select from a few set walks, or create your own path through the many twittens. Find a route by either entering an address, or using the map context-menu. Add additional markers by dragging an existing path to a new location.<br/>
 						<p><img src="assets/img/help-walking.png" alt="Walking route preview"/></p>
 					</div>
 					<div id="gototour"><hr/>
 					<h3>History Tab</h3>
-						Navigate by either selecting from the list-box or using the arrows to jump between articles. Mobile users may also swipe the list-box to navigate.<br/><br/>
-						<img style="display:inline-block;padding:0;margin-bottom:-5px;width:20px;height:20px;" src="tour/tour-show.svg" alt="Show on map button"/> Show on map: Displays an interactive layer related to the article.
+						<img class="floatleft" src="assets/img/sb-tour.png"/> History: Travel back in time and discover the history of the town with this interactive guide. Navigate by either selecting from the list-box or using the arrows to jump between articles.
+						<p><img class="floatleft" src="tour/tour-show.svg" alt="Show on map button"/> Show on map: Displays an interactive layer related to the article.</p>
 					</div>
 					<div id="gotothennow"><hr/>
 					<h3>Then and Now Tab</h3>
-						Click on an image or marker to enlarge it, the slideshow will automatically advance after a few seconds. You can pause or close the current image using the controls in the top right corner of the page.<br/><br/>
+						<img class="floatleft" src="assets/img/sb-thennow.png"/> Then and Now: See how places have changed over the years and what they may look like if they were still here today.
+						<p>Click on an image or marker to enlarge it, the slideshow will automatically advance after a few seconds. You can pause, close or advance the current image using the controls on the page.</p>
+					</div>
+					<div id="gotosettings"><hr/>
+					<h3>Settings Tab</h3>
+						<img class="floatleft" src="assets/img/sb-settings.png"/> Settings: Various options for how the map is displayed. Debugging and development tools.
 					</div>
 					<a class="theme anchor"></a>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="info">
 				<div class="sidebar-header"><span class="sidebar-header-text">Information</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
-				<div class="sidebar-body">
+				<div class="sidebar-body custscroll">
 					<p>
 						<a href="#gotoabout">About &amp; Contact</a><br/>
 						<a href="#gotodonate">Donate</a><br/>
@@ -388,6 +385,7 @@
 								<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank" rel="noopener">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
 								<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank" rel="noopener">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
 								<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank" rel="noopener">leaflet-hash</a> &copy; Michael L. Evans</li>
+								<li><a href="https://github.com/MazeMap/Leaflet.VisualClick/" target="_blank" rel="noopener">Leaflet.VisualClick</a> &copy; Dag Jomar Mersland</li>
 							</ul></li>
 							<li><a href="https://jquery.com" target="_blank" rel="noopener">jQuery</a> &copy; The jQuery Foundation</li>
 							<li><a href="https://github.com/medialize/URI.js" target="_blank" rel="noopener">URI.js</a> &copy; Medialize</li>
@@ -403,8 +401,8 @@
 					</div>
 					<div id="gotoprivacy"><hr/>
 					<h3>Privacy Policy</h3>
-						There are no trackers, ads, miners, or analytics.<br/>
-						Local Storage is used to remember you've read the tutorial, your favourites and to temporary cache POIs. Clear this storage at any time by right-clicking the <i class="fas fa-trash fa-sm"></i> button.
+						There are no trackers, ads, miners, or analytics.<br/><br/>
+						Your browser's local storage is used to remember you've read the tutorial, bookmarks and to cache POIs. Clear this storage at any time by right-clicking the <i class="fas fa-trash fa-sm"></i> button.
 					</div>
 					<a class="theme anchor"></a>
 				</div>
@@ -416,7 +414,7 @@
 	<div id="map" class="sidebar-map leaflet-touch"></div>
 
 	<!-- JavaScript | site plugins -->
-	<script src="assets/js/plugins/jquery.min.js?v=3.5.1"></script>
+	<script src="assets/js/plugins/jquery.min.js?v=3.6.0"></script>
 	<script src="assets/js/plugins/jquery-ui.min.js?v=1.12.1"></script>
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v=1.5.0rc1"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v=1.3.4"></script>
@@ -424,6 +422,7 @@
 	<script src="assets/js/plugins/URI.min.js?v=1.19.6"></script>
 	<script src="assets/js/plugins/leaflet.js?v=1.7.1"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v=0.2.1"></script>
+	<script src="assets/js/plugins/L.VisualClick.js?v=1.1.0"></script>
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v=0.4.0"></script>
 	<script src="assets/js/plugins/Control.Loading.min.js?v=0.1.24"></script>
 	<script src="assets/js/plugins/leaflet.wms.min.js?v=0.2.0"></script>
@@ -434,16 +433,16 @@
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v=1.12.0"></script>
 	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.72.2"></script>
 	<script src="assets/js/plugins/bouncemarker.min.js?v=1.2.0"></script>
-	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.4.0"></script>
+	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.6.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=5.11.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=5.11.0"></script>
-	<script src="assets/js/tags-parsers.js?v=5.11.0"></script>
-	<script src="assets/js/pois-type.js?v=5.11.0"></script>
-	<script src="tour/tour.js?v=5.11.0"></script>
-	<script src="assets/js/site.js?v=5.11.0"></script>
+	<script src="assets/js/config.js?v=6.0.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=6.0.0"></script>
+	<script src="assets/js/tags-parsers.js?v=6.0.0"></script>
+	<script src="assets/js/pois-type.js?v=6.0.0"></script>
+	<script src="tour/tour.js?v=6.0.0"></script>
+	<script src="assets/js/site.js?v=6.0.0"></script>
 
  </body>
 </html>

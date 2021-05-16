@@ -7,7 +7,7 @@
 <book>
 <copyright>
 	<name>The Story of Bexhill Street Names</name>
-	<author>Dr Paul Wright, Local History Group, 2014</author>
+	<author>Dr Paul Wright, Local History Study Group, 2014</author>
 	<url>https://bexhill-osm.org.uk/streetnames</url>
 </copyright>
 <streetNames>
@@ -719,7 +719,7 @@
 	<street>
 		<name>Cooden Close</name>
 		<date>1962</date>
-		<desc>The former manor of Cooden is on costal land at the western side of Bexhill. John de Coding was the first tenant in the 11th century. (Adopted by Borough of Bexhill, 1st part 6th November 1967 and last part 30th June 1969).</desc>
+		<desc>The former manor of Cooden is on costal land at the eastern side of Bexhill. John de Coding was the first tenant in the 11th century. (Adopted by Borough of Bexhill, 1st part 6th November 1967 and last part 30th June 1969).</desc>
 	</street>
 	<street>
 		<name>Cooden Down</name>
@@ -729,12 +729,12 @@
 	<street>
 		<name>Cooden Drive</name>
 		<date>tramway 1906; road 1914</date>
-		<desc>The former manor of Cooden is on costal land at the western side of Bexhill. John de Coding was the first tenant in the 11th century. The Hastings Tramways line was extended from Marina to Cooden Beach, via Egerton Road and Brockley Road and opened on 28th July 1906. At that time the greater part of this section of line ran through open cornfields. In 1914 work began to make up the road and this was completed in 1918. Between about 1915 and 1916 the section of road closer to Cooden was called Cooden Beach in the street directories. The tramway service ended during 1929 and the tracks were eventually removed. (Adopted by Borough of Bexhill, Richmond Road to Brockley Road 30th November 1925. Also adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
+		<desc>The former manor of Cooden is on costal land at the eastern side of Bexhill. John de Coding was the first tenant in the 11th century. The Hastings Tramways line was extended from Marina to Cooden Beach, via Egerton Road and Brockley Road and opened on 28th July 1906. At that time the greater part of this section of line ran through open cornfields. In 1914 work began to make up the road and this was completed in 1918. Between about 1915 and 1916 the section of road closer to Cooden was called Cooden Beach in the street directories. The tramway service ended during 1929 and the tracks were eventually removed. (Adopted by Borough of Bexhill, Richmond Road to Brockley Road 30th November 1925. Also adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
 	</street>
 	<street>
 		<name>Cooden Sea Road</name>
 		<date>road ~1841; name 1930</date>
-		<desc>The former manor of Cooden is on costal land at the western side of Bexhill. John de Coding was the first tenant in the 11th century. This road was simply known as Sea Road until 1929. Occasionally Cooden Sea Lane has been noted in the records. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825. When the railway came to Bexhill in 1846 it was necessary to establish cattle arches at Cooden Beach, Westcourt Drive, Sackville Road and Glyne Gap, to enable farmers north of the railway line to move their stock to summer grazing on the low-lying marshland to the south of the railway. Because of the increasing volume and size of road traffic the cattle arch was later demolished and replaced by a number of bridges. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
+		<desc>The former manor of Cooden is on costal land at the eastern side of Bexhill. John de Coding was the first tenant in the 11th century. This road was simply known as Sea Road until 1929. Occasionally Cooden Sea Lane has been noted in the records. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825. When the railway came to Bexhill in 1846 it was necessary to establish cattle arches at Cooden Beach, Westcourt Drive, Sackville Road and Glyne Gap, to enable farmers north of the railway line to move their stock to summer grazing on the low-lying marshland to the south of the railway. Because of the increasing volume and size of road traffic the cattle arch was later demolished and replaced by a number of bridges. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
 	</street>
 	<street>
 		<name>Cooper Drive</name>
@@ -1148,7 +1148,7 @@
 	</street>
 	<street>
 		<name>Fiveways</name>
-		<date></date>
+		<date>no date</date>
 		<desc>Old popular name for road junction near St Stephen's Church where Down Road, West Down Road, Broadoak Lane, Gunters Lane and Woodsgate Park meet.</desc>
 	</street>
 	<street>
@@ -1158,7 +1158,7 @@
 	</street>
 	<street>
 		<name>Four Turnings</name>
-		<date></date>
+		<date>no date</date>
 		<desc>Old popular name for crossroad between Peartree Lane, Turkey Road and Whydown Road.</desc>
 	</street>
 	<street>
@@ -3582,7 +3582,7 @@
 	<newstreet>
 		<name>Castle Way</name>
 		<date>2017</date>
-		<desc></desc>
+		<desc>Probably a reference to the adjacent Windsor Road. A public house on the corner of London Road was also once called The Castle.</desc>
 	</newstreet>
 	<newstreet>
 		<name>Clarence Gardens</name>
@@ -3602,12 +3602,12 @@
 	<newstreet>
 		<name>Combe Valley Greenway</name>
 		<date>2017</date>
-		<desc></desc>
+		<desc>Combe means a short valley or hollow on a hillside or coastline</desc>
 	</newstreet>
 	<newstreet>
 		<name>Combe Valley Way</name>
 		<date>2015</date>
-		<desc></desc>
+		<desc>Combe means a short valley or hollow on a hillside or coastline</desc>
 	</newstreet>
 	<newstreet>
 		<name>Daffodil Way</name>
@@ -3702,12 +3702,12 @@
 	<newstreet>
 		<name>Pages Parade East</name>
 		<date></date>
-		<desc></desc>
+		<desc>Built on land forming part of the former Pages Estate.</desc>
 	</newstreet>
 	<newstreet>
 		<name>Pages Parade West</name>
 		<date></date>
-		<desc></desc>
+		<desc>Built on land forming part of the former Pages Estate.</desc>
 	</newstreet>
 	<newstreet>
 		<name>Pelton Close</name>
@@ -3717,7 +3717,7 @@
 	<newstreet>
 		<name>Preston Hall Close</name>
 		<date></date>
-		<desc></desc>
+		<desc>Nearby Preston House in 1380 is recorded as Prestesdene meaning a priest's valley.</desc>
 	</newstreet>
 	<newstreet>
 		<name>Redgrove Close</name>
@@ -3727,7 +3727,7 @@
 	<newstreet>
 		<name>Sackville Mews</name>
 		<date></date>
-		<desc></desc>
+		<desc>Herbrand de Sauqueville was a follower of William the Conqueror who came to Sussex in 1068. The Sackville family have been Lords of the Manor of Bexhill since 1570 when it was granted to Thomas Sackville by Queen Elizabeth I. </desc>
 	</newstreet>
 	<newstreet>
 		<name>Snowdrop Way</name>
@@ -3762,7 +3762,7 @@
 	<newstreet>
 		<name>Wrestwood Parade</name>
 		<date></date>
-		<desc></desc>
+		<desc>Named after the former Wrest Wood which itself was previously called Rist Wood. In 1327 a Robert de Reste had a home nearby.</desc>
 	</newstreet>
 	<newstreet>
 		<name>Woodsgate Place</name>

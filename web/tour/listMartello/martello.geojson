@@ -1,0 +1,267 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+			"type": "Feature",
+			"properties": {
+				"id": "mt55",
+				"name": "Martello Tower 55",
+				"date": "1806-present",
+				"description": "Normans Bay. The only existing tower in Bexhill today, known as Billy's Tower to the local fishermen.<br>Used for semaphore communication from the 1820&#39;s and then for experiments in wireless telegraphy in 1910. The tower then became a summer residence until the Second World War when it was converted to a Battery Observation Post. Some anti-tank cubes can still be found around the site today.<br>In 2004 it went up for sale with a reserve price of £150,000 - it sold for £285,000. By 2008 it was converted into a two bedroom home with a glass extention on the roof and is now a Grade II listed building.",
+				"img": {
+					"0": "listMartello/img/mt55(0)",
+					"1": "listMartello/img/mt55(1)",
+					"2": "File:Martello Tower No 55, Coast Road, Normans Bay.jpg"
+				},
+				"imgattrib": {
+					"0": "1999 | &copy; Bexhill Museum",
+					"1": "2002 | &copy; Anthony Sherwin Architects"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.38492, 50.82289]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt54",
+				"name": "Martello Tower 54",
+				"date": "1806-1911",
+				"description": "Pevensey Sluice. Built to protect the sluice together with No.53.<br>In 1865 a whale was washed up on the shingle close next to the tower and an estimated 40,000 people came to see the 70 foot finback. Museum of Zoology in Cambridge acquired the whale skeleton in 1866 and it is still on display today!<br>No.54 went up for auction in August 1908 and was subsequently withdrawn when it didn't make it's bidding price of £500, demolished three years later.",
+				"img": {
+					"0": "listMartello/img/mt54(0)",
+					"1": "listMartello/img/mt54(1)",
+					"2": "listMartello/img/mt54(2)",
+					"3": "listMartello/img/mt54(3)"
+				},
+				"imgattrib": {
+					"0": "1865",
+					"1": "c1908 | East Sussex Libraries",
+					"2": "c1908 | East Sussex Libraries",
+					"3": "c1908 | East Sussex Libraries"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.39308, 50.82518]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt53",
+				"name": "Martello Tower 53",
+				"date": "1806-1875",
+				"description": "Pevensey Sluice. Built to protect the sluice together with No.54, the War Department put down boundary markers (pictured) to mark out the land.<br>Like many of the towers, after the threat of Napoleon had vanished, married pensioners from the Royal Artillery were put in as peacekeepers here in 1817.<br>One night in 1830 when the tower was garrisoned by the Coast Blockade, smugglers attacked four of the men leaving them seriously injured.<br>Damaged by erosion in the 1870s and subsequently dismantled.",
+				"img": {
+					"0": "listMartello/img/mt53(0)"
+				},
+				"imgattrib": {
+					"0": "2020 | Derek Smith"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.39915, 50.82652]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt52",
+				"name": "Martello Tower 52",
+				"date": "1806-1875",
+				"description": "Pevensey Levels.<br>On the early hours of Saturday 28th February 1822, a large gang of smugglers tried to capture the Coastal Blockade guards at this tower as a boat arrived on the shore. When attacked the Blockade men shot one of the smugglers, killing him. Alarms were raised and one arrest was made.<br>Collapsed due to cliff erosion and subsequently dismantled.<br>The landowner still has the pivoting stones for the gun platform.",
+				"img": {
+					"0": "listMartello/img/mt52(0)"
+				},
+				"imgattrib": {
+					"0": "2020 | Derek Smith"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.40525, 50.82800]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt51",
+				"name": "Martello Tower 51",
+				"date": "1806-1869",
+				"description": "Culvercroft Bank.<br>Coastal Blockade men were considered fair game for bribery and in 1819 two smugglers offered £100 (over £5500 today) to bypass the guards as a loaded boat pulled to the shore, they were unsuccessful and the boat quickly turned and left.<br>Used as a blockade hospital from 1827.<br>Collapsed due to cliff erosion.",
+				"img": {
+					"0": "listMartello/img/mt51(0)",
+					"1": "listMartello/img/mt51(1)"
+				},
+				"imgattrib": {
+					"0": "&copy; Story of Bexhill, L.J. Bartley",
+					"1": "1869 | &copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.41419, 50.83028]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt50",
+				"name": "Martello Tower 50",
+				"date": "1806-1860",
+				"description": "Cooden Beach.<br>Tuesday, 30th October 1860. Preparations were being made for artillery experiments against this Martello Tower. Two 68lb and two 32lb smooth-bore guns were being moved along the line from Bexhill to directly opposite the tower. During the unloading, Lieutenant Marshall lost his hand when it was accidentally crushed under a gun. He was quickly removed to Powell's Hotel (now the doctors surgery in the Old Town).<br>Saturday, 10th November 1860. The experiments commenced with both shot and shell being fired from 1,030yd over four days. The Duke of Cambridge was in attendance with a huge crowd of spectators, at one point guns were fired over the public's heads to stop them scavenging the spent shells! In the end the bombardment had little effect on the tower, with only four shots penetrating the interior. The tower finally succumbed when the distance was reduced to 400yds.<br>Some of the bricks were used to make Kewhurst Coastguard Station (demolished 1920, now Westbourne Court).",
+				"img": {
+					"0": "listMartello/img/mt50(0)"
+				},
+				"imgattrib": {
+					"0": "Local Coastguard Station made from No.50 | c1896 | &copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.42527, 50.83128]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt49",
+				"name": "Martello Tower 49",
+				"date": "1806-c1862",
+				"description": "Veness Gap.<br>Saturday, 22nd October 1864. The Sussex Advertiser reported on a three day long bombardment of artillery shelling aimed at No.49, similar to that at No.50 in 1860. This time Government authorities tested their 70lb Armstrong and Whitworth Guns commanded by Lieutenant Robinson and 50 men of the Coastal Blockade. On the first day solid shot and blind shells were fired, which considerably damaged the wall, but seemed to have been pierced through in one place only - each shot only brought down a portion of brick at a time, slowly chipping away at the tower. On the second day live shells were fired knocking down the near side of the eight foot thick wall together with the centre pillar. Only the outer sea side of the tower remained and this was promptly destroyed on the third day."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.44124, 50.83350]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt48",
+				"name": "Martello Tower 48",
+				"date": "1806-c1865",
+				"description": "South Cliff.<br>Confusion over the numbering of the towers prior to 1867 meant No.48 was accidentally omitted and therefore making this tower's history relatively unknown. We do know it was twinned with No.49 in 1830 to make a single blockade post and abandoned in 1865.",
+				"img": {
+					"0": "listMartello/img/mt48(0)"
+				},
+				"imgattrib": {
+					"0": "1856 | &copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.45410, 50.83484]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt47",
+				"name": "Martello Tower 47",
+				"date": "1806-c1859",
+				"description": "Polegrove.<br>Evidence of bricks and stone pieces from this tower can still be seen today, usually at low tide after storms when the sand has shifted. February 2014 was particularly good time see to what was left.<br>Collapsed and washed away by the sea.",
+				"img": {
+					"0": "File:Ruins of Martello Tower No 47, Bexhill.jpg",
+					"1": "File:Ruins of Martello Tower No 47, Bexhill (2).jpg"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46419, 50.83554]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt46",
+				"name": "Martello Tower 46",
+				"date": "1806-1870",
+				"description": "The Horn.<br>So called due to the high point of ground which once stuck out into the sea which surrounded the tower. Twinned with No.44 to make a single blockade post in 1830. Traces of the tower were found in 1910 during the building of the Colonnade.<br>Sea eroded foundations and subsequently dismantled.",
+				"img": {
+					"0": "listMartello/img/mt46(0)",
+					"1": "listMartello/img/mt46(1)",
+					"2": "listMartello/img/mt46(2)"
+				},
+				"imgattrib": {
+					"0": "1866 | &copy; Bexhill Museum",
+					"1": "1860 | &copy; Bexhill Museum",
+					"2": "1860 | &copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47169, 50.83694]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt45",
+				"name": "Martello Tower 45",
+				"date": "1806-1822",
+				"description": "My Lords Rock.<br>The tower is depicted in a sketch by Turner who visited Bexhill in 1807. Later watercoloured for his book 'Liber Studorium'.<br>An early casualty, damaged by coastal erosion and subsequently dismantled.",
+				"img": {
+					"0": "File:Joseph Mallord William Turner - Liber Studiorum- Martello Towers, near Bexhill, Sussex - 1919.149 - Cleveland Museum of Art.jpg"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.48362, 50.83799]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt44",
+				"name": "Martello Tower 44",
+				"date": "1806-1895",
+				"description": "Galley Hill.<br>This and No.43 were the first towers to be built in the Parish. Admiralty signal post built beside it in 1810. Used by the Coastal Blockade 1818-1831, famously the men who fought in the Battle of Sidley Green were stationed at this tower (see our Smuggling article for the full story).<br>Collapsed due to cliff erosion, some of the remains were still visible up until the 1930's.",
+				"img": {
+					"0": "listMartello/img/mt44(0)",
+					"1": "listMartello/img/mt44(1)",
+					"2": "listMartello/img/mt44(2)"
+				},
+				"imgattrib": {
+					"0": "1895 | &copy; Bexhill Museum",
+					"1": "1895 | &copy; Bexhill Museum",
+					"2": "1870 | &copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.49936, 50.84167]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt43",
+				"name": "Martello Tower 43",
+				"date": "1806-1875",
+				"description": "Little Galley Hill, Bulverhythe (outside Bexhill).<br>This and No.44 were the first towers to be built in the Parish. Disappeared through cliff erosion.",
+				"img": {
+					"0": "listMartello/img/mt43(0)"
+				},
+				"imgattrib": {
+					"0": "1800s | &copy; Phil Sellens"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.51071, 50.84452]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mt42",
+				"name": "Martello Tower 42",
+				"date": "1806-1840",
+				"description": "Salts, Bulverhythe (outside Bexhill).<br>Occupied by the Coastal Blockade and Coastguard in the 1830's. In 1832 a battle between smugglers broke out and two Coastguard men died through gun shots.<br>Damaged by erosion and demolished. The material that was saved from the site was sold for 217 pounds 9 shillings 6 pence (about £13,000 today). Some was used in the construction of the chancel at St. Mark's Church, Little Common - brought by sea to Cooden Sea Road and taken up by cart.",
+				"img": {
+					"0": "listMartello/img/mt42(0)",
+					"1": "listMartello/img/mt42(1)"
+				},
+				"imgattrib": {
+					"0": "1835 | &copy; John F. Tennant",
+					"1": "1800s | &copy; Hastings Library"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.51834, 50.84712]
+			}
+		}
+	]
+}

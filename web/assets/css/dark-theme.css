@@ -3,12 +3,14 @@
 	--hover-color: #ccc;
 	--bg-color: #111;
 	--bg-color2: rgba(20, 20, 20, 0.9);
+	--scr-track: #222;
+	--scr-thumb: #777;
 }
 .spinner {
 	filter: invert(100%) hue-rotate(180deg);
 }
 html, body, input, select, #map, .leaflet-control-layers-expanded, #msgStatusHead, .leaflet-control-attribution, .leaflet-tooltip, 
-.leaflet-contextmenu a.leaflet-contextmenu-item, .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+.leaflet-contextmenu a.leaflet-contextmenu-item, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line {
 	color: var(--text-color) !important;
 }
 .anchor:hover, select:hover:enabled, #poi-results button:hover, #home .sidebar-body a i:hover, #inputWw2 div, .leaflet-control-attribution .fa-info-circle:hover, 
@@ -21,13 +23,20 @@ button:hover, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.
 	background-color: var(--bg-color) !important;
 }
 .poi-checkbox-selected, #poi-results-list tr:hover, #msgStatusBody, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, 
-.leaflet-control-layers-expanded, #homeBox, #xmasMsg, hr, .poi-checkbox > label:hover, .leaflet-control-layers, .leaflet-control-attribution, 
-.sidebar.collapsed .sidebar-tabs, .leaflet-control-geocoder {
+.leaflet-control-layers-expanded, #homeBox, #xmasMsg, hr, .poi-checkbox > label:hover, .leaflet-control-layers, .sidebar.collapsed .sidebar-tabs, .leaflet-control-geocoder {
 	background-color: var(--bg-color2) !important;
 }
-
-.sidebar-body, #poi-icons, #poi-results {
-	scrollbar-color: var(--text-color) var(--bg-color) !important;
+#weather, #newFeed ul {
+	color: #688c81;
+}
+.leaflet-bar a, .leaflet-bar a:hover {
+	border-bottom: 1px solid #555;
+}
+.leaflet-bar a:last-child {
+	border-bottom: none;
+}
+.custscroll {
+	scrollbar-color: var(--scr-thumb) var(--scr-track) !important;
 }
 .baselayer {
 	opacity: 0.85 !important;
@@ -44,13 +53,20 @@ button:hover, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.
 #poi-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li {
 	border-bottom: 2px solid var(--bg-color) !important;
 }
-.poi-result-selected {
+.leaflet-control-scale-line, .poi-result-selected {
 	background-color: rgba(0, 0, 0, 0.5);
+}
+.leaflet-control-scale-line {
+	border: 2px solid #000;
+	border-top: none;
+}
+.leaflet-container .leaflet-control-attribution {
+	background: rgba(0, 0, 0, 0.7);
 }
 .anchor, .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
 	border-color: #666;
 }
-input, select, button, .leaflet-bar a, .leaflet-tooltip {
+input, select, #sidebar button, .leaflet-tooltip {
 	border: 1px solid #666 !important;
 }
 .leaflet-control-geocoder input, .leaflet-control-geocoder-alternatives a, .fancybox-button, .modalButton {
@@ -77,8 +93,8 @@ input, select, button, .leaflet-bar a, .leaflet-tooltip {
 .leaflet-tooltip-right::before {
 	border-right-color: var(--bg-color);
 }
-#newFeed ul, #weather {
-	color: #72958b;
+#gotocontrols .fa-border, .leaflet-touch .leaflet-bar {
+	background-color: black;
 }
 .modalTutor {
 	color: black;
@@ -93,8 +109,7 @@ input, select, button, .leaflet-bar a, .leaflet-tooltip {
 	border-bottom: 1px solid #333;
 }
 .popup-ohTable tr, .popup-bsTable tr { border: 1px solid black; }
-.popup-bsTable tr { background-color: #111; }
-.popup-ohTable td.times { background-color: #222; }
+.popup-bsTable tr, .popup-ohTable td.times { background-color: #222; }
 .popup-ohTable td.workday { background-color: #333; }
 .popup-ohTable td.weekend { background-color: #444; }
 .sidebar-close:hover {
@@ -102,4 +117,10 @@ input, select, button, .leaflet-bar a, .leaflet-tooltip {
 }
 .popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {
 	background-blend-mode: soft-light;
+}
+.custscroll::-webkit-scrollbar {
+	background-color: var(--scr-track);
+}
+.custscroll::-webkit-scrollbar-thumb {
+	background-color: var(--scr-thumb);
 }

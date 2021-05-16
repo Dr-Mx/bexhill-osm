@@ -97,6 +97,14 @@ var pois = {
 		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve']
 	},
 
+	recreation: {
+		name: 'Recreation',
+		query: 'way[~"."~"^recreation_ground$|^golf_course$|^sports_centre$|^horse_riding$"][name][!club][access!~private];',
+		iconName: 'recreation',
+		catName: 'Leisure-Tourism',
+		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'cricket', 'swimming pool', 'horse riding', 'motocross', 'park', 'open-space', 'green']
+	},
+
 	playground: {
 		name: 'Playground',
 		query: 'nwr[leisure=playground][name];',
@@ -106,7 +114,7 @@ var pois = {
 	},
 
 	picnic_table: {
-		name: 'Picnic-Table',
+		name: 'Picnic Table',
 		query: 'node[leisure=picnic_table];',
 		iconName: 'picnic-2',
 		catName: 'Leisure-Tourism',
@@ -136,14 +144,6 @@ var pois = {
 		iconName: 'conversation-map-icon',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['hobby', 'social', 'events', 'venue', 'sport', 'club']
-	},
-
-	recreation: {
-		name: 'Recreation',
-		query: 'way[~"."~"^recreation_ground$|^golf_course$|^sports_centre$|^horse_riding$"][name][!club][access!~private];',
-		iconName: 'recreation',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'cricket', 'swimming pool', 'horse riding', 'motocross', 'park', 'open-space', 'green']
 	},
 
 	fitness_centre: {

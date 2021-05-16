@@ -1,5 +1,4 @@
 :root {
-	--main-color: #b05000;
 	--text-color: black;
 	--bg-color: inherit;
 	--bg-color2: rgba(190, 190, 190, 0.5);
@@ -17,8 +16,15 @@ body {
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	height: 100%;
-	scrollbar-color: var(--text-color) var(--bg-color);
+	scrollbar-color: var(--scr-thumb) var(--scr-track);
 	scrollbar-width: thin;
+}
+body::-webkit-scrollbar {
+	width: 7px;
+	background-color: var(--scr-track);
+}
+body::-webkit-scrollbar-thumb {
+	background-color: var(--scr-thumb);
 }
 @media (min-width: 733px) and (max-width: 1264px), (max-width: 365px) {
 	body {

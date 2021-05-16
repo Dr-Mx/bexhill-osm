@@ -10,6 +10,5 @@ window.BOSM = {
 	thuforKey: '',					// Map tiles						https://manage.thunderforest.com/dashboard
 	mpllryKey: '',					// Panoramic street level images	https://www.mapillary.com/dashboard/developers
 	googleKey: '',					// Panoramic street level images	https://cloud.google.com/maps-platform
-	trvllneApi: { u: '', p: '' },	// Bus times						http://www.travelinedata.org.uk
-	bookingCom: ''					// Affiliate number					https://spadmin.booking.com
+	trvllneApi: { u: '', p: '' }	// Bus times						http://www.travelinedata.org.uk
 };

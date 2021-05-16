@@ -34,7 +34,7 @@ a:hover {
 	width: 110%;
 	opacity: 0.75;
 	margin: -5%;
-	border-radius: 10px;
+	border-radius: 10px 10px 0 0;
 }
 h1 {
 	color: var(--main-color);
@@ -46,9 +46,10 @@ hr {
 	margin: 20px 0;
 }
 #anchor::before {
-	content: '\21E7';
+	content: '\279C';
 	font-weight: bold;
 	font-size: 14pt;
+	line-height: 26px;
 }
 #anchor {
 	display: block;
@@ -68,6 +69,7 @@ hr {
 	color: white;
 	cursor: pointer;
 	transition: opacity 100ms linear;
+	transform: rotate(270deg);
 }
 #anchor:hover {
 	opacity: 1;
@@ -79,6 +81,10 @@ hr {
 .credit {
 	text-align: right;
 	font-style: italic;
+}
+.credit::before {
+	content: "\00a9";
+	margin-right: 5px;
 }
 #endresults {
 	text-align: center;

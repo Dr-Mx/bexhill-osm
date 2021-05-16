@@ -2,6 +2,8 @@
     --main-color: #b05000;
 	--second-color: #be6f2e;
 	--bg-hover-color: #f4f4f4;
+	--scr-thumb: #cdcdcd;
+	--scr-track: #f0f0f0;
 	--popup-long-desc-height: 200px;
 }
 .spinner {
@@ -58,19 +60,20 @@ input[type=text], input[type=date], input[type=number] {
 }
 .sidebar-notif {
 	position: absolute;
-	line-height: 1.3;
+	width: 16px;
+	height: 16px;
+	font-size: 9px;
+	font-weight: bold;
+	color: #fff;
+	line-height: 1.85;
 	background-color: var(--second-color);
-	border-radius: 5px;
+	border-radius: 100%;
 	right: 2px;
 	margin-top: 28px;
-	font-size: 9px;
-	color: #fff;
-	padding: 1px 2px;
-	box-shadow: 0 0 5px black;
+	box-shadow: 0 0 3px black;
 	display: none;
 	z-index: 1;
 }
-
 
 #homeBox, #xmasMsg {
 	max-width: 500px;
@@ -81,27 +84,54 @@ input[type=text], input[type=date], input[type=number] {
 }
 #weather {
 	display: table;
+	min-height: 45px;
 	width: 100%;
-	color: #536862;
-	height: 55px;
 	cursor: pointer;
 }
-#weather span {
+#weather, #newFeed ul {
+	color: #51655f;
+}
+#weather > span {
 	display: table-cell;
 	vertical-align: middle;
-	padding: 2px 5px 2px 0;
+}
+#weather > span:nth-child(odd) {
+	text-align: center;
+	padding: 0 5px;
+}
+#weather > span:nth-child(even) {
 	text-align: left;
+	line-height: 1;
+	padding: 2px;
 }
-#weather span img {
-	width: 50px;
-	display: block;
-	margin: 0 auto;
+#weather > span.wwind > span {
+	white-space: nowrap;
 }
-#weather span .fas {
+#weather > span.wtide2 {
+	white-space: nowrap;
+	line-height: 1.5;
+}
+#weather > span:nth-child(1) {
+	color: #bbb;
+}
+#weather > span:nth-child(3) {
 	color: #8795bd;
+}
+#weather > span .fa-water, #weather > span .fa-level-up-alt, #weather > span .fa-level-down-alt {
+	color: #61818a;
 }
 #weather .comment {
 	text-align: center;
+}
+#minimap {
+	text-align: center;
+	padding: 0 2px;
+}
+#minimap > img {
+	max-width: 100%;
+}
+#minimap > map > area {
+	cursor: pointer;
 }
 #tips {
 	display: table;
@@ -111,7 +141,7 @@ input[type=text], input[type=date], input[type=number] {
 #tipsText {
 	display: table-cell;
 	vertical-align: middle;
-	padding: 3px;
+	padding: 2px;
 }
 #tipsText a {
 	color: inherit;
@@ -119,7 +149,7 @@ input[type=text], input[type=date], input[type=number] {
 #tipsButton {
 	display: table-cell;
 	text-align: right;
-	padding: 10px 3px;
+	padding: 10px 2px;
 }
 #home .sidebar-body a i:hover {
 	color: black;
@@ -140,7 +170,6 @@ input[type=text], input[type=date], input[type=number] {
 }
 #newFeed ul {
 	margin-top: 5px;
-	color: #596e68;
 }
 #newFeed ul > li {
 	left: -1em;
@@ -202,17 +231,6 @@ h3 {
 	color: black;
 }
 
-#minimap {
-	text-align: center;
-}
-#minimap > img {
-	max-width: 100%;
-}
-#minimap > map > area {
-	cursor: pointer;
-}
-
-
 .comment {
 	text-align: center;
 	font-style: italic;
@@ -253,6 +271,9 @@ h3 {
 
 .baselayer {
 	transition: opacity 300ms linear;
+}
+.leaflet-touch .leaflet-bar {
+	background-color: white;
 }
 .leaflet-control-layers-toggle {
 	width: 40px !important;
@@ -348,7 +369,7 @@ h3 {
 }
 .leaflet-control-attribution {
 	white-space: nowrap;
-	border-radius: 4px;
+	border-top-left-radius: 4px;
 	line-height: 20px;
 }
 .leaflet-control-attribution .fa-info-circle:hover {
@@ -356,6 +377,7 @@ h3 {
 }
 .leaflet-bar a:hover, .leaflet-bar button:hover {
 	background-color: var(--bg-hover-color);
+	color: black;
 }
 .leaflet-control-layers-toggle {
 	background-image: url(../img/leaflet/layers.png);
@@ -618,7 +640,7 @@ select:hover:enabled, #poi-results button:hover {
 	border-bottom: 2px solid #ececec;
 }
 #poi-results-list tr:last-child {
-	border-bottom: none;
+	border-bottom: none !important;
 }
 #poi-results-list tr:hover {
 	background-color: rgba(190, 190, 190, 0.5);
@@ -670,8 +692,15 @@ select:hover:enabled, #poi-results button:hover {
 	flex: 1;
 	position: relative;
 }
-.sidebar-body, #poi-icons, #poi-results {
+.custscroll {
 	scrollbar-width: thin;
+}
+.custscroll::-webkit-scrollbar {
+	width: 7px;
+	background-color: var(--scr-track);
+}
+.custscroll::-webkit-scrollbar-thumb {
+	background-color: var(--scr-thumb);
 }
 #poi-bookm {
 	width: auto;
@@ -905,6 +934,11 @@ input:indeterminate + .slider::before {
 	display: block;
 	padding: 0 15px 0 15px;
 }
+#help img.floatleft {
+	float: left;
+	height: 15px;
+	padding: 0 5px 0 0;
+}
 #gotocontrols .fa-border {
 	border: 1px solid #aaa;
 	border-radius: 5px;
@@ -912,11 +946,6 @@ input:indeterminate + .slider::before {
 }
 #gotocontext .fa-fw {
 	color: #666;
-}
-#gototabs img {
-	float: left;
-	padding: 0 5px 0 5px;
-	width: 25px;
 }
 #gotodonate table {
 	margin-top: 5px;
@@ -1092,21 +1121,35 @@ input:indeterminate + .slider::before {
 	padding-right: 15px;
 	cursor: pointer;
 }
+.popup-ohTable, .popup-bsTable {
+	font: 80%/1.2 monospace;
+	text-align: center;
+}
 .popup-ohTable {
 	display: none;
 	cursor: default;
-	font: 80% monospace;
-	text-align: center;
 	max-height: 170px;
 	padding: 5px 0 5px 15px;
 }
+.popup-bsTable {
+	border-collapse: collapse;
+	margin: 5px 0;
+	max-height: 200px;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
 .popup-ohTable table { width: 100%; border-collapse: collapse; }
-.popup-ohTable tr { border: 1px solid white; }
+.popup-ohTable tr, .popup-bsTable tr { border: 1px solid white; }
 .popup-ohTable td { padding: 2px 0; }
 .popup-ohTable tr.today { font-weight: bold; }
 .popup-ohTable td.weekend { background-color: #ccc; }
 .popup-ohTable td.workday { background-color: #ddd; }
-.popup-ohTable td.times { background-color: #eee; }
+.popup-ohTable td.times, .popup-bsTable tr { background-color: #eee; }
+.popup-bsTable tr { text-align: left; }
+.popup-bsTable td { padding: 2px; }
+.popup-bsTable td:nth-child(1) { font-weight: bold; }
+.popup-bsTable td:nth-child(2) { width: 100%; }
+.popup-bsTable td:nth-child(3) { white-space: nowrap; text-align: right; }
 #img0 {
 	display: inherit;
 }
@@ -1143,24 +1186,9 @@ input:indeterminate + .slider::before {
 	width: 80px;
 	vertical-align: bottom;
 }
-.popup-bsTable {
-	border-collapse: collapse;
-	text-align: center;
-	margin: 5px 0;
-	font-size: 90%;
-	color: #555;
-	max-height: 200px;
-	overflow-y: auto;
-	-webkit-overflow-scrolling: touch;
-}
 .popup-facilities span {
 	display: inline-block;
 }
-.popup-bsTable tr { text-align: left; border: 1px solid #ccc; background-color: white; }
-.popup-bsTable td { padding: 2px; }
-.popup-bsTable td:nth-child(1) { font-weight: bold; }
-.popup-bsTable td:nth-child(2) { width: 100%; }
-.popup-bsTable td:nth-child(3) { white-space: nowrap; text-align: right; }
 .facYes { color: darkgreen; }
 .facLtd { color: olive; }
 .facNo { color: darkred; }
@@ -1208,7 +1236,7 @@ input:indeterminate + .slider::before {
 	padding: 5px 10px;
 	position: absolute;
 	z-index: 1200;
-	max-width: 75px;
+	max-width: 100px;
 	background-color: rgba(75, 75, 75, 0.95);
 	color: white;
 	font-size: 8pt;
@@ -1312,3 +1340,31 @@ input:indeterminate + .slider::before {
 	animation-iteration-count: 4;
 }
 ::-ms-clear { display: none; }
+
+.leaflet-visualclick-icon {
+	border-radius: 100%;
+	pointer-events: none;
+}
+.leaflet-visualclick-icon:after {
+	content: "";
+	border-radius: 100%;
+	height: 120px;
+	width: 120px;
+	position: absolute;
+	margin-left: -60px;
+	margin-top: -60px;
+	pointer-events: none;
+	box-shadow: 0 0 0 5px var(--main-color);
+	animation: visualclick-pulsate 0.5s;
+	opacity: 0;
+}
+@keyframes visualclick-pulsate {
+	from {
+		transform: scale(1);
+		opacity: 0;
+	}
+	to {
+		transform: scale(0.2);
+		opacity: 0.5;
+	}
+}

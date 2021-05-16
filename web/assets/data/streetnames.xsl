@@ -40,9 +40,9 @@
 	<p>In this edition we have also included details of street names which no longer exist but which researchers may come across on old maps or in the early censuses and street directories. Also included are some old and new place names which have yet to be associated with specific street names but which nonetheless are often found on maps eg. The Honies and Polegrove. We have used 1841 as our starting year as this coincides with the first national census. Another important date is 1886 when the first local street directory was published for Bexhill. Also an attempt has been made using the local street directories to include the date when a street first appears in the records. The date recorded is usually when property, houses or businesses were built on that street rather than when the street was laid out, and often named, which could be a few years earlier. It must also be appreciated that houses were often built in phases along a street rather than all at the same time. These dates have proved more difficult to obtain after the street directories ceased publication in 1974. The date of adoption of the street by the Borough of Bexhill, or later by Rother District Council, has also been included, when available.</p>
 	<p>When consulting the early maps, census returns and street directories a significant number of inconsistencies of both names, dates and descriptions have been discovered, including some street names which have only been seen once, so a pragmatic approach has had to be adopted in this edition. As in most cities, towns and villages there are street names which are neologisms, in other words they have simply been made up by the builder or developer. In hindsight these can be difficult to identify and we accept we may have missed some or misinterpreted others. We have also found it very difficult to locate official documentation to help us discover the approved origin of many of the town’s street names. Hence some of the entries in this edition are, at best, informed guesswork. We hope our readers will understand and accept our difficulties.</p>
 	<p>We would like to thank the many individuals who have helped us with the preparation of this new addition especially Julian Porter, Curator at Bexhill Museum, his staff and many museum volunteers and supporters as well as members of the public. Margaret Cullingworth has been particularly helpful with information regarding the streets around Sidley. Any errors are entirely our own responsibility. Finally we hope you enjoy reading the fruits of our endeavours.</p>
-	<p class="credit">&#169; <xsl:value-of select="copyright/author"/></p>
+	<p class="credit"><xsl:value-of select="copyright/author"/></p>
 	<p>This online edition is being currently being developed and updated with new roads and streets. If you have any additional information, suggestions or corrections, please contact <a href="mailto:info@bexhill-osm.org.uk">info@bexhill-osm.org.uk</a>.</p>
-	<p class="credit">&#169; Alexis Markwick, Bexhill-OSM, 2020</p>
+	<p class="credit">Alexis Markwick, Bexhill OpenStreetMap, 2021</p>
 	</div>
 	<hr/>
 	<div id="street-filter"><input id="street-filter-in" type="text" placeholder="Enter a street name or year"/><span id="street-filter-cl"></span>
@@ -55,6 +55,7 @@
 	<hr/>
 	<div id="outro">
 	<h2>Work in Progress</h2>
+	If you can help give descriptions to these roads, let us know.
 	<p><xsl:for-each select="streetNames/newstreet"><xsl:sort select="name"/><xsl:value-of select="name"/>; </xsl:for-each></p>
 	<hr/>
 	<h2>Appendix</h2>

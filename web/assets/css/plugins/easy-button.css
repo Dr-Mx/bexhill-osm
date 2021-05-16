@@ -1,8 +1,6 @@
-.leaflet-bar button,
-.leaflet-bar button:hover {
+.leaflet-bar button {
   background-color: #fff;
   border: none;
-  border-bottom: 1px solid #ccc;
   width: 26px;
   height: 26px;
   line-height: 26px;
@@ -13,7 +11,6 @@
 }
 
 .leaflet-bar button {
-  color: #b05000;
   color: var(--main-color);
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -26,7 +23,7 @@
   background-color: var(--btn-hover-color);
 }
 
-.leaflet-bar button:last-of-type {
+.leaflet-bar.easy-button-container button:last-of-type {
   border-bottom: none;
 }
 

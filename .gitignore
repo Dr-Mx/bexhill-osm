@@ -1,11 +1,8 @@
+web/assets/data/tides.json
 web/assets/maptiles/
-web/tour/*/*.jpg
-web/tour/*/*.png
-web/tour/*/**/*.jpg
-web/tour/*/**/*.png
+web/tour/*/*/*
 web/assets/other/*
 web/assets/img/uploads/
-web/assets/img/thennow/
 web/assets/js/config.js
 web/robots.txt
 

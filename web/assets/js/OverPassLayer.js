@@ -36,14 +36,14 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			setMsgStatus('fas fa-' + icon, errMsg, indicatorMsg, 1);
 		}
 	},
-	initialize: function (options) {
+	initialize: function(options) {
 		L.Util.setOptions(this, options);
 		this._layers = {};
 		// save position of the layer or any options from the constructor
 		this._ids = {};
 		this._requested = {};
 	},
-	onMoveEnd: function () {
+	onMoveEnd: function() {
 		var url = this.options.endpoint + '?data=' + this.options.query + '&contact=' + email;
 		var self = this;
 		var reference = { instance: self };
@@ -65,7 +65,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			else $.ajax({
 				url: url,
 				datatype: 'xml',
-				success: function (xml) {
+				success: function(xml) {
 					self.options.callback.call(reference, xml);
 					if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('info-circle', 'No places found', 'Please try turning off "only show open" in options.');
 					else if (poiList.length === 0 && !rQuery) self.options.statusMsg('info-circle', 'No places found', 'Please try another area or query.');
@@ -76,7 +76,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 					}
 					if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
 				},
-				complete: function (e) {
+				complete: function(e) {
 					if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
 						var erMsg = 'Something unknown happened. Please try again later.';
 						switch (e.status) {
@@ -90,18 +90,18 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						this.error();
 					}
 				},
-				error: function () {
+				error: function() {
 					rQuery = false;
 					if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS:', encodeURI(this.url));
 				}
 			});
 		}
 	},
-	onAdd: function (map) {
+	onAdd: function(map) {
 		this._map = map;
 		this.onMoveEnd();
 	},
-	onRemove: function (map) {
+	onRemove: function(map) {
 		L.LayerGroup.prototype.onRemove.call(this, map);
 		this._ids = {};
 		this._requested = {};

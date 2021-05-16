@@ -1,0 +1,53 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+			"type": "Feature",
+			"properties": {
+				"id": "sackvillefos",
+				"title": "Iguanadon Footprints",
+				"name": "Sackville",
+				"description": "View at low tide. Walk directly out onto the beach infront of Sackville Apartments. The tracks are just to the south-east of the two large rocks a few hundred yards out from the East Parade.<br>One footprint is about 18-inches long.",
+				"img": {
+					"0": "listPrehistory/img/dinofoot-sackville"
+				},
+				"imgattrib": {
+					"0": "2018 | &copy; Bexhill-OSM"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.482517, 50.837617]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "centralfos",
+				"title": "Iguanadon Footprints",
+				"name": "Central Parade",
+				"description": "Found in 1978. View at low tide. Walk directly out onto the beach behind Marina Court Avenue. Impressions in light grey soft sand stone, about 4.5 inches thick lying on harder yellowish stone.<br>11 footprints in total."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.473995, 50.836284]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "harfieldfos",
+				"title": "Iguanadon Footprints",
+				"name": "Hartfield Road",
+				"description": "Found in 1980. View at low tide. South of 27 Hartfield Road.<br>7 footprints in total.",
+				"img": {
+					"0": "listPrehistory/img/dinofoot-hartfield"
+				},
+				"imgattrib": {
+					"0": "2018 | &copy; Bexhill-OSM"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.441865, 50.832998]
+			}
+		}
+	]
+}

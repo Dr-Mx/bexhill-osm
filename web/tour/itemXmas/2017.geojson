@@ -1,0 +1,388 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+			"type": "Feature",
+			"properties": {
+				"id": "ageuk",
+				"name": "Age UK",
+				"img": {
+					"0": "itemXmas/2017/ageuk(0)"
+				},
+				"winner": 3
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47535, 50.83971]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "barbykeel",
+				"name": "Barby Keel",
+				"img": {
+					"0": "itemXmas/2017/barbykeel(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47455, 50.83991]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "beflawless",
+				"name": "Be Flawless",
+				"img": {
+					"0": "itemXmas/2017/beflawless(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47280, 50.83966]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "bexhillflorist",
+				"name": "The Bexhill Florist",
+				"img": {
+					"0": "itemXmas/2017/bexhillflorist(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47680, 50.83972]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "bloomers",
+				"name": "Bloomers",
+				"img": {
+					"0": "itemXmas/2017/bloomers(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47285, 50.84017]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "birkdale",
+				"name": "Birkdale Nursery",
+				"img": {
+					"0": "itemXmas/2017/birkdale(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46994, 50.84197]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "caringcommunity",
+				"name": "Bexhill Caring Community",
+				"img": {
+					"0": "itemXmas/2017/caringcommunity(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47009, 50.83883]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "debnhair",
+				"name": "Deb N Hair",
+				"img": {
+					"0": "itemXmas/2017/debnhair(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46932, 50.84417]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "dorothymarchant",
+				"name": "Dorothy Marchant Florists",
+				"img": {
+					"0": "itemXmas/2017/dorothymarchant(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47034, 50.83995]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "emmahellier",
+				"name": "Emma Hellier",
+				"img": {
+					"0": "itemXmas/2017/emmahellier(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46974, 50.83919]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "hearingcentre",
+				"name": "Bexhill Hearing Centre",
+				"img": {
+					"0": "itemXmas/2017/hearingcentre(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47741, 50.84081]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "inperspective",
+				"name": "In Perspective: Arts and Craft",
+				"img": {
+					"0": "itemXmas/2017/inperspective(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47637, 50.83976]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "jellybeans",
+				"name": "JellyBeans Toy Shop",
+				"img": {
+					"0": "itemXmas/2017/jellybeans(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46983, 50.83876]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "ljcollis",
+				"name": "L.J. Collis & Co",
+				"img": {
+					"0": "itemXmas/2017/ljcollis(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47420, 50.83995]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "madexpectations",
+				"name": "Mad Expectations",
+				"img": {
+					"0": "itemXmas/2017/madexpectations(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47196, 50.84010]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "milzarsflorist",
+				"name": "Milzar's Florist",
+				"img": {
+					"0": "itemXmas/2017/milzarsflorist(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47001, 50.83923]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mind",
+				"name": "Mind",
+				"img": {
+					"0": "itemXmas/2017/mind(0)"
+				},
+				"winner": 4
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47419, 50.83799]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mummery",
+				"name": "Mummery",
+				"img": {
+					"0": "itemXmas/2017/mummery(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47390, 50.83926]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "number10",
+				"name": "Number10",
+				"img": {
+					"0": "itemXmas/2017/number10(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47530, 50.84066]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "salvridges",
+				"name": "Salvridges",
+				"img": {
+					"0": "itemXmas/2017/salvridges(0)",
+					"1": "itemXmas/2017/salvridges(1)"
+				},
+				"winner": 1
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47271, 50.83965]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "saralee",
+				"name": "Sara Lee Trust",
+				"img": {
+					"0": "itemXmas/2017/saralee(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47079, 50.83999]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "thimbleinas",
+				"name": "Thimble-Inas",
+				"img": {
+					"0": "itemXmas/2017/thimbleinas(0)"
+				},
+				"winner": 2
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47575, 50.83968]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "rushwittwilson",
+				"name": "Rush Witt & Wilson",
+				"img": {
+					"0": "itemXmas/2017/rushwittwilson(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47369, 50.84018]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "stmichaelshospice",
+				"name": "St. Michael's Hospice",
+				"img": {
+					"0": "itemXmas/2017/stmichaelshospice(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47378, 50.83833]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "topdoggrooming",
+				"name": "Top Dog Grooming",
+				"img": {
+					"0": "itemXmas/2017/topdoggrooming(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47714, 50.84073]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "wards",
+				"name": "Wards Group",
+				"img": {
+					"0": "itemXmas/2017/wards(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47365, 50.83900]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "whitefeather",
+				"name": "The White Feather Card Company",
+				"img": {
+					"0": "itemXmas/2017/whitefeather(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46911, 50.83984]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "wickhambistro",
+				"name": "Wickham Bistro",
+				"img": {
+					"0": "itemXmas/2017/wickhambistro(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46920, 50.83985]
+			}
+		}
+	]
+}

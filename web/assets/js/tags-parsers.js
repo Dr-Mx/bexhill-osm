@@ -26,7 +26,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		return markerPopup;
 	};
 	var phone_parser = function(tags) {
-		var tagPhone = tags.phone || tags['contact:phone'];
+		var tagPhone = tags.phone || tags['phone:GB'] || tags['contact:phone'] || tags['contact:phone:GB'];
 		markerPopup = '';
 		if (tagPhone) {
 			if (navigator.language === 'en-GB') tagPhone = tagPhone.replace('+44 ', '0');
@@ -243,7 +243,7 @@ function parse_tags(element, titlePopup, poiParser) {
 	var street_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
-		if (tags.highway && eName && element.type === 'way') {
+		if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) {
 			// get street history through xml file lookup
 			$.ajax({
 				async: false,
@@ -255,7 +255,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					var streetDate = $('date', street).text();
 					var streetDesc = $('desc', street).text();
 					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Start date', value: streetDate, iconName: 'fas fa-calendar-alt' });
-					if (streetDesc) markerPopup += '<span class="popup-longDesc">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'fas fa-book' }) + '</span>';
+					if (streetDesc) markerPopup += '<span class="popup-longDesc custscroll">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'fas fa-book' }) + '</span>';
 					if (markerPopup) {
 						var sourceLink = $(xml).find('url').text();
 						var sourceAuthor = $(xml).find('author').text();
@@ -282,14 +282,16 @@ function parse_tags(element, titlePopup, poiParser) {
 	var furtherreading_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
-		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'])
+		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'] && LBounds.contains(element.center))
 			tag += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="Lookup street">Street history</a>; ';
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			var w = tags.wikipedia || tags['site:wikipedia'];
-			tag += '<a href="https://' + w.split(':')[0] + '.wikipedia.org/wiki/' + w.split(':')[1] + '" title="Wikipedia" target="_blank" rel="noopener">Wikipedia</a>; ';
+			tag += '<a href="https://' + w.split(':')[0] + '.wikipedia.org/wiki/' + w.split(':')[1] + '" title="The Free Encyclopaedia" target="_blank" rel="noopener">Wikipedia</a>; ';
 		}
+		if (tags['url:bexhillnature'])
+			tag += '<a class="nowrap" href="http://bexhillnature.uk/' + tags['url:bexhillnature'] + '" title="Wild animals and plants" target="_blank" rel="noopener">Bexhill Nature</a>; ';
 		if (tags['url:bexhillhistorytrail'])
-			tag += '<a class="nowrap" href="' + tags['url:bexhillhistorytrail'] + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
+			tag += '<a class="nowrap" href="https://thebexhillhistorytrail.wordpress.com/' + tags['url:bexhillhistorytrail'] + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
 		if (tags['ref:thekeep'])
 			tag += '<a class="nowrap" href="https://www.thekeep.info/collections/getrecord/' + tags['ref:thekeep'] + '" title="The Keep" target="_blank" rel="noopener">The Keep</a>; ';
 		if (tags['ref:edubase'])
@@ -759,6 +761,7 @@ function callback(data) {
 			if (!name) name = e.tags.natural;
 			if (!type) type = e.tags.natural;
 			if (type === 'peak') iconName = 'hill';
+			if (type === 'wood') iconName = 'forest2';
 		}
 		if (e.tags.surveillance) {
 			if (!type) type = e.tags.surveillance;
@@ -801,7 +804,7 @@ function callback(data) {
 			if (!name) name = e.tags.landuse;
 			if (!type) type = e.tags.landuse;
 			if (e.tags.landuse === 'cemetery') iconName = 'cemetery';
-			if (e.tags.landuse === 'recreation_ground') { type = 'recreation'; iconName = 'soccer'; }
+			if (e.tags.landuse === 'recreation_ground') type = 'recreation';
 		}
 		if (e.tags.boundary) {
 			if (!name) name = e.tags.protection_title;
@@ -979,7 +982,7 @@ function pushPoiList(customSort) {
 		// keep checkbox in view
 		if ($('.poi-checkbox input:checked').length === 1) $('#poi-icons')
 			.scrollTop(0)
-			.animate({ scrollTop: $('.poi-checkbox input:checked').parent().position().top - 50 }, 100);
+			.animate({ scrollTop: $('.poi-checkbox input:checked').parent().position().top - 50 }, 50);
 	}).css('pointer-events', 'auto');
 	$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
 	// interact with map
@@ -998,8 +1001,8 @@ function pushPoiList(customSort) {
 		}
 	});
 	$('#poi-results h3').html(
-		poiList.length + ' results' + ($('#inputOpen').is(':checked') ? ' (open)' : '') +
-			(customSort ? '' : '<i style="color:#777;" class="fas fa-sort-' + (poiList[0].distance ? 'numeric' : 'alpha') + '-down fa-fw"></i>')
+		poiList.length + ' result' + (poiList.length > 1 ? 's' : '') + ($('#inputOpen').is(':checked') ? ' (open)' : '') +
+			(customSort ? '' : ' <i style="color:#777;" class="fas fa-sort-' + (poiList[0].distance ? 'numeric' : 'alpha') + '-down fa-fw"></i>')
 	);
 	if (poiList.length === maxOpResults) {
 		$('#poi-results h3').append('<br/>(maximum number of results)');
@@ -1027,13 +1030,13 @@ function generic_tag_parser(tags, tag, label, iconName) {
 	// ignore implied access
 	if (tags[tag] && tag === 'access' && tags[tag] === 'yes') return markerPopup;
 	else if (tags[tag]) {
-		if (tags[tag] === 'yes') result = '<i class="fas fa-check fa-fw"></i>';
-		else if (tags[tag] === 'no') result = '<i class="fas fa-times fa-fw"></i>';
+		if (tags[tag] === 'yes') result = '<i class="fas fa-check fa-fw" title="yes"></i>';
+		else if (tags[tag] === 'no') result = '<i class="fas fa-times fa-fw" title="no"></i>';
 		else if (tag.indexOf('_date') > -1 || tag.indexOf('date_') > -1) result = date_parser(tags[tag], 'long');
 		else result = tags[tag].replace(/;/g, ', ').replace(/_/g, ' ');
 		markerPopup += L.Util.template(tagTmpl, { tag: label, value: result, iconName: iconName });
 	}
-	if ((tags.description || tags.inscription) && markerPopup) markerPopup = '<span class="popup-longDesc">' + markerPopup + '</span>';
+	if ((tags.description || tags.inscription) && markerPopup) markerPopup = '<span class="popup-longDesc custscroll">' + markerPopup + '</span>';
 	return markerPopup;
 }
 function generic_img_parser(img, id, attrib) {
@@ -1066,6 +1069,7 @@ function artwork_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'artwork_subject', label: 'Artwork subject', iconName: 'fas fa-pen-square'},
 		{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'far fa-user'},
+		{callback: generic_tag_parser, tag: 'builder', label: 'Builder', iconName: 'far fa-user'},
 		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fas fa-pen-square'},
 		{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'fas fa-cube'}
 	]);
@@ -1231,6 +1235,7 @@ function historic_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'bunker_type', label: 'Bunker type', iconName: 'fas fa-cube'},
 		{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'fas fa-user'},
+		{callback: generic_tag_parser, tag: 'builder', label: 'Builder', iconName: 'fas fa-user'},
 		{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'fas fa-cube'},
 		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fas fa-pen-square'},
 		{callback: generic_tag_parser, tag: 'wreck:date_sunk', label: 'Date sunk', iconName: 'fas fa-ship'},
@@ -1253,8 +1258,7 @@ function hotel_parser(tags, titlePopup) {
 			tag = tag.substring(0, tag.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'fas fa-bed' });
 		}
-		// set booking.com affiliate link in config.js
-		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="https://www.booking.com/hotel/gb/' + tags['url:booking_com'] + '.en.html?aid=' + BOSM.bookingCom + '&no_rooms=1&group_adults=1" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"/></a>', iconName: 'fas fa-file' });
+		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="https://www.booking.com/hotel/gb/' + tags['url:booking_com'] + '.en-gb.html" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"/></a>', iconName: 'fas fa-file' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
@@ -1280,7 +1284,7 @@ function post_parser(tags, titlePopup) {
 				case 'GVIR': royalcypher += ': George VI (1936-1952)'; break;
 				case 'EIIR': royalcypher += ': Elizabeth II (1952+)'; break;
 			}
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Royal cypher', value: royalcypher, iconName: 'fas fa-archive' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Royal cypher', value: royalcypher, iconName: 'fas fa-signature' });
 		}
 		return markerPopup;
 	};
@@ -1330,7 +1334,8 @@ function surveyp_parser(tags, titlePopup) {
 }
 function tap_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'drinking_water', label: 'Drinking water', iconName: 'fas fa-tint'},
+		{callback: generic_tag_parser, tag: 'drinking_water', label: 'Drinking water', iconName: 'fas fa-faucet'},
+		{callback: generic_tag_parser, tag: 'bottle', label: 'Bottle refill', iconName: 'fas fa-tint'}
 	]);
 }
 function taxi_parser(tags, titlePopup) {
@@ -1363,7 +1368,7 @@ function getWikiAttrib(id) {
 			success: function(result) {
 				if (!result.query.pages[-1]) {
 					var imgAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
-					var imgArtist = $(imgAttrib.Artist.value).text() || imgAttrib.Artist.value;
+					var imgArtist = $('<span>' + imgAttrib.Artist.value + '</span>').text();
 					var imgDate = imgAttrib.DateTimeOriginal ? imgAttrib.DateTimeOriginal.value : imgAttrib.DateTime.value;
 					imgDate = $('<span>' + (new Date(imgDate.split(' ')[0]).getFullYear() || imgDate) + '</span>')[0].firstChild.data;
 					var imgAttribUrl = '<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank" rel="noopener">' + imgDate + ' | &copy; ' + imgArtist;
@@ -1421,8 +1426,8 @@ function titleCase(str) {
 	else return str.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 function date_parser(dtStr, style) {
-	// parse ISO 8601 dates
-	if (dtStr.indexOf('T') === 10) dtStr = new Date(dtStr).toISOString().replace('T', ' ').substring(0, 16);
+	// parse ISO 8601 dates using local offset
+	if (dtStr.indexOf('T') === 10) dtStr = new Date(new Date(dtStr).setHours(new Date(dtStr).getHours()-new Date(dtStr).getTimezoneOffset()/60)).toISOString().replace('T', ' ').substring(0, 16);
 	var tm, dt, dtFrmt = dtStr.split('-').length - 1;
 	// check for time
 	tm = (dtStr.indexOf(':') > -1) ? tm = new Date(dtStr).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) : '';

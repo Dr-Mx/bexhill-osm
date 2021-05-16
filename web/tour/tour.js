@@ -2,7 +2,7 @@
 
 var actImgLayer, slideShow = { firstrun: true, auto: true };
 function tour(ti, fromPermalink) {
-	var lID, dfltDir = 'tour/tour', xmasYear = '2020';
+	var lID, dfltDir = 'tour/', xmasYear = '2020';
 	if (!fromPermalink) clear_map('markers');
 	if ($(window).width() < 768 && !fromPermalink && ti !== 'thennow') $('.sidebar-close:visible').click();
 	// general markers
@@ -95,11 +95,11 @@ function tour(ti, fromPermalink) {
 			});
 	};
 	// set active tour and notify sidebar if sidebar closed
-	var setTour = function(tourNum) {
+	var setTour = function(tourVal) {
 		actImgLayer = ti;
 		if (actTab === 'none' && fromPermalink) {
 			$('.sidebar-tabs ul li [href="#tour"] .sidebar-notif').show();
-			$('#tourList').val(tourNum).trigger('change');
+			$('#tourList').val(tourVal).trigger('change');
 		}
 	};
 	// timeout hack to stop iframe breaking on ff
@@ -199,7 +199,7 @@ function tour(ti, fromPermalink) {
 			if (ti.length > 4) xmasYear = ti.split('xmas')[1];
 			if (actOverlayLayer === undefined) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
-				url: dfltDir + 'Xmas/' + xmasYear + '/' + xmasYear + '.geojson',
+				url: dfltDir + 'itemXmas/' + xmasYear + '.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -209,12 +209,12 @@ function tour(ti, fromPermalink) {
 							var winner = feature.properties.winner, winnerTxt = ['Highly Commended', 'First Prize', 'Second Prize', 'Third Prize', 'Fourth Prize', 'Fifth Prize'],
 								winnerIco = ['award', 'trophy', 'medal', 'medal', 'medal', 'medal'], winnerEle = '';
 							if (winner >= 0) winnerEle = '<i class="award commended' + winner + ' fas fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner];
-							if (!feature.properties.img) feature.properties.img = { '0': 'Xmas/000placehldr' };
+							if (!feature.properties.img) feature.properties.img = { '0': 'itemXmas/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, winnerEle, ''], '', 'popup-xmas');
 						},
 						pointToLayer: function (feature, latlng) {
 							var marker = setMarker(latlng, true, {
-								iconUrl: 'Xmas/window',
+								iconUrl: 'itemXmas/window',
 								iconSize: [32, 37],
 								iconAnchor: [16, 37],
 								iconNoBounce: true,
@@ -241,7 +241,7 @@ function tour(ti, fromPermalink) {
 			$('.spinner').show();
 			// ward outlines
 			$.ajax({
-				url: dfltDir + 'Scarecrow/boundary.geojson',
+				url: dfltDir + 'itemScarecrow/boundary.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: true,
@@ -249,7 +249,7 @@ function tour(ti, fromPermalink) {
 			});
 			// markers
 			$.ajax({
-				url: dfltDir + 'Scarecrow/scarecrow.geojson',
+				url: dfltDir + 'itemScarecrow/2020.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -260,13 +260,13 @@ function tour(ti, fromPermalink) {
 							var winner = feature.properties.winner, winnerTxt = ['', 'First Prize', 'Second Prize'],
 								winnerIco = ['', 'trophy', 'medal'], subtitleEle = feature.properties.ward;
 							if (winner > 0) subtitleEle = '<i class="award commended' + winner + ' fas fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner] + ' - ' + subtitleEle;
-							if (!feature.properties.img) feature.properties.img = { '0': 'Scarecrow/000placehldr' };
+							if (!feature.properties.img) feature.properties.img = { '0': 'itemScarecrow/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, subtitleEle], '', 'popup-scarecrow');
 							feature.properties.sortby = feature.properties.winner ? feature.properties.ward + feature.properties.winner : feature.properties.ward + '9';
 						},
 						pointToLayer: function (feature, latlng) {
 							var marker = setMarker(latlng, true, {
-								iconUrl: 'Scarecrow/scarecrow' + (feature.properties.winner === 1 ? 'Win' : ''),
+								iconUrl: 'itemScarecrow/scarecrow' + (feature.properties.winner === 1 ? 'Win' : ''),
 								iconSize: [35, 37],
 								iconAnchor: [17, 37],
 								iconNoBounce: true,
@@ -292,7 +292,7 @@ function tour(ti, fromPermalink) {
 			if (actTab === 'thennow') $('#thennowLoading').show();
 			else $('.spinner').show();
 			$.ajax({
-				url: dfltDir + 'ThenNow/thennow.geojson',
+				url: dfltDir + 'itemThenNow/thennow.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -302,11 +302,11 @@ function tour(ti, fromPermalink) {
 					imageOverlay.addLayer(L.geoJSON(json, {
 						pointToLayer: function(feature, latlng) {
 							var tnBody = '<hr/><h3>' + feature.properties.imgcaption['1'] + ' (' + feature.properties.date + ')</h3>' +
-								'<p><a href="' + dfltDir + 'ThenNow/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.imgcaption['1'] + '">' +
-								'<img id="' + feature.properties.id + '" src="' + dfltDir + 'ThenNow/' + feature.properties.id + '(0).jpg"/></a>';
+								'<p><a href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.imgcaption['1'] + '">' +
+								'<img id="' + feature.properties.id + '" src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"/></a>';
 							// find number of images based on caption count
 							$.each(feature.properties.imgcaption, function(x) {
-								if (+x > 1) tnBody += '<a style="display:none;" href="' + dfltDir + 'ThenNow/' + feature.properties.id + '(' + (x) + ').jpg" data-fancybox="' + feature.properties.id +
+								if (+x > 1) tnBody += '<a style="display:none;" href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(' + (x) + ').jpg" data-fancybox="' + feature.properties.id +
 								'" data-caption="' + feature.properties.imgcaption[x] + '"/></a>';
 							});
 							$('#thennow .sidebar-body div').append(tnBody + '<span class="comment">' + feature.properties.desc + '</span></p>');
@@ -333,7 +333,7 @@ function tour(ti, fromPermalink) {
 								}
 							});
 							var marker = setMarker(latlng, true);
-							marker.bindTooltip(feature.properties.imgcaption['1'] + '<img src="' + dfltDir + 'ThenNow/' + feature.properties.id + '(0).jpg"/>', { className: 'thennowTip', opacity: noTouch ? 1 : 0 });
+							marker.bindTooltip(feature.properties.imgcaption['1'] + '<img src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"/>', { className: 'thennowTip', opacity: noTouch ? 1 : 0 });
 							marker.on('click', function() {
 								$('#thennow .sidebar-body').scrollTop(0);
 								$('#thennow .sidebar-body').scrollTop($('#' + feature.properties.id).offset().top - 120);
@@ -358,7 +358,7 @@ function tour(ti, fromPermalink) {
 		case 'fossils':
 			$('.spinner').show();
 			$.ajax({
-				url: dfltDir + '01/dinofoot.geojson',
+				url: dfltDir + 'listPrehistory/dinofoot.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -381,63 +381,71 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			setTour('1');
+			setTour('prehistory');
 			break;
 		case 'shipwreck':
 			rQuery = true;
 			show_overpass_layer('node(3192282124);', ti);
+			setTour('amsterdam');
 			break;
 		case 'smugglingPanels':
 			show_overpass_layer('node["ref"~"^TST"];', ti, true);
 			setPageTitle('Smuggling Trail');
-			setTour('3');
+			setTour('smuggling');
 			break;
-		case 'smugglingGreen':
+		case 'sidleyGreen':
 			rQuery = true;
 			show_overpass_layer('way(263267372);', ti);
+			setTour('smuggling');
 			break;
-		case 'railwayBexhillstation':
+		case 'bexhillStation':
 			rQuery = true;
 			show_overpass_layer('way(397839677);', ti);
+			setTour('railways');
 			break;
-		case 'railwayWestbranch':
+		case 'westBranch':
 			show_overpass_layer('(node(6528018966);node(318219478););', ti);
 			if (actOverlayLayer !== 'br1959') map.addLayer(tileOverlayLayers[tileOverlayLayer.br1959.name]);
-			setTour('4');
+			setTour('railways');
 			break;
-		case 'railwayGlynegap':
+		case 'glynegapStation':
 			rQuery = true;
 			show_overpass_layer('node(4033104292);', ti);
+			setTour('railways');
 			break;
 		case 'tramway':
-			imageOverlay.addLayer(L.imageOverlay(dfltDir + '05/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }));
+			imageOverlay.addLayer(L.imageOverlay(dfltDir + 'listTrams/img/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }));
 			if (!fromPermalink) map.flyToBounds(imageOverlay.getBounds().pad(0.2));
 			setPageTitle('Tramway Route');
-			setTour('5');
+			setTour('trams');
 			break;
 		case 'motorTrack':
 			if (actOverlayLayer !== 'mt1902') map.addLayer(tileOverlayLayers[tileOverlayLayer.mt1902.name]);
 			if (!fromPermalink) map.flyToBounds(tileOverlayLayer.mt1902.bounds);
-			setPageTitle('Motor Racing Track');
+			setPageTitle('1902 Motor Racing Track');
+			setTour('racing');
 			break;
 		case 'motorSerpollet':
 			rQuery = true;
 			show_overpass_layer('node(3592525934);', ti);
+			setTour('racing');
 			break;
 		case 'motorTrail':
 			show_overpass_layer('(node["ref"~"^TMT"];node(5059264455);node(5059264456););', ti, true);
 			setPageTitle('The Motor Trail');
-			setTour('6');
+			setTour('racing');
 			break;
-		case 'delawarr':
+		case 'pavilion':
 			rQuery = true;
 			show_overpass_layer('way(247116304);', ti);
+			setTour('dlwp');
 			break;
 		case 'manor':
 			rQuery = true;
 			show_overpass_layer('way(364593716);', ti);
+			setTour('manor');
 			break;
-		case 'ww2Bombmap':
+		case 'bombmap':
 			$('.spinner').show();
 			// bomb radius outline
 			for (var x = 1; x <= 5; x++) imageOverlay.addLayer(L.circle([50.84150, 0.47150], {
@@ -453,7 +461,7 @@ function tour(ti, fromPermalink) {
 			}));
 			// bomb markers
 			$.ajax({
-				url: dfltDir + '09/ww2incidents.geojson',
+				url: dfltDir + 'listWw2/incidents.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -513,12 +521,12 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			setTour('9');
+			setTour('ww2');
 			break;
-		case 'ww2Shelters':
+		case 'arshelters':
 			$('.spinner').show();
 			$.ajax({
-				url: dfltDir + '09/ww2shelters.geojson',
+				url: dfltDir + 'listWw2/shelters.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -543,49 +551,55 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			setTour('9');
+			setTour('ww2');
 			break;
-		case 'ww2Arp':
+		case 'arpmap':
 			if (actOverlayLayer !== 'arp1942') map.addLayer(tileOverlayLayers[tileOverlayLayer.arp1942.name]);
+			setTour('ww2');
 			break;
-		case 'ww2Structures':
+		case 'structures':
 			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);', ti, true);
 			setPageTitle('WWII Existing Structures');
-			setTour('9');
+			setTour('ww2');
 			break;
-		case 'northeye':
+		case 'prison':
 			rQuery = true;
 			show_overpass_layer('way(28940913);', ti);
+			setTour('northeye');
 			break;
-		case 'peopleNarayan':
+		case 'narayan':
 			rQuery = true;
 			show_overpass_layer('way(247118625);', ti);
+			setTour('people');
 			break;
-		case 'peopleIxion':
+		case 'ixion':
 			rQuery = true;
 			show_overpass_layer('node(3989026714);', ti);
+			setTour('people');
 			break;
-		case 'peopleBaird':
+		case 'baird':
 			rQuery = true;
 			show_overpass_layer('node(3971492451);', ti);
 			break;
-		case 'peopleLlewelyn':
+		case 'llewelyn':
 			rQuery = true;
 			show_overpass_layer('way(393451834);', ti);
+			setTour('people');
 			break;
-		case 'peopleMilligan':
+		case 'milligan':
 			rQuery = true;
 			show_overpass_layer('way(419719683);', ti);
+			setTour('people');
 			break;
-		case 'clocks':
+		case 'publicClocks':
 			show_overpass_layer(pois.clock.query, ti, true);
 			setPageTitle('Public Clocks');
-			setTour('10');
+			setTour('clocks');
 			break;
 		case 'lost':
 			$('.spinner').show();
 			$.ajax({
-				url: dfltDir + '13/lost.geojson',
+				url: dfltDir + 'listHeritage/lost.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -608,22 +622,22 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			setTour('13');
+			setTour('heritage');
 			break;
-		case 'boundary':
+		case 'stones':
 			show_overpass_layer(pois.boundary_stone.query, ti, true);
 			setPageTitle('Boundary Stones');
-			setTour('14');
+			setTour('boundary');
 			break;
-		case 'surveyPoint':
+		case 'benchmarks':
 			show_overpass_layer(pois.survey_point.query, ti, true);
 			setPageTitle('OS Surveying Points');
-			setTour('15');
+			setTour('surveying');
 			break;
-		case 'martello':
+		case 'towers':
 			$('.spinner').show();
 			$.ajax({
-				url: dfltDir + '16/martello.geojson',
+				url: dfltDir + 'listMartello/martello.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
@@ -634,9 +648,9 @@ function tour(ti, fromPermalink) {
 						},
 						pointToLayer: function(feature, latlng) {
 							var marker = setMarker(latlng, true, {
-								iconUrl: '16/martello',
+								iconUrl: 'listMartello/martello',
 								iconSize: [35, 35],
-								shadowUrl: '16/martellos',
+								shadowUrl: 'listMartello/martellos',
 								shadowAnchor: [18, 18],
 								popupAnchor: [0, -18]
 							});
@@ -652,7 +666,7 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			setTour('16');
+			setTour('martello');
 			break;
 	} permalinkSet(); }, 50);
 }
@@ -672,11 +686,11 @@ function tourFocus(ti, id) {
 }
 
 // load references page, highlight and scroll to item
-function tourRef(tourNum, item) {
-	$('#tourList').val('99').trigger('change');
+function tourRef(tourVal, item) {
+	$('#tourList').val('zrefs').trigger('change');
 	$('#tourFrame').one('load', function() {
-		$(this).contents().find('ol:nth(' + (+tourNum + 1) + ') > li').eq(item - 1).css('background-color', $('html').css('--main-color') + '55');
-		$(this).contents().find('body').animate({ scrollTop: $(this).contents().find('ol:nth(' + (+tourNum + 1) + ') > li').eq(item - 1).offset().top - 20 }, 1000);
+		$(this).contents().find('#' + tourVal + ' > li').eq(item - 1).css('background-color', $('html').css('--main-color') + '55');
+		$(this).contents().find('body').animate({ scrollTop: $(this).contents().find('#' + tourVal).offset().top - 30 }, 1000);
 	});
 }
 

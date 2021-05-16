@@ -1,0 +1,257 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+			"type": "Feature",
+			"properties": {
+				"id": "bexhillflorist",
+				"name": "The Bexhill Florist",
+				"link": "http://www.thebexhillflorist.co.uk",
+				"img": {
+					"0": "itemXmas/2020/bexhillflorist(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47680, 50.83972]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "birkdale",
+				"name": "Birkdale Nursery",
+				"link": "http://www.birkdalenursery.co.uk/",
+				"img": {
+					"0": "itemXmas/2020/birkdale(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46994, 50.84197]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "brickmakers",
+				"name": "Brickmaker's Alehouse",
+				"link": "https://brickmakersalehouse.co.uk/",
+				"img": {
+					"0": "itemXmas/2020/brickmakers(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47725, 50.84004]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "caringcommunity",
+				"name": "Bexhill Caring Community",
+				"link": "http://www.bexhillcaringcommunity.org",
+				"img": {
+					"0": "itemXmas/2020/caringcommunity(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47009, 50.83883]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "evo",
+				"name": "Evo Taxis",
+				"link": "https://www.bookevo.co.uk/",
+				"img": {
+					"0": "itemXmas/2020/evo(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46994, 50.84160]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "holly",
+				"name": "Holly Blakeley Hair",
+				"link": "https://www.hollyblakeleyhair.co.uk/",
+				"img": {
+					"0": "itemXmas/2020/holly(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47737, 50.84058]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mind",
+				"name": "Mind",
+				"link": "https://www.mind.org.uk/",
+				"img": {
+					"0": "itemXmas/2020/mind(0)",
+					"1": "itemXmas/2020/mind(1)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47419, 50.83799]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "milzar",
+				"name": "Milzar's Florist",
+				"link": "https://www.facebook.com/MilzarsFlorist/",
+				"img": {
+					"0": "itemXmas/2020/milzar(0)",
+					"1": "itemXmas/2020/milzar(1)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47000, 50.83923]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mummery",
+				"name": "Mummery",
+				"link": "https://www.coop.co.uk/funeralcare/funeral-directors/bexhill-on-sea/TN40-1AH/mummery-funeralcare/29-31-devonshire-road",
+				"img": {
+					"0": "itemXmas/2020/mummery(0)"
+				},
+				"winner": 4
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47390, 50.83926]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "rspca",
+				"name": "RSPCA",
+				"link": "https://www.rspca.org.uk/",
+				"img": {
+					"0": "itemXmas/2020/rspca(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47241, 50.84028]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "saralee1",
+				"name": "Sara Lee Trust",
+				"link": "http://www.saraleetrust.org",
+				"img": {
+					"0": "itemXmas/2020/saralee1(0)"
+				},
+				"winner": 3
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47079, 50.83999]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "scope",
+				"name": "Scope",
+				"link": "https://www.scope.org.uk/",
+				"img": {
+					"0": "itemXmas/2020/scope(0)"
+				},
+				"winner": 1
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47018, 50.83844]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "starlings",
+				"name": "Starlings",
+				"link": "https://www.starlingsgifts.co.uk/",
+				"img": {
+					"0": "itemXmas/2020/starlings(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47002, 50.83916]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "strive",
+				"name": "Strive",
+				"link": "https://www.strivecafe.org/",
+				"img": {
+					"0": "itemXmas/2020/strive(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46952, 50.84011]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "sweets",
+				"name": "Sweets On-Sea",
+				"link": "https://www.facebook.com/sweetsonsea/",
+				"img": {
+					"0": "itemXmas/2020/sweets(0)",
+					"1": "itemXmas/2020/sweets(1)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46968, 50.83947]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "wards",
+				"name": "Wards Group",
+				"link": "http://www.wardsgroup.co.uk/",
+				"img": {
+					"0": "itemXmas/2020/wards(0)",
+					"1": "itemXmas/2020/wards(1)"
+				},
+				"winner": 2
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47365, 50.83900]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "warming",
+				"name": "Warming Up The Homeless",
+				"link": "https://wuth.org/",
+				"img": {
+					"0": "itemXmas/2020/warming(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47374, 50.83854]
+			}
+		}
+	]
+}
