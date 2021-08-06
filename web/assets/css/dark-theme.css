@@ -15,7 +15,7 @@ html, body, input, select, #map, .leaflet-control-layers-expanded, #msgStatusHea
 }
 .anchor:hover, select:hover:enabled, #poi-results button:hover, #home .sidebar-body a i:hover, #inputWw2 div, .leaflet-control-attribution .fa-info-circle:hover, 
 button:hover, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.leaflet-popup-close-button:hover, .popup-edit:hover, .popup-bookm:hover, 
-.leaflet-routing-geocoders button:hover::after {
+.leaflet-routing-geocoders button:hover::after, #poi-filter-cl:hover::after, #devTools h3:hover::after, .popup-ohContainer .popup-tagValue:hover::after {
 	color: var(--hover-color) !important;
 }
 .sidebar-tabs, .anchor, input:not([type="range"]), select, button, .leaflet-bar > a, .leaflet-tooltip, .leaflet-control-geocoder input, .slider::before, #inputOpacity, .leaflet-control-geocoder, .leaflet-contextmenu, #msgStatusHead, 
@@ -66,7 +66,7 @@ button:hover, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.
 .anchor, .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
 	border-color: #666;
 }
-input, select, #sidebar button, .leaflet-tooltip {
+input, select, #sidebar button:not(.modalButton), .leaflet-tooltip {
 	border: 1px solid #666 !important;
 }
 .leaflet-control-geocoder input, .leaflet-control-geocoder-alternatives a, .fancybox-button, .modalButton {

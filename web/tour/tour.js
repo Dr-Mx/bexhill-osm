@@ -6,10 +6,11 @@ function tour(ti, fromPermalink) {
 	if (!fromPermalink) clear_map('markers');
 	if ($(window).width() < 768 && !fromPermalink && ti !== 'thennow') $('.sidebar-close:visible').click();
 	// general markers
-	// coordinates | clickable | icon
-	var setMarker = function(latlng, interactive, icon) {
+	// coordinates | clickable | icon | has popup
+	var setMarker = function(latlng, interactive, icon, popup) {
+		var marker;
 		if (icon) {
-			if (icon.iconUrl) return L.marker(latlng, {
+			if (icon.iconUrl) marker = L.marker(latlng, {
 				icon: L.icon({
 					className: icon.className,
 					iconUrl: dfltDir + icon.iconUrl + '.png',
@@ -25,18 +26,18 @@ function tour(ti, fromPermalink) {
 				keyboard: false,
 				riseOnHover: true
 			});
-			else return L.circle(latlng, {
+			else marker = L.circle(latlng, {
 				className: icon.className,
 				interactive: interactive,
 				radius: 20,
-				weight: 2,
+				weight: 1,
 				color: '#000',
-				opacity: 0.8,
+				opacity: 1,
 				fillColor: icon.fillColor,
-				fillOpacity: 0.5
-			});	
+				fillOpacity: 0.75
+			});
 		}
-		else return L.circleMarker(latlng, {
+		else marker = L.circleMarker(latlng, {
 			interactive: interactive,
 			radius: 14,
 			weight: 4,
@@ -45,6 +46,12 @@ function tour(ti, fromPermalink) {
 			fillColor: '#fff',
 			fillOpacity: 0.5
 		});
+		if (popup) marker.on('click', function(e) {
+			// enable autopan after initial permalink popup, check if sidebar is open
+			e.sourceTarget._popup.options.autoPan = true;
+			e.sourceTarget._popup.options.autoPanPaddingTopLeft = ($(window).width() < 1300) ? [20, 40] : [sidebar.width() + 50, 5];
+		});
+		return marker;
 	};
 	// tooltip and pop-up
 	// data | layer | [main header, subheader, date subheader] | image attribution | marker popup class
@@ -58,9 +65,9 @@ function tour(ti, fromPermalink) {
 		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long')));
 		toolTip += '<b>' + header[0] + '</b><br/><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
-		markerPopup += '<span class="comment">' + layer._latlng.lat + '°N ' + layer._latlng.lng + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 3) + '</span>';
+		markerPopup += '<span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 3) + '</span>';
 		if (feature.properties.description) {
-			markerPopup += '<span class="popup-longDesc">' + feature.properties.description + '</span>';
+			markerPopup += '<span class="popup-longDesc custscroll">' + feature.properties.description + '</span>';
 			toolTip += ' <i style="color:#777;min-width:17px;" class="fas fa-bars fa-fw" title="Notes"></i>';
 		}
 		if (feature.properties.link) {
@@ -173,7 +180,7 @@ function tour(ti, fromPermalink) {
 								shadowUrl: '/../../assets/img/leaflet/marker-shadow',
 								shadowAnchor: [12, 41],
 								popupAnchor: [0, -35]
-							});
+							}, true);
 							marker.ohState = (feature.properties.status === 'open' ? 'false' : 'true');
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
@@ -221,7 +228,7 @@ function tour(ti, fromPermalink) {
 								shadowUrl: '/../../assets/img/icons/000shadow',
 								shadowAnchor: [16, 35],
 								popupAnchor: [0, -27]
-							});
+							}, true);
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
 							return marker;
@@ -273,7 +280,7 @@ function tour(ti, fromPermalink) {
 								shadowUrl: '/../../assets/img/icons/000shadow',
 								shadowAnchor: [20, 33],
 								popupAnchor: [0, -27]
-							});
+							}, true);
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
 							return marker;
@@ -332,12 +339,11 @@ function tour(ti, fromPermalink) {
 									slideShow.firstrun = true;
 								}
 							});
-							var marker = setMarker(latlng, true);
+							var marker = setMarker(latlng, true, false, false);
 							marker.bindTooltip(feature.properties.imgcaption['1'] + '<img src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"/>', { className: 'thennowTip', opacity: noTouch ? 1 : 0 });
 							marker.on('click', function() {
-								$('#thennow .sidebar-body').scrollTop(0);
-								$('#thennow .sidebar-body').scrollTop($('#' + feature.properties.id).offset().top - 120);
-								$('#thennow #' + feature.properties.id).click();
+								$('#' + feature.properties.id)[0].scrollIntoView({ block: 'center' });
+								$('#' + feature.properties.id).click();
 							});
 							marker._leaflet_id = feature.properties.id;
 							return marker;
@@ -350,10 +356,10 @@ function tour(ti, fromPermalink) {
 						function() { map._layers[this.id].openTooltip(); },
 						function() { map._layers[this.id].closeTooltip(); }
 					);
+					actImgLayer = ti;
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			actImgLayer = ti;
 			break;
 		case 'fossils':
 			$('.spinner').show();
@@ -368,7 +374,7 @@ function tour(ti, fromPermalink) {
 							setJsonPopup(feature, layer, [feature.properties.title, feature.properties.name, '']);
 						},
 						pointToLayer: function(feature, latlng) {
-							var marker = setMarker(latlng, true);
+							var marker = setMarker(latlng, true, false, true);
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
 							return marker;
@@ -450,9 +456,8 @@ function tour(ti, fromPermalink) {
 			// bomb radius outline
 			for (var x = 1; x <= 5; x++) imageOverlay.addLayer(L.circle([50.84150, 0.47150], {
 				className: 'ww2radius',
-				color: 'darkred',
+				color: '#a9a9a9',
 				weight: 2,
-				opacity: 0.2,
 				fill: false,
 				radius: x * 804.672,
 				clickable: false
@@ -485,7 +490,7 @@ function tour(ti, fromPermalink) {
 							if (feature.properties.name) setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], 'Bexhill Observer');
 						},
 						pointToLayer: function(feature, latlng) {
-							var marker = setMarker(latlng, interactive, { fillColor: fillColor, className: 'ww2bb' + (feature.properties.date ? ' ww2' + feature.properties.date.split(' ')[0] : '') });
+							var marker = setMarker(latlng, interactive, { fillColor: fillColor, className: 'ww2bb' + (feature.properties.date ? ' ww2' + feature.properties.date.split(' ')[0] : '') }, true);
 							if (interactive) {
 								dateRange[x] = feature.properties.date.split(' ')[0];
 								marker._leaflet_id = 'bb' + x++;
@@ -537,7 +542,7 @@ function tour(ti, fromPermalink) {
 							setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], 'Bexhill Museum');
 						},
 						pointToLayer: function(feature, latlng) {
-							var marker = setMarker(latlng, true, { fillColor: '#008800' });
+							var marker = setMarker(latlng, true, { fillColor: '#008800' }, true);
 							marker._leaflet_id = 'sr' + x++;
 							marker.desc = 'Shelter';
 							poiList.push(marker);
@@ -551,10 +556,6 @@ function tour(ti, fromPermalink) {
 					$('.spinner').fadeOut('fast');
 				}
 			});
-			setTour('ww2');
-			break;
-		case 'arpmap':
-			if (actOverlayLayer !== 'arp1942') map.addLayer(tileOverlayLayers[tileOverlayLayer.arp1942.name]);
 			setTour('ww2');
 			break;
 		case 'structures':
@@ -609,14 +610,14 @@ function tour(ti, fromPermalink) {
 							setJsonPopup(feature, layer, [feature.properties.name, feature.properties.date, '']);
 						},
 						pointToLayer: function(feature, latlng) {
-							var marker = setMarker(latlng, true);
+							var marker = setMarker(latlng, true, false, true);
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
 							return marker;
 						}
 					}));
 					map.fireEvent('zoomend');
-					setTimeout(pushPoiList, 250);
+					setTimeout(function() { pushPoiList('feature.properties.id'); }, 250);
 					setPageTitle('Lost Heritage');
 					if (markerId) map._layers[markerId].openPopup();
 					$('.spinner').fadeOut('fast');
@@ -653,7 +654,7 @@ function tour(ti, fromPermalink) {
 								shadowUrl: 'listMartello/martellos',
 								shadowAnchor: [18, 18],
 								popupAnchor: [0, -18]
-							});
+							}, true);
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
 							return marker;
@@ -667,6 +668,59 @@ function tour(ti, fromPermalink) {
 				}
 			});
 			setTour('martello');
+			break;
+		case 'boreholes':
+			$('.spinner').show();
+			$.ajax({
+				url: dfltDir + 'listBores/boreholes.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function(json) {
+					var fillColor, x = 0;
+					imageOverlay.addLayer(L.geoJSON(json, {
+						filter: function(feature) {
+							if (feature.properties.length > 0 && feature.properties.length <= 10) fillColor = '#9792fc';
+							else if (feature.properties.length > 10 && feature.properties.length <= 30) fillColor = '#5bff6e';
+							else if (feature.properties.length > 30) fillColor = '#ff6464';
+							else if (feature.properties.length === -2) fillColor = '#a93909';
+							else fillColor = '#000000';
+							return true;
+						},
+						onEachFeature: function(feature, layer) {
+							// push any additional information into a popup
+							feature.properties.description = 
+								generic_tag_parser({ ref: feature.properties.reference.toString() }, 'ref', 'Reference', 'fas fa-hashtag') +
+								(feature.properties.year_known ? generic_tag_parser({ date: feature.properties.year_known.toString() }, 'date', 'Date', 'fas fa-calendar-alt') : '') +
+								'<a style="margin:5px;display:block;text-align:center;" onclick="tourIframe(\'' + feature.properties.scan_url + '\', \'\', \'circular\')">View borehole scan</a>';
+							setJsonPopup(feature, layer, [titleCase(feature.properties.name, 1), '', feature.properties.length + 'm length borehole']);
+						},
+						pointToLayer: function(feature, latlng) {
+							if (feature.properties.length === -1) return;
+							var marker = setMarker(latlng, true, { fillColor: fillColor }, true);
+							marker._leaflet_id = 'bore' + x++;
+							poiList.push(marker);
+							return marker;
+						}
+					}));
+					map.fireEvent('zoomend');
+					setTimeout(function() { pushPoiList('feature.properties.id'); }, 250);
+					setPageTitle('Bores and Wells');
+					if (markerId) map._layers[markerId].openPopup();
+					$('.spinner').fadeOut('fast');
+				}
+			});
+			setTour('bores');
+			break;
+		case 'map_bm1946':  /* fall through */
+		case 'map_arp1942': /* fall through */
+		case 'map_mc1925':  /* fall through */
+		case 'map':
+			var ml = ti.split('_')[1];
+			if (ml && actOverlayLayer !== ml) {
+				map.addLayer(tileOverlayLayers[tileOverlayLayer[ml].name]);
+				map.flyToBounds(tileOverlayLayer[ml].bounds);
+			}
 			break;
 	} permalinkSet(); }, 50);
 }
@@ -690,14 +744,14 @@ function tourRef(tourVal, item) {
 	$('#tourList').val('zrefs').trigger('change');
 	$('#tourFrame').one('load', function() {
 		$(this).contents().find('#' + tourVal + ' > li').eq(item - 1).css('background-color', $('html').css('--main-color') + '55');
-		$(this).contents().find('body').animate({ scrollTop: $(this).contents().find('#' + tourVal).offset().top - 30 }, 1000);
+		$(this).contents().find('#' + tourVal).prev()[0].scrollIntoView({ behavior: "smooth" });
 	});
 }
 
 // play video
-function tourVideo(url) {
+function tourVideo(id) {
 	$.fancybox.open({
-		src: 'https://www.youtube.com/embed/' + url,
+		src: 'https://www.youtube.com/embed/' + id,
 		youtube: {
 			modestbranding: 1,
 			iv_load_policy: 3,
@@ -707,13 +761,17 @@ function tourVideo(url) {
 }
 
 // view The Story of Bexhill Street Names book
-function streetNameBook() {
-	var bookSrc = ((window.location.protocol !== 'file:') ? '../../' : '') + 'assets/data/streetnames.xml';
+function tourIframe(src, cap, ani) {
+	if (src === 'book') {
+		src = ((window.location.protocol !== 'file:') ? '../../' : '') + 'assets/data/streetnames.xml';
+		cap = '<a href="' + src + '" target="_blank">https://bexhill-osm.org.uk/streetnames</a>';
+	}
 	if ($(window).width() >= 1150 && noTouch) $.fancybox.open([{
-		src: bookSrc,
+		src: src,
 		type: 'iframe',
 		opts: {
-			caption: '<a href="' + bookSrc + '" target="_blank">https://bexhill-osm.org.uk/streetnames</a>',
+			animationEffect: ani,
+			caption: cap,
 			iframe: {
 				preload: false,
 				css: {
@@ -725,5 +783,5 @@ function streetNameBook() {
 			}
 		}
 	}]);
-	else popupWindow(bookSrc, 'streetWindow', 1024, 768);
+	else popupWindow(src, 'tourWindow', 1024, 768);
 }

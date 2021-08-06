@@ -107,7 +107,7 @@
 				"id": "mt50",
 				"name": "Martello Tower 50",
 				"date": "1806-1860",
-				"description": "Cooden Beach.<br>Tuesday, 30th October 1860. Preparations were being made for artillery experiments against this Martello Tower. Two 68lb and two 32lb smooth-bore guns were being moved along the line from Bexhill to directly opposite the tower. During the unloading, Lieutenant Marshall lost his hand when it was accidentally crushed under a gun. He was quickly removed to Powell's Hotel (now the doctors surgery in the Old Town).<br>Saturday, 10th November 1860. The experiments commenced with both shot and shell being fired from 1,030yd over four days. The Duke of Cambridge was in attendance with a huge crowd of spectators, at one point guns were fired over the public's heads to stop them scavenging the spent shells! In the end the bombardment had little effect on the tower, with only four shots penetrating the interior. The tower finally succumbed when the distance was reduced to 400yds.<br>Some of the bricks were used to make Kewhurst Coastguard Station (demolished 1920, now Westbourne Court).",
+				"description": "Cooden Beach.<br>Tuesday, 30th October 1860. Preparations were being made for artillery experiments against this Martello Tower. Two 68lb and two 32lb smooth-bore guns were being moved along the line from Bexhill to directly opposite the tower. During the unloading, Lieutenant Marshall lost his hand when it was accidentally crushed under a gun. He was quickly removed to Powell's Hotel (The Bell, Old Town).<br>Saturday, 10th November 1860. The experiments commenced with both shot and shell being fired from 1,030yd over four days. The Duke of Cambridge was in attendance with a huge crowd of spectators, at one point guns were fired over the public's heads to stop them scavenging the spent shells! In the end the bombardment had little effect on the tower, with only four shots penetrating the interior. The tower finally succumbed when the distance was reduced to 400yds.<br>Some of the bricks were used to make Kewhurst Coastguard Station (demolished 1920, now Westbourne Court).",
 				"img": {
 					"0": "listMartello/img/mt50(0)"
 				},
@@ -157,8 +157,16 @@
 				"date": "1806-c1859",
 				"description": "Polegrove.<br>Evidence of bricks and stone pieces from this tower can still be seen today, usually at low tide after storms when the sand has shifted. February 2014 was particularly good time see to what was left.<br>Collapsed and washed away by the sea.",
 				"img": {
-					"0": "File:Ruins of Martello Tower No 47, Bexhill.jpg",
-					"1": "File:Ruins of Martello Tower No 47, Bexhill (2).jpg"
+					"0": "listMartello/img/mt47(0)",
+					"1": "listMartello/img/mt47(1)",
+					"2": "listMartello/img/mt47(2)",
+					"3": "File:Ruins of Martello Tower No 47, Bexhill.jpg",
+					"4": "File:Ruins of Martello Tower No 47, Bexhill (2).jpg"
+				},
+				"imgattrib": {
+					"0": "late 1909 | &copy; P.B. Roberts",
+					"1": "late 1909 | &copy; P.B. Roberts",
+					"2": "late 1909 | &copy; P.B. Roberts"
 				}
 			},
 			"geometry": {

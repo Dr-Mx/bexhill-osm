@@ -46,6 +46,9 @@ html, body, #map {
 	#map {
 		transition: margin-left 400ms ease-out;
 	}
+	#weather .fa-2x {
+		font-size: 1.8em;
+	}
 }
 input, select, button {
 	font-size: 10pt;
@@ -151,8 +154,8 @@ input[type=text], input[type=date], input[type=number] {
 	text-align: right;
 	padding: 10px 2px;
 }
-#home .sidebar-body a i:hover {
-	color: black;
+#home .sidebar-body a i:hover, #poi-filter-cl:hover::after, #devTools h3:hover::after, .popup-ohContainer .popup-tagValue:hover::after {
+	color: black !important;
 }
 .navigateItem {
 	position: absolute;
@@ -207,7 +210,7 @@ h3 {
 
 .anchor::before {
 	content: '\f062';
-	font-family: 'Font Awesome 5 Pro';
+	font-family: 'Font Awesome 6 Pro';
 	font-weight: 900;
 }
 .anchor {
@@ -228,7 +231,7 @@ h3 {
 }
 .anchor:hover {
 	text-decoration: none;
-	color: black;
+	color: black !important;
 }
 
 .comment {
@@ -258,7 +261,7 @@ h3 {
 }
 #devTools h3::after, .popup-ohContainer .popup-tagValue::after {
 	position: absolute;
-	font-family: 'Font Awesome 5 Pro';
+	font-family: 'Font Awesome 6 Pro';
 	font-weight: 900;
 	content: '\f0da';
 	margin-left: 15px;
@@ -419,7 +422,7 @@ h3 {
 	border: none;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
 	font-size: 90%;
-	text-align: left;
+	text-align: center;
 	z-index: 1100;
 }
 .modalTutorArrow {
@@ -432,8 +435,11 @@ h3 {
 	transform: rotate(45deg);
 	z-index: -1;
 }
+.modalTutor > div {
+	text-align: left;
+}
 .modalButton {
-	margin-top: 5px;
+	margin: 5px auto 0 auto;
 	border: 0;
 	border-radius: 4px;
 	box-shadow: 1px 1px #ddd;
@@ -441,7 +447,7 @@ h3 {
 	font-weight: bold;
 	line-height: 26px !important;
 	height: 26px !important;
-	width: 100% !important;
+	width: 70% !important;
 	cursor: pointer;
 }
 .modalButton:hover {
@@ -600,7 +606,7 @@ select {
 }
 select:hover:enabled, #poi-results button:hover {
 	background-color: var(--bg-hover-color);
-	color: black;
+	color: black !important;
 }
 #poi-results-list {
 	font-size: 90%;
@@ -618,7 +624,7 @@ select:hover:enabled, #poi-results button:hover {
 	margin-bottom: 3px;
 }
 #poi-results-list td {
-	padding: 3px 1px;
+	padding: 3px 2px;
 }
 #poi-results-list td:first-child {
 	text-align: center;
@@ -977,11 +983,11 @@ input:indeterminate + .slider::before {
 	border: 1px solid #ccc;
 	border-radius: 20px;
 }
-#mylinks {
+.mylinks {
 	line-height: 25px;
 }
-#mylinks .fa-fw {
-	padding: 0 10px;
+.mylinks .fa-fw {
+	padding: 0 5px;
 }
 
 /* marker popups */
@@ -1367,4 +1373,7 @@ input:indeterminate + .slider::before {
 		transform: scale(0.2);
 		opacity: 0.5;
 	}
+}
+input:focus, select:focus, textarea:focus, button:focus {
+	outline: none;
 }

@@ -4,7 +4,7 @@ if (typeof BOSM === 'undefined') alert('Error: No API keys defined, please see c
 
 // map area
 var osmRelation = ''; // 9825836 (work in progress, leave blank if osm relation doesn't exist, mapBounds will be used)
-var mapBounds = { south: 50.8025, west: 0.3724, north: 50.8785, east: 0.5290 };
+var mapBounds = { south: 50.802, west: 0.372, north: 50.878, east: 0.525 };
 var LBounds = L.latLngBounds([mapBounds.south, mapBounds.west], [mapBounds.north, mapBounds.east]);
 var mapMinZoom = 10;
 // map open location
@@ -25,7 +25,7 @@ var maxNomResults = 5;
 // website checks
 var noTouch = window.ontouchstart === undefined;
 var noIframe = window.top === window.self;
-var noPermalink = !URI(window.location.href).search() || URI(window.location.href).search() === '?T=none';
+var noPermalink = !new URL(window.location.href).searchParams.toString() || new URL(window.location.href).searchParams.toString() === 'T=none';
 // title tag tooltip defaults
 var tooltipDef = {
 	disabled: noTouch ? false : true,
@@ -78,8 +78,7 @@ $('#tour')
 
 // smooth scrolling to anchor
 $(document).on('click', 'a[href*="#goto"]', function(e) {
-	var target = $('#' + this.hash.slice(1));
-	$('#poi-icons, .sidebar-body').stop(true).animate({ scrollTop: target.offset().top - 55 - ((actTab === 'pois' && $('#poi-results:visible').length) ? $('#poi-results').height() : 0) }, 500);
+	$('#' + this.hash.slice(1))[0].scrollIntoView({ behavior: "smooth" });
 	e.preventDefault();
 });
 
@@ -127,8 +126,8 @@ L.Map.addInitHook(function() {
 			clickOutline.clearLayers();
 			$('#msgStatus').hide();
 		}
-		// ignore map click if low zoom / dragging walk markers / overlay control is open / overlay displayed / spinner is shown / popup is open on screen
-		else if (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .leaflet-control-layers-expanded').length && !imageOverlay.getLayers().length && !spinner &&
+		// ignore map click if... low zoom / dragging walk markers / overlay control is open / overlay displayed / spinner is shown / popup is open on screen
+		else if (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .leaflet-control-layers-expanded').length && !imageOverlay.getLayers().length && !actOverlayLayer && !spinner &&
 			!($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) {
 			that.fire('visualclick', L.Util.extend(e, { type: 'visualclick' }));
 			// drop marker and reverse lookup on single click
@@ -228,7 +227,7 @@ var map = new L.map('map', {
 	$('.anchor')
 		.hide()
 		.click(function() {
-			if ($(this).parent().scrollTop()) $(this).parent().stop(true).animate({ scrollTop: 0 }, 500);
+			$(this).parent()[0].scroll({ top: 0, behavior: "smooth" });
 		})
 		.parent().scroll(function() {
 			if ($(this).scrollTop() > 350) $(this).find('.anchor').fadeIn(200);
@@ -240,7 +239,7 @@ var map = new L.map('map', {
 		if (!window.localStorage.tutorial || window.localStorage.tutorial === '0') window.localStorage.tutorial = '';
 		var showModalTutor = function(target, id, dist, text, arrowDir) { if (window.localStorage.tutorial.indexOf(id) === -1) {
 			target.before(
-				'<div id="' + id + '" class="modalTutor leaflet-control" style="left:' + dist + 'px;">' + text +
+				'<div id="' + id + '" class="modalTutor leaflet-control" style="left:' + dist + 'px;"><div>' + text + '</div>' +
 				'<button type="button" class="modalButton theme">Got it</button>' +
 				'<div class="modalTutorArrow" style="' + arrowDir + ':-5px;"></div></div>'
 			);
@@ -311,8 +310,6 @@ var map = new L.map('map', {
 }).on('popupopen', function(e) {
 	var popupThis = $(e.popup._container);
 	var osmId = e.popup._source._leaflet_id;
-	// padding so popup is not obfuscated by map controls
-	e.popup.options.autoPanPaddingTopLeft = ($(window).width() < 1300) ? [20, 40] : [sidebar.width() + 50, 5];
 	// add/remove favourites
 	if ($('.popup-bookm').length) {
 		if (!window.localStorage.favourites) window.localStorage.favourites = '';
@@ -397,7 +394,7 @@ var map = new L.map('map', {
 					);
 				}
 				popupThis.find($('.popup-bsTable')).after('<div class="popup-imgAttrib">Data: <a href="https://www.travelinedata.org.uk/" target="_blank" rel="noopener">Traveline NextBuses</div>');
-				if (noPermalink) e.popup._adjustPan();
+				if (e.popup.options.autoPan) e.popup._adjustPan();
 			}
 			else popupThis.find($('.popup-bsTable')).html('<span class="comment">No buses due at this time.</span>');
 			if ($('#inputDebug').is(':checked')) console.debug('Nextbus:', xml);
@@ -410,6 +407,7 @@ var map = new L.map('map', {
 	// highlight in results list and add openpopup to permalink
 	if (poiList.length && !popupThis.find($('a#userLoc')).length && !$('#inputDebug').is(':checked')) {
 		popupThis.find($('#poi-results-list tr#' + osmId).addClass('poi-result-selected'));
+		if ($('.poi-result-selected').length) $('.poi-result-selected')[0].scrollIntoView({ behavior: "smooth", block: 'center' });
 		markerId = osmId;
 		permalinkSet();
 	}
@@ -442,21 +440,16 @@ var map = new L.map('map', {
 				if (popupThis.find($('.popup-imgContainer img')).attr('src').indexOf('000placehldr') >= 0) popupThis.find($('.popup-imgContainer').css('pointer-events', 'none'));
 				popupThis.find($('.popup-imgContainer img')).attr('alt', 'Image of ' + popupThis.find($('.popup-header h3')).text());
 				// add padding on attribution for navigation buttons
-				if (popupThis.find($('.navigateItem')).length) {
-					var rpad = 75;
-					if (popupThis.find($('.navigateItem a')).length === 1) rpad = 20;
-					else if (popupThis.find($('.navigateItem a')).length === 2) rpad = 60;
-					popupThis.find($('.popup-imgAttrib')).css('padding-right', rpad + 'px');
-				}
-				if (noPermalink) e.popup._adjustPan();
+				if (popupThis.find($('.navigateItem')).length) popupThis.find($('.popup-imgAttrib')).css('padding-right', 20*$('.navigateItem i:visible').length + 'px');
+				if (e.popup.options.autoPan && map.getBounds().contains(e.popup._latlng)) e.popup._adjustPan();
 			});
 	}
-	// panorama attribution
-	$('.pano').each(function(i, element) {
+	// panorama and video attribution
+	$('.pano, .vid').each(function(i, element) {
 		$(element).data('caption', '<a href="https://commons.wikimedia.org/wiki/' + $(element).data('caption') + '" title="Wikimedia Commons" target="_blank" rel="noopener">Wikimedia Commons</a>');
 	});
-	noPermalink = true;
 }).on('popupclose', function() {
+	// unselect from poi list
 	if (poiList.length) {
 		$('#poi-results-list tr').removeClass('poi-result-selected');
 		if (!rQuery) markerId = undefined;
@@ -568,7 +561,8 @@ function reverseQuery(e, singlemapclick) {
 					var geoRoad = geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || '';
 					msgStatusHead = titleCase(geoMarker.type !== 'yes' ? geoMarker.type + ' ' + geoMarker.addresstype : geoMarker.category);
 					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoName ? '<b>' + geoName + '</b><br/>' : '') +
-						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + (geoMarker.address.postcode ? ', ' + geoMarker.address.postcode : '') : '') + '</a>';
+						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + (geoMarker.address.postcode ? ', ' + geoMarker.address.postcode + '<br/>' : '') : '') +
+						(geoMarker.address.retail ? geoMarker.address.retail : '') + '</a>';
 				}
 				else if (geoServer === 'opencage') {
 					msgStatusHead = titleCase(geoMarker.type);
@@ -656,7 +650,7 @@ function panoView(e, fromSequence) {
 			var svUrl = 'https://www.google.com/maps/embed/v1/streetview?location=' + e.latlng.lat + ',' + e.latlng.lng + '&fov=90&key=' + window.BOSM.googleKey;
 			var svCaption = 'Google Street View';
 			if (json.features.length > 0 && (!$('#inputStView').is(':checked') || fromSequence)) {
-				svUrl = 'https://embed-v1.mapillary.com/embed?version=1&style=photo&image_key=' + json.features[0].properties.key + '&client_id='  + window.BOSM.mpllryKey;
+				svUrl = 'https://www.mapillary.com/embed?image_key=' + json.features[0].properties.key + '&style=photo';
 				svCaption = 'Mapillary Street Level';
 			}
 			$.fancybox.open([{
@@ -733,7 +727,7 @@ function suggestWalk(walkId, isDesc) {
 		case 'hwds':
 			if (isDesc) w =
 				'Starting at the Wheatsheaf Inn, this walk takes you on a public right-of-way through wood, farmland and down country lanes. ' +
-				'Pass through Whydown and see the extraordinary early 20th century Gotham Wood House, before arriving at the west corner of ancient Highwoods.';
+				'Pass through Whydown and see the extraordinary early 20th century Gotham Wood House, before arriving at the south-west corner of ancient Highwoods.';
 			else w = [
 				[50.84536, 0.43353],
 				[50.84958, 0.42689],
@@ -805,7 +799,7 @@ $('#tourList').change(function() {
 			$(this).fadeIn();
 			$(this).contents().find('sup').click(function() { tourRef(tourVal, this.innerText); });
 			$(this).contents().find('sup').attr('title', 'View reference');
-			$(this).contents().find('img').off('click').click(function() { $.fancybox.open([{ src: $(this)[0].currentSrc, caption: $(this).attr('alt') }]); });
+			$(this).contents().find('img').not('h3 img').off('click').click(function() { $.fancybox.open([{ src: $(this)[0].currentSrc, caption: $(this).attr('alt') }]); });
 			$('#tourControls').children().prop('disabled', false);
 		});
 		permalinkSet();
@@ -858,13 +852,6 @@ function setLeaflet() {
 			name: 'OpenStreetMap',
 			url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			maxNativeZoom: 19
-		},
-		mpsrfr: {
-			name: 'Mapsurfer',
-			url: 'https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png?api_key=' + BOSM.orsKey,
-			atribution: attribution + ', <a href="https://openrouteservice.org/" target="_blank" rel="noopener">MapSurfer.NET</a>',
-			maxNativeZoom: 19,
-			hide: 1
 		},
 		general: {
 			name: 'General Purpose',
@@ -1026,7 +1013,7 @@ function setLeaflet() {
 			name: '1946 Aerial (p.levels)',
 			url: 'https://tiles.bexhillheritage.org.uk/bm1946/{z}/{x}/{y}.png',
 			attribution: 'CPEUK, <a href="https://bexhillmuseum.org.uk/" target="_blank" rel="noopener">Bexhill Museum</a>',
-			bounds: LBounds,
+			bounds: L.latLngBounds([50.857, 0.379], [50.828, 0.428]),
 			opacity: 1,
 			minNativeZoom: 14,
 			maxNativeZoom: 18,
@@ -1057,6 +1044,15 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 17,
 			offset: [-2, -2]
+		},
+		mc1925: {
+			name: '1925 Maynards Chronicle',
+			url: 'https://tiles.bexhillheritage.org.uk/mc1925/{z}/{x}/{y}.png',
+			attribution: '<a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
+			bounds: L.latLngBounds([50.869, 0.417], [50.827, 0.509]),
+			opacity: 1,
+			maxNativeZoom: 17,
+			hide: 1
 		},
 		os1909: {
 			name: '1909 Ordnance Survey',
@@ -1703,7 +1699,7 @@ function poi_changed(newcheckbox) {
 			permalinkSet();
 		}
 	}
-	else {
+	else if (poiChk.length > maxPOICheckbox) {
 		// flash selected pois when max number reached
 		poiChk.parent().fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
 		$('#' + newcheckbox).prop('checked', false);
@@ -1764,7 +1760,7 @@ function getTips(tip) {
 		'Get the latest Food Hygiene Ratings on every business in the area under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
 		'Find your closest <i class="fas fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
 		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', 9);">History <i class="fas fa-book fa-sm"></i></a>.',
-		'Some places have a panoramic view, click the <i class="fas fa-street-view fa-fw"></i> icon to view it.',
+		'Some places have a panoramic view, click the <i class="fas fa-panorama fa-fw"></i> icon to view it.',
 		'Click the <i class="fas fa-street-view fa-fw"></i> map control icon to see exclusive panoramic views of that street.',
 		'View superimposed and colourised images of Bexhill past and present under <a onclick="switchTab(\'thennow\');">Then and Now <i class="far fa-image fa-sm"></i></a>.',
 		'Notice something wrong or missing on the map? Right-click the area and <i class="far fa-sticky-note fa-sm"></i> Leave a note.',
@@ -1792,7 +1788,7 @@ function showWeather() {
 		success: function(json) {
 			var nextTide = '', iconTide = { HighWater: 'up', LowWater: 'down' };
 			$.each(json, function(i, element) { if (new Date().getTime() > new Date(element.DateTime + 'Z').getTime()) nextTide = i+1; });
-			if (nextTide && nextTide !== json.length) {
+			if (nextTide && nextTide < json.length-1) {
 				var tideTitle = json[nextTide].EventType + ': ' + L.Util.formatNum(json[nextTide].Height, 2) + 'm\n' + json[nextTide+1].EventType + ': ' + L.Util.formatNum(json[nextTide+1].Height, 2) + 'm';
 				tideData =
 					'<span class="wtide1" title="' + tideTitle + '"><i class="fas fa-water fa-2x"></i></span><span class="wtide2" title="' + tideTitle + '">' +
@@ -1890,38 +1886,43 @@ function showEditFeed() {
 	});
 }
 
-// https://github.com/medialize/URI.js
 // M = basemap, O = overlay, OP = overlay opacity, S = settings, T = tab, U = tour frame, G = image layer, P = grouped pois, I = single poi, W = walkpoints
 // search = geocode query, data = overpass query, loc = location on
 function permalinkSet() {
-	var uri = URI(window.location.href);
-	var selectedPois = '', walkCoords = '', settingChk, tourPage, overlayOpacity, c;
+	// get clean url without parameters and hash
+	var uri = new URL(window.location.href.split('?')[0].split('#')[0]);
+	var selectedPois = '', walkCoords = '', settingChk, overlayOpacity, c;
 	var walkWayp = routingControl ? routingControl.getWaypoints() : undefined;
-	var tab = (actTab === defTab) ? undefined : actTab;
-	var baseLayer = (actBaseTileLayer === defBaseTileLayer) ? undefined : actBaseTileLayer;
-	var imgLayer = (actTab === actImgLayer) ? undefined : actImgLayer;
+	if (actTab !== defTab) uri.searchParams.set('T', actTab);
+	if (actBaseTileLayer !== defBaseTileLayer) uri.searchParams.set('M', actBaseTileLayer);
+	if (actImgLayer && actTab !== 'thennow') uri.searchParams.set('G', actImgLayer);
 	if (actOverlayLayer) {
+		uri.searchParams.set('O', actOverlayLayer);
 		overlayOpacity = Math.floor(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].options.opacity * 100);
 		if (overlayOpacity === tileOverlayLayer[actOverlayLayer].opacity * 100) overlayOpacity = undefined;
+		if (overlayOpacity) uri.searchParams.set('OP', overlayOpacity);
 	}
-	if (walkWayp) for (c in walkWayp) if (walkWayp[c].latLng) walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_';
-	walkCoords = walkCoords ? walkCoords.slice(0, -1) : undefined;
-	if (actTab === 'tour' && $('#tourList option').eq(0).val() !== $('#tourList option:selected').eq(0).val()) tourPage = $('#tourList option:selected').val();
+	if (walkWayp) {
+		for (c in walkWayp) if (walkWayp[c].latLng) walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_';
+		if (walkCoords) uri.searchParams.set('W', walkCoords.slice(0, -1));
+	}
+	if (actTab === 'tour' && $('#tourList option').eq(0).val() !== $('#tourList option:selected').eq(0).val()) uri.searchParams.set('U', $('#tourList option:selected').val());
 	$('.poi-checkbox input:checked').each(function(i, element) { selectedPois += element.id + '-'; });
-	selectedPois = selectedPois ? selectedPois.slice(0, -1) : undefined;
+	if (selectedPois) uri.searchParams.set('P', selectedPois.slice(0, -1));
 	if ($('#settings input[data="uri"]:checkbox:checked').length) {
 		settingChk = '';
 		for (c = 0; c < $('#settings input[data="uri"]:checkbox').length; c++) settingChk += $('#settings input[data="uri"]:checkbox').eq(c).is(':checked') ? '1' : '0';
+		uri.searchParams.set('S', settingChk);
 	}
 	if (noIframe && window.localStorage) {
 		window.localStorage.settingChk = '';
 		for (c = 0; c < $('#settings input[data="cache"]:checkbox').length; c++) window.localStorage.settingChk += $('#settings input[data="cache"]:checkbox').eq(c).is(':checked') ? '1' : '0';
 	}
-	uri.query({ 'M': baseLayer, 'O': actOverlayLayer, 'OP': overlayOpacity, 'S': settingChk, 'T': tab, 'U': tourPage, 'G': imgLayer, 'P': selectedPois, 'I': markerId, 'W': walkCoords });
-	window.history.replaceState(null, null, uri.resource());
+	if (markerId && !actImgLayer) uri.searchParams.set('I', markerId);
+	window.history.replaceState(null, null, uri + window.location.hash);
 }
 function permalinkReturn() {
-	var uri = URI(window.location.href), junkQ = window.location.href.split('?'), c;
+	var uri = new URL(window.location.href).searchParams, junkQ = window.location.href.split('?'), c;
 	// split fix for facebook and other junk trackers adding ?fbclid etc and busting queries
 	if (junkQ.length > 2) {
 		uri = URI(junkQ.slice(0, 2).join('?'));
@@ -1932,40 +1933,40 @@ function permalinkReturn() {
 	else if (noIframe && window.matchMedia("(prefers-color-scheme: dark)").matches) $('#inputDark').prop('checked', true);
 	$('#inputDark').trigger('change');
 	if (!noPermalink) {
-		if (uri.hasQuery('M') && tileBaseLayer[uri.search(true).M]) actBaseTileLayer = uri.search(true).M;
-		if (uri.hasQuery('O') && tileOverlayLayer[uri.search(true).O]) {
-			actOverlayLayer = uri.search(true).O;
+		if (uri.has('M') && tileBaseLayer[uri.get('M')]) actBaseTileLayer = uri.get('M');
+		if (uri.has('O') && tileOverlayLayer[uri.get('O')]) {
+			actOverlayLayer = uri.get('O');
 			tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].addTo(map);
-			if (uri.hasQuery('OP')) tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].setOpacity(uri.search(true).OP / 100);
+			if (uri.has('OP')) tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].setOpacity(uri.get('OP') / 100);
 		}
-		if (uri.hasQuery('S')) {
-			var settingChk = uri.search(true).S;
+		if (uri.has('S')) {
+			var settingChk = uri.get('S');
 			for (c = 0; c < settingChk.length; c++) $('#settings input[data="uri"]:checkbox').eq(c).prop('checked', parseInt(settingChk.charAt(c), 10));
 			if ($('#inputDebug').is(':checked')) $('#inputDebug').trigger('change');
 		}
 		$('#inputUnit').trigger('change');
-		if (uri.hasQuery('T')) actTab = uri.search(true).T;
-		if (uri.hasQuery('U')) {
-			var tourVal = uri.search(true).U;
+		if (uri.has('T')) actTab = uri.get('T');
+		if (uri.has('U')) {
+			var tourVal = uri.get('U');
 			if ($('#tourList option[value=' + tourVal + ']').length && !$('#tourList option[value=' + tourVal + ']')[0].disabled)
 				$('#tourList').val(tourVal).trigger('change');
 		}
-		if (uri.hasQuery('W')) {
-			var walkPoints = uri.search(true).W;
+		if (uri.has('W')) {
+			var walkPoints = uri.get('W');
 			walkPoints = walkPoints.split('_');
 			for (c in walkPoints) {
 				walkPoints[c] = walkPoints[c].replace('x', ', ');
 				routingControl.spliceWaypoints(c, 1, JSON.parse('[' + walkPoints[c] + ']'));
 			}
 		}
-		if (uri.hasQuery('G')) {
-			if (uri.hasQuery('I')) markerId = uri.search(true).I;
-			tour(uri.search(true).G, true);
+		if (uri.has('G')) {
+			if (uri.has('I')) markerId = uri.get('I');
+			tour(uri.get('G'), true);
 		}
-		else if (uri.hasQuery('P')) {
-			var groupedPoi = uri.search(true).P;
+		else if (uri.has('P')) {
+			var groupedPoi = uri.get('P');
 			if (groupedPoi.indexOf('-') !== -1) groupedPoi = groupedPoi.split('-');
-			if (uri.hasQuery('I')) markerId = uri.search(true).I;
+			if (uri.has('I')) markerId = uri.get('I');
 			setTimeout(function() {
 				if (!$.isArray(groupedPoi)) $('#' + groupedPoi).prop('checked', true);
 				// the last poi has a "/" on it because leaflet-hash
@@ -1973,28 +1974,28 @@ function permalinkReturn() {
 				poi_changed(groupedPoi);
 			}, 500);
 		}
-		else if (uri.hasQuery('I')) {
-			var singlePoi = uri.search(true).I;
+		else if (uri.has('I')) {
+			var singlePoi = uri.get('I');
 			rQuery = true;
 			setTimeout(function() { show_overpass_layer(elementType(singlePoi) + '(' + singlePoi.slice(1) + ');', singlePoi.toUpperCase()); }, 500);
 		}
-		else if (uri.hasQuery('search')) searchAddr(decodeURIComponent(uri.search(true).search));
-		else if (uri.hasQuery('data')) {
-			$('#inputOverpass').val(decodeURIComponent(uri.search(true).data));
-			customQuery(decodeURIComponent(uri.search(true).data));
+		else if (uri.has('search')) searchAddr(decodeURIComponent(uri.get('search')));
+		else if (uri.has('data')) {
+			$('#inputOverpass').val(decodeURIComponent(uri.get('data')));
+			customQuery(decodeURIComponent(uri.get('data')));
 		}
-		if (uri.hasQuery('loc')) setTimeout(function() { lc.start(); }, 500);
+		if (uri.has('loc')) setTimeout(function() { lc.start(); }, 500);
 	}
 	else {
 		$('#inputUnit').trigger('change');
-		if (uri.hasQuery('T')) actTab = uri.search(true).T;
+		if (uri.has('T')) actTab = uri.get('T');
 	}
 	tileBaseLayers[tileBaseLayer[actBaseTileLayer].name].addTo(map);
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
 	if (actTab === 'thennow') tour('thennow', true);
 	if (actTab !== 'none') sidebar.open(actTab);
 	// animate sidebar close button on smaller devices if layers underneath
-	if (actTab !== 'none' && $(window).width() < 768 && (uri.hasQuery('O') || uri.hasQuery('G') || uri.hasQuery('P') || uri.hasQuery('I') || uri.hasQuery('W')))
+	if (actTab !== 'none' && $(window).width() < 768 && (uri.has('O') || uri.has('G') || uri.has('P') || uri.has('I') || uri.has('W')))
 		$('.sidebar-close').addClass('wobble');
 	if (noIframe && window.localStorage && parseInt(window.localStorage.OPLCacheDur) >= 0 && parseInt(window.localStorage.OPLCacheDur) <= 240)
 		$('#inputOpCache').val(parseInt(window.localStorage.OPLCacheDur));

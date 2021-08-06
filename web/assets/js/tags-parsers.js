@@ -104,8 +104,9 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags.wheelchair === 'yes') tag += '<i class="facYes fas fa-wheelchair fa-fw" title="wheelchair: yes"></i>';
 		else if (tags.wheelchair === 'limited') tag += '<i class="facLtd fas fa-wheelchair fa-fw" title="wheelchair: limited"></i>';
 		else if (tags.wheelchair === 'no') tag += '<i class="facNo fas fa-wheelchair fa-fw" title="wheelchair: no"></i>';
-		if (tags['hearing_impaired:induction_loop'] === 'yes') tag += '<i class="facYes fas fa-deaf fa-fw" title="Induction loop: yes"></i>';
-		if (tags['tactile_writing:braille'] === 'yes') tag += '<i class="facYes fas fa-braille fa-fw" title="Braille: yes"></i>';
+		if (tags.elevator === 'yes')  tag += '<i class="facYes fas fa-elevator fa-fw" title="elevator: yes"></i>';
+		if (tags['hearing_impaired:induction_loop'] === 'yes') tag += '<i class="facYes fas fa-deaf fa-fw" title="induction loop: yes"></i>';
+		if (tags['tactile_writing:braille'] === 'yes') tag += '<i class="facYes fas fa-braille fa-fw" title="braille: yes"></i>';
 		if (tags.dog === 'yes') tag += '<i class="facYes fas fa-dog fa-fw" title="dog: yes"></i>';
 		else if (tags.dog === 'no') tag += '<i class="facNo fas fa-dog fa-fw" title="dog: no"></i>';
 		if (tags.internet_access === 'wlan') tag += '<i class="facYes fas fa-wifi fa-fw" title="internet: wireless"></i>';
@@ -290,6 +291,8 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		if (tags['url:bexhillnature'])
 			tag += '<a class="nowrap" href="http://bexhillnature.uk/' + tags['url:bexhillnature'] + '" title="Wild animals and plants" target="_blank" rel="noopener">Bexhill Nature</a>; ';
+		if (tags['ref:publicsculpturesofsussex'])
+			tag += '<a class="nowrap" href="https://publicsculpturesofsussex.co.uk/index.php/object?id=' + tags['ref:publicsculpturesofsussex'] + '" title="Public Sculptures of Sussex" target="_blank" rel="noopener">Public Sculptures</a>; ';
 		if (tags['url:bexhillhistorytrail'])
 			tag += '<a class="nowrap" href="https://thebexhillhistorytrail.wordpress.com/' + tags['url:bexhillhistorytrail'] + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
 		if (tags['ref:thekeep'])
@@ -309,7 +312,7 @@ function parse_tags(element, titlePopup, poiParser) {
 	var image_parser = function(tags) {
 		// get images
 		var lID = 0;
-		var multiPano = [];
+		var multiPano = [], multiVid = [];
 		markerPopup = '';
 		if (tags.wikimedia_commons) {
 			// support semicolon separated commons images
@@ -347,7 +350,14 @@ function parse_tags(element, titlePopup, poiParser) {
 				(tags['wikimedia_commons:pano_2'] ? ';' + tags['wikimedia_commons:pano_2'] : '')
 			).split(';');
 		}
-		if (lID > 1 || multiPano.length) markerPopup += show_img_controls(lID, multiPano);
+		if (tags['wikimedia_commons:video']) {
+			multiVid =
+				(tags['wikimedia_commons:video'] +
+				(tags['wikimedia_commons:video_1'] ? ';' + tags['wikimedia_commons:video_1'] : '') +
+				(tags['wikimedia_commons:video_2'] ? ';' + tags['wikimedia_commons:video_2'] : '')
+			).split(';');
+		}
+		if (lID > 1 || multiPano.length || multiVid.length) markerPopup += show_img_controls(lID, multiPano, multiVid);
 		return markerPopup;
 	};
 	// https://github.com/opening-hours/opening_hours.js
@@ -507,7 +517,7 @@ function callback(data) {
 				success: function(xml) {
 					areaOutline.addLayer(new L.OSM.DataLayer(xml)).addTo(map);
 					eleCache['VEC' + type + id] = xml;
-					if ($('#inputDebug').is(':checked')) console.debug('OSM outline:', xml);
+					if ($('#inputDebug').is(':checked')) console.debug('OSM outline (' + type + id + '):', xml);
 				},
 				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-OUTLINE:', encodeURI(this.url)); }
 			});
@@ -765,6 +775,7 @@ function callback(data) {
 		}
 		if (e.tags.surveillance) {
 			if (!type) type = e.tags.surveillance;
+			if (e.tags.surveillance === 'webcam') name = type = 'webcam';
 			if (type !== 'webcam') name = e.tags.surveillance + ' ' + e.tags['surveillance:type'];
 		}
 		if (e.tags.emergency) {
@@ -809,6 +820,10 @@ function callback(data) {
 		if (e.tags.boundary) {
 			if (!name) name = e.tags.protection_title;
 			if (!type) type = e.tags.boundary;
+			if (type === 'historic') {
+				iconName = 'administrativeboundary';
+				name = 'historic boundary';
+			}
 		}
 		if (e.tags.place) {
 			name = e.tags.place;
@@ -825,6 +840,7 @@ function callback(data) {
 				else if (e.tags.building === 'service') iconName = 'powersubstation';
 				else iconName = 'apartment-3';
 			}
+			else if (e.tags.entrance) iconName = 'entrance';
 			else iconName = '000blank';
 		}
 		var marker = L.marker(pos, {
@@ -840,6 +856,10 @@ function callback(data) {
 			}),
 			keyboard: false,
 			riseOnHover: true
+		}).on('click', function(e) {
+			// enable autopan after initial permalink popup, check if sidebar is open
+			e.sourceTarget._popup.options.autoPan = true;
+			e.sourceTarget._popup.options.autoPanPaddingTopLeft = ($(window).width() < 1300) ? [20, 40] : [sidebar.width() + 50, 5];
 		});
 		// find alternative poi name
 		if (!name || (poi && name === poi.name.toLowerCase())) {
@@ -875,13 +895,15 @@ function callback(data) {
 		else if (e.tags.operator) toolTip += e.tags.operator;
 		toolTip += '</div><i>' + name + '</i>';
 		if (e.tags.image || e.tags.wikimedia_commons) toolTip += ' <i class="tooltip-icons fas fa-image fa-fw" title="Image(s)"></i>';
-		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Panoramic view"></i>';
+		if (e.tags['wikimedia_commons:video']) toolTip += ' <i class="tooltip-icons fa fa-film fa-fw" title="Video(s)"></i>';
+		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-panorama fa-fw" title="Panoramic view"></i>';
 		// popup
 		var customPOptions = {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
 			minWidth: (e.tags.image || e.tags.wikimedia_commons) ? imgSize : '',
-			autoPanPaddingBottomRight: [5, 50],
-			autoPan: noPermalink ? true : false
+			autoPan: noPermalink ? true : false,
+			autoPanPaddingTopLeft: ($(window).width() < 1300) ? [20, 40] : [sidebar.width() + 50, 5],
+			autoPanPaddingBottomRight: [5, 50]
 		};
 		// check if already defined poi
 		if (poi) {
@@ -932,6 +954,7 @@ function callback(data) {
 		}
 	}
 	oQuery = false;
+	noPermalink = true;
 	// output list of pois in sidebar
 	if (poiList.length) setTimeout(pushPoiList, 250);
 	if (spinner > 0) spinner--;
@@ -958,7 +981,7 @@ function pushPoiList(customSort) {
 		var poiIcon = '';
 		if (poiList[c]._icon) poiIcon = '<img src="' + poiList[c]._icon.src + '"/>';
 		else if (poiList[c].options.color)
-			poiIcon = '<i style="-webkit-text-stroke:3px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fas fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
+			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fas fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
 			'<td class="openColor-list-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
 			'<td>' + poiList[c]._tooltip._content + '</td>' +
@@ -980,9 +1003,7 @@ function pushPoiList(customSort) {
 	$('#poi-results-list td:nth-child(3) i').tooltip(tooltipDef);
 	$('#poi-results').slideDown(400, function() {
 		// keep checkbox in view
-		if ($('.poi-checkbox input:checked').length === 1) $('#poi-icons')
-			.scrollTop(0)
-			.animate({ scrollTop: $('.poi-checkbox input:checked').parent().position().top - 50 }, 50);
+		if ($('.poi-checkbox input:checked').length === 1) $('.poi-checkbox input:checked').parent()[0].scrollIntoView({ block: 'center', behavior: "smooth" });
 	}).css('pointer-events', 'auto');
 	$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
 	// interact with map
@@ -1014,7 +1035,7 @@ function pushPoiList(customSort) {
 var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}:</strong> {value}</span></div>';
 function generic_header_parser(header, subheader, fhrs, osmId) {
 	var markerPopup = '<div class="popup-header">';
-	if (header) markerPopup += '<h3>' + header + '</h3>';
+	if (header || fhrs) markerPopup += '<h3>' + (header !== undefined ? header : '&hellip;') + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
 	if (!$('#inputAttic').val()) {
 		if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.svg"/></span>';
@@ -1383,14 +1404,21 @@ function getWikiAttrib(id) {
 		});
 	}
 }
-function show_img_controls(imgMax, img360) {
+function show_img_controls(imgMax, img360, vid) {
 	// add image navigation controls to popup
 	var ctrlTmpl = '<div class="navigateItem">';
+	if (vid && vid.length) for (x = 0; x < vid.length; x++) {
+		if (vid[x].indexOf('File:') === 0 && vid[x].indexOf('webm') === vid[x].length-4) ctrlTmpl +=
+			'<a class="vid" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-loop="false"' +
+				'data-animation-effect="circular" href="https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(vid[x]) + '">' +
+				'<i style="min-width:25px;" class="fas fa-film fa-fw jump"></i>' +
+			'</a>';
+	}
 	if (img360 && img360.length) for (x = 0; x < img360.length; x++) {
 		if (img360[x].indexOf('File:') === 0) ctrlTmpl +=
 			'<a class="pano" title="Panoramic views" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-preload="false" data-fancybox="pano"' +
 				'data-type="iframe" data-animation-effect="circular" data-src="https://tools.wmflabs.org/panoviewer/#' + encodeURIComponent(img360[x].split(':')[1]) + '" href="javascript:;">' +
-				'<i style="min-width:25px;" class="fas fa-street-view fa-fw jump"></i>' +
+				'<i style="min-width:25px;" class="fas fa-panorama fa-fw jump"></i>' +
 			'</a>';
 	}
 	if (imgMax > 1) ctrlTmpl +=
@@ -1419,10 +1447,10 @@ function navImg(direction) {
 }
 
 // formatting parsers
-function titleCase(str) {
+function titleCase(str, force) {
 	// remove underscore, replace semi-colon with comma, convert to title-case
 	str = str.replace(/;/g, ', ').replace(/_/g, ' ');
-	if (str === str.toUpperCase()) return str;
+	if (str === str.toUpperCase() && force === undefined) return str;
 	else return str.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 function date_parser(dtStr, style) {

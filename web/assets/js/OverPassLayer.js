@@ -65,6 +65,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			else $.ajax({
 				url: url,
 				datatype: 'xml',
+				retryLimit: 3,
 				success: function(xml) {
 					self.options.callback.call(reference, xml);
 					if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('info-circle', 'No places found', 'Please try turning off "only show open" in options.');
@@ -83,7 +84,15 @@ L.OverPassLayer = L.FeatureGroup.extend({
 							case 0: erMsg = 'Data server not responding. Please try again later.'; e.status = 1; break;
 							case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
 							case 429: erMsg = 'Too Many Requests. Please try a smaller selection.'; break;
-							case 504: erMsg = 'Gateway Timeout. Please try again.'; break;
+							case 504:
+								// retry on timeout
+								if (this.retryLimit) {
+									this.retryLimit--;
+									$.ajax(this);
+									return;
+								}
+								else erMsg = 'Gateway Timeout. Please try again later.';
+								break;
 						}
 						self.options.statusMsg('exclamation-triangle', 'ERROR #' + e.status, erMsg);
 						self.options.callback.call(reference, {elements: []});

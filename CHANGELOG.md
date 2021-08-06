@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v6.1.0
+
+**Date:** 06/08/2021
+
+Updated js
+ - L.Control.Locate.min.js 0.74.0
+
+Site changes
+ - Font Awesome 6
+ - Remove URI.js in favour of self searchParams implementation
+ - Remove jquery animate scrolling in favour of js scroll/scollIntoView
+ - Support for 'elevator' tags for facilities parser
+ - Support semicolon separated wikimedia_commons:video videos
+ - Retry overpass query if time-out occurs
+ - Icon for 'entrance' key
+ - Add Boreholes and Other Maps to Tour
+
+
 ## v6.0.0 - Visual click
 
 **Date:** 17/05/2021

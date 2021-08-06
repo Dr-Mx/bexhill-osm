@@ -17,6 +17,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - Bookmark favourite POIs
   - Facility icons
     - Wheelchair (key:wheelchair)
+    - Elevator (key:elevator)
     - Hearing induction loop (key:hearing_impaired:induction_loop)
     - Braille (key:tactile_writing:braille)
     - Internet (key:internet_access)
@@ -38,6 +39,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - UK Food Hygiene Rating System API (key:fhrs:id)
   - Real-time Traveline API information on bus-stops (key:naptan:AtcoCode)
   - Multiple image support including Wikimedia Commons API (key:wikimedia_commons, key:image)
+  - Multiple video support using Wikimedia Commons (key:wikimedia_commons:video)
   - Multiple spherical panorama support using Wikimedia Commons (key:wikimedia_commons:pano)
 - Find an address by searching (Nominatim > Overpass)
 - Query any feature on map by clicking (Nominatim > Overpass)

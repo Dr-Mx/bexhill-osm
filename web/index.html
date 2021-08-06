@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5"/>
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7"/>
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=6.0.0"/>
+	<link rel="stylesheet" href="assets/css/site.css?v=6.1.0"/>
 	<link rel="stylesheet" id="darkcss"/>
  </head>
 
@@ -105,11 +105,11 @@
 					<span id="newFeed">
 						<span>What's new:
 							<ul class="fa-ul">
-								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Add tide times to weather widget</i></a> - 04/2021</li>
+								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', 'maps');"><i>Historic tour of 'Other Maps'</i></a> - 07/2021</li>
+								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Add tide times to weather widget</i> - 04/2021</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('settings');"><i>Add dark theme</i></a> - 02/2021</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'scarecrow');"><i>Xmas Scarecrow Competition 2020</i></a> - 12/2020</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'xmas');"><i>Xmas Window Display Competition 2020</i></a> - 11/2020</li>
-								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'pano');"><i>360&deg; panoramic street level views (in progress)</i></a> - 07/2020</li>
 							</ul>
 						</span>
 						<span id="osmFeed"><!-- auto-populated --></span>
@@ -181,6 +181,8 @@
 								<option value="people" data-keyword="famous notable people">Notable People</option>
 								<option value="clocks" data-keyword="public street clock">Public Clocks</option>
 								<option value="surveying" data-keyword="ordnance survey point, benchmark">OS Surveying Points</option>
+								<!-- <option value="boring" data-keyword="borehole, well">Boreholes &amp; Wells</option> -->
+								<option value="maps" data-keyword="map">Other Maps</option>
 								<option value="zrefs">~ References &amp; further reading</option>
 							</select>
 						<button type="button" id="tourNext" title="Next article"><i class="fas fa-chevron-right"></i></button>
@@ -270,7 +272,7 @@
 						<i class="theme fas fa-street-view fa-border fa-fw"></i> Panoramic views: Browse Mapillary Street Level images by clicking the highlighted areas.<br/><br/>
 						<i class="theme fas fa-bookmark fa-border fa-fw"></i> Show bookmarks: Displays any saved POIs on the map. Right-click will copy your bookmarks as a shareable link.<br/><br/>
 						<i class="theme fas fa-trash fa-border fa-fw"></i> Clear layers (CTRL-DEL): Remove all current layers on the map. Right-click will reload the website to defaults.<br/><br/>
-						<i class="fas fa-layer-group fa-border fa-lg fa-fw" style="color:#888;"></i> Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the map.
+						<i class="fas fa-layer-group fa-border fa-lg fa-fw" style="line-height:1em;color:#888;"></i> Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the map.
 					</div>
 					<div id="gotocontext"><hr/>
 					<h3>Context-menu</h3>
@@ -336,21 +338,20 @@
 						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we do welcome listings on all publicly visitable places.</p>
 						<span id="myprofile"><img alt="Alexis Markwick" title="Alexis Markwick" src="assets/img/info-me.jpg"/>Web-development and the underlying map data are maintained by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</span>
 						<p>If you're involved with a local group, I'll be happy to come and speak at one of your events about the project.</p>
-						<p id="mylinks">
-							<a href="" onclick="this.href='mailto:' + email;" title="Email"><i class="fas fa-envelope fa-fw fa-lg"></i> info [at] bexhill-osm.org.uk</a><br/>
-							<a href="https://www.facebook.com/bexhillosm" target="_blank" rel="noopener" title="Facebook"><i style="color:#3b5998;" class="fab fa-facebook fa-fw fa-lg"></i> Bexhill-OSM</a><br/>
-							<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter"><i style="color:#1da1f2;" class="fab fa-twitter fa-fw fa-lg"></i> @BexhillOSM</a><br/>
-							<a href="https://osm.org/user/Bexhill-OSM" target="_blank" rel="noopener" title="OpenStreetMap"><i style="color:#6aa755;" class="fas fa-map fa-fw fa-lg"></i> Bexhill-OSM (OpenStreetMap)</a>
+						<p class="mylinks">
+							<a href="" onclick="this.href='mailto:' + email;" title="Email"><i class="fas fa-envelope fa-fw fa-lg"></i>info [at] bexhill-osm.org.uk</a><br/>
+							<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter"><i style="color:#1da1f2;" class="fab fa-twitter fa-fw fa-lg"></i>@BexhillOSM</a><br/>
+							<a href="https://osm.org/user/Bexhill-OSM" target="_blank" rel="noopener" title="OpenStreetMap"><i style="color:#6aa755;" class="fas fa-map fa-fw fa-lg"></i>Bexhill-OSM (OpenStreetMap)</a>
 						</p>
 					</div>
 					<div id="gotodonate"><hr/>
 					<h3>Donate</h3>
 						Bexhill-OSM is entirely advertisement and commercial free. If you so wish, click a link below to support the project. Thank you.
-						<table>
-							<tr><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3X9MHLW4W9TG&source=url" target="_blank" rel="noopener" title="Donate to Bexhill-OSM"><img alt="Paypal" src="assets/img/info-paypal.png"/></a></td></tr>
-							<tr><td><a href="https://amzn.eu/cEeSUjc?sort=priority" target="_blank" rel="noopener" title="Amazon Wish List"><img alt="My Amazon Wish List" src="assets/img/info-amazon.png"/><br/>My Amazon Wish List</a></td></tr>
-							<tr><td title="Bitcoin"><a href="bitcoin:1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi"><i class="fab fa-btc fa-fw fa-lg"></i><i class="comment">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</i></a></td></tr>
-						</table>
+						<p class="mylinks">
+							<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3X9MHLW4W9TG&source=url" target="_blank" rel="noopener" title="Donate to Bexhill-OSM"><i style="color:#003083;" class="fab fa-paypal fa-fw fa-lg"></i>Donate with PayPal</a><br/>
+							<a href="https://amzn.eu/cEeSUjc?sort=priority" target="_blank" rel="noopener" title="Amazon Wish List"><i style="color:#000000;" class="fab fa-amazon fa-fw fa-lg"></i>My Amazon Wish List</a><br/>
+							<a href="bitcoin:1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi"><i style="color:#f7931a;" class="fab fa-btc fa-fw fa-lg"></i>Bitcoin <i class="comment" style="font-size:7pt;">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</i></a>
+						</p>
 					</div>
 					<div id="gotolinks"><hr/>
 					<h3>Links</h3>
@@ -367,7 +368,7 @@
 					<div id="gotosoftware"><hr/>
 					<h3>Software</h3>
 						<p>Bexhill-OSM is openly available under the GNU General Public License.</p>
-						<p><a href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Bexhill-OSM</a> &copy; Alexis Markwick</p>
+						<p class="mylinks"><a href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><i style="color:#000000;" class="fab fa-github fa-fw fa-lg"></i>Bexhill-OSM</a> &copy; Alexis Markwick</p>
 						Thanks to these developers:
 						<ul>
 							<li><a href="https://github.com/humitos/osm-pois/" target="_blank" rel="noopener">osm-pois</a> &copy; Manuel Kaufmann</li>
@@ -419,7 +420,6 @@
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v=1.5.0rc1"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v=1.3.4"></script>
 	<script src="assets/js/plugins/imageMapResizer.min.js?v=1.0.10"></script>
-	<script src="assets/js/plugins/URI.min.js?v=1.19.6"></script>
 	<script src="assets/js/plugins/leaflet.js?v=1.7.1"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v=0.2.1"></script>
 	<script src="assets/js/plugins/L.VisualClick.js?v=1.1.0"></script>
@@ -431,18 +431,18 @@
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v=1.5.1"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v=3.2.5"></script>
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v=1.12.0"></script>
-	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.72.2"></script>
+	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.74.0"></script>
 	<script src="assets/js/plugins/bouncemarker.min.js?v=1.2.0"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.6.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=6.0.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=6.0.0"></script>
-	<script src="assets/js/tags-parsers.js?v=6.0.0"></script>
-	<script src="assets/js/pois-type.js?v=6.0.0"></script>
-	<script src="tour/tour.js?v=6.0.0"></script>
-	<script src="assets/js/site.js?v=6.0.0"></script>
+	<script src="assets/js/config.js?v=6.1.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=6.1.0"></script>
+	<script src="assets/js/tags-parsers.js?v=6.1.0"></script>
+	<script src="assets/js/pois-type.js?v=6.1.0"></script>
+	<script src="tour/tour.js?v=6.1.0"></script>
+	<script src="assets/js/site.js?v=6.1.0"></script>
 
  </body>
 </html>

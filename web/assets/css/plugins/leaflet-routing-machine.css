@@ -133,23 +133,23 @@
 
 .leaflet-routing-add-waypoint::after {
 	color: var(--main-color);	
-    content: '\f067';
+    content: '\2b';
 	line-height: 1;
-	font-family: 'Font Awesome 5 Pro';
+	font-family: 'Font Awesome 6 Pro';
 }
 
 .leaflet-routing-reverse-waypoints::after {
 	color: var(--main-color);	
 	content: '\f079';
 	line-height: 1;
-	font-family: 'Font Awesome 5 Pro';
+	font-family: 'Font Awesome 6 Pro';
 }
 
 .leaflet-routing-delete-waypoints::after {
 	color: var(--main-color);	
 	content: '\f1f8';
 	line-height: 1;
-	font-family: 'Font Awesome 5 Pro';
+	font-family: 'Font Awesome 6 Pro';
 }
 
 .leaflet-routing-delete-waypoints, .leaflet-routing-reverse-waypoints, .leaflet-routing-add-waypoint {

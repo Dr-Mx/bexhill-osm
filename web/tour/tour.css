@@ -1,6 +1,6 @@
 :root {
 	--text-color: black;
-	--bg-color: inherit;
+	--bg-color: #ccc;
 	--bg-color2: rgba(190, 190, 190, 0.5);
 }
 html {
@@ -58,6 +58,10 @@ ul, ol {
 	padding-left: 20px;
 }
 
+h3 img {
+	width: 98%;
+	margin: 0;
+}
 img {
 	width: 100%;
 	max-width: 500px;

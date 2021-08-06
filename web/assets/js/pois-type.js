@@ -27,7 +27,8 @@ var pois = {
 		query: 'node[surveillance=webcam];',
 		iconName: 'webcam',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['webcam', 'surveillance']
+		tagKeyword: ['webcam', 'surveillance'],
+		tagParser: cctv_parser
 	},
 
 	bus: {
@@ -285,10 +286,10 @@ var pois = {
 
 	drinking_water: {
 		name: 'Drinking-Water',
-		query: 'node[amenity=drinking_water];node[drinking_water=yes];nwr["drinking_water:bexfill"=yes];',
+		query: 'node[amenity=drinking_water];node[drinking_water=yes];nwr["drinking_water:refill"=yes];',
 		iconName: 'drinkingwater',
 		catName: 'Amenities',
-		tagKeyword: ['drink', 'tap', 'water', 'bexfill'],
+		tagKeyword: ['drink', 'tap', 'water', 'refill'],
 		tagParser: tap_parser
 	},
 
@@ -401,7 +402,7 @@ var pois = {
 		query: 'nwr[~"^amenity$|^emergency$"~"^police$|^fire_station$|^ambulance_station$|^coast_guard$"];',
 		iconName: 'police2',
 		catName: 'Services',
-		tagKeyword: ['police', 'fire', 'ambulance', 'help', 'emergency', 'coastguard']
+		tagKeyword: ['police', 'fire', 'ambulance', 'coastguard', 'help', 'emergency']
 	},
 
 	townhall: {
@@ -532,7 +533,7 @@ var pois = {
 		query: 'nwr[shop~"mobility|hearing_aids"];',
 		iconName: 'retirement_home',
 		catName: 'Services',
-		tagKeyword: ['mobility', 'wheelchair', 'deaf', 'disabled']
+		tagKeyword: ['mobility', 'wheelchair', 'deaf', 'disability']
 	},
 
 	funeral_directors: {
@@ -670,7 +671,7 @@ var pois = {
 		query: 'nwr[shop=variety_store];',
 		iconName: 'mall',
 		catName: 'Shops',
-		tagKeyword: ['variety', 'pound', '99p', 'supplies', 'toys', 'confectionery']
+		tagKeyword: ['variety', 'pound', 'supplies', 'toys', 'confectionery']
 	},
 
 	copyshop: {
@@ -807,7 +808,7 @@ var pois = {
 		query: 'nwr[shop=hairdresser];',
 		iconName: 'hair',
 		catName: 'Shops',
-		tagKeyword: ['barber', 'hairdresser', 'trim', 'shave'],
+		tagKeyword: ['barber', 'hairdresser', 'shave'],
 	},
 
 	beauty: {
@@ -879,7 +880,7 @@ var pois = {
 		query: 'nwr[shop=books];',
 		iconName: 'book',
 		catName: 'Shops',
-		tagKeyword: ['books', 'read']
+		tagKeyword: ['books', 'reading']
 	},
 
 	antiques: {
@@ -1041,14 +1042,14 @@ var pois = {
 
 	surveillance: {
 		name: 'Surveillance',
-		query: 'node[~"^highway$|^man_made$"~"^speed_camera$|^surveillance$"];',
+		query: 'node[~"^highway$|^man_made$"~"^speed_camera$|^surveillance$"][surveillance!~webcam];',
 		iconName: 'cctv',
 		catName: 'Other',
 		tagKeyword: ['surveillance', 'cctv', 'security', 'camera'],
 		tagParser: cctv_parser
 	},
 
-	// UNLISTED
+	// unlisted from categories but used elsewhere
 	
 	bus_stop: {
 		name: 'Bus Stop',
@@ -1064,7 +1065,7 @@ var pois = {
 	
 	boundary_stone: {
 		name: 'Boundary Stone',
-		query: 'node[historic=boundary_stone];',
+		query: '(node[historic=boundary_stone];relation(9825836);relation(12268775););',
 		iconName: 'boundary'
 	},
 

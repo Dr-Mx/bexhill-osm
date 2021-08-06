@@ -73,6 +73,10 @@
 		<changefreq>never</changefreq>
 	</url>
 	<url>
+		<loc>https://bexhill-osm.org.uk/ww2</loc>
+		<changefreq>never</changefreq>
+	</url>
+	<url>
 		<loc>https://bexhill-osm.org.uk/streetnames</loc>
 		<changefreq>monthly</changefreq>
 	</url>
