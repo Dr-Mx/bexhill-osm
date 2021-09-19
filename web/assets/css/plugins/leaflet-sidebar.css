@@ -22,7 +22,8 @@
 	opacity : 0; }
 @media (min-width: 1300px) {
 	.sidebar.collapsed .sidebar-tabs {
-		background-color: rgba(204, 204, 204, 0.5); }
+		background-color: rgba(204, 204, 204, 0.5);
+		transition: background-color 400ms ease-out; }
 	.sidebar.collapsed {
 		width: 40px; } }
 .sidebar-left {
@@ -34,8 +35,7 @@
 	top: 0;
 	bottom: 0;
 	height: 100%;
-	background-color: #ddd;
-	transition: background-color 300ms ease-out; }
+	background-color: #ddd; }
 .sidebar-left .sidebar-tabs {
 	left: 0; }
 .sidebar-tabs, .sidebar-tabs > ul {

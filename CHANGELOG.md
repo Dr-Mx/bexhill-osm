@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## v6.2.0 - Pannellum
+
+**Date:** 19/09/2021
+
+Added
+ - Pannellum
+
+Site changes
+ - Switch to self-hosted Pannellum photosphere viewer
+ - Option to use OSM Area ID for OverPass bounding box
+ - Remove leaflet-osm.js in favour of getting geometry from OverPass
+ - Only load POI image thumbnails on popup open
+ - Stop some single-clicks on overlays by adding layerNoClick class
+ - Let some baselayers be inverted for darkmode using layerDark class
+ - Create lightbox gallery from images in tour pages
+ - Tidied up Settings tab
+ - Permalinks for custom queries
+ - More of the usual bug fixes and code improvements
+
+
 ## v6.1.0
 
 **Date:** 06/08/2021
@@ -13,7 +33,7 @@ Site changes
  - Remove jquery animate scrolling in favour of js scroll/scollIntoView
  - Support for 'elevator' tags for facilities parser
  - Support semicolon separated wikimedia_commons:video videos
- - Retry overpass query if time-out occurs
+ - Retry OverPass query if time-out occurs
  - Icon for 'entrance' key
  - Add Boreholes and Other Maps to Tour
 
@@ -45,7 +65,7 @@ Updated js
  - jquery.mobile.custom.min.js 1.5.0rc1
  - URI.js 1.19.6
  - L.Control.Locate.min.js 0.72.2
- 
+
 Site changes
  - Proper support for a dark theme, auto switching if user prefers a dark colour scheme
  - Custom OverPass queries can now include osm elements
@@ -63,7 +83,7 @@ Site changes
 
 Updated js
  - URI.js 1.19.4
- 
+
 Site changes
  - Offsets for baselayers
  - Add annual scarecrow competition to Tour
@@ -81,7 +101,7 @@ Updated js
  - leaflet.js 1.7.1
  - jquery.js 3.5.1
  - L.Control.Locate.min.js 0.72.1
- 
+
 Site changes
  - Show OSM notes and comment history
  - Added OpenCageData server for reverse lookups
@@ -98,7 +118,7 @@ Site changes
 
 Updated js
  - L.Control.Locate.min.js 0.72.0
- 
+
 Site changes
  - Right-click 'Panoramic view' opens a panoramic Mapillary Street Level iframe, if not found use Google Street View
  - Hide back-to-top anchor button when at top of tab
@@ -117,11 +137,11 @@ Site changes
 
 Added js
  - geotools.min.js
- 
+
 Updated js
  - Control.Geocoder.min.js 1.12.0
  - L.Control.Locate.min.js 0.70.0
- 
+
 Site changes
  - Right-click on the map to directly copy coordinates (LatLng & NationalGridRef)
  - Direct links to property records on UK Land Registry
@@ -401,10 +421,10 @@ Site changes
 
 Added js
  - config.js
- 
+
 Updated js
  - opening_hours+deps.min.js [removed other localisations]
- 
+
 Site changes
  - Get next bus times from NaPTAN codes on bus-stops using API from Traveline
  - Images show as thumbnails until hovered or tapped
@@ -427,7 +447,7 @@ Updated js
  - jQuery 3.3.1
  - jquery.mobile.custom.min.js 1.5.0a
  - easy-button.min.js 3.0.0
- 
+
 Site changes
  - Larger overlay opacity slider with added close button
  - Show Overpass 'attic data' for a certain date in development options
@@ -554,7 +574,7 @@ Site changes
 **Date:** 02/06/2017
 
 Site changes
- - Added list of results when selecting a group POI, colours show current open state. Mouse-over an item to see tooltip, click to open popup.
+ - Added list of results when selecting a group POI, colours show current open state. Mouse-over an item to see tooltip, click to open popup
  - Removed 'facilities open right now' checkbox
  - Use alternative method to get thumbnail from wikimedia without MD5 plugin
 
@@ -760,7 +780,7 @@ Updated js
 
 Site changes
  - Re-write of creating POI checkbox tables, now a single tab with page jump links. Complete automated import from pois-types.js
- - Changed URL encoding to not use unsafe characters and less parameters, old links will no longer work.
+ - Changed URL encoding to not use unsafe characters and less parameters, old links will no longer work
  - Added a Historic Tour tab. Contains controls linking to an iframe containing various articles that interact with the map
  - Suggested walks now use switch statement
  - Wikimedia images now display proper attribution through their api
@@ -1003,11 +1023,11 @@ Site changes
 
 Updated js
  - jQuery 3.0.0
- 
+
 Added js
  - jquery-ui.min.js
  - jquery.easy-autocomplete.js
- 
+
 Site changes
  - New 'find interest' input that finds POIs based on keywords
  - Checkboxes briefly highlight when selected by 'find interest' or returning from link

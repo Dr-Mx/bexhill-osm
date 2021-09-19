@@ -57,7 +57,7 @@ function tour(ti, fromPermalink) {
 	// data | layer | [main header, subheader, date subheader] | image attribution | marker popup class
 	var setJsonPopup = function(feature, layer, header, dfltAttrib, pClass) {
 		var toolTip = '', markerPopup = '', customPOptions = {
-			className: 'popup-t' + (pClass ? ' ' + pClass : ''),
+			className: pClass,
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
 			minWidth: feature.properties.img ? imgSize : '',
 			autoPanPaddingBottomRight: [5, 50],
@@ -161,7 +161,7 @@ function tour(ti, fromPermalink) {
 						onEachFeature: function (feature, layer) {
 							var fp = feature.properties;
 							fp.description = '<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
-								'openstreetmap.org/note/' + fp.id + '</a><hr/>';
+								'osm.org/note/' + fp.id + '</a><hr/>';
 							$.each(fp.comments, function(c) {
 								if (fp.comments[c].text) fp.description += L.Util.template(tagTmpl, {
 									tag: (fp.comments[c].user ? '<a href="' + fp.comments[c].user_url + '" target="_blank" rel="noopener">' + fp.comments[c].user + '</a>' : 'Anonymous'),
@@ -321,6 +321,7 @@ function tour(ti, fromPermalink) {
 								protect: true,
 								transitionEffect: 'fade',
 								transitionDuration: 5000,
+								slideShow: { speed: 2000 },
 								afterLoad: function() {
 									// cancel slideshow if left/right arrows clicked
 									$('.fancybox-button--arrow_left, .fancybox-button--arrow_right').on('click touchstart', function() {
@@ -689,7 +690,7 @@ function tour(ti, fromPermalink) {
 						},
 						onEachFeature: function(feature, layer) {
 							// push any additional information into a popup
-							feature.properties.description = 
+							feature.properties.description =
 								generic_tag_parser({ ref: feature.properties.reference.toString() }, 'ref', 'Reference', 'fas fa-hashtag') +
 								(feature.properties.year_known ? generic_tag_parser({ date: feature.properties.year_known.toString() }, 'date', 'Date', 'fas fa-calendar-alt') : '') +
 								'<a style="margin:5px;display:block;text-align:center;" onclick="tourIframe(\'' + feature.properties.scan_url + '\', \'\', \'circular\')">View borehole scan</a>';

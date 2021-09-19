@@ -126,7 +126,7 @@ img {
 	color: var(--main-color);
 }
 .maplink:hover {
-	background-color: var(--bg-color2);
+	background-color: var(--bg-color);
 }
 .vidlink {
 	display: block;

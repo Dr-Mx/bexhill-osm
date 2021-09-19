@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5"/>
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7"/>
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=6.1.0"/>
+	<link rel="stylesheet" href="assets/css/site.css?v=6.2.0"/>
 	<link rel="stylesheet" id="darkcss"/>
  </head>
 
@@ -76,7 +76,7 @@
 					<div id="homeBox">
 						<div id="weather"><span class="comment">Loading weather...</span></div>
 						<div id="minimap">
-							<img src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap"/>
+							<img class="darkbaselayer" src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap"/>
 							<map name="m_minimap">
 								<area title="Bexhill-on-Sea" shape="rect" coords="211,154,315,172"/>
 								<area title="Barnhorn" shape="rect" coords="0,141,74,174"/>
@@ -102,8 +102,8 @@
 					<p>See <a style="white-space:nowrap;" onclick="switchTab('help');"><i class="theme fas fa-question-circle"></i></a> for more assistance.
 					<br/>Contact details can be found under <a style="white-space:nowrap;" onclick="switchTab('info');"><i class="theme fas fa-info-circle"></i></a>.</p>
 					<hr/>
-					<span id="newFeed">
-						<span>What's new:
+					<div id="newFeed">
+						<div>What's new:
 							<ul class="fa-ul">
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', 'maps');"><i>Historic tour of 'Other Maps'</i></a> - 07/2021</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Add tide times to weather widget</i> - 04/2021</li>
@@ -111,16 +111,16 @@
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'scarecrow');"><i>Xmas Scarecrow Competition 2020</i></a> - 12/2020</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'xmas');"><i>Xmas Window Display Competition 2020</i></a> - 11/2020</li>
 							</ul>
-						</span>
-						<span id="osmFeed"><!-- auto-populated --></span>
-					</span>
+						</div>
+						<div id="osmFeed"><!-- auto-populated --></div>
+					</div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="pois">
 				<div class="sidebar-header"><span class="sidebar-header-text">Places</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
 				<div class="sidebar-body custscroll">
 					<div id="poi-results" class="custscroll">
-						<h3></h3>
+						<h3><!-- auto-populated --></h3>
 						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map('markers');"><i class="fas fa-trash"></i></button>
 						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="zoom_area(true);"><i class="fas fa-eye"></i></button>
 						<div id="poi-results-list"></div>
@@ -136,7 +136,7 @@
 					<div id="routingControl"></div>
 					<div class="comment">
 						Directions courtesy of <a href="https://www.mapbox.com/directions/" target="_blank" rel="noopener">Mapbox</a><br/>
-						Tip: For more advanced routing, try <a href="https://brouter.de/brouter-web/" target="_blank" rel="noopener">BRouter <i class="theme fas fa-external-link-alt fa-sm"></i></a>
+						Tip: For more advanced routing, try <a href="https://brouter.de/brouter-web/" target="_blank" rel="noopener">BRouter <i class="theme fas fa-up-right-from-square fa-sm"></i></a>
 					</div>
 					<hr/>
 					<h3>Suggested leisure walks</h3>
@@ -208,38 +208,39 @@
 				<div class="sidebar-header"><span class="sidebar-header-text">Settings</span><span class="sidebar-close" title="Minimise sidebar"></span></div>
 				<div class="sidebar-body custscroll">
 					<h3>Map display options</h3>
-					<p><label class="switch"><input id="inputOpen" data="uri" type="checkbox"><span class="slider" title="Filter results to open facilities"></span><span class="switchLabel">Only show currently open places</span></label></p>
-					<p><label class="switch"><input id="inputUnit" data="cache" type="checkbox"><span class="slider" title="mi/ft or km/m"></span><span class="switchLabel">Use kilometres for measurements (metric)</span></label></p>
-					<p><label class="switch"><input id="inputStView" data="cache" type="checkbox"><span class="slider" title="Only use Google Street View"></span><span class="switchLabel">Default to Google for street panoramas</span></label></p>
-					<p><label class="switch"><input id="inputDark" data="cache" type="checkbox"><span class="slider" title="Changes theme better suited for night"></span><span class="switchLabel">Dark theme</span></label></p>
+					<p><label class="switch"><input id="inputDark" data-cache type="checkbox"><span class="slider" title="Changes theme better suited for night"></span><span class="switchLabel">Dark theme</span></label></p>
+					<p><label class="switch"><input id="inputUnit" data-cache type="checkbox"><span class="slider" title="mi/ft or km/m"></span><span class="switchLabel">Use kilometres for measurements (metric)</span></label></p>
+					<p><label class="switch"><input id="inputStView" data-cache type="checkbox"><span class="slider" title="Only use Google Street View"></span><span class="switchLabel">Default to Google for street photospheres</span></label></p>
+					<p><label class="switch"><input id="inputOpen" data-uri type="checkbox"><span class="slider" title="Filter results to open facilities"></span><span class="switchLabel">Only show 'currently open' results</span></label></p>
 					<hr/>
 					<div id="devTools">
 						<h3>Development tools</h3>
 						<div>
-							<p><label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span><span class="switchLabel">Debug mode</span></label></p>
+							<button type="button" onclick="tour('notes');"><i class="fas fa-sticky-note"></i></button><div class="buttonLabel">Show map notes</div>
+							<button type="button" id="exportQuery"><i class="fas fa-upload"></i></button><div class="buttonLabel">Export current query to Overpass Turbo</div>
+							<button type="button" id="downloadBB"><i class="fas fa-download"></i></button><div class="buttonLabel">Download all OSM data within map bounds (xml)</div>
+							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fas fa-circle-question fa-sm fa-fw"></i></a> :<br/>
+								<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text"><span class="leaflet-routing-remove-waypoint" onclick="$(this).prev().val('');"></span>
+							</p>
+							<p>Attic data (date) <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener"><i class="theme fas fa-circle-question fa-sm fa-fw"></i></a> :<br/>
+								<input id="inputAttic" type="date" min="2016-01-01"></p>
 							<p>localStorage cache duration for POIs :<br/>
 								<input id="inputOpCache" min="0" max="240" type="number"><span class="buttonLabel">hours</span></p>
-							<p>Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Leaflet Control Geocoder providers"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br/>
+							<p>Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Leaflet Control Geocoder providers"><i class="theme fas fa-circle-question fa-sm fa-fw"></i></a> :<br/>
 								<select id="inputRevServer" class="theme">
 									<option selected value="nominatim">nominatim.openstreetmap.org</option>
 									<option value="opencage">api.opencagedata.com</option>
 									<option value="photon">photon.komoot.io</option>
 									<option value="openrouteservice">api.openrouteservice.org</option>
 								</select></p>
-							<p>OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Overpass Query Servers"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br/>
+							<p>OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Overpass Query Servers"><i class="theme fas fa-circle-question fa-sm fa-fw"></i></a> :<br/>
 								<select id="inputOpServer" class="theme">
 									<option selected value="overpass-api.de">overpass-api.de</option>
-									<option value="overpass.nchc.org.tw">overpass.nchc.org.tw</option>
 									<option value="overpass.kumi.systems">overpass.kumi.systems</option>
 									<option value="overpass.openstreetmap.fr">overpass.openstreetmap.fr</option>
+									<option disabled value="overpass.nchc.org.tw">overpass.nchc.org.tw</option>
 								</select></p>
-							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br/>
-								<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text"></p>
-							<p>Attic data (date) <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener"><i class="theme fas fa-external-link-alt fa-sm fa-fw"></i></a> :<br/>
-								<input id="inputAttic" type="date" min="2016-01-01"></p>
-							<p><button type="button" onclick="tour('notes');"><i class="fas fa-sticky-note"></i></button><div class="buttonLabel">Show map notes</div></p>
-							<p><button type="button" onclick="exportQuery();"><i class="fas fa-upload"></i></button><div class="buttonLabel">Export current query to Overpass Turbo</div></p>
-							<p><button type="button" onclick="downloadBB();"><i class="fas fa-download"></i></button><div class="buttonLabel">Download all OSM data within map bounds (xml)</div></p>
+							<p><label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span><span class="switchLabel">Debug mode</span></label></p>
 						</div>
 					</div>
 				</div>
@@ -266,12 +267,12 @@
 					<div id="gotocontrols"><hr/>
 					<h3>Map Controls</h3>
 						<i class="theme fas fa-plus fa-border fa-fw"></i><i class="theme fas fa-minus fa-border fa-fw"></i> Zoom: Enlarge and shrink the map.<br/><br/>
-						<i class="theme fas fa-expand fa-border fa-fw"></i> Full screen (ALT-ENTER): Maximise the map to fit your whole screen.<br/><br/>
+						<i class="theme fas fa-expand fa-border fa-fw"></i> Full screen <kbd>ALT</kbd>+<kbd>ENTER</kbd>: Maximise the map to fit your whole screen.<br/><br/>
 						<i class="theme fas fa-location-arrow fa-border fa-fw"></i> Show your location: See your current location if you are within the bounds of the map. You may click on the blue location marker to see what places are around you.<br/><br/>
-						<i class="theme fas fa-search fa-border fa-fw"></i> Address search (CTRL-F): Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br/><br/>
-						<i class="theme fas fa-street-view fa-border fa-fw"></i> Panoramic views: Browse Mapillary Street Level images by clicking the highlighted areas.<br/><br/>
+						<i class="theme fas fa-search fa-border fa-fw"></i> Address search <kbd>CTRL</kbd>+<kbd>F</kbd>: Enter a place-name or a part of an address into the search box. A selection will appear if multiple results are found.<br/><br/>
+						<i class="theme fas fa-street-view fa-border fa-fw"></i> Photosphere views: Browse Mapillary Street Level images by clicking the highlighted areas.<br/><br/>
 						<i class="theme fas fa-bookmark fa-border fa-fw"></i> Show bookmarks: Displays any saved POIs on the map. Right-click will copy your bookmarks as a shareable link.<br/><br/>
-						<i class="theme fas fa-trash fa-border fa-fw"></i> Clear layers (CTRL-DEL): Remove all current layers on the map. Right-click will reload the website to defaults.<br/><br/>
+						<i class="theme fas fa-trash fa-border fa-fw"></i> Clear layers <kbd>CTRL</kbd>+<kbd>DEL</kbd>: Remove all current layers on the map. Right-click will reload the website to defaults.<br/><br/>
 						<i class="fas fa-layer-group fa-border fa-lg fa-fw" style="line-height:1em;color:#888;"></i> Various styles and historic map overlays can be displayed using the layer selector - located at the top-right of the map.
 					</div>
 					<div id="gotocontext"><hr/>
@@ -282,13 +283,13 @@
 						<i class="fas fa-crosshairs fa-fw"></i> Centre map here: Useful when creating a bookmark or link.<br/><br/>
 						<i class="far fa-sticky-note fa-fw"></i> Leave a note here: Report a mistake or something missing.<br/><br/>
 						<i class="fas fa-wrench fa-fw"></i> FixMyStreet: Opens a new window to report problems in the community.<br/><br/>
-						<i class="fas fa-street-view fa-fw"></i> Panoramic view: View Mapillary Street Level / Google Street View images at this location.<br/><br/>
+						<i class="fas fa-street-view fa-fw"></i> Photosphere view: View Mapillary Street Level / Google Street View images at this location.<br/><br/>
 						<i class="far fa-copy fa-fw"></i> Coordinates: Copy the GPS and Grid Reference to clipboard.
 						<p><img src="assets/img/help-context.png" alt="Context-menu preview"/></p>
 					</div>
 					<div id="gotoplaces"><hr/>
 					<h3>Places Tab</h3>
-						<img class="floatleft" src="assets/img/sb-pois.png"/> Select an interest to be displayed on the map. Up to 3 groups can be displayed, after a few moments the corresponding markers will appear on the map.<br/>
+						<img class="floatleft" src="assets/img/sb-pois.png" alt="Places"/> Select an interest to be displayed on the map. Up to 3 groups can be displayed, after a few moments the corresponding markers will appear on the map.<br/>
 						<p><img src="assets/img/help-checkboxes.png" alt="Checkbox preview"/></p>
 						Results will be displayed as a scrollable list and on the map as markers. The buttons at the top allow you to clear the results, or zoom to their area on the map.<br/>
 						Each listed item will have a colour showing if the place is currently open; its facilities and accessibility; and distance if location is turned on.
@@ -301,22 +302,22 @@
 					</div>
 					<div id="gotowalking"><hr/>
 					<h3>Walking Tab</h3>
-						<img class="floatleft" src="assets/img/sb-walking.png"/> Select from a few set walks, or create your own path through the many twittens. Find a route by either entering an address, or using the map context-menu. Add additional markers by dragging an existing path to a new location.<br/>
+						<img class="floatleft" src="assets/img/sb-walking.png" alt="Walking"/> Select from a few set walks, or create your own path through the many twittens. Find a route by either entering an address, or using the map context-menu. Add additional markers by dragging an existing path to a new location.<br/>
 						<p><img src="assets/img/help-walking.png" alt="Walking route preview"/></p>
 					</div>
 					<div id="gototour"><hr/>
 					<h3>History Tab</h3>
-						<img class="floatleft" src="assets/img/sb-tour.png"/> History: Travel back in time and discover the history of the town with this interactive guide. Navigate by either selecting from the list-box or using the arrows to jump between articles.
+						<img class="floatleft" src="assets/img/sb-tour.png" alt="History"/> History: Travel back in time and discover the history of the town with this interactive guide. Navigate by either selecting from the list-box or using the arrows to jump between articles.
 						<p><img class="floatleft" src="tour/tour-show.svg" alt="Show on map button"/> Show on map: Displays an interactive layer related to the article.</p>
 					</div>
 					<div id="gotothennow"><hr/>
 					<h3>Then and Now Tab</h3>
-						<img class="floatleft" src="assets/img/sb-thennow.png"/> Then and Now: See how places have changed over the years and what they may look like if they were still here today.
+						<img class="floatleft" src="assets/img/sb-thennow.png" alt="Then and Now"/> Then and Now: See how places have changed over the years and what they may look like if they were still here today.
 						<p>Click on an image or marker to enlarge it, the slideshow will automatically advance after a few seconds. You can pause, close or advance the current image using the controls on the page.</p>
 					</div>
 					<div id="gotosettings"><hr/>
 					<h3>Settings Tab</h3>
-						<img class="floatleft" src="assets/img/sb-settings.png"/> Settings: Various options for how the map is displayed. Debugging and development tools.
+						<img class="floatleft" src="assets/img/sb-settings.png" alt="Settings"/> Settings: Various options for how the map is displayed. Debugging and development tools.
 					</div>
 					<a class="theme anchor"></a>
 				</div>
@@ -335,8 +336,8 @@
 					<h3>About &amp; Contact</h3>
 						<p>Bexhill-OSM is part of a community of mappers that want to create a free, editable map of the world. You can learn about the global project at the official <a href="https://www.openstreetmap.org/about" target="_blank" rel="noopener">OpenStreetMap website</a>.</p>
 						<p>This independent website looks to continuously archive Bexhill as it stands today; heralding history, community and business in an informative, accessible form.</p>
-						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we do welcome listings on all publicly visitable places.</p>
-						<span id="myprofile"><img alt="Alexis Markwick" title="Alexis Markwick" src="assets/img/info-me.jpg"/>Web-development and the underlying map data are maintained by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</span>
+						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we welcome listings on all publicly visitable places.</p>
+						<span id="myprofile"><img alt="Alexis Markwick" title="Alexis Markwick" src="assets/img/info-me.jpg"/>Web-development and the underlying map data is maintained by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</span>
 						<p>If you're involved with a local group, I'll be happy to come and speak at one of your events about the project.</p>
 						<p class="mylinks">
 							<a href="" onclick="this.href='mailto:' + email;" title="Email"><i class="fas fa-envelope fa-fw fa-lg"></i>info [at] bexhill-osm.org.uk</a><br/>
@@ -346,9 +347,9 @@
 					</div>
 					<div id="gotodonate"><hr/>
 					<h3>Donate</h3>
-						Bexhill-OSM is entirely advertisement and commercial free. If you so wish, click a link below to support the project. Thank you.
+						Bexhill-OSM has been under continual development and improvement since 2016. If you like the project, click a link below to help make it even better. Thanks for visiting the site.
 						<p class="mylinks">
-							<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B3X9MHLW4W9TG&source=url" target="_blank" rel="noopener" title="Donate to Bexhill-OSM"><i style="color:#003083;" class="fab fa-paypal fa-fw fa-lg"></i>Donate with PayPal</a><br/>
+							<a href="https://www.paypal.com/paypalme/AMarkwick" target="_blank" rel="noopener" title="Donate to me"><i style="color:#003083;" class="fab fa-paypal fa-fw fa-lg"></i>Donate with PayPal</a><br/>
 							<a href="https://amzn.eu/cEeSUjc?sort=priority" target="_blank" rel="noopener" title="Amazon Wish List"><i style="color:#000000;" class="fab fa-amazon fa-fw fa-lg"></i>My Amazon Wish List</a><br/>
 							<a href="bitcoin:1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi"><i style="color:#f7931a;" class="fab fa-btc fa-fw fa-lg"></i>Bitcoin <i class="comment" style="font-size:7pt;">1Po4ym9VFzYcDyykWM9TZGbxYnXjBgULRi</i></a>
 						</p>
@@ -359,7 +360,7 @@
 						<a href="https://www.bexhillmuseum.org.uk/" target="_blank" rel="noopener">Bexhill Museum</a><br/>&nbsp; - Local history and archaeology to fashion and motor heritage.<br/>
 						<a href="https://thebexhillhistorytrail.wordpress.com/" target="_blank" rel="noopener">The Bexhill History Trail</a><br/>&nbsp; - A guide to many of the historic gems.<br/>
 						<a href="https://bexhillheritage.org.uk/" target="_blank" rel="noopener">Bexhill Heritage</a><br/>&nbsp; - Caring for Bexhill's past, present and future.<br/>
-						<a href="http://www.bexhilloldtown.org/" target="_blank" rel="noopener">The Old Town Preservation Society</a><br/>&nbsp; - Supporting and promoting aspects of the Old Town for public benefit.<br/>
+						<a href="https://www.bexhilloldtown.org/" target="_blank" rel="noopener">The Old Town Preservation Society</a><br/>&nbsp; - Supporting and promoting aspects of the Old Town for public benefit.<br/>
 						<a href="https://www.discoverbexhill.com/" target="_blank" rel="noopener">Discover Bexhill-on-Sea</a><br/>&nbsp; - Local visitor and tourist guide.<br/>
 						<a href="https://www.bexhilleventfriends.com/" target="_blank" rel="noopener">Friends of Bexhill Events</a><br/>&nbsp; - Bexhill's Community Notice Board.<br/>
 						<a href="https://maps.me/" target="_blank" rel="noopener">MAPS.ME</a><br/>&nbsp; - Download the map for use offline on your mobile.<br/>
@@ -376,7 +377,6 @@
 							<li><ul>
 								<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank" rel="noopener">sidebar-v2</a> &copy; Tobias Bieniek</li>
 								<li><a href="https://github.com/heigeo/leaflet.wms" target="_blank" rel="noopener">leaflet-wms</a> &copy; hei geo</li>
-								<li><a href="https://github.com/jfirebaugh/leaflet-osm" target="_blank" rel="noopener">leaflet-osm</a> &copy; John Firebaugh</li>
 								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu" target="_blank" rel="noopener">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
 								<li><a href="https://github.com/maximeh/leaflet.bouncemarker" target="_blank" rel="noopener">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
 								<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank" rel="noopener">Leaflet.loading</a> &copy; Eric Brelsford</li>
@@ -389,12 +389,12 @@
 								<li><a href="https://github.com/MazeMap/Leaflet.VisualClick/" target="_blank" rel="noopener">Leaflet.VisualClick</a> &copy; Dag Jomar Mersland</li>
 							</ul></li>
 							<li><a href="https://jquery.com" target="_blank" rel="noopener">jQuery</a> &copy; The jQuery Foundation</li>
-							<li><a href="https://github.com/medialize/URI.js" target="_blank" rel="noopener">URI.js</a> &copy; Medialize</li>
 							<li><a href="https://github.com/opening-hours/opening_hours.js" target="_blank" rel="noopener">opening_hours.js</a> &copy; Robin Schneider</li>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
 							<li><a href="https://github.com/davidjbradshaw/image-map-resizer" target="_blank" rel="noopener">image-map-resizer</a> &copy; David J. Bradshaw</li>
 							<li><a href="https://www.nearby.org.uk/tests/GeoTools.html" target="_blank" rel="noopener">GeoTools WGS84/OSGB36 Converter</a> &copy; Paul Dixon</li>
 							<li><a href="https://github.com/fancyapps/fancybox" target="_blank" rel="noopener">fancyBox</a> &copy; Jānis Skarnelis</li>
+							<li><a href="https://github.com/mpetroff/pannellum" target="_blank" rel="noopener">Pannellum</a> &copy;  Matthew Petroff</li>
 							<li><a href="https://mapicons.mapsmarker.com" target="_blank" rel="noopener">Map Icons Collection</a> &copy; Nicolas Mollet</li>
 							<li><a href="https://fontawesome.com/" target="_blank" rel="noopener">Font Awesome</a> &copy; Dave Gandy</li>
 							<li><a href="https://realfavicongenerator.net/" target="_blank" rel="noopener">Favicon Generator</a> &copy; Philippe Bernard</li>
@@ -403,7 +403,7 @@
 					<div id="gotoprivacy"><hr/>
 					<h3>Privacy Policy</h3>
 						There are no trackers, ads, miners, or analytics.<br/><br/>
-						Your browser's local storage is used to remember you've read the tutorial, bookmarks and to cache POIs. Clear this storage at any time by right-clicking the <i class="fas fa-trash fa-sm"></i> button.
+						Your browser's local storage is used to remember you've read the tutorial, bookmarks and to cache POIs. Clear this storage at any time by right-clicking the <i class="theme fas fa-trash fa-border fa-fw"></i> button.
 					</div>
 					<a class="theme anchor"></a>
 				</div>
@@ -426,7 +426,6 @@
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v=0.4.0"></script>
 	<script src="assets/js/plugins/Control.Loading.min.js?v=0.1.24"></script>
 	<script src="assets/js/plugins/leaflet.wms.min.js?v=0.2.0"></script>
-	<script src="assets/js/plugins/leaflet-osm.min.js?v=0.1.0"></script>
 	<script src="assets/js/plugins/easy-button.min.js?v=2.3.0"></script>
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v=1.5.1"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v=3.2.5"></script>
@@ -437,12 +436,12 @@
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=6.1.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=6.1.0"></script>
-	<script src="assets/js/tags-parsers.js?v=6.1.0"></script>
-	<script src="assets/js/pois-type.js?v=6.1.0"></script>
-	<script src="tour/tour.js?v=6.1.0"></script>
-	<script src="assets/js/site.js?v=6.1.0"></script>
+	<script src="assets/js/config.js?v=6.2.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=6.2.0"></script>
+	<script src="assets/js/tags-parsers.js?v=6.2.0"></script>
+	<script src="assets/js/pois-type.js?v=6.2.0"></script>
+	<script src="tour/tour.js?v=6.2.0"></script>
+	<script src="assets/js/site.js?v=6.2.0"></script>
 
  </body>
 </html>

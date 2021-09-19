@@ -9,18 +9,18 @@ function show_overpass_layer(query, cacheId, bound) {
 		$('.poi-checkbox').addClass('poi-loading');
 		queryBbox = '[out:json]';
 		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
-		// select within relation - work in progress
+		// select within area
 		if (bound)
-			if (osmRelation) {
-				queryBbox += ';rel(' + osmRelation + ');map_to_area';
-				query = query.replace(/];/g, '](area);');
+			if (osmAreaId) {
+				queryBbox += ';area(' + osmAreaId + ')->.b';
+				query = query.replace(/\[/g, '(area.b)[');
 			}
 			else queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
 		queryBbox += ';' + query;
 	}
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
-		query: queryBbox + 'out tags center qt ' + maxOpResults + ';',
+		query: queryBbox + 'out geom qt ' + maxOpResults + ';',
 		endpoint: 'https://' + $('#inputOpServer').val() + '/api/interpreter',
 		callback: callback,
 		cacheId: cacheId ? 'OPL' + cacheId : ''
@@ -79,11 +79,11 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				},
 				complete: function(e) {
 					if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
-						var erMsg = 'Something unknown happened. Please try again later.';
+						var erMsg = 'Something went wrong. Please try again later.';
 						switch (e.status) {
 							case 0: erMsg = 'Data server not responding. Please try again later.'; e.status = 1; break;
 							case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
-							case 429: erMsg = 'Too Many Requests. Please try a smaller selection.'; break;
+							case 429: erMsg = 'Too Many Requests. Please wait a few moments before trying again.'; break;
 							case 504:
 								// retry on timeout
 								if (this.retryLimit) {
@@ -95,7 +95,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 								break;
 						}
 						self.options.statusMsg('exclamation-triangle', 'ERROR #' + e.status, erMsg);
-						self.options.callback.call(reference, {elements: []});
+						self.options.callback.call(reference, { elements: [] });
 						this.error();
 					}
 				},

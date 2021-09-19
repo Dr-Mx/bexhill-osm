@@ -1,5 +1,5 @@
 :root {
-    --main-color: #b05000;
+	--main-color: #b05000;
 	--second-color: #be6f2e;
 	--bg-hover-color: #f4f4f4;
 	--scr-thumb: #cdcdcd;
@@ -46,6 +46,9 @@ html, body, #map {
 	#map {
 		transition: margin-left 400ms ease-out;
 	}
+	#weather {
+		font-size: 8.7pt;
+	}
 	#weather .fa-2x {
 		font-size: 1.8em;
 	}
@@ -56,6 +59,11 @@ input, select, button {
 
 input[type=text], input[type=date], input[type=number] {
 	height: 28px;
+}
+
+button:disabled {
+	opacity: 50%;
+	pointer-events: none;
 }
 
 #sidebar {
@@ -272,9 +280,6 @@ h3 {
 	transform: rotate(90deg);
 }
 
-.baselayer {
-	transition: opacity 300ms linear;
-}
 .leaflet-touch .leaflet-bar {
 	background-color: white;
 }
@@ -390,6 +395,12 @@ h3 {
 }
 .leaflet-left .leaflet-control-scale {
 	margin: 0 0 3px 10px;
+}
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.1s linear;
+	-moz-transition: opacity 0.1s linear;
+	transition: opacity 0.1s linear;
 }
 
 #noscript {
@@ -904,12 +915,20 @@ input:indeterminate + .slider::before {
 	margin-right: 5px;
 }
 .buttonLabel {
+	display: table-cell;
+	vertical-align: middle;
 	font-size: 90%;
-	line-height: 20px;
-	padding-top: 5px;
+	height: 40px;
 }
-#inputOverpass, #inputOpServer, #inputRevServer {
-	width: calc(100% - 100px);
+#inputOpServer, #inputRevServer {
+	width: 210px;
+}
+#inputOverpass {
+    width: calc(100% - 32px);
+    max-width: 350px;
+    min-width: 210px;
+    padding-right: 20px !important;
+    position: relative;
 }
 #inputAttic, #inputOverpass, #inputOpServer, #inputOpCache, #inputRevServer {
 	margin: 5px 0 5px 5px;
@@ -921,6 +940,7 @@ input:indeterminate + .slider::before {
 	line-height: 28px;
 }
 #inputOpCache {
+	float: left;
 	width: 50px;
 	margin-right: 5px;
 }
@@ -929,7 +949,7 @@ input:indeterminate + .slider::before {
 	position: relative;
 }
 #devTools > div {
-	padding: 5px 0 15px 15px;
+	padding: 0 5%;
 }
 
 /* help tab */
@@ -945,8 +965,8 @@ input:indeterminate + .slider::before {
 	height: 15px;
 	padding: 0 5px 0 0;
 }
-#gotocontrols .fa-border {
-	border: 1px solid #aaa;
+#gotocontrols .fa-border, #gotoprivacy .fa-border {
+	border: 1px solid #ccc;
 	border-radius: 5px;
 	background-color: white;
 }
@@ -1021,6 +1041,7 @@ input:indeterminate + .slider::before {
 }
 .leaflet-popup-content {
 	margin: 0 15px 10px 15px;
+	min-width: 75px;
 }
 .leaflet-container a.leaflet-popup-close-button {
 	top: -14px;
@@ -1060,23 +1081,19 @@ input:indeterminate + .slider::before {
 	background-color: rgba(200, 200, 200, 0.2);
 }
 .popup-header h3 {
-	padding-right: 60px;
 	margin: 0 auto 0;
-}
-.popup-t .popup-header h3 {
-	padding-right: 0;
 }
 .popup-header-sub {
 	display: table-cell;
 	font-style: oblique;
 	font-weight: bold;
-	padding-right: 60px;
 	width: 100%;
 	vertical-align: bottom;
 }
 .popup-fhrs {
 	display: table-cell;
 	line-height: 0;
+	padding-left: 5px;
 }
 .popup-fhrs > a > img {
 	white-space: nowrap;
@@ -1112,7 +1129,7 @@ input:indeterminate + .slider::before {
 	text-align: justify;
 	padding-right: 3px;
 }
-@media (max-height: 500px) {
+@media (max-height: 640px) {
 	.popup-longDesc {
 		max-height: calc(var(--popup-long-desc-height) / 2);
 	}
@@ -1128,7 +1145,6 @@ input:indeterminate + .slider::before {
 	cursor: pointer;
 }
 .popup-ohTable, .popup-bsTable {
-	font: 80%/1.2 monospace;
 	text-align: center;
 }
 .popup-ohTable {
@@ -1145,7 +1161,7 @@ input:indeterminate + .slider::before {
 	-webkit-overflow-scrolling: touch;
 }
 .popup-ohTable table { width: 100%; border-collapse: collapse; }
-.popup-ohTable tr, .popup-bsTable tr { border: 1px solid white; }
+.popup-ohTable tr, .popup-bsTable tr { font: 80%/1.2 monospace; border: 1px solid white; }
 .popup-ohTable td { padding: 2px 0; }
 .popup-ohTable tr.today { font-weight: bold; }
 .popup-ohTable td.weekend { background-color: #ccc; }
@@ -1209,7 +1225,7 @@ input:indeterminate + .slider::before {
 .fancybox-button .fa-2x:hover {
 	opacity: 1;
 }
-.fancybox-button--pause .fas:first-child, .fancybox-button--play .fas:nth-child(2) {
+.fancybox-button--pause .fas:first-child, .fancybox-button--play .fas:nth-child(2), .noslideshow .fancybox-button--play {
 	display: none;
 }
 
@@ -1288,7 +1304,7 @@ input:indeterminate + .slider::before {
 	padding: 0 5px;
 }
 .popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {
-	background-image: url('../../tour/tourXmas/popup-bg.png');
+	background-image: url('../../tour/itemXmas/popup-bg.png');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -1376,4 +1392,13 @@ input:indeterminate + .slider::before {
 }
 input:focus, select:focus, textarea:focus, button:focus {
 	outline: none;
+}
+kbd {
+	border-radius: 3px;
+	border: 1px solid rgba(180, 180, 180, 0.5);
+	font-size: .85em;
+	font-weight: 700;
+	padding: 0 2px;
+	margin: 0 2px;
+	white-space: nowrap;
 }

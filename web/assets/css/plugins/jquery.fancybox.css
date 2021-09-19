@@ -266,6 +266,7 @@ body.compensate-for-scrollbar {
 }
 
 .fancybox-slide--iframe .fancybox-content {
+    height: 100% !important;
     background: #fff;
 }
 

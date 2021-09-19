@@ -1,16 +1,16 @@
 :root {
 	--text-color: #aaa;
 	--hover-color: #ccc;
-	--bg-color: #111;
-	--bg-color2: rgba(20, 20, 20, 0.9);
-	--scr-track: #222;
-	--scr-thumb: #777;
+	--bg-color: #0c0c0d;
+	--bg-color2: rgba(35, 35, 39, 0.95);
+	--scr-track: #0c0c0d;
+	--scr-thumb: #555;
 }
 .spinner {
 	filter: invert(100%) hue-rotate(180deg);
 }
 html, body, input, select, #map, .leaflet-control-layers-expanded, #msgStatusHead, .leaflet-control-attribution, .leaflet-tooltip, 
-.leaflet-contextmenu a.leaflet-contextmenu-item, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line {
+.leaflet-contextmenu a.leaflet-contextmenu-item, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line, .leaflet-routing-remove-waypoint:hover::after {
 	color: var(--text-color) !important;
 }
 .anchor:hover, select:hover:enabled, #poi-results button:hover, #home .sidebar-body a i:hover, #inputWw2 div, .leaflet-control-attribution .fa-info-circle:hover, 
@@ -18,19 +18,26 @@ button:hover, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.
 .leaflet-routing-geocoders button:hover::after, #poi-filter-cl:hover::after, #devTools h3:hover::after, .popup-ohContainer .popup-tagValue:hover::after {
 	color: var(--hover-color) !important;
 }
-.sidebar-tabs, .anchor, input:not([type="range"]), select, button, .leaflet-bar > a, .leaflet-tooltip, .leaflet-control-geocoder input, .slider::before, #inputOpacity, .leaflet-control-geocoder, .leaflet-contextmenu, #msgStatusHead, 
-.leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-alternatives li:hover, .leaflet-control-geocoder-selected {
+.sidebar-tabs, #homeBox, #xmasMsg, .anchor, input:not([type="range"]), hr, select, button, .leaflet-bar > a, .leaflet-tooltip, .leaflet-control-geocoder input,
+.slider::before, #inputOpacity, .leaflet-control-geocoder, .leaflet-contextmenu, #msgStatusHead, .leaflet-container a.leaflet-popup-close-button,
+.leaflet-control-geocoder-alternatives li:hover, .leaflet-control-geocoder-selected, #poi-results-list tr:hover, .poi-checkbox-selected, .poi-checkbox > label:hover,
+.leaflet-touch .leaflet-bar {
 	background-color: var(--bg-color) !important;
 }
-.poi-checkbox-selected, #poi-results-list tr:hover, #msgStatusBody, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, 
-.leaflet-control-layers-expanded, #homeBox, #xmasMsg, hr, .poi-checkbox > label:hover, .leaflet-control-layers, .sidebar.collapsed .sidebar-tabs, .leaflet-control-geocoder {
+#msgStatusBody, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded, .leaflet-control-layers,
+.leaflet-control-geocoder {
 	background-color: var(--bg-color2) !important;
+}
+@media (min-width: 1300px) {
+	.sidebar.collapsed .sidebar-tabs {
+		background-color: rgba(0, 0, 0, 0.5) !important;
+	}
 }
 #weather, #newFeed ul {
 	color: #688c81;
 }
 .leaflet-bar a, .leaflet-bar a:hover {
-	border-bottom: 1px solid #555;
+	border-bottom: 1px solid #333;
 }
 .leaflet-bar a:last-child {
 	border-bottom: none;
@@ -38,8 +45,8 @@ button:hover, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.
 .custscroll {
 	scrollbar-color: var(--scr-thumb) var(--scr-track) !important;
 }
-.baselayer {
-	opacity: 0.85 !important;
+.layerDark {
+	filter: invert(90%) hue-rotate(180deg);
 }
 .sidebar-header {
 	color: #ddd;
@@ -79,13 +86,16 @@ input, select, #sidebar button:not(.modalButton), .leaflet-tooltip {
 	background: none repeat scroll 0 0 #000;
 }
 .sidebar-tabs > ul > li:hover, .slider {
-	background-color: #555;
+	background-color: #444;
 }
 .slider:hover {
 	background-color: #666;
 }
 .popup-header {
-	background-color: rgba(55, 55, 55, 0.5);
+	background-color: rgba(12, 12, 13, 0.5) !important;
+}
+.popup-fhrs > a > img {
+	filter: brightness(0.75);
 }
 .leaflet-container a.leaflet-popup-close-button {
 	border: 3px solid #333;
@@ -93,19 +103,16 @@ input, select, #sidebar button:not(.modalButton), .leaflet-tooltip {
 .leaflet-tooltip-right::before {
 	border-right-color: var(--bg-color);
 }
-#gotocontrols .fa-border, .leaflet-touch .leaflet-bar {
-	background-color: black;
-}
-.modalTutor {
-	color: black;
-}
 .modalButton {
 	box-shadow: 1px 1px #000;
 	background-color: #222 !important;
 }
 .leaflet-contextmenu a.leaflet-contextmenu-item.over {
 	background-color: #222;
-	border-top: 1px solid #333;
+	border-top: 1px solid #222;
+	border-bottom: 1px solid #222;
+}
+.leaflet-contextmenu-separator {
 	border-bottom: 1px solid #333;
 }
 .popup-ohTable tr, .popup-bsTable tr { border: 1px solid black; }
@@ -123,4 +130,9 @@ input, select, #sidebar button:not(.modalButton), .leaflet-tooltip {
 }
 .custscroll::-webkit-scrollbar-thumb {
 	background-color: var(--scr-thumb);
+}
+#gotocontrols .fa-border, #gotoprivacy .fa-border {
+	border: 1px solid #333;
+	border-radius: 5px;
+	background-color: var(--bg-color);
 }

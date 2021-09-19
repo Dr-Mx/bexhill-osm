@@ -92,7 +92,7 @@ var pois = {
 
 	park: {
 		name: 'Park',
-		query: 'way[leisure~"park|nature_reserve"];',
+		query: 'nwr[leisure~"park|nature_reserve"];',
 		iconName: 'urbanpark',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve']
@@ -254,7 +254,7 @@ var pois = {
 		query: 'node[amenity=atm];',
 		iconName: 'atm_pound',
 		catName: 'Amenities',
-		tagKeyword: ['ATM', 'bank', 'money', 'cash-point'],
+		tagKeyword: ['atm', 'bank', 'money', 'cash-point'],
 		tagParser: vending_parser
 	},
 
@@ -329,11 +329,11 @@ var pois = {
 
 	bicycle_parking: {
 		name: 'Bicycle-Parking',
-		query: 'node[amenity=bicycle_parking];',
+		query: 'node[amenity=bicycle_parking][access!~private];',
 		iconName: 'parking_bicycle',
 		catName: 'Amenities',
 		tagKeyword: ['bike-parking', 'bicycle'],
-		tagParser: bikepark_parser
+		tagParser: bike_parser
 	},
 
 	taxi: {
@@ -997,11 +997,11 @@ var pois = {
 
 	bicycle: {
 		name: 'Bicycle',
-		query: 'nwr[shop=bicycle];nwr["service:bicycle:retail"];',
+		query: 'nwr[shop=bicycle];nwr["service:bicycle:retail"];nwr[amenity=bicycle_repair_station];',
 		iconName: 'bicycle_shop',
 		catName: 'Shops',
 		tagKeyword: ['bicycle', 'bike'],
-		tagParser: bikeshop_parser
+		tagParser: bike_parser
 	},
 
 	car: {
