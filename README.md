@@ -32,7 +32,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - Payment parser (key:payment:\*)
   - Diet parser (key:diet:\*)
   - Cuisine parser (key:cuisine, key:breakfast, key:lunch)
-  - Ordering parser (key:takeaway, key:delivery, key:outdoor_searing, key:beer_garden, key:reservation)
+  - Ordering parser (key:takeaway, key:delivery, key:outdoor_seating, key:beer_garden, key:reservation)
   - Building details (key:architect, key:building:architecture, key:start_date, key:HE_ref, key:listed_status)
   - Current open state with 7 day opening hours table (key:opening_hours)
   - Last postbox collection time state (key:collection_times)
