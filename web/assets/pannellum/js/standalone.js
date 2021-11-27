@@ -47,7 +47,8 @@ function parseURLParameters() {
 			case 'panorama':
 				value = decodeURIComponent(value).split(':')[1].replace(/ /gi, '_');
 				var getMd5 = md5(value);
-				configFromURL[option] = 'https://upload.wikimedia.org/wikipedia/commons/' + getMd5.substring(0, 1) + '/' + getMd5.substring(0, 2) + '/' + value;
+				if (document.documentElement.clientWidth < 1200) configFromURL[option] = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + getMd5.substring(0, 1) + '/' + getMd5.substring(0, 2) + '/' + value + '/2560px-' + value;
+				else configFromURL[option] = 'https://upload.wikimedia.org/wikipedia/commons/' + getMd5.substring(0, 1) + '/' + getMd5.substring(0, 2) + '/' + value;
 				break;
             default:
                 anError('An invalid configuration parameter was specified: ' + option);

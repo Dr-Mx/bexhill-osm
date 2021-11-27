@@ -1,5 +1,8 @@
 {
 	"autoLoad": true,
+	"showZoomCtrl" false,
 	"compass": false,
-	"autoRotate": -5
+	"orientationOnByDefault": true,
+	"autoRotate": -5,
+	"autoRotateInactivityDelay": 15000
 }

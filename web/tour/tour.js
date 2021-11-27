@@ -2,7 +2,7 @@
 
 var actImgLayer, slideShow = { firstrun: true, auto: true };
 function tour(ti, fromPermalink) {
-	var lID, dfltDir = 'tour/', xmasYear = '2020';
+	var lID, dfltDir = 'tour/';
 	if (!fromPermalink) clear_map('markers');
 	if ($(window).width() < 768 && !fromPermalink && ti !== 'thennow') $('.sidebar-close:visible').click();
 	// general markers
@@ -65,7 +65,7 @@ function tour(ti, fromPermalink) {
 		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long')));
 		toolTip += '<b>' + header[0] + '</b><br/><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
-		markerPopup += '<span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 3) + '</span>';
+		markerPopup += '<span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
 		if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc custscroll">' + feature.properties.description + '</span>';
 			toolTip += ' <i style="color:#777;min-width:17px;" class="fas fa-bars fa-fw" title="Notes"></i>';
@@ -179,7 +179,7 @@ function tour(ti, fromPermalink) {
 								iconAnchor: [12, 41],
 								shadowUrl: '/../../assets/img/leaflet/marker-shadow',
 								shadowAnchor: [12, 41],
-								popupAnchor: [0, -35]
+								popupAnchor: [0, -30]
 							}, true);
 							marker.ohState = (feature.properties.status === 'open' ? 'false' : 'true');
 							marker._leaflet_id = feature.properties.id;
@@ -201,9 +201,10 @@ function tour(ti, fromPermalink) {
 		case 'xmas2017': /* fall through */
 		case 'xmas2018': /* fall through */
 		case 'xmas2019': /* fall through */
+		case 'xmas2020': /* fall through */
 		case 'xmas':
+			var xmasYear = (ti.length > 4) ? ti.split('xmas')[1] : '2021';
 			$('.spinner').show();
-			if (ti.length > 4) xmasYear = ti.split('xmas')[1];
 			if (actOverlayLayer === undefined) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
 				url: dfltDir + 'itemXmas/' + xmasYear + '.geojson',
@@ -227,7 +228,7 @@ function tour(ti, fromPermalink) {
 								iconNoBounce: true,
 								shadowUrl: '/../../assets/img/icons/000shadow',
 								shadowAnchor: [16, 35],
-								popupAnchor: [0, -27]
+								popupAnchor: [0, -24]
 							}, true);
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
@@ -238,7 +239,7 @@ function tour(ti, fromPermalink) {
 					setTimeout(pushPoiList, 250);
 					setPageTitle('Xmas Window Competition ' + xmasYear);
 					if (markerId) map._layers[markerId].openPopup().stopBounce();
-					else map.flyToBounds(imageOverlay.getBounds());
+					else map.flyToBounds(imageOverlay.getBounds().pad(0.2));
 					$('.spinner').fadeOut('fast');
 				}
 			});
@@ -263,13 +264,13 @@ function tour(ti, fromPermalink) {
 				success: function (json) {
 					imageOverlay.addLayer(L.geoJSON(json, {
 						onEachFeature: function (feature, layer) {
-							// console.log(feature.properties.name + '|' + feature.properties.ward + '|' + (feature.properties.img ? 'yes' : 'no'))
 							var winner = feature.properties.winner, winnerTxt = ['', 'First Prize', 'Second Prize'],
 								winnerIco = ['', 'trophy', 'medal'], subtitleEle = feature.properties.ward;
 							if (winner > 0) subtitleEle = '<i class="award commended' + winner + ' fas fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner] + ' - ' + subtitleEle;
 							if (!feature.properties.img) feature.properties.img = { '0': 'itemScarecrow/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, subtitleEle], '', 'popup-scarecrow');
 							feature.properties.sortby = feature.properties.winner ? feature.properties.ward + feature.properties.winner : feature.properties.ward + '9';
+							if ($('#inputDebug').is(':checked')) console.debug(feature.properties.name + '|' + feature.properties.ward + '|' + (feature.properties.img ? 'yes' : 'no'));
 						},
 						pointToLayer: function (feature, latlng) {
 							var marker = setMarker(latlng, true, {
@@ -320,8 +321,8 @@ function tour(ti, fromPermalink) {
 							$('[data-fancybox="' + feature.properties.id + '"]').fancybox({
 								protect: true,
 								transitionEffect: 'fade',
-								transitionDuration: 5000,
-								slideShow: { speed: 2000 },
+								transitionDuration: 7500,
+								slideShow: { speed: 2500 },
 								afterLoad: function() {
 									// cancel slideshow if left/right arrows clicked
 									$('.fancybox-button--arrow_left, .fancybox-button--arrow_right').on('click touchstart', function() {
@@ -332,7 +333,7 @@ function tour(ti, fromPermalink) {
 									setTimeout(function() { if (slideShow.auto && slideShow.firstrun && $.fancybox.getInstance()) {
 										$.fancybox.getInstance().SlideShow.start();
 										slideShow.firstrun = false;
-									} }, 4000);
+									} }, 5000);
 								},
 								beforeClose: function() {
 									// remember slideshow state
@@ -595,7 +596,7 @@ function tour(ti, fromPermalink) {
 			break;
 		case 'publicClocks':
 			show_overpass_layer(pois.clock.query, ti, true);
-			setPageTitle('Public Clocks');
+			setPageTitle(pois.clock.name);
 			setTour('clocks');
 			break;
 		case 'lost':
@@ -628,12 +629,12 @@ function tour(ti, fromPermalink) {
 			break;
 		case 'stones':
 			show_overpass_layer(pois.boundary_stone.query, ti, true);
-			setPageTitle('Boundary Stones');
+			setPageTitle(pois.boundary_stone.name);
 			setTour('boundary');
 			break;
 		case 'benchmarks':
 			show_overpass_layer(pois.survey_point.query, ti, true);
-			setPageTitle('OS Surveying Points');
+			setPageTitle(pois.survey_point.name);
 			setTour('surveying');
 			break;
 		case 'towers':
@@ -654,7 +655,7 @@ function tour(ti, fromPermalink) {
 								iconSize: [35, 35],
 								shadowUrl: 'listMartello/martellos',
 								shadowAnchor: [18, 18],
-								popupAnchor: [0, -18]
+								popupAnchor: [0, -12]
 							}, true);
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
@@ -713,6 +714,8 @@ function tour(ti, fromPermalink) {
 			});
 			setTour('bores');
 			break;
+		case 'map_wl1950':  /* fall through */
+		case 'map_wl1940':  /* fall through */
 		case 'map_bm1946':  /* fall through */
 		case 'map_arp1942': /* fall through */
 		case 'map_mc1925':  /* fall through */

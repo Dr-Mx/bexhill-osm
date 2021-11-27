@@ -92,22 +92,16 @@ img {
 	opacity: 0.75;
 }
 
-.person {
+.person > div {
 	display: table;
 	width: 100%;
 }
-.person p {
+.person > div p {
 	margin-top: 0px;
 }
-	
-.comment {
-	font-size: 85%;
-	margin-top: -8px;
-	text-align: center;
-	font-style: italic;
-	color: #808080;
+.maps .maplink p {
+	margin: 5px 0;
 }
-
 .maplink {
 	cursor: pointer;
 	background:
@@ -140,6 +134,13 @@ img {
 	margin-bottom: 2px;
 	font-size: 95%;
 	background-size: 18px 18px;
+}
+.comment {
+	font-size: 85%;
+	margin-top: -8px;
+	text-align: center;
+	font-style: italic;
+	color: #808080;
 }
 
 a {

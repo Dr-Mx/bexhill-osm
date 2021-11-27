@@ -1,5 +1,36 @@
 # CHANGELOG
 
+## v6.3.0
+
+**Date:** 27/11/2021
+
+Added
+ - assets/font/fontawesome 6.0.0b3
+
+Updated
+ - jquery-ui.min.js 1.13.0
+ - bouncemarker.min.js 1.2.3
+
+Site changes
+ - Switch to self-hosted FontAwesome
+ - Add taginfo.json for use on https://taginfo.openstreetmap.org/projects/bexhillosm
+ - Add ability to search for an OS Grid Reference using the home search box
+ - Cleaner autocomplete on the home search box
+ - Switch to using relation rather than area id for bounding box
+ - Increase default cache time from 2 to 5 days
+ - POI results button to jump to next item in list
+ - POI categories show in page title when selected
+ - Car repair and education parser
+ - Wikidata link inside popups
+ - Weather tooltip gives more information
+ - Api to show ground elevation on context menu
+ - Tidy holiday decorations
+ - Update lidar overlay to 2020 data
+ - Two new overlay maps for History tour
+ - Drop panoramic image resolution on smaller devices
+ - More of the usual bug fixes and code improvements
+
+
 ## v6.2.0 - Pannellum
 
 **Date:** 19/09/2021

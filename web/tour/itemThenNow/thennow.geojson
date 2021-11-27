@@ -3,18 +3,18 @@
 	"features": [{
 		"type": "Feature",
 		"properties": {
-			"id": "ritz",
-			"date": "1937",
+			"id": "riposo",
+			"date": "1930",
 			"imgcaption": {
-				"1": "Ritz Cinema, Buckhurst Road",
-				"2": "Now in 2020",
-				"3": "Then in 1937 | dusashenka, via Flickr"
+				"1": "Riposo Hotel, De La Warr Parade",
+				"2": "Now in 2021",
+				"3": "Then in c1930 | Bexhill Museum"
 			},
-			"desc": "Built on the site of a skating rink, this Art Deco design by Samuel Beverley,  B.A. Stevens and Frank T. Verity hosted a cinema screen with seating for 1142 people. Demolished in 1968 and replaced with the Telephone Exchange."
+			"desc": "This Neo-Gothic hotel sat on the corner of Dorset Road South between 1901-1961. It served 39 rooms, mostly to keen golfers on The Links course to the east. Today demolished and replaced with Cavendish Court."
 		},
 		"geometry": {
 			"type": "Point",
-			"coordinates": [0.47247, 50.84178]
+			"coordinates": [0.48372, 50.83925]
 		}
 	}, {
 		"type": "Feature",
@@ -305,22 +305,6 @@
 		"geometry": {
 			"type": "Point",
 			"coordinates": [0.47670, 50.83775]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "riposo",
-			"date": "1930",
-			"imgcaption": {
-				"1": "Riposo Hotel, De La Warr Parade",
-				"2": "Now in 2019",
-				"3": "Then in c1930 | Bexhill Museum"
-			},
-			"desc": "This Neo-Gothic hotel sat on the corner of Dorset Road South between 1901-1961. It served 39 rooms, mostly to keen golfers on The Links course to the east. Today demolished and replaced with Cavendish Court."
-		},
-		"geometry": {
-			"type": "Point",
-			"coordinates": [0.48372, 50.83925]
 		}
 	}, {
 		"type": "Feature",

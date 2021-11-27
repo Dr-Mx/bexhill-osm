@@ -13,9 +13,9 @@ html, body, input, select, #map, .leaflet-control-layers-expanded, #msgStatusHea
 .leaflet-contextmenu a.leaflet-contextmenu-item, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line, .leaflet-routing-remove-waypoint:hover::after {
 	color: var(--text-color) !important;
 }
-.anchor:hover, select:hover:enabled, #poi-results button:hover, #home .sidebar-body a i:hover, #inputWw2 div, .leaflet-control-attribution .fa-info-circle:hover, 
-button:hover, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.leaflet-popup-close-button:hover, .popup-edit:hover, .popup-bookm:hover, 
-.leaflet-routing-geocoders button:hover::after, #poi-filter-cl:hover::after, #devTools h3:hover::after, .popup-ohContainer .popup-tagValue:hover::after {
+.anchor:hover, select:hover:enabled, #poi-results button:hover:enabled, #home .sidebar-body a i:hover, #inputWw2 div, .leaflet-control-attribution .fa-info-circle:hover, 
+button:hover:enabled, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.leaflet-popup-close-button:hover, .popup-header-button:hover, 
+.leaflet-routing-geocoders button:hover::after, #devTools h3:hover::after, .popup-ohContainer .popup-tagValue:hover::after {
 	color: var(--hover-color) !important;
 }
 .sidebar-tabs, #homeBox, #xmasMsg, .anchor, input:not([type="range"]), hr, select, button, .leaflet-bar > a, .leaflet-tooltip, .leaflet-control-geocoder input,
@@ -99,6 +99,9 @@ input, select, #sidebar button:not(.modalButton), .leaflet-tooltip {
 }
 .leaflet-container a.leaflet-popup-close-button {
 	border: 3px solid #333;
+}
+.leaflet-popup .award {
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 15px black;
 }
 .leaflet-tooltip-right::before {
 	border-right-color: var(--bg-color);

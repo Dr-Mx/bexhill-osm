@@ -1,5 +1,4 @@
-// enter your personal api keys here, get your own (free) keys by using the links below
-// rename to config.js
+// enter your personal api keys here, get your own (free) keys by using the links below, rename to config.js
 
 window.BOSM = {
 	osmchaTok: '',					// Get latest map changes			https://osmcha.mapbox.com/user			
@@ -10,5 +9,6 @@ window.BOSM = {
 	thuforKey: '',					// Map tiles						https://manage.thunderforest.com/dashboard
 	mpllryKey: '',					// Panoramic street level images	https://www.mapillary.com/dashboard/developers
 	googleKey: '',					// Panoramic street level images	https://cloud.google.com/maps-platform
-	trvllneApi: { u: '', p: '' }	// Bus times						http://www.travelinedata.org.uk
+	trvllneApi: { u: '', p: '' },	// Bus times						https://www.travelinedata.org.uk
+	corsKey: ''						// CORS	bypass						https://github.com/gridaco/base/issues/23
 };

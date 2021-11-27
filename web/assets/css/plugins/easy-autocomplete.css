@@ -4,104 +4,112 @@
  * 
  * @author Łukasz Pawełczak (http://github.com/pawelczak)
  * @version 1.3.5
- * Copyright  License: 
+ * Copyright	License: 
  */
 
 .easy-autocomplete {
-  position: relative;
-  width: 100%;
+	position: relative;
+	width: 100%;
+	display: inline-block;
 }
 .easy-autocomplete input {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  line-height: 28px;
-  float: none;
-  padding: 0 12px;
-  width: calc(100% - 26px);
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	line-height: 28px;
+	float: none;
+	padding: 0 22px 0 12px;
+	width: calc(100% - 36px);
 }
 
 .easy-autocomplete input:hover, .easy-autocomplete input:focus {
-  box-shadow: none;
+	box-shadow: none;
 }
 .easy-autocomplete a {
-  display: block;
+	display: block;
 }
 .easy-autocomplete.eac-bootstrap input {
-  border-color: #ccc;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  color: #555;
-  padding: 6px 12px;
+	border-color: #ccc;
+	border-radius: 4px;
+	border-style: solid;
+	border-width: 1px;
+	color: #555;
+	padding: 6px 12px;
 }
 
 .easy-autocomplete-container {
-  left: 0;
-  position: absolute;
-  width: 100%;
-  z-index: 2;
-  font-size: 90%;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	z-index: 2;
+	font-size: 90%;
+	filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.1));
 }
 
 .easy-autocomplete-container ul {
-  background: none repeat scroll 0 0 #f5f5f5;
-  margin-top: -2px;
-  padding-bottom: 0;
-  padding-left: 0;
-  position: relative;
-  top: -1px;
+	background: none repeat scroll 0 0 #f5f5f5;
+	margin-top: -2px;
+	padding-bottom: 0;
+	padding-left: 0;
+	position: relative;
+	top: -1px;
 }
 .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
-  background: inherit;
-  border-color: #ccc;
-  border-image: none;
-  border-style: solid;
-  display: block;
-  font-weight: normal;
-  padding: 4px 10px;
-  white-space: nowrap;
+	background: inherit;
+	border-color: #ccc;
+	border-image: none;
+	border-style: solid;
+	display: block;
+	font-weight: normal;
+	padding: 0 10px;
+	white-space: nowrap;
 }
 .eac-category {
 	border-width: 1px 1px 0 1px;
-	cursor: not-allowed;
+	cursor: default;
+	height: 0pt;
+	pointer-events: none;
 }
 .easy-autocomplete-container ul li {
-	  border-width: 0 1px;
+	border-width: 0 1px;
+	padding: 0 5px 1px 15px;
 }
-
+.eac-category + li {
+	height: 45px !important;
+	line-height: 65px;
+}
 .eac-category img {
-	height: 20px;
-	margin: -5px 5px -5px auto;
+	height: 25px;
+	margin: 0 5px -10px auto;
 	opacity: 0.75;
+	padding-top: 2px;
 }
 .easy-autocomplete-container ul li:last-child {
-  border-radius: 0 0 2px 2px;
-  border-width: 0 1px 1px;
+	border-radius: 0 0 2px 2px;
+	border-width: 0 1px 1px;
 }
 .easy-autocomplete-container ul li.selected {
-  background: none repeat scroll 0 0 #fff;
-  cursor: pointer;
+	background: none repeat scroll 0 0 #fff;
+	cursor: pointer;
 }
 .easy-autocomplete-container ul li.selected div {
-  font-weight: normal;
+	font-weight: normal;
 }
 .easy-autocomplete-container ul li div {
-  display: block;
-  font-weight: normal;
-  word-break: break-all;
+	display: block;
+	font-weight: normal;
+	word-break: break-all;
 }
 .easy-autocomplete-container ul li b {
-  font-weight: bold;
+	font-weight: bold;
 }
 .easy-autocomplete-container ul .eac-category {
-  color: #808080;
-  font-style: italic;
+	font-style: italic;
 }
 
 .eac-description .eac-item span {
-  color: #808080;
-  font-style: italic;
-  font-size: 0.9em;
+	color: #808080;
+	font-style: italic;
+	font-size: 0.9em;
 }
 
 .eac-item {
@@ -110,19 +118,19 @@
 }
 
 .eac-icon-left .eac-item img {
-  margin-right: 4px;
-  max-height: 30px;
+	margin-right: 4px;
+	max-height: 30px;
 }
 
 .eac-icon-right .eac-item {
-  margin-top: 8px;
-  min-height: 24px;
-  position: relative;
+	margin-top: 8px;
+	min-height: 24px;
+	position: relative;
 }
 .eac-icon-right .eac-item img {
-  margin-left: 4px;
-  max-height: 30px;
-  position: absolute;
-  right: -4px;
-  top: -8px;
+	margin-left: 4px;
+	max-height: 30px;
+	position: absolute;
+	right: -4px;
+	top: -8px;
 }

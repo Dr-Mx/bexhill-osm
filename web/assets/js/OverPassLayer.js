@@ -11,12 +11,13 @@ function show_overpass_layer(query, cacheId, bound) {
 		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
 		// select within area
 		if (bound)
-			if (osmAreaId) {
-				queryBbox += ';area(' + osmAreaId + ')->.b';
-				query = query.replace(/\[/g, '(area.b)[');
+			if (osmRelation && !$('#inputBbox').is(':checked')) {
+				queryBbox += ';rel(' + osmRelation + ');map_to_area->.a';
+				query = query.replace(/\[/g, '(area.a)[');
 			}
 			else queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
 		queryBbox += ';' + query;
+		$('#exportQuery').prop('disabled', false);
 	}
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
@@ -53,58 +54,56 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			self.options.callback.call(reference, eleCache[self.options.cacheId]);
 			if (self.options.debug) console.debug('Query received from eleCache.', self.options.cacheId);
 		}
-		else {
-			// check if cached in localStorage and not expired
-			if (noIframe && !$('#inputOpen').is(':checked') && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0 &&
-				(new Date(JSON.parse(window.localStorage[self.options.cacheId]).osm3s.timestamp_osm_base).getTime()+(parseInt($('#inputOpCache').val())*60*60*1000) > new Date().getTime())) {
-					eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
-					self.options.callback.call(reference, eleCache[self.options.cacheId]);
-					if (self.options.debug) console.debug('Query received from localStorage.', self.options.cacheId);
-			}
-			// get from overpass
-			else $.ajax({
-				url: url,
-				datatype: 'xml',
-				retryLimit: 3,
-				success: function(xml) {
-					self.options.callback.call(reference, xml);
-					if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('info-circle', 'No places found', 'Please try turning off "only show open" in options.');
-					else if (poiList.length === 0 && !rQuery) self.options.statusMsg('info-circle', 'No places found', 'Please try another area or query.');
-					// if not in iframe, cache to local storage
-					if (self.options.cacheId && !$('#inputAttic').val()) {
-						eleCache[self.options.cacheId] = xml;
-						if (noIframe && window.localStorage) window.localStorage[self.options.cacheId] = JSON.stringify(xml);
-					}
-					if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
-				},
-				complete: function(e) {
-					if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
-						var erMsg = 'Something went wrong. Please try again later.';
-						switch (e.status) {
-							case 0: erMsg = 'Data server not responding. Please try again later.'; e.status = 1; break;
-							case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
-							case 429: erMsg = 'Too Many Requests. Please wait a few moments before trying again.'; break;
-							case 504:
-								// retry on timeout
-								if (this.retryLimit) {
-									this.retryLimit--;
-									$.ajax(this);
-									return;
-								}
-								else erMsg = 'Gateway Timeout. Please try again later.';
-								break;
-						}
-						self.options.statusMsg('exclamation-triangle', 'ERROR #' + e.status, erMsg);
-						self.options.callback.call(reference, { elements: [] });
-						this.error();
-					}
-				},
-				error: function() {
-					rQuery = false;
-					if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS:', encodeURI(this.url));
-				}
-			});
+		// check if cached in localStorage and not expired
+		else if (noIframe && !$('#inputOpen').is(':checked') && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0 &&
+			(new Date(JSON.parse(window.localStorage[self.options.cacheId]).osm3s.timestamp_osm_base).getTime()+(parseInt($('#inputOpCache').val())*60*60*1000) > new Date().getTime())) {
+				eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
+				self.options.callback.call(reference, eleCache[self.options.cacheId]);
+				if (self.options.debug) console.debug('Query received from localStorage.', self.options.cacheId);
 		}
+		// get from overpass
+		else $.ajax({
+			url: url,
+			datatype: 'xml',
+			retryLimit: 3,
+			success: function(xml) {
+				self.options.callback.call(reference, xml);
+				if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('info-circle', 'No places found', 'Please try turning off "only show open" in options.');
+				else if (poiList.length === 0 && !rQuery) self.options.statusMsg('info-circle', 'No places found', 'Please try another area or query.');
+				// if not in iframe, cache to local storage
+				if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {
+					eleCache[self.options.cacheId] = xml;
+					if (noIframe && window.localStorage) window.localStorage[self.options.cacheId] = JSON.stringify(xml);
+				}
+				if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
+			},
+			complete: function(e) {
+				if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
+					var erMsg = 'Something went wrong. Please try again later.';
+					switch (e.status) {
+						case 0: erMsg = 'Data server not responding. Please try again later.'; e.status = 1; break;
+						case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
+						case 429: erMsg = 'Too Many Requests. Please wait a few moments before trying again.'; break;
+						case 504:
+							// retry on timeout
+							if (this.retryLimit) {
+								this.retryLimit--;
+								$.ajax(this);
+								return;
+							}
+							else erMsg = 'Gateway Timeout. Please try again later.';
+							break;
+					}
+					self.options.statusMsg('exclamation-triangle', 'ERROR #' + e.status, erMsg);
+					self.options.callback.call(reference, { elements: [] });
+					this.error();
+				}
+			},
+			error: function() {
+				rQuery = false;
+				if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS:', encodeURI(this.url));
+			}
+		});
 	},
 	onAdd: function(map) {
 		this._map = map;

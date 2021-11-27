@@ -219,9 +219,9 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		if (tags.fee) {
 			var feeTag = '';
-			if (tags.fee.indexOf(':') > 0 && tags.charge) feeTag = tags.fee + ': ' + tags.charge;
+			if (tags['fee:conditional'] && tags.charge) feeTag = tags['fee:conditional'] + ': ' + tags.charge;
 			else {
-				feeTag = tags.charge || tags.fee;
+				feeTag = tags.charge || tags['fee:conditional'] || tags.fee;
 				if (feeTag === 'yes') feeTag = '<i class="fas fa-check fa-fw"></i>';
 				else if (feeTag === 'no') feeTag = '<i class="fas fa-times fa-fw"></i>';
 			}
@@ -301,7 +301,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['url:bexhillhistorytrail'])
 			tag += '<a class="nowrap" href="https://thebexhillhistorytrail.wordpress.com/' + tags['url:bexhillhistorytrail'] + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
 		if (tags['url:bexhillnature'])
-			tag += '<a class="nowrap" href="https://bexhillnature.uk/' + tags['url:bexhillnature'] + '" title="Wild animals and plants" target="_blank" rel="noopener">Bexhill Nature</a>; ';
+			tag += '<a class="nowrap" href="https://bexhillnature.uk/places/' + tags['url:bexhillnature'] + '.php" title="Wild animals and plants" target="_blank" rel="noopener">Bexhill Nature</a>; ';
 		if (tags['ref:edubase'])
 			tag += '<a class="nowrap" href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + tags['ref:edubase'] + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
 		if (tags['ref:charity'])
@@ -501,8 +501,9 @@ function parse_tags(element, titlePopup, poiParser) {
 			titlePopup = element.id;
 		}
 		$.each(element.tags, function(e) { markerPopup += generic_tag_parser(element.tags, e, e, 'fas fa-tag'); });
+		markerPopup = '<i>' + markerPopup + '</i>';
 	}
-	return generic_header_parser((eName || element.tags.ref), titlePopup, element.tags['fhrs:id'], true) + markerPopup;
+	return generic_header_parser((eName || element.tags.ref), titlePopup, element.tags['fhrs:id'], true, element.tags.wikidata) + markerPopup;
 }
 
 function callback(data) {
@@ -544,12 +545,14 @@ function callback(data) {
 				interactive: false
 			};
 			if (e.type === 'relation') {
-				if (e.tags.type === 'multipolygon') {
+				if (e.tags.type === 'multipolygon' || e.tags.leisure) {
 					e.members.forEach(x => mems.push(x.geometry));
 					outline = L.polygon([mems], optsPolygon);
 				}
 				else {
 					e.members.forEach(x => { if (x.type === 'way') mems.push(x.geometry); });
+					// set official colour for routes
+					if (e.tags.type === 'route' && e.tags.colour) optsPolyline.color = e.tags.colour;
 					outline = L.polyline([mems], e.tags.type === 'boundary' ? optsPolylineThin : optsPolyline);
 				}
 			}
@@ -559,6 +562,7 @@ function callback(data) {
 				// assume way
 				else outline = L.polyline(e.geometry, optsPolyline);
 			}
+			outline._leaflet_id = 'o_' + e.type.slice(0, 1) + e.id;
 			e.center = outline.getBounds().getCenter();
 			areaOutline.addLayer(outline).addTo(map);
 		}
@@ -646,6 +650,7 @@ function callback(data) {
 				case 'taxi': if (!e.tags.building) { name = e.tags.amenity + ' rank'; iconName = 'taxirank'; } break;
 			}
 		}
+		if (e.tags.education === 'centre') name = 'education centre';
 		if (e.tags.highway) {
 			iconName = 'roadtype_tar';
 			switch (e.tags.highway) {
@@ -708,12 +713,12 @@ function callback(data) {
 			if (!type) type = e.tags.man_made;
 			if (type === 'water_tap') type = 'drinking_water';
 			if (type === 'survey_point') {
-				name = e.tags.survey_point;
-				switch (e.tags.survey_point) {
-					case 'triangulation_station': iconName = 'sppillar'; break;
-					case 'flush_bracket': iconName = 'spbracket'; break;
-					case 'pivot':
-					case 'rivet': iconName = 'sprivet'; break;
+				name = e.tags['survey_point:structure'];
+				switch (e.tags['survey_point:structure']) {
+					case 'block': iconName = 'sppillar'; break;
+					case 'bracket': iconName = 'spbracket'; break;
+					case 'indented_pin':
+					case 'pin': iconName = 'sprivet'; break;
 				}
 			}
 		}
@@ -721,24 +726,24 @@ function callback(data) {
 			if (e.tags.shop === 'yes') name = 'shop';
 			if (!name) name = e.tags.shop;
 			if (!type) type = e.tags.shop;
-			else if (e.tags.second_hand === 'yes') type = 'second_hand';
+			if (name !== 'charity' && (e.tags.second_hand === 'yes' || e.tags.second_hand === 'only')) name = 'second hand ' + name;
 			switch (e.tags.shop) {
-				case 'beauty': if (e.tags.beauty) name = e.tags.beauty + ' ' + e.tags.shop; break;
+				case 'beauty': if (e.tags.beauty) name = e.tags.beauty + ' ' + name; break;
 				case 'bathroom_furnishing':
 				case 'interior_decoration':
 				case 'kitchen': type = 'houseware'; break;
 				case 'butcher': type = 'deli'; iconName = 'butcher-2'; break;
-				case 'books': name = (e.tags.second_hand ? 'second hand ' + e.tags.shop : e.tags.shop); break;
 				case 'car_parts': type = 'car_repair'; break;
 				case 'department_store': iconName = 'departmentstore';
 					/* fall through */
 				case 'boutique': type = 'clothes';
 					/* fall through */
-				case 'clothes': if (e.tags.clothes && e.tags.clothes.indexOf(';') === -1) name = e.tags.clothes + ' ' + name; break;
+				case 'clothes': name = (e.tags.clothes && e.tags.clothes.indexOf(';') === -1 ? e.tags.clothes + ' ' : '') + name; break;
 				case 'collector': type = 'games'; break;
 				case 'craft': if (e.tags.craft) name = e.tags.craft; break;
 				case 'e-cigarette': type = 'tobacco'; break;
 				case 'frozen_food': type = 'supermarket'; break;
+				case 'furniture': name = (e.tags.furniture ? e.tags.furniture + ' ' : '') + name; break;
 				case 'garden_centre': type = 'florist'; break;
 				case 'hairdresser':
 					if (e.tags.male === 'yes') { name = 'male barber'; iconName = 'hairmale'; }
@@ -750,9 +755,9 @@ function callback(data) {
 				case 'laundry': type = 'dry_cleaning'; break;
 				case 'pet_grooming': type = 'pet'; break;
 				case 'signs': type = 'copyshop'; break;
-				case 'trade': if (e.tags.trade) name = e.tags.trade + ' ' + e.tags.shop; break;
+				case 'trade': if (e.tags.trade) name = e.tags.trade + ' ' + name; break;
 				case 'window_blind': type = 'curtain'; break;
-				case 'vacant': name = e.tags.shop + ' shop'; type = ''; break;
+				case 'vacant': name = name + ' shop'; type = ''; break;
 			}
 			if (e.tags['service:bicycle:retail'] === 'yes') type = 'bicycle';
 		}
@@ -886,7 +891,7 @@ function callback(data) {
 				iconAnchor: [16, 37],
 				shadowUrl: 'assets/img/icons/000shadow.png',
 				shadowAnchor: [16, 27],
-				popupAnchor: [0, -27]
+				popupAnchor: [0, -24]
 			}),
 			keyboard: false,
 			riseOnHover: true
@@ -961,9 +966,10 @@ function callback(data) {
 	// output list of pois in sidebar
 	if (poiList.length) setTimeout(pushPoiList, 250);
 	if (spinner > 0) spinner--;
-	if (spinner === 0) {
+	else {
 		$('.spinner').fadeOut(200);
-		$('.poi-checkbox').removeClass('poi-loading');
+		// timeout to stop double-clicking on fast loads
+		setTimeout(function() { $('.poi-checkbox').removeClass('poi-loading'); }, 250);
 	}
 	permalinkSet();
 }
@@ -1002,12 +1008,15 @@ function pushPoiList(customSort) {
 		poiResultsList += '</tr>';
 	}
 	poiResultsList += '</table>';
-	$('#poi-results-list').html(poiResultsList).fadeTo(0, 1);
-	$('#poi-results-list td:nth-child(3) i').tooltip(tooltipDef);
-	$('#poi-results').slideDown(400, function() {
+	$('#poi-results-list').html(poiResultsList).show();
+	$('#poi-results').slideDown(500, function() {
+		$('#poi-results-list').css('opacity', 1);
+		$('#poi-results button').prop('disabled', false);
+		$(this).css('pointer-events', 'auto');
 		// keep checkbox in view
-		if ($('.poi-checkbox input:checked').length === 1) $('.poi-checkbox input:checked').parent()[0].scrollIntoView({ block: 'center', behavior: "smooth" });
-	}).css('pointer-events', 'auto');
+		if ($('.poi-checkbox input:checked').length === 1) $('.poi-checkbox input:checked').parent()[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+	});
+	$('#poi-results-list td:nth-child(3) i').tooltip(tooltipDef);
 	$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
 	// interact with map
 	if (noTouch) $('#poi-results-list tr').hover(
@@ -1038,17 +1047,16 @@ function pushPoiList(customSort) {
 
 // templates
 var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName} fa-fw"></i><span class="popup-tagValue"><strong>{tag}:</strong> {value}</span></div>';
-function generic_header_parser(header, subheader, fhrs, osmId) {
+function generic_header_parser(header, subheader, fhrs, osmId, wikidata) {
 	var markerPopup = '<div class="popup-header">';
+	if (osmId && !$('#inputAttic').val()) {
+		markerPopup += '<a class="popup-edit popup-header-button" title="Edit on OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
+		if (wikidata) markerPopup += '<a class="popup-header-button" title="Edit Wikidata" href="https://www.wikidata.org/wiki/' + wikidata + '" target="_blank" rel="noopener"><i class="fas fa-barcode fa-fw"></i></a>';
+		if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm popup-header-button" title="Bookmark"><i class="far fa-bookmark fa-fw"></i></a>';
+		if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.svg"/></span>';
+	}
 	if (header || fhrs) markerPopup += '<h3>' + (header !== undefined ? header : '&hellip;') + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
-	if (!$('#inputAttic').val()) {
-		if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.svg"/></span>';
-		if (osmId) {
-			if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm" title="Bookmark"><i class="far fa-bookmark fa-fw"></i></a>';
-			markerPopup += '<a class="popup-edit" title="Edit with OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
-		}
-	}
 	return markerPopup + '</div>';
 }
 function generic_tag_parser(tags, tag, label, iconName) {
@@ -1144,26 +1152,31 @@ function busstop_parser(tags, titlePopup) {
 	]);
 }
 function carpark_parser(tags, titlePopup) {
-	var maxstay_parser = function(tags) {
-		var markerPopup = '';
-		if (tags.maxstay) markerPopup += L.Util.template(tagTmpl, { tag: 'Max stay', value: time_parser(tags.maxstay), iconName: 'fas fa-clock' });
-		return markerPopup;
-	};
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'capacity', label: 'Spaces', iconName: 'fas fa-car'},
 		{callback: generic_tag_parser, tag: 'capacity:disabled', label: 'Disabled spaces', iconName: 'fas fa-wheelchair'},
 		{callback: generic_tag_parser, tag: 'capacity:parent', label: 'Parent spaces', iconName: 'fas fa-child'},
-		{callback: maxstay_parser}
+		{callback: generic_tag_parser, tag: 'maxstay', label: 'Max stay', iconName: 'fas fa-hourglass'}
 	]);
 }
 function carshop_parser(tags, titlePopup) {
-	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'service', label: 'Services', iconName: 'fas fa-car'}
+	var carservices_parser = function(tags) {
+		var markerPopup = '', tag = '';
+		for (var key in tags) if (key.indexOf('service:vehicle:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[2] + ', ';
+		if (tag) {
+			tag = tag.replace(/_/g, '-');
+			tag = tag.substring(0, tag.length - 2);
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Repair services', value: tag, iconName: 'fas fa-car' });
+		}
+		return markerPopup;
+	};
+	return parse_tags(tags, titlePopup,	[
+		{callback: carservices_parser}
 	]);
 }
 function cctv_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'maxspeed', label: 'Max speed', iconName: 'fas fa-video'},
+		{callback: generic_tag_parser, tag: 'maxspeed', label: 'Max speed', iconName: 'fas fa-gauge-simple'},
 		{callback: generic_tag_parser, tag: 'surveillance:zone', label: 'Surveillance zone', iconName: 'fas fa-eye'},
 		{callback: generic_tag_parser, tag: 'camera:mount', label: 'Camera mount', iconName: 'fas fa-video'},
 		{callback: generic_tag_parser, tag: 'camera:type', label: 'Camera type', iconName: 'fas fa-video'}
@@ -1361,12 +1374,31 @@ function tap_parser(tags, titlePopup) {
 	]);
 }
 function taxi_parser(tags, titlePopup) {
-	return parse_tags(tags, titlePopup, [ {callback: generic_tag_parser, tag: 'capacity', label: 'Taxi rank capacity', iconName: 'fas fa-taxi'} ]);
+	return parse_tags(tags, titlePopup, [
+		{callback: generic_tag_parser, tag: 'capacity', label: 'Taxi rank capacity', iconName: 'fas fa-taxi'}
+	]);
 }
 function vending_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'brand', label: 'Brand'},
 		{callback: generic_tag_parser, tag: 'biometric', label: 'Biometric', iconName: 'fas fa-fingerprint'},
+	]);
+}
+function education_parser(tags, titlePopup) {
+	var eduinfo_parser = function(tags) {
+		var markerPopup = '', tag = '';
+		if (tags.min_age && tags.max_age) tag += 'Ages ' + tags.min_age + '-' + tags.max_age + ', ';
+		if (tags.capacity) tag += 'Capacity ' + tags.capacity + ', ';
+		if (tags["school:type"]) tag += titleCase(tags["school:type"]) + ', ';
+		if (tags.denomination) tag += titleCase(tags.denomination) + ', ';
+		if (tag) {
+			tag = tag.substring(0, tag.length - 2);
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Education details', value: tag, iconName: 'fas fa-school' });
+		}
+		return markerPopup;
+	};
+	return parse_tags(tags, titlePopup, [
+		{callback: eduinfo_parser}
 	]);
 }
 function worship_parser(tags, titlePopup) {

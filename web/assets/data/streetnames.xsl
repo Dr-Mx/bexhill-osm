@@ -113,10 +113,8 @@
 		} });
 		$('#street-filter-cl').on('click', function() { $('#street-filter-in').val('').trigger('keyup'); });
 		$('#street-filter-cl').trigger('click');
+		$('#anchor').on('click touchstart', function() { $('hr')[0].scrollIntoView({ behavior: 'smooth' }); });
 		history.replaceState(null, null, '../../streetnames');
-		$('#anchor').on('click touchstart', function() {
-			$('html, body').stop().animate({ scrollTop: $('#street-filter').offset().top - 25 }, 500);
-		});
 	});
 	</script>
 </body>

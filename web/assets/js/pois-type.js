@@ -5,17 +5,17 @@
 var pois = {
 
 	// LEISURE-TOURISM - 99a3a4 - e74d3c - 874ea0 - 239b56 - 2e86c1
-	
+
 	attraction: {
-		name: 'Attraction',
-		query: 'way[name~"^De La Warr Pavilion$|^Bexhill Museum$|^Egerton Park$|^Manor Gardens$|^Galley Hill Open Space$"];',
+		name: 'Attractions',
+		query: 'way[name~"De La Warr Pavilion|Bexhill Museum|Egerton Park|Manor Gardens|Galley Hill Open Space"];',
 		iconName: 'pinother',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'attraction']
 	},
 
 	viewpoint: {
-		name: 'Viewpoint',
+		name: 'Viewpoints',
 		query: 'node[tourism=viewpoint];',
 		iconName: 'panoramicview',
 		catName: 'Leisure-Tourism',
@@ -23,7 +23,7 @@ var pois = {
 	},
 
 	webcam: {
-		name: 'Webcam',
+		name: 'Webcams',
 		query: 'node[surveillance=webcam];',
 		iconName: 'webcam',
 		catName: 'Leisure-Tourism',
@@ -41,7 +41,7 @@ var pois = {
 
 	information: {
 		name: 'Information',
-		query: 'nwr[information][information!~guidepost][~"^ref$|^name$"~"."];',
+		query: 'nwr[information][information!~guidepost][~"ref|name"~"."];',
 		iconName: 'information',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'information']
@@ -57,7 +57,7 @@ var pois = {
 	},
 
 	museum: {
-		name: 'Museum',
+		name: 'Museums',
 		query: 'nwr[tourism=museum];',
 		iconName: 'museum_archeological',
 		catName: 'Leisure-Tourism',
@@ -65,7 +65,7 @@ var pois = {
 	},
 
 	artwork: {
-		name: 'Public Artwork',
+		name: 'Public Artworks',
 		query: 'nwr[tourism~"artwork|gallery"];nwr[map_type=toposcope];',
 		iconName: 'publicart',
 		catName: 'Leisure-Tourism',
@@ -74,8 +74,8 @@ var pois = {
 	},
 
 	historic: {
-		name: 'Historic',
-		query: 'nwr[historic][historic!~boundary_stone][historic!~district];node[board_type=history];',
+		name: 'Historic Sites',
+		query: 'nwr[historic][historic!~"district|boundary_stone"];node[board_type=history];',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque', 'war'],
@@ -83,7 +83,7 @@ var pois = {
 	},
 
 	listed_status: {
-		name: 'Heritage-Listed',
+		name: 'Heritage Listings',
 		query: 'nwr[HE_ref];',
 		iconName: 'house',
 		catName: 'Leisure-Tourism',
@@ -91,7 +91,7 @@ var pois = {
 	},
 
 	park: {
-		name: 'Park',
+		name: 'Parks',
 		query: 'nwr[leisure~"park|nature_reserve"];',
 		iconName: 'urbanpark',
 		catName: 'Leisure-Tourism',
@@ -99,15 +99,15 @@ var pois = {
 	},
 
 	recreation: {
-		name: 'Recreation',
-		query: 'way[~"."~"^recreation_ground$|^golf_course$|^sports_centre$|^horse_riding$"][name][!club][access!~private];',
+		name: 'Recreation Areas',
+		query: 'way[~"."~"recreation_ground|golf_course|sports_centre|horse_riding"][name][!club][access!~private];',
 		iconName: 'recreation',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'cricket', 'swimming pool', 'horse riding', 'motocross', 'park', 'open-space', 'green']
+		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'cricket', 'swimming-pool', 'horse riding', 'motocross', 'park', 'open-space', 'green']
 	},
 
 	playground: {
-		name: 'Playground',
+		name: 'Playgrounds',
 		query: 'nwr[leisure=playground][name];',
 		iconName: 'playground',
 		catName: 'Leisure-Tourism',
@@ -115,7 +115,7 @@ var pois = {
 	},
 
 	picnic_table: {
-		name: 'Picnic Table',
+		name: 'Picnic Tables',
 		query: 'node[leisure=picnic_table];',
 		iconName: 'picnic-2',
 		catName: 'Leisure-Tourism',
@@ -123,7 +123,7 @@ var pois = {
 	},
 
 	shelter: {
-		name: 'Shelter',
+		name: 'Shelters',
 		query: 'nwr[amenity=shelter];',
 		iconName: 'shelter',
 		catName: 'Leisure-Tourism',
@@ -131,7 +131,7 @@ var pois = {
 	},
 
 	allotments: {
-		name: 'Allotment',
+		name: 'Allotments',
 		query: 'way[landuse=allotments];',
 		iconName: 'soil',
 		catName: 'Leisure-Tourism',
@@ -140,7 +140,7 @@ var pois = {
 	},
 
 	club: {
-		name: 'Club',
+		name: 'Clubs',
 		query: 'nwr[club];',
 		iconName: 'conversation-map-icon',
 		catName: 'Leisure-Tourism',
@@ -148,15 +148,15 @@ var pois = {
 	},
 
 	fitness_centre: {
-		name: 'Fitness Gym',
-		query: 'nwr[leisure~"fitness_centre|fitness_station"];',
+		name: 'Fitness Gyms',
+		query: 'nwr[leisure~"^fitness"];',
 		iconName: 'weights',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['fitness', 'leisure', 'gym', 'sport', 'weight-lifting']
 	},
 
 	boat_rental: {
-		name: 'Boat Rental',
+		name: 'Boat Rentals',
 		query: 'nwr[amenity=boat_rental];',
 		iconName: 'rowboat',
 		catName: 'Leisure-Tourism',
@@ -164,7 +164,7 @@ var pois = {
 	},
 
 	amusement_arcade: {
-		name: 'Amusement Arcade',
+		name: 'Amusement Arcades',
 		query: 'nwr[leisure=amusement_arcade];',
 		iconName: 'casino-2',
 		catName: 'Leisure-Tourism',
@@ -174,7 +174,7 @@ var pois = {
 	// AMENITIES - 85929e - 7e5109 - 2980b9 - d4ac0d - 45b39d
 
 	dog: {
-		name: 'Dog Friendly',
+		name: 'Dog Friendly Places',
 		query: 'nwr[dog=yes];',
 		iconName: 'dogs_leash',
 		catName: 'Amenities',
@@ -182,7 +182,7 @@ var pois = {
 	},
 
 	fairtrade: {
-		name: 'Fairtrade',
+		name: 'Fairtrade Businesses',
 		query: 'nwr[fair_trade=yes];',
 		iconName: 'fairtrade',
 		catName: 'Amenities',
@@ -190,7 +190,7 @@ var pois = {
 	},
 
 	cafe: {
-		name: 'Cafe',
+		name: 'Cafés',
 		query: 'nwr[amenity=cafe];',
 		iconName: 'coffee',
 		catName: 'Amenities',
@@ -199,7 +199,7 @@ var pois = {
 	},
 
 	restaurant: {
-		name: 'Restaurant',
+		name: 'Restaurants',
 		query: 'nwr[amenity=restaurant];',
 		iconName: 'restaurant',
 		catName: 'Amenities',
@@ -208,7 +208,7 @@ var pois = {
 	},
 
 	fast_food: {
-		name: 'Fast-Food',
+		name: 'Fast-foods',
 		query: 'nwr[amenity=fast_food];',
 		iconName: 'fastfood',
 		catName: 'Amenities',
@@ -217,7 +217,7 @@ var pois = {
 	},
 
 	pub: {
-		name: 'Pub',
+		name: 'Pubs',
 		query: 'nwr[amenity=pub];',
 		iconName: 'bar',
 		catName: 'Amenities',
@@ -226,7 +226,7 @@ var pois = {
 	},
 
 	bar: {
-		name: 'Bar/Nightclub',
+		name: 'Bars/Nightclubs',
 		query: 'nwr[amenity~"bar|nightclub"];',
 		iconName: 'bar_coktail',
 		catName: 'Amenities',
@@ -234,7 +234,7 @@ var pois = {
 	},
 
 	marketplace: {
-		name: 'Marketplace',
+		name: 'Markets',
 		query: 'nwr[amenity=marketplace];',
 		iconName: 'market',
 		catName: 'Amenities',
@@ -250,7 +250,7 @@ var pois = {
 	},
 
 	atm: {
-		name: 'ATM',
+		name: 'ATMs',
 		query: 'node[amenity=atm];',
 		iconName: 'atm_pound',
 		catName: 'Amenities',
@@ -259,7 +259,7 @@ var pois = {
 	},
 
 	photo_booth: {
-		name: 'Photo-Booth',
+		name: 'Photo Booths',
 		query: 'node[amenity=photo_booth];',
 		iconName: 'photobooth',
 		catName: 'Amenities',
@@ -268,7 +268,7 @@ var pois = {
 	},
 
 	telephone: {
-		name: 'Telephone-Box',
+		name: 'Telephone Boxes',
 		query: 'node[amenity=telephone];',
 		iconName: 'telephone',
 		catName: 'Amenities',
@@ -276,8 +276,8 @@ var pois = {
 	},
 
 	post_box: {
-		name: 'Post-Box/Office',
-		query: 'nwr[amenity~"post_box|post_depot|post_office"];',
+		name: 'Post-boxes/Offices',
+		query: 'nwr[amenity~"^post_"];',
 		iconName: 'postal',
 		catName: 'Amenities',
 		tagKeyword: ['post', 'letter', 'mail'],
@@ -285,7 +285,7 @@ var pois = {
 	},
 
 	drinking_water: {
-		name: 'Drinking-Water',
+		name: 'Drinking Water',
 		query: 'node[amenity=drinking_water];node[drinking_water=yes];nwr["drinking_water:refill"=yes];',
 		iconName: 'drinkingwater',
 		catName: 'Amenities',
@@ -294,7 +294,7 @@ var pois = {
 	},
 
 	recycling: {
-		name: 'Recycling',
+		name: 'Recycling Centres',
 		query: 'nwr[amenity=recycling];',
 		iconName: 'recycle',
 		catName: 'Amenities',
@@ -302,7 +302,7 @@ var pois = {
 	},
 
 	defibrillator: {
-		name: 'Defibrillator',
+		name: 'Defibrillators',
 		query: 'node[emergency=defibrillator];',
 		iconName: 'aed-2',
 		catName: 'Amenities',
@@ -311,7 +311,7 @@ var pois = {
 	},
 
 	grit_bin: {
-		name: 'Grit-Bin',
+		name: 'Grit-bins',
 		query: 'node[amenity=grit_bin];',
 		iconName: 'roadtype_gravel',
 		catName: 'Amenities',
@@ -319,7 +319,7 @@ var pois = {
 	},
 
 	parking: {
-		name: 'Car-Parking',
+		name: 'Car Parking',
 		query: 'nwr[amenity=parking][access=yes];',
 		iconName: 'parking',
 		catName: 'Amenities',
@@ -328,7 +328,7 @@ var pois = {
 	},
 
 	bicycle_parking: {
-		name: 'Bicycle-Parking',
+		name: 'Bicycle Parking',
 		query: 'node[amenity=bicycle_parking][access!~private];',
 		iconName: 'parking_bicycle',
 		catName: 'Amenities',
@@ -337,7 +337,7 @@ var pois = {
 	},
 
 	taxi: {
-		name: 'Taxi',
+		name: 'Taxis',
 		query: 'nwr[amenity=taxi];',
 		iconName: 'taxi',
 		catName: 'Amenities',
@@ -346,7 +346,7 @@ var pois = {
 	},
 
 	fuel: {
-		name: 'Fuel',
+		name: 'Fuel Stations',
 		query: 'nwr[amenity=fuel];',
 		iconName: 'fillingstation',
 		catName: 'Amenities',
@@ -355,7 +355,7 @@ var pois = {
 	},
 
 	car_repair: {
-		name: 'Car-Repair/Parts',
+		name: 'Car Repairs/Parts',
 		query: 'nwr[shop~"car_repair|car_parts"];',
 		iconName: 'carrepair',
 		catName: 'Amenities',
@@ -364,7 +364,7 @@ var pois = {
 	},
 
 	car_rental: {
-		name: 'Car-Rental',
+		name: 'Car Rentals',
 		query: 'nwr[amenity=car_rental];',
 		iconName: 'carrental',
 		catName: 'Amenities',
@@ -372,7 +372,7 @@ var pois = {
 	},
 
 	car_wash: {
-		name: 'Car-Wash',
+		name: 'Car Washes',
 		query: 'nwr[amenity=car_wash];',
 		iconName: 'carwash',
 		catName: 'Amenities',
@@ -380,7 +380,7 @@ var pois = {
 	},
 
 	veterinary: {
-		name: 'Veterinary',
+		name: 'Veterinarians',
 		query: 'nwr[amenity=veterinary];',
 		iconName: 'veterinary',
 		catName: 'Amenities',
@@ -388,8 +388,8 @@ var pois = {
 	},
 
 	animal_shelter: {
-		name: 'Animal Kennel',
-		query: 'nwr[amenity~"animal_shelter|animal_boarding"];',
+		name: 'Animal Kennels',
+		query: 'nwr[amenity~"^animal_"];',
 		iconName: 'animal-shelter-export',
 		catName: 'Amenities',
 		tagKeyword: ['kennel', 'shelter', 'board', 'pet', 'cat', 'dog', 'animal']
@@ -398,15 +398,15 @@ var pois = {
 	// SERVICES - 2874a6 - a04000 - 1abc9c - af7ac5
 
 	police: {
-		name: 'Emergency',
-		query: 'nwr[~"^amenity$|^emergency$"~"^police$|^fire_station$|^ambulance_station$|^coast_guard$"];',
+		name: 'Emergency Services',
+		query: 'nwr[~"amenity|emergency"~"police|fire_station|ambulance_station|coast_guard"];',
 		iconName: 'police2',
 		catName: 'Services',
 		tagKeyword: ['police', 'fire', 'ambulance', 'coastguard', 'help', 'emergency']
 	},
 
 	townhall: {
-		name: 'Town-Hall',
+		name: 'Town Hall',
 		query: 'nwr[amenity=townhall];',
 		iconName: 'townhouse',
 		catName: 'Services',
@@ -414,7 +414,7 @@ var pois = {
 	},
 
 	community_centre: {
-		name: 'Community-Centre',
+		name: 'Community Centres',
 		query: 'nwr[amenity=community_centre];',
 		iconName: 'communitycentre',
 		catName: 'Services',
@@ -422,7 +422,7 @@ var pois = {
 	},
 
 	bank: {
-		name: 'Bank',
+		name: 'Banks',
 		query: 'nwr[amenity=bank];',
 		iconName: 'bank_pound',
 		catName: 'Services',
@@ -430,7 +430,7 @@ var pois = {
 	},
 
 	library: {
-		name: 'Library',
+		name: 'Libraries',
 		query: 'nwr[amenity~"library|public_bookcase"];',
 		iconName: 'library',
 		catName: 'Services',
@@ -438,7 +438,7 @@ var pois = {
 	},
 
 	jobcentre: {
-		name: 'Job Centre',
+		name: 'Job Centres',
 		query: 'nwr[amenity=jobcentre];',
 		iconName: 'workoffice',
 		catName: 'Services',
@@ -446,15 +446,16 @@ var pois = {
 	},
 
 	school: {
-		name: 'Education',
-		query: 'nwr[amenity~"school|college"][name];',
+		name: 'Education Institutions',
+		query: 'nwr[amenity~"school|college"];nwr[education=centre];',
 		iconName: 'school2',
 		catName: 'Services',
-		tagKeyword: ['school', 'college', 'education']
+		tagKeyword: ['school', 'college', 'education'],
+		tagParser: education_parser
 	},
 
 	kindergarten: {
-		name: 'Nursery',
+		name: 'Nurseries',
 		query: 'nwr[amenity=kindergarten];',
 		iconName: 'daycare',
 		catName: 'Services',
@@ -462,7 +463,7 @@ var pois = {
 	},
 
 	place_of_worship: {
-		name: 'Place of Worship',
+		name: 'Places of Worship',
 		query: 'nwr[amenity=place_of_worship];',
 		iconName: 'prayer',
 		catName: 'Services',
@@ -471,7 +472,7 @@ var pois = {
 	},
 
 	social_facility: {
-		name: 'Social-Facility',
+		name: 'Social-facilities',
 		query: 'nwr[amenity~"social_facility|retirement_home"];',
 		iconName: 'sozialeeinrichtung',
 		catName: 'Services',
@@ -480,7 +481,7 @@ var pois = {
 	},
 
 	events_venue: {
-		name: 'Events-Venue',
+		name: 'Events-venues',
 		query: 'nwr[amenity=events_venue];',
 		iconName: 'dancinghall',
 		catName: 'Services',
@@ -488,7 +489,7 @@ var pois = {
 	},
 
 	hospital: {
-		name: 'Hospital',
+		name: 'Hospitals',
 		query: 'nwr[amenity=hospital];',
 		iconName: 'hospital-building',
 		catName: 'Services',
@@ -497,7 +498,7 @@ var pois = {
 	},
 
 	doctors: {
-		name: 'Doctor',
+		name: 'Doctors',
 		query: 'nwr[amenity=doctors];',
 		iconName: 'medicine',
 		catName: 'Services',
@@ -505,7 +506,7 @@ var pois = {
 	},
 
 	dentist: {
-		name: 'Dentist',
+		name: 'Dentists',
 		query: 'nwr[amenity=dentist];',
 		iconName: 'dentist',
 		catName: 'Services',
@@ -513,7 +514,7 @@ var pois = {
 	},
 
 	healthcare: {
-		name: 'Healthcare',
+		name: 'Healthcare Services',
 		query: 'nwr[healthcare];',
 		iconName: 'medicalstore',
 		catName: 'Services',
@@ -521,7 +522,7 @@ var pois = {
 	},
 
 	pharmacy: {
-		name: 'Pharmacy',
+		name: 'Pharmacies',
 		query: 'nwr[amenity=pharmacy];',
 		iconName: 'drugstore',
 		catName: 'Services',
@@ -529,7 +530,7 @@ var pois = {
 	},
 
 	mobility: {
-		name: 'Mobility/Hearing',
+		name: 'Mobility/Hearing Aids',
 		query: 'nwr[shop~"mobility|hearing_aids"];',
 		iconName: 'retirement_home',
 		catName: 'Services',
@@ -545,7 +546,7 @@ var pois = {
 	},
 
 	estate_agent: {
-		name: 'Property',
+		name: 'Property Agents',
 		query: 'nwr[office~"estate_agent|property_management"];',
 		iconName: 'apartment-2',
 		catName: 'Services',
@@ -553,7 +554,7 @@ var pois = {
 	},
 
 	accountant: {
-		name: 'Accountant',
+		name: 'Accountants',
 		query: 'nwr[office~"accountant|financial"];',
 		iconName: 'coins',
 		catName: 'Services',
@@ -561,7 +562,7 @@ var pois = {
 	},
 
 	insurance: {
-		name: 'Insurance',
+		name: 'Insurers',
 		query: 'nwr[office=insurance];',
 		iconName: 'umbrella-2',
 		catName: 'Services',
@@ -569,7 +570,7 @@ var pois = {
 	},
 
 	lawyer: {
-		name: 'Solicitor',
+		name: 'Solicitors',
 		query: 'nwr[office=lawyer];',
 		iconName: 'court',
 		catName: 'Services',
@@ -579,7 +580,7 @@ var pois = {
 	// SHOPS - 1b4f72 - e74c3c - 117864 - a06464 - 52be80 - b9770e
 
 	supermarket: {
-		name: 'Supermarket',
+		name: 'Supermarkets',
 		query: 'nwr[shop~"supermarket|frozen_food"];',
 		iconName: 'supermarket',
 		catName: 'Shops',
@@ -587,7 +588,7 @@ var pois = {
 	},
 
 	convenience: {
-		name: 'Convenience',
+		name: 'Convenience Stores',
 		query: 'nwr[shop=convenience];',
 		iconName: 'conveniencestore',
 		catName: 'Shops',
@@ -595,7 +596,7 @@ var pois = {
 	},
 
 	newsagent: {
-		name: 'Newsagent',
+		name: 'Newsagents',
 		query: 'nwr[shop=newsagent];',
 		iconName: 'newsagent',
 		catName: 'Shops',
@@ -603,7 +604,7 @@ var pois = {
 	},
 
 	greengrocer: {
-		name: 'Greengrocer',
+		name: 'Greengrocers',
 		query: 'nwr[shop=greengrocer];',
 		iconName: 'fruits',
 		catName: 'Shops',
@@ -611,7 +612,7 @@ var pois = {
 	},
 
 	bakery: {
-		name: 'Bakery',
+		name: 'Bakeries',
 		query: 'nwr[shop=bakery];',
 		iconName: 'bread',
 		catName: 'Shops',
@@ -619,7 +620,7 @@ var pois = {
 	},
 
 	deli: {
-		name: 'Butcher/Deli',
+		name: 'Butchers/Delicatessens',
 		query: 'nwr[shop~"deli|butcher"];',
 		iconName: 'farmstand',
 		catName: 'Shops',
@@ -627,7 +628,7 @@ var pois = {
 	},
 
 	seafood: {
-		name: 'Seafood',
+		name: 'Fishmongers',
 		query: 'nwr[shop=seafood];',
 		iconName: 'shop_fish',
 		catName: 'Shops',
@@ -635,7 +636,7 @@ var pois = {
 	},
 
 	confectionery: {
-		name: 'Confectionery',
+		name: 'Confectioners',
 		query: 'nwr[shop=confectionery];',
 		iconName: 'candy',
 		catName: 'Shops',
@@ -643,15 +644,15 @@ var pois = {
 	},
 
 	alcohol: {
-		name: 'Alcohol',
+		name: 'Off-licences',
 		query: 'nwr[shop=alcohol];',
 		iconName: 'liquor',
 		catName: 'Shops',
-		tagKeyword: ['alcohol', 'liquor', 'beer', 'wine', 'spirits', 'drink']
+		tagKeyword: ['alcohol', 'liquor', 'beer', 'wine', 'spirits', 'drink', 'off-licence']
 	},
 
 	tobacco: {
-		name: 'Cigarettes',
+		name: 'Tobacconists/Vaping',
 		query: 'nwr[shop~"tobacco|e-cigarette"];',
 		iconName: 'smoking',
 		catName: 'Shops',
@@ -659,7 +660,7 @@ var pois = {
 	},
 
 	bookmaker: {
-		name: 'Betting',
+		name: 'Bookmakers',
 		query: 'nwr[shop=bookmaker];',
 		iconName: 'cup',
 		catName: 'Shops',
@@ -667,7 +668,7 @@ var pois = {
 	},
 
 	variety_store: {
-		name: 'Variety-Store',
+		name: 'Variety Stores',
 		query: 'nwr[shop=variety_store];',
 		iconName: 'mall',
 		catName: 'Shops',
@@ -683,7 +684,7 @@ var pois = {
 	},
 
 	stationery: {
-		name: 'Stationery',
+		name: 'Stationers',
 		query: 'nwr[shop=stationery];',
 		iconName: 'pens',
 		catName: 'Shops',
@@ -691,7 +692,7 @@ var pois = {
 	},
 
 	doityourself: {
-		name: 'DIY/Hardware',
+		name: 'DIY/Hardware Stores',
 		query: 'nwr[shop~"doityourself|hardware"];',
 		iconName: 'tools',
 		catName: 'Shops',
@@ -708,7 +709,7 @@ var pois = {
 	},
 
 	tailor: {
-		name: 'Tailor',
+		name: 'Tailors',
 		query: 'nwr[shop=tailor];',
 		iconName: 'tailor',
 		catName: 'Shops',
@@ -716,7 +717,7 @@ var pois = {
 	},
 
 	charity: {
-		name: 'Charity',
+		name: 'Charities',
 		query: 'nwr[shop=charity];nwr[charity=yes];',
 		iconName: 'charity',
 		catName: 'Shops',
@@ -732,7 +733,7 @@ var pois = {
 	},
 
 	houseware: {
-		name: 'House/Decoration',
+		name: 'Interior Decorations',
 		query: 'nwr[shop~"houseware|interior_decoration|bathroom_furnishing|kitchen"];',
 		iconName: 'kitchen',
 		catName: 'Shops',
@@ -740,7 +741,7 @@ var pois = {
 	},
 
 	furniture: {
-		name: 'Furniture',
+		name: 'Furniture Stores',
 		query: 'nwr[shop=furniture];',
 		iconName: 'homecenter',
 		catName: 'Shops',
@@ -748,7 +749,7 @@ var pois = {
 	},
 
 	carpet: {
-		name: 'Carpet-Store',
+		name: 'Carpets',
 		query: 'nwr[shop=carpet];',
 		iconName: 'textiles',
 		catName: 'Shops',
@@ -756,7 +757,7 @@ var pois = {
 	},
 
 	bed: {
-		name: 'Bed-Store',
+		name: 'Beds',
 		query: 'nwr[shop=bed];',
 		iconName: 'lodging-2',
 		catName: 'Shops',
@@ -764,15 +765,15 @@ var pois = {
 	},
 
 	curtain: {
-		name: 'Curtain/Blind',
+		name: 'Curtains/Blinds',
 		query: 'nwr[shop~"curtain|window_blind"];',
 		iconName: 'curtain',
 		catName: 'Shops',
 		tagKeyword: ['curtain', 'blinds', 'windows']
 	},
-	
+
 	glaziery: {
-		name: 'Glaziery',
+		name: 'Glaziers',
 		query: 'nwr[shop=glaziery];',
 		iconName: 'glazer',
 		catName: 'Shops',
@@ -780,7 +781,7 @@ var pois = {
 	},
 
 	jewelry: {
-		name: 'Jewellery',
+		name: 'Jewellers',
 		query: 'nwr[shop=jewelry];',
 		iconName: 'jewelry',
 		catName: 'Shops',
@@ -788,7 +789,7 @@ var pois = {
 	},
 
 	bag: {
-		name: 'Bag',
+		name: 'Bags',
 		query: 'nwr[shop=bag];',
 		iconName: 'bags',
 		catName: 'Shops',
@@ -800,11 +801,11 @@ var pois = {
 		query: 'nwr[shop=watches];',
 		iconName: 'watch',
 		catName: 'Shops',
-		tagKeyword: ['watches', 'clock']
+		tagKeyword: ['watches', 'clock', 'repair']
 	},
 
 	hairdresser: {
-		name: 'Hairdresser',
+		name: 'Hairdressers',
 		query: 'nwr[shop=hairdresser];',
 		iconName: 'hair',
 		catName: 'Shops',
@@ -812,7 +813,7 @@ var pois = {
 	},
 
 	beauty: {
-		name: 'Beauty',
+		name: 'Beauticians',
 		query: 'nwr[shop=beauty];',
 		iconName: 'beautysalon',
 		catName: 'Shops',
@@ -820,7 +821,7 @@ var pois = {
 	},
 
 	massage: {
-		name: 'Massage',
+		name: 'Massage Parlours',
 		query: 'nwr[shop=massage];',
 		iconName: 'massage',
 		catName: 'Shops',
@@ -828,7 +829,7 @@ var pois = {
 	},
 
 	optician: {
-		name: 'Optician',
+		name: 'Opticians',
 		query: 'nwr[shop=optician];',
 		iconName: 'glasses',
 		catName: 'Shops',
@@ -836,7 +837,7 @@ var pois = {
 	},
 
 	tattoo: {
-		name: 'Tattoo',
+		name: 'Tattoo Artists',
 		query: 'nwr[shop=tattoo];',
 		iconName: 'tattoo',
 		catName: 'Shops',
@@ -844,7 +845,7 @@ var pois = {
 	},
 
 	dry_cleaning: {
-		name: 'Laundry/Dry-Cleaning',
+		name: 'Laundrettes/Dry-Cleaners',
 		query: 'nwr[shop~"dry_cleaning|laundry"];',
 		iconName: 'laundromat',
 		catName: 'Shops',
@@ -852,7 +853,7 @@ var pois = {
 	},
 
 	travel_agency: {
-		name: 'Travel-Agency',
+		name: 'Travel Agents',
 		query: 'nwr[shop=travel_agency];',
 		iconName: 'travel_agency',
 		catName: 'Shops',
@@ -860,7 +861,7 @@ var pois = {
 	},
 
 	florist: {
-		name: 'Florist/Garden Centre',
+		name: 'Florist/Garden Centres',
 		query: 'nwr[shop~"florist|garden_centre"];',
 		iconName: 'garden',
 		catName: 'Shops',
@@ -868,7 +869,7 @@ var pois = {
 	},
 
 	art: {
-		name: 'Art',
+		name: 'Art Shops',
 		query: 'nwr[shop=art];',
 		iconName: 'museum_paintings',
 		catName: 'Shops',
@@ -876,7 +877,7 @@ var pois = {
 	},
 
 	books: {
-		name: 'Books',
+		name: 'Bookstores',
 		query: 'nwr[shop=books];',
 		iconName: 'book',
 		catName: 'Shops',
@@ -892,15 +893,15 @@ var pois = {
 	},
 
 	second_hand: {
-		name: 'Second-Hand',
-		query: 'nwr[shop=second_hand];nwr[second_hand=yes];',
+		name: 'Second-hand Stores',
+		query: 'nwr[shop=second_hand];nwr[second_hand~"yes|only"];',
 		iconName: '2hand',
 		catName: 'Shops',
-		tagKeyword: ['second-hand', 'clothes', 'books', 'toys', 'confectionery', 'furniture', 'crafts', 'thrift', 'bric-a-brac', 'appliance']
+		tagKeyword: ['second-hand', 'thrift', 'bric-a-brac']
 	},
 
 	craft: {
-		name: 'Craft',
+		name: 'Craft Supplies',
 		query: 'nwr[shop=craft];',
 		iconName: 'craftstore',
 		catName: 'Shops',
@@ -908,7 +909,7 @@ var pois = {
 	},
 
 	frame: {
-		name: 'Picture Framing',
+		name: 'Picture Framers',
 		query: 'nwr[shop=frame];',
 		iconName: 'museum_art',
 		catName: 'Shops',
@@ -916,7 +917,7 @@ var pois = {
 	},
 
 	gift: {
-		name: 'Gift',
+		name: 'Gifts',
 		query: 'nwr[shop=gift];',
 		iconName: 'gifts',
 		catName: 'Shops',
@@ -940,7 +941,7 @@ var pois = {
 	},
 
 	pet: {
-		name: 'Pet',
+		name: 'Pets',
 		query: 'nwr[shop~"^pet"];',
 		iconName: 'pets',
 		catName: 'Shops',
@@ -948,7 +949,7 @@ var pois = {
 	},
 
 	music: {
-		name: 'Music',
+		name: 'Records',
 		query: 'nwr[shop=music];',
 		iconName: 'music',
 		catName: 'Shops',
@@ -956,7 +957,7 @@ var pois = {
 	},
 
 	musical_instrument: {
-		name: 'Musical-Instrument',
+		name: 'Musical Instruments',
 		query: 'nwr[shop=musical_instrument];',
 		iconName: 'music_rock',
 		catName: 'Shops',
@@ -972,7 +973,7 @@ var pois = {
 	},
 
 	computer: {
-		name: 'Computer',
+		name: 'Computers',
 		query: 'nwr[shop=computer];',
 		iconName: 'computers',
 		catName: 'Shops',
@@ -980,7 +981,7 @@ var pois = {
 	},
 
 	games: {
-		name: 'Games/Collector',
+		name: 'Games/Collectors',
 		query: 'nwr[shop~"games|collector"];',
 		iconName: 'poker',
 		catName: 'Shops',
@@ -988,15 +989,15 @@ var pois = {
 	},
 
 	mobile_phone: {
-		name: 'Mobile-Phone',
+		name: 'Mobile Phones',
 		query: 'nwr[shop=mobile_phone];',
 		iconName: 'phones',
 		catName: 'Shops',
-		tagKeyword: ['mobile-phone', 'repair']
+		tagKeyword: ['mobile', 'cell', 'phone', 'repair']
 	},
 
 	bicycle: {
-		name: 'Bicycle',
+		name: 'Bicycles',
 		query: 'nwr[shop=bicycle];nwr["service:bicycle:retail"];nwr[amenity=bicycle_repair_station];',
 		iconName: 'bicycle_shop',
 		catName: 'Shops',
@@ -1005,17 +1006,17 @@ var pois = {
 	},
 
 	car: {
-		name: 'Car-Sales',
+		name: 'Car Sales',
 		query: 'nwr[shop=car];',
 		iconName: 'car',
 		catName: 'Shops',
 		tagKeyword: ['car-sales', 'second-hand']
 	},
-	
+
 	// OTHER - eaecee
-	
+
 	political: {
-		name: 'Ward',
+		name: 'Wards',
 		query: 'relation[political_division=ward];',
 		iconName: 'politicalboundary',
 		catName: 'Other',
@@ -1024,7 +1025,7 @@ var pois = {
 	},
 
 	protected_area: {
-		name: 'Protected Area',
+		name: 'Protected Areas',
 		query: 'way[boundary=protected_area];',
 		iconName: 'administrativeboundary',
 		catName: 'Other',
@@ -1033,7 +1034,7 @@ var pois = {
 	},
 
 	construction: {
-		name: 'Construction',
+		name: 'Construction Areas',
 		query: 'nwr[construction]["ref:planningapp"];',
 		iconName: 'construction',
 		catName: 'Other',
@@ -1041,8 +1042,8 @@ var pois = {
 	},
 
 	surveillance: {
-		name: 'Surveillance',
-		query: 'node[~"^highway$|^man_made$"~"^speed_camera$|^surveillance$"][surveillance!~webcam];',
+		name: 'Surveillance Cameras',
+		query: 'node[~"highway|man_made"~"speed_camera|surveillance"][surveillance!~webcam];',
 		iconName: 'cctv',
 		catName: 'Other',
 		tagKeyword: ['surveillance', 'cctv', 'security', 'camera'],
@@ -1050,27 +1051,27 @@ var pois = {
 	},
 
 	// unlisted from categories but used elsewhere
-	
+
 	bus_stop: {
 		name: 'Bus Stop',
 		tagParser: busstop_parser
 	},
 
 	clock: {
-		name: 'Clock',
+		name: 'Public Clocks',
 		query: 'node[amenity=clock];',
 		iconName: 'clock',
 		tagParser: clock_parser
 	},
-	
+
 	boundary_stone: {
-		name: 'Boundary Stone',
+		name: 'Boundary Stones',
 		query: '(node[historic=boundary_stone];relation(9825836);relation(12268775););',
 		iconName: 'boundary'
 	},
 
 	survey_point: {
-		name: 'Survey Point',
+		name: 'Survey Points',
 		query: 'node[man_made=survey_point];',
 		iconName: 'spbenchmark',
 		tagParser: surveyp_parser

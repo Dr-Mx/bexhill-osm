@@ -128,7 +128,7 @@
 	cursor: pointer; }
 .sidebar-close::before {
 	content: '\f0d9';
-	font-family: 'Font Awesome 6 Pro';
+	font-family: 'Font Awesome 6 Free';
 	font-weight: 900; }
 .sidebar-close {
 	position: absolute;

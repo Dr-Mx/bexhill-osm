@@ -488,7 +488,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	height: 17px;
 	padding: 1px;
 
-	margin: -10px auto 0;
+	margin: -16px auto 0;
 
 	-webkit-transform: rotate(45deg);
 	   -moz-transform: rotate(45deg);
