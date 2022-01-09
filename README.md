@@ -59,6 +59,13 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
 - OpenWeatherMap API
 - Various debugging tools
 
+## Futher Reading on the Project
+
+- https://wiki.openstreetmap.org/wiki/Bexhill-on-Sea
+- https://taginfo.openstreetmap.org/projects/bexhillosm
+- https://osmuk.org/case-studies/bexhill-osm-celebrating-local-pride/
+- https://blog.opencagedata.com/post/openstreetmap-in-bexhill-uk
+
 ## Attribution
 
 Originally forked from:
