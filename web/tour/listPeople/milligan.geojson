@@ -1,0 +1,306 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+			"type": "Feature",
+			"properties": {
+				"id": "constables",
+				"title": "Observation Post",
+				"name": "Constables Farm",
+				"description": "Spike spent a week each month at this location."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.39946, 50.84358]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "cemetery",
+				"title": "Anecdote",
+				"name": "Bexhill Cemetery",
+				"description": "While stationed at nearby Mill Wood Spike used a tap in the cemetery for his ablutions. The cemetery was also where an inebriated comrade was deposited."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.45168, 50.86044]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "millwood",
+				"title": "Gun Position",
+				"name": "Mill Wood",
+				"description": "In 1941, 'D' Battery moved to a ‘specially selected’ muddy disused rubbish tip called Mill Wood.",
+				"img": {
+					"0": "listPeople/img/milligan-millwood(0)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.45703, 50.86244]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "turkeyroad",
+				"title": "Billet",
+				"name": "Grammar School",
+				"description": "'D' Battery was billeted in Turkey Road Girls' School along with a WVS canteen van and a piano. From here, the band ran their own dances.",
+				"img": {
+					"0": "listPeople/img/milligan-turkeyroad(0)",
+					"1": "listPeople/img/milligan-turkeyroad(1)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum",
+					"1": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46150, 50.85672]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "wrestwoodroad",
+				"title": "Gun Position",
+				"name": "Wrestwood Road",
+				"description": "A photo taken of Spike (top row, left) and friends is thought to be sited here. The gun pointing out to the coast.",
+				"img": {
+					"0": "listPeople/img/milligan-wrestwoodroad(0)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.48990, 50.85067]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "worthingholm",
+				"title": "Billet",
+				"name": "Worthingholm",
+				"description": "A private school that had been requisitioned and used as the Headquarters of 'D' Battery 56th Heavy Regiment.",
+				"img": {
+					"0": "listPeople/img/milligan-worthingholm(0)",
+					"1": "listPeople/img/milligan-worthingholm(1)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum",
+					"1": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.48683, 50.84857]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "stpeters",
+				"title": "Anecdote",
+				"name": "St. Peter's Church",
+				"description": "A drum kit was found in the church and was requisitioned for the band’s use."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47886, 50.84604]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "stpetershall",
+				"title": "Music Venue",
+				"name": "St. Peter's Church Hall",
+				"description": "The site of the band’s first gig was in this hall. The dance was a sell-out, and the bar did roaring business.",
+				"img": {
+					"0": "listPeople/img/milligan-stpetershall(0)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47791, 50.84593]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "galleyhill",
+				"title": "Observation Post",
+				"name": "Galley Hill",
+				"description": "Spike spent a week each month at this location.",
+				"img": {
+					"0": "listPeople/img/milligan-galleyhill(0)",
+					"1": "listPeople/img/milligan-galleyhill(1)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum",
+					"1": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.49781, 50.84199]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "manorgardens",
+				"title": "Reunion",
+				"name": "Manor Gardens",
+				"description": "In May 1988 the Prince of Wales landed at the St Richard’s School playing fields to attend an informal visit to the Manor Barn where he attended the Royal Artillery’s 56th Heavy Regiment, 'D' Battery dinner.",
+				"img": {
+					"0": "listPeople/img/milligan-manorgardens(0)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47997, 50.84506]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "granville",
+				"title": "Music Venue",
+				"name": "Granville Hotel",
+				"description": "The Granville was the scene of many 'D' Battery dances.",
+				"img": {
+					"0": "listPeople/img/milligan-granville(0)",
+					"1": "listPeople/img/milligan-granville(1)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum",
+					"1": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47744, 50.84032]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "sydenham",
+				"title": "W.V.S. Forces Corner",
+				"name": "Sydenham House Cafe",
+				"description": "The Women’s Voluntary Service ran the Forces Corner café which 'opened for tea, buns, billiards, ping-pong and deserters' and was frequented by Spike.",
+				"img": {
+					"0": "listPeople/img/milligan-sydenham(0)",
+					"1": "listPeople/img/milligan-sydenham(1)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum",
+					"1": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47725, 50.83980]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "delawarr",
+				"title": "Music Venue and Reunion",
+				"name": "De La Warr Pavilion",
+				"description": "Spike and his band played here regularly. In later years the Pavilion was the venue for 'D' Battery’s Annual Reunions and where Spike was ambushed for an episode of the television programme This Is Your Life.",
+				"img": {
+					"0": "listPeople/img/milligan-delawarr(0)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47128, 50.83756]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "museum",
+				"title": "Exhibition",
+				"name": "Bexhill Museum",
+				"description": "In 1989 Spike attended the Museum’s Bexhill At War exhibition.",
+				"img": {
+					"0": "listPeople/img/milligan-museum(0)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46582, 50.83737]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "polegrove",
+				"title": "Sports",
+				"name": "Polegrove",
+				"description": "The 1941 Southern Command Sports Day was a military athletics tournament held at Polegrove. The Battery played rugby and Spike received eye injuries."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46103, 50.83773]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "glynegap",
+				"title": "Sculpture",
+				"name": "Glyne Gap",
+				"description": "Portrait Bench unveiled 2012 of local heroes. The figures of Spike Milligan, Richard Ball and Tyrone Wildman are cut from sheet steel and were inspired and chosen for their individual contribution to the life of the local community.",
+				"img": {
+					"0": "File:Portrait Bench Sculpture, Bexhill-on-Sea.jpg"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.50457, 50.84371]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "bowreyplace",
+				"title": "Anecdote",
+				"name": "Bowrey Place",
+				"description": "A house here was a popular stop over for lunch with the Barden family."
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47130, 50.84675]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "sussexhotel",
+				"title": "Music Venue",
+				"name": "Sussex Hotel",
+				"description": "Spike and his band played often here.",
+				"img": {
+					"0": "listPeople/img/milligan-sussexhotel(0)"
+				},
+				"imgattrib": {
+					"0": "&copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47176, 50.85576]
+			}
+		}
+	]
+}

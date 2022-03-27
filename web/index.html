@@ -22,17 +22,17 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-	<link rel="manifest" href="/manifest.json"/>
+	<link rel="manifest" href="/site.webmanifest"/>
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#b05000"/>
 	<link rel="shortcut icon" href="/favicon.ico"/>
-	<meta name="apple-mobile-web-app-title" content="Bexhill OpenStreetMap"/>
 	<meta name="application-name" content="Bexhill-OSM"/>
+	<meta name="msapplication-TileColor" content="#b05000">
 	<meta name="theme-color" content="#b05000"/>
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.0.0b3"/>
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.1.1"/>
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.7.1"/>
-	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=1.12.0"/>
+	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0"/>
 	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css?v=0.1.24"/>
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0"/>
 	<link rel="stylesheet" href="assets/css/plugins/easy-button.css?v=2.3.0"/>
@@ -40,7 +40,7 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5"/>
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7"/>
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=6.3.0"/>
+	<link rel="stylesheet" href="assets/css/site.css?v=6.4.0"/>
 	<link rel="stylesheet" id="darkcss"/>
  </head>
 
@@ -105,11 +105,11 @@
 					<div id="newFeed">
 						<div>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>1938 Ordnance Survey</i> - 03/2022</li>
+								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', 'people', '', 'milligan');"><i>Spike Milligan historic tour</i></a> - 02/2022</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'xmas');"><i>Xmas Window Display Competition 2021</i></a> - 10/2021</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('tour', 'maps');"><i>Historic tour of 'Other Maps'</i></a> - 07/2021</li>
 								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><i>Add tide times to weather widget</i> - 04/2021</li>
-								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('settings');"><i>Add dark theme</i></a> - 02/2021</li>
-								<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span><a onclick="switchTab('', '', '', 'scarecrow');"><i>Xmas Scarecrow Competition 2020</i></a> - 12/2020</li>
 							</ul>
 						</div>
 						<div id="osmFeed"><!-- auto-populated --></div>
@@ -179,7 +179,7 @@
 								<option value="northeye" data-keyword="northeye prison, royal air force, raf">Northeye Prison Site</option>
 								<option value="heritage" data-keyword="lost heritage, ruin">Lost Heritage</option>
 								<option value="boundary" data-keyword="boundary stone, marker">Boundary Stones</option>
-								<option value="people" data-keyword="famous notable people">Notable People</option>
+								<option value="people" data-keyword="famous notable people, john logie baird, canon basil davis ixion, desmond llewelyn, spike milligan, maharaja cooch behar">Notable People</option>
 								<option value="clocks" data-keyword="public street clock">Public Clocks</option>
 								<option value="surveying" data-keyword="ordnance survey point, benchmark">OS Surveying Points</option>
 								<!-- <option value="boring" data-keyword="borehole, well">Boreholes &amp; Wells</option> -->
@@ -221,25 +221,32 @@
 							<button disabled type="button" id="exportQuery"><i class="fas fa-upload"></i></button><div class="buttonLabel">Export current query to Overpass Turbo</div>
 							<button type="button" id="downloadBB"><i class="fas fa-download"></i></button><div class="buttonLabel">Download all OSM data within map bounds (xml)</div>
 							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fas fa-circle-question fa-sm fa-fw"></i></a> :<br/>
-								<input id="inputOverpass" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="$(this).prev().val('');"></span>
+								<input id="inputOverpass" list="inputOverpassQ" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="$(this).prev().val('');"></span>
+								<datalist id="inputOverpassQ">
+									<option value="[fixme]">[fixme]</option>
+									<option value="[note]">[note]</option>
+									<option value="[shop=vacant]">[shop=vacant]</option>
+									<option value="['wikimedia_commons:pano']">['wikimedia_commons:pano']</option>
+								</datalist>
+								<label id="inputOverpassR"><input type="checkbox"> Include relations</label>
 							</p>
 							<p>Attic data (date) <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener"><i class="theme fas fa-circle-question fa-sm fa-fw"></i></a> :<br/>
 								<input id="inputAttic" type="date" min="2016-01-01"></p>
 							<p>localStorage cache duration for POIs :<br/>
-								<input id="inputOpCache" min="0" max="720" type="number"><span class="buttonLabel">hours (set to 0 to bypass)</span></p>
+								<input id="inputOpCache" value="120" min="0" max="720" type="number"><span class="buttonLabel">hours (set to 0 to bypass)</span></p>
 							<p>Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Leaflet Control Geocoder providers"><i class="theme fas fa-circle-question fa-sm fa-fw"></i></a> :<br/>
 								<select id="inputRevServer" class="theme">
 									<option selected value="nominatim">nominatim.openstreetmap.org</option>
-									<option value="opencage">api.opencagedata.com</option>
+									<option disabled value="opencage">api.opencagedata.com</option>
 									<option value="photon">photon.komoot.io</option>
 									<option value="openrouteservice">api.openrouteservice.org</option>
 								</select></p>
 							<p>OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Overpass Query Servers"><i class="theme fas fa-circle-question fa-sm fa-fw"></i></a> :<br/>
 								<select id="inputOpServer" class="theme">
-									<option selected value="overpass-api.de">overpass-api.de</option>
+									<option value="overpass-api.de">overpass-api.de</option>
+									<option value="overpass.openstreetmap.ru">overpass.openstreetmap.ru</option>
 									<option value="overpass.kumi.systems">overpass.kumi.systems</option>
-									<option value="overpass.openstreetmap.fr">overpass.openstreetmap.fr</option>
-									<option disabled value="overpass.nchc.org.tw">overpass.nchc.org.tw</option>
+									<option selected value="maps.mail.ru/osm/tools/overpass">maps.mail.ru</option>
 								</select></p>
 							<p><label class="switch"><input id="inputBbox" type="checkbox"><span class="slider"></span><span class="switchLabel">Use bbox instead of area</span></label></p>
 							<p><label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span><span class="switchLabel">Debug mode</span></label></p>
@@ -344,6 +351,7 @@
 						<p class="mylinks">
 							<a href="" onclick="this.href='mailto:' + email;" title="Email"><i class="fas fa-envelope fa-fw fa-lg"></i>info [at] bexhill-osm.org.uk</a><br/>
 							<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter"><i style="color:#1da1f2;" class="fab fa-twitter fa-fw fa-lg"></i>@BexhillOSM</a><br/>
+							<a href="https://www.youtube.com/channel/UCS3phqTevP6eHysdqvoU1_w" target="_blank" rel="noopener" title="YouTube"><i style="color:#ff0000;" class="fab fa-youtube fa-fw fa-lg"></i>BexhillOSM</a><br/>
 							<a href="https://osm.org/user/Bexhill-OSM" target="_blank" rel="noopener" title="OpenStreetMap"><i style="color:#6aa755;" class="fas fa-map fa-fw fa-lg"></i>Bexhill-OSM (OpenStreetMap)</a>
 						</p>
 					</div>
@@ -404,8 +412,8 @@
 					</div>
 					<div id="gotoprivacy"><hr/>
 					<h3>Privacy Policy</h3>
-						There are no trackers, ads, miners, or analytics.<br/><br/>
-						Your browser's local storage is used to remember you've read the tutorial, bookmarks and to cache POIs. Clear this storage at any time by right-clicking the <i class="theme fas fa-trash fa-border fa-fw"></i> button.
+						There are no trackers, ads, miners, or analytics. Verify this at <a href="https://themarkup.org/blacklight?url=bexhill-osm.org.uk" target="_blank" rel="noopener">Blacklight Real-Time Website Privacy Inspector.</a><br/><br/>
+						Your browser's local storage is used to remember settings, bookmarks and to cache POIs. You may clear this storage at any time by right-clicking the <i class="theme fas fa-trash fa-border fa-fw"></i> button.
 					</div>
 					<a class="theme anchor"></a>
 				</div>
@@ -418,7 +426,7 @@
 
 	<!-- JavaScript | site plugins -->
 	<script src="assets/js/plugins/jquery.min.js?v=3.6.0"></script>
-	<script src="assets/js/plugins/jquery-ui.min.js?v=1.13.0"></script>
+	<script src="assets/js/plugins/jquery-ui.min.js?v=1.13.1"></script>
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v=1.5.0rc1"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v=1.3.4"></script>
 	<script src="assets/js/plugins/imageMapResizer.min.js?v=1.0.10"></script>
@@ -428,22 +436,22 @@
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v=0.4.0"></script>
 	<script src="assets/js/plugins/Control.Loading.min.js?v=0.1.24"></script>
 	<script src="assets/js/plugins/leaflet.wms.min.js?v=0.2.0"></script>
-	<script src="assets/js/plugins/easy-button.min.js?v=2.3.0"></script>
+	<script src="assets/js/plugins/easy-button.min.js?v=2.4.0"></script>
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v=1.5.1"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v=3.2.5"></script>
-	<script src="assets/js/plugins/Control.Geocoder.min.js?v=1.12.0"></script>
-	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.74.0"></script>
+	<script src="assets/js/plugins/Control.Geocoder.min.js?v=2.4.0"></script>
+	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.76.0"></script>
 	<script src="assets/js/plugins/bouncemarker.min.js?v=1.2.3"></script>
-	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.6.0"></script>
+	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.7.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=6.3.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=6.3.0"></script>
-	<script src="assets/js/tags-parsers.js?v=6.3.0"></script>
-	<script src="assets/js/pois-type.js?v=6.3.0"></script>
-	<script src="tour/tour.js?v=6.3.0"></script>
-	<script src="assets/js/site.js?v=6.3.0"></script>
+	<script src="assets/js/config.js?v=6.4.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=6.4.0"></script>
+	<script src="assets/js/tags-parsers.js?v=6.4.0"></script>
+	<script src="assets/js/pois-type.js?v=6.4.0"></script>
+	<script src="tour/tour.js?v=6.4.0"></script>
+	<script src="assets/js/site.js?v=6.4.0"></script>
 
  </body>
 </html>

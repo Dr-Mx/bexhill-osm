@@ -13,6 +13,7 @@ Redirect /xmas /?M=bosm&T=none&G=xmas
 Redirect /scarecrow /?M=general&T=none&G=scarecrow
 Redirect /ext /?M=general&T=none#13/50.8470/0.4670
 Redirect /streetnames /assets/data/streetnames.xml
+Redirect /millifest /?T=none&G=milligan
 
 # php -- BEGIN cPanel-generated handler, do not edit
 # This domain inherits the “PHP” package.

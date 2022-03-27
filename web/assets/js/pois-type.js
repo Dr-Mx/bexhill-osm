@@ -75,7 +75,7 @@ var pois = {
 
 	historic: {
 		name: 'Historic Sites',
-		query: 'nwr[historic][historic!~"district|boundary_stone"];node[board_type=history];',
+		query: 'nwr[historic][historic!~"district|boundary_stone"];node["historic:railway"];node[board_type=history];',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque', 'war'],
@@ -286,7 +286,7 @@ var pois = {
 
 	drinking_water: {
 		name: 'Drinking Water',
-		query: 'node[amenity=drinking_water];node[drinking_water=yes];nwr["drinking_water:refill"=yes];',
+		query: 'node[amenity=drinking_water];node[man_made=water_tap][drinking_water=yes];nwr["drinking_water:refill"=yes];',
 		iconName: 'drinkingwater',
 		catName: 'Amenities',
 		tagKeyword: ['drink', 'tap', 'water', 'refill'],
@@ -1020,17 +1020,16 @@ var pois = {
 		query: 'relation[political_division=ward];',
 		iconName: 'politicalboundary',
 		catName: 'Other',
-		tagKeyword: ['ward', 'politcal-area', 'voting', 'boundary'],
-		permTooltip: 1
+		tagKeyword: ['ward', 'political-area', 'voting', 'boundary'],
+		permTooltip: true
 	},
 
 	protected_area: {
 		name: 'Protected Areas',
-		query: 'way[boundary=protected_area];',
+		query: 'nwr[boundary=protected_area];',
 		iconName: 'administrativeboundary',
 		catName: 'Other',
-		tagKeyword: ['conservation', 'protected-area', 'boundary'],
-		permTooltip: 1
+		tagKeyword: ['conservation', 'protected-area', 'boundary']
 	},
 
 	construction: {
@@ -1038,7 +1037,7 @@ var pois = {
 		query: 'nwr[construction]["ref:planningapp"];',
 		iconName: 'construction',
 		catName: 'Other',
-		tagKeyword: ['construction']
+		tagKeyword: ['construction', 'development']
 	},
 
 	surveillance: {
@@ -1066,7 +1065,7 @@ var pois = {
 
 	boundary_stone: {
 		name: 'Boundary Stones',
-		query: '(node[historic=boundary_stone];relation(9825836);relation(12268775););',
+		query: 'node[historic=boundary_stone];relation(9825836);relation(12268775);',
 		iconName: 'boundary'
 	},
 

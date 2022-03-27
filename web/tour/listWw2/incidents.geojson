@@ -2144,7 +2144,7 @@
 			"properties": {
 				"name": "Metropole Hotel, West Parade",
 				"date": "1940-09-30 08:10",
-				"description": "Considerable damage to the front of the building, although unoccupied at the time a postman was badly injured by falling rubble. Beach Towers Hotel opposite also sustained damage causing loss of one of its turrets.",
+				"description": "Considerable damage to the front of the building, although unoccupied at the time a postman, Len Crowhurst, was badly injured by falling rubble. Beach Towers Hotel opposite also sustained damage causing loss of one of its turrets.",
 				"img": {
 					"0": "listWw2/bomb/metropolehotel(0)"
 				}
@@ -2861,7 +2861,10 @@
 				"name": "The Mount",
 				"date": "1944-07-03",
 				"description": "V-1 flying bomb. 1 person injured.",
-				"type": "V-1"
+				"type": "V-1",
+				"img": {
+					"0": "File:The Mount, Bexhill (aerial).jpg"
+				}
 			},
 			"geometry": {
 				"type": "Point",

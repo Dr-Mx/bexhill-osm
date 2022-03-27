@@ -1,11 +1,37 @@
 # CHANGELOG
 
+## v6.4.0
+
+**Date:** 27/03/2022
+
+Updated
+ - fontawesome 6.1.1
+ - jquery-ui.min.js 1.13.1
+ - easy-button.min.js 2.4.0
+ - Control.Geocoder.min.js 2.4.0 
+ - L.Control.Locate.min.js 0.76.0
+
+Site changes
+ - Datalist option examples for custom OverPass queries (press down arrow on Custom OverpassAPI query input box)
+ - Wrap popup-body in its own div
+ - Option to force lookup pois in bbox (useful for displaying historic places just outside the boundary)
+ - Added 1938 OS overlay
+ - 1878 OS was actually 1873, dropped old 1873 OS
+ - Spike Milligan historic tour
+ - Fallback to overpass-api.de if an alternative server fails
+ - Save server selections to localStorage
+ - Redesigned favicon (include Bexhill flag)
+ - Upgrade fonts to woff2
+ - If defaulting to Dark theme for the first time, show message box allowing quick change back to light theme
+ - More of the usual bug fixes and code improvements
+
+
 ## v6.3.0
 
 **Date:** 27/11/2021
 
 Added
- - assets/font/fontawesome 6.0.0b3
+ - fontawesome 6.0.0b3
 
 Updated
  - jquery-ui.min.js 1.13.0
@@ -477,7 +503,7 @@ Site changes
 Updated js
  - jQuery 3.3.1
  - jquery.mobile.custom.min.js 1.5.0a
- - easy-button.min.js 3.0.0
+ - easy-button.min.js 2.3.0
 
 Site changes
  - Larger overlay opacity slider with added close button

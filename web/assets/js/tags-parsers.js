@@ -305,7 +305,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['ref:edubase'])
 			tag += '<a class="nowrap" href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + tags['ref:edubase'] + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
 		if (tags['ref:charity'])
-			tag += '<a class="nowrap" href="https://register-of-charities.charitycommission.gov.uk/charity-search?p_p_id=uk_gov_ccew_portlet_CharitySearchPortlet&_uk_gov_ccew_portlet_CharitySearchPortlet_priv_r_p_useSession=true&_uk_gov_ccew_portlet_CharitySearchPortlet_priv_r_p_mvcRenderCommandName=%2Fsearch-results&_uk_gov_ccew_portlet_CharitySearchPortlet_keywords=' + tags['ref:charity'] + '" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
+			tag += '<a class="nowrap" href="https://register-of-charities.charitycommission.gov.uk/charity-details/?regId=' + tags['ref:charity'] + '&subId=0" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
 		if (tags.tpuk_ref)
 			tag += '<a href="http://trigpointing.uk/trig/' + tags.tpuk_ref.split('TP')[1] + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
 		if (tag) {
@@ -503,7 +503,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		$.each(element.tags, function(e) { markerPopup += generic_tag_parser(element.tags, e, e, 'fas fa-tag'); });
 		markerPopup = '<i>' + markerPopup + '</i>';
 	}
-	return generic_header_parser((eName || element.tags.ref), titlePopup, element.tags['fhrs:id'], true, element.tags.wikidata) + markerPopup;
+	return generic_header_parser((eName || element.tags.ref), titlePopup, element.tags['fhrs:id'], true, element.tags.wikidata) + '<div class="popup-body">' + markerPopup + '</div>';
 }
 
 function callback(data) {
@@ -666,7 +666,8 @@ function callback(data) {
 					break;
 			}
 		}
-		if (e.tags.historic) {
+		if (e.tags.historic || e.tags['historic:railway']) {
+			if (e.tags['historic:railway']) e.tags.historic = 'railway_station';
 			if (!name) name = 'historic ' + e.tags.historic;
 			if (!type) type = 'historic';
 			if (e.tags.ruins) iconName = 'ruins-2';
@@ -1025,12 +1026,14 @@ function pushPoiList(customSort) {
 	);
 	$('#poi-results-list tr').click(function() {
 		if ($('#inputWw2').length) $('#inputWw2 input').val($('#inputWw2 input')[0].max).change();
-		map._layers[this.id].closePopup().openPopup();
+		map._layers[this.id].openPopup();
 		if ($(window).width() < 768) $('.sidebar-close:visible').click();
 		else {
-			// focus 150px above marker to allow room for popup
-			var px = map.project(map._layers[this.id]._latlng);
-			map.stop().flyTo(map.unproject([px.x, px.y -= 150]));
+			// get bounds of area, focus 150px above marker to allow room for popup
+			var zm = map._layers['o_' + this.id] ? map.getBoundsZoom(map._layers['o_' + this.id]._bounds.pad(0.5)) : map.getZoom();
+			if (zm > 18) zm = 18;
+			var px = map.project(map._layers[this.id]._latlng, zm);
+			map.stop().flyTo(map.unproject([px.x, px.y -= 150], zm), zm);
 		}
 	});
 	$('#poi-results h3').html(
@@ -1041,7 +1044,7 @@ function pushPoiList(customSort) {
 	);
 	if (poiList.length === maxOpResults) {
 		$('#poi-results h3').append('<br/>(maximum number of results)');
-		setMsgStatus('fas fa-info-circle', 'Max Results', 'Maximum number of results shown (' + maxOpResults + ').', 1);
+		setMsgStatus('fas fa-info-circle', 'Max Results', 'Maximum number of results shown (' + maxOpResults + ').', 3);
 	}
 }
 
@@ -1443,7 +1446,7 @@ function show_img_controls(imgMax, img360, vid) {
 	if (vid && vid.length) for (x = 0; x < vid.length; x++) {
 		if (vid[x].indexOf('File:') === 0 && vid[x].indexOf('webm') === vid[x].length-4) ctrlTmpl +=
 			'<a class="vid" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-base-class="noslideshow" data-loop="false"' +
-				'data-animation-effect="circular" href="https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(vid[x]) + '">' +
+				'data-type="iframe" data-animation-effect="circular" href="https://commons.wikimedia.org/wiki/' + encodeURIComponent(vid[x]) + '?embedplayer=yes">' +
 				'<i style="min-width:25px;" class="fas fa-film fa-fw jump"></i>' +
 			'</a>';
 	}

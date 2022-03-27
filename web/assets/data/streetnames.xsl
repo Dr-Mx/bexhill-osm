@@ -59,6 +59,7 @@
 	<p><xsl:for-each select="streetNames/newstreet"><xsl:sort select="name"/><xsl:value-of select="name"/>; </xsl:for-each></p>
 	<hr/>
 	<h2>Appendix</h2>
+	<p><a href="https://www.rother.gov.uk/wp-content/uploads/2021/01/Street_Naming__Numbering_Policy_Published_Version.pdf" target="_blank" rel="noopener">Rother District Council - Street Naming and Property Numbering Policy</a> (2020, pdf)</p>
 	<p>The routes and numbers of various trunk and county roads through Bexhill have changed over the years. Four examples are included here for comparison and interest.</p>
 	<p><b>1930</b><br/>
 	<span>A259 - Barnhorn Road, Little Common Road, Belle Hill, High Street, De La Warr Road and Hastings Road.</span><br/>

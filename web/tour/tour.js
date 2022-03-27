@@ -65,7 +65,7 @@ function tour(ti, fromPermalink) {
 		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long')));
 		toolTip += '<b>' + header[0] + '</b><br/><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
-		markerPopup += '<span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
+		markerPopup += '<div class="popup-body"><span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
 		if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc custscroll">' + feature.properties.description + '</span>';
 			toolTip += ' <i style="color:#777;min-width:17px;" class="fas fa-bars fa-fw" title="Notes"></i>';
@@ -92,6 +92,7 @@ function tour(ti, fromPermalink) {
 			}
 			if (feature.properties.img[0].indexOf('000placehldr') === -1) toolTip += ' <i style="color:#777;min-width:17px;" class="fas fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
 		}
+		markerPopup += '</div>';
 		layer
 			.bindPopup(markerPopup, customPOptions)
 			.bindTooltip(toolTip, {
@@ -363,6 +364,11 @@ function tour(ti, fromPermalink) {
 				}
 			});
 			break;
+		case 'historical':
+			show_overpass_layer(pois.historic.query, ti, true, true);
+			setPageTitle(pois.historic.name);
+			setTour('bexhill');
+			break;
 		case 'fossils':
 			$('.spinner').show();
 			$.ajax({
@@ -453,6 +459,9 @@ function tour(ti, fromPermalink) {
 			show_overpass_layer('way(364593716);', ti);
 			setTour('manor');
 			break;
+		case 'ww2Bombmap':
+			ti = 'bombmap';
+			/* fall through */
 		case 'bombmap':
 			$('.spinner').show();
 			// bomb radius outline
@@ -561,7 +570,7 @@ function tour(ti, fromPermalink) {
 			setTour('ww2');
 			break;
 		case 'structures':
-			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);', ti, true);
+			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);', ti, true, true);
 			setPageTitle('WWII Existing Structures');
 			setTour('ww2');
 			break;
@@ -590,9 +599,32 @@ function tour(ti, fromPermalink) {
 			setTour('people');
 			break;
 		case 'milligan':
-			rQuery = true;
-			show_overpass_layer('way(419719683);', ti);
-			setTour('people');
+			$('.spinner').show();
+			$.ajax({
+				url: dfltDir + 'listPeople/milligan.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function(json) {
+					imageOverlay.addLayer(L.geoJSON(json, {
+						onEachFeature: function(feature, layer) {
+							setJsonPopup(feature, layer, [feature.properties.title, feature.properties.name, '']);
+						},
+						pointToLayer: function(feature, latlng) {
+							var marker = setMarker(latlng, true, false, true);
+							marker._leaflet_id = feature.properties.id;
+							poiList.push(marker);
+							return marker;
+						}
+					}));
+					map.fireEvent('zoomend');
+					setTimeout(pushPoiList, 250);
+					setPageTitle('Spike Milligan');
+					if (markerId) map._layers[markerId].openPopup();
+					$('.spinner').fadeOut('fast');
+				}
+			});
+			setTour('milligan');
 			break;
 		case 'publicClocks':
 			show_overpass_layer(pois.clock.query, ti, true);
@@ -628,7 +660,7 @@ function tour(ti, fromPermalink) {
 			setTour('heritage');
 			break;
 		case 'stones':
-			show_overpass_layer(pois.boundary_stone.query, ti, true);
+			show_overpass_layer(pois.boundary_stone.query, ti, true, true);
 			setPageTitle(pois.boundary_stone.name);
 			setTour('boundary');
 			break;

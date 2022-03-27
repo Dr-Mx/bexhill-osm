@@ -1,7 +1,7 @@
 // query overpass server - based on https://github.com/kartenkarsten/leaflet-layer-overpass
 
 var eleCache = [], queryBbox = '';
-function show_overpass_layer(query, cacheId, bound) {
+function show_overpass_layer(query, cacheId, bound, forceBbox) {
 	if (!query || query === '();') return;
 	else {
 		// show spinner, disable poi checkboxes
@@ -11,12 +11,12 @@ function show_overpass_layer(query, cacheId, bound) {
 		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
 		// select within area
 		if (bound)
-			if (osmRelation && !$('#inputBbox').is(':checked')) {
+			if (osmRelation && !$('#inputBbox').is(':checked') && !forceBbox) {
 				queryBbox += ';rel(' + osmRelation + ');map_to_area->.a';
 				query = query.replace(/\[/g, '(area.a)[');
 			}
 			else queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
-		queryBbox += ';' + query;
+		queryBbox += ';(' + query + ');';
 		$('#exportQuery').prop('disabled', false);
 	}
 	var opl = new L.OverPassLayer({
@@ -34,7 +34,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		statusMsg: function(icon, errMsg, indicatorMsg) {
 			$('.spinner').fadeOut(200);
 			clear_map('markers');
-			setMsgStatus('fas fa-' + icon, errMsg, indicatorMsg, 1);
+			setMsgStatus('fas fa-' + icon, errMsg, indicatorMsg, 3);
 		}
 	},
 	initialize: function(options) {
@@ -81,7 +81,21 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
 					var erMsg = 'Something went wrong. Please try again later.';
 					switch (e.status) {
-						case 0: erMsg = 'Data server not responding. Please try again later.'; e.status = 1; break;
+						case 0:
+							// fallback to main overpass server if failed on alternative
+							if ($('#inputOpServer').val() !== $("#inputOpServer option").eq(0).val() && this.retryLimit) {
+								var that = this;
+								that.url = this.url.replace($('#inputOpServer').val(), $("#inputOpServer option").eq(0).val());
+								this.retryLimit = 0;
+								$.ajax(that);
+								$("#inputOpServer").prop('selectedIndex', 0);
+								return;
+							}
+							else {
+								erMsg = 'Data server not responding. Please try again later.';
+								e.status = 1;
+							}
+							break;
 						case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
 						case 429: erMsg = 'Too Many Requests. Please wait a few moments before trying again.'; break;
 						case 504:
@@ -96,11 +110,11 @@ L.OverPassLayer = L.FeatureGroup.extend({
 					}
 					self.options.statusMsg('exclamation-triangle', 'ERROR #' + e.status, erMsg);
 					self.options.callback.call(reference, { elements: [] });
+					rQuery = false;
 					this.error();
 				}
 			},
 			error: function() {
-				rQuery = false;
 				if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS:', encodeURI(this.url));
 			}
 		});

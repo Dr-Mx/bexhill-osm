@@ -27,7 +27,7 @@
 }
 @font-face {
 	font-family: BerlinSans;
-	src: url('../font/berlinsans.woff') format('woff');
+	src: url('../font/berlinsans.woff2') format('woff2'), url('../font/berlinsans.ttf') format("truetype");
 }
 
 body {
@@ -396,6 +396,7 @@ h3 {
 .leaflet-bar a:hover, .leaflet-bar button:hover {
 	background-color: var(--bg-hover-color);
 	color: black;
+	text-decoration: none;
 }
 .leaflet-control-layers-toggle {
 	background-image: url(../img/leaflet/layers.png);
@@ -606,6 +607,7 @@ button:disabled {
 	position: relative;
 	padding: 0 15px 15px;
 	overflow-y: auto;
+	overflow-x: hidden;
 	-webkit-overflow-scrolling: touch;
 	border: 2px solid #bbb;
 	background-color: rgba(0, 0, 0, 0.1);
@@ -703,6 +705,7 @@ select:hover:enabled, #poi-results button:hover:enabled {
 	height: auto;
 	padding: 0 15px;
 	overflow-y: auto;
+	overflow-x: hidden;
 	-webkit-overflow-scrolling: touch;
 	flex: 1;
 	position: relative;
@@ -924,9 +927,15 @@ input:indeterminate + .slider::before {
 #inputOverpass {
 	width: calc(100% - 32px);
 	max-width: 350px;
-	min-width: 210px;
 	padding-right: 20px !important;
 	position: relative;
+}
+#inputOverpassR {
+	display: block;
+	width: 100%;
+	text-align: right;
+	margin-top: -5px;
+	max-width: 382px;
 }
 #inputAttic, #inputOverpass, #inputOpServer, #inputOpCache, #inputRevServer {
 	margin: 5px 0 5px 5px;
@@ -1046,7 +1055,7 @@ input:indeterminate + .slider::before {
 }
 .leaflet-popup-content {
 	margin: 0 15px 10px 15px;
-	min-width: 75px;
+	min-width: 150px;
 }
 .leaflet-container a.leaflet-popup-close-button {
 	top: -14px;
@@ -1101,6 +1110,9 @@ input:indeterminate + .slider::before {
 }
 .popup-fhrs > a > img {
 	white-space: nowrap;
+}
+.popup-body {
+	min-height: 5px;
 }
 .popup-tagContainer {
 	display: table;
@@ -1281,6 +1293,13 @@ input:indeterminate + .slider::before {
 	display: none;
 }
 
+@keyframes holiday-anim {
+	0%,100% { transform: rotate(-5deg); }
+	50% { transform: rotate(5deg); }
+}
+#holidayImg:hover {
+	animation: holiday-anim 0.7s infinite ease-in-out;
+}
 #holidayImg {
 	z-index: 1;
 	position: absolute;
@@ -1290,9 +1309,15 @@ input:indeterminate + .slider::before {
 	opacity: 0.85;
 	filter: drop-shadow(1px 1px 2px);
 	transition: opacity 150ms linear;
-	pointer-events: none;
+}
+@keyframes xmasMsg-anim {
+	from { background-position: 0 0; }
+	to { background-postion: 0 100%; }
 }
 #xmasMsg {
+	background-image: url('../../tour/itemXmas/popup-bg.png');
+	background-position: 0 364px;
+	background-repeat: repeat-y;
 	padding: 5px;
 	margin-top: 10px;
 	background-color: rgba(255, 255, 255, 0.25);
@@ -1300,6 +1325,7 @@ input:indeterminate + .slider::before {
 }
 #xmasMsg:hover {
 	box-shadow: inset 0 0 5px darkred;
+	animation: xmasMsg-anim 10s linear infinite;
 }
 #xmasMsg > #xmasTitle {
 	display: flex;
@@ -1317,7 +1343,7 @@ input:indeterminate + .slider::before {
 #xmasMsg .fas {
 	margin: 15px auto;
 }
-.popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {
+.popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas {
 	background-image: url('../../tour/itemXmas/popup-bg.png');
 	background-position: center;
 	background-repeat: no-repeat;

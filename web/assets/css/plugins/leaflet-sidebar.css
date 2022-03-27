@@ -161,7 +161,7 @@
     .sidebar-left ~ .sidebar-map {
 		margin-left: 0; } }
 .sidebar {
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
+		box-shadow: 0 1px 5px rgb(0 0 0 / 40%); }
 @media (min-width: 1300px) {
 	.sidebar {
 		border-radius: 10px; } }

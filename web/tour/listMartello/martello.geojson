@@ -157,16 +157,8 @@
 				"date": "1806-c1859",
 				"description": "Polegrove.<br>Evidence of bricks and stone pieces from this tower can still be seen today, usually at low tide after storms when the sand has shifted. February 2014 was particularly good time see to what was left.<br>Collapsed and washed away by the sea.",
 				"img": {
-					"0": "listMartello/img/mt47(0)",
-					"1": "listMartello/img/mt47(1)",
-					"2": "listMartello/img/mt47(2)",
-					"3": "File:Ruins of Martello Tower No 47, Bexhill.jpg",
-					"4": "File:Ruins of Martello Tower No 47, Bexhill (2).jpg"
-				},
-				"imgattrib": {
-					"0": "late 1909 | &copy; P.B. Roberts",
-					"1": "late 1909 | &copy; P.B. Roberts",
-					"2": "late 1909 | &copy; P.B. Roberts"
+					"0": "File:Ruins of Martello Tower No 47, Bexhill.jpg",
+					"1": "File:Ruins of Martello Tower No 47, Bexhill (2).jpg"
 				}
 			},
 			"geometry": {

@@ -14,6 +14,7 @@ body {
 	text-align: justify;
 	margin: 0;
 	overflow-y: auto;
+	overflow-x: hidden;
 	-webkit-overflow-scrolling: touch;
 	height: 100%;
 	scrollbar-color: var(--scr-thumb) var(--scr-track);
