@@ -37,7 +37,7 @@
         "id": 788690,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788690"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788690"
       },
       "geometry": {
         "type": "Point",
@@ -60,7 +60,7 @@
         "id": 788451,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788451"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788451"
       },
       "geometry": {
         "type": "Point",
@@ -83,7 +83,7 @@
         "id": 788691,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788691"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788691"
       },
       "geometry": {
         "type": "Point",
@@ -106,7 +106,7 @@
         "id": 788692,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788692"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788692"
       },
       "geometry": {
         "type": "Point",
@@ -244,7 +244,7 @@
         "id": 788780,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788780"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788780"
       },
       "geometry": {
         "type": "Point",
@@ -359,7 +359,7 @@
         "id": 788727,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788727"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788727"
       },
       "geometry": {
         "type": "Point",
@@ -405,7 +405,7 @@
         "id": 788687,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788687"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788687"
       },
       "geometry": {
         "type": "Point",
@@ -428,7 +428,7 @@
         "id": 788688,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788688"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788688"
       },
       "geometry": {
         "type": "Point",
@@ -520,7 +520,7 @@
         "id": 788689,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788689"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788689"
       },
       "geometry": {
         "type": "Point",
@@ -612,7 +612,7 @@
         "id": 788453,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788453"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788453"
       },
       "geometry": {
         "type": "Point",
@@ -635,7 +635,7 @@
         "id": 788452,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788452"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788452"
       },
       "geometry": {
         "type": "Point",
@@ -796,7 +796,7 @@
         "id": 788514,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788514"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788514"
       },
       "geometry": {
         "type": "Point",
@@ -819,7 +819,7 @@
         "id": 788513,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788513"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788513"
       },
       "geometry": {
         "type": "Point",
@@ -842,7 +842,7 @@
         "id": 788511,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788511"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788511"
       },
       "geometry": {
         "type": "Point",
@@ -865,7 +865,7 @@
         "id": 788516,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788516"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788516"
       },
       "geometry": {
         "type": "Point",
@@ -888,7 +888,7 @@
         "id": 788515,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788515"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788515"
       },
       "geometry": {
         "type": "Point",
@@ -911,7 +911,7 @@
         "id": 788517,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788517"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788517"
       },
       "geometry": {
         "type": "Point",
@@ -934,7 +934,7 @@
         "id": 788512,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788512"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788512"
       },
       "geometry": {
         "type": "Point",
@@ -957,7 +957,7 @@
         "id": 788510,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788510"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788510"
       },
       "geometry": {
         "type": "Point",
@@ -980,7 +980,7 @@
         "id": 788731,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788731"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788731"
       },
       "geometry": {
         "type": "Point",
@@ -1003,7 +1003,7 @@
         "id": 788440,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788440"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788440"
       },
       "geometry": {
         "type": "Point",
@@ -1026,7 +1026,7 @@
         "id": 788686,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788686"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788686"
       },
       "geometry": {
         "type": "Point",
@@ -1049,7 +1049,7 @@
         "id": 788454,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788454"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788454"
       },
       "geometry": {
         "type": "Point",
@@ -1072,7 +1072,7 @@
         "id": 788455,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788455"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788455"
       },
       "geometry": {
         "type": "Point",
@@ -1095,7 +1095,7 @@
         "id": 652665,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652665"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652665"
       },
       "geometry": {
         "type": "Point",
@@ -1118,7 +1118,7 @@
         "id": 652664,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652664"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652664"
       },
       "geometry": {
         "type": "Point",
@@ -1141,7 +1141,7 @@
         "id": 652632,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652632"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652632"
       },
       "geometry": {
         "type": "Point",
@@ -1164,7 +1164,7 @@
         "id": 652633,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652633"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652633"
       },
       "geometry": {
         "type": "Point",
@@ -1187,7 +1187,7 @@
         "id": 652630,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652630"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652630"
       },
       "geometry": {
         "type": "Point",
@@ -1210,7 +1210,7 @@
         "id": 652631,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652631"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652631"
       },
       "geometry": {
         "type": "Point",
@@ -1233,7 +1233,7 @@
         "id": 652627,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652627"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652627"
       },
       "geometry": {
         "type": "Point",
@@ -1256,7 +1256,7 @@
         "id": 652628,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652628"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652628"
       },
       "geometry": {
         "type": "Point",
@@ -1279,7 +1279,7 @@
         "id": 652645,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652645"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652645"
       },
       "geometry": {
         "type": "Point",
@@ -1302,7 +1302,7 @@
         "id": 652644,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652644"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652644"
       },
       "geometry": {
         "type": "Point",
@@ -1325,7 +1325,7 @@
         "id": 652629,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652629"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652629"
       },
       "geometry": {
         "type": "Point",
@@ -1348,7 +1348,7 @@
         "id": 652647,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652647"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652647"
       },
       "geometry": {
         "type": "Point",
@@ -1371,7 +1371,7 @@
         "id": 652648,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652648"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652648"
       },
       "geometry": {
         "type": "Point",
@@ -1394,7 +1394,7 @@
         "id": 652649,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652649"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652649"
       },
       "geometry": {
         "type": "Point",
@@ -1417,7 +1417,7 @@
         "id": 652652,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652652"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652652"
       },
       "geometry": {
         "type": "Point",
@@ -1440,7 +1440,7 @@
         "id": 652653,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652653"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652653"
       },
       "geometry": {
         "type": "Point",
@@ -1463,7 +1463,7 @@
         "id": 788730,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788730"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788730"
       },
       "geometry": {
         "type": "Point",
@@ -1486,7 +1486,7 @@
         "id": 788438,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788438"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788438"
       },
       "geometry": {
         "type": "Point",
@@ -1509,7 +1509,7 @@
         "id": 788669,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788669"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788669"
       },
       "geometry": {
         "type": "Point",
@@ -1532,7 +1532,7 @@
         "id": 788439,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788439"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788439"
       },
       "geometry": {
         "type": "Point",
@@ -1555,7 +1555,7 @@
         "id": 788670,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788670"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788670"
       },
       "geometry": {
         "type": "Point",
@@ -1578,7 +1578,7 @@
         "id": 788671,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788671"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788671"
       },
       "geometry": {
         "type": "Point",
@@ -1601,7 +1601,7 @@
         "id": 788672,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788672"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788672"
       },
       "geometry": {
         "type": "Point",
@@ -1624,7 +1624,7 @@
         "id": 15933621,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15933621"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15933621"
       },
       "geometry": {
         "type": "Point",
@@ -1647,7 +1647,7 @@
         "id": 788673,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788673"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788673"
       },
       "geometry": {
         "type": "Point",
@@ -1670,7 +1670,7 @@
         "id": 15933622,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15933622"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15933622"
       },
       "geometry": {
         "type": "Point",
@@ -2153,7 +2153,7 @@
         "id": 15956280,
         "lenth_sca": "0_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -2176,7 +2176,7 @@
         "id": 16023103,
         "lenth_sca": "0_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -2199,7 +2199,7 @@
         "id": 15956279,
         "lenth_sca": "0_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -2222,7 +2222,7 @@
         "id": 652672,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652672"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652672"
       },
       "geometry": {
         "type": "Point",
@@ -2245,7 +2245,7 @@
         "id": 788674,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788674"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788674"
       },
       "geometry": {
         "type": "Point",
@@ -2268,7 +2268,7 @@
         "id": 788675,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788675"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788675"
       },
       "geometry": {
         "type": "Point",
@@ -2291,7 +2291,7 @@
         "id": 15933623,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15933623"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15933623"
       },
       "geometry": {
         "type": "Point",
@@ -2314,7 +2314,7 @@
         "id": 788676,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788676"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788676"
       },
       "geometry": {
         "type": "Point",
@@ -2337,7 +2337,7 @@
         "id": 788677,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788677"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788677"
       },
       "geometry": {
         "type": "Point",
@@ -2360,7 +2360,7 @@
         "id": 15933624,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15933624"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15933624"
       },
       "geometry": {
         "type": "Point",
@@ -2383,7 +2383,7 @@
         "id": 788678,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788678"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788678"
       },
       "geometry": {
         "type": "Point",
@@ -2406,7 +2406,7 @@
         "id": 788679,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788679"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788679"
       },
       "geometry": {
         "type": "Point",
@@ -2429,7 +2429,7 @@
         "id": 788680,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788680"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788680"
       },
       "geometry": {
         "type": "Point",
@@ -2452,7 +2452,7 @@
         "id": 788681,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788681"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788681"
       },
       "geometry": {
         "type": "Point",
@@ -2475,7 +2475,7 @@
         "id": 788682,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788682"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788682"
       },
       "geometry": {
         "type": "Point",
@@ -2498,7 +2498,7 @@
         "id": 15933625,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15933625"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15933625"
       },
       "geometry": {
         "type": "Point",
@@ -2521,7 +2521,7 @@
         "id": 788683,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788683"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788683"
       },
       "geometry": {
         "type": "Point",
@@ -2544,7 +2544,7 @@
         "id": 788684,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788684"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788684"
       },
       "geometry": {
         "type": "Point",
@@ -2567,7 +2567,7 @@
         "id": 788685,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788685"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788685"
       },
       "geometry": {
         "type": "Point",
@@ -3119,7 +3119,7 @@
         "id": 788596,
         "lenth_sca": "3_Y",
         "date_updat": "2015/02/12",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788596"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788596"
       },
       "geometry": {
         "type": "Point",
@@ -3280,7 +3280,7 @@
         "id": 691308,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691308"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691308"
       },
       "geometry": {
         "type": "Point",
@@ -3303,7 +3303,7 @@
         "id": 710039,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710039"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710039"
       },
       "geometry": {
         "type": "Point",
@@ -3326,7 +3326,7 @@
         "id": 710031,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710031"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710031"
       },
       "geometry": {
         "type": "Point",
@@ -3349,7 +3349,7 @@
         "id": 710030,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710030"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710030"
       },
       "geometry": {
         "type": "Point",
@@ -3372,7 +3372,7 @@
         "id": 710029,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710029"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710029"
       },
       "geometry": {
         "type": "Point",
@@ -3395,7 +3395,7 @@
         "id": 710027,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710027"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710027"
       },
       "geometry": {
         "type": "Point",
@@ -3418,7 +3418,7 @@
         "id": 710028,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710028"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710028"
       },
       "geometry": {
         "type": "Point",
@@ -3441,7 +3441,7 @@
         "id": 710051,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710051"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710051"
       },
       "geometry": {
         "type": "Point",
@@ -3464,7 +3464,7 @@
         "id": 710061,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710061"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710061"
       },
       "geometry": {
         "type": "Point",
@@ -3487,7 +3487,7 @@
         "id": 710026,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710026"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710026"
       },
       "geometry": {
         "type": "Point",
@@ -3510,7 +3510,7 @@
         "id": 710062,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710062"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710062"
       },
       "geometry": {
         "type": "Point",
@@ -3533,7 +3533,7 @@
         "id": 710025,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710025"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710025"
       },
       "geometry": {
         "type": "Point",
@@ -3556,7 +3556,7 @@
         "id": 15987359,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -3579,7 +3579,7 @@
         "id": 710024,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710024"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710024"
       },
       "geometry": {
         "type": "Point",
@@ -3602,7 +3602,7 @@
         "id": 710023,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710023"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710023"
       },
       "geometry": {
         "type": "Point",
@@ -3625,7 +3625,7 @@
         "id": 710022,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710022"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710022"
       },
       "geometry": {
         "type": "Point",
@@ -3648,7 +3648,7 @@
         "id": 710021,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710021"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710021"
       },
       "geometry": {
         "type": "Point",
@@ -3671,7 +3671,7 @@
         "id": 652634,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652634"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652634"
       },
       "geometry": {
         "type": "Point",
@@ -3694,7 +3694,7 @@
         "id": 18133411,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -3717,7 +3717,7 @@
         "id": 652695,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652695"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652695"
       },
       "geometry": {
         "type": "Point",
@@ -3740,7 +3740,7 @@
         "id": 652668,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652668"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652668"
       },
       "geometry": {
         "type": "Point",
@@ -3763,7 +3763,7 @@
         "id": 652694,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652694"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652694"
       },
       "geometry": {
         "type": "Point",
@@ -3786,7 +3786,7 @@
         "id": 652670,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652670"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652670"
       },
       "geometry": {
         "type": "Point",
@@ -3809,7 +3809,7 @@
         "id": 18133414,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -3832,7 +3832,7 @@
         "id": 652693,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652693"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652693"
       },
       "geometry": {
         "type": "Point",
@@ -3855,7 +3855,7 @@
         "id": 18133412,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -3878,7 +3878,7 @@
         "id": 652673,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652673"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652673"
       },
       "geometry": {
         "type": "Point",
@@ -3901,7 +3901,7 @@
         "id": 652691,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652691"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652691"
       },
       "geometry": {
         "type": "Point",
@@ -3924,7 +3924,7 @@
         "id": 652667,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652667"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652667"
       },
       "geometry": {
         "type": "Point",
@@ -3947,7 +3947,7 @@
         "id": 652690,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652690"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652690"
       },
       "geometry": {
         "type": "Point",
@@ -3970,7 +3970,7 @@
         "id": 652674,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652674"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652674"
       },
       "geometry": {
         "type": "Point",
@@ -3993,7 +3993,7 @@
         "id": 652671,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652671"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652671"
       },
       "geometry": {
         "type": "Point",
@@ -4016,7 +4016,7 @@
         "id": 710069,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710069"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710069"
       },
       "geometry": {
         "type": "Point",
@@ -4039,7 +4039,7 @@
         "id": 710070,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710070"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710070"
       },
       "geometry": {
         "type": "Point",
@@ -4430,7 +4430,7 @@
         "id": 788781,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788781"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788781"
       },
       "geometry": {
         "type": "Point",
@@ -4476,7 +4476,7 @@
         "id": 788778,
         "lenth_sca": "3_Y",
         "date_updat": "2014/08/28",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788778"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788778"
       },
       "geometry": {
         "type": "Point",
@@ -4499,7 +4499,7 @@
         "id": 788779,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788779"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788779"
       },
       "geometry": {
         "type": "Point",
@@ -4522,7 +4522,7 @@
         "id": 788726,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/788726"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/788726"
       },
       "geometry": {
         "type": "Point",
@@ -4545,7 +4545,7 @@
         "id": 710100,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710100"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710100"
       },
       "geometry": {
         "type": "Point",
@@ -4568,7 +4568,7 @@
         "id": 710105,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710105"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710105"
       },
       "geometry": {
         "type": "Point",
@@ -4821,7 +4821,7 @@
         "id": 710071,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710071"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710071"
       },
       "geometry": {
         "type": "Point",
@@ -4844,7 +4844,7 @@
         "id": 710072,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710072"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710072"
       },
       "geometry": {
         "type": "Point",
@@ -4867,7 +4867,7 @@
         "id": 710073,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710073"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710073"
       },
       "geometry": {
         "type": "Point",
@@ -4890,7 +4890,7 @@
         "id": 710074,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710074"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710074"
       },
       "geometry": {
         "type": "Point",
@@ -4913,7 +4913,7 @@
         "id": 652686,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652686"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652686"
       },
       "geometry": {
         "type": "Point",
@@ -4936,7 +4936,7 @@
         "id": 652657,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652657"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652657"
       },
       "geometry": {
         "type": "Point",
@@ -4959,7 +4959,7 @@
         "id": 652687,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652687"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652687"
       },
       "geometry": {
         "type": "Point",
@@ -4982,7 +4982,7 @@
         "id": 652681,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652681"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652681"
       },
       "geometry": {
         "type": "Point",
@@ -5005,7 +5005,7 @@
         "id": 652682,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652682"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652682"
       },
       "geometry": {
         "type": "Point",
@@ -5028,7 +5028,7 @@
         "id": 652688,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652688"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652688"
       },
       "geometry": {
         "type": "Point",
@@ -5051,7 +5051,7 @@
         "id": 652683,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652683"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652683"
       },
       "geometry": {
         "type": "Point",
@@ -5074,7 +5074,7 @@
         "id": 652684,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652684"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652684"
       },
       "geometry": {
         "type": "Point",
@@ -5097,7 +5097,7 @@
         "id": 652658,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652658"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652658"
       },
       "geometry": {
         "type": "Point",
@@ -5120,7 +5120,7 @@
         "id": 652685,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652685"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652685"
       },
       "geometry": {
         "type": "Point",
@@ -5143,7 +5143,7 @@
         "id": 710075,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710075"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710075"
       },
       "geometry": {
         "type": "Point",
@@ -5166,7 +5166,7 @@
         "id": 15987407,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5189,7 +5189,7 @@
         "id": 710096,
         "lenth_sca": "-2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710096"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710096"
       },
       "geometry": {
         "type": "Point",
@@ -5212,7 +5212,7 @@
         "id": 710116,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710116"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710116"
       },
       "geometry": {
         "type": "Point",
@@ -5235,7 +5235,7 @@
         "id": 15987402,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5258,7 +5258,7 @@
         "id": 15987405,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5281,7 +5281,7 @@
         "id": 15987411,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5304,7 +5304,7 @@
         "id": 15987410,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5327,7 +5327,7 @@
         "id": 15987416,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5350,7 +5350,7 @@
         "id": 15987409,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5373,7 +5373,7 @@
         "id": 15987412,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5396,7 +5396,7 @@
         "id": 16098209,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/16098209"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/16098209"
       },
       "geometry": {
         "type": "Point",
@@ -5419,7 +5419,7 @@
         "id": 16098172,
         "lenth_sca": "2_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/16098172"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/16098172"
       },
       "geometry": {
         "type": "Point",
@@ -5442,7 +5442,7 @@
         "id": 710042,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710042"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710042"
       },
       "geometry": {
         "type": "Point",
@@ -5465,7 +5465,7 @@
         "id": 15987413,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -5488,7 +5488,7 @@
         "id": 710055,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710055"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710055"
       },
       "geometry": {
         "type": "Point",
@@ -5511,7 +5511,7 @@
         "id": 710078,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710078"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710078"
       },
       "geometry": {
         "type": "Point",
@@ -5534,7 +5534,7 @@
         "id": 19341625,
         "lenth_sca": "2_Y",
         "date_updat": "2015/04/15",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/19341625"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/19341625"
       },
       "geometry": {
         "type": "Point",
@@ -5557,7 +5557,7 @@
         "id": 710079,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710079"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710079"
       },
       "geometry": {
         "type": "Point",
@@ -5580,7 +5580,7 @@
         "id": 710115,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710115"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710115"
       },
       "geometry": {
         "type": "Point",
@@ -5603,7 +5603,7 @@
         "id": 710080,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710080"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710080"
       },
       "geometry": {
         "type": "Point",
@@ -5626,7 +5626,7 @@
         "id": 710099,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710099"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710099"
       },
       "geometry": {
         "type": "Point",
@@ -5649,7 +5649,7 @@
         "id": 19404169,
         "lenth_sca": "2_Y",
         "date_updat": "2015/04/15",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/19404169"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/19404169"
       },
       "geometry": {
         "type": "Point",
@@ -5672,7 +5672,7 @@
         "id": 710081,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710081"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710081"
       },
       "geometry": {
         "type": "Point",
@@ -5695,7 +5695,7 @@
         "id": 710082,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710082"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710082"
       },
       "geometry": {
         "type": "Point",
@@ -5718,7 +5718,7 @@
         "id": 710083,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710083"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710083"
       },
       "geometry": {
         "type": "Point",
@@ -5741,7 +5741,7 @@
         "id": 710114,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710114"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710114"
       },
       "geometry": {
         "type": "Point",
@@ -5764,7 +5764,7 @@
         "id": 710113,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710113"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710113"
       },
       "geometry": {
         "type": "Point",
@@ -5787,7 +5787,7 @@
         "id": 710087,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710087"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710087"
       },
       "geometry": {
         "type": "Point",
@@ -5810,7 +5810,7 @@
         "id": 710084,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710084"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710084"
       },
       "geometry": {
         "type": "Point",
@@ -5833,7 +5833,7 @@
         "id": 710066,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710066"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710066"
       },
       "geometry": {
         "type": "Point",
@@ -5856,7 +5856,7 @@
         "id": 652692,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/652692"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/652692"
       },
       "geometry": {
         "type": "Point",
@@ -5879,7 +5879,7 @@
         "id": 710109,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710109"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710109"
       },
       "geometry": {
         "type": "Point",
@@ -5902,7 +5902,7 @@
         "id": 710086,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710086"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710086"
       },
       "geometry": {
         "type": "Point",
@@ -5925,7 +5925,7 @@
         "id": 710085,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710085"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710085"
       },
       "geometry": {
         "type": "Point",
@@ -5948,7 +5948,15 @@
         "id": 710091,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710091"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710091",
+				"img": {
+					"0": "listPrehistory/img/bore-74bellehill(0)",
+					"1": "listPrehistory/img/bore-74bellehill(1)"
+				},
+				"imgattrib": {
+					"0": "2021 | &copy; Bexhill-OSM",
+					"1": "2021 | &copy; Bexhill-OSM"
+				}
       },
       "geometry": {
         "type": "Point",
@@ -5971,7 +5979,7 @@
         "id": 710098,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710098"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710098"
       },
       "geometry": {
         "type": "Point",
@@ -5994,7 +6002,7 @@
         "id": 710036,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710036"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710036"
       },
       "geometry": {
         "type": "Point",
@@ -6017,7 +6025,7 @@
         "id": 710111,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710111"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710111"
       },
       "geometry": {
         "type": "Point",
@@ -6040,7 +6048,7 @@
         "id": 710035,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710035"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710035"
       },
       "geometry": {
         "type": "Point",
@@ -6063,7 +6071,7 @@
         "id": 710034,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710034"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710034"
       },
       "geometry": {
         "type": "Point",
@@ -6086,7 +6094,7 @@
         "id": 710110,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710110"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710110"
       },
       "geometry": {
         "type": "Point",
@@ -6109,7 +6117,7 @@
         "id": 710033,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710033"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710033"
       },
       "geometry": {
         "type": "Point",
@@ -6132,7 +6140,7 @@
         "id": 710032,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710032"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710032"
       },
       "geometry": {
         "type": "Point",
@@ -6155,7 +6163,7 @@
         "id": 710052,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710052"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710052"
       },
       "geometry": {
         "type": "Point",
@@ -6178,7 +6186,7 @@
         "id": 710064,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710064"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710064"
       },
       "geometry": {
         "type": "Point",
@@ -6201,7 +6209,7 @@
         "id": 710040,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710040"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710040"
       },
       "geometry": {
         "type": "Point",
@@ -6224,7 +6232,7 @@
         "id": 710097,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710097"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710097"
       },
       "geometry": {
         "type": "Point",
@@ -6247,7 +6255,7 @@
         "id": 710048,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710048"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710048"
       },
       "geometry": {
         "type": "Point",
@@ -6270,7 +6278,7 @@
         "id": 710049,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710049"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710049"
       },
       "geometry": {
         "type": "Point",
@@ -6293,7 +6301,7 @@
         "id": 710108,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710108"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710108"
       },
       "geometry": {
         "type": "Point",
@@ -6316,7 +6324,7 @@
         "id": 710050,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710050"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710050"
       },
       "geometry": {
         "type": "Point",
@@ -6339,7 +6347,7 @@
         "id": 710129,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710129"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710129"
       },
       "geometry": {
         "type": "Point",
@@ -6362,7 +6370,7 @@
         "id": 710130,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710130"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710130"
       },
       "geometry": {
         "type": "Point",
@@ -6385,7 +6393,7 @@
         "id": 710107,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710107"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710107"
       },
       "geometry": {
         "type": "Point",
@@ -6408,7 +6416,7 @@
         "id": 710106,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710106"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710106"
       },
       "geometry": {
         "type": "Point",
@@ -6431,7 +6439,7 @@
         "id": 710121,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710121"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710121"
       },
       "geometry": {
         "type": "Point",
@@ -6454,7 +6462,7 @@
         "id": 710117,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710117"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710117"
       },
       "geometry": {
         "type": "Point",
@@ -6477,7 +6485,7 @@
         "id": 710090,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710090"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710090"
       },
       "geometry": {
         "type": "Point",
@@ -6500,7 +6508,7 @@
         "id": 710103,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710103"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710103"
       },
       "geometry": {
         "type": "Point",
@@ -6523,7 +6531,7 @@
         "id": 710089,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710089"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710089"
       },
       "geometry": {
         "type": "Point",
@@ -6546,7 +6554,7 @@
         "id": 710104,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710104"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710104"
       },
       "geometry": {
         "type": "Point",
@@ -6569,7 +6577,7 @@
         "id": 691339,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691339"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691339"
       },
       "geometry": {
         "type": "Point",
@@ -6592,7 +6600,7 @@
         "id": 710063,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710063"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710063"
       },
       "geometry": {
         "type": "Point",
@@ -6615,7 +6623,7 @@
         "id": 710068,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710068"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710068"
       },
       "geometry": {
         "type": "Point",
@@ -6638,7 +6646,7 @@
         "id": 710112,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710112"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710112"
       },
       "geometry": {
         "type": "Point",
@@ -6661,7 +6669,7 @@
         "id": 691340,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691340"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691340"
       },
       "geometry": {
         "type": "Point",
@@ -6684,7 +6692,7 @@
         "id": 691341,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691341"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691341"
       },
       "geometry": {
         "type": "Point",
@@ -6707,7 +6715,7 @@
         "id": 691342,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691342"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691342"
       },
       "geometry": {
         "type": "Point",
@@ -6730,7 +6738,7 @@
         "id": 691343,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691343"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691343"
       },
       "geometry": {
         "type": "Point",
@@ -6753,7 +6761,7 @@
         "id": 691344,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691344"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691344"
       },
       "geometry": {
         "type": "Point",
@@ -6776,7 +6784,7 @@
         "id": 710058,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710058"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710058"
       },
       "geometry": {
         "type": "Point",
@@ -6799,7 +6807,7 @@
         "id": 710059,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710059"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710059"
       },
       "geometry": {
         "type": "Point",
@@ -6822,7 +6830,7 @@
         "id": 691375,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691375"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691375"
       },
       "geometry": {
         "type": "Point",
@@ -6845,7 +6853,7 @@
         "id": 710057,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710057"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710057"
       },
       "geometry": {
         "type": "Point",
@@ -6868,7 +6876,7 @@
         "id": 691345,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691345"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691345"
       },
       "geometry": {
         "type": "Point",
@@ -6891,7 +6899,7 @@
         "id": 691313,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691313"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691313"
       },
       "geometry": {
         "type": "Point",
@@ -6914,7 +6922,7 @@
         "id": 691360,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691360"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691360"
       },
       "geometry": {
         "type": "Point",
@@ -6937,7 +6945,7 @@
         "id": 691346,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691346"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691346"
       },
       "geometry": {
         "type": "Point",
@@ -6960,7 +6968,7 @@
         "id": 691350,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691350"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691350"
       },
       "geometry": {
         "type": "Point",
@@ -6983,7 +6991,7 @@
         "id": 691348,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691348"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691348"
       },
       "geometry": {
         "type": "Point",
@@ -7006,7 +7014,7 @@
         "id": 691349,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691349"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691349"
       },
       "geometry": {
         "type": "Point",
@@ -7029,7 +7037,7 @@
         "id": 691347,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691347"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691347"
       },
       "geometry": {
         "type": "Point",
@@ -7052,7 +7060,7 @@
         "id": 691351,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691351"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691351"
       },
       "geometry": {
         "type": "Point",
@@ -7075,7 +7083,7 @@
         "id": 691376,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691376"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691376"
       },
       "geometry": {
         "type": "Point",
@@ -7098,7 +7106,7 @@
         "id": 710101,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710101"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710101"
       },
       "geometry": {
         "type": "Point",
@@ -7121,7 +7129,7 @@
         "id": 691365,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691365"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691365"
       },
       "geometry": {
         "type": "Point",
@@ -7144,7 +7152,7 @@
         "id": 710102,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710102"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710102"
       },
       "geometry": {
         "type": "Point",
@@ -7167,7 +7175,7 @@
         "id": 710056,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710056"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710056"
       },
       "geometry": {
         "type": "Point",
@@ -7190,7 +7198,7 @@
         "id": 691366,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691366"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691366"
       },
       "geometry": {
         "type": "Point",
@@ -7213,7 +7221,7 @@
         "id": 710092,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710092"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710092"
       },
       "geometry": {
         "type": "Point",
@@ -7236,7 +7244,7 @@
         "id": 710088,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710088"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710088"
       },
       "geometry": {
         "type": "Point",
@@ -7259,7 +7267,7 @@
         "id": 710094,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710094"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710094"
       },
       "geometry": {
         "type": "Point",
@@ -7282,7 +7290,7 @@
         "id": 710118,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710118"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710118"
       },
       "geometry": {
         "type": "Point",
@@ -7305,7 +7313,7 @@
         "id": 710095,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710095"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710095"
       },
       "geometry": {
         "type": "Point",
@@ -7328,7 +7336,7 @@
         "id": 710054,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710054"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710054"
       },
       "geometry": {
         "type": "Point",
@@ -7351,7 +7359,7 @@
         "id": 710093,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710093"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710093"
       },
       "geometry": {
         "type": "Point",
@@ -7374,7 +7382,7 @@
         "id": 710019,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7397,7 +7405,7 @@
         "id": 710125,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710125"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710125"
       },
       "geometry": {
         "type": "Point",
@@ -7420,7 +7428,7 @@
         "id": 710126,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710126"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710126"
       },
       "geometry": {
         "type": "Point",
@@ -7443,7 +7451,7 @@
         "id": 710060,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710060"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710060"
       },
       "geometry": {
         "type": "Point",
@@ -7466,7 +7474,7 @@
         "id": 710017,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7489,7 +7497,7 @@
         "id": 710016,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7512,7 +7520,7 @@
         "id": 710120,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710120"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710120"
       },
       "geometry": {
         "type": "Point",
@@ -7535,7 +7543,7 @@
         "id": 710119,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710119"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710119"
       },
       "geometry": {
         "type": "Point",
@@ -7558,7 +7566,7 @@
         "id": 710018,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7581,7 +7589,7 @@
         "id": 710004,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7604,7 +7612,7 @@
         "id": 710015,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7627,7 +7635,7 @@
         "id": 710011,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7650,7 +7658,7 @@
         "id": 710012,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7673,7 +7681,7 @@
         "id": 710013,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7696,7 +7704,7 @@
         "id": 710014,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7719,7 +7727,7 @@
         "id": 710005,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7742,7 +7750,7 @@
         "id": 710003,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7765,7 +7773,7 @@
         "id": 710041,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710041"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710041"
       },
       "geometry": {
         "type": "Point",
@@ -7788,7 +7796,7 @@
         "id": 710122,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710122"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710122"
       },
       "geometry": {
         "type": "Point",
@@ -7811,7 +7819,7 @@
         "id": 710123,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710123"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710123"
       },
       "geometry": {
         "type": "Point",
@@ -7834,7 +7842,7 @@
         "id": 710046,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710046"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710046"
       },
       "geometry": {
         "type": "Point",
@@ -7857,7 +7865,7 @@
         "id": 710053,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710053"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710053"
       },
       "geometry": {
         "type": "Point",
@@ -7880,7 +7888,7 @@
         "id": 710009,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7903,7 +7911,7 @@
         "id": 710124,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710124"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710124"
       },
       "geometry": {
         "type": "Point",
@@ -7926,7 +7934,7 @@
         "id": 710006,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7949,7 +7957,7 @@
         "id": 710067,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710067"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710067"
       },
       "geometry": {
         "type": "Point",
@@ -7972,7 +7980,7 @@
         "id": 710008,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -7995,7 +8003,7 @@
         "id": 710007,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -8018,7 +8026,7 @@
         "id": 710132,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710132"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710132"
       },
       "geometry": {
         "type": "Point",
@@ -8041,7 +8049,7 @@
         "id": 691357,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691357"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691357"
       },
       "geometry": {
         "type": "Point",
@@ -8064,7 +8072,7 @@
         "id": 691356,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691356"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691356"
       },
       "geometry": {
         "type": "Point",
@@ -8087,7 +8095,7 @@
         "id": 691338,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691338"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691338"
       },
       "geometry": {
         "type": "Point",
@@ -8110,7 +8118,7 @@
         "id": 691337,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691337"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691337"
       },
       "geometry": {
         "type": "Point",
@@ -8133,7 +8141,7 @@
         "id": 691336,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691336"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691336"
       },
       "geometry": {
         "type": "Point",
@@ -8156,7 +8164,7 @@
         "id": 691335,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691335"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691335"
       },
       "geometry": {
         "type": "Point",
@@ -8179,7 +8187,7 @@
         "id": 691355,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691355"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691355"
       },
       "geometry": {
         "type": "Point",
@@ -8202,7 +8210,7 @@
         "id": 691359,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691359"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691359"
       },
       "geometry": {
         "type": "Point",
@@ -8225,7 +8233,7 @@
         "id": 691334,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691334"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691334"
       },
       "geometry": {
         "type": "Point",
@@ -8248,7 +8256,7 @@
         "id": 691354,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691354"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691354"
       },
       "geometry": {
         "type": "Point",
@@ -8271,7 +8279,7 @@
         "id": 691312,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691312"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691312"
       },
       "geometry": {
         "type": "Point",
@@ -8294,7 +8302,7 @@
         "id": 691333,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/691333"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/691333"
       },
       "geometry": {
         "type": "Point",
@@ -8317,7 +8325,7 @@
         "id": 641350,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641350"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641350"
       },
       "geometry": {
         "type": "Point",
@@ -8340,7 +8348,7 @@
         "id": 710038,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710038"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710038"
       },
       "geometry": {
         "type": "Point",
@@ -8363,7 +8371,7 @@
         "id": 710037,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710037"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710037"
       },
       "geometry": {
         "type": "Point",
@@ -8386,7 +8394,7 @@
         "id": 15623056,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623056"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623056"
       },
       "geometry": {
         "type": "Point",
@@ -8409,7 +8417,7 @@
         "id": 15623055,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623055"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623055"
       },
       "geometry": {
         "type": "Point",
@@ -8432,7 +8440,7 @@
         "id": 15623057,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623057"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623057"
       },
       "geometry": {
         "type": "Point",
@@ -8455,7 +8463,7 @@
         "id": 15623062,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623062"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623062"
       },
       "geometry": {
         "type": "Point",
@@ -8478,7 +8486,7 @@
         "id": 710065,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710065"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710065"
       },
       "geometry": {
         "type": "Point",
@@ -8501,7 +8509,7 @@
         "id": 15623059,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623059"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623059"
       },
       "geometry": {
         "type": "Point",
@@ -8524,7 +8532,7 @@
         "id": 15623063,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623063"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623063"
       },
       "geometry": {
         "type": "Point",
@@ -8547,7 +8555,7 @@
         "id": 710131,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710131"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710131"
       },
       "geometry": {
         "type": "Point",
@@ -8570,7 +8578,7 @@
         "id": 15623054,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623054"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623054"
       },
       "geometry": {
         "type": "Point",
@@ -8593,7 +8601,7 @@
         "id": 15623061,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623061"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623061"
       },
       "geometry": {
         "type": "Point",
@@ -8616,7 +8624,7 @@
         "id": 15623060,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623060"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623060"
       },
       "geometry": {
         "type": "Point",
@@ -8639,7 +8647,7 @@
         "id": 15623053,
         "lenth_sca": "1_Y",
         "date_updat": "2007/09/27",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/15623053"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/15623053"
       },
       "geometry": {
         "type": "Point",
@@ -8662,7 +8670,7 @@
         "id": 20090890,
         "lenth_sca": "2_Y",
         "date_updat": "2017/04/10",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/20090890"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/20090890"
       },
       "geometry": {
         "type": "Point",
@@ -8685,7 +8693,7 @@
         "id": 20090891,
         "lenth_sca": "2_Y",
         "date_updat": "2017/04/10",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/20090891"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/20090891"
       },
       "geometry": {
         "type": "Point",
@@ -8708,7 +8716,7 @@
         "id": 710043,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710043"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710043"
       },
       "geometry": {
         "type": "Point",
@@ -8731,7 +8739,7 @@
         "id": 710127,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710127"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710127"
       },
       "geometry": {
         "type": "Point",
@@ -8754,7 +8762,7 @@
         "id": 710047,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710047"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710047"
       },
       "geometry": {
         "type": "Point",
@@ -8777,7 +8785,7 @@
         "id": 710045,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710045"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710045"
       },
       "geometry": {
         "type": "Point",
@@ -8800,7 +8808,7 @@
         "id": 710128,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710128"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710128"
       },
       "geometry": {
         "type": "Point",
@@ -8823,7 +8831,7 @@
         "id": 710044,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710044"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710044"
       },
       "geometry": {
         "type": "Point",
@@ -8846,7 +8854,7 @@
         "id": 641347,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641347"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641347"
       },
       "geometry": {
         "type": "Point",
@@ -8869,7 +8877,7 @@
         "id": 641327,
         "lenth_sca": "3_Y",
         "date_updat": "2013/10/18",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641327"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641327"
       },
       "geometry": {
         "type": "Point",
@@ -8892,7 +8900,7 @@
         "id": 641339,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641339"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641339"
       },
       "geometry": {
         "type": "Point",
@@ -8915,7 +8923,7 @@
         "id": 641338,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641338"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641338"
       },
       "geometry": {
         "type": "Point",
@@ -8938,7 +8946,7 @@
         "id": 641340,
         "lenth_sca": "2_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641340"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641340"
       },
       "geometry": {
         "type": "Point",
@@ -8961,7 +8969,7 @@
         "id": 641346,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641346"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641346"
       },
       "geometry": {
         "type": "Point",
@@ -8984,7 +8992,7 @@
         "id": 641331,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641331"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641331"
       },
       "geometry": {
         "type": "Point",
@@ -9007,7 +9015,7 @@
         "id": 641330,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641330"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641330"
       },
       "geometry": {
         "type": "Point",
@@ -9030,7 +9038,7 @@
         "id": 641329,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641329"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641329"
       },
       "geometry": {
         "type": "Point",
@@ -9053,7 +9061,7 @@
         "id": 641328,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/641328"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/641328"
       },
       "geometry": {
         "type": "Point",
@@ -9076,7 +9084,7 @@
         "id": 710020,
         "lenth_sca": "3_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710020"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710020"
       },
       "geometry": {
         "type": "Point",
@@ -9099,7 +9107,7 @@
         "id": 710133,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710133"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710133"
       },
       "geometry": {
         "type": "Point",
@@ -9122,7 +9130,7 @@
         "id": 16088221,
         "lenth_sca": "1_Y",
         "date_updat": "2010/05/18",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/16088221"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/16088221"
       },
       "geometry": {
         "type": "Point",
@@ -9145,7 +9153,7 @@
         "id": 16088223,
         "lenth_sca": "1_Y",
         "date_updat": "2010/05/18",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/16088223"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/16088223"
       },
       "geometry": {
         "type": "Point",
@@ -9168,7 +9176,7 @@
         "id": 16088214,
         "lenth_sca": "1_Y",
         "date_updat": "2010/05/18",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/16088214"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/16088214"
       },
       "geometry": {
         "type": "Point",
@@ -9191,7 +9199,7 @@
         "id": 16088218,
         "lenth_sca": "1_Y",
         "date_updat": "2010/05/18",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/16088218"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/16088218"
       },
       "geometry": {
         "type": "Point",
@@ -9214,7 +9222,7 @@
         "id": 16088220,
         "lenth_sca": "1_Y",
         "date_updat": "2010/05/18",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/16088220"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/16088220"
       },
       "geometry": {
         "type": "Point",
@@ -9237,7 +9245,7 @@
         "id": 15987415,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9260,7 +9268,7 @@
         "id": 15987392,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9283,7 +9291,7 @@
         "id": 15987417,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9306,7 +9314,7 @@
         "id": 15987382,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9329,7 +9337,7 @@
         "id": 15987400,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9352,7 +9360,7 @@
         "id": 15987398,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9375,7 +9383,7 @@
         "id": 15987396,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9398,7 +9406,7 @@
         "id": 15987379,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9421,7 +9429,7 @@
         "id": 15987363,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9444,7 +9452,7 @@
         "id": 15987362,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9467,7 +9475,7 @@
         "id": 15987360,
         "lenth_sca": "0_Y",
         "date_updat": "2013/01/07",
-        "scan_url": "https://shop.bgs.ac.uk/GeoRecords"
+        "scan_url": "shop.bgs.ac.uk/GeoRecords"
       },
       "geometry": {
         "type": "Point",
@@ -9490,7 +9498,7 @@
         "id": 710077,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710077"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710077"
       },
       "geometry": {
         "type": "Point",
@@ -9513,7 +9521,7 @@
         "id": 710076,
         "lenth_sca": "1_Y",
         "date_updat": "2013/01/22",
-        "scan_url": "https://scans.bgs.ac.uk/sobi_scans/boreholes/710076"
+        "scan_url": "scans.bgs.ac.uk/sobi_scans/boreholes/710076"
       },
       "geometry": {
         "type": "Point",

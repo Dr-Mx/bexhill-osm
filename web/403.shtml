@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
-	<title>Bexhill OpenStreetMap: Access Forbidden</title>
+	<title>Access Forbidden | Bexhill-OSM</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
@@ -10,7 +10,7 @@
 	<h2>the page you requested is not authorised for viewing</h2>
 	<h3><a style="color:#b05000;" href="//bexhill-osm.org.uk" target="_parent">return to the homepage</a></h3>
 	<br>
-	<img style="max-width:50%;max-height:600px;border:2px solid #ccc;" src="assets/img/403-gates.jpg">
+	<img style="max-width:50%;max-height:600px;border:2px solid #ccc;" src="/assets/img/403-gates.jpg">
 	<br>Also forbidden: Access inside the De La Warr Gates, the 8th Earl De La Warr's Bexhill estate and resort.<br>Built 1895, demolished 1913.
 	<br><br><br>
 	<a style="color:#808080;" href="//bexhill-osm.org.uk" target="_parent"><img src="/favicon-32x32.png"><br>Bexhill-OSM</a>

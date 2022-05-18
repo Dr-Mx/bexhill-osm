@@ -45,7 +45,7 @@
 .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon {
     background-image: url('../../img/loader.svg');
 }
-.leaflet-control-geocoder-throbber > .leaflet-control-geocoder-icon > .fas {
+.leaflet-control-geocoder-throbber > .leaflet-control-geocoder-icon > .fa-solid {
 	opacity: 0;
 }
 

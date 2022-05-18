@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## v7.0.0
+
+**Date:** 18/05/2022
+
+Updated
+ - L.Control.Locate.min.js 0.76.1
+
+Site changes
+ - Updated fontawesome to use latest naming conventions, use their inbuilt animations
+ - Use fontawesome in iframes
+ - Moved some switch cases to objects
+ - Improve history tour youtube links
+ - Add geology and boreholes to prehistory tour
+ - Add 1911 Ward Lock to Other Maps
+ - Highlight area outline on openpopup
+ - Popups now remember dynamic content
+ - Site parser to cover buildings, artwork, history and clocks
+ - More of the usual bug fixes and code improvements
+
+
 ## v6.4.0
 
 **Date:** 27/03/2022

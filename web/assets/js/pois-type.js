@@ -69,8 +69,7 @@ var pois = {
 		query: 'nwr[tourism~"artwork|gallery"];nwr[map_type=toposcope];',
 		iconName: 'publicart',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'artwork', 'sculpture'],
-		tagParser: artwork_parser
+		tagKeyword: ['tourism', 'artwork', 'sculpture']
 	},
 
 	historic: {
@@ -78,8 +77,7 @@ var pois = {
 		query: 'nwr[historic][historic!~"district|boundary_stone"];node["historic:railway"];node[board_type=history];',
 		iconName: 'historic',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque', 'war'],
-		tagParser: historic_parser
+		tagKeyword: ['tourism', 'historic', 'memorial', 'plaque', 'war']
 	},
 
 	listed_status: {
@@ -372,7 +370,7 @@ var pois = {
 	},
 
 	car_wash: {
-		name: 'Car Washes',
+		name: 'Car Washing',
 		query: 'nwr[amenity=car_wash];',
 		iconName: 'carwash',
 		catName: 'Amenities',
@@ -1051,6 +1049,12 @@ var pois = {
 
 	// unlisted from categories but used elsewhere
 
+	boundary_stone: {
+		name: 'Boundary Stones',
+		query: 'node[historic=boundary_stone];relation(9825836);relation(12268775);',
+		iconName: 'boundary'
+	},
+
 	bus_stop: {
 		name: 'Bus Stop',
 		tagParser: busstop_parser
@@ -1059,16 +1063,9 @@ var pois = {
 	clock: {
 		name: 'Public Clocks',
 		query: 'node[amenity=clock];',
-		iconName: 'clock',
-		tagParser: clock_parser
+		iconName: 'clock'
 	},
-
-	boundary_stone: {
-		name: 'Boundary Stones',
-		query: 'node[historic=boundary_stone];relation(9825836);relation(12268775);',
-		iconName: 'boundary'
-	},
-
+	
 	survey_point: {
 		name: 'Survey Points',
 		query: 'node[man_made=survey_point];',

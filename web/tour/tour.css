@@ -1,3 +1,4 @@
+@import '../assets/font/fontawesome/css/all.min.css';
 :root {
 	--text-color: black;
 	--bg-color: #ccc;
@@ -39,8 +40,16 @@ body::-webkit-scrollbar-thumb {
 #reference ol {
 	margin-top: 5px;
 }
-#reference b {
+#reference > a > b {
 	color: var(--text-color);
+}
+#reference > a::before {
+	display: inline-block;
+	font-family: 'Font Awesome 6 Free';
+	font-weight: 900;
+	content: '\f053';
+	text-align: center;
+	width: 1.25em;
 }
 
 h3 {
@@ -59,10 +68,6 @@ ul, ol {
 	padding-left: 20px;
 }
 
-h3 img {
-	width: 98%;
-	margin: 0;
-}
 img {
 	width: 100%;
 	max-width: 500px;
@@ -103,15 +108,16 @@ img {
 .maps .maplink p {
 	margin: 5px 0;
 }
+.maplink::before {
+	font-family: 'Font Awesome 6 Free';
+	font-weight: 900;
+	font-size: 110%;
+	content: '\f5a0';
+	float: right;
+}
 .maplink {
 	cursor: pointer;
-	background:
-		url(tour-show.svg)
-		right 5px
-		center
-		/20px 20px
-		no-repeat;
-	padding: 5px 28px 5px 5px;
+	padding: 5px;
 	margin-right: -5px;
 	margin-bottom: 5px;
 	margin-left: -5px;
@@ -126,9 +132,17 @@ img {
 .vidlink {
 	display: block;
 	padding: 5px 0;
+	font-size: 90%;
+	font-style: italic;
+	text-align: right;
 }
 .vidlink::before {
-	content: "\25BA\0020";
+	font-family: 'Font Awesome 6 Brands';
+	font-weight: 900;
+	font-size: 110%;
+	font-style: normal;
+	color: #ff0000;
+	content: '\f167';
 }
 .sm {
 	margin-top: 5px;

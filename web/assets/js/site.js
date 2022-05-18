@@ -1,7 +1,6 @@
 // all main functions for site
 // don't forget to create config.js with your api keys
 if (typeof BOSM === 'undefined') alert('Error: No API keys defined, please see config.example.js');
-
 // map area
 var osmRelation = '12710197'; // osm relation for overpass queries, if blank bbox will be used
 var mapBounds = { south: 50.802, west: 0.372, north: 50.878, east: 0.525 };
@@ -26,7 +25,7 @@ var maxNomResults = 5;
 var noTouch = window.ontouchstart === undefined;
 var noIframe = window.top === window.self;
 var noPermalink = !new URL(window.location.href).searchParams.toString() || new URL(window.location.href).searchParams.toString() === 'T=none';
-var autoDarkmode = noIframe && window.matchMedia("(prefers-color-scheme: dark)").matches;
+var autoDarkmode = noIframe && window.matchMedia('(prefers-color-scheme: dark)').matches;
 // title tag tooltip defaults
 var tooltipDef = {
 	disabled: noTouch ? false : true,
@@ -45,10 +44,10 @@ var version = $('script').last().attr('src').split('v=')[1];
 $.extend($.fancybox.defaults, {
 	spinnerTpl: '<div class="spinner" style="position:relative;opacity:0.5;" title="Loading..."></div>',
 	btnTpl: {
-		slideShow: '<button data-fancybox-play class="fancybox-button fancybox-button--play" title="{{PLAY_START}}"><i class="fas fa-play-circle fa-2x"></i><i class="fas fa-pause-circle fa-2x"></i></button>',
-		close: '<button data-fancybox-close class="fancybox-button fancybox-close" title="{{CLOSE}}"><i class="fas fa-times-circle fa-2x"></i></button>',
-		arrowLeft: '<button data-fancybox-prev class="fancybox-button fancybox-button--arrow_left" title="{{PREV}}"><i class="fas fa-caret-square-left fa-2x"></i></button>',
-		arrowRight: '<button data-fancybox-next class="fancybox-button fancybox-button--arrow_right" title="{{NEXT}}"><i class="fas fa-caret-square-right fa-2x"></i></button>'
+		slideShow: '<button data-fancybox-play class="fancybox-button fancybox-button--play" title="{{PLAY_START}}"><i class="fa-solid fa-circle-play fa-2x"></i><i class="fa-solid fa-circle-pause fa-2x"></i></button>',
+		close: '<button data-fancybox-close class="fancybox-button fancybox-close" title="{{CLOSE}}"><i class="fa-solid fa-times-circle fa-2x"></i></button>',
+		arrowLeft: '<button data-fancybox-prev class="fancybox-button fancybox-button--arrow_left" title="{{PREV}}"><i class="fa-solid fa-square-caret-left fa-2x"></i></button>',
+		arrowRight: '<button data-fancybox-next class="fancybox-button fancybox-button--arrow_right" title="{{NEXT}}"><i class="fa-solid fa-square-caret-right fa-2x"></i></button>'
 	},
 	idleTime: false,
 	hash: false,
@@ -129,7 +128,7 @@ L.Map.addInitHook(function() {
 		}
 		// ignore map click if... low zoom / dragging walk markers / overlay control is open / layerNoclick / spinner is shown / popup is open on screen
 		else if (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .leaflet-control-layers-expanded, .layerNoclick').length && !imageOverlay.getLayers().length &&
-			!spinner && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) {
+			!$('.spinner:visible').length && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) {
 			that.fire('visualclick', L.Util.extend(e, { type: 'visualclick' }));
 			// drop marker and reverse lookup on single click
 			h = setTimeout(function() {
@@ -166,31 +165,31 @@ var map = new L.map('map', {
 	// https://github.com/aratcliffe/Leaflet.contextmenu
 	contextmenu: true,
 	contextmenuItems: [{
-		text: '<i class="fas fa-hand-pointer fa-fw"></i> Query feature',
+		text: '<i class="fa-solid fa-hand-pointer fa-fw"></i> Query feature',
 		index: 0,
 		callback: reverseQuery
 	}, {
-		text: '<i class="fas fa-walking fa-fw"></i> Walk to here',
+		text: '<i class="fa-solid fa-person-walking fa-fw"></i> Walk to here',
 		index: 1,
 		callback: walkHere
 	}, {
-		text: '<i class="fas fa-map-marker-alt fa-fw"></i> Add a walk point',
+		text: '<i class="fa-solid fa-location-dot fa-fw"></i> Add a walk point',
 		index: 2,
 		callback: walkPoint
 	}, {
-		text: '<i class="fas fa-crosshairs fa-fw"></i> Centre map here',
+		text: '<i class="fa-solid fa-crosshairs fa-fw"></i> Centre map here',
 		index: 3,
 		callback: centreMap
 	}, '-', {
-		text: '<i class="far fa-sticky-note fa-fw"></i> Leave a note here',
+		text: '<i class="fa-regular fa-sticky-note fa-fw"></i> Leave a note here',
 		index: 4,
 		callback: improveMap
 	}, {
-		text: '<i class="fas fa-wrench fa-fw"></i> FixMyStreet',
+		text: '<i class="fa-solid fa-wrench fa-fw"></i> FixMyStreet',
 		index: 5,
 		callback: fixMyStreet
 	}, {
-		text: '<i class="fas fa-street-view fa-fw"></i> Photosphere view',
+		text: '<i class="fa-solid fa-street-view fa-fw"></i> Photosphere view',
 		index: 6,
 		callback: panoView
 	}, '-', {
@@ -199,7 +198,7 @@ var map = new L.map('map', {
 		callback: copyGeos
 	}]
 }).whenReady(function() {
-	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'software\');" title="Attribution"><i class="fas fa-info-circle fa-fw"></i></a>');
+	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'software\');" title="Attribution"><i class="fa-solid fa-circle-info fa-fw"></i></a>');
 	if (!noIframe) {
 		$('#devTools').hide();
 		$('.leaflet-control-locate').hide();
@@ -255,9 +254,11 @@ var map = new L.map('map', {
 		showModalTutor($('.sidebar-tabs ul li').eq(3), 'modalT3', '40', 'Display articles on the history of the area. From dinosaur footprints to WW2 incidents.', 'left');
 		showModalTutor($('#inputOpacity input'), 'modalT4', '-160', 'This slider changes the opacity of the overlay.' + (noTouch ? ' Tapping <kbd>CTRL</kbd> will fade the overlay in and out.' : ''), 'right');
 	}
-	// holiday decorations
-	if (new Date().getMonth() === 3 && new Date().getDate() >= 10 && new Date().getDate() <= 13) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('M', '&#x1F430;'));
-	else if (new Date().getMonth() === 9 && new Date().getDate() >= 28 && new Date().getDate() <= 31) $('#home .sidebar-header-text').text($('#home .sidebar-header-text').text().replace('O', '&#x1F383;'));
+	// easter holiday decorations
+	if (new Date().getMonth() === 3 && new Date().getDate() >= 10 && new Date().getDate() <= 13) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F95A'));
+	// halloween holiday decorations
+	else if (new Date().getMonth() === 9 && new Date().getDate() >= 28 && new Date().getDate() <= 31) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F383;'));
+	// xmas holiday decorations
 	else if ((new Date().getMonth() === 10 && new Date().getDate() >= 25) || new Date().getMonth() === 11) {
 		$('html').css({ '--main-color': '#8b0000', '--second-color': '#993c3c' });
 		// central
@@ -302,7 +303,7 @@ var map = new L.map('map', {
 	$('#map').css('background', $('#inputDark').is(':checked') ? '#0f0f0f' : '#e6e6e6');
 	if (spinner > 0) spinner--;
 	else $('.spinner').fadeOut(500);
-	if (autoDarkmode) setMsgStatus('fas fa-circle-half-stroke', 'Dark theme enabled', '<a onclick="$(\'#inputDark\').prop(\'checked\', false).trigger(\'change\');$(\'#msgStatus\').hide();">Change to light theme?</a>', 10);
+	if (autoDarkmode) setMsgStatus('fa-solid fa-circle-half-stroke fa-flip', 'Dark theme enabled', '<a onclick="$(\'#inputDark\').prop(\'checked\', false).trigger(\'change\');$(\'#msgStatus\').hide();">Change to light theme?</a>', 10);
 }).on('contextmenu.show', function(e) {
 	$('#copyGeos').html(L.Util.formatNum(e.latlng.lat, 3) + ', ' + L.Util.formatNum(e.latlng.lng, 3) + ' | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 3) + '<span class="ele"></span>');
 	// https://www.opentopodata.org
@@ -325,15 +326,15 @@ var map = new L.map('map', {
 	// add/remove favourites
 	if ($('.popup-bookm').length) {
 		if (!window.localStorage.favourites) window.localStorage.favourites = '';
-		if (window.localStorage.favourites.indexOf(elementType(osmId) + '(' + osmId.slice(1) + ');') >= 0) popupThis.find($('.popup-bookm i').removeClass('far').addClass('fas'));
+		if (window.localStorage.favourites.indexOf(elementType(osmId) + '(' + osmId.slice(1) + ');') >= 0) popupThis.find($('.popup-bookm i').removeClass('fa-regular').addClass('fa-solid'));
 		$('.popup-bookm').click(function() {
-			if ($('.popup-bookm i.fas').length) {
+			if ($('.popup-bookm i.fa-solid').length) {
 				window.localStorage.favourites = window.localStorage.favourites.replace(elementType(osmId) + '(' + osmId.slice(1) + ');', '');
-				popupThis.find($('.popup-bookm i').removeClass('fas').addClass('far'));
+				popupThis.find($('.popup-bookm i').removeClass('fa-solid').addClass('fa-regular'));
 			}
 			else {
 				window.localStorage.favourites = window.localStorage.favourites + elementType(osmId) + '(' + osmId.slice(1) + ');';
-				popupThis.find($('.popup-bookm i').removeClass('far').addClass('fas'));
+				popupThis.find($('.popup-bookm i').removeClass('fa-regular').addClass('fa-solid'));
 			}
 		});
 	}
@@ -351,7 +352,7 @@ var map = new L.map('map', {
 	});
 	// https://ratings.food.gov.uk/open-data/en-GB
 	// show food hygiene ratings
-	if (popupThis.find($('.popup-fhrs')).length) $.ajax({
+	if (popupThis.find($('.popup-fhrs.notloaded')).length) $.ajax({
 		url: 'https://api.ratings.food.gov.uk/establishments/' + popupThis.find($('.popup-fhrs')).attr('fhrs-key'),
 		headers: { 'x-api-version': 2 },
 		dataType: 'json',
@@ -361,7 +362,7 @@ var map = new L.map('map', {
 			popupThis.find($('.popup-fhrs')).html(
 				'<a href="https://ratings.food.gov.uk/business/en-GB/' + result.FHRSID + '" title="Food Hygiene Rating\n' + result.BusinessName + ' (' + RatingDate + ')" target="_blank" rel="noopener">' +
 				'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"/></a>'
-			);
+			).removeClass('notloaded');
 			if ($('#inputDebug').is(':checked')) console.debug('Food Hygiene Rating:', result);
 		},
 		error: function() {
@@ -415,6 +416,12 @@ var map = new L.map('map', {
 			if ($('#inputDebug').is(':checked')) console.debug('ERROR BUSES:', encodeURI(this.url));
 		}
 	});
+	// highlight outline
+	if (areaOutline.getLayer('o_' + osmId)) areaOutline.getLayer('o_' + osmId).bringToFront().setStyle({
+		color: $('html').css('--main-color'),
+		fillColor: $('html').css('--main-color'),
+		opacity: 0.7,
+	});
 	// highlight in results list and add openpopup to permalink
 	if (poiList.length && !popupThis.find($('span#userLoc')).length && !$('#inputDebug').is(':checked')) {
 		popupThis.find($('#poi-results-list tr#' + osmId).addClass('poi-result-selected'));
@@ -429,9 +436,8 @@ var map = new L.map('map', {
 			popupThis.find($('.popup-imgContainer').each(function(i, element) {
 				// dynamically load images and attribution
 				$(element).find('img').attr('src', $(element).find('a').attr('href') + ($(element).find('a').data('srcset') ? '&width=' + imgSize : ''));
-				if (!popupThis.find($(element).find('.attribd')).length) getWikiAttrib(popupThis.find($(element)));
-				// possible to get the popup to remember the dynamically loaded content?
-				//map._layers[osmId].setPopupContent(popupThis.find('.leaflet-popup-content').html());
+				if (popupThis.find($(element).find('.notloaded')).length) getWikiAttrib(popupThis.find($(element)));
+				else if (!popupThis.find('.notloaded').length) map._layers[osmId].setPopupContent();
 			}));
 		}, 200);
 		popupThis.find($('.popup-imgContainer img'))
@@ -453,19 +459,32 @@ var map = new L.map('map', {
 			.on('selectstart', false);
 		popupThis.find($('#img0 img'))
 			.on('load', function() {
-				// stop placeholder images from being zoomed
-				if (popupThis.find($('.popup-imgContainer img')).attr('src').indexOf('000placehldr') >= 0) popupThis.find($('.popup-imgContainer').css('pointer-events', 'none'));
-				popupThis.find($('.popup-imgContainer img')).attr('alt', 'Image of ' + popupThis.find($('.popup-header h3')).text());
-				// add padding on attribution for navigation buttons
-				if (popupThis.find($('.navigateItem')).length) popupThis.find($('.popup-imgAttrib')).css('padding-right', 20*popupThis.find($('.navigateItem i:visible')).length + 'px');
-				if (e.popup.options.autoPan && map.getBounds().contains(e.popup._latlng)) e.popup._adjustPan();
+				try {
+					// stop placeholder images from being zoomed
+					if (popupThis.find($('.popup-imgContainer img')).attr('src').indexOf('000placehldr') >= 0) popupThis.find($('.popup-imgContainer').css('pointer-events', 'none'));
+					popupThis.find($('.popup-imgContainer img')).attr('alt', 'Image of ' + popupThis.find($('.popup-header h3')).text());
+					// add padding on attribution for navigation buttons
+					if (popupThis.find($('.navigateItem')).length) popupThis.find($('.popup-imgAttrib')).css('padding-right', 20*popupThis.find($('.navigateItem i:visible')).length + 'px');
+					if (e.popup.options.autoPan && map.getBounds().contains(e.popup._latlng)) e.popup._adjustPan();
+				}
+				catch(err) {
+					if ($('#inputDebug').is(':checked')) console.debug(err + '- Popup was probably closed.');
+				}
 			});
 	}
+	// add padding for navigation items without image
+	else if (popupThis.find($('.navigateItem')).length && !popupThis.find($('.popup-imgContainer')).length) popupThis.find($('.popup-body')).css('padding-bottom', '12px');
 	// photosphere and video attribution
 	$('.pano, .vid').each(function(i, element) {
 		$(element).data('caption', '<a href="https://commons.wikimedia.org/wiki/' + $(element).data('caption') + '" title="Wikimedia Commons" target="_blank" rel="noopener">Wikimedia Commons</a>');
 	});
 }).on('popupclose', function() {
+	// unhighlight outline
+	if (areaOutline.getLayer('o_' + markerId)) areaOutline.getLayer('o_' + markerId).setStyle({
+		color: $('html').css('--second-color'),
+		fillColor: $('html').css('--second-color'),
+		opacity: 0.4
+	});
 	// unselect from poi list
 	if (poiList.length) {
 		$('#poi-results-list tr').removeClass('poi-result-selected');
@@ -526,6 +545,7 @@ function setOverlayLabel() {
 	for (var tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').hide();
 	for (var tileOverlay in tileOverlayLayer) if (tileOverlayLayer[tileOverlay].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tileOverlay].name + '")').hide();
 	if (!$('.leaflet-control-layers-list.custscroll').length) $('.leaflet-control-layers-list').addClass('custscroll');
+	if (!$('.leaflet-control-layers-toggle span').length) $('.leaflet-control-layers-toggle').html('<span style="margin:5px;" class="fa fa-solid fa-layer-group fa-2x"></span>').css('background-image', 'none');
 }
 function changeOffset(layer, container) {
 	// offset layer, metres to pixels
@@ -538,24 +558,23 @@ function changeOffset(layer, container) {
 }
 
 // https://github.com/davidjbradshaw/image-map-resizer
-// bounding coordinates for minimap
 $('#minimap > map > area').click(function() {
-	var mLoc = $(this).attr('title'), mBounds = [];
-	switch (mLoc) {
-		case 'Bexhill-on-Sea': mBounds = LBounds; break;
-		case 'Barnhorn': mBounds = [[50.8507, 0.4301], [50.8415, 0.4066]]; break;
-		case 'Central': mBounds = [[50.8425, 0.4801], [50.8351, 0.4649]]; break;
-		case 'Collington': mBounds = [[50.8472, 0.4604], [50.8352, 0.4406]]; break;
-		case 'Cooden': mBounds = [[50.8417, 0.4416], [50.8305, 0.4195]]; break;
-		case 'Glenleigh Park': mBounds = [[50.8573, 0.4641], [50.8476, 0.4454]]; break;
-		case 'Glyne Gap': mBounds = [[50.8485, 0.5102], [50.8423, 0.4954]]; break;
-		case 'The Highlands': mBounds = [[50.8637, 0.4615], [50.8566, 0.4462]]; break;
-		case 'Little Common': mBounds = [[50.8501, 0.4424], [50.8399, 0.4244]]; break;
-		case 'Normans Bay': mBounds = [[50.8302, 0.4020], [50.8216, 0.3814]]; break;
-		case 'Old Town': mBounds = [[50.8484, 0.4841], [50.8419, 0.4706]]; break;
-		case 'Pebsham': mBounds = [[50.8589, 0.5140], [50.8472, 0.4882]]; break;
-		case 'Sidley': mBounds = [[50.8607, 0.4833], [50.8509, 0.4610]]; break;
-	}
+	// bounding coordinates for minimap
+	var mBounds = {
+		'Bexhill-on-Sea': LBounds,
+		'Barnhorn': [[50.8507, 0.4301], [50.8415, 0.4066]],
+		'Central': [[50.8425, 0.4801], [50.8351, 0.4649]],
+		'Collington': [[50.8472, 0.4604], [50.8352, 0.4406]],
+		'Cooden': [[50.8417, 0.4416], [50.8305, 0.4195]],
+		'Glenleigh Park': [[50.8573, 0.4641], [50.8476, 0.4454]],
+		'Glyne Gap': [[50.8485, 0.5102], [50.8423, 0.4954]],
+		'The Highlands': [[50.8637, 0.4615], [50.8566, 0.4462]],
+		'Little Common': [[50.8501, 0.4424], [50.8399, 0.4244]],
+		'Normans Bay': [[50.8302, 0.4020], [50.8216, 0.3814]],
+		'Old Town': [[50.8484, 0.4841], [50.8419, 0.4706]],
+		'Pebsham': [[50.8589, 0.5140], [50.8472, 0.4882]],
+		'Sidley': [[50.8607, 0.4833], [50.8509, 0.4610]],
+	}[$(this).attr('title')];
 	if (mBounds) {
 		map.flyToBounds(L.latLngBounds(mBounds));
 		if ($(window).width() < 768) $('.sidebar-close:visible').click();
@@ -565,7 +584,7 @@ $('#minimap > map > area').click(function() {
 var rQuery = false;
 function reverseQuery(e, singlemapclick) {
 	var geocoder, geoMarker, geoServer = $('#inputRevServer').val();
-	if (singlemapclick) setMsgStatus('fas fa-spinner fa-pulse', '', '');
+	if (singlemapclick) setMsgStatus('fa-solid fa-spinner fa-pulse', '', '');
 	else $('.spinner').show();
 	if (geoServer === 'nominatim') geocoder = L.Control.Geocoder.nominatim({ reverseQueryParams: { format: 'jsonv2', namedetails: 1, email: email } });
 	else if (geoServer === 'opencage') geocoder = L.Control.Geocoder.opencage({ apiKey: BOSM.ocKey, reverseQueryParams: { limit: 1, roadinfo: (map.getZoom() < 17 ? 1 : 0) } });
@@ -577,11 +596,11 @@ function reverseQuery(e, singlemapclick) {
 		if ($('#inputDebug').is(':checked') && results[0]) console.debug('Reverse search ' + titleCase(geoServer), results[0]);
 		if (geoMarker.osm_id || (geoMarker.source_id && geoMarker.source_id.indexOf('/')) > 0) {
 			if (singlemapclick && $('#msgStatus:visible').length) {
-				var msgStatusIcon = 'fas fa-search-location', msgStatusHead, msgStatusBody;
+				var msgStatusHead, msgStatusBody;
 				if (geoServer === 'nominatim') {
 					var geoName = geoMarker.namedetails.ref || geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '';
 					var geoRoad = geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || geoMarker.address.locality || '';
-					msgStatusHead = titleCase(geoMarker.type !== 'yes' ? geoMarker.type + ' ' + geoMarker.addresstype : geoMarker.category);
+					msgStatusHead = titleCase(geoMarker.type === 'yes' || geoMarker.type === geoMarker.addresstype ? geoMarker.category : geoMarker.type + ' ' + geoMarker.addresstype);
 					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoName ? '<b>' + geoName + '</b><br/>' : '') +
 						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + (geoMarker.address.postcode ? ', ' + geoMarker.address.postcode + '<br/>' : '') : '') +
 						(geoMarker.address.retail ? geoMarker.address.retail : '') + '</a>';
@@ -607,9 +626,9 @@ function reverseQuery(e, singlemapclick) {
 					wgs84.setDegrees(e.latlng.lat, e.latlng.lng);
 					var osgb = wgs84.getOSGB();
 					var landRegUrl = 'https://eservices.landregistry.gov.uk/eservices/FindAProperty/view/MapEnquiryRadiusSearch.do?findPropertiesGroup=on&radius=5&mapType=r&ukMapX=' + osgb.eastings + '&ukMapY=' + osgb.northings + '&zoomLevel=' + map.getZoom() + '#LL_DataServer';
-					msgStatusBody += '<hr/><a onclick="popupWindow(\'' + landRegUrl + '\', \'editWindow\', 1024, 768);"><i>Land Registry Lookup</i> <i class="theme fas fa-up-right-from-square fa-sm"></i></a>';
+					msgStatusBody += '<hr/><a onclick="popupWindow(\'' + landRegUrl + '\', \'editWindow\', 1024, 768);"><i>Land Registry Lookup</i> <i class="theme fa-solid fa-up-right-from-square fa-sm"></i></a>';
 				}
-				setMsgStatus(msgStatusIcon, msgStatusHead, msgStatusBody);
+				setMsgStatus('fa-solid fa-magnifying-glass-location', msgStatusHead, msgStatusBody);
 				// move click location to address location on hover
 				if (noTouch) $('#msgStatus .msgStatusBodyAddr').hover(
 					function() { if (clickOutline.getLayers()[0]) clickOutline.getLayers()[0].setLatLng(results[0].center); },
@@ -620,7 +639,8 @@ function reverseQuery(e, singlemapclick) {
 		}
 		else {
 			$('.spinner').fadeOut(200);
-			setMsgStatus('fas fa-info-circle', 'No places found', 'Please try another area.', 3);
+			setMsgStatus('fa-solid fa-circle-info', 'No places found', 'Please try another area.', 3);
+			clickOutline.clearLayers();
 		}
 	});
 }
@@ -698,114 +718,67 @@ function panoView(e, fromSequence) {
 function copyGeos(e) {
 	var geos = L.Util.formatNum(e.latlng.lat, 5) + '°N ' + L.Util.formatNum(e.latlng.lng, 5) + '°E | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 6);
 	navigator.clipboard.writeText(geos).then(
-		function() { setMsgStatus('fas fa-copy', 'Clipboard', 'Coordinates copied successfully.<p class="comment">' + geos + '</p>', 3); },
-		function() { setMsgStatus('fas fa-copy', 'Clipboard Error', 'Could not copy coordinates. Manually copy below <p class="comment">' + geos + '</p>'); }
+		function() { setMsgStatus('fa-solid fa-copy', 'Clipboard', 'Coordinates copied successfully.<p class="comment">' + geos + '</p>', 3); },
+		function() { setMsgStatus('fa-solid fa-copy', 'Clipboard Error', 'Could not copy coordinates. Manually copy below <p class="comment">' + geos + '</p>'); }
 	);
 }
 
 $('#walkList').change(function() {
-	$('#walkDesc').html(suggestWalk($('#walkList').val(), 1) + '<img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg"/>');
+	$('#walkDesc').html(suggestWalk($('#walkList').val(), 0) + '<img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg"/>');
 });
 $('#walkSelect').click(function() {
-	routingControl.setWaypoints(suggestWalk($('#walkList').val(), 0));
+	clear_map('walk');
+	routingControl.zoomBounds = true;
+	routingControl.setWaypoints(suggestWalk($('#walkList').val(), 1));
 	if ($(window).width() < 768) $('.sidebar-close:visible').click();
 });
-function suggestWalk(walkId, isDesc) {
-	var w;
-	if (!isDesc) {
-		clear_map('walk');
-		routingControl.zoomBounds = true;
-	}
-	switch (walkId) {
-		case 'ww2h':
-			if (isDesc) w =
-				'The route of this walk is marked out by a series of 10 plaques along the promenade. ' +
-				'Launched in 2011, it hopes to encourage people to regularly walk a specific distance along the promenade. ' +
-				'Small plinths are placed at ground level opposite every third beach groyne between numbers 48 and 72.';
-			else w = [
-				[50.83567, 0.45892],
-				[50.83701, 0.47363]
-			];
-			break;
-		case 'tmrt':
-			if (isDesc) w =
-				'In May 1902 Bexhill-on-Sea became "The Birthplace of British Motor Racing". ' +
-				'Follow five seafront Motoring Heritage panels and two galleries dedicated to the story of those intrepid ' +
-				'early motoring pioneers (the 5th panel is situated outside ' +
-				'<a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel <i class="theme fas fa-search fa-sm"></i></a>).';
-			else w = [
-				[50.84059, 0.49121],
-				[50.83729, 0.47612],
-				[50.83647, 0.46637],
-				[50.83732, 0.46639]
-			];
-			break;
-		case 'neye':
-			if (isDesc) w =
-				'Pevensey Levels was a tidal inlet until the eastward drift of coastal shingle isolated it and a salt marsh developed. ' +
-				'The walk starts and ends at The Star Inn pub, heading north-west towards the archaeological site of Northeye, a village abandoned to flooding in the Middle Ages. ' +
-				'Before making your way back round, you will see evidence of a wooden sea defense from the 14th century called Crooked Ditch.<br/>' +
-				'Although sometimes rough and wet in places, there are great open views of countryside and plenty of grazing sheep to keep you company.';
-			else w = [
-				[50.83026, 0.39324],
-				[50.83832, 0.38729],
-				[50.83618, 0.40594],
-				[50.83007, 0.39370]
-			];
-			break;
-		case 'hwds':
-			if (isDesc) w =
-				'Starting at the Wheatsheaf Inn, this walk takes you on a public right-of-way through wood, farmland and down country lanes. ' +
-				'Pass through Whydown and see the extraordinary early 20th century Gotham Wood House, before arriving at the south-west corner of ancient Highwoods.';
-			else w = [
-				[50.84536, 0.43353],
-				[50.84958, 0.42689],
-				[50.85671, 0.42740],
-				[50.86120, 0.42984]
-			];
-			break;
-		case 'gnwy':
-			if (isDesc) w =
-				'The Greenway runs alongside the Combe Valley Way, providing access for walkers, cyclists and horse riders between Bexhill and Hastings. ' +
-				'It links up with public bridleways and footpaths in the area, including the 1066 Country Walk Bexhill Link, with two sections where horse ' +
-				'riders take an alternative route to walkers and cyclists.';
-			else w = [
-				[50.85676, 0.47898],
-				[50.86033, 0.48303],
-				[50.86530, 0.48571],
-				[50.87003, 0.52085]
-			];
-			break;
-		case '1066':
-			if (isDesc) w =
-				'The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time. ' +
-				'This is a section of the Bexhill - Battle link, the full route can be found on ' +
-				'<a href="https://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank" rel="noopener">waymarkedtrails.org <i class="theme fas fa-external-link-alt fa-sm"></i></a>.';
-			else w = [
-				[50.84522, 0.48044],
-				[50.85591, 0.49312],
-				[50.87800, 0.50009]
-			];
-			break;
-		case 'bcr1':
-			if (isDesc) w =
-				'This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient woodland, ' +
-				'reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy areas. Refreshments and toilets are ' +
-				'available at the start point - Bexhill railway station - and towards the end of the walk.';
-			else w = [
-				[50.84125, 0.47717],
-				[50.84484, 0.47876],
-				[50.84523, 0.48052],
-				[50.85590, 0.49312],
-				[50.86230, 0.51823],
-				[50.84808, 0.52014],
-				[50.84056, 0.49142],
-				[50.83792, 0.47660],
-				[50.84093, 0.47718]
-			];
-			break;
-	}
-	return w;
+function suggestWalk(walkId, isWP) {
+	return {
+		ww2h: [
+			'The route of this walk is marked out by a series of 10 plaques along the promenade. ' +
+			'Launched in 2011, it hopes to encourage people to regularly walk a specific distance along the promenade. ' +
+			'Small plinths are placed at ground level opposite every third beach groyne between numbers 48 and 72.',
+			[[50.83567, 0.45892], [50.83701, 0.47363]]
+		],
+		tmrt: [
+			'In May 1902 Bexhill-on-Sea became "The Birthplace of British Motor Racing". ' +
+			'Follow five seafront Motoring Heritage panels and two galleries dedicated to the story of those intrepid ' +
+			'early motoring pioneers (the 5th panel is situated outside ' +
+			'<a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel <i class="theme fa-solid fa-magnifying-glass fa-sm"></i></a>).',
+			[[50.84059, 0.49121], [50.83729, 0.47612], [50.83647, 0.46637], [50.83732, 0.46639]]
+		],
+		neye: [
+			'Pevensey Levels was a tidal inlet until the eastward drift of coastal shingle isolated it and a salt marsh developed. ' +
+			'The walk starts and ends at The Star Inn pub, heading north-west towards the archaeological site of Northeye, a village abandoned to flooding in the Middle Ages. ' +
+			'Before making your way back round, you will see evidence of a wooden sea defense from the 14th century called Crooked Ditch.<br/>' +
+			'Although sometimes rough and wet in places, there are great open views of countryside and plenty of grazing sheep to keep you company.',
+			[[50.83026, 0.39324], [50.83832, 0.38729], [50.83618, 0.40594], [50.83007, 0.39370]]
+		],
+		hwds: [
+			'Starting at the Wheatsheaf Inn, this walk takes you on a public right-of-way through wood, farmland and down country lanes. ' +
+			'Pass through Whydown and see the extraordinary early 20th century Gotham Wood House, before arriving at the south-west corner of ancient Highwoods.',
+			[[50.84536, 0.43353], [50.84958, 0.42689], [50.85671, 0.42740], [50.86120, 0.42984]]
+		],
+		gnwy: [
+			'The Greenway runs alongside the Combe Valley Way, providing access for walkers, cyclists and horse riders between Bexhill and Hastings. ' +
+			'It links up with public bridleways and footpaths in the area, including the 1066 Country Walk Bexhill Link, with two sections where horse ' +
+			'riders take an alternative route to walkers and cyclists.',
+			[[50.85676, 0.47898], [50.86033, 0.48303], [50.86530, 0.48571], [50.87003, 0.52085]]
+		],
+		ad1066: [
+			'The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time. ' +
+			'This is a section of the Bexhill - Battle link, the full route can be found on ' +
+			'<a href="https://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank" rel="noopener">waymarkedtrails.org <i class="theme fa-solid fa-up-right-from-square fa-sm"></i></a>.',
+			[[50.84522, 0.48044], [50.85591, 0.49312], [50.87800, 0.50009]]
+		],
+		bcr1: [
+			'This is an edge of town walk of about 6 miles. It includes riverside fields and farmland, hedgerow remains of ancient woodland, ' +
+			'reedbeds, vegetated shingle and a wonderful mile of rock pools at low tide. There are no hills or particularly muddy areas. Refreshments and toilets are ' +
+			'available at the start point - Bexhill railway station - and towards the end of the walk.',
+			[[50.84125, 0.47717], [50.84484, 0.47876], [50.84523, 0.48052], [50.85590, 0.49312], [50.86230, 0.51823],
+			[50.84808, 0.52014], [50.84056, 0.49142], [50.83792, 0.47660], [50.84093, 0.47718]]
+		]
+	}[walkId][isWP];
 }
 
 // navigation controls for history tour
@@ -838,6 +811,8 @@ $('#tourList').change(function() {
 				}}});
 			});
 			$('#tourControls').children().prop('disabled', false);
+			if ($('#tourList').prop('selectedIndex') === 0) $('#tourPrev').prop('disabled', true);
+			else if ($('#tourList').prop('selectedIndex') === $('#tourList option').length-1) $('#tourNext').prop('disabled', true);
 		});
 		permalinkSet();
 	}
@@ -925,7 +900,7 @@ function setLeaflet() {
 			maxNativeZoom: 19,
 			quadkey: true,
 			errorTileUrl: 'https://ecn.t0.tiles.virtualearth.net/tiles/a1202020223330?g=737&n=z',
-			offset: [2, 3]
+			offset: [-1, 1]
 		}
 	};
 	for (var tile in tileBaseLayer) {
@@ -946,8 +921,8 @@ function setLeaflet() {
 	// overlays, set an offset by using metres (offset: [left, top])
 	tileOverlayLayer = {
 		lidar: {
-			name: 'Lidar DTM 2m',
-			url: 'https://environment.data.gov.uk/spatialdata/lidar-composite-digital-terrain-model-dtm-2m-2020/wms',
+			name: 'Lidar DTM 1m',
+			url: 'https://environment.data.gov.uk/spatialdata/lidar-composite-digital-terrain-model-dtm-1m-2020/wms',
 			wms: {
 				layers: '1',
 				format: 'image/png',
@@ -968,7 +943,7 @@ function setLeaflet() {
 		},
 		tpo: {
 			name: 'Tree Preservation Orders',
-			url: 'https://policiesmap.rother.gov.uk/geoserver/re/wms',
+			url: 'https://maps.rother.gov.uk/geoserver/re/wms',
 			wms: {
 				layers: 're:Tree_Preservation_Orders',
 				format: 'image/png',
@@ -985,7 +960,7 @@ function setLeaflet() {
 			opacity: 0.5,
 			maxNativeZoom: 19,
 			quadkey: true,
-			offset: [2, 3]
+			offset: [-1, 1]
 		},
 		// historic
 		osm2012: {
@@ -1121,6 +1096,16 @@ function setLeaflet() {
 			hide: 1,
 			className: 'layerNoclick'
 		},
+		wl1911: {
+			name: '1911 Ward Lock',
+			url: 'https://tiles.bexhillheritage.org.uk/wl1911/{z}/{x}/{y}.png',
+			attribution: '<a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
+			bounds: L.latLngBounds([50.848, 0.459], [50.834, 0.488]),
+			opacity: 1,
+			maxNativeZoom: 18,
+			hide: 1,
+			className: 'layerNoclick'
+		},
 		os1909: {
 			name: '1909 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/25_inch/holes_england/{z}/{x}/{y}.png',
@@ -1168,7 +1153,7 @@ function setLeaflet() {
 			attribution: '<a href="https://apps.eastsussex.gov.uk/leisureandtourism/localandfamilyhistory/tithemaps/MapDetail.aspx?ID=112769" target="_blank" rel="noopener">ESRO TDE 141</a>',
 			bounds: L.latLngBounds([50.815, 0.351], [50.890, 0.536]),
 			opacity: 1,
-			maxNativeZoom: 17,
+			maxNativeZoom: 18,
 			className: 'layerNoclick'
 		},
 		mb1805: {
@@ -1226,7 +1211,7 @@ var fcnFullscr = L.easyButton({
 	id: 'btnFullscr',
 	states: [{
 		stateName: 'normalScreen',
-		icon: 'fas fa-expand',
+		icon: 'fa-solid fa-expand',
 		title: 'Full screen',
 		onClick: function(control) {
 			var viewer = $('html')[0];
@@ -1236,7 +1221,7 @@ var fcnFullscr = L.easyButton({
 		}
 	}, {
 		stateName: 'fullScreen',
-		icon: 'fas test fa-compress',
+		icon: 'fa-solid fa-compress',
 		title: 'Exit full screen',
 		onClick: function(control) {
 			var cFS = document.exitFullscreen || document.webkitExitFullscreen;
@@ -1253,8 +1238,9 @@ function btnFullscrState() {
 
 // https://github.com/domoritz/leaflet-locatecontrol
 var lc = L.control.locate({
-	icon: 'fas fa-location-arrow',
+	icon: 'fa-solid fa-location-arrow',
 	iconLoading: 'fas fa-compass fa-spin',
+	iconElementTag: 'i',
 	setView: true,
 	flyTo: true,
 	keepCurrentZoomLevel: true,
@@ -1270,10 +1256,10 @@ var lc = L.control.locate({
 		enableHighAccuracy: false
 	},
 	onLocationError: function() {
-		setMsgStatus('fas fa-exclamation-triangle', 'Location Error', 'Sorry, we could not locate you.', 3);
+		setMsgStatus('fa-solid fa-triangle-exclamation', 'Location Error', 'Sorry, we could not locate you.', 3);
 	},
 	onLocationOutsideMapBounds: function() {
-		setMsgStatus('fas fa-info-circle', 'Out of Bounds', 'You appear to be located outside the map area. Come visit us!', 3);
+		setMsgStatus('fa-solid fa-circle-info', 'Out of Bounds', 'You appear to be located outside the map area. Come visit us!', 3);
 		lc.stop();
 	}
 }).addTo(map);
@@ -1309,7 +1295,7 @@ var geocode = L.Control.geocoder({
 		}, 50);
 	}
 }).addTo(map);
-$('.leaflet-control-geocoder-icon').html('<i class="fas fa-search"></i>').attr('title','Address search');
+$('.leaflet-control-geocoder-icon').html('<i class="fa-solid fa-magnifying-glass"></i>').attr('title','Address search');
 // automate a geocode from a given address
 function searchAddr(addr) {
 	$('.leaflet-control-geocoder-form input').val(addr);
@@ -1324,12 +1310,12 @@ var fcnStLvl = L.easyButton({
 	id: 'btnStLvl',
 	states: [{
 		stateName: 'offStLvl',
-		icon: 'fas fa-street-view',
+		icon: 'fa-solid fa-street-view',
 		title: 'Photosphere views',
 		onClick: function() { tour('pano'); }
 	}, {
 		stateName: 'onStLvl',
-		icon: 'fas fa-street-view',
+		icon: 'fa-solid fa-street-view',
 		title: 'Photosphere views',
 		onClick: function() {
 			zoom_area();
@@ -1342,14 +1328,14 @@ var fcnStLvl = L.easyButton({
 L.easyButton({
 	id: 'btnBookm',
 	states: [{
-		icon: 'fas fa-bookmark',
+		icon: 'fa-solid fa-bookmark',
 		title: 'Show bookmarks',
 		onClick: function() {
 			if (window.localStorage.favourites) {
 				clear_map('markers');
 				show_overpass_layer('(' + window.localStorage.favourites + ');');
 			}
-			else setMsgStatus('fas fa-info-circle', 'Bookmarks', 'Add your favourite places by clicking <i class="far fa-bookmark fa-fw"></i> within a popup.', 3);
+			else setMsgStatus('fa-solid fa-circle-info', 'Bookmarks', 'Add your favourite places by clicking <i class="fa-regular fa-bookmark fa-fw"></i> within a popup.', 3);
 		}
 	}]
 }).addTo(map);
@@ -1357,8 +1343,8 @@ $('#btnBookm').bind('contextmenu', function() {
 	if (window.localStorage && window.localStorage.favourites) {
 		var bmlink = encodeURI((window.location.origin === 'null' ? window.location.pathname : window.location.origin) + '?data=(' + window.localStorage.favourites +')');
 		navigator.clipboard.writeText(bmlink).then(
-			function() { setMsgStatus('fas fa-copy', 'Clipboard', 'Bookmarks permalink copied successfully.<p class="comment">' + bmlink + '</p>', 3); },
-			function() { setMsgStatus('fas fa-exclamation-triangle', 'Clipboard Error', 'Could not copy bookmark permalink.', 3); }
+			function() { setMsgStatus('fa-solid fa-copy', 'Clipboard', 'Bookmarks permalink copied successfully.<p class="comment">' + bmlink + '</p>', 3); },
+			function() { setMsgStatus('fa-solid fa-triangle-exclamation', 'Clipboard Error', 'Could not copy bookmark permalink.', 3); }
 		);
 	}
 	return false;
@@ -1369,7 +1355,7 @@ $('#btnBookm').bind('contextmenu', function() {
 L.easyButton({
 	id: 'btnClearmap',
 	states: [{
-		icon: 'fas fa-trash',
+		icon: 'fa-solid fa-trash',
 		title: 'Clear layers',
 		onClick: function() { clear_map('all'); }
 	}]
@@ -1667,8 +1653,8 @@ $('#devTools').accordion({
 });
 $('#inputDebug').change(function() {
 	if ($(this).is(':checked')) {
-		setMsgStatus('fas fa-bug', 'Debug Mode Enabled', 'Check web console for output for details.', 3);
-		console.debug('%cDEBUG MODE%c\nAPI requests output to console, map bounds unlocked, custom queries available.', 'color: ' + $('html').css('--main-color') + ';font-weight:bold;');
+		setMsgStatus('fa-solid fa-bug', 'Debug Mode Enabled', 'Check web console for output for details.', 3);
+		console.debug('%cDEBUG MODE%c\nAPI requests output to console, map bounds unlocked.', 'color: ' + $('html').css('--main-color') + ';font-weight:bold;');
 		$('#devTools').accordion({ collapsible: false });
 		$('.sidebar-tabs ul li [href="#settings"] .sidebar-notif').show();
 		map.setMaxBounds();
@@ -1699,20 +1685,18 @@ $('#inputOpCache').change(function() {
 	if (window.localStorage) window.localStorage.OPLCacheDur = $(this).val();
 });
 $('#inputOverpass').keydown(function(e) {
-	if (e.keyCode == $.ui.keyCode.ENTER && $(this).val()) {
-		clear_map('all');
-		customQuery($(this).val());
-		spinner--;
-	}
+	if (e.keyCode == $.ui.keyCode.ENTER && $(this).val()) customQuery($(this).val(), true);
 });
-function customQuery(q) {
+function customQuery(q, fromInput) {
 	spinner++;
+	if (fromInput) clear_map('all');
 	if (q.charAt(0) === '[' && q.charAt(q.length-1) === ']') show_overpass_layer('(nw' + ($('#inputOverpassR input').is(':checked') ? 'r' : '') + q + ';);', '', true);
 	else if (q.charAt(0) === '(' && q.charAt(q.length-1) === ')') show_overpass_layer(q + ';', '', true);
-	else setMsgStatus('fas fa-info-circle', 'Incorrect query', 'Enclose queries with [ ] for tags,<br/>and ( ) for element ids.', 3);
+	else setMsgStatus('fa-solid fa-circle-info', 'Incorrect query', 'Enclose queries with [ ] for tags,<br/>and ( ) for element ids.', 3);
+	if (spinner > 0 && fromInput) spinner--;
 }
-$('#inputRevServer').change(function() { if (window.localStorage) window.localStorage.RevServer = $("#inputRevServer").prop('selectedIndex'); });
-$('#inputOpServer').change(function() { if (window.localStorage) window.localStorage.OPServer = $("#inputOpServer").prop('selectedIndex'); });
+$('#inputRevServer').change(function() { if (window.localStorage) window.localStorage.RevServer = $('#inputRevServer').prop('selectedIndex'); });
+$('#inputOpServer').change(function() { if (window.localStorage) window.localStorage.OPServer = $('#inputOpServer').prop('selectedIndex'); });
 
 // clear layers
 function clear_map(layer) {
@@ -1835,34 +1819,34 @@ function setMsgStatus(headerIco, headerTxt, msgBody, closeTime) {
 function getTips(tip) {
 	var nextTip, tips = [
 		'Right-click or long-press the map to see a context menu with information on that area.',
-		'Click an area of the above minimap to quickly <i class="fas fa-search-plus fa-sm"></i> to that location.',
+		'Click an area of the above minimap to quickly <i class="fa-solid fa-magnifying-glass-plus fa-sm"></i> to that location.',
 		'Zoom into the map and click almost any place to see more details.',
-		'Find any address by entering part of it into Search <i class="fas fa-search fa-sm"></i> and pressing enter.',
-		'Almost every street in Bexhill has a history behind its name, Search <i class="fas fa-search fa-sm"></i> for a road to learn more.',
-		'Zoom into the map and click a bus-stop <i class="fas fa-bus fa-sm"></i> to see real-time information on arrivals.',
+		'Find any address by entering part of it into Search <i class="fa-solid fa-magnifying-glass fa-sm"></i> and pressing enter.',
+		'Almost every street in Bexhill has a history behind its name, Search <i class="fa-solid fa-magnifying-glass fa-sm"></i> for a road to learn more.',
+		'Zoom into the map and click a bus-stop <i class="fa-solid fa-bus fa-sm"></i> to see real-time information on arrivals.',
 		'Use the mouse wheel or swipe to see the next image in a pop-up. Click an image to see it full-screen.',
-		'Click <i class="fas fa-location-arrow fa-sm"></i> to turn on your location to see place results ordered by distance.',
-		'Quickly create walking <i class="fas fa-walking fa-sm"></i> directions by turning on <i class="fas fa-location-arrow fa-sm"></i> and right-clicking the map.',
-		'Choose between miles or kilometres in <a onclick="switchTab(\'settings\');">Settings <i class="fas fa-cog fa-sm"></i></a>.',
-		'The dark theme can be enabled/disabled in <a onclick="switchTab(\'settings\');">Settings <i class="fas fa-cog fa-sm"></i></a>.',
-		'Click <i class="fas fa-trash fa-sm"></i> to clear all layers from the map, right-clicking the button resets the map to defaults.',
-		'Touch screen users can quickly close the sidebar by swiping <i class="fas fa-hand-point-up fa-sm"></i> the sidebar title.',
-		'Personally bookmark any place by clicking the <i class="far fa-bookmark fa-sm"></i> icon in a popup, click it again to remove.',
-		'We have a number of historical map overlays, select them using the top-right layer control <i class="fas fa-layer-group fa-sm"></i> .',
+		'Click <i class="fa-solid fa-location-arrow fa-sm"></i> to turn on your location to see place results ordered by distance.',
+		'Quickly create walking <i class="fa-solid fa-person-walking fa-sm"></i> directions by turning on <i class="fa-solid fa-location-arrow fa-sm"></i> and right-clicking the map.',
+		'Choose between miles or kilometres in <a onclick="switchTab(\'settings\');">Settings <i class="fa-solid fa-gear fa-sm"></i></a>.',
+		'The dark theme can be enabled/disabled in <a onclick="switchTab(\'settings\');">Settings <i class="fa-solid fa-gear fa-sm"></i></a>.',
+		'Click <i class="fa-solid fa-trash fa-sm"></i> to clear all layers from the map, right-clicking the button resets the map to defaults.',
+		'Touch screen users can quickly close the sidebar by swiping <i class="fa-solid fa-hand-point-up fa-sm"></i> the sidebar title.',
+		'Personally bookmark any place by clicking the <i class="fa-regular fa-bookmark fa-sm"></i> icon in a popup, click it again to remove.',
+		'We have a number of historical map overlays, select them using the top-right layer control <i class="fa-solid fa-layer-group fa-sm"></i> .',
 		'Results in Places are coloured to show currently open (green) or closed (red).',
-		'Zoom into the map and click a post-box <i class="fas fa-envelope fa-sm"></i> to see the last post collection.',
+		'Zoom into the map and click a post-box <i class="fa-solid fa-envelope fa-sm"></i> to see the last post collection.',
 		'You can find booking information on accommodation under <a onclick="switchTab(\'pois\', \'Leisure-Tourism\');">Leisure-Tourism</a>.',
 		'Get the latest Food Hygiene Ratings on every business in the area under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
-		'Find your closest <i class="fas fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
-		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', 9);">History <i class="fas fa-book fa-sm"></i></a>.',
-		'Some places have a photosphere view, click the <i class="fas fa-street-view fa-fw"></i> icon to view it.',
-		'Click the <i class="fas fa-street-view fa-fw"></i> map control icon to see exclusive photosphere views of that street.',
-		'View superimposed and colourised images of Bexhill past and present under <a onclick="switchTab(\'thennow\');">Then and Now <i class="far fa-image fa-sm"></i></a>.',
-		'Notice something wrong or missing on the map? Right-click the area and <i class="far fa-sticky-note fa-sm"></i> Leave a note.',
-		'<i class="fas fa-map-pin fa-sm"></i> Over 1,100 photos, 20,000 buildings and 250 miles of roads/paths within 15 miles&sup2; have been mapped thus far!',
+		'Find your closest <i class="fa-solid fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
+		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', 9);">History <i class="fa-solid fa-book fa-sm"></i></a>.',
+		'Some places have a photosphere view, click the <i class="fa-solid fa-street-view fa-fw"></i> icon to view it.',
+		'Click the <i class="fa-solid fa-street-view fa-fw"></i> map control icon to see exclusive photosphere views of that street.',
+		'View superimposed and colourised images of Bexhill past and present under <a onclick="switchTab(\'thennow\');">Then and Now <i class="fa-regular fa-image fa-sm"></i></a>.',
+		'Notice something wrong or missing on the map? Right-click the area and <i class="fa-regular fa-sticky-note fa-sm"></i> Leave a note.',
+		'<i class="fa-solid fa-map-pin fa-sm"></i> Over 1,100 photos, 20,000 buildings and 250 miles of roads/paths within 15 miles&sup2; have been mapped thus far!',
 		'The data behind Bexhill-OSM is open-source and can be used by anyone however they wish!',
 		'For a mobile, offline version of this map - give <a href="https://organicmaps.app" target="_blank" rel="noopener">Organic Maps</a> a try.',
-		'Anyone can help with building the <i class="far fa-map fa-sm"></i>, visit <a href="https://osm.org" target="_blank" rel="noopener">OpenStreetMap.org</a> on how to get started.'
+		'Anyone can help with building the <i class="fa-regular fa-map fa-sm"></i>, visit <a href="https://osm.org" target="_blank" rel="noopener">OpenStreetMap.org</a> on how to get started.'
 	];
 	if (tip === 'random') nextTip = Math.floor(Math.random() * tips.length);
 	else if (parseInt($('#tipsText').data('tip')) === tips.length - 1) nextTip = 0;
@@ -1887,9 +1871,9 @@ function showWeather() {
 				wtooltip += '<hr/>' + json[nextTide].EventType + ': ' + L.Util.formatNum(json[nextTide].Height, 2) + 'm<br/>' +
 					json[nextTide+1].EventType + ': ' + L.Util.formatNum(json[nextTide+1].Height, 2) + 'm';
 				tideData =
-					'<span class="wtide1"><i class="fas fa-water fa-2x"></i></span><span class="wtide2">' +
-					'<i class="fas fa-sm fa-level-' + iconTide[json[nextTide].EventType] + '-alt"></i> ' + new Date(json[nextTide].DateTime + 'Z').toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '<br/>' +
-					'<i class="fas fa-sm fa-level-' + iconTide[json[nextTide+1].EventType] + '-alt"></i> ' + new Date(json[nextTide+1].DateTime + 'Z').toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '</span>';
+					'<span class="wtide1"><i class="fa-solid fa-water fa-2x"></i></span><span class="wtide2">' +
+					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide].EventType] + '"></i> ' + new Date(json[nextTide].DateTime + 'Z').toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '<br/>' +
+					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide+1].EventType] + '"></i> ' + new Date(json[nextTide+1].DateTime + 'Z').toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '</span>';
 			}
 			else this.error();
 		},
@@ -1914,12 +1898,12 @@ function showWeather() {
 					'West',  'West-northwest', 'Northwest', 'North-northwest'
 				], getWinddir = json.wind.deg ? windDir[(Math.floor((json.wind.deg / 22.5) + 0.5)) % 16] : 'Calm';
 				$('#weather').html(
-					'<span class="wtemp"><i class="fas fa-' + tempIcon[json.weather[0].icon] + ' fa-2x"></i></span>' +
+					'<span class="wtemp"><i class="fa-solid fa-' + tempIcon[json.weather[0].icon] + ' fa-2x"></i></span>' +
 					'<span class="wtemp">' +
 						json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1) + '<br/>' +
 						json.main.temp.toFixed(1) + '&deg;C' +
 					'</span>' +
-					'<span class="wwind"><i class="fas fa-wind fa-2x"' + (json.wind.deg ? ' style="transform:rotate(' + (json.wind.deg + 90) + 'deg);"' : '') + '></i></span>' +
+					'<span class="wwind"><i class="fa-solid fa-wind fa-2x"' + (json.wind.deg ? ' style="transform:rotate(' + (json.wind.deg + 90) + 'deg);"' : '') + '></i></span>' +
 					'<span class="wwind">' +
 						getWinddir + '<br/>' +
 						'<span>' + (json.wind.speed * 2.236936).toFixed(1) + 'mph</span>' +
@@ -1971,7 +1955,7 @@ function showEditFeed() {
 			if (data.features) {
 				var s = '';
 				$.each(data.features, function(e, itm) {
-					s += '<li><span class="fa-li"><i class="fas fa-sync"></i></span><a href="https://overpass-api.de/achavi/?changeset=' + itm.id + '&layers=B0FTTFT" title="View changeset"><i>' + itm.properties.comment + '</i></a>' +
+					s += '<li><span class="fa-li"><i class="fa-solid fa-circle-check"></i></span><a href="https://overpass-api.de/achavi/?changeset=' + itm.id + '&layers=B0FTTFT" title="View changeset"><i>' + itm.properties.comment + '</i></a>' +
 					' - <a href="https://www.openstreetmap.org/user/' + itm.properties.user + '" title="View user">' + itm.properties.user + '</a>' +
 					' - <span title="' + date_parser(itm.properties.date, 'long') + '">' + date_parser(itm.properties.date.split('T')[0], 'short') + '</span></li>';
 				});
@@ -2015,7 +1999,7 @@ function permalinkSet() {
 	if (actTab === 'tour' && $('#tourList option').eq(0).val() !== $('#tourList option:selected').eq(0).val()) uri.searchParams.set('U', $('#tourList option:selected').val());
 	$('.poi-checkbox input:checked').each(function(i, element) { selectedPois += element.id + '-'; });
 	if (selectedPois) uri.searchParams.set('P', selectedPois.slice(0, -1));
-	else if (queryBbox && queryBbox.indexOf($('#inputOverpass').val()) > 0) uri.searchParams.set('QO', $('#inputOverpass').val());
+	else if (queryBbox && queryBbox.indexOf($('#inputOverpass').val()) > 0) uri.searchParams.set('QO', ($('#inputOverpassR input').is(':checked') ? 'r' : '') + $('#inputOverpass').val());
 	if ($('#settings input[data-uri]:checkbox:checked').length) {
 		setChk = '';
 		for (c = 0; c < $('#settings input[data-uri]:checkbox').length; c++) setChk += $('#settings input[data-uri]:checkbox').eq(c).is(':checked') ? '1' : '0';
@@ -2085,8 +2069,14 @@ function permalinkReturn() {
 			spinner++;
 		}
 		else if (uri.has('QO')) {
-			$('#inputOverpass').val(decodeURIComponent(uri.get('QO')));
-			customQuery(decodeURIComponent(uri.get('QO')));
+			var QO = decodeURIComponent(uri.get('QO'));
+			if (QO.charAt(0) === 'r') {
+				QO = uri.get('QO').slice(1);
+				$('#inputOverpassR input').prop('checked', true);
+			}
+			else $('#inputOverpassR').prop('checked', false);
+			$('#inputOverpass').val(QO);
+			customQuery(QO);
 			if (uri.has('I')) markerId = uri.get('I');
 			$('#devTools').accordion({ active: 0 });
 		}
@@ -2107,7 +2097,7 @@ function permalinkReturn() {
 	if (actTab !== 'none') sidebar.open(actTab);
 	// animate sidebar close button on smaller devices if layers underneath
 	if (actTab !== 'none' && $(window).width() < 768 && (uri.has('O') || uri.has('G') || uri.has('P') || uri.has('I') || uri.has('W')))
-		$('.sidebar-close').addClass('wobble');
+		$('.sidebar-close').addClass('fa-fade');
 	if (noIframe && window.localStorage) {
 		if (parseInt(window.localStorage.OPLCacheDur) >= 0 && parseInt(window.localStorage.OPLCacheDur) <= 240)	$('#inputOpCache').val(parseInt(window.localStorage.OPLCacheDur));
 		else $('#inputOpCache').val($('#inputOpCache').attr('value'));

@@ -21,7 +21,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			else if (tags['addr:hamlet']) addr += ', <span title="Hamlet">' + tags['addr:hamlet'] + '</span>';
 			if (tags['addr:city'] && tags['addr:city'] !== 'Bexhill-on-Sea') addr += ', <span title="City">' + tags['addr:city'] + '</span>';
 			if (tags['addr:postcode']) addr += ', <span class="nowrap" title="Postcode">' + tags['addr:postcode'] + '</span>';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Address', value: addr, iconName: 'fas fa-map-marker' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Address', value: addr, iconName: 'fa-solid fa-location-pin' });
 		}
 		return markerPopup;
 	};
@@ -31,7 +31,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tagPhone) {
 			if (navigator.language === 'en-GB') tagPhone = tagPhone.replace('+44 ', '0');
 			var link = '<a href="tel:' + tagPhone + '" title="Telephone">' + tagPhone + '</a>';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Phone', value: link, iconName: 'fas fa-phone' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Phone', value: link, iconName: 'fa-solid fa-phone' });
 		}
 		return markerPopup;
 	};
@@ -42,7 +42,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			var strWebsite = (tagWebsite.indexOf('://') > 0) ? tagWebsite.split('://')[1] : tagWebsite;
 			if (strWebsite.slice(-1) === '/') strWebsite = strWebsite.slice(0, -1);
 			var link = '<a class="popup-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px;" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + strWebsite + '</a>';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: link, iconName: 'fas fa-globe' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: link, iconName: 'fa-solid fa-globe' });
 		}
 		return markerPopup;
 	};
@@ -50,171 +50,158 @@ function parse_tags(element, titlePopup, poiParser) {
 		var tag = '';
 		markerPopup = '';
 		var tagMail = tags.email || tags['contact:email'], tagFb = tags.facebook || tags['contact:facebook'], tagTwit = tags.twitter || tags['contact:twitter'], tagInstg = tags['contact:instagram'], tagYtube = tags['contact:youtube'];
-		if (tagMail) tag += '<a href="mailto:' + tagMail + '"><i class="fas fa-envelope fa-fw" title="E-mail: ' + tagMail + '"></i></a> ';
-		if (tagFb) tag += '<a href="' + tagFb + '" target="_blank" rel="noopener nofollow"><i class="fab fa-facebook fa-fw" title="Facebook: ' + tagFb + '" style="color:#3b5998;"></i></a> ';
-		if (tagTwit) tag += '<a href="https://twitter.com/' + tagTwit + '" target="_blank" rel="noopener nofollow"><i class="fab fa-twitter fa-fw" title="Twitter: @' + tagTwit + '" style="color:#1da1f2;"></i></a> ';
-		if (tagInstg) tag += '<a href="https://instagram.com/' + tagInstg + '" target="_blank" rel="noopener nofollow"><i class="fab fa-instagram fa-fw" title="Instagram: ' + tagInstg + '" style="color:#d93175;"></i></a> ';
-		if (tagYtube) tag += '<a href="' + tagYtube + '" target="_blank" rel="noopener nofollow"><i class="fab fa-youtube fa-fw" title="YouTube: ' + tagYtube + '" style="color:#ff0000;"></i></a> ';
-		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Contact', value: tag, iconName: 'fas fa-user-circle' });
+		if (tagMail) tag += '<a href="mailto:' + tagMail + '"><i class="fa-solid fa-envelope fa-fw" title="E-mail: ' + tagMail + '"></i></a> ';
+		if (tagFb) tag += '<a href="' + tagFb + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-facebook fa-fw" title="Facebook: ' + tagFb + '" style="color:#3b5998;"></i></a> ';
+		if (tagTwit) tag += '<a href="https://twitter.com/' + tagTwit + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-twitter fa-fw" title="Twitter: @' + tagTwit + '" style="color:#1da1f2;"></i></a> ';
+		if (tagInstg) tag += '<a href="https://instagram.com/' + tagInstg + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-instagram fa-fw" title="Instagram: ' + tagInstg + '" style="color:#d93175;"></i></a> ';
+		if (tagYtube) tag += '<a href="' + tagYtube + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-youtube fa-fw" title="YouTube: ' + tagYtube + '" style="color:#ff0000;"></i></a> ';
+		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Contact', value: tag, iconName: 'fa-solid fa-circle-user' });
 		return markerPopup;
 	};
-	var listed_parser = function(tags) {
-		var tag = '', label = '', icon = '', planningLink = '';
+	var site_parser = function(tags) {
+		var tag = '', planningLink = '';
+		var siteType = tags.building ? ['Building', 'building'] : ['Site', 'monument'];
 		markerPopup = '';
+		if (tags.bunker_type) tag += '<span title="Bunker type">' + tags.bunker_type + '</span>; ';
+		if (tags['building:architecture']) tag += '<span title="Architecture">' + titleCase(tags['building:architecture']) + '</span>; ';
+		if (tags.architect) tag += '<span title="Architect">Arch. ' + tags.architect + '</span>; ';
+		if (tags.artist_name) tag += '<span title="Artist">Artst. ' + tags.artist_name + '</span>; ';
+		if (tags.builder) tag += '<span title="Builder">Bldr. ' + tags.builder + '</span>; ';
+		if (tags.display) tag += '<span title="Clock display">' + tags.display + '</span>; ';
+		if (tags.support) tag += '<span title="Clock support">' + tags.support + '</span>; ';
+		if (tags.faces) tag += '<span title="Clock faces">' + ((tags.faces >= 2) ? tags.faces + ' faces' : '1 face') + '</span>; ';
+		if (tags.material) tag += '<span title="Material">Mtrl. ' + tags.material + '</span>; ';
+		if (tags.start_date) {
+			tag += '<span title="Start date">' + date_parser(tags.start_date, 'short') + '</span>';
+			if (tags.end_date) tag += ' to <span title="End date">' + date_parser(tags.end_date, 'short') + '</span>';
+			tag += '; ';
+		}
+		if (tags['wreck:date_sunk']) tag += '<span title="Date sunk">Sunk: ' + date_parser(tags['wreck:date_sunk'], 'short') + '</span>; ';
+		if (tags.height) tag += '<span title="Height in metres">' + tags.height + 'm</span>; ';
 		if (tags['ref:planningapp']) planningLink = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + tags['ref:planningapp'] + '" target="_blank" rel="noopener">' + tags['ref:planningapp'] + '</a>';
 		else if (tags['ref:historicplanningapp']) planningLink = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/historyDetails?reference=' + tags['ref:historicplanningapp'] + '" target="_blank" rel="noopener">' + tags['ref:historicplanningapp'] + '</a>';
-		if (tags.building) {
-			label = 'Building';
-			icon = 'fas fa-building';
-			if (tags['building:architecture']) tag += '<span title="Architecture">' + titleCase(tags['building:architecture']) + '</span>, ';
-			if (tags.architect) tag += '<span title="Architect">Arch. ' + tags.architect + '</span>, ';
-			if (tags.builder) tag += '<span title="Builder">Bldr. ' + tags.builder + '</span>, ';
-			if (tags.start_date) {
-				tag += '<span title="Start date">' + date_parser(tags.start_date, 'short') + '</span>';
-				if (tags.end_date) tag += ' to <span title="End date">' + date_parser(tags.end_date, 'short') + '</span>';
-				tag += ', ';
-			}
-			if (tags.height) tag += '<span title="Height in metres">' + tags.height + 'm</span>, ';
-			if (planningLink) tag += '<span class="nowrap" title="Planning application">' + planningLink + '</span>, ';
-		}
-		else {
-			label = 'Listed';
-			icon = 'fas fa-file';
-			if (tags.date) markerPopup += L.Util.template(tagTmpl, { tag: 'Event date', value: date_parser(tags.date, 'long'), iconName: 'fas fa-calendar-alt' });
-			if (tags.start_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Start date', value: date_parser(tags.start_date, 'long'), iconName: 'fas fa-calendar-alt' });
-			if (tags.end_date) markerPopup += L.Util.template(tagTmpl, { tag: 'End date', value: date_parser(tags.end_date, 'long'), iconName: 'fas fa-calendar-alt' });
-			if (tags.architect) markerPopup += L.Util.template(tagTmpl, { tag: 'Architect', value: tags.architect, iconName: 'fas fa-user' });
-			if (planningLink) markerPopup += L.Util.template(tagTmpl, { tag: 'Planning application', value: planningLink, iconName: 'fas fa-file' });
-		}
+		if (planningLink) tag += '<span class="nowrap" title="Planning application">' + planningLink + '</span>; ';
 		if (tags.HE_ref) {
 			var listedStatus = tags.listed_status || tags.HE_ref;
-			tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank" rel="noopener">' + listedStatus + '</a>, ';
+			tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank" rel="noopener">' + listedStatus + '</a>; ';
 		}
-		if (tag) {
-			tag = tag.substring(0, tag.length - 2);
-			markerPopup = L.Util.template(tagTmpl, { tag: label + ' details', value: tag, iconName: icon }) + markerPopup;
-		}
+		if (tag) markerPopup = L.Util.template(tagTmpl, { tag:  siteType[0] + ' details', value: listTidy(tag, true), iconName: 'fa-solid fa-' + siteType[1] }) + markerPopup;
 		return markerPopup;
 	};
 	var facility_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
-		if (tags.disused === 'yes') tag += '<i class="facNo fas fa-house-damage fa-fw" title="disused: yes"></i>';
-		if (tags.indoor === 'yes') tag += '<i class="facYes fas fa-door-closed fa-fw" title="indoor: yes"></i>';
-		if (tags.wheelchair === 'yes') tag += '<i class="facYes fas fa-wheelchair fa-fw" title="wheelchair access: yes"></i>';
-		else if (tags.wheelchair === 'limited') tag += '<i class="facLtd fas fa-wheelchair fa-fw" title="wheelchair access: limited"></i>';
-		else if (tags.wheelchair === 'no') tag += '<i class="facNo fas fa-wheelchair fa-fw" title="wheelchair access: no"></i>';
-		if (tags.blind === 'yes') tag += '<i class="facYes fas fa-person-walking-with-cane fa-fw" title="blind person access: yes"></i>';
-		else if (tags.blind === 'limited') tag += '<i class="facLtd fas fa-person-walking-with-cane fa-fw" title="blind person access: limited"></i>';
-		else if (tags.blind === 'no') tag += '<i class="facNo fas fa-person-walking-with-cane fa-fw" title="blind person access: no"></i>';
-		if (tags.elevator === 'yes') tag += '<i class="facYes fas fa-elevator fa-fw" title="elevator: yes"></i>';
-		if (tags['hearing_impaired:induction_loop'] === 'yes') tag += '<i class="facYes fas fa-deaf fa-fw" title="induction loop: yes"></i>';
-		if (tags['tactile_writing:braille'] === 'yes') tag += '<i class="facYes fas fa-braille fa-fw" title="braille: yes"></i>';
-		if (tags.dog === 'yes') tag += '<i class="facYes fas fa-dog fa-fw" title="dog access: yes"></i>';
-		else if (tags.dog === 'no') tag += '<i class="facNo fas fa-dog fa-fw" title="dog access: no"></i>';
-		else if (tags.dog === 'leashed') tag += '<i class="facYes fas fa-dog-leashed fa-fw" title="dog access: leashed"></i>';
-		if (tags.internet_access === 'wlan') tag += '<i class="facYes fas fa-wifi fa-fw" title="internet: wireless"></i>';
-		else if (tags.internet_access === 'terminal') tag += '<i class="facYes fas fa-desktop fa-fw" title="internet: terminal"></i>';
-		if (tags['drinking_water:refill'] === 'yes') tag += '<i class="fas fa-tint fa-fw" style="color:#0082ff;" title="drinking water refills: yes"></i>';
-		if (tags.live_music === 'yes') tag += '<i class="facYes fas fa-music fa-fw" title="live music: yes"></i>';
-		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') tag += '<i class="facYes fas fa-umbrella fa-fw" title="shelter: yes"></i>';
+		if (tags.disused === 'yes') tag += '<i class="facLtd fa-solid fa-hourglass fa-fw" title="place is currently disused"></i>';
+		if (tags.indoor === 'yes') tag += '<i class="facYes fa-solid fa-door-closed fa-fw" title="place is indoors"></i>';
+		if (tags.wheelchair === 'yes') tag += '<i class="facYes fa-solid fa-wheelchair fa-fw" title="wheelchair access"></i>';
+		else if (tags.wheelchair === 'limited') tag += '<i class="facLtd fa-solid fa-wheelchair fa-fw" title="limited wheelchair access"></i>';
+		else if (tags.wheelchair === 'no') tag += '<i class="facNo fa-solid fa-wheelchair fa-fw" title="no wheelchair access"></i>';
+		if (tags.elevator === 'yes') tag += '<i class="facYes fa-solid fa-elevator fa-fw" title="lift access"></i>';
+		if (tags['hearing_impaired:induction_loop'] === 'yes') tag += '<i class="facYes fa-solid fa-ear-deaf fa-fw" title="induction loop"></i>';
+		if (tags['tactile_writing:braille'] === 'yes') tag += '<i class="facYes fa-solid fa-braille fa-fw" title="braille"></i>';
+		if (tags.dog === 'yes') tag += '<i class="facYes fa-solid fa-dog fa-fw" title="dogs allowed"></i>';
+		else if (tags.dog === 'no') tag += '<i class="facNo fa-solid fa-dog fa-fw" title="no dogs allowed"></i>';
+		else if (tags.dog === 'leashed') tag += '<i class="facYes fa-solid fa-dog-leashed fa-fw" title="leashed dogs only"></i>';
+		if (tags.internet_access === 'wlan') tag += '<i class="facYes fa-solid fa-wifi fa-fw" title="wireless internet"></i>';
+		else if (tags.internet_access === 'terminal') tag += '<i class="facYes fa-solid fa-desktop fa-fw" title="internet terminal"></i>';
+		if (tags['drinking_water:refill'] === 'yes') tag += '<i class="fa-solid fa-bottle-droplet fa-fw" style="color:#0082ff;" title="free drinking water refills"></i>';
+		if (tags.live_music === 'yes') tag += '<i class="facYes fa-solid fa-music fa-fw" title="live music"></i>';
+		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') tag += '<i class="facYes fa-solid fa-umbrella fa-fw" title="sheltered"></i>';
 		if (tags.highway === 'bus_stop') {
-			if (tags.bench === 'yes') tag += '<i class="facYes fas fa-chair fa-fw" title="bench: yes"></i>';
-			if (tags.bin === 'yes') tag += '<i class="facYes fas fa-trash-alt fa-fw" title="rubbish bin: yes"></i>';
+			if (tags.bench === 'yes') tag += '<i class="facYes fa-solid fa-chair fa-fw" title="seating"></i>';
+			if (tags.bin === 'yes') tag += '<i class="facYes fa-solid fa-trash-can fa-fw" title="rubbish bin"></i>';
 		}
 		if (tags.amenity === 'telephone') {
-			if (tags.internet_access === 'yes') tag += '<i class="facYes fas fa-at fa-fw" title="internet + email: yes"></i>';
-			if (tags.sms === 'yes') tag += '<i class="facYes fas fa-sms fa-fw" title="sms: yes"></i>';
+			if (tags.internet_access === 'yes') tag += '<i class="facYes fa-solid fa-at fa-fw" title="internet access"></i>';
+			if (tags.sms === 'yes') tag += '<i class="facYes fa-solid fa-comment-sms fa-fw" title="sms"></i>';
 		}
 		if (tags.amenity === 'toilets') {
-			if (tags.unisex === 'yes') tag += '<i class="facYes fas fa-restroom fa-fw" title="unisex: yes"></i>';
-			if (tags.male === 'yes') tag += '<i class="facYes fas fa-male fa-fw" title="male: yes"></i>';
-			if (tags.female === 'yes') tag += '<i class="facYes fas fa-female fa-fw" title="female: yes"></i>';
-			if (tags.changing_table === 'yes') tag += '<i class="facYes fas fa-baby fa-fw" title="baby changing: yes"></i>';
+			if (tags.unisex === 'yes') tag += '<i class="facYes fa-solid fa-restroom fa-fw" title="unisex"></i>';
+			if (tags.male === 'yes') tag += '<i class="facYes fa-solid fa-person fa-fw" title="male"></i>';
+			if (tags.female === 'yes') tag += '<i class="facYes fa-solid fa-person-dress fa-fw" title="female"></i>';
+			if (tags.changing_table === 'yes') tag += '<i class="facYes fa-solid fa-baby fa-fw" title="baby changing"></i>';
 		}
 		if (tag) tag = '<span class="facGen">' + tag + '</span>';
 		if (tags.amenity === 'recycling') {
-			var recycTag = '', recycList = '';
+			var recycTag = '', recycList = '', recycIcon = {
+				aerosol_cans: 'fa-solid fa-spray-can',
+				animal_waste: 'fa-solid fa-poop',
+				batteries: 'fa-solid fa-battery-full',
+				bicycles: 'fa-solid fa-bicycles',
+				books: 'fa-solid fa-book',
+				cans: 'fa-solid fa-prescription-bottle',
+				car_batteries: 'fa-solid fa-car-battery',
+				cardboard: 'fa-solid fa-box',
+				cds: 'fa-solid fa-compact-disc',
+				clothes: 'fa-solid fa-shirt',
+				computers: 'fa-solid fa-laptop',
+				tv_monitor: 'fa-solid fa-tv',
+				electrical_appliances: 'fa-solid fa-tv',
+				engine_oil: 'fa-solid fa-oil-can',
+				furniture: 'fa-solid fa-couch',
+				glass: 'fa-solid fa-wine-glass',
+				glass_bottles: 'fa-solid fa-wine-bottle',
+				green_waste: 'fa-solid fa-leaf',
+				christmas_trees: 'fa-solid fa-tree',
+				wood: 'fa-solid fa-tree',
+				hazardous_waste: 'fa-solid fa-biohazard',
+				low_energy_bulbs: 'fa-solid fa-lightbulb',
+				mobile_phones: 'fa-solid fa-mobile-screen-button',
+				organic: 'fa-solid fa-drumstick-bite',
+				paint: 'fa-solid fa-fill-drip',
+				pallets: 'fa-solid fa-pallet',
+				magazines: 'fa-solid fa-newspaper',
+				newspaper: 'fa-solid fa-newspaper',
+				paper: 'fa-solid fa-newspaper',
+				pens: 'fa-solid fa-pen-clip',
+				plastic_bottles: 'fa-solid fa-bottle-water',
+				printer_cartridges: 'fa-solid fa-print',
+				scrap_metal: 'fa-solid fa-gear',
+				shoes: 'fa-solid fa-shoe-prints',
+				small_appliances: 'fa-solid fa-blender',
+				waste: 'fa-solid fa-dumpster'
+			};
 			for (var recycKey in tags) {
-				var recyc = '', recycIcon = '';
+				var recyc = '';
 				if (recycKey.indexOf('recycling:') === 0 && (tags[recycKey] === 'yes')) {
 					recyc = recycKey.split(':')[1];
 					recycList += recyc + ', ';
 				}
-				switch (recyc) {
-					case 'aerosol_cans': recycIcon = 'fas fa-spray-can'; break;
-					case 'animal_waste': recycIcon = 'fas fa-poop'; break;
-					case 'batteries': recycIcon = 'fas fa-battery-full'; break;
-					case 'bicycles': recycIcon = 'fas fa-bicycles'; break;
-					case 'books': recycIcon = 'fas fa-book'; break;
-					case 'cans': recycIcon = 'fas fa-prescription-bottle'; break;
-					case 'car_batteries': recycIcon = 'fas fa-car-battery'; break;
-					case 'cardboard': recycIcon = 'fas fa-box'; break;
-					case 'cds': recycIcon = 'fas fa-compact-disc'; break;
-					case 'clothes': recycIcon = 'fas fa-tshirt'; break;
-					case 'computers': recycIcon = 'fas fa-laptop'; break;
-					case 'tv_monitor':
-					case 'electrical_appliances': recycIcon = 'fas fa-tv'; break;
-					case 'engine_oil': recycIcon = 'fas fa-oil-can'; break;
-					case 'furniture': recycIcon = 'fas fa-couch'; break;
-					case 'glass': recycIcon = 'fas fa-wine-glass'; break;
-					case 'glass_bottles': recycIcon = 'fas fa-wine-bottle'; break;
-					case 'green_waste': recycIcon = 'fas fa-leaf'; break;
-					case 'christmas_trees':
-					case 'wood': recycIcon = 'fas fa-tree'; break;
-					case 'hazardous_waste': recycIcon = 'fas fa-biohazard'; break;
-					case 'low_energy_bulbs': recycIcon = 'fas fa-lightbulb'; break;
-					case 'mobile_phones': recycIcon = 'fas fa-mobile-alt'; break;
-					case 'organic': recycIcon = 'fas fa-drumstick-bite'; break;
-					case 'paint': recycIcon = 'fas fa-fill-drip'; break;
-					case 'pallets': recycIcon = 'fas fa-pallet'; break;
-					case 'magazines':
-					case 'newspaper':
-					case 'paper': recycIcon = 'fas fa-newspaper'; break;
-					case 'pens': recycIcon = 'fas fa-pen-alt'; break;
-					case 'plastic_bottles': recycIcon = 'fab fa-gulp'; break;
-					case 'printer_cartridges': recycIcon = 'fas fa-print'; break;
-					case 'scrap_metal': recycIcon = 'fas fa-cog'; break;
-					case 'shoes': recycIcon = 'fas fa-shoe-prints'; break;
-					case 'small_appliances': recycIcon = 'fas fa-blender'; break;
-					case 'waste': recycIcon = 'fas fa-dumpster'; break;
-				}
-				if (recycIcon) recycTag += '<i class="' + recycIcon + ' fa-fw" title="' + recyc + ': yes"></i>';
+				if (recycIcon[recyc]) recycTag += '<i class="' + recycIcon[recyc] + ' fa-fw" title="' + recyc + '"></i>';
 			}
-			if (recycList) markerPopup += L.Util.template(tagTmpl, { tag: 'Recycling options', value: recycList.replace(/_/g, '-').substring(0, recycList.length - 2), iconName: 'fas fa-recycle' });
+			if (recycList) markerPopup += L.Util.template(tagTmpl, { tag: 'Recycling options', value: listTidy(recycList, true), iconName: 'fa-solid fa-recycle' });
 			if (recycTag) tag += '<span class="facRecyc"' + (tag ? ' style="padding-left:10px;"' : '') + '>' + recycTag + '</span>';
 		}
 		if (Object.keys(tags).some(function(k){ return ~k.indexOf('payment:'); })) {
-			var payTag = '', payList = '';
+			var payTag = '', payList = '', payIcon = {
+				cash: 'fa-solid fa-coins',
+				coins: 'fa-solid fa-coins',
+				notes: 'fa-solid fa-money-bill',
+				cheque: 'fa-solid fa-money-check',
+				credit_cards: 'fa-regular fa-credit-card',
+				debit_cards: 'fa-solid fa-credit-card',
+				american_express: 'fa-brands fa-cc-amex',
+				discover: 'fa-brands fa-cc-discover',
+				diners_club: 'fa-brands fa-cc-diners-club',
+				mastercard: 'fa-brands fa-cc-mastercard',
+				visa_electron: 'fa-brands fa-cc-visa',
+				visa_debit: 'fa-brands fa-cc-visa',
+				visa: 'fa-brands fa-cc-visa',
+				sms: 'fa-solid fa-comment-sms',
+				bitcoin: 'fa-brands fa-bitcoin',
+				google_pay: 'fa-brands fa-google-wallet',
+				apple_pay: 'fa-brands fa-apple-pay',
+				gift_card: 'fa-solid fa-gift'
+			};
 			for (var payKey in tags) {
-				var pay = '', payIcon = '';
+				var pay = '';
 				if (payKey.indexOf('payment:') === 0 && tags[payKey] === 'yes') {
 					pay = payKey.split(':')[1];
 					payList += pay + ', ';
 				}
-				switch (pay) {
-					case 'cash':
-					case 'coins': payIcon = 'fas fa-coins'; break;
-					case 'notes': payIcon = 'fas fa-money-bill'; break;
-					case 'cheque': payIcon = 'fas fa-money-check-alt'; break;
-					case 'credit_cards': payIcon = 'far fa-credit-card'; break;
-					case 'debit_cards': payIcon = 'fas fa-credit-card'; break;
-					case 'american_express': payIcon = 'fab fa-cc-amex'; break;
-					case 'discover': payIcon = 'fab fa-cc-discover'; break;
-					case 'diners_club': payIcon = 'fab fa-cc-diners-club'; break;
-					case 'mastercard': payIcon = 'fab fa-cc-mastercard'; break;
-					case 'visa_electron':
-					case 'visa_debit':
-					case 'visa': payIcon = 'fab fa-cc-visa'; break;
-					case 'sms': payIcon = 'fas fa-sms'; break;
-					case 'bitcoin': payIcon = 'fab fa-bitcoin'; break;
-					case 'google_pay': payIcon = 'fab fa-google-wallet'; break;
-					case 'apple_pay': payIcon = 'fab fa-apple-pay'; break;
-					case 'gift_card': payIcon = 'fas fa-gift'; break;
-				}
-				if (payIcon) payTag += '<i class="' + payIcon + ' fa-fw" title="' + pay + ': yes"></i>';
+				if (payIcon[pay]) payTag += '<i class="' + payIcon[pay] + ' fa-fw" title="' + pay + '"></i>';
 			}
-			if (payList) markerPopup += L.Util.template(tagTmpl, { tag: 'Payment options', value: payList.replace(/_/g, '-').substring(0, payList.length - 2), iconName: 'fas fa-cash-register' });
+			if (payList) markerPopup += L.Util.template(tagTmpl, { tag: 'Payment options', value: listTidy(payList, true), iconName: 'fa-solid fa-cash-register' });
 			if (payTag) tag += '<span class="facPay"' + (tag ? ' style="padding-left:10px;"' : '') + '>' + payTag + '</span>';
 		}
 		if (tags.fee) {
@@ -222,27 +209,26 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags['fee:conditional'] && tags.charge) feeTag = tags['fee:conditional'] + ': ' + tags.charge;
 			else {
 				feeTag = tags.charge || tags['fee:conditional'] || tags.fee;
-				if (feeTag === 'yes') feeTag = '<i class="fas fa-check fa-fw"></i>';
-				else if (feeTag === 'no') feeTag = '<i class="fas fa-times fa-fw"></i>';
+				if (feeTag === 'yes') feeTag = '<i class="fa-solid fa-check fa-fw"></i>';
+				else if (feeTag === 'no') feeTag = '<i class="fa-solid fa-xmark fa-fw"></i>';
 			}
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Fee', value: feeTag.replace(/;/g, ', '), iconName: 'fas fa-pound-sign' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Fee', value: listTidy(feeTag), iconName: 'fa-solid fa-sterling-sign' });
 		}
 		if (Object.keys(tags).some(function(k){ return ~k.indexOf('diet:'); })) {
-			var dietTag = '';
+			var dietTag = '', dietIcon = {
+				pescetarian: 'fa-solid fa-fish',
+				vegetarian: 'fa-solid fa-carrot',
+				vegan: 'fa-solid fa-leaf',
+				fruitarian: 'fa-solid fa-apple'
+			};
 			for (var dietKey in tags) {
-				var diet = '', dietIcon = '';
+				var diet = '';
 				if (dietKey.indexOf('diet:') === 0 && tags[dietKey] === 'yes') diet = dietKey.split(':')[1];
-				switch (diet) {
-					case 'pescetarian': dietIcon = 'fas fa-fish'; break;
-					case 'vegetarian': dietIcon = 'fas fa-carrot'; break;
-					case 'vegan': dietIcon = 'fas fa-leaf'; break;
-					case 'fruitarian': dietIcon = 'fas fa-apple'; break;
-				}
-				if (dietIcon) dietTag += '<i class="' + dietIcon + ' fa-fw" title="' + diet + ' options"></i>';
+				if (dietIcon[diet]) dietTag += '<i class="' + dietIcon[diet] + ' fa-fw" title="' + diet + ' options"></i>';
 			}
 			if (dietTag) tag += '<span class="facDiet"' + (tag ? ' style="padding-left:10px;"' : '') + '>' + dietTag + '</span>';
 		}
-		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Facilities', value: '<span class="popup-facilities">' + tag + '</span>', iconName: 'fas fa-info-circle' });
+		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Facilities', value: '<span class="popup-facilities">' + tag + '</span>', iconName: 'fa-solid fa-circle-info' });
 		return markerPopup;
 	};
 	var street_parser = function(tags) {
@@ -259,8 +245,8 @@ function parse_tags(element, titlePopup, poiParser) {
 					var street = $(xml).find('name').filter(function() { return ($(this).text() === tags.name || $(this).text() === tags.alt_name); }).closest('street');
 					var streetDate = $('date', street).text();
 					var streetDesc = $('desc', street).text();
-					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Start date', value: streetDate, iconName: 'fas fa-calendar-alt' });
-					if (streetDesc) markerPopup += '<span class="popup-longDesc custscroll">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'fas fa-book' }) + '</span>';
+					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Start date', value: streetDate, iconName: 'fa-solid fa-calendar-days' });
+					if (streetDesc) markerPopup += '<span class="popup-longDesc custscroll">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'fa-solid fa-book' }) + '</span>';
 					if (markerPopup) {
 						var sourceLink = $(xml).find('url').text();
 						var sourceAuthor = $(xml).find('author').text();
@@ -280,7 +266,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags.bridge === 'yes') tag += 'bridge; ';
 			if (tag) {
 				tag = tag.substring(0, tag.length - 2);
-				markerPopup += L.Util.template(tagTmpl, { tag: 'Highway details', value: tag, iconName: 'fas fa-road' });
+				markerPopup += L.Util.template(tagTmpl, { tag: 'Highway details', value: tag, iconName: 'fa-solid fa-road' });
 			}
 		}
 		return markerPopup;
@@ -310,14 +296,13 @@ function parse_tags(element, titlePopup, poiParser) {
 			tag += '<a href="http://trigpointing.uk/trig/' + tags.tpuk_ref.split('TP')[1] + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
 		if (tag) {
 			tag = tag.substring(0, tag.length - 2);
-			markerPopup = L.Util.template(tagTmpl, { tag: 'Further reading', value: tag, iconName: 'fas fa-book' });
+			markerPopup = L.Util.template(tagTmpl, { tag: 'Further reading', value: tag, iconName: 'fa-solid fa-book' });
 		}
 		return markerPopup;
 	};
 	var image_parser = function(tags) {
 		// get images
-		var lID = 0;
-		var multiPano = [], multiVid = [];
+		var imgCount = 0, multiPano = [], multiVid = [];
 		markerPopup = '';
 		if (tags.wikimedia_commons) {
 			// support semicolon separated commons images
@@ -327,8 +312,8 @@ function parse_tags(element, titlePopup, poiParser) {
 				(tags.wikimedia_commons_2 ? ';' + tags.wikimedia_commons_2 : '')
 			).split(';');
 			for (x = 0; x < multiCommons.length; x++) if (multiCommons[x].indexOf('File:') === 0) {
-				markerPopup += generic_img_parser(multiCommons[x], lID, '');
-				lID++;
+				markerPopup += generic_img_parser(multiCommons[x], imgCount, '');
+				imgCount++;
 			}
 		}
 		if (tags.image) {
@@ -344,8 +329,8 @@ function parse_tags(element, titlePopup, poiParser) {
 				(tags['source:image_2'] ? ';' + tags['source:image_2'] : '')
 			).split(';') : '';
 			for (x = 0; x < multiImage.length; x++) if (multiImage[x].indexOf('http') === 0) {
-				markerPopup += generic_img_parser(multiImage[x], lID, multiImageSource[x] ? '&copy; ' + multiImageSource[x] : '');
-				lID++;
+				markerPopup += generic_img_parser(multiImage[x], imgCount, multiImageSource[x] ? '&copy; ' + multiImageSource[x] : '');
+				imgCount++;
 			}
 		}
 		if (tags['wikimedia_commons:pano']) {
@@ -362,13 +347,13 @@ function parse_tags(element, titlePopup, poiParser) {
 				(tags['wikimedia_commons:video_2'] ? ';' + tags['wikimedia_commons:video_2'] : '')
 			).split(';');
 		}
-		if (lID > 1 || multiPano.length || multiVid.length) markerPopup += show_img_controls(lID, multiPano, multiVid);
+		if (imgCount > 1 || multiPano.length || multiVid.length) markerPopup += show_img_controls(imgCount, multiPano, multiVid);
 		return markerPopup;
 	};
 	// https://github.com/opening-hours/opening_hours.js
 	var opening_hours_parser = function(tags) {
 		markerPopup = '';
-		if (tags.opening_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Opening date', value: date_parser(tags.opening_date, 'long'), iconName: 'fas fa-calendar-alt' });
+		if (tags.opening_date) markerPopup += L.Util.template(tagTmpl, { tag: 'Opening date', value: date_parser(tags.opening_date, 'long'), iconName: 'fa-solid fa-calendar-days' });
 		var drawTable = function(oh, date_today) {
 			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 			var weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -454,7 +439,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (openhrsState) {	markerPopup =
 				'<div style="min-width:' + (ohTable ? '270px;" class="popup-ohContainer' : '100px;') + '">' +
 					'<span class="popup-tagContainer" title="' + tags.opening_hours.replace(/"/g, '\'') + '">' +
-						'<i class="popup-tagIcon popup-openhrsState openColor-' + ohState + ' fas fa-circle fa-fw"></i>' +
+						'<i class="popup-tagIcon popup-openhrsState openColor-' + ohState + ' fa-solid fa-circle fa-fw"></i>' +
 						'<span class="popup-tagValue"><strong>' + openhrsState + ':</strong> ' + strNextChange + '</span>' +
 					'</span>' +
 					'<div class="popup-ohTable">' + ohTable + '</div>' +
@@ -471,13 +456,15 @@ function parse_tags(element, titlePopup, poiParser) {
 		{callback: generic_tag_parser, tag: 'loc_name', label: 'Local name'},
 		{callback: generic_tag_parser, tag: 'alt_name', label: 'Alternative name'},
 		{callback: generic_tag_parser, tag: 'old_name', label: 'Old name'},
-		{callback: generic_tag_parser, tag: 'operator', label: 'Operator', iconName: 'fas fa-user-tie'},
+		{callback: generic_tag_parser, tag: 'operator', label: 'Operator', iconName: 'fa-solid fa-user-tie'},
 		{callback: address_parser},
-		{callback: listed_parser},
+		{callback: site_parser},
 		{callback: phone_parser},
 		{callback: website_parser},
 		{callback: contact_parser},
-		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'fas fa-clipboard'},
+		{callback: generic_tag_parser, tag: 'artwork_subject', label: 'Subject', iconName: 'fa-solid fa-palette'},
+		{callback: generic_tag_parser, tag: 'description', label: 'Description', iconName: 'fa-solid fa-clipboard'},
+		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fa-solid fa-square-pen'},
 		{callback: street_parser},
 		{callback: furtherreading_parser},
 		{callback: facility_parser}
@@ -489,7 +476,7 @@ function parse_tags(element, titlePopup, poiParser) {
 	for (var c = 0; c < functions.length; c++) {
 		var data = functions[c];
 		if (data.tag && data.label) {
-			var iconName = data.iconName || 'fas fa-tag';
+			var iconName = data.iconName || 'fa-solid fa-tag';
 			markerPopup += data.callback(element.tags, data.tag, data.label, iconName);
 		}
 		else markerPopup += data.callback(element.tags);
@@ -500,7 +487,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			eName = element.type;
 			titlePopup = element.id;
 		}
-		$.each(element.tags, function(e) { markerPopup += generic_tag_parser(element.tags, e, e, 'fas fa-tag'); });
+		$.each(element.tags, function(e) { markerPopup += generic_tag_parser(element.tags, e, e, 'fa-solid fa-tag'); });
 		markerPopup = '<i>' + markerPopup + '</i>';
 	}
 	return generic_header_parser((eName || element.tags.ref), titlePopup, element.tags['fhrs:id'], true, element.tags.wikidata) + '<div class="popup-body">' + markerPopup + '</div>';
@@ -527,21 +514,21 @@ function callback(data) {
 		// get geometry outlines
 		if (e.type !== 'node') {
 			var outline, mems = [], optsPolygon = {
-				color: $('html').css('--main-color'),
-				opacity: 0.5,
-				weight: 5,
-				fillColor: $('html').css('--main-color'),
+				color: $('html').css('--second-color'),
+				opacity: 0.4,
+				weight: 4,
+				fillColor: $('html').css('--second-color'),
 				fillOpacity: 0.3,
 				interactive: false
 			}, optsPolyline = {
-				color: $('html').css('--main-color'),
-				opacity: 0.5,
+				color: $('html').css('--second-color'),
+				opacity: 0.4,
 				weight: 10,
 				interactive: false
 			}, optsPolylineThin = {
-				color: $('html').css('--main-color'),
-				opacity: 0.75,
-				weight: 3,
+				color: $('html').css('--second-color'),
+				opacity: 0.4,
+				weight: 4,
 				interactive: false
 			};
 			if (e.type === 'relation') {
@@ -557,9 +544,9 @@ function callback(data) {
 				}
 			}
 			else if (e.geometry) {
-				// check if area
+				// if area
 				if (Object.values(e.geometry[0]).toString() === Object.values(e.geometry[e.geometry.length-1]).toString()) outline = L.polygon(e.geometry, optsPolygon);
-				// assume way
+				// else assume way
 				else outline = L.polyline(e.geometry, optsPolyline);
 			}
 			outline._leaflet_id = 'o_' + e.type.slice(0, 1) + e.id;
@@ -670,11 +657,14 @@ function callback(data) {
 			if (e.tags['historic:railway']) e.tags.historic = 'railway_station';
 			if (!name) name = 'historic ' + e.tags.historic;
 			if (!type) type = 'historic';
-			if (e.tags.ruins) iconName = 'ruins-2';
+			if (e.tags.ruins) {
+				iconName = 'ruins-2';
+				name = name + ' ruins';
+			}
 			if (e.tags.military) {
 				iconName = 'war';
 				switch (e.tags.military) {
-					case 'bunker': iconName = 'bunker'; break;
+					case 'bunker': iconName = 'bunker-2-2'; break;
 					case 'barrier':
 						iconName = 'tanktrap';
 						name = 'historic ' + e.tags.barrier;
@@ -687,6 +677,8 @@ function callback(data) {
 				case 'boundary_stone':
 				case 'milestone':
 				case 'stone': iconName = pois.boundary_stone.iconName; break;
+				case 'cemetery': iconName = 'cemetery1'; break;
+				case 'farm': iconName = 'farm-2'; break;
 				case 'folly': iconName = 'tower'; break;
 				case 'memorial':
 					if (e.tags.memorial) {
@@ -702,6 +694,7 @@ function callback(data) {
 					}
 					if (!iconName) iconName = 'memorial';
 					break;
+				case 'mill': iconName = 'windmill-2'; break;
 				case 'moat': iconName = 'lake2'; break;
 				case 'railway_station': iconName = 'steamtrain'; break;
 				case 'street_lamp': iconName = 'streetlamp'; break;
@@ -722,6 +715,10 @@ function callback(data) {
 					case 'pin': iconName = 'sprivet'; break;
 				}
 			}
+		}
+		if (e.tags.power) {
+			name = 'power ' + e.tags.power;
+			iconName = 'powersubstation';
 		}
 		if (e.tags.shop) {
 			if (e.tags.shop === 'yes') name = 'shop';
@@ -854,8 +851,17 @@ function callback(data) {
 		if (e.tags.landuse) {
 			if (!name) name = e.tags.landuse;
 			if (!type) type = e.tags.landuse;
-			if (e.tags.landuse === 'cemetery') iconName = 'cemetery';
-			if (e.tags.landuse === 'recreation_ground') type = 'recreation';
+			switch (e.tags.landuse) {
+				case 'cemetery': iconName = 'cemetery'; break;
+				case 'recreation_ground': type = 'recreation'; break;
+			}
+		}
+		if (e.tags.cemetery) {
+			if (!name) name = e.tags.cemetery;
+			switch (e.tags.cemetery) {
+				case 'grave': if (!iconName) iconName = 'headstone-2'; break;
+				case 'sector': iconName = 'administrativeboundary'; break;
+			}
 		}
 		if (e.tags.boundary) {
 			if (!name) name = e.tags.protection_title;
@@ -877,7 +883,6 @@ function callback(data) {
 			else if (e.tags.building) {
 				if (e.tags.building === 'house' || e.tags.building === 'bungalow') iconName = 'bighouse';
 				else if (e.tags.building === 'hut') iconName = 'hut';
-				else if (e.tags.building === 'service') iconName = 'powersubstation';
 				else iconName = 'apartment-3';
 			}
 			else if (e.tags.entrance) iconName = 'entrance';
@@ -934,7 +939,10 @@ function callback(data) {
 		else if (e.tags.ref) toolTip += e.tags.ref;
 		else if (e.tags.operator) toolTip += e.tags.operator;
 		toolTip += '</div><i>' + name + '</i>';
-		if (e.tags.image || e.tags.wikimedia_commons) toolTip += ' <i class="tooltip-icons fas fa-image fa-fw" title="Image"></i>';
+		if (e.tags.image || e.tags.wikimedia_commons) {
+			var imgIcon = ((e.tags.image && e.tags.wikimedia_commons) || (e.tags.image && e.tags.image.indexOf(';') > -1) || (e.tags.wikimedia_commons && e.tags.wikimedia_commons.indexOf(';') > -1)) ? 'images' : 'image';
+			toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
+		}
 		if (e.tags['wikimedia_commons:video']) toolTip += ' <i class="tooltip-icons fa fa-film fa-fw" title="Video"></i>';
 		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Photosphere view"></i>';
 		// popup
@@ -952,7 +960,7 @@ function callback(data) {
 			customTOptions.className = (ohState !== undefined) ? 'openColor-list-' + ohState : 'openColor-list-' + ctState;
 			marker.bindPopup(markerPopup, customPOptions);
 			marker.bindTooltip(toolTip, customTOptions);
-			marker.addTo(this.instance);
+			marker.addTo(iconLayer);
 			// single poi
 			if (rQuery) {
 				if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').click();
@@ -991,7 +999,7 @@ function pushPoiList(customSort) {
 		var poiIcon = '';
 		if (poiList[c]._icon) poiIcon = '<img src="' + poiList[c]._icon.src + '"/>';
 		else if (poiList[c].options.color)
-			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fas fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
+			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fa-solid fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
 			'<td class="openColor-list-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
 			'<td>' + poiList[c]._tooltip._content + '</td>' +
@@ -1030,7 +1038,7 @@ function pushPoiList(customSort) {
 		if ($(window).width() < 768) $('.sidebar-close:visible').click();
 		else {
 			// get bounds of area, focus 150px above marker to allow room for popup
-			var zm = map._layers['o_' + this.id] ? map.getBoundsZoom(map._layers['o_' + this.id]._bounds.pad(0.5)) : map.getZoom();
+			var zm = areaOutline.getLayer('o_' + this.id) ? map.getBoundsZoom(areaOutline.getLayer('o_' + this.id)._bounds.pad(0.5)) : map.getZoom();
 			if (zm > 18) zm = 18;
 			var px = map.project(map._layers[this.id]._latlng, zm);
 			map.stop().flyTo(map.unproject([px.x, px.y -= 150], zm), zm);
@@ -1040,11 +1048,11 @@ function pushPoiList(customSort) {
 		poiList.length + ' result' + (poiList.length > 1 ? 's' : '') +
 			($('#inputAttic').val() ? ' from ' + date_parser($('#inputAttic').val(), 'short') : '') +
 			($('#inputOpen').is(':checked') ? ' (open)' : '') +
-			(customSort ? '' : ' <i style="color:#777;" class="fas fa-sort-' + (poiList[0].distance ? 'numeric' : 'alpha') + '-down fa-fw"></i>')
+			(customSort ? '' : ' <i style="color:#777;" class="fa-solid fa-sort-' + (poiList[0].distance ? 'numeric' : 'alpha') + '-down fa-fw"></i>')
 	);
 	if (poiList.length === maxOpResults) {
 		$('#poi-results h3').append('<br/>(maximum number of results)');
-		setMsgStatus('fas fa-info-circle', 'Max Results', 'Maximum number of results shown (' + maxOpResults + ').', 3);
+		setMsgStatus('fa-solid fa-circle-info', 'Max Results', 'Maximum number of results shown (' + maxOpResults + ').', 3);
 	}
 }
 
@@ -1053,10 +1061,10 @@ var tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName
 function generic_header_parser(header, subheader, fhrs, osmId, wikidata) {
 	var markerPopup = '<div class="popup-header">';
 	if (osmId && !$('#inputAttic').val()) {
-		markerPopup += '<a class="popup-edit popup-header-button" title="Edit on OpenStreetMap"><i class="fas fa-edit fa-fw"></i></a>';
-		if (wikidata) markerPopup += '<a class="popup-header-button" title="Edit Wikidata" href="https://www.wikidata.org/wiki/' + wikidata + '" target="_blank" rel="noopener"><i class="fas fa-barcode fa-fw"></i></a>';
-		if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm popup-header-button" title="Bookmark"><i class="far fa-bookmark fa-fw"></i></a>';
-		if (fhrs) markerPopup += '<span class="popup-fhrs" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.svg"/></span>';
+		markerPopup += '<a class="popup-edit popup-header-button" title="Edit on OpenStreetMap"><i class="fa-solid fa-pen-to-square fa-fw"></i></a>';
+		if (wikidata) markerPopup += '<a class="popup-header-button" title="Edit Wikidata" href="https://www.wikidata.org/wiki/' + wikidata + '" target="_blank" rel="noopener"><i class="fa-solid fa-barcode fa-fw"></i></a>';
+		if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark fa-fw"></i></a>';
+		if (fhrs) markerPopup += '<span class="popup-fhrs notloaded" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.svg"/></span>';
 	}
 	if (header || fhrs) markerPopup += '<h3>' + (header !== undefined ? header : '&hellip;') + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
@@ -1067,13 +1075,13 @@ function generic_tag_parser(tags, tag, label, iconName) {
 	// ignore implied access
 	if (tags[tag] && tag === 'access' && tags[tag] === 'yes') return markerPopup;
 	else if (tags[tag]) {
-		if (tags[tag] === 'yes') result = '<i class="fas fa-check fa-fw" title="yes"></i>';
-		else if (tags[tag] === 'no') result = '<i class="fas fa-times fa-fw" title="no"></i>';
+		if (tags[tag] === 'yes') result = '<i class="fa-solid fa-check fa-fw" title="yes"></i>';
+		else if (tags[tag] === 'no') result = '<i class="fa-solid fa-xmark fa-fw" title="no"></i>';
 		else if (tag.indexOf('_date') > -1 || tag.indexOf('date_') > -1) result = date_parser(tags[tag], 'long');
-		else result = tags[tag].replace(/;/g, ', ').replace(/_/g, ' ');
+		else result = listTidy(tags[tag]);
 		markerPopup += L.Util.template(tagTmpl, { tag: label, value: result, iconName: iconName });
 	}
-	if ((tags.description || tags.inscription) && markerPopup) markerPopup = '<span class="popup-longDesc custscroll">' + markerPopup + '</span>';
+	if ((tags.description || tags.inscription || tags.artwork_subject) && markerPopup) markerPopup = '<span class="popup-longDesc custscroll">' + markerPopup + '</span>';
 	return markerPopup;
 }
 function generic_img_parser(img, id, attrib) {
@@ -1084,7 +1092,7 @@ function generic_img_parser(img, id, attrib) {
 		imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
 			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=1280 1280w, {img}&width=800 800w, {img}&width=640 640w">' +
 			'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;"/></a>' +
-			'<div class="popup-imgAttrib">Loading attribution...</div>' +
+			'<div class="popup-imgAttrib notloaded">Loading attribution...</div>' +
 		'</div>';
 	}
 	else imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
@@ -1098,79 +1106,54 @@ function generic_img_parser(img, id, attrib) {
 // poi callback parsers
 function allotment_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'user', label: 'Point of contact', iconName: 'fas fa-user-circle'},
-		{callback: generic_tag_parser, tag: 'plots', label: 'Plots', iconName: 'fas fa-th-large'},
-	]);
-}
-function artwork_parser(tags, titlePopup) {
-	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'artwork_subject', label: 'Artwork subject', iconName: 'fas fa-pen-square'},
-		{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'far fa-user'},
-		{callback: generic_tag_parser, tag: 'builder', label: 'Builder', iconName: 'far fa-user'},
-		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fas fa-pen-square'},
-		{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'fas fa-cube'}
+		{callback: generic_tag_parser, tag: 'user', label: 'Point of contact', iconName: 'fa-solid fa-circle-user'},
+		{callback: generic_tag_parser, tag: 'plots', label: 'Plots', iconName: 'fa-solid fa-table-cells-large'},
 	]);
 }
 function bike_parser(tags, titlePopup) {
 	var bikeservices_parser = function(tags) {
 		var markerPopup = '', tag = '';
 		for (var key in tags) if (key.indexOf('service:bicycle:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[2] + ', ';
-		if (tag) {
-			tag = tag.replace(/_/g, '-');
-			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Bicycle services', value: tag, iconName: 'fas fa-bicycle' });
-		}
+		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Bicycle services', value: listTidy(tag, true), iconName: 'fa-solid fa-bicycle' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
 		{callback: bikeservices_parser},
-		{callback: generic_tag_parser, tag: 'bicycle_parking', label: 'Type', iconName: 'fas fa-lock'},
-		{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'fas fa-bicycle'},
+		{callback: generic_tag_parser, tag: 'bicycle_parking', label: 'Type', iconName: 'fa-solid fa-lock'},
+		{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'fa-solid fa-bicycle'},
 	]);
 }
 function busstop_parser(tags, titlePopup) {
 	var nextbus_parser = function(tags) {
-		var markerPopup = '', bearing;
-		if (tags['naptan:Bearing']) {
-			switch (tags['naptan:Bearing']) {
-				case 'N': bearing = 'North'; break;
-				case 'E': bearing = 'East'; break;
-				case 'S': bearing = 'South'; break;
-				case 'W': bearing = 'West'; break;
-				case 'NE': bearing = 'North-east'; break;
-				case 'NW': bearing = 'North-west'; break;
-				case 'SE': bearing = 'South-east'; break;
-				case 'SW': bearing = 'South-west'; break;
-			}
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Bearing', value: bearing, iconName: 'fas fa-compass' });
-		}
-		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable" style="width:' + imgSize + 'px;" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
+		var markerPopup = '';
+		var bearing = {
+			N: 'North', E: 'East', S: 'South', W: 'West',
+			NE: 'North-east', NW: 'North-west', SE: 'South-east', SW: 'South-west'
+		}[tags['naptan:Bearing']];
+		if (bearing) markerPopup += L.Util.template(tagTmpl, { tag: 'Bearing', value: bearing, iconName: 'fa-solid fa-compass' });
+		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable notloaded" style="width:' + imgSize + 'px;" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
 				'<img title="Loading next bus times" src="assets/img/loader.svg"/></div>';
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
-		{callback: generic_tag_parser, tag: 'ref', label: 'Stop ID', iconName: 'fas fa-bus'},
-		{callback: generic_tag_parser, tag: 'naptan:Street', label: 'Street', iconName: 'fas fa-road'},
+		{callback: generic_tag_parser, tag: 'ref', label: 'Stop ID', iconName: 'fa-solid fa-bus'},
+		{callback: generic_tag_parser, tag: 'naptan:Street', label: 'Street', iconName: 'fa-solid fa-road'},
 		{callback: nextbus_parser}
 	]);
 }
 function carpark_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'capacity', label: 'Spaces', iconName: 'fas fa-car'},
-		{callback: generic_tag_parser, tag: 'capacity:disabled', label: 'Disabled spaces', iconName: 'fas fa-wheelchair'},
-		{callback: generic_tag_parser, tag: 'capacity:parent', label: 'Parent spaces', iconName: 'fas fa-child'},
-		{callback: generic_tag_parser, tag: 'maxstay', label: 'Max stay', iconName: 'fas fa-hourglass'}
+		{callback: generic_tag_parser, tag: 'capacity', label: 'Spaces', iconName: 'fa-solid fa-car'},
+		{callback: generic_tag_parser, tag: 'capacity:disabled', label: 'Disabled spaces', iconName: 'fa-solid fa-wheelchair'},
+		{callback: generic_tag_parser, tag: 'capacity:parent', label: 'Parent spaces', iconName: 'fa-solid fa-child'},
+		{callback: generic_tag_parser, tag: 'maxstay', label: 'Max stay', iconName: 'fa-solid fa-hourglass'}
 	]);
 }
 function carshop_parser(tags, titlePopup) {
 	var carservices_parser = function(tags) {
 		var markerPopup = '', tag = '';
 		for (var key in tags) if (key.indexOf('service:vehicle:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[2] + ', ';
-		if (tag) {
-			tag = tag.replace(/_/g, '-');
-			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Repair services', value: tag, iconName: 'fas fa-car' });
-		}
+		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Repair services', value: listTidy(tag, true), iconName: 'fa-solid fa-car' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
@@ -1179,38 +1162,21 @@ function carshop_parser(tags, titlePopup) {
 }
 function cctv_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'maxspeed', label: 'Max speed', iconName: 'fas fa-gauge-simple'},
-		{callback: generic_tag_parser, tag: 'surveillance:zone', label: 'Surveillance zone', iconName: 'fas fa-eye'},
-		{callback: generic_tag_parser, tag: 'camera:mount', label: 'Camera mount', iconName: 'fas fa-video'},
-		{callback: generic_tag_parser, tag: 'camera:type', label: 'Camera type', iconName: 'fas fa-video'}
-	]);
-}
-function clock_parser(tags, titlePopup) {
-	var clockDetail = function(tags) {
-		var markerPopup = '', tag = '';
-		if (tags.display) tag += tags.display + ', ';
-		if (tags.support) tag += tags.support + ', ';
-		tag += (tags.faces >= 2) ? tags.faces + ' faces, ' : '1 face, ';
-		if (tag) {
-			tag = tag.replace(/_/g, '-');
-			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Detail', value: tag, iconName: 'fas fa-clock' });
-		}
-		return markerPopup;
-	};
-	return parse_tags(tags, titlePopup, [
-		{callback: clockDetail}
+		{callback: generic_tag_parser, tag: 'maxspeed', label: 'Max speed', iconName: 'fa-solid fa-gauge-simple'},
+		{callback: generic_tag_parser, tag: 'surveillance:zone', label: 'Surveillance zone', iconName: 'fa-solid fa-eye'},
+		{callback: generic_tag_parser, tag: 'camera:mount', label: 'Camera mount', iconName: 'fa-solid fa-video'},
+		{callback: generic_tag_parser, tag: 'camera:type', label: 'Camera type', iconName: 'fa-solid fa-video'}
 	]);
 }
 function clothes_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'clothes', label: 'Clothes type', iconName: 'fas fa-tshirt'},
-		{callback: generic_tag_parser, tag: 'second_hand', label: 'Second hand', iconName: 'fas fa-tshirt'}
+		{callback: generic_tag_parser, tag: 'clothes', label: 'Clothes type', iconName: 'fa-solid fa-shirt'},
+		{callback: generic_tag_parser, tag: 'second_hand', label: 'Second hand', iconName: 'fa-solid fa-shirt'}
 	]);
 }
 function defib_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'fas fa-location-arrow'},
+		{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'fa-solid fa-location-arrow'},
 	]);
 }
 function food_parser(tags, titlePopup) {
@@ -1224,11 +1190,7 @@ function food_parser(tags, titlePopup) {
 		if (tags.real_ale === 'yes') tag += 'real ale, ';
 		if (tags.real_cider === 'yes') tag += 'real cider, ';
 		for (var key in tags) if (key.indexOf('diet:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + ' options, ';
-		if (tag) {
-			tag = tag.replace(/_/g, '-');
-			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Cuisine', value: tag, iconName: 'fas fa-utensils' });
-		}
+		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Cuisine', value: listTidy(tag, true), iconName: 'fa-solid fa-utensils' });
 		return markerPopup;
 	};
 	var service_parser = function(tags) {
@@ -1244,7 +1206,7 @@ function food_parser(tags, titlePopup) {
 		if (tags['url:ordering']) tag += '<a href="' + tags['url:ordering'] + '" title="Ordering" target="_blank" rel="noopener">online ordering</a>, ';
 		if (tag) {
 			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Service', value: tag, iconName: 'fas fa-shopping-bag' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Service', value: tag, iconName: 'fa-solid fa-bag-shopping' });
 		}
 		return markerPopup;
 	};
@@ -1257,27 +1219,12 @@ function fuelstation_parser(tags, titlePopup) {
 	var fuel_parser = function(tags) {
 		var markerPopup = '', tag = '';
 		for (var key in tags) if (key.indexOf('fuel:') === 0 && (tags[key] === 'yes')) tag += key.split(':')[1] + ', ';
-		if (tag) {
-			tag = tag.replace(/_/g, '-');
-			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Fuel options', value: tag, iconName: 'fas fa-oil-can' });
-		}
+		if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Fuel options', value: listTidy(tag, true), iconName: 'fa-solid fa-oil-can' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'shop', label: 'Shop', iconName: 'fas fa-store-alt'},
+		{callback: generic_tag_parser, tag: 'shop', label: 'Shop', iconName: 'fa-solid fa-shop'},
 		{callback: fuel_parser}
-	]);
-}
-function historic_parser(tags, titlePopup) {
-	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'bunker_type', label: 'Bunker type', iconName: 'fas fa-cube'},
-		{callback: generic_tag_parser, tag: 'artist_name', label: 'Artist', iconName: 'fas fa-user'},
-		{callback: generic_tag_parser, tag: 'builder', label: 'Builder', iconName: 'fas fa-user'},
-		{callback: generic_tag_parser, tag: 'material', label: 'Material', iconName: 'fas fa-cube'},
-		{callback: generic_tag_parser, tag: 'inscription', label: 'Inscription', iconName: 'fas fa-pen-square'},
-		{callback: generic_tag_parser, tag: 'wreck:date_sunk', label: 'Date sunk', iconName: 'fas fa-ship'},
-		{callback: generic_tag_parser, tag: 'wreck:visible_at_low_tide', label: 'Visible at low tide', iconName: 'fas fa-ship'}
 	]);
 }
 function hotel_parser(tags, titlePopup) {
@@ -1285,45 +1232,43 @@ function hotel_parser(tags, titlePopup) {
 		var markerPopup = '', tag = '';
 		if (tags.stars) {
 			var result = '<a href="https://www.visitengland.com/plan-your-visit/quality-assessment-and-star-ratings/visitengland-star-ratings" title="' + tags.stars + ' stars" target="_blank" rel="noopener">';
-			for (var c = 0; c < tags.stars; c++) result += '<i class="far fa-star fa-fw"></i>';
+			for (var c = 0; c < tags.stars; c++) result += '<i class="fa-regular fa-star fa-fw"></i>';
 			result += '</a>';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'VisitEngland rating', value: result, iconName: 'fas fa-star' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'VisitEngland rating', value: result, iconName: 'fa-solid fa-star' });
 		}
 		if (tags.view) tag += tags.view + ' view, ';
 		if (tags.balcony) tag += 'balcony, ';
 		if (tags.cooking) tag += 'self-catering, ';
 		if (tag) {
 			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'fas fa-bed' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Accomodation', value: tag, iconName: 'fa-solid fa-bed' });
 		}
-		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="https://www.booking.com/hotel/gb/' + tags['url:booking_com'] + '.en-gb.html" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"/></a>', iconName: 'fas fa-file' });
+		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { tag: 'Check avalibility', value: '<a href="https://www.booking.com/hotel/gb/' + tags['url:booking_com'] + '.en-gb.html" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"/></a>', iconName: 'fa-solid fa-file' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
 		{callback: hotelservices_parser},
-		{callback: generic_tag_parser, tag: 'rooms', label: 'Rooms', iconName: 'fas fa-bed'}
+		{callback: generic_tag_parser, tag: 'rooms', label: 'Rooms', iconName: 'fa-solid fa-bed'}
 	]);
 }
 function hospital_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'emergency', label: 'Emergency', iconName: 'fas fa-ambulance'}
+		{callback: generic_tag_parser, tag: 'emergency', label: 'Emergency', iconName: 'fa-solid fa-truck-medical'}
 	]);
 }
 function post_parser(tags, titlePopup) {
 	var postcypher_parser = function(tags) {
-		var royalcypher = tags.royal_cypher;
 		var markerPopup = '';
-		if (royalcypher) {
-			switch (royalcypher) {
-				case 'VR': royalcypher += ': Victoria (1837-1901)'; break;
-				case 'EVIIR': royalcypher += ': Edward VII (1901-1910)'; break;
-				case 'GR': royalcypher += ': George V (1910-1936)'; break;
-				case 'EVIIIR': royalcypher += ': Edward VIII (1936)'; break;
-				case 'GVIR': royalcypher += ': George VI (1936-1952)'; break;
-				case 'EIIR': royalcypher += ': Elizabeth II (1952+)'; break;
-			}
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Royal cypher', value: royalcypher, iconName: 'fas fa-signature' });
-		}
+		var royalcypher = {
+			VR: 'Victoria (1837-1901)',
+			EVIIR: 'Edward VII (1901-1910)',
+			GR: 'George V (1910-1936)',
+			EVIIIR: 'Edward VIII (1936)',
+			GVIR: 'George VI (1936-1952)',
+			EIIR: 'Elizabeth II (1952+)',
+			no: 'none'
+		}[tags.royal_cypher];
+		if (royalcypher) markerPopup += L.Util.template(tagTmpl, { tag: 'Royal cypher', value: royalcypher, iconName: 'fa-solid fa-signature' });
 		return markerPopup;
 	};
 	var collection_parser = function(tags) {
@@ -1334,14 +1279,14 @@ function post_parser(tags, titlePopup) {
 			else if (ct.getDate() === new Date(new Date().getDate() + 1).getDate()) strNextChange = 'Tomorrow ' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 			else if (ct.getDate() > new Date(new Date().getDate() + 1).getDate()) strNextChange = ct.toLocaleDateString(navigator.language, { weekday: 'long' }) + ' ' + ct.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 			ctState = (ct.getDate() === new Date().getDate() && ct.getDate() >= new Date().getDate()) ? true : false;
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Next collection', value: '<span title="' + tags.collection_times + '">' + strNextChange + '</span>', iconName: 'openColor-' + ctState + ' fas fa-circle' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Next collection', value: '<span title="' + tags.collection_times + '">' + strNextChange + '</span>', iconName: 'openColor-' + ctState + ' fa-solid fa-circle' });
 		}
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup, [
 		{callback: postcypher_parser},
-		{callback: generic_tag_parser, tag: 'post_box:mounting', label: 'Mounted on', iconName: 'fas fa-archive'},
-		{callback: generic_tag_parser, tag: 'collection_times', label: 'Collection times', iconName: 'fas fa-clock'},
+		{callback: generic_tag_parser, tag: 'post_box:mounting', label: 'Mounted on', iconName: 'fa-solid fa-box-archive'},
+		{callback: generic_tag_parser, tag: 'collection_times', label: 'Collection times', iconName: 'fa-solid fa-clock'},
 		{callback: collection_parser}
 	]);
 }
@@ -1352,39 +1297,39 @@ function socialf_parser(tags, titlePopup) {
 		if (tags.social_facility) tag += tags.social_facility;
 		if (tag) {
 			tag = tag.replace(/_/g, ' ');
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Social facility', value: tag, iconName: 'fas fa-users' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Social facility', value: tag, iconName: 'fa-solid fa-users' });
 		}
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup, [
 		{callback: socialfservices_parser},
-		{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'fas fa-users'}
+		{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'fa-solid fa-users'}
 	]);
 }
 function surveyp_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'ref', label: 'Bracket number', iconName: 'fas fa-hashtag'},
-		{callback: generic_tag_parser, tag: 'ele', label: 'Elevation (m above sea)', iconName: 'fas fa-arrow-up'},
-		{callback: generic_tag_parser, tag: 'height', label: 'Height (m above ground)', iconName: 'fas fa-arrow-up'},
-		{callback: generic_tag_parser, tag: 'survey_point:levelling_date', label: 'Levelling date', iconName: 'fas fa-calendar-alt'},
-		{callback: generic_tag_parser, tag: 'survey_point:verified_date', label: 'Verified date', iconName: 'fas fa-calendar-alt'}
+		{callback: generic_tag_parser, tag: 'ref', label: 'Bracket number', iconName: 'fa-solid fa-hashtag'},
+		{callback: generic_tag_parser, tag: 'ele', label: 'Elevation (m above sea)', iconName: 'fa-solid fa-arrow-up'},
+		{callback: generic_tag_parser, tag: 'height', label: 'Height (m above ground)', iconName: 'fa-solid fa-arrow-up'},
+		{callback: generic_tag_parser, tag: 'survey_point:levelling_date', label: 'Levelling date', iconName: 'fa-solid fa-calendar-days'},
+		{callback: generic_tag_parser, tag: 'survey_point:verified_date', label: 'Verified date', iconName: 'fa-solid fa-calendar-days'}
 	]);
 }
 function tap_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'drinking_water', label: 'Drinking water', iconName: 'fas fa-faucet'},
-		{callback: generic_tag_parser, tag: 'bottle', label: 'Bottle refill', iconName: 'fas fa-tint'}
+		{callback: generic_tag_parser, tag: 'drinking_water', label: 'Drinking water', iconName: 'fa-solid fa-faucet'},
+		{callback: generic_tag_parser, tag: 'bottle', label: 'Bottle refill', iconName: 'fa-solid fa-bottle-droplet'}
 	]);
 }
 function taxi_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'capacity', label: 'Taxi rank capacity', iconName: 'fas fa-taxi'}
+		{callback: generic_tag_parser, tag: 'capacity', label: 'Taxi rank capacity', iconName: 'fa-solid fa-taxi'}
 	]);
 }
 function vending_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'brand', label: 'Brand'},
-		{callback: generic_tag_parser, tag: 'biometric', label: 'Biometric', iconName: 'fas fa-fingerprint'},
+		{callback: generic_tag_parser, tag: 'biometric', label: 'Biometric', iconName: 'fa-solid fa-fingerprint'},
 	]);
 }
 function education_parser(tags, titlePopup) {
@@ -1396,7 +1341,7 @@ function education_parser(tags, titlePopup) {
 		if (tags.denomination) tag += titleCase(tags.denomination) + ', ';
 		if (tag) {
 			tag = tag.substring(0, tag.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Education details', value: tag, iconName: 'fas fa-school' });
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Education details', value: tag, iconName: 'fa-solid fa-school' });
 		}
 		return markerPopup;
 	};
@@ -1406,17 +1351,17 @@ function education_parser(tags, titlePopup) {
 }
 function worship_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'denomination', label: 'Denomination', iconName: 'fas fa-place-of-worship'},
-		{callback: generic_tag_parser, tag: 'service_times', label: 'Service times', iconName: 'fas fa-clock'}
+		{callback: generic_tag_parser, tag: 'denomination', label: 'Denomination', iconName: 'fa-solid fa-place-of-worship'},
+		{callback: generic_tag_parser, tag: 'service_times', label: 'Service times', iconName: 'fa-solid fa-clock'}
 	]);
 }
 
 // popup image elements
-function getWikiAttrib(id) {
+function getWikiAttrib(element) {
 	// https://commons.wikimedia.org/wiki/Commons:API
 	// get image attribution
-	if ($(id[0]).find('img').data('url') && $(id[0]).find('img').data('url').indexOf('File:') === 0) {
-		var img = $(id[0]).find('img').data('url');
+	if (element.find('img').data('url') && element.find('img').data('url').indexOf('File:') === 0) {
+		var img = element.find('img').data('url');
 		$.ajax({
 			url: 'https://commons.wikimedia.org/w/api.php',
 			dataType: 'jsonp',
@@ -1429,11 +1374,13 @@ function getWikiAttrib(id) {
 					var imgDate = new Date(imgAttrib.DateTimeOriginal ? imgAttrib.DateTimeOriginal.value : imgAttrib.DateTime.value).getFullYear();
 					var imgAttribUrl = '<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank" rel="noopener">' +
 						(imgDate ? imgDate + ' | ' : '') + '&copy; ' + imgArtist + ' | ';
-					id.find($('.popup-imgAttrib')).html(imgAttribUrl + imgAttrib.LicenseShortName.value + '</a>');
-					$(id[0]).find('a').data('caption', 'Wikimedia Commons: ' + imgAttribUrl + imgAttrib.UsageTerms.value + '</a>');
+					element.find($('.popup-imgAttrib')).html(imgAttribUrl + imgAttrib.LicenseShortName.value + '</a>');
+					element.find('a').data('caption', 'Wikimedia Commons: ' + imgAttribUrl + imgAttrib.UsageTerms.value + '</a>');
 				}
-				else id.find($('.popup-imgAttrib')).html('Error: Attribution not found');
-				id.find($('.popup-imgAttrib')).addClass('attribd');
+				else element.find($('.popup-imgAttrib')).html('Error: Attribution not found');
+				element.find($('.popup-imgAttrib')).removeClass('notloaded');
+				// set the popup content so it includes dynamically loaded content
+				if (markerId && !element.find($('.notloaded')).length) map._layers[markerId].setPopupContent();
 				if ($('#inputDebug').is(':checked')) console.debug('Wikimedia-attrib:', result);
 			},
 			error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKIMEDIA-ATTRIB:', encodeURI(this.url)); }
@@ -1447,20 +1394,20 @@ function show_img_controls(imgMax, img360, vid) {
 		if (vid[x].indexOf('File:') === 0 && vid[x].indexOf('webm') === vid[x].length-4) ctrlTmpl +=
 			'<a class="vid" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-base-class="noslideshow" data-loop="false"' +
 				'data-type="iframe" data-animation-effect="circular" href="https://commons.wikimedia.org/wiki/' + encodeURIComponent(vid[x]) + '?embedplayer=yes">' +
-				'<i style="min-width:25px;" class="fas fa-film fa-fw jump"></i>' +
+				'<i style="min-width:25px;" class="fa-solid fa-film fa-fw fa-bounce"></i>' +
 			'</a>';
 	}
 	if (img360 && img360.length) for (x = 0; x < img360.length; x++) {
 		if (img360[x].indexOf('File:') === 0) ctrlTmpl +=
 			'<a class="pano" title="Photosphere" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-fancybox="pano" data-base-class="noslideshow" data-loop="false"' +
 				'data-type="iframe" data-animation-effect="circular" data-src="assets/pannellum/pannellum.htm#config=config.json&panorama=' + encodeURIComponent(img360[x]) + '" href="javascript:;">' +
-				'<i style="min-width:25px;" class="fas fa-street-view fa-fw jump"></i>' +
+				'<i style="min-width:25px;" class="fa-solid fa-street-view fa-fw fa-bounce"></i>' +
 			'</a>';
 	}
 	if (imgMax > 1) ctrlTmpl +=
-		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fas fa-caret-square-left fa-fw"></i></a></span>' +
-		'<i class="fas fa-images fa-fw" title="Gallery (1 of ' + imgMax + ')"></i>' +
-		'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fas fa-caret-square-right fa-fw"></i></a></span>';
+		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fa-solid fa-square-caret-left fa-fw"></i></a></span>' +
+		'<i class="fa-solid fa-images fa-fw" title="Gallery (1 of ' + imgMax + ')"></i>' +
+		'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fa-solid fa-square-caret-right fa-fw"></i></a></span>';
 	return ctrlTmpl + '</div>';
 }
 function navImg(direction) {
@@ -1488,6 +1435,11 @@ function titleCase(str, force) {
 	str = str.replace(/;/g, ', ').replace(/_/g, ' ');
 	if (str === str.toUpperCase() && force === undefined) return str;
 	else return str.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+}
+function listTidy(str, trunc) {
+	// truncate trail end, replace semi-colon non-spaced lists with spaced commas, replace underscores with dashes
+	if (trunc) str = str.substring(0, str.length - 2);
+	return str.replace(/;(?=\S)/g, ', ').replace(/_/g, '-');
 }
 function date_parser(dtStr, style) {
 	// parse ISO 8601 dates using local offset
@@ -1528,9 +1480,9 @@ function pad(n) {
 	return (n < 10) ? '0' + n : n;
 }
 function elementType(e) {
-	switch (e.toLowerCase().slice(0, 1)) {
-		case 'n': return 'node';
-		case 'w': return 'way';
-		case 'r': return 'relation';
-	}
+	return {
+		n: 'node',
+		w: 'way',
+		r: 'relation'
+	}[e.toLowerCase().slice(0, 1)];
 }

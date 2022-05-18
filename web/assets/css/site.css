@@ -124,7 +124,7 @@ input[type=text], input[type=date], input[type=number] {
 #weather > span:nth-child(3) {
 	color: #8795bd;
 }
-#weather > span .fa-water, #weather > span .fa-level-up-alt, #weather > span .fa-level-down-alt {
+#weather > span .fa-water, #weather > span .fa-turn-up, #weather > span .fa-turn-down {
 	color: #61818a;
 }
 #weather .comment {
@@ -165,7 +165,7 @@ input[type=text], input[type=date], input[type=number] {
 #home .sidebar-body a i:hover, #devTools h3:hover::after, .popup-ohContainer .popup-tagValue:hover::after {
 	color: black !important;
 }
-#home .leaflet-routing-remove-waypoint::after {
+.easy-autocomplete + .leaflet-routing-remove-waypoint::after, #inputOverpass + .leaflet-routing-remove-waypoint::after {
 	font-family: 'Font Awesome 6 Free';
 	content: '\f002';
 	font-size: 14px;
@@ -265,7 +265,6 @@ h3 {
 }
 .ui-accordion-header {
 	cursor: pointer;
-	-ms-user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
@@ -300,7 +299,6 @@ h3 {
 	padding: 4px 0;
 	background-color: white;
 	cursor: default;
-	-ms-user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
@@ -390,19 +388,13 @@ h3 {
 	border-top-left-radius: 4px;
 	line-height: 20px;
 }
-.leaflet-control-attribution .fa-info-circle:hover {
+.leaflet-control-attribution .fa-circle-info:hover {
 	color: #333;
 }
-.leaflet-bar a:hover, .leaflet-bar button:hover {
+.leaflet-bar a:hover, .leaflet-bar button:enabled:hover {
 	background-color: var(--bg-hover-color);
 	color: black;
 	text-decoration: none;
-}
-.leaflet-control-layers-toggle {
-	background-image: url(../img/leaflet/layers.png);
-}
-.leaflet-retina .leaflet-control-layers-toggle {
-	background-image: url(../img/leaflet/layers-2x.png);
 }
 .leaflet-left .leaflet-control-scale {
 	margin: 0 0 3px 10px;
@@ -535,9 +527,6 @@ input[type=range]:-moz-focusring {
 	outline: 1px solid white;
 	outline-offset: -1px;
 }
-input[type=range]::-ms-tooltip {
-	display: none;
-}
 #inputOpacity .leaflet-popup-close-button, #msgStatus .leaflet-popup-close-button {
 	position: absolute;
 	right: 5px;
@@ -587,8 +576,10 @@ input[type=range]::-ms-tooltip {
 	border: 1px solid #ccc;
 	height: 30px;
 }
-button:disabled {
-	filter: grayscale(80%) contrast(80%);
+button:disabled, button:disabled:hover {
+	background-color: #eee;
+	color: #aaa;
+	cursor: default;
 }
 
 /* poi tab */
@@ -785,10 +776,8 @@ select:hover:enabled, #poi-results button:hover:enabled {
 	margin: auto;
 	padding: 5px 10px 5px 10px;
 	display: block;
-}
-#walking a img:hover {
-	filter: brightness(80%);
-	transition: filter 100ms;
+	border-radius: 20px;
+	background-color: #fff;
 }
 #walkContainer {
 	padding: 5px 0;
@@ -1079,7 +1068,7 @@ input:indeterminate + .slider::before {
 	padding-left: 5px;
 	top: -2px;
 }
-.popup-bookm > .fas {
+.popup-bookm > .fa-solid {
 	color: goldenrod;
 }
 .popup-header {
@@ -1248,12 +1237,15 @@ input:indeterminate + .slider::before {
 .fancybox-button .fa-2x:hover {
 	opacity: 1;
 }
-.fancybox-button--pause .fas:first-child, .fancybox-button--play .fas:nth-child(2), .noslideshow .fancybox-button--play {
+.fancybox-button--pause .fa-solid:first-child, .fancybox-button--play .fa-solid:nth-child(2), .noslideshow .fancybox-button--play {
 	display: none;
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
 	background-color: rgba(244, 244, 244, 0.9);
+}
+.leaflet-popup-tip {
+	margin: -17px auto 0;
 }
 .leaflet-popup-content-wrapper {
 	padding: 0 1px 1px 1px;
@@ -1312,7 +1304,7 @@ input:indeterminate + .slider::before {
 }
 @keyframes xmasMsg-anim {
 	from { background-position: 0 0; }
-	to { background-postion: 0 100%; }
+	to { background-position: 0 100%; }
 }
 #xmasMsg {
 	background-image: url('../../tour/itemXmas/popup-bg.png');
@@ -1340,7 +1332,7 @@ input:indeterminate + .slider::before {
 	color: darkred;
 	padding: 0 5px;
 }
-#xmasMsg .fas {
+#xmasMsg .fa-solid {
 	margin: 15px auto;
 }
 .popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas {
@@ -1380,28 +1372,13 @@ input:indeterminate + .slider::before {
 .commended4 { color: #4d7480; }
 .commended5 { color: #52804d; }
 
-@keyframes jump {
-	0%,to { transform: translateZ(0); }
-	10%,30%,50%,70%,90% { transform: translate3d(0,-2px,0); }
-	20%,40%,60%,80% { transform: translate3d(0,2px,0); }
+.fa-fade {
+	--fa-animation-iteration-count: 6;
 }
-.jump {
-	animation-duration: 1.5s;
-	animation-name: jump;
-	animation-timing-function: ease-in-out;
+.fa-bounce {
+	--fa-animation-iteration-count: 4;
+	--fa-bounce-height: -4px;
 }
-@keyframes wobble {
-	0%,to { transform:translateX(0); }
-	10%,30%,50%,70%,90% { transform: translate3d(-2px,0,0); }
-	20%,40%,60%,80% { transform: translate3d(2px,0,0); }
-}
-.wobble {
-	animation-duration: 2s;
-	animation-name: wobble;
-	animation-timing-function: ease-in-out;
-	animation-iteration-count: 4;
-}
-::-ms-clear { display: none; }
 
 .leaflet-visualclick-icon {
 	border-radius: 100%;

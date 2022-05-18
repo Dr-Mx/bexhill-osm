@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="book">
-<html lang="en">
+<html lang="en-GB">
 <head>
-	<title>Bexhill OpenStreetMap: The Story of Bexhill Street Names</title>
+	<title>The Story of Bexhill Street Names | Bexhill-OSM</title>
 
 	<!-- Display, social network, search index info -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<meta name="description" content="How Bexhill-on-Sea's street and road names came to be, and the history behind them."/>
+	<meta name="description" content="The history of Bexhill-on-Sea's street and road names."/>
 	<meta name="author" content="Dr Paul Wright"/>
 	<meta name="twitter:site" content="@BexhillOSM"/>
 	<meta name="twitter:creator" content="@BexhillOSM"/>
 	<meta name="twitter:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg"/>
 	<meta property="og:url" content="https://bexhill-osm.org.uk/streetnames"/>
-	<meta property="og:title" content="Bexhill OpenStreetMap: The Story of Bexhill Street Names"/>
-	<meta property="og:description" content="How Bexhill-on-Sea's street and road names came to be, and the history behind them."/>
+	<meta property="og:title" content="The Story of Bexhill Street Names | Bexhill-OSM"/>
+	<meta property="og:description" content="The history of Bexhill-on-Sea's street and road names."/>
 	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg"/>
 	<meta property="og:type" content="website"/>
 	<meta property="og:locale" content="en_GB"/>
@@ -24,11 +24,10 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-	<link rel="manifest" href="/manifest.json"/>
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#b05000"/>
 	<link rel="shortcut icon" href="/favicon.ico"/>
 	<meta name="theme-color" content="#b05000"/>
-
+	
 	<!-- CSS -->
 	<link rel="stylesheet" href="streetnames.css"/>
 </head>

@@ -15,7 +15,10 @@ function show_overpass_layer(query, cacheId, bound, forceBbox) {
 				queryBbox += ';rel(' + osmRelation + ');map_to_area->.a';
 				query = query.replace(/\[/g, '(area.a)[');
 			}
-			else queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
+			else {
+				queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
+				cacheId += cacheId ? 'BB' : '';
+			}
 		queryBbox += ';(' + query + ');';
 		$('#exportQuery').prop('disabled', false);
 	}
@@ -34,15 +37,13 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		statusMsg: function(icon, errMsg, indicatorMsg) {
 			$('.spinner').fadeOut(200);
 			clear_map('markers');
-			setMsgStatus('fas fa-' + icon, errMsg, indicatorMsg, 3);
+			setMsgStatus('fa-solid fa-' + icon, errMsg, indicatorMsg, 3);
 		}
 	},
 	initialize: function(options) {
 		L.Util.setOptions(this, options);
-		this._layers = {};
 		// save position of the layer or any options from the constructor
 		this._ids = {};
-		this._requested = {};
 	},
 	onMoveEnd: function() {
 		var url = this.options.endpoint + '?data=' + this.options.query + '&contact=' + email;
@@ -68,8 +69,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			retryLimit: 3,
 			success: function(xml) {
 				self.options.callback.call(reference, xml);
-				if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('info-circle', 'No places found', 'Please try turning off "only show open" in options.');
-				else if (poiList.length === 0 && !rQuery) self.options.statusMsg('info-circle', 'No places found', 'Please try another area or query.');
+				if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('circle-info', 'No places found', 'Please try turning off "only show open" in options.');
+				else if (poiList.length === 0 && !rQuery) self.options.statusMsg('circle-info', 'No places found', 'Please try another area or query.');
 				// if not in iframe, cache to local storage
 				if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {
 					eleCache[self.options.cacheId] = xml;
@@ -83,12 +84,12 @@ L.OverPassLayer = L.FeatureGroup.extend({
 					switch (e.status) {
 						case 0:
 							// fallback to main overpass server if failed on alternative
-							if ($('#inputOpServer').val() !== $("#inputOpServer option").eq(0).val() && this.retryLimit) {
+							if ($('#inputOpServer').val() !== $('#inputOpServer option').eq(0).val() && this.retryLimit) {
 								var that = this;
-								that.url = this.url.replace($('#inputOpServer').val(), $("#inputOpServer option").eq(0).val());
+								that.url = this.url.replace($('#inputOpServer').val(), $('#inputOpServer option').eq(0).val());
 								this.retryLimit = 0;
 								$.ajax(that);
-								$("#inputOpServer").prop('selectedIndex', 0);
+								$('#inputOpServer').prop('selectedIndex', 0);
 								return;
 							}
 							else {
@@ -108,7 +109,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 							else erMsg = 'Gateway Timeout. Please try again later.';
 							break;
 					}
-					self.options.statusMsg('exclamation-triangle', 'ERROR #' + e.status, erMsg);
+					self.options.statusMsg('triangle-exclamation', 'ERROR #' + e.status, erMsg);
 					self.options.callback.call(reference, { elements: [] });
 					rQuery = false;
 					this.error();
@@ -126,7 +127,6 @@ L.OverPassLayer = L.FeatureGroup.extend({
 	onRemove: function(map) {
 		L.LayerGroup.prototype.onRemove.call(this, map);
 		this._ids = {};
-		this._requested = {};
 		$('#msgStatus').hide();
 		map.off({ 'moveend': this.onMoveEnd }, this);
 		this._map = null;
