@@ -51,12 +51,12 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		var reference = { instance: self };
 		if (self.options.debug) console.debug('Overpass query:', encodeURI(url));
 		// check if cached in variable
-		if (eleCache[self.options.cacheId] && !$('#inputOpen').is(':checked') && !$('#inputAttic').val() && $('#inputOpCache').val() > 0) {
+		if (eleCache[self.options.cacheId] && !$('#inputAttic').val() && $('#inputOpCache').val() > 0) {
 			self.options.callback.call(reference, eleCache[self.options.cacheId]);
 			if (self.options.debug) console.debug('Query received from eleCache.', self.options.cacheId);
 		}
 		// check if cached in localStorage and not expired
-		else if (noIframe && !$('#inputOpen').is(':checked') && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0 &&
+		else if (noIframe && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0 &&
 			(new Date(JSON.parse(window.localStorage[self.options.cacheId]).osm3s.timestamp_osm_base).getTime()+(parseInt($('#inputOpCache').val())*60*60*1000) > new Date().getTime())) {
 				eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
 				self.options.callback.call(reference, eleCache[self.options.cacheId]);
@@ -69,8 +69,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			retryLimit: 3,
 			success: function(xml) {
 				self.options.callback.call(reference, xml);
-				if (poiList.length === 0 && $('#inputOpen').is(':checked')) self.options.statusMsg('circle-info', 'No places found', 'Please try turning off "only show open" in options.');
-				else if (poiList.length === 0 && !rQuery) self.options.statusMsg('circle-info', 'No places found', 'Please try another area or query.');
+				if (poiList.length === 0 && !rQuery) self.options.statusMsg('circle-info', 'No places found', 'Please try another area or query.');
 				// if not in iframe, cache to local storage
 				if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {
 					eleCache[self.options.cacheId] = xml;

@@ -140,7 +140,10 @@
 			"properties": {
 				"name": "Belle Hill junction",
 				"date": "1940",
-				"description": "Surface. Capacity 90. Bunks 44."
+				"description": "Surface. Capacity 90. Bunks 44.",
+				"img": {
+					"0": "listWw2/shelter/bellehilljunction(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -325,7 +328,8 @@
 				"description": "Trench. Capacity 64.",
 				"img": {
 					"0": "listWw2/shelter/eastparade(0)",
-					"1": "listWw2/shelter/eastparade(1)"
+					"1": "listWw2/shelter/eastparade(1)",
+					"2": "listWw2/shelter/eastparade(2)"
 				},
 				"imgattrib": {
 					"0": "The Royal Windsor Website & Forum",

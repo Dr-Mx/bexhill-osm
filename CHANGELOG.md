@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## v7.1.0
+
+**Date:** 04/08/2022
+
+Updated
+ - fontawesome 6.1.2
+
+Site changes
+ - UI cleanup
+ - Remove outdated help system
+ - Remove 'currently open' option
+ - Default to Google Street View
+ - Tooltips show above POI
+ - Highlight imageoverlay layers where possible on interact
+ - New Manor House tour overlay (work in progress)
+ - Two new overlays for Other Maps
+ - Expand popupWindow function to cover fancybox iframes
+ - New POI for sports/fitness
+ - Parks POI now covers recreation grounds
+ - Use figure/figcaption tags in tour article images
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.0.0
 
 **Date:** 18/05/2022

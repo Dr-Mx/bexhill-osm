@@ -14,18 +14,17 @@ html, body, input, select, #map, .leaflet-control-layers-expanded, #msgStatusHea
 	color: var(--text-color) !important;
 }
 .anchor:hover, select:hover:enabled, #home .sidebar-body a i:hover, #inputWw2 div, .leaflet-control-attribution .fa-circle-info:hover, 
-button:hover:enabled, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.leaflet-popup-close-button:hover, .popup-header-button:hover, 
+button:hover:enabled:not(.fancybox-button), .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.leaflet-popup-close-button:hover, .popup-header-button:hover, 
 .leaflet-routing-geocoders button:hover::after, #devTools h3:hover::after, .popup-ohContainer .popup-tagValue:hover::after {
 	color: var(--hover-color) !important;
 }
-.sidebar-tabs, #homeBox, #xmasMsg, .anchor, input:not([type="range"]), hr, select, button, .leaflet-tooltip, .leaflet-control-geocoder input,
-.slider::before, #inputOpacity, .leaflet-control-geocoder, .leaflet-contextmenu, #msgStatusHead, .leaflet-container a.leaflet-popup-close-button,
-.leaflet-control-geocoder-alternatives li:hover, .leaflet-control-geocoder-selected, #poi-results-list tr:hover, .poi-checkbox-selected, .poi-checkbox > label:hover,
-.leaflet-touch .leaflet-bar, #walking a img {
+.sidebar-tabs, #homeBox, #xmasMsg, .anchor, input:not([type="range"]), hr, select, button, .leaflet-tooltip, .leaflet-control-geocoder input, .slider::before, #inputOpacity,
+.leaflet-control-geocoder, .leaflet-contextmenu, #msgStatusHead, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected,
+#poi-results-list tr:hover, .poi-checkbox-selected, .poi-checkbox > label:hover, .leaflet-touch .leaflet-bar, #walking a img {
 	background-color: var(--bg-color) !important;
 }
 #msgStatusBody, .leaflet-bar > a, .leaflet-bar button, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded, .leaflet-control-layers,
-.leaflet-control-geocoder {
+.leaflet-control-geocoder, .leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-alternatives li:hover {
 	background-color: var(--bg-color2) !important;
 }
 @media (min-width: 1300px) {
@@ -46,7 +45,7 @@ button:hover:enabled, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-cont
 	scrollbar-color: var(--scr-thumb) var(--scr-track) !important;
 }
 .layerDark {
-	filter: invert(90%) hue-rotate(180deg);
+	filter: invert(90%) hue-rotate(180deg) contrast(0.8);
 }
 .sidebar-header {
 	color: #ddd;
@@ -57,7 +56,7 @@ button:hover:enabled, .leaflet-bar a:hover, .navigateItem a:hover, .leaflet-cont
 #poi-results, #walkDesc img, #thennow img, #myprofile img, .popup-imgContainer > a > img, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
 	border: 2px solid var(--bg-color);
 }
-#poi-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li {
+#poi-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li:not(:last-child) {
 	border-bottom: 2px solid var(--bg-color) !important;
 }
 .leaflet-control-scale-line, .poi-result-selected {

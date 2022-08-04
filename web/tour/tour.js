@@ -30,17 +30,17 @@ function tour(ti, fromPermalink) {
 				className: icon.className,
 				interactive: interactive,
 				radius: 20,
-				weight: 1,
+				weight: 2,
 				color: '#000',
 				opacity: 1,
 				fillColor: icon.fillColor,
-				fillOpacity: 0.75
+				fillOpacity: 0.5
 			});
 		}
 		else marker = L.circleMarker(latlng, {
 			interactive: interactive,
-			radius: 14,
-			weight: 4,
+			radius: 12,
+			weight: 2,
 			color: $('html').css('--main-color'),
 			opacity: 1,
 			fillColor: '#fff',
@@ -65,7 +65,7 @@ function tour(ti, fromPermalink) {
 		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long')));
 		toolTip += '<b>' + header[0] + '</b><br/><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
-		markerPopup += '<div class="popup-body"><span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
+		if (layer._latlng) markerPopup += '<div class="popup-body"><span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
 		if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc custscroll">' + feature.properties.description + '</span>';
 			toolTip += ' <i class="tooltip-icons fa-solid fa-bars fa-fw" title="Notes"></i>';
@@ -76,14 +76,15 @@ function tour(ti, fromPermalink) {
 				'" target="_blank" rel="noopener" title="' + feature.properties.link + '">' + feature.properties.link + '</a></span>';
 		}
 		if (feature.properties.img) {
-			var imgIcon = 'image';
+			var imgIcon = 'image', imgAttrib = '';
 			customPOptions.minWidth = imgSize;
 			$.each(feature.properties.img, function(x) {
 				if (feature.properties.imgattrib && feature.properties.imgattrib[x]) {
-					dfltAttrib = feature.properties.imgattrib[x];
-					if (feature.properties.imgattriburl && feature.properties.imgattriburl[x]) dfltAttrib = '<a href="' + feature.properties.imgattriburl[x] + '" target="blank">' + dfltAttrib + '</a>';
+					imgAttrib = feature.properties.imgattrib[x];
+					if (feature.properties.imgattriburl && feature.properties.imgattriburl[x]) imgAttrib = '<a href="' + feature.properties.imgattriburl[x] + '" target="blank">' + imgAttrib + '</a>';
 				}
-				markerPopup += generic_img_parser((feature.properties.img[x].indexOf('File:') === 0) ? feature.properties.img[x] : (dfltDir + feature.properties.img[x] + '.jpg'), x, dfltAttrib);
+				else imgAttrib = dfltAttrib;
+				markerPopup += generic_img_parser((feature.properties.img[x].indexOf('File:') === 0) ? feature.properties.img[x] : (dfltDir + feature.properties.img[x] + '.jpg'), x, imgAttrib);
 				lID = x;
 			});
 			if (feature.properties.img[1]) {
@@ -96,9 +97,9 @@ function tour(ti, fromPermalink) {
 		layer
 			.bindPopup(markerPopup, customPOptions)
 			.bindTooltip(toolTip, {
-				direction: 'right',
-				offset: [18, 2],
 				className: pClass,
+				direction: 'top',
+				offset: [0, -18],
 				opacity: noTouch ? 1 : 0
 			});
 	};
@@ -126,7 +127,7 @@ function tour(ti, fromPermalink) {
 				cache: false,
 				success: function(json) {
 					imageOverlay.clearLayers().addLayer(L.geoJSON(json, {
-						onEachFeature: function (feature, layer) {
+						onEachFeature: function(feature, layer) {
 							layer.on('click', function(e) { panoView(e, true); });
 						},
 						style: {
@@ -159,7 +160,7 @@ function tour(ti, fromPermalink) {
 				cache: true,
 				success: function(json) {
 					L.geoJSON(json, {
-						onEachFeature: function (feature, layer) {
+						onEachFeature: function(feature, layer) {
 							var fp = feature.properties;
 							fp.description = '<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
 								'osm.org/note/' + fp.id + '</a><hr/>';
@@ -173,7 +174,7 @@ function tour(ti, fromPermalink) {
 							fp.description += '<hr/><span class="comment"><i class="fa-solid fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + date_parser(fp.closed_at.split(' ')[0], 'long') : 'times"></i> Currently unresolved') + '</span>';
 							setJsonPopup(feature, layer, [titleCase(fp.status + ' note'), date_parser(fp.date_created.split(' ')[0], 'long')]);
 						},
-						pointToLayer: function (feature, latlng) {
+						pointToLayer: function(feature, latlng) {
 							var marker = setMarker(latlng, true, {
 								iconUrl: '/../../assets/img/leaflet/' + feature.properties.status + '_note_marker',
 								iconSize: [25, 41],
@@ -213,16 +214,16 @@ function tour(ti, fromPermalink) {
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
-				success: function (json) {
+				success: function(json) {
 					L.geoJSON(json, {
-						onEachFeature: function (feature, layer) {
+						onEachFeature: function(feature, layer) {
 							var winner = feature.properties.winner, winnerTxt = ['Highly Commended', 'First Prize', 'Second Prize', 'Third Prize', 'Fourth Prize', 'Fifth Prize'],
 								winnerIco = ['award', 'trophy', 'medal', 'medal', 'medal', 'medal'], winnerEle = '';
 							if (winner >= 0) winnerEle = '<i class="award commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner];
 							if (!feature.properties.img) feature.properties.img = { '0': 'itemXmas/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, winnerEle, ''], '', 'popup-xmas');
 						},
-						pointToLayer: function (feature, latlng) {
+						pointToLayer: function(feature, latlng) {
 							var marker = setMarker(latlng, true, {
 								iconUrl: 'itemXmas/window',
 								iconSize: [32, 37],
@@ -256,7 +257,7 @@ function tour(ti, fromPermalink) {
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: true,
-				success: function (json) { imageOverlay.addLayer(L.geoJSON(json, { style: { color: 'darkcyan', opacity: 0.5 }, interactive: false })); }
+				success: function(json) { imageOverlay.addLayer(L.geoJSON(json, { style: { color: 'darkcyan', opacity: 0.5 }, interactive: false })); }
 			});
 			// markers
 			$.ajax({
@@ -264,9 +265,9 @@ function tour(ti, fromPermalink) {
 				dataType: 'json',
 				mimeType: 'application/json',
 				cache: false,
-				success: function (json) {
+				success: function(json) {
 					L.geoJSON(json, {
-						onEachFeature: function (feature, layer) {
+						onEachFeature: function(feature, layer) {
 							var winner = feature.properties.winner, winnerTxt = ['', 'First Prize', 'Second Prize'],
 								winnerIco = ['', 'trophy', 'medal'], subtitleEle = feature.properties.ward;
 							if (winner > 0) subtitleEle = '<i class="award commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner] + ' - ' + subtitleEle;
@@ -275,7 +276,7 @@ function tour(ti, fromPermalink) {
 							feature.properties.sortby = feature.properties.winner ? feature.properties.ward + feature.properties.winner : feature.properties.ward + '9';
 							if ($('#inputDebug').is(':checked')) console.debug(feature.properties.name + '|' + feature.properties.ward + '|' + (feature.properties.img ? 'yes' : 'no'));
 						},
-						pointToLayer: function (feature, latlng) {
+						pointToLayer: function(feature, latlng) {
 							var marker = setMarker(latlng, true, {
 								iconUrl: 'itemScarecrow/scarecrow' + (feature.properties.winner === 1 ? 'Win' : ''),
 								iconSize: [35, 37],
@@ -328,7 +329,7 @@ function tour(ti, fromPermalink) {
 								transitionDuration: 7500,
 								slideShow: { speed: 2500 },
 								afterLoad: function() {
-									// cancel slideshow if left/right arrows clicked
+									// cancel slideshow user manually advances
 									$('.fancybox-button--arrow_left, .fancybox-button--arrow_right').on('click touchstart', function() {
 										$.fancybox.getInstance().SlideShow.stop();
 										slideShow.firstrun = false;
@@ -346,7 +347,12 @@ function tour(ti, fromPermalink) {
 								}
 							});
 							var marker = setMarker(latlng, true, false, false);
-							marker.bindTooltip(feature.properties.imgcaption['1'] + '<img src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"/>', { className: 'thennowTip', opacity: noTouch ? 1 : 0 });
+							marker.bindTooltip('<img src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"/><br/><span>' + feature.properties.imgcaption['1'] + '</span>', {
+								className: 'thennowTip',
+								direction: 'top',
+								offset: [0, -18],
+								opacity: noTouch ? 1 : 0
+							});
 							marker.on('click', function() {
 								$('#' + feature.properties.id)[0].scrollIntoView({ block: 'center' });
 								$('#' + feature.properties.id).click();
@@ -360,8 +366,8 @@ function tour(ti, fromPermalink) {
 					if (!fromPermalink) zoom_area();
 					else map.fireEvent('zoomend');
 					if (noTouch) $('#thennow img').hover(
-						function() { imageOverlay.getLayer(this.id).openTooltip(); },
-						function() { imageOverlay.getLayer(this.id).closeTooltip(); }
+						function() { imageOverlay.getLayer(this.id).openTooltip(); highlightOutline(this.id, 1); },
+						function() { imageOverlay.getLayer(this.id).closeTooltip(); highlightOutline(this.id, 0); }
 					);
 					actImgLayer = ti;
 					$('.spinner').fadeOut('fast');
@@ -396,7 +402,7 @@ function tour(ti, fromPermalink) {
 							feature.properties.description =
 								generic_tag_parser({ ref: feature.properties.reference.toString() }, 'ref', 'Reference', 'fa-solid fa-hashtag') +
 								(feature.properties.year_known ? generic_tag_parser({ date: feature.properties.year_known.toString() }, 'date', 'Date', 'fa-solid fa-calendar-days') : '') +
-								'<a style="margin:5px;display:block;text-align:center;" onclick="tourIframe(\'http://' + feature.properties.scan_url + '\', \'\', \'circular\')"><i class="fa-solid fa-file fa-fw"></i>View borehole scan</a>';
+								'<a style="margin:5px;display:block;text-align:center;" onclick="popupWindow(\'https://' + feature.properties.scan_url + '\', \'popup\')"><i class="fa-solid fa-file fa-fw"></i>View borehole scan</a>';
 							setJsonPopup(feature, layer, [titleCase(feature.properties.name, 1), '', feature.properties.length + 'm length borehole']);
 						},
 						pointToLayer: function(feature, latlng) {
@@ -447,8 +453,38 @@ function tour(ti, fromPermalink) {
 			setTour('prehistory');
 			break;
 		case 'manor':
-			rQuery = true;
-			show_overpass_layer('way(364593716);', ti);
+			$('.spinner').show();
+			$.ajax({
+				url: dfltDir + 'listManor/manor.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function(json) {
+					imageOverlay.clearLayers().addLayer(L.geoJSON(json, {
+						onEachFeature: function(feature, layer) {
+							setJsonPopup(feature, layer, [feature.properties.title, feature.properties.name, ''], 'Bexhill Museum');
+							layer._leaflet_id = feature.properties.id;
+							if (feature.properties.name) poiList.push(layer);
+						},
+						style: function(feature) {
+							return {
+								interactive: feature.properties.name ? true : false,
+								color: '#000',
+								fillColor: '#b22222',
+								opacity: 0.75,
+								weight: 2,
+								fillOpacity: 0.5
+							};
+						}
+					}));
+					setTimeout(pushPoiList, 250);
+					setPageTitle('Former Manor House');
+					if (markerId) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]].getLayer(markerId).openPopup();
+					if (!fromPermalink) zoom_area();
+					else map.fireEvent('zoomend');
+					$('.spinner').fadeOut('fast');
+				}
+			});
 			setTour('manor');
 			break;
 		case 'shipwreck':
@@ -757,11 +793,13 @@ function tour(ti, fromPermalink) {
 			setPageTitle(pois.survey_point.name);
 			setTour('surveying');
 			break;
-		case 'wl1950':  /* fall through */
-		case 'wl1940':  /* fall through */
-		case 'wl1911':  /* fall through */
-		case 'bm1946':  /* fall through */
-		case 'arp1942': /* fall through */
+		case 'wl1950':   /* fall through */
+		case 'wl1940':   /* fall through */
+		case 'wl1911':   /* fall through */
+		case 'raf1946t': /* fall through */
+		case 'raf1946p': /* fall through */
+		case 'raf1941c': /* fall through */
+		case 'arp1942':  /* fall through */
 		case 'mc1925':
 			if (actOverlayLayer !== ti) {
 				map.addLayer(tileOverlayLayers[tileOverlayLayer[ti].name]);
@@ -806,31 +844,4 @@ function tourVideo(id) {
 			rel: 0
 		}
 	});
-}
-
-// view iframe
-function tourIframe(src, cap, ani) {
-	// view The Story of Bexhill Street Names book
-	if (src === 'book') {
-		src = ((window.location.protocol !== 'file:') ? '../../' : '') + 'assets/data/streetnames.xml';
-		cap = '<a href="' + src + '" target="_blank">https://bexhill-osm.org.uk/streetnames</a>';
-	}
-	if ($(window).width() >= 1150 && noTouch) $.fancybox.open([{
-		src: src,
-		type: 'iframe',
-		opts: {
-			animationEffect: ani,
-			caption: cap,
-			iframe: {
-				preload: false,
-				css: {
-					'width': '1024px',
-					'height': '768px',
-					'max-width': '95%',
-					'max-height': '95%'
-				}
-			}
-		}
-	}]);
-	else popupWindow(src, 'tourWindow', 1024, 768);
 }

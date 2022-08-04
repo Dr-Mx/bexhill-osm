@@ -59,7 +59,8 @@
 	<hr/>
 	<h2>Appendix</h2>
 	<p><a href="https://www.rother.gov.uk/wp-content/uploads/2021/01/Street_Naming__Numbering_Policy_Published_Version.pdf" target="_blank" rel="noopener">Rother District Council - Street Naming and Property Numbering Policy</a> (2020, pdf)</p>
-	<p>The routes and numbers of various trunk and county roads through Bexhill have changed over the years. Four examples are included here for comparison and interest.</p>
+	<p><a href="https://battlehistorysociety.com/Road%20Names/" target="_blank" rel="noopener">The Battle and District Historical Society Road Names Project</a> (website)</p>
+	<p>The routes and numbers of various trunk and county roads through Bexhill have changed over the years. Four examples are included here for comparison and interest:</p>
 	<p><b>1930</b><br/>
 	<span>A259 - Barnhorn Road, Little Common Road, Belle Hill, High Street, De La Warr Road and Hastings Road.</span><br/>
 	<span>A269 - Chantry Lane, Holliers Hill and Ninfield Road to Lunsford Cross.</span><br/>

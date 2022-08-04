@@ -26,12 +26,13 @@ function parse_tags(element, titlePopup, poiParser) {
 		return markerPopup;
 	};
 	var phone_parser = function(tags) {
-		var tagPhone = tags.phone || tags['phone:GB'] || tags['contact:phone'] || tags['contact:phone:GB'];
+		var tagPhone = tags.phone || tags['phone:GB'] || tags['contact:phone'] || tags['contact:phone:GB'], linkPhone = '';
 		markerPopup = '';
-		if (tagPhone) {
-			if (navigator.language === 'en-GB') tagPhone = tagPhone.replace('+44 ', '0');
-			var link = '<a href="tel:' + tagPhone + '" title="Telephone">' + tagPhone + '</a>';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Phone', value: link, iconName: 'fa-solid fa-phone' });
+		if (tagPhone) linkPhone = '<a href="tel:' + tagPhone + '" title="Telephone">' + tagPhone + '</a>';
+		if (tags['contact:mobile']) linkPhone = (linkPhone ? linkPhone + ' / ' : '') + '<a href="tel:' + tags['contact:mobile'] + '" title="Mobile">' + tags['contact:mobile'] + '</a>';
+		if (linkPhone) {
+			if (navigator.language === 'en-GB') linkPhone = linkPhone.replaceAll('+44 ', '0');
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Phone', value: linkPhone, iconName: 'fa-solid fa-phone' });
 		}
 		return markerPopup;
 	};
@@ -41,8 +42,8 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tagWebsite) {
 			var strWebsite = (tagWebsite.indexOf('://') > 0) ? tagWebsite.split('://')[1] : tagWebsite;
 			if (strWebsite.slice(-1) === '/') strWebsite = strWebsite.slice(0, -1);
-			var link = '<a class="popup-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px;" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + strWebsite + '</a>';
-			markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: link, iconName: 'fa-solid fa-globe' });
+			var linkWebsite = '<a class="popup-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px;" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + strWebsite + '</a>';
+			markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: linkWebsite, iconName: 'fa-solid fa-globe' });
 		}
 		return markerPopup;
 	};
@@ -59,8 +60,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		return markerPopup;
 	};
 	var site_parser = function(tags) {
-		var tag = '', planningLink = '';
-		var siteType = tags.building ? ['Building', 'building'] : ['Site', 'monument'];
+		var tag = '', planningLink = '', siteType = [];
 		markerPopup = '';
 		if (tags.bunker_type) tag += '<span title="Bunker type">' + tags.bunker_type + '</span>; ';
 		if (tags['building:architecture']) tag += '<span title="Architecture">' + titleCase(tags['building:architecture']) + '</span>; ';
@@ -83,15 +83,23 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (planningLink) tag += '<span class="nowrap" title="Planning application">' + planningLink + '</span>; ';
 		if (tags.HE_ref) {
 			var listedStatus = tags.listed_status || tags.HE_ref;
-			tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England entry" target="_blank" rel="noopener">' + listedStatus + '</a>; ';
+			tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England" target="_blank" rel="noopener">' + listedStatus + '</a>; ';
 		}
+		if (tags.disused) tag+= '<span title="Disused">Currently disused</span>; ';
+		if (tags.building) {
+			if (tags.building === 'garage') siteType = ['Garage', 'warehouse'];
+			else if (tags.building === 'house' || tags.building === 'bungalow' || tags.building === 'detached') siteType = ['House', 'house-chimney'];
+			else if (tags.building === 'hut') siteType = ['Structure', 'person-shelter'];
+			else if (tags.building === 'warehouse') siteType = ['Warehouse', 'warehouse'];
+			else siteType = ['Building', 'building'];
+		}
+		else siteType = ['Site', 'monument'];
 		if (tag) markerPopup = L.Util.template(tagTmpl, { tag:  siteType[0] + ' details', value: listTidy(tag, true), iconName: 'fa-solid fa-' + siteType[1] }) + markerPopup;
 		return markerPopup;
 	};
 	var facility_parser = function(tags) {
 		var tag = '';
 		markerPopup = '';
-		if (tags.disused === 'yes') tag += '<i class="facLtd fa-solid fa-hourglass fa-fw" title="place is currently disused"></i>';
 		if (tags.indoor === 'yes') tag += '<i class="facYes fa-solid fa-door-closed fa-fw" title="place is indoors"></i>';
 		if (tags.wheelchair === 'yes') tag += '<i class="facYes fa-solid fa-wheelchair fa-fw" title="wheelchair access"></i>';
 		else if (tags.wheelchair === 'limited') tag += '<i class="facLtd fa-solid fa-wheelchair fa-fw" title="limited wheelchair access"></i>';
@@ -134,6 +142,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				cardboard: 'fa-solid fa-box',
 				cds: 'fa-solid fa-compact-disc',
 				clothes: 'fa-solid fa-shirt',
+				cooking_oil: 'fa-solid fa-bottle-droplet',
 				computers: 'fa-solid fa-laptop',
 				tv_monitor: 'fa-solid fa-tv',
 				electrical_appliances: 'fa-solid fa-tv',
@@ -250,24 +259,27 @@ function parse_tags(element, titlePopup, poiParser) {
 					if (markerPopup) {
 						var sourceLink = $(xml).find('url').text();
 						var sourceAuthor = $(xml).find('author').text();
-						markerPopup += '<span class="popup-streetSource"><a href="' + sourceLink + '" target="_blank" rel="noopener" title="' + sourceLink + '">&copy; ' + sourceAuthor + '</a></span>';
+						markerPopup += '<span class="popup-streetSource"><a onclick="popupWindow(\'streetBook\');" title="' + sourceLink + '">&copy; ' + sourceAuthor + '</a></span>';
 					}
 					if ($('#inputDebug').is(':checked')) console.debug('Street-names:', xml);
 				},
 				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }
 			});
-			if (tags.access === 'private') tag += 'private; ';
-			if (tags.unadopted === 'yes') tag += 'unadopted; ';
-			if (tags.surface) tag += tags.surface + '; ';
 			if (tags.maxspeed) tag += tags.maxspeed + '; ';
 			if (tags.maxwidth) tag += tags.maxwidth + '; ';
+			if (tags.access === 'private') tag += 'private; ';
+			if (tags.unadopted === 'yes') tag += 'unadopted; ';
+			if (tags.designation) tag += 'designated ' + tags.designation + '; ';
+			if (tags.surface) tag += tags.surface + '; ';
+			if (tags.narrow === 'yes') tag += 'narrow; ';
+			if (tags.cutting === 'yes') tag += 'cutting; ';
+			if (tags.sidewalk === 'no') tag += 'no pavement; ';
+			if (tags.incline) tag += 'incline; ';
 			if (tags.lit === 'yes') tag += 'lit; ';
 			if (tags.oneway === 'yes') tag += 'oneway; ';
 			if (tags.bridge === 'yes') tag += 'bridge; ';
-			if (tag) {
-				tag = tag.substring(0, tag.length - 2);
-				markerPopup += L.Util.template(tagTmpl, { tag: 'Highway details', value: tag, iconName: 'fa-solid fa-road' });
-			}
+			if (tag) markerPopup += L.Util.template(tagTmpl, { tag: 'Highway details', value: listTidy(tag, true), iconName: 'fa-solid fa-road' });
+			if (tags.prow_ref) markerPopup += L.Util.template(tagTmpl, { tag: 'Public Right of Way', value: tags.prow_ref, iconName: 'fa-solid fa-person-hiking' });
 		}
 		return markerPopup;
 	};
@@ -431,7 +443,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			}
 			// create readable table
 			var ohTable = drawTable(oh, new Date());
-			if (tags.opening_hours.indexOf('PH ') === -1 && ohTable) ohTable += '<div class="comment" style="text-align:left;padding-top:5px;">Holiday periods may differ.</div>';
+			if (tags.opening_hours.indexOf('PH ') === -1 && ohTable) ohTable += '<div class="comment" style="font-size:80%;text-align:left;padding-top:5px;">Holiday periods may differ.</div>';
 			// show tag and collapsible accordion
 			if (ohState === true) openhrsState = 'Open until';
 			else if (ohState === false) openhrsState = 'Closed until';
@@ -515,19 +527,19 @@ function callback(data) {
 		if (e.type !== 'node') {
 			var outline, mems = [], optsPolygon = {
 				color: $('html').css('--second-color'),
-				opacity: 0.4,
+				opacity: 0.3,
 				weight: 4,
 				fillColor: $('html').css('--second-color'),
 				fillOpacity: 0.3,
 				interactive: false
 			}, optsPolyline = {
-				color: $('html').css('--second-color'),
-				opacity: 0.4,
+				color: e.tags.colour || $('html').css('--second-color'),
+				opacity: 0.3,
 				weight: 10,
 				interactive: false
 			}, optsPolylineThin = {
-				color: $('html').css('--second-color'),
-				opacity: 0.4,
+				color: e.tags.colour || $('html').css('--second-color'),
+				opacity: 0.7,
 				weight: 4,
 				interactive: false
 			};
@@ -538,8 +550,6 @@ function callback(data) {
 				}
 				else {
 					e.members.forEach(x => { if (x.type === 'way') mems.push(x.geometry); });
-					// set official colour for routes
-					if (e.tags.type === 'route' && e.tags.colour) optsPolyline.color = e.tags.colour;
 					outline = L.polyline([mems], e.tags.type === 'boundary' ? optsPolylineThin : optsPolyline);
 				}
 			}
@@ -791,17 +801,36 @@ function callback(data) {
 		if (e.tags.leisure) {
 			if (!name) name = e.tags.leisure;
 			if (!type) type = e.tags.leisure;
-			if (e.tags.sport) name = e.tags.sport + ' ' + e.tags.leisure;
+			if (e.tags.sport) {
+				type = 'sport';
+				name = e.tags.sport + ' ' + e.tags.leisure;
+			}
 			switch (type) {
-				case 'nature_reserve': type = 'park'; break;
-				case 'fitness_station': type = 'fitness_centre'; break;
+				case 'fitness_centre':
+				case 'fitness_station': iconName = 'weights'; break;
 				case 'garden': iconName = 'urbanpark'; break;
-				case 'golf_course': type = 'recreation'; iconName = 'golfing'; break;
-				case 'horse_riding': type = 'recreation'; iconName = 'horseriding'; break;
-				case 'sports_centre':
-					type = 'recreation';
-					iconName = (e.tags.sport === 'swimming') ? 'swimming2' : 'indoor-arena';
-					break;
+				case 'golf_course':  iconName = 'golfing'; break;
+				case 'horse_riding': iconName = 'horseriding'; break;
+				case 'nature_reserve': type = 'park'; break;
+			}
+			switch (e.tags.sport) {
+				case 'basketball': iconName = 'basketballfield'; break;
+				case 'bmx': iconName = 'bike_rising'; break;
+				case 'boules': iconName = 'boccia'; break;
+				case 'bowls': iconName = 'bowls'; break;
+				case 'boxing': iconName = 'boxing'; break;
+				case 'cricket': iconName = 'cricket'; break;
+				case 'fishing': iconName = 'fishing'; break;
+				case 'martial_arts': iconName = 'karate'; break;
+				case 'model_aerodrome':
+				case 'rc_car': iconName = 'videogames'; break;
+				case 'rowing': iconName = 'rowboat'; break;
+				case 'sailing': iconName = 'sailing'; break;
+				case 'skateboard': iconName = 'rollerskate'; break;
+				case 'soccer': iconName = 'soccerfield'; break;
+				case 'swimming': iconName = 'swimming2'; break;
+				case 'racquet':
+				case 'tennis': iconName = 'tenniscourt'; break;
 			}
 		}
 		if (e.tags.natural) {
@@ -853,7 +882,7 @@ function callback(data) {
 			if (!type) type = e.tags.landuse;
 			switch (e.tags.landuse) {
 				case 'cemetery': iconName = 'cemetery'; break;
-				case 'recreation_ground': type = 'recreation'; break;
+				case 'recreation_ground': type = 'park'; iconName = 'recreation'; break;
 			}
 		}
 		if (e.tags.cemetery) {
@@ -921,8 +950,8 @@ function callback(data) {
 		marker._leaflet_id = e.type.slice(0, 1) + e.id;
 		// tooltip
 		var customTOptions = {
-			direction: 'right',
-			offset: [15, 2],
+			direction: 'top',
+			offset: [0, -40],
 			interactive: poi ? poi.permTooltip : 0,
 			permanent: poi ? poi.permTooltip : 0,
 			opacity: (noTouch || (poi && poi.permTooltip)) ? 1 : 0
@@ -945,7 +974,7 @@ function callback(data) {
 		}
 		if (e.tags['wikimedia_commons:video']) toolTip += ' <i class="tooltip-icons fa fa-film fa-fw" title="Video"></i>';
 		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Photosphere view"></i>';
-		// popup
+		// popup and tooltip
 		var customPOptions = {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
 			minWidth: (e.tags.image || e.tags.wikimedia_commons) ? imgSize : '',
@@ -954,22 +983,18 @@ function callback(data) {
 			autoPanPaddingBottomRight: [5, 50]
 		};
 		markerPopup = (poi && poi.tagParser) ? poi.tagParser(e, name) : parse_tags(e, name, []);
-		// filters out closed group pois if 'currently open' is set
-		if (rQuery || !$('#inputOpen').is(':checked') || ($('#inputOpen').is(':checked') && ohState === true)) {
-			// create tooltip / popup
-			customTOptions.className = (ohState !== undefined) ? 'openColor-list-' + ohState : 'openColor-list-' + ctState;
-			marker.bindPopup(markerPopup, customPOptions);
-			marker.bindTooltip(toolTip, customTOptions);
-			marker.addTo(iconLayer);
-			// single poi
-			if (rQuery) {
-				if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').click();
-				marker.openPopup();
-				markerId = marker._leaflet_id;
-			}
-			else if (marker._leaflet_id === markerId) marker.openPopup().stopBounce();
-			setPoiList();
+		customTOptions.className = (ohState !== undefined) ? 'openColor-list-' + ohState : 'openColor-list-' + ctState;
+		marker.bindPopup(markerPopup, customPOptions);
+		marker.bindTooltip(toolTip, customTOptions);
+		marker.addTo(iconLayer);
+		// single poi
+		if (rQuery) {
+			if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').click();
+			marker.openPopup();
+			markerId = marker._leaflet_id;
 		}
+		else if (marker._leaflet_id === markerId) marker.openPopup().stopBounce();
+		setPoiList();
 	}
 	noPermalink = true;
 	// output list of pois in sidebar
@@ -1036,7 +1061,7 @@ function pushPoiList(customSort) {
 		if ($('#inputWw2').length) $('#inputWw2 input').val($('#inputWw2 input')[0].max).change();
 		map._layers[this.id].openPopup();
 		if ($(window).width() < 768) $('.sidebar-close:visible').click();
-		else {
+		else if (map._layers[this.id]._latlng) {
 			// get bounds of area, focus 150px above marker to allow room for popup
 			var zm = areaOutline.getLayer('o_' + this.id) ? map.getBoundsZoom(areaOutline.getLayer('o_' + this.id)._bounds.pad(0.5)) : map.getZoom();
 			if (zm > 18) zm = 18;
@@ -1047,7 +1072,6 @@ function pushPoiList(customSort) {
 	$('#poi-results h3').html(
 		poiList.length + ' result' + (poiList.length > 1 ? 's' : '') +
 			($('#inputAttic').val() ? ' from ' + date_parser($('#inputAttic').val(), 'short') : '') +
-			($('#inputOpen').is(':checked') ? ' (open)' : '') +
 			(customSort ? '' : ' <i style="color:#777;" class="fa-solid fa-sort-' + (poiList[0].distance ? 'numeric' : 'alpha') + '-down fa-fw"></i>')
 	);
 	if (poiList.length === maxOpResults) {
@@ -1389,19 +1413,21 @@ function getWikiAttrib(element) {
 }
 function show_img_controls(imgMax, img360, vid) {
 	// add image navigation controls to popup
+	// check if user has already seen bouncing icons
+	var bouncedicon = window.localStorage.tutorial.indexOf('bouncedicon') === -1 ? ' fa-bounce' : '';
 	var ctrlTmpl = '<div class="navigateItem">';
 	if (vid && vid.length) for (x = 0; x < vid.length; x++) {
 		if (vid[x].indexOf('File:') === 0 && vid[x].indexOf('webm') === vid[x].length-4) ctrlTmpl +=
-			'<a class="vid" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-base-class="noslideshow" data-loop="false"' +
+			'<a class="vid notloaded" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-base-class="noslideshow" data-loop="false"' +
 				'data-type="iframe" data-animation-effect="circular" href="https://commons.wikimedia.org/wiki/' + encodeURIComponent(vid[x]) + '?embedplayer=yes">' +
-				'<i style="min-width:25px;" class="fa-solid fa-film fa-fw fa-bounce"></i>' +
+				'<i style="min-width:25px;" class="fa-solid fa-film fa-fw' + bouncedicon + '"></i>' +
 			'</a>';
 	}
 	if (img360 && img360.length) for (x = 0; x < img360.length; x++) {
 		if (img360[x].indexOf('File:') === 0) ctrlTmpl +=
-			'<a class="pano" title="Photosphere" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-fancybox="pano" data-base-class="noslideshow" data-loop="false"' +
+			'<a class="pano notloaded" title="Photosphere" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-fancybox="pano" data-base-class="noslideshow" data-loop="false"' +
 				'data-type="iframe" data-animation-effect="circular" data-src="assets/pannellum/pannellum.htm#config=config.json&panorama=' + encodeURIComponent(img360[x]) + '" href="javascript:;">' +
-				'<i style="min-width:25px;" class="fa-solid fa-street-view fa-fw fa-bounce"></i>' +
+				'<i style="min-width:25px;" class="fa-solid fa-street-view fa-fw' + bouncedicon + '"></i>' +
 			'</a>';
 	}
 	if (imgMax > 1) ctrlTmpl +=
@@ -1414,7 +1440,7 @@ function navImg(direction) {
 	if (!$('.popup-imgContainer').is(':animated')) {
 		// get the current and last image
 		var cID = parseInt($('.popup-imgContainer:visible').attr('id').split('img')[1]);
-		var lID = parseInt($('.popup-imgContainer:last').attr('id').split('img')[1]);
+		var lID = parseInt($('.popup-imgContainer').last().attr('id').split('img')[1]);
 		// get the next image
 		var swapImg = function(nID) {
 			$('.popup-imgContainer#img' + cID).hide(300);

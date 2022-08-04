@@ -89,19 +89,11 @@ var pois = {
 	},
 
 	park: {
-		name: 'Parks',
-		query: 'nwr[leisure~"park|nature_reserve"];',
+		name: 'Parks/Recreation',
+		query: 'nwr[leisure~"park|nature_reserve"];nwr[landuse=recreation_ground][name][access!~private];',
 		iconName: 'urbanpark',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve']
-	},
-
-	recreation: {
-		name: 'Recreation Areas',
-		query: 'way[~"."~"recreation_ground|golf_course|sports_centre|horse_riding"][name][!club][access!~private];',
-		iconName: 'recreation',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['recreation', 'sport', 'football', 'golf', 'cricket', 'swimming-pool', 'horse riding', 'motocross', 'park', 'open-space', 'green']
+		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve', 'recreation']
 	},
 
 	playground: {
@@ -137,20 +129,20 @@ var pois = {
 		tagParser: allotment_parser
 	},
 
+	sport: {
+		name: 'Sports/Fitness',
+		query: 'nwr[leisure~"pitch|track|golf_course|sports_centre|horse_riding|^fitness"][access!~private];',
+		iconName: 'recreation',
+		catName: 'Leisure-Tourism',
+		tagKeyword: ['sport', 'football', 'golf', 'cricket', 'swimming-pool', 'horse-riding', 'equestrian', 'basketball', 'tennis', 'skate', 'bmx', 'gym', 'fitness']
+	},
+	
 	club: {
 		name: 'Clubs',
 		query: 'nwr[club];',
 		iconName: 'conversation-map-icon',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['hobby', 'social', 'events', 'venue', 'sport', 'club']
-	},
-
-	fitness_centre: {
-		name: 'Fitness Gyms',
-		query: 'nwr[leisure~"^fitness"];',
-		iconName: 'weights',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['fitness', 'leisure', 'gym', 'sport', 'weight-lifting']
 	},
 
 	boat_rental: {
@@ -586,7 +578,7 @@ var pois = {
 	},
 
 	convenience: {
-		name: 'Convenience Stores',
+		name: 'Convenience',
 		query: 'nwr[shop=convenience];',
 		iconName: 'conveniencestore',
 		catName: 'Shops',
@@ -666,7 +658,7 @@ var pois = {
 	},
 
 	variety_store: {
-		name: 'Variety Stores',
+		name: 'Variety',
 		query: 'nwr[shop=variety_store];',
 		iconName: 'mall',
 		catName: 'Shops',
@@ -690,7 +682,7 @@ var pois = {
 	},
 
 	doityourself: {
-		name: 'DIY/Hardware Stores',
+		name: 'DIY/Hardware',
 		query: 'nwr[shop~"doityourself|hardware"];',
 		iconName: 'tools',
 		catName: 'Shops',
@@ -739,7 +731,7 @@ var pois = {
 	},
 
 	furniture: {
-		name: 'Furniture Stores',
+		name: 'Furniture',
 		query: 'nwr[shop=furniture];',
 		iconName: 'homecenter',
 		catName: 'Shops',
@@ -859,7 +851,7 @@ var pois = {
 	},
 
 	florist: {
-		name: 'Florist/Garden Centres',
+		name: 'Florist/Garden',
 		query: 'nwr[shop~"florist|garden_centre"];',
 		iconName: 'garden',
 		catName: 'Shops',
@@ -867,7 +859,7 @@ var pois = {
 	},
 
 	art: {
-		name: 'Art Shops',
+		name: 'Art',
 		query: 'nwr[shop=art];',
 		iconName: 'museum_paintings',
 		catName: 'Shops',
@@ -875,7 +867,7 @@ var pois = {
 	},
 
 	books: {
-		name: 'Bookstores',
+		name: 'Books',
 		query: 'nwr[shop=books];',
 		iconName: 'book',
 		catName: 'Shops',
@@ -891,7 +883,7 @@ var pois = {
 	},
 
 	second_hand: {
-		name: 'Second-hand Stores',
+		name: 'Second-hand',
 		query: 'nwr[shop=second_hand];nwr[second_hand~"yes|only"];',
 		iconName: '2hand',
 		catName: 'Shops',
@@ -1031,7 +1023,7 @@ var pois = {
 	},
 
 	construction: {
-		name: 'Construction Areas',
+		name: 'Construction',
 		query: 'nwr[construction]["ref:planningapp"];',
 		iconName: 'construction',
 		catName: 'Other',
@@ -1039,7 +1031,7 @@ var pois = {
 	},
 
 	surveillance: {
-		name: 'Surveillance Cameras',
+		name: 'Surveillance',
 		query: 'node[~"highway|man_made"~"speed_camera|surveillance"][surveillance!~webcam];',
 		iconName: 'cctv',
 		catName: 'Other',

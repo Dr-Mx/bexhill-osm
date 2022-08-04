@@ -1836,7 +1836,15 @@
 			"properties": {
 				"name": "De La Warr Pavilion, Marina",
 				"date": "1940-09-30 08:10",
-				"description": "Destroyed dressing rooms and some of the backstage area. The buildings foundations also suffered minor damage."
+				"description": "Destroyed dressing rooms and some of the backstage area. The buildings foundations also suffered minor damage.",
+				"img": {
+					"0": "listWw2/bomb/dlwp(0)",
+					"1": "listWw2/bomb/dlwp(1)"
+				},
+				"imgattrib": {
+					"0": "Bexhill Museum",
+					"1": "Bexhill Museum"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -2051,10 +2059,12 @@
 				"date": "1940-09-19",
 				"description": "A bomb removed one of the gables and the two entrances. The gable wasn't restored until the late 1950s - early 1960s with the two entrances replaced in a 1950s style that broke the symmetry of the northern elevation. These were restored to the original style in 2016.",
 				"img": {
-					"0": "listWw2/bomb/knolecourt(0)"
+					"0": "listWw2/bomb/knolecourt(0)",
+					"1": "listWw2/bomb/knolecourt(1)"
 				},
 				"imgattrib": {
-					"0": "J. Stewart, 1952"
+					"0": "J. Stewart, 1952",
+					"1": "Bexhill Museum"
 				}
 			},
 			"geometry": {
@@ -2833,7 +2843,8 @@
 				"date": "1940-10-06",
 				"description": "Destroyed and never reopened.",
 				"img": {
-					"0": "listWw2/bomb/gaietycinema(0)"
+					"0": "listWw2/bomb/gaietycinema(0)",
+					"1": "listWw2/bomb/gaietycinema(1)"
 				}
 			},
 			"geometry": {
@@ -3368,7 +3379,8 @@
 				"type": "aircraft",
 				"img": {
 					"0": "listWw2/aircraft/ju88(0)",
-					"1": "listWw2/aircraft/ju88(1)"
+					"1": "listWw2/aircraft/ju88(1)",
+					"2": "listWw2/aircraft/ju88(2)"
 				},
 				"imgattrib": {
 					"0": "Andy Saunders"

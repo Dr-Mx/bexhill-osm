@@ -1,5 +1,5 @@
 .leaflet-control-geocoder {
-  border-radius: 4px;
+  border-radius: 10px;
   background: white;
   min-width: 30px;
   min-height: 30px;
@@ -71,7 +71,8 @@
   width: 272px;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 1px 0 0 0;
+  border-radius: 10px;
 }
 
 .leaflet-control-geocoder-alternatives-minimized {
@@ -101,6 +102,10 @@
 
 .leaflet-control-geocoder-alternatives li:last-child {
   border-bottom: none;
+  border-radius: 0 0 10px 10px;
+}
+.leaflet-control-geocoder-alternatives li:first-child {
+  border-radius: 10px 10px 0 0;
 }
 .leaflet-control-geocoder-alternatives li:hover,
 .leaflet-control-geocoder-selected {

@@ -107,7 +107,7 @@
     width: calc(100% - 40px);
     line-height: 26px;
     border: 1px solid #ccc;
-	border-radius: 4px;
+	border-radius: 10px;
 	padding: 0 25px 0 12px;
 	height: 28px;
 }

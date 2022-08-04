@@ -14,7 +14,7 @@
 }
 .easy-autocomplete input {
 	border: 1px solid #ccc;
-	border-radius: 4px;
+	border-radius: 10px;
 	line-height: 28px;
 	float: none;
 	padding: 0 22px 0 12px;
@@ -29,7 +29,7 @@
 }
 .easy-autocomplete.eac-bootstrap input {
 	border-color: #ccc;
-	border-radius: 4px;
+	border-radius: 10px;
 	border-style: solid;
 	border-width: 1px;
 	color: #555;
@@ -52,6 +52,7 @@
 	padding-left: 0;
 	position: relative;
 	top: -1px;
+	border-radius: 0 0 10px 10px;
 }
 .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
 	background: inherit;
@@ -71,7 +72,7 @@
 }
 .easy-autocomplete-container ul li {
 	border-width: 0 1px;
-	padding: 0 5px 1px 15px;
+	padding: 0 5px 1px 40px;
 }
 .eac-category + li {
 	height: 45px !important;
@@ -79,12 +80,12 @@
 }
 .eac-category img {
 	height: 25px;
-	margin: 0 5px -10px auto;
+	margin: 4px 5px 0 auto;
 	opacity: 0.75;
-	padding-top: 2px;
+	float: left;
 }
 .easy-autocomplete-container ul li:last-child {
-	border-radius: 0 0 2px 2px;
+	border-radius: 0 0 10px 10px;
 	border-width: 0 1px 1px;
 }
 .easy-autocomplete-container ul li.selected {
@@ -104,6 +105,8 @@
 }
 .easy-autocomplete-container ul .eac-category {
 	font-style: italic;
+	padding-top: 2px;
+	line-height: 25px;
 }
 
 .eac-description .eac-item span {
@@ -113,7 +116,6 @@
 }
 
 .eac-item {
-	padding-left: 23px;
 	color: var(--main-color);
 }
 

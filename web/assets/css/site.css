@@ -1,6 +1,6 @@
 :root {
-	--main-color: #b05000;
-	--second-color: #be6f2e;
+	--main-color:  #a04900;
+	--second-color:  #ba5500;
 	--bg-hover-color: #f4f4f4;
 	--scr-thumb: #cdcdcd;
 	--scr-track: #f0f0f0;
@@ -8,11 +8,13 @@
 }
 .spinner {
 	opacity: 0.75;
-	position: absolute;
+	position: fixed;
+	display: inline-block;
 	z-index: 1500;
 	background: url('../../assets/img/spinner.svg') center no-repeat;
 	height: 100%;
 	width: 100%;
+	overflow: hidden;
 	pointer-events: none;
 }
 .theme {
@@ -23,6 +25,7 @@
 }
 #map {
 	background: var(--second-color);
+	background: radial-gradient(circle, var(--second-color) 25%, var(--main-color) 50%);
 	transition: background 2.5s;
 }
 @font-face {
@@ -85,7 +88,7 @@ input[type=text], input[type=date], input[type=number] {
 	max-width: 500px;
 	margin: 0 auto;
 	background-color: rgba(255, 255, 255, 0.6);
-	border-radius: 5px;
+	border-radius: 10px;
 	transition: box-shadow 100ms linear;
 }
 #weather {
@@ -288,14 +291,15 @@ h3 {
 .leaflet-touch .leaflet-bar {
 	background-color: white;
 }
-.leaflet-control-layers-toggle {
+.leaflet-control-layers-toggle, .leaflet-retina .leaflet-control-layers-toggle {
+	background-image: none;
 	width: 40px !important;
 	height: 40px !important;
 }
 .leaflet-contextmenu {
 	display: none;
 	box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
-	border-radius: 4px;
+	border-radius: 10px;
 	padding: 4px 0;
 	background-color: white;
 	cursor: default;
@@ -384,9 +388,9 @@ h3 {
 	}
 }
 .leaflet-control-attribution {
-	white-space: nowrap;
-	border-top-left-radius: 4px;
-	line-height: 20px;
+	max-width: 60vw;
+	padding: 2px 5px;
+	border-radius: 10px 0 0 0;
 }
 .leaflet-control-attribution .fa-circle-info:hover {
 	color: #333;
@@ -432,7 +436,7 @@ h3 {
 	padding: 8px;
 	margin: 10px;
 	color: white;
-	border-radius: 5px;
+	border-radius: 10px;
 	border: none;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
 	font-size: 90%;
@@ -455,7 +459,7 @@ h3 {
 .modalButton {
 	margin: 5px auto 0 auto;
 	border: 0;
-	border-radius: 4px;
+	border-radius: 10px;
 	box-shadow: 1px 1px #ddd;
 	background-color: white;
 	font-weight: bold;
@@ -478,7 +482,7 @@ h3 {
 	height: 30px;
 	width: 150px;
 	text-align: center;
-	border-radius: 5px;
+	border-radius: 10px;
 	background-color: #fff;
 	border: none;
 }
@@ -494,7 +498,7 @@ input[type=range] {
 	padding: 0;
 	border: none;
 	background-color: #ccc;
-	border-radius: 3px;
+	border-radius: 10px;
 	cursor: e-resize;
 }
 input[type=range]::-webkit-slider-thumb {
@@ -513,7 +517,7 @@ input[type=range]::-moz-range-track {
 	width: 100%;
 	height: 10px;
 	border: none;
-	border-radius: 3px;
+	border-radius: 10px;
 }
 input[type=range]::-moz-range-thumb {
 	height: 20px;
@@ -560,13 +564,16 @@ input[type=range]:-moz-focusring {
 @media (min-width: 768px) and (max-width: 1000px) { #inputWw2 { width: 400px; } }
 @media (max-width: 768px) { #inputWw2 { width: 300px; } }
 
+.sidebar-body {
+	scroll-behavior: smooth;
+}
 .sidebar-body button {
 	color: var(--main-color);
 	border: 1px solid #ccc;
 	width: 30px;
 	height: 30px;
 	background-color: white;
-	border-radius: 4px;
+	border-radius: 10px;
 	padding: 0 6px;
 }
 .sidebar-body button:hover:enabled {
@@ -617,11 +624,11 @@ select {
 	padding-left: 5px;
 	background-color: white;
 	border: 1px solid #ccc;
-	border-radius: 4px;
+	border-radius: 10px;
 	height: 30px;
 	cursor: pointer;
 }
-select:hover:enabled, #poi-results button:hover:enabled {
+select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 	background-color: var(--bg-hover-color);
 	color: black !important;
 }
@@ -632,9 +639,15 @@ select:hover:enabled, #poi-results button:hover:enabled {
 	width: 100%;
 	text-align: left;
 }
-#poi-results-list img {
-	height: 26px;
+#poi-results-list img, .eac-category img[data-key="poi"] {
+	height: 24px;
 	display: block;
+	object-fit: none;
+	width: 24px;
+	object-position: -4px -4px;
+	border-radius: 5px;
+	outline: 1px solid rgba(0, 0, 0, 0.2);
+	outline-offset: -1px;
 }
 #poi-results-list td:first-child .fa-lg {
 	opacity: 0.75;
@@ -684,7 +697,7 @@ select:hover:enabled, #poi-results button:hover:enabled {
 }
 #poi-filter-in {
 	border: 1px solid #ccc;
-	border-radius: 4px;
+	border-radius: 10px;
 	line-height: 28px;
 	padding: 0 24px 0 12px;
 	width: calc(100% - 38px);
@@ -745,8 +758,14 @@ select:hover:enabled, #poi-results button:hover:enabled {
 }
 .poi-checkbox > label > img {
 	float: left;
-	height: 30px;
-	margin: 1px 4px;
+	height: 24px;
+	margin: 3px 4px 3px 2px;
+	width: 24px;
+	object-position: -4px -4px;
+	object-fit: none;
+	border-radius: 5px;
+	outline: 2px solid rgba(0, 0, 0, 0.2);
+	outline-offset: -1px;
 }
 .poi-checkbox > label > input {
 	display: none;
@@ -789,9 +808,6 @@ select:hover:enabled, #poi-results button:hover:enabled {
 #walkSelect {
 	position: absolute;
 }
-#walkDesc {
-	color: darkgreen;
-}
 #thennow .sidebar-body {
 	overflow-y: scroll;
 }
@@ -799,6 +815,7 @@ select:hover:enabled, #poi-results button:hover:enabled {
 	width: 100%;
 	max-width: 500px;
 	border: 2px solid #ccc;
+	border-radius: 5px;
 	margin: 5px auto auto auto;
 	display: block;
 }
@@ -807,13 +824,17 @@ select:hover:enabled, #poi-results button:hover:enabled {
 }
 .thennowTip {
 	text-align: center;
-	max-width: 150px;
-	white-space: normal;
+	padding: 0;
 }
 .thennowTip img {
-	width: 100px;
-	border-radius: 5px;
+	width: 100%;
+	min-width: 150px;
 	filter: grayscale(1) sepia(0.3);
+	border-radius: 10px 10px 0 0;
+}
+.thennowTip span {
+	padding: 0 5px;
+	white-space: nowrap;
 }
 
 /* tour tab */
@@ -885,6 +906,9 @@ select:hover:enabled, #poi-results button:hover:enabled {
 	background-color: #999;
 }
 input:checked + .slider {
+	background-color: var(--second-color);
+}
+input:checked:hover + .slider {
 	background-color: var(--main-color);
 }
 input:checked + .slider::before {
@@ -931,7 +955,7 @@ input:indeterminate + .slider::before {
 }
 #inputOverpass, #inputAttic, #inputOpCache {
 	border: 1px solid #ccc;
-	border-radius: 4px;
+	border-radius: 10px;
 	padding: 0 5px;
 	line-height: 28px;
 }
@@ -952,36 +976,6 @@ input:indeterminate + .slider::before {
 	margin: 10px 0;
 }
 
-/* help tab */
-#help img {
-	box-sizing: border-box;
-	max-width: 100%;
-	margin: auto;
-	display: block;
-	padding: 0 15px 0 15px;
-}
-#help img.floatleft {
-	float: left;
-	height: 15px;
-	padding: 0 5px 0 0;
-}
-#gotocontrols .fa-border, #gotoprivacy .fa-border {
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	background-color: white;
-}
-#gotocontext .fa-fw {
-	color: #666;
-}
-#gotodonate table {
-	margin-top: 5px;
-	text-align: center;
-	width: 100%;
-}
-#gotodonate td {
-	padding: 5px 0;
-}
-
 /* information tab */
 #info ul {
 	padding-left: 10px;
@@ -999,15 +993,28 @@ input:indeterminate + .slider::before {
 }
 #myprofile img {
 	float: left;
-	margin-right: 5px;
-	border: 1px solid #ccc;
-	border-radius: 20px;
+	margin-right: 10px;
+	border: 2px solid #ccc;
+	border-radius: 100%;
 }
 .mylinks {
 	line-height: 25px;
 }
 .mylinks .fa-fw {
 	padding: 0 5px;
+}
+#gotoprivacy .fa-border {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: white;
+}
+#gotodonate table {
+	margin-top: 5px;
+	text-align: center;
+	width: 100%;
+}
+#gotodonate td {
+	padding: 5px 0;
 }
 
 /* marker popups */
@@ -1123,7 +1130,7 @@ input:indeterminate + .slider::before {
 	overflow-x: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	margin-bottom: -4px;
+	margin-bottom: -5px;
 	text-indent: 0;
 }
 .popup-longDesc {
@@ -1241,8 +1248,8 @@ input:indeterminate + .slider::before {
 	display: none;
 }
 
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-	background-color: rgba(244, 244, 244, 0.9);
+.leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-tooltip {
+	background-color: rgba(244, 244, 244, 0.9) !important;
 }
 .leaflet-popup-tip {
 	margin: -17px auto 0;
@@ -1251,10 +1258,14 @@ input:indeterminate + .slider::before {
 	padding: 0 1px 1px 1px;
 }
 .leaflet-tooltip {
+	pointer-events: none;
 	font-size: 10pt;
-	border-radius: 5px;
+	border-radius: 10px;
 	color: #222;
-	background-color: #fff !important;
+}
+.leaflet-tooltip.leaflet-clickable {
+	pointer-events: auto;
+	cursor: pointer;
 }
 .openColor-list-true { background: linear-gradient(to right, rgba(0, 100, 0, 0.4), transparent); }
 .openColor-list-false { background: linear-gradient(to right, rgba(139, 0, 0, 0.4), transparent); }
@@ -1278,7 +1289,7 @@ input:indeterminate + .slider::before {
 	color: white;
 	font-size: 8pt;
 	text-align: center;
-	border-radius: 5px;
+	border-radius: 10px;
 	border: 1px solid #ccc;
 }
 .ui-helper-hidden-accessible {
@@ -1411,7 +1422,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 	outline: none;
 }
 kbd {
-	border-radius: 3px;
+	border-radius: 5px;
 	border: 1px solid rgba(180, 180, 180, 0.5);
 	font-size: .85em;
 	font-weight: 700;

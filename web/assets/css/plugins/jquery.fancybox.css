@@ -252,7 +252,7 @@ body.compensate-for-scrollbar {
     overflow: visible;
     padding: 0;
     width: 100%;
-	max-width: 1200px;
+	max-width: 1365px;
 	max-height: 768px;
 	border-radius: 10px;
 }
@@ -327,7 +327,6 @@ body.compensate-for-scrollbar {
 .fancybox-button,
 .fancybox-button:visited,
 .fancybox-button:link {
-    color: #b05000;
 	color: var(--main-color);
 }
 

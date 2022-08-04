@@ -51,7 +51,7 @@
 @media (min-width: 1300px) {
 	.sidebar-tabs, .sidebar-tabs > ul {
 		width: 40px; } }
-@media (max-height: 400px) {
+@media (max-height: 350px) {
 	.sidebar-tabs > ul:last-child > li:nth-child(n+2) {
 		display: none; } }
 .sidebar-tabs > li, .sidebar-tabs > ul > li {
@@ -66,7 +66,7 @@
 	background-color: var(--main-color) !important; }
 @media (min-width: 1300px) {
 	.sidebar-tabs > li.active, .sidebar-tabs > ul > li.active, .sidebar-tabs > ul > li:hover {
-		border-radius: 5px 0 0 5px; } }
+		border-radius: 10px 0 0 10px; } }
 .sidebar-tabs > li.disabled, .sidebar-tabs > ul > li.disabled {
 	color: rgba(51, 51, 51, 0.4); }
 .sidebar-tabs > li.disabled:hover, .sidebar-tabs > ul > li.disabled:hover {

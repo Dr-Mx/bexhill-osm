@@ -68,21 +68,38 @@ ul, ol {
 	padding-left: 20px;
 }
 
+figure {
+	margin: 15px 0;
+}
 img {
 	width: 100%;
 	max-width: 500px;
 	border: 2px solid var(--bg-color);
+	border-radius: 5px;
 	margin: auto;
 	display: block;
 	cursor: zoom-in;
 }
-
 .float-left {
 	float: left;
 	width: auto;
 	max-width: 35%;
 	max-height: 200px;
 	margin: 0 5px 5px 0;
+}
+.no-border {
+	border: none;
+	border-radius: unset;
+}
+.shadow {
+	filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+figcaption {
+	margin-top: 3px;
+	font-size: 85%;
+	text-align: center;
+	font-style: italic;
+	color: #808080;
 }
 
 #bombKey {
@@ -105,6 +122,9 @@ img {
 .person > div p {
 	margin-top: 0px;
 }
+.maps > div {
+	padding-bottom: 10px;
+}
 .maps .maplink p {
 	margin: 5px 0;
 }
@@ -122,40 +142,43 @@ img {
 	margin-bottom: 5px;
 	margin-left: -5px;
 	text-align: left;
-	border-radius: 3px;
+	border-radius: 5px;
 	transition: background-color 100ms;
 	color: var(--main-color);
 }
 .maplink:hover {
 	background-color: var(--bg-color);
 }
-.vidlink {
+.link {
 	display: block;
 	padding: 5px 0;
 	font-size: 90%;
 	font-style: italic;
 	text-align: right;
 }
-.vidlink::before {
-	font-family: 'Font Awesome 6 Brands';
+.link::before {
+	font-family: 'Font Awesome 6 Free';
 	font-weight: 900;
 	font-size: 110%;
 	font-style: normal;
+	color: #00A995;
+}
+.vid.link::before {
+	font-family: 'Font Awesome 6 Brands';
 	color: #ff0000;
 	content: '\f167';
+}
+.txt.link::before {
+	content: '\f518';
+}
+.cam.link::before {
+	content: '\f030';
 }
 .sm {
 	margin-top: 5px;
 	margin-bottom: 2px;
 	font-size: 95%;
 	background-size: 18px 18px;
-}
-.comment {
-	font-size: 85%;
-	margin-top: -8px;
-	text-align: center;
-	font-style: italic;
-	color: #808080;
 }
 
 a {
