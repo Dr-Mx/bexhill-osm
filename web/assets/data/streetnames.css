@@ -2,9 +2,12 @@
 	--main-color: #974500;
 	--second-color: #b05000;
 }
+html {
+	scroll-behavior: smooth;
+}
 body {
 	background-color: #ffffff;
-	font: 11pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font: 11pt Helvetica, Arial, sans-serif;
 	text-align: justify;
 	margin: auto 5%;
 	font-size: 90%;
@@ -19,14 +22,46 @@ body {
 		box-shadow: 0 2px 10px #555555;
 		font-size: 100%;
 	}
+	#header {
+		width: 110%;
+		margin: -5%;
+		border-radius: 10px 10px 0 0;
+	}
+	#btnTheme {
+		width: 40px;
+		height: 40px;
+	}
 	#anchor {
 		margin-left: 110% !important;
+	}
+	h1 {
+		font-size: 2.5vw;
+	}
+}
+@media (max-width: 899px) {
+	#header {
+		margin: 0 -5.5% -50px -5.5%;
+		width: 111%;
+		object-fit: none;
+		height: 244px;
+	}
+	#btnTheme {
+		top: 170px;
+		left: 10px;
+		width: 30px;
+		height: 30px;
+	}
+	#btnTheme svg path {
+		transform: scale(75%);
+	}
+	h1 {
+		font-size: 5vw;
 	}
 }
 a {
 	text-decoration: none;
 }
-a:link, a:visited, a:hover, .leaflet-container a {
+a:link, a:visited, a:hover, a {
 	color: var(--main-color);
 	cursor: pointer;
 }
@@ -34,13 +69,11 @@ a:hover {
 	text-decoration: underline;
 }
 #header {
-	width: 110%;
 	opacity: 0.75;
-	margin: -5%;
-	border-radius: 10px 10px 0 0;
 }
 h1 {
 	color: var(--main-color);
+	text-align: center;
 }
 hr {
 	height: 1px;
@@ -48,11 +81,29 @@ hr {
 	border: 0;
 	margin: 20px 0;
 }
+ul {
+	padding-left: 20px;
+	list-style-type: circle;
+}
 #anchor::before {
 	content: '\279C';
 	font-weight: bold;
 	font-size: 14pt;
 	line-height: 26px;
+}
+#btnTheme {
+	position: absolute;
+	padding: 2px;
+}
+#btnTheme svg path {
+	fill: #ffffff;
+}
+#btnTheme, #anchor {
+	opacity: 0.6;
+	border-radius: 100%;
+	background-color: var(--main-color);
+	border: 1px solid rgba(128, 128, 128, 0.5);
+	cursor: pointer;
 }
 #anchor {
 	display: block;
@@ -62,28 +113,23 @@ hr {
 	margin-left: calc(101% - 22px);
 	padding: 5px;
 	width: 26px;
-	background-color: var(--main-color);
-	opacity: 0.5;
-	border-radius: 100%;
-	border-width: 1px;
-	border-color: #ccc;
-	border-style: solid;
 	text-align: center;
 	color: white;
-	cursor: pointer;
 	transition: opacity 100ms linear;
 	transform: rotate(270deg);
 }
-#anchor:hover {
+#anchor:hover, #btnTheme:hover {
 	opacity: 1;
 	text-decoration: none;
 }
 #intro, #outro {
-	color: #333;
+	color: #333333;
 }
 .credit {
 	text-align: right;
 	font-style: italic;
+	margin: 10px 0;
+	font-size: 8pt;
 }
 .credit::before {
 	content: "\00a9";
@@ -95,7 +141,17 @@ hr {
 	font-weight: bold;
 	margin-top: 0;
 }
-
+#street-index {
+	margin-bottom: 20px;
+	text-align: center;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #aaaaaa;
+}
+#street-index a {
+	padding: 5px 0.95%;
+	display: inline-block;
+}
 #street-filter {
 	position: relative;
 	top: 0px;
@@ -104,7 +160,8 @@ hr {
 	margin: 0 auto;
 }
 #street-filter-in {
-	border: 1px solid #aaa;
+	background-color: transparent;
+	border: 1px solid #aaaaaa;
 	border-radius: 4px;
 	line-height: 28px;
 	padding: 0 25px 0 12px;
@@ -131,12 +188,40 @@ hr {
 	padding-bottom: 20px;
 }
 #street-results {
-	color: var(--main-color);
+	color: #555555;
 	text-align: right;
-	font-weight: bold;
-	padding-bottom: 10px;
+	margin: 10px 0 20px 0;
+	font-style: italic;
 }
 .street {
 	line-height: 1.3;
 	margin-bottom: 20px;
+}
+@media (min-width: 900px) {
+	html.darkMode {
+		background-color: #333333;
+	}
+	html.darkMode body {
+		box-shadow: 0 2px 10px #000000;
+	}
+}
+html.darkMode body {	
+	background-color: #111111;
+	color: #777777;
+}
+html.darkMode #btnTheme svg path {
+	fill: #000000;
+}
+html.darkMode #street-index {
+	color: #777777;
+}
+html.darkMode #street-filter-in {
+	border-color: #777777;
+	color: #777777;
+}
+html.darkMode #intro, html.darkMode #outro {
+	color: #666666;
+}
+html.darkMode #anchor {
+	color: #000000;
 }

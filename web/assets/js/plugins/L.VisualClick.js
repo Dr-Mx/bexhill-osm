@@ -15,7 +15,7 @@ L.Map.VisualClick = L.Handler.extend({
 			icon: this._visualIcon,
 			interactive: false
 		}).addTo(map);
-		window.setTimeout(function () { if (map) marker.remove(); }.bind(this), map.options.visualClick.removeTimeout || 500);
+		window.setTimeout(function () { if (map) marker.remove(); }.bind(this), map.options.visualClick.removeTimeout || 350);
 		return true;
 	},
 	addHooks: function () {

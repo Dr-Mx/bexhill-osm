@@ -77,13 +77,12 @@ function parse_tags(element, titlePopup, poiParser) {
 			tag += '; ';
 		}
 		if (tags['wreck:date_sunk']) tag += '<span title="Date sunk">Sunk: ' + date_parser(tags['wreck:date_sunk'], 'short') + '</span>; ';
-		if (tags.height) tag += '<span title="Height in metres">' + tags.height + 'm</span>; ';
 		if (tags['ref:planningapp']) planningLink = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + tags['ref:planningapp'] + '" target="_blank" rel="noopener">' + tags['ref:planningapp'] + '</a>';
 		else if (tags['ref:historicplanningapp']) planningLink = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/historyDetails?reference=' + tags['ref:historicplanningapp'] + '" target="_blank" rel="noopener">' + tags['ref:historicplanningapp'] + '</a>';
 		if (planningLink) tag += '<span class="nowrap" title="Planning application">' + planningLink + '</span>; ';
 		if (tags.HE_ref) {
 			var listedStatus = tags.listed_status || tags.HE_ref;
-			tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '" title="Historic England" target="_blank" rel="noopener">' + listedStatus + '</a>; ';
+			tag += '<a href="https://historicengland.org.uk/listing/the-list/list-entry/' + tags.HE_ref + '?section=official-list-entry" title="Historic England" target="_blank" rel="noopener">' + listedStatus + '</a>; ';
 		}
 		if (tags.disused) tag+= '<span title="Disused">Currently disused</span>; ';
 		if (tags.building) {
@@ -258,8 +257,8 @@ function parse_tags(element, titlePopup, poiParser) {
 					if (streetDesc) markerPopup += '<span class="popup-longDesc custscroll">' + L.Util.template(tagTmpl, { tag: 'Street history', value: streetDesc, iconName: 'fa-solid fa-book' }) + '</span>';
 					if (markerPopup) {
 						var sourceLink = $(xml).find('url').text();
-						var sourceAuthor = $(xml).find('author').text();
-						markerPopup += '<span class="popup-streetSource"><a onclick="popupWindow(\'streetBook\');" title="' + sourceLink + '">&copy; ' + sourceAuthor + '</a></span>';
+						var sourceTitle = $(xml).find('title').text();
+						markerPopup += '<span class="popup-streetSource"><a onclick="popupWindow(\'streetBook\');" title="' + sourceLink + '">' + sourceTitle + '</a></span>';
 					}
 					if ($('#inputDebug').is(':checked')) console.debug('Street-names:', xml);
 				},
@@ -316,18 +315,6 @@ function parse_tags(element, titlePopup, poiParser) {
 		// get images
 		var imgCount = 0, multiPano = [], multiVid = [];
 		markerPopup = '';
-		if (tags.wikimedia_commons) {
-			// support semicolon separated commons images
-			var multiCommons =
-				(tags.wikimedia_commons +
-				(tags.wikimedia_commons_1 ? ';' + tags.wikimedia_commons_1 : '') +
-				(tags.wikimedia_commons_2 ? ';' + tags.wikimedia_commons_2 : '')
-			).split(';');
-			for (x = 0; x < multiCommons.length; x++) if (multiCommons[x].indexOf('File:') === 0) {
-				markerPopup += generic_img_parser(multiCommons[x], imgCount, '');
-				imgCount++;
-			}
-		}
 		if (tags.image) {
 			// support semicolon separated images
 			var multiImage =
@@ -342,6 +329,18 @@ function parse_tags(element, titlePopup, poiParser) {
 			).split(';') : '';
 			for (x = 0; x < multiImage.length; x++) if (multiImage[x].indexOf('http') === 0) {
 				markerPopup += generic_img_parser(multiImage[x], imgCount, multiImageSource[x] ? '&copy; ' + multiImageSource[x] : '');
+				imgCount++;
+			}
+		}
+		if (tags.wikimedia_commons) {
+			// support semicolon separated commons images
+			var multiCommons =
+				(tags.wikimedia_commons +
+				(tags.wikimedia_commons_1 ? ';' + tags.wikimedia_commons_1 : '') +
+				(tags.wikimedia_commons_2 ? ';' + tags.wikimedia_commons_2 : '')
+			).split(';');
+			for (x = 0; x < multiCommons.length; x++) if (multiCommons[x].indexOf('File:') === 0) {
+				markerPopup += generic_img_parser(multiCommons[x], imgCount, '');
 				imgCount++;
 			}
 		}
@@ -933,7 +932,7 @@ function callback(data) {
 		}).on('click', function(e) {
 			// enable autopan after initial permalink popup, check if sidebar is open
 			e.sourceTarget._popup.options.autoPan = true;
-			e.sourceTarget._popup.options.autoPanPaddingTopLeft = ($(window).width() < 1300) ? [20, 40] : [sidebar.width() + 50, 5];
+			e.sourceTarget._popup.options.autoPanPaddingTopLeft = ($(window).width() < 1024) ? [20, 40] : [sidebar.width() + 50, 5];
 		});
 		// find alternative poi name
 		if (!name || (poi && name === poi.name.toLowerCase())) {
@@ -979,7 +978,7 @@ function callback(data) {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
 			minWidth: (e.tags.image || e.tags.wikimedia_commons) ? imgSize : '',
 			autoPan: noPermalink ? true : false,
-			autoPanPaddingTopLeft: ($(window).width() < 1300) ? [20, 40] : [sidebar.width() + 50, 5],
+			autoPanPaddingTopLeft: ($(window).width() < 1024) ? [20, 40] : [sidebar.width() + 50, 5],
 			autoPanPaddingBottomRight: [5, 50]
 		};
 		markerPopup = (poi && poi.tagParser) ? poi.tagParser(e, name) : parse_tags(e, name, []);
@@ -1043,7 +1042,7 @@ function pushPoiList(customSort) {
 	}
 	poiResultsList += '</table>';
 	$('#poi-results-list').html(poiResultsList).show();
-	$('#poi-results').slideDown(500, function() {
+	$('#poi-results').slideDown(400, function() {
 		$('#poi-results-list').css('opacity', 1);
 		$('#poi-results button').prop('disabled', false);
 		$(this).css('pointer-events', 'auto');
@@ -1087,8 +1086,8 @@ function generic_header_parser(header, subheader, fhrs, osmId, wikidata) {
 	if (osmId && !$('#inputAttic').val()) {
 		markerPopup += '<a class="popup-edit popup-header-button" title="Edit on OpenStreetMap"><i class="fa-solid fa-pen-to-square fa-fw"></i></a>';
 		if (wikidata) markerPopup += '<a class="popup-header-button" title="Edit Wikidata" href="https://www.wikidata.org/wiki/' + wikidata + '" target="_blank" rel="noopener"><i class="fa-solid fa-barcode fa-fw"></i></a>';
-		if (noIframe && window.localStorage) markerPopup += '<a class="popup-bookm popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark fa-fw"></i></a>';
-		if (fhrs) markerPopup += '<span class="popup-fhrs notloaded" fhrs-key="' + fhrs + '"><img title="Loading hygiene rating..." src="assets/img/loader.svg"/></span>';
+		if (noIframe && localStorageAvail()) markerPopup += '<a class="popup-bookm popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark fa-fw"></i></a>';
+		if (fhrs) markerPopup += '<span class="popup-fhrs notloaded" fhrs-key="' + fhrs + '"><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>';
 	}
 	if (header || fhrs) markerPopup += '<h3>' + (header !== undefined ? header : '&hellip;') + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
@@ -1155,8 +1154,8 @@ function busstop_parser(tags, titlePopup) {
 			NE: 'North-east', NW: 'North-west', SE: 'South-east', SW: 'South-west'
 		}[tags['naptan:Bearing']];
 		if (bearing) markerPopup += L.Util.template(tagTmpl, { tag: 'Bearing', value: bearing, iconName: 'fa-solid fa-compass' });
-		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable notloaded" style="width:' + imgSize + 'px;" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
-				'<img title="Loading next bus times" src="assets/img/loader.svg"/></div>';
+		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable custscroll notloaded" style="width:' + imgSize + 'px;" naptan-key="' + tags['naptan:AtcoCode'] + '">' +
+				'<i class="fa-solid fa-spinner fa-spin-pulse"></i></div>';
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
@@ -1414,7 +1413,7 @@ function getWikiAttrib(element) {
 function show_img_controls(imgMax, img360, vid) {
 	// add image navigation controls to popup
 	// check if user has already seen bouncing icons
-	var bouncedicon = window.localStorage.tutorial.indexOf('bouncedicon') === -1 ? ' fa-bounce' : '';
+	var bouncedicon = (localStorageAvail() && window.localStorage.tutorial.indexOf('bouncedicon') === -1) ? ' fa-bounce' : '';
 	var ctrlTmpl = '<div class="navigateItem">';
 	if (vid && vid.length) for (x = 0; x < vid.length; x++) {
 		if (vid[x].indexOf('File:') === 0 && vid[x].indexOf('webm') === vid[x].length-4) ctrlTmpl +=

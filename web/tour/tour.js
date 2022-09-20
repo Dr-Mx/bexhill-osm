@@ -43,13 +43,13 @@ function tour(ti, fromPermalink) {
 			weight: 2,
 			color: $('html').css('--main-color'),
 			opacity: 1,
-			fillColor: '#fff',
+			fillColor: darkMode ? '#000' : '#fff',
 			fillOpacity: 0.5
 		});
 		if (popup) marker.on('click', function(e) {
 			// enable autopan after initial permalink popup, check if sidebar is open
 			e.sourceTarget._popup.options.autoPan = true;
-			e.sourceTarget._popup.options.autoPanPaddingTopLeft = ($(window).width() < 1300) ? [20, 40] : [sidebar.width() + 50, 5];
+			e.sourceTarget._popup.options.autoPanPaddingTopLeft = ($(window).width() < 1024) ? [20, 40] : [sidebar.width() + 50, 5];
 		});
 		return marker;
 	};
@@ -315,14 +315,14 @@ function tour(ti, fromPermalink) {
 					L.geoJSON(json, {
 						pointToLayer: function(feature, latlng) {
 							var tnBody = '<hr/><h3>' + feature.properties.imgcaption['1'] + ' (' + feature.properties.date + ')</h3>' +
-								'<p><a href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.imgcaption['1'] + '">' +
+								'<figure><a href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.imgcaption['1'] + '">' +
 								'<img id="' + feature.properties.id + '" src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"/></a>';
 							// find number of images based on caption count
 							$.each(feature.properties.imgcaption, function(x) {
 								if (+x > 1) tnBody += '<a style="display:none;" href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(' + (x) + ').jpg" data-fancybox="' + feature.properties.id +
 								'" data-caption="' + feature.properties.imgcaption[x] + '"/></a>';
 							});
-							$('#thennow .sidebar-body div').append(tnBody + '<span class="comment">' + feature.properties.desc + '</span></p>');
+							$('#thennow .sidebar-body div').append(tnBody + '<figcaption>' + feature.properties.desc + '</figcaption></figure>');
 							$('[data-fancybox="' + feature.properties.id + '"]').fancybox({
 								protect: true,
 								transitionEffect: 'fade',
@@ -394,7 +394,7 @@ function tour(ti, fromPermalink) {
 							else if (feature.properties.length > 10 && feature.properties.length <= 30) fillColor = '#5bff6e';
 							else if (feature.properties.length > 30) fillColor = '#ff6464';
 							else if (feature.properties.length === -2) fillColor = '#a93909';
-							else fillColor = '#000000';
+							else fillColor = '#000';
 							return true;
 						},
 						onEachFeature: function(feature, layer) {
@@ -443,7 +443,8 @@ function tour(ti, fromPermalink) {
 							return marker;
 						}
 					});
-					map.fireEvent('zoomend');
+					if (!fromPermalink) zoom_area();
+					else map.fireEvent('zoomend');
 					setTimeout(pushPoiList, 250);
 					setPageTitle('Dinosaur Footprints');
 					if (markerId) imageOverlay.getLayer(markerId).openPopup();
@@ -528,7 +529,8 @@ function tour(ti, fromPermalink) {
 							return marker;
 						}
 					});
-					map.fireEvent('zoomend');
+					if (!fromPermalink) zoom_area();
+					else map.fireEvent('zoomend');
 					setTimeout(pushPoiList, 250);
 					setPageTitle('Martello Towers');
 					if (markerId) imageOverlay.getLayer(markerId).openPopup().stopBounce();
@@ -540,6 +542,7 @@ function tour(ti, fromPermalink) {
 		case 'motorTrack':
 			if (actOverlayLayer !== 'mt1902') map.addLayer(tileOverlayLayers[tileOverlayLayer.mt1902.name]);
 			if (!fromPermalink) map.flyToBounds(tileOverlayLayer.mt1902.bounds);
+			else map.fireEvent('zoomend');
 			setPageTitle(tileOverlayLayer.mt1902.name);
 			setTour('racing');
 			break;
@@ -571,6 +574,7 @@ function tour(ti, fromPermalink) {
 		case 'tramway':
 			imageOverlay.addLayer(L.imageOverlay(dfltDir + 'listTrams/img/tramway.png', [[50.8523, 0.4268], [50.8324, 0.5343]], { opacity: 0.9 }));
 			if (!fromPermalink) map.flyToBounds(imageOverlay.getBounds().pad(0.2));
+			else map.fireEvent('zoomend');
 			setPageTitle('Tramway Route');
 			setTour('trams');
 			break;
@@ -587,7 +591,7 @@ function tour(ti, fromPermalink) {
 			// bomb radius outline
 			for (var x = 1; x <= 5; x++) imageOverlay.addLayer(L.circle([50.84150, 0.47150], {
 				className: 'ww2radius',
-				color: '#a9a9a9',
+				color: '#888',
 				weight: 2,
 				fill: false,
 				radius: x * 804.672,
@@ -793,6 +797,39 @@ function tour(ti, fromPermalink) {
 			setPageTitle(pois.survey_point.name);
 			setTour('surveying');
 			break;
+		case 'ch1983':
+			$.ajax({
+				url: dfltDir + 'listOverlays/ch1983.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function(json) {
+					var imgs = [];
+					L.geoJSON(json, {
+						pointToLayer: function (feature, latlng) {
+							var marker = setMarker(latlng, true, false, false);
+							marker.bindTooltip(feature.properties.name, {
+								direction: 'top',
+								offset: [0, -18],
+								opacity: noTouch ? 1 : 0
+							});
+							imgs.push({
+								src: dfltDir + 'listOverlays/img/ch1983/C69600(' + feature.properties.id + ').jpg',
+								opts: { caption: feature.properties.name + ' | 1983 | Bexhill Museum' }
+							});
+							marker.on('click', function() {
+								$.fancybox.open(imgs, { protect: true, loop: false, buttons: ['close'] }, parseInt(feature.properties.id));
+							});
+							imageOverlay.addLayer(marker);
+							return marker;
+						}
+					});
+					if (!fromPermalink) map.flyToBounds(imageOverlay.getBounds().pad(0.2));
+					else map.fireEvent('zoomend');
+				}
+			});
+			actImgLayer = ti;
+			break;
 		case 'wl1950':   /* fall through */
 		case 'wl1940':   /* fall through */
 		case 'wl1911':   /* fall through */
@@ -806,7 +843,6 @@ function tour(ti, fromPermalink) {
 				map.flyToBounds(tileOverlayLayer[ti].bounds);
 			}
 			setPageTitle(tileOverlayLayer[ti].name);
-			//setTour('maps');
 			break;
 	} permalinkSet(); }, 50);
 }
@@ -830,7 +866,7 @@ function tourRef(tourVal, item) {
 	$('#tourList').val('zrefs').trigger('change');
 	$('#tourFrame').one('load', function() {
 		$(this).contents().find('#' + tourVal + ' > li').eq(item - 1).css('background-color', $('html').css('--main-color') + '55');
-		$(this).contents().find('#' + tourVal).prev()[0].scrollIntoView({ behavior: "smooth" });
+		$(this).contents().find('#' + tourVal).prev()[0].scrollIntoView({ behavior: 'smooth' });
 	});
 }
 

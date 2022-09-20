@@ -25,10 +25,10 @@
 
 .leaflet-control-geocoder-form {
   display: none;
-  vertical-align: middle;
 }
 .leaflet-control-geocoder-expanded .leaflet-control-geocoder-form {
   display: inline-block;
+  margin-left: 5px;
 }
 .leaflet-control-geocoder-form input {
   border: 0;
@@ -42,11 +42,11 @@
   height: 30px;
 }
 
-.leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon {
-    background-image: url('../../img/loader.svg');
+.leaflet-control-geocoder-throbber > .leaflet-control-geocoder-icon > .fa-solid:first-child {
+	display: none;
 }
-.leaflet-control-geocoder-throbber > .leaflet-control-geocoder-icon > .fa-solid {
-	opacity: 0;
+.leaflet-control-geocoder-throbber > .leaflet-control-geocoder-icon > .fa-solid:last-child {
+	display: inline-block !important;
 }
 
 .leaflet-control-geocoder-form-no-error {

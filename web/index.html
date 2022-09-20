@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-GB">
  <head>
-	<title>Bexhill OpenStreetMap</title>
-
 	<!-- Display, social network, search index info -->
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 	<meta name="description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information."/>
 	<meta name="author" content="Alexis Markwick"/>
+	<meta name="color-scheme" content="only light"/>
 	<meta name="twitter:site" content="@BexhillOSM"/>
 	<meta name="twitter:creator" content="@BexhillOSM"/>
 	<meta name="twitter:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg"/>
@@ -30,24 +29,30 @@
 	<meta name="theme-color" content="#a04900"/>
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.1.2"/>
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.2.0"/>
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.7.1"/>
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0"/>
-	<link rel="stylesheet" href="assets/css/plugins/Control.Loading.css?v=0.1.24"/>
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0"/>
 	<link rel="stylesheet" href="assets/css/plugins/easy-button.css?v=2.3.0"/>
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v=1.3.4"/>
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5"/>
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7"/>
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=7.1.0"/>
-	<link rel="stylesheet" id="darkcss"/>
+	<link rel="stylesheet" href="assets/css/site.css?v=7.2.0"/>
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.2.0" disabled id="darkcss"/>
+
+	<title>Bexhill OpenStreetMap</title>
  </head>
 
  <body>
 	<!-- Loading items -->
 	<noscript><div id="noscript">Sorry, you need a modern JavaScript enabled browser to view the map.</div></noscript>
-	<div class="spinner" title="Loading..."></div>
+	<div class="spinner" title="Loading...">
+		<svg width="96" height="96" viewBox="0 0 128 128">
+			<circle cx="70" cy="70" r="60"/>
+			<g><path d="M17.3 57.6a6.3 6.3.0 1 1-6.28 6.28 6.3 6.3.0 0 1 6.3-6.3zM29 24.04a4.72 4.72.0 1 1-4.7 4.72 4.72 4.72.0 0 1 4.7-4.72zm35.12-22.7A15.72 15.72.0 1 1 48.4 17.06 15.72 15.72.0 0 1 64.12 1.34zm35.1 13.27A14.15 14.15.0 1 1 85.1 28.8a14.15 14.15.0 0 1 14.15-14.15zm11.7 36.7a12.58 12.58.0 1 1-12.57 12.6 12.58 12.58.0 0 1 12.58-12.58zM99.22 88a11 11 0 1 1-11 11 11 11 0 0 1 11-11zm-35.1 13.27a9.44 9.44.0 1 1-9.43 9.44 9.44 9.44.0 0 1 9.4-9.45zM29.02 91.1a7.86 7.86.0 1 1-7.88 7.9A7.86 7.86.0 0 1 29 91.1z"/></g>
+		</svg>
+	</div>
 
  	<!-- Sidebar -->
 	<div id="sidebar" class="sidebar collapsed">
@@ -71,7 +76,7 @@
 			<div class="sidebar-pane" id="home">
 				<div class="sidebar-header"><span class="sidebar-header-text" onclick="$(window.location).attr('href', window.location.pathname);">Bexhill OpenStreetMap</span><span class="sidebar-close" title="Collapse"></span></div>
 				<div class="sidebar-body custscroll">
-					<p><input id="autocomplete" type="text" class="autocomplete" placeholder="Search, e.g. 'coffee', 'ww2', 'western road'" title="Enter a keyword, or an address"><span class="leaflet-routing-remove-waypoint" onclick="autocomplete();"></span></p>
+					<p><input id="autocomplete" type="text" class="autocomplete" placeholder="Search, e.g. 'coffee', 'ww2', 'western road'" title="Enter a keyword, grid reference, or an address"><span class="leaflet-routing-remove-waypoint" onclick="autocomplete();"></span></p>
 					<div id="homeBox">
 						<div id="weather"><span class="comment">Loading weather...</span></div>
 						<div id="minimap">
@@ -93,7 +98,7 @@
 							</map>
 						</div>
 						<div id="tips" class="comment">
-							<div id="tipsText"><!-- auto-populated --></div>
+							<div id="tipsText"></div><!-- auto-populated -->
 							<span id="tipsButton" class="theme navigateItemNext"><a onclick="getTips();"><i class="fa-solid fa-square-caret-right"></i></a></span>
 						</div>
 					</div>
@@ -103,28 +108,29 @@
 					<div id="newFeed">
 						<div>What's new:
 							<ul class="fa-ul">
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span><a onclick="switchTab('tour', 'prehistory', '', 'boreholes');"><i>Geology historic tour</i></a> - 04/2022</li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span><i>1938 Ordnance Survey</i> - 03/2022</li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span><a onclick="switchTab('tour', 'people', '', 'milligan');"><i>Spike Milligan historic tour</i></a> - 02/2022</li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span><a onclick="switchTab('', '', '', 'xmas');"><i>Xmas Window Display Competition 2021</i></a> - 10/2021</li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span><a onclick="switchTab('tour', 'maps');"><i>Other Maps historic tour</i></a> - 07/2021</li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Aug 22 - <a onclick="switchTab('tour', 'overlays');">1983 coastal aerial photographs</i></a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jul 22 - <a onclick="switchTab('tour', 'manor', '', 'manor');">The Manor House layout</a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Apr 22 - <a onclick="switchTab('tour', 'prehistory', '', 'boreholes');">Geology and boreholes</a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Mar 22 - 1938 Ordnance Survey</li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Feb 22 - <a onclick="switchTab('tour', 'people', '', 'milligan');">Spike Milligan's places of interest</a></li>
 							</ul>
 						</div>
-						<div id="osmFeed"><!-- auto-populated --></div>
+						<div id="osmFeed"></div><!-- auto-populated -->
 					</div>
 				</div>
+				<div id="creditFooter"><img src="favicon-32x32.png" alt="logo"/><span><i class="fa-regular fa-copyright"></i> Bexhill-OSM 2016-</span></div>
 			</div>
 			<div class="sidebar-pane" id="pois">
 				<div class="sidebar-header"><span class="sidebar-header-text">Find Places</span><span class="sidebar-close" title="Collapse"></span></div>
 				<div class="sidebar-body custscroll">
 					<div id="poi-results" class="custscroll">
-						<h3><!-- auto-populated --></h3>
+						<h3>Results</h3>
 						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map('markers');"><i class="fa-solid fa-trash"></i></button>
 						<button type="button" id="btnPoiResultsView" title="Zoom to results" onclick="zoom_area(true);"><i class="fa-solid fa-eye"></i></button>
 						<button type="button" id="btnPoiResultsNext" title="Jump to next item" onclick="poi_next();"><i class="fa-solid fa-turn-down"></i></button>
-						<div id="poi-results-list"><!-- auto-populated --></div>
+						<div id="poi-results-list"></div><!-- auto-populated -->
 					</div>
-					<div id="poi-icons" class="custscroll"><!-- auto-populated using pois-type.js as a reference --></div>
+					<div id="poi-icons" class="custscroll"></div><!-- auto-populated using pois-type.js as a reference -->
 				</div>
 			</div>
 			<div class="sidebar-pane" id="walking">
@@ -140,7 +146,7 @@
 					<hr/>
 					<h3>Suggested leisure walks</h3>
 					<div id="walkContainer">
-						<select id="walkList" class="theme">
+						<select id="walkList" class="theme" title="Select walk">
 							<option value="ww2h">Walking the Way to Health (0.7mi / 1km)</option>
 							<option value="tmrt">The Motor Trail (1.3mi / 2km)</option>
 							<option value="hwds">Little Common to Highwoods (1.6mi / 2.6km)</option>
@@ -180,13 +186,13 @@
 							<option value="people" data-keyword="famous notable people, john logie baird, canon basil davis ixion, desmond llewelyn, spike milligan, maharaja cooch behar">Notable People</option>
 							<option value="clocks" data-keyword="public street clock">Public Clocks</option>
 							<option value="surveying" data-keyword="ordnance survey point, benchmark">OS Surveying Points</option>
-							<option value="maps" data-keyword="map">Other Maps</option>
+							<option value="overlays" data-keyword="maps, aerial photographs">Other Overlays</option>
 							<option value="zrefs">~ References &amp; further reading</option>
 						</select>
 						<button type="button" id="tourNext" title="Next article"><i class="fa-solid fa-chevron-right"></i></button>
 					</div>
-					<div id="tourLoading"><i class="fa-solid fa-spinner fa-3x fa-pulse"></i></div>
-					<iframe id="tourFrame"><!-- auto-populated --></iframe>
+					<div id="tourLoading"><i class="fa-solid fa-spinner fa-spin-pulse fa-3x"></i></div>
+					<iframe id="tourFrame"></iframe><!-- auto-populated -->
 				</div>
 			</div>
 			<div class="sidebar-pane" id="thennow">
@@ -206,16 +212,23 @@
 				<div class="sidebar-header"><span class="sidebar-header-text">Settings</span><span class="sidebar-close" title="Collapse"></span></div>
 				<div class="sidebar-body custscroll">
 					<h3>Map display options</h3>
-					<p><label class="switch" title="Uses a theme suited for night viewing"><input id="inputDark" data-cache type="checkbox"><span class="slider"></span><span class="switchLabel">Dark theme</span></label></p>
-					<p><label class="switch" title="Switch between mi/ft (default) or km/m"><input id="inputUnit" data-cache type="checkbox"><span class="slider"></span><span class="switchLabel">Metric for measurements</span></label></p>
-					<p><label class="switch" title="Use Mapillary instead of Google where possible"><input id="inputStView" data-cache type="checkbox"><span class="slider"></span><span class="switchLabel">Mapillary street-level imagery</span></label></p>
+					<div id="setOptions">
+						<p class="setLabel"><select id="inputTheme" class="theme">
+							<option selected value="auto">Device theme</option>
+							<option value="light">Light theme</option>
+							<option value="dark">Dark theme</option>
+						</select><label for="inputTheme">Appearance</label></p>
+						<p class="setLabel switch" title="Switch between mi/ft (default) or km/m"><input id="inputUnit" data-cache type="checkbox"><label for="inputUnit" class="slider"></label><label for="inputUnit">Metric for measurements</label></p>
+						<p class="setLabel switch" title="Use Mapillary instead of Google where possible"><input id="inputStView" data-cache type="checkbox"><label for="inputStView" class="slider"></label><label for="inputStView">Mapillary street-level imagery</label></p>
+						<p class="setLabel" title="Clears all stored data"><button id="btnReset" type="button"><i class="fa-solid fa-rotate-left"></i></button><label for="btnReset">Reset to defaults</label></p>
+					</div>
 					<hr/>
 					<div id="devTools">
 						<h3>Development tools</h3>
 						<div>
-							<button type="button" onclick="tour('notes');"><i class="fa-solid fa-note-sticky"></i></button><div class="buttonLabel">Show map notes</div>
-							<button disabled type="button" id="exportQuery"><i class="fa-solid fa-upload"></i></button><div class="buttonLabel">Export current query to Overpass Turbo</div>
-							<button type="button" id="downloadBB"><i class="fa-solid fa-download"></i></button><div class="buttonLabel">Download all OSM data within map bounds (xml)</div>
+							<p class="setLabel"><button id="btnNotes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button><label for="btnNotes">Show OSM map notes</label></p>
+							<p class="setLabel"><button disabled id="btnExportQuery" type="button"><i class="fa-solid fa-upload"></i></button><label for="btnExportQuery">Export current query to Overpass Turbo</label></p>
+							<p class="setLabel"><button id="btnDownloadBB" type="button"><i class="fa-solid fa-download"></i></button><label for="btnDownloadBB">Download all OSM data within map bounds (xml)</label></p>
 							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br/>
 								<input id="inputOverpass" list="inputOverpassQ" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="customQuery($(this).prev().val(), true);"></span>
 								<datalist id="inputOverpassQ">
@@ -225,12 +238,12 @@
 									<option value="['wikimedia_commons:pano']">['wikimedia_commons:pano']</option>
 									<option value="['wikimedia_commons:video']">['wikimedia_commons:video']</option>
 								</datalist>
-								<label id="inputOverpassR"><input type="checkbox"> Include relations</label>
+								<span class="setLabel smallCheckbox"><input id="inputOverpassR" type="checkbox"><label for="inputOverpassR">Include relations</label></span>
 							</p>
 							<p>Attic data (date) <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br/>
 								<input id="inputAttic" type="date" min="2016-01-01"></p>
 							<p>localStorage cache duration for POIs :<br/>
-								<input id="inputOpCache" value="120" min="0" max="720" type="number"><span class="buttonLabel">hours (set to 0 to bypass)</span></p>
+								<span class="setLabel inputOpCacheL"><input id="inputOpCache" value="120" min="0" max="720" type="number"><label for="inputOpCache">hours (set to 0 to bypass)</label></span></p>
 							<p>Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Leaflet Control Geocoder providers"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br/>
 								<select id="inputRevServer" class="theme">
 									<option selected value="nominatim">nominatim.openstreetmap.org</option>
@@ -245,8 +258,8 @@
 									<option value="overpass.kumi.systems">overpass.kumi.systems</option>
 									<option selected value="maps.mail.ru/osm/tools/overpass">maps.mail.ru</option>
 								</select></p>
-							<p><label class="switch"><input id="inputBbox" data-uri type="checkbox"><span class="slider"></span><span class="switchLabel">Use bbox instead of area</span></label></p>
-							<p><label class="switch"><input id="inputDebug" type="checkbox"><span class="slider"></span><span class="switchLabel">Debug mode</span></label></p>
+							<p class="setLabel switch"><input id="inputBbox" data-uri type="checkbox"><label for="inputBbox" class="slider"></label><label for="inputBbox">Use bbox instead of area</label></p>
+							<p class="setLabel switch"><input id="inputDebug" type="checkbox"><label for="inputDebug" class="slider"></label><label for="inputDebug">Debug mode</label></p>
 						</div>
 					</div>
 				</div>
@@ -263,7 +276,7 @@
 					<div id="gotoabout"><hr/>
 					<h3>About &amp; Contact</h3>
 						<p>Bexhill-OSM is part of a community of mappers that want to create a free, editable map of the world. You can learn about the global project at the official <a href="https://www.openstreetmap.org/about" target="_blank" rel="noopener">OpenStreetMap website</a>.</p>
-						<p>This independent website looks to continuously archive Bexhill as it stands today; heralding history, community and business in an informative, accessible form.</p>
+						<p>This independent website looks to continuously archive Bexhill-on-Sea as it stands today; heralding history, community and business in an informative, accessible form.</p>
 						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we welcome listings on all publicly visitable places.</p>
 						<span id="myprofile"><img alt="Alexis Markwick" title="Alexis Markwick" src="assets/img/info-me.jpg"/>Web-development and the underlying map data is maintained by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</span>
 						<p>If you're involved with a local group, I'll be happy to come and speak at one of your events about the project and give demonstrations.</p>
@@ -290,38 +303,47 @@
 						<p class="mylinks"><a href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><i style="color:#000000;" class="fa-brands fa-github fa-fw fa-lg"></i>Bexhill-OSM</a> &copy; Alexis Markwick</p>
 						Thanks to these developers:
 						<ul>
-							<li><a href="https://github.com/humitos/osm-pois/" target="_blank" rel="noopener">osm-pois</a> &copy; Manuel Kaufmann</li>
+							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
+							<li><a href="https://github.com/fancyapps/fancybox" target="_blank" rel="noopener">fancyBox</a> &copy; Jānis Skarnelis</li>
+							<li><a href="https://realfavicongenerator.net" target="_blank" rel="noopener">Favicon Generator</a> &copy; Philippe Bernard</li>
+							<li><a href="https://fontawesome.com" target="_blank" rel="noopener">Font Awesome</a> &copy; Dave Gandy</li>
+							<li><a href="https://www.nearby.org.uk/tests/GeoTools.html" target="_blank" rel="noopener">GeoTools WGS84/OSGB36 Converter</a> &copy; Paul Dixon</li>
+							<li><a href="https://github.com/davidjbradshaw/image-map-resizer" target="_blank" rel="noopener">image-map-resizer</a> &copy; David J. Bradshaw</li>
+							<li><a href="https://jquery.com" target="_blank" rel="noopener">jQuery</a> &copy; The jQuery Foundation</li>
 							<li><a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a> &copy; Vladimir Agafonkin</li>
 							<li><ul>
-								<li><a href="https://github.com/Turbo87/sidebar-v2" target="_blank" rel="noopener">sidebar-v2</a> &copy; Tobias Bieniek</li>
-								<li><a href="https://github.com/heigeo/leaflet.wms" target="_blank" rel="noopener">leaflet-wms</a> &copy; hei geo</li>
-								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu" target="_blank" rel="noopener">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
 								<li><a href="https://github.com/maximeh/leaflet.bouncemarker" target="_blank" rel="noopener">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
-								<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank" rel="noopener">Leaflet.loading</a> &copy; Eric Brelsford</li>
-								<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton" target="_blank" rel="noopener">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
+								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu" target="_blank" rel="noopener">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
 								<li><a href="https://github.com/perliedman/leaflet-control-geocoder" target="_blank" rel="noopener">leaflet-control-geocoder</a> &copy; Per Liedman</li>
-								<li><a href="https://github.com/perliedman/leaflet-routing-machine" target="_blank" rel="noopener">leaflet-routing-machine</a> &copy; Per Liedman</li>
-								<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank" rel="noopener">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
-								<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank" rel="noopener">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
+								<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton" target="_blank" rel="noopener">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
 								<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank" rel="noopener">leaflet-hash</a> &copy; Michael L. Evans</li>
+								<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank" rel="noopener">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
+								<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank" rel="noopener">Leaflet.loading</a> &copy; Eric Brelsford</li>
+								<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank" rel="noopener">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
+								<li><a href="https://github.com/perliedman/leaflet-routing-machine" target="_blank" rel="noopener">leaflet-routing-machine</a> &copy; Per Liedman</li>
 								<li><a href="https://github.com/MazeMap/Leaflet.VisualClick" target="_blank" rel="noopener">Leaflet.VisualClick</a> &copy; Dag Jomar Mersland</li>
+								<li><a href="https://github.com/heigeo/leaflet.wms" target="_blank" rel="noopener">leaflet-wms</a> &copy; hei geo</li>
+								<li><a href="https://github.com/Turbo87/sidebar-v2" target="_blank" rel="noopener">sidebar-v2</a> &copy; Tobias Bieniek</li>
 							</ul></li>
-							<li><a href="https://jquery.com" target="_blank" rel="noopener">jQuery</a> &copy; The jQuery Foundation</li>
-							<li><a href="https://github.com/opening-hours/opening_hours.js" target="_blank" rel="noopener">opening_hours.js</a> &copy; Robin Schneider</li>
-							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
-							<li><a href="https://github.com/davidjbradshaw/image-map-resizer" target="_blank" rel="noopener">image-map-resizer</a> &copy; David J. Bradshaw</li>
-							<li><a href="https://www.nearby.org.uk/tests/GeoTools.html" target="_blank" rel="noopener">GeoTools WGS84/OSGB36 Converter</a> &copy; Paul Dixon</li>
-							<li><a href="https://github.com/fancyapps/fancybox" target="_blank" rel="noopener">fancyBox</a> &copy; Jānis Skarnelis</li>
-							<li><a href="https://github.com/mpetroff/pannellum" target="_blank" rel="noopener">Pannellum</a> &copy; Matthew Petroff</li>
 							<li><a href="https://mapicons.mapsmarker.com" target="_blank" rel="noopener">Map Icons Collection</a> &copy; Nicolas Mollet</li>
-							<li><a href="https://fontawesome.com" target="_blank" rel="noopener">Font Awesome</a> &copy; Dave Gandy</li>
-							<li><a href="https://realfavicongenerator.net" target="_blank" rel="noopener">Favicon Generator</a> &copy; Philippe Bernard</li>
+							<li><a href="https://github.com/opening-hours/opening_hours.js" target="_blank" rel="noopener">opening_hours.js</a> &copy; Robin Schneider</li>
+							<li><a href="https://github.com/humitos/osm-pois/" target="_blank" rel="noopener">osm-pois</a> &copy; Manuel Kaufmann</li>
+							<li><a href="https://github.com/mpetroff/pannellum" target="_blank" rel="noopener">Pannellum</a> &copy; Matthew Petroff</li>
+						</ul>
+						<ul>
+							<li><a href="https://docs.mapbox.com/help/glossary/directions-api/" target="_blank" rel="noopener">Directions API</a> &copy; Mapbox</li>
+							<li><a href="https://www.travelinedata.org.uk/traveline-open-data/nextbuses-api/" target="_blank" rel="noopener">NextBuses API</a> &copy; Traveline</li>
+							<li><a href="https://www.opentopodata.org/" target="_blank" rel="noopener">Open Topo Data API</a> &copy; Andrew Nisbet</li>
+							<li><a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeather API</a> &copy; OpenWeather</li>
+							<li><a href="https://osmcha.org" target="_blank" rel="noopener">OSM Changeset Analyser API</a> &copy; OSMCha</li>
+							<li><a href="https://ratings.food.gov.uk/open-data/en-GB" target="_blank" rel="noopener">UK Food Hygiene API</a> &copy; Food Standards Agency</li>
+							<li><a href="https://admiraltyapi.portal.azure-api.net/" target="_blank" rel="noopener">UK Tidal API</a> &copy; UK Hydrographic Office</li>
 						</ul>
 					</div>
 					<div id="gotoprivacy"><hr/>
 					<h3>Privacy Policy</h3>
 						There are no trackers, ads, miners, or analytics. You can verify this using <a href="https://themarkup.org/blacklight?url=bexhill-osm.org.uk" target="_blank" rel="noopener">Blacklight Real-Time Website Privacy Inspector.</a><br/><br/>
-						Your browser's local storage is used to remember settings, bookmarks and to cache POIs. You may clear this storage at any time by right-clicking the <i class="theme fa-solid fa-trash fa-border fa-fw"></i> button.
+						Your browser's local storage is used to remember settings, bookmarks and to cache POIs. You may clear this storage at any time by clicking Settings > <i class="theme fa-solid fa-rotate-left fa-border fa-fw"></i> Reset to defaults.
 					</div>
 					<a class="theme anchor"></a>
 				</div>
@@ -354,12 +376,11 @@
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=7.1.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=7.1.0"></script>
-	<script src="assets/js/tags-parsers.js?v=7.1.0"></script>
-	<script src="assets/js/pois-type.js?v=7.1.0"></script>
-	<script src="tour/tour.js?v=7.1.0"></script>
-	<script src="assets/js/site.js?v=7.1.0"></script>
-
+	<script src="assets/js/config.js?v=7.2.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=7.2.0"></script>
+	<script src="assets/js/tags-parsers.js?v=7.2.0"></script>
+	<script src="assets/js/pois-type.js?v=7.2.0"></script>
+	<script src="tour/tour.js?v=7.2.0"></script>
+	<script src="assets/js/site.js?v=7.2.0"></script>
  </body>
 </html>

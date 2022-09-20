@@ -20,7 +20,7 @@ function show_overpass_layer(query, cacheId, bound, forceBbox) {
 				cacheId += cacheId ? 'BB' : '';
 			}
 		queryBbox += ';(' + query + ');';
-		$('#exportQuery').prop('disabled', false);
+		$('#btnExportQuery').prop('disabled', false);
 	}
 	var opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
@@ -56,7 +56,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			if (self.options.debug) console.debug('Query received from eleCache.', self.options.cacheId);
 		}
 		// check if cached in localStorage and not expired
-		else if (noIframe && !$('#inputAttic').val() && window.localStorage && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0 &&
+		else if (noIframe && localStorageAvail() && !$('#inputAttic').val() && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0 &&
 			(new Date(JSON.parse(window.localStorage[self.options.cacheId]).osm3s.timestamp_osm_base).getTime()+(parseInt($('#inputOpCache').val())*60*60*1000) > new Date().getTime())) {
 				eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
 				self.options.callback.call(reference, eleCache[self.options.cacheId]);
@@ -66,49 +66,52 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		else $.ajax({
 			url: url,
 			datatype: 'xml',
-			retryLimit: 3,
+			retryTimeout: 2,
 			success: function(xml) {
-				self.options.callback.call(reference, xml);
-				if (poiList.length === 0 && !rQuery) self.options.statusMsg('circle-info', 'No places found', 'Please try another area or query.');
-				// if not in iframe, cache to local storage
-				if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {
-					eleCache[self.options.cacheId] = xml;
-					if (noIframe && window.localStorage) window.localStorage[self.options.cacheId] = JSON.stringify(xml);
+				if (xml.elements) {
+					self.options.callback.call(reference, xml);
+					if (poiList.length === 0 && !rQuery) self.options.statusMsg('circle-info', 'No places found', 'Please try another area or query.');
+					// if not in iframe, cache to local storage
+					if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {
+						eleCache[self.options.cacheId] = xml;
+						if (noIframe && localStorageAvail()) window.localStorage[self.options.cacheId] = JSON.stringify(xml);
+					}
+					if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
 				}
-				if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
+				else self.options.statusMsg('face-frown', 'Error', 'Bad response from data server. Please try again later.');
 			},
 			complete: function(e) {
 				if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
 					var erMsg = 'Something went wrong. Please try again later.';
 					switch (e.status) {
-						case 0:
+						case 0: /* fall through */
+						case 504:
+							// retry on timeout
+							if (e.status === 504 && this.retryTimeout) {
+								this.retryTimeout--;
+								$.ajax(this);
+								return;
+							}
 							// fallback to main overpass server if failed on alternative
-							if ($('#inputOpServer').val() !== $('#inputOpServer option').eq(0).val() && this.retryLimit) {
+							if ($('#inputOpServer').val() !== $('#inputOpServer option').eq(0).val()) {
 								var that = this;
 								that.url = this.url.replace($('#inputOpServer').val(), $('#inputOpServer option').eq(0).val());
-								this.retryLimit = 0;
 								$.ajax(that);
 								$('#inputOpServer').prop('selectedIndex', 0);
 								return;
 							}
 							else {
-								erMsg = 'Data server not responding. Please try again later.';
-								e.status = 1;
+								if (e.status === 0) {
+									erMsg = 'Data server not responding. Please try again later.';
+									e.status = 1;
+								}
+								else erMsg = 'Data server timed-out. Please try again later.';
 							}
 							break;
-						case 400: erMsg = 'Bad Request. Check the URL or query is valid.'; break;
-						case 429: erMsg = 'Too Many Requests. Please wait a few moments before trying again.'; break;
-						case 504:
-							// retry on timeout
-							if (this.retryLimit) {
-								this.retryLimit--;
-								$.ajax(this);
-								return;
-							}
-							else erMsg = 'Gateway Timeout. Please try again later.';
-							break;
+						case 400: erMsg = 'Bad request. Check the URL or query is valid.'; break;
+						case 429: erMsg = 'Too many requests. Please wait a few moments before trying again.'; break;
 					}
-					self.options.statusMsg('triangle-exclamation', 'ERROR #' + e.status, erMsg);
+					self.options.statusMsg('face-frown', 'Error ' + e.status, erMsg);
 					self.options.callback.call(reference, { elements: [] });
 					rQuery = false;
 					this.error();

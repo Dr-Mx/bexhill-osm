@@ -1,0 +1,154 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+		"type": "Feature",
+		"properties": {
+			"id": "00",
+			"name": "Cooden Beach"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.42998, 50.83064]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "01",
+			"name": "Beaulieu Road"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.43656, 50.83121]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "02",
+			"name": "Hartfield Road"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.44210, 50.83174]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "03",
+			"name": "Veness Gap"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.44677, 50.83225]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "04",
+			"name": "South Cliff"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.45240, 50.83305]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "05",
+			"name": "West Parade, Polegrove"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.4598, 50.8334]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "06",
+			"name": "West Parade, Egerton Park"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.46697, 50.83408]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "07",
+			"name": "De La Warr Pavilion"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47105, 50.83464]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "08",
+			"name": "Channel View"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47567, 50.83529]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "09",
+			"name": "East Parade, Marine Mansions"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47980, 50.83586]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "10",
+			"name": "East Parade, Bethune Road"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.48733, 50.83752]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "11",
+			"name": "Sutton Place"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.49240, 50.83828]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "12",
+			"name": "Galley Hill"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.49912, 50.83938]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "13",
+			"name": "Glyne Gap"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.50586, 50.84136]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
+			"id": "14",
+			"name": "Little Galley Hill"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.51061, 50.84200]
+		}
+	}]
+}

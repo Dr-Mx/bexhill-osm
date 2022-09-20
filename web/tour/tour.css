@@ -1,7 +1,7 @@
 @import '../assets/font/fontawesome/css/all.min.css';
 :root {
 	--text-color: black;
-	--bg-color: #ccc;
+	--bg-color: #cccccc;
 	--bg-color2: rgba(190, 190, 190, 0.5);
 }
 html {
@@ -10,8 +10,8 @@ html {
 	color: var(--text-color);
 }
 body {
-	font: 11pt "Helvetica Neue", Arial, Helvetica, sans-serif;
-	padding: 0 15px 0 15px;
+	font: 11pt Helvetica, Arial, sans-serif;
+	padding: 0 3%;
 	text-align: justify;
 	margin: 0;
 	overflow-y: auto;
@@ -69,7 +69,7 @@ ul, ol {
 }
 
 figure {
-	margin: 15px 0;
+	margin: 15px 3%;
 }
 img {
 	width: 100%;
@@ -122,10 +122,10 @@ figcaption {
 .person > div p {
 	margin-top: 0px;
 }
-.maps > div {
+.overlayLink > div {
 	padding-bottom: 10px;
 }
-.maps .maplink p {
+.overlayLink .maplink p {
 	margin: 5px 0;
 }
 .maplink::before {
@@ -148,6 +148,11 @@ figcaption {
 }
 .maplink:hover {
 	background-color: var(--bg-color);
+	color: var(--text-color);
+}
+.maplink img {
+	width: 94%;
+	margin: 0 3%;
 }
 .link {
 	display: block;
@@ -161,11 +166,9 @@ figcaption {
 	font-weight: 900;
 	font-size: 110%;
 	font-style: normal;
-	color: #00A995;
 }
 .vid.link::before {
 	font-family: 'Font Awesome 6 Brands';
-	color: #ff0000;
 	content: '\f167';
 }
 .txt.link::before {

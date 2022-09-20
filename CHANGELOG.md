@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## v7.2.0
+
+**Date:** 20/09/2022
+
+Updated
+ - fontawesome 6.2.0
+
+Site changes
+ - Spinner/loader is now an inline svg that uses theme
+ - Theme defaults to System default theme under new option in Settings
+ - Add vertical resize to sidebar on bigger screens
+ - Undock sidebar on smaller screens
+ - Add credit footer to home tab
+ - Improved checking of localStorage availability
+ - Improved responsiveness when clicking map
+ - Bookmarks are now shown directly in URL
+ - 'Reset to defaults' moved to a Settings button
+ - Cleaner 'Recent map edits' feed
+ - Add 1983 aerial photographs to Other Maps
+ - Remodel streetnames xml/xsl book with an alphabetic index and Dark theme
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.1.0
 
 **Date:** 04/08/2022
@@ -9,7 +32,7 @@ Updated
 
 Site changes
  - UI cleanup
- - Remove outdated help system
+ - Remove outdated help tab
  - Remove 'currently open' option
  - Default to Google Street View
  - Tooltips show above POI
@@ -31,7 +54,7 @@ Updated
  - L.Control.Locate.min.js 0.76.1
 
 Site changes
- - Updated fontawesome to use latest naming conventions, use their inbuilt animations
+ - Updated fontawesome to use latest naming conventions, uses inbuilt animations
  - Use fontawesome in iframes
  - Moved some switch cases to objects
  - Improve history tour youtube links

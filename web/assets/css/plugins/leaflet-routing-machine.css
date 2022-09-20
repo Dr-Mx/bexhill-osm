@@ -25,12 +25,13 @@
 }
 
 .leaflet-routing-alt, .leaflet-routing-geocoders, .leaflet-routing-error {
-    max-height: 310px;
     overflow-y: auto;
     transition: all 0.2s ease;
 	text-align: left;
 }
-
+.leaflet-routing-alt {
+    max-height: 310px;
+}
 .leaflet-control-container .leaflet-routing-container-hide .leaflet-routing-alt, 
 .leaflet-control-container .leaflet-routing-container-hide .leaflet-routing-geocoders {
     display: none;
@@ -129,27 +130,6 @@
 
 .leaflet-routing-geocoders button:hover::after {
 	color: black;
-}
-
-.leaflet-routing-add-waypoint::after {
-	color: var(--main-color);	
-    content: '\2b';
-	line-height: 1;
-	font-family: 'Font Awesome 6 Free';
-}
-
-.leaflet-routing-reverse-waypoints::after {
-	color: var(--main-color);	
-	content: '\f079';
-	line-height: 1;
-	font-family: 'Font Awesome 6 Free';
-}
-
-.leaflet-routing-delete-waypoints::after {
-	color: var(--main-color);	
-	content: '\f1f8';
-	line-height: 1;
-	font-family: 'Font Awesome 6 Free';
 }
 
 .leaflet-routing-delete-waypoints, .leaflet-routing-reverse-waypoints, .leaflet-routing-add-waypoint {

@@ -172,7 +172,7 @@ var pois = {
 	},
 
 	fairtrade: {
-		name: 'Fairtrade Businesses',
+		name: 'Fairtrade Business',
 		query: 'nwr[fair_trade=yes];',
 		iconName: 'fairtrade',
 		catName: 'Amenities',
