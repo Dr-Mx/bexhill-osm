@@ -104,6 +104,7 @@ ul {
 	background-color: var(--main-color);
 	border: 1px solid rgba(128, 128, 128, 0.5);
 	cursor: pointer;
+	transition: opacity 100ms linear;
 }
 #anchor {
 	display: block;
@@ -115,7 +116,6 @@ ul {
 	width: 26px;
 	text-align: center;
 	color: white;
-	transition: opacity 100ms linear;
 	transform: rotate(270deg);
 }
 #anchor:hover, #btnTheme:hover {

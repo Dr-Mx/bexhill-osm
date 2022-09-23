@@ -1,7 +1,7 @@
 {
     "data_format": 1,
     "data_url": "https://bexhill-osm.org.uk/assets/data/taginfo.json",
-	"data_updated": "20211108T200000Z",
+	"data_updated": "20220923T200000Z",
     "project": {
         "name": "Bexhill OpenStreetMap",
         "description": "A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.",
@@ -23,7 +23,10 @@
             "description": "Keeps track of empty shops for display on the map."
         }, {
             "key": "wikimedia_commons",
-            "description": "Link to a photo, or multiple photos when separated by semicolons, displayed in an elements popup."
+            "description": "Link to a photo, displayed in an elements popup."
+        }, {
+            "key": "wikimedia_commons_1",
+            "description": "Links to multiple photos when separated by semicolons, displayed in an elements popup."
         }, {
             "key": "wikimedia_commons:pano",
             "description": "Links to a 360 panoramic image, or multiple panoramas when separated by semicolons, linked in an elements popup."
@@ -32,7 +35,10 @@
             "description": "Links to a video, or multiple videos when separated by semicolons, linked in an elements popup."
         }, {
             "key": "image",
-            "description": "A direct url link to a photo, or multiple photos when separated by semicolons, displayed in an elements popup."
+            "description": "Direct url link to a photo, displayed in an elements popup."
+        }, {
+            "key": "image_1",
+            "description": "Direct url links to multiple photos when separated by semicolons, displayed in an elements popup."
         }, {
             "key": "image:source",
             "description": "Attribution for 'image' tag, for displaying under the image."

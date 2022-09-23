@@ -54,7 +54,7 @@ input[type=range] {
 .custscroll {
 	scrollbar-color: var(--scr-thumb) var(--scr-track) !important;
 }
-.layerDark {
+.layerDark, #minimap > img {
 	filter: invert(90%) hue-rotate(180deg) contrast(0.8);
 }
 .sidebar-header {

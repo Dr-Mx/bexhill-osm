@@ -678,7 +678,7 @@ input[type=range]:-moz-focusring {
 	border: 1px solid #cccccc;
 	height: 30px;
 }
-button:disabled, button:disabled:hover {
+button:disabled:not(.fancybox-button), button:disabled:not(.fancybox-button):hover {
 	background-color: #eeeeee;
 	cursor: default;
 	pointer-events: none;

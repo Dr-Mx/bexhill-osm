@@ -11,8 +11,12 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
 
 ## Features
 - Mobile and desktop friendly
-- Mapillary Street Level spherical panorama support
-- Local caching of API requests
+- Light/dark theme support
+- Map display
+  - Switch between metric and imperial
+  - Adjust overlay opacity
+  - Set map layer offset
+- Local caching of OSM API requests
 - Detailed POI markers through Overpass API
   - Bookmark favourite POIs
   - Facility icons
@@ -41,23 +45,26 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - Multiple image support including Wikimedia Commons API (key:wikimedia_commons, key:image)
   - Multiple video support using Wikimedia Commons (key:wikimedia_commons:video)
   - Multiple spherical panorama support using Wikimedia Commons (key:wikimedia_commons:pano)
+  - Fallback to main Overpass server on failure
+  - Area outlines
 - Find an address by searching (Nominatim > Overpass)
 - Query any feature on map by clicking (Nominatim > Overpass)
-- Area highlight on select (OpenStreetMap API)
 - Manually select groups of POIs from list or using a keyword
 - POI result list with current opening_hours / collection_times state
 - Detailed walking directions with Mapbox API
-- Geolocate user and show distances from POIs
+- Geolocate user
+- Mapillary/Google street spherical panorama support
 - History Tour articles that link to various overlays on the map
-- Direct link to edit an element on OSM or leave a note
+- Direct link to edit an element on OSM or edit Wikidata
 - Share any current map state with dynamic permalink
-- Map display
-  - Switch between metric and imperial
-  - Adjustable themes / Dark theme
-  - Adjust overlay opacity
-  - Set overlay offset
 - OpenWeatherMap API
-- Various debugging tools
+- Development tools
+  - Display OSM notes
+  - Export current query to Overpass Turbo
+  - Download all data within map bounds
+  - Custom OverpassAPI queries
+  - Query OSM attic data from a certain date
+  - Output debug info to console
 
 ## Futher Reading on the Project
 
