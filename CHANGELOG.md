@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v7.3.0
+
+**Date:** 16/11/2022
+
+Updated
+ - fontawesome 6.2.1
+ - L.Control.Locate.min.js 0.78.0
+
+Site changes
+ - Move streetnames xml/xsl book to tour
+ - Fix CSS to use fontawesome varibles rather than font-family
+ - Click through tutor modals sequentially
+ - Added a play button to WW2 tour that animates chronological bomb incidents
+ - Support for amenity=training in Education Institutions POI
+ - Larger zoomable wikimedia_commons images when opening in lightbox
+ - Xmas updates
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.2.0
 
 **Date:** 20/09/2022

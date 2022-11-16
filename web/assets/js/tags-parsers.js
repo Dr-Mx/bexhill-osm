@@ -1,8 +1,8 @@
 // parse tags and marker popup
-
+var test;
 var spinner = 0, markerId, ohState, ctState, poiList = [];
 function parse_tags(element, titlePopup, poiParser) {
-	var eName = element.tags['name:en'] || element.tags.name || undefined;
+	var eName = element.tags.name || element.tags['addr:housename'] || undefined;
 	if (eName && element.tags.ref) eName += ' (' + element.tags.ref + ')';
 	var markerPopup = '';
 	// global callback parsers
@@ -13,7 +13,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags.level > 0 && tags.level <= 10) addr += '<span title="Level">' + ['Ground', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'][tags.level] + '-floor</span>, ';
 			if (tags['addr:unit']) addr += 'Unit ' + tags['addr:unit'] + ', ';
 			if (tags['addr:flats']) addr += 'Flats ' + tags['addr:flats'] + ', ';
-			if (tags['addr:housename'] && tags['addr:housename'] !== eName) addr += '<span title="House name">' + tags['addr:housename'] + '</span>, ';
+			if (tags['addr:housename'] && tags['addr:housename'] !== element.tags.name) addr += '<span title="House name">' + tags['addr:housename'] + '</span>, ';
 			if (tags['addr:housenumber']) addr += '<span title="House number">' + tags['addr:housenumber'] + '</span> ';
 			if (tags['addr:street']) addr += '<span title="Street">' + tags['addr:street'] + '</span>';
 			else if (tags['addr:place']) addr += '<span title="Place">' + tags['addr:place'] + '</span>';
@@ -40,7 +40,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		var tagWebsite = tags.website || tags['contact:website'] || tags['contact:webcam'];
 		markerPopup = '';
 		if (tagWebsite) {
-			var strWebsite = (tagWebsite.indexOf('://') > 0) ? tagWebsite.split('://')[1] : tagWebsite;
+			var strWebsite = (tagWebsite.indexOf('://www.') > 0) ? tagWebsite.split('://www.')[1] : ((tagWebsite.indexOf('://') > 0) ? tagWebsite.split('://')[1] : tagWebsite);
 			if (strWebsite.slice(-1) === '/') strWebsite = strWebsite.slice(0, -1);
 			var linkWebsite = '<a class="popup-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px;" href="' + tagWebsite + '" title="' + tagWebsite + '" target="_blank" rel="noopener nofollow">' + strWebsite + '</a>';
 			markerPopup += L.Util.template(tagTmpl, { tag: 'Website', value: linkWebsite, iconName: 'fa-solid fa-globe' });
@@ -93,7 +93,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			else siteType = ['Building', 'building'];
 		}
 		else siteType = ['Site', 'monument'];
-		if (tag) markerPopup = L.Util.template(tagTmpl, { tag:  siteType[0] + ' details', value: listTidy(tag, true), iconName: 'fa-solid fa-' + siteType[1] }) + markerPopup;
+		if (tag) markerPopup = L.Util.template(tagTmpl, { tag: siteType[0] + ' details', value: listTidy(tag, true), iconName: 'fa-solid fa-' + siteType[1] }) + markerPopup;
 		return markerPopup;
 	};
 	var facility_parser = function(tags) {
@@ -246,7 +246,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			// get street history through xml file lookup
 			$.ajax({
 				async: false,
-				url: 'assets/data/streetnames.xml',
+				url: 'tour/itemStreetNames/streetnames.xml',
 				dataType: 'xml',
 				cache: true,
 				success: function(xml) {
@@ -339,6 +339,23 @@ function parse_tags(element, titlePopup, poiParser) {
 				(tags.wikimedia_commons_1 ? ';' + tags.wikimedia_commons_1 : '') +
 				(tags.wikimedia_commons_2 ? ';' + tags.wikimedia_commons_2 : '')
 			).split(';');
+			/* CATEGORIES SUPPORT TODO
+			if (multiCommons[0].indexOf('Category:') === 0) {
+				$.ajax({
+					url: 'https://commons.wikimedia.org/w/api.php',
+					dataType: 'jsonp',
+					cache: true,
+					data: { action: 'query', list: 'categorymembers', cmtype: 'file', cmtitle: multiCommons[0], format: 'json' },
+					success: function(result) {
+						if (!result.query.categorymembers[-1]) for (x = 0; x < result.query.categorymembers.length; x++) if (result.query.categorymembers[x].title.indexOf('File:') === 0) {
+							markerPopup += generic_img_parser(result.query.categorymembers[x].title, imgCount, '');
+							imgCount++;
+						}
+						if ($('#inputDebug').is(':checked')) console.debug('Wikimedia-categories:', result);
+					},
+					error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKIMEDIA-CATEGORIES:', encodeURI(this.url)); }
+				});
+			} else */
 			for (x = 0; x < multiCommons.length; x++) if (multiCommons[x].indexOf('File:') === 0) {
 				markerPopup += generic_img_parser(multiCommons[x], imgCount, '');
 				imgCount++;
@@ -587,6 +604,7 @@ function callback(data) {
 						switch (e.tags.cuisine) {
 							case 'chinese': iconName = 'restaurant_chinese'; break;
 							case 'fish_and_chips': iconName = 'fishchips'; break;
+							case 'greek': iconName = 'restaurant_greek'; break;
 							case 'ice_cream': iconName = 'icecream'; break;
 							case 'indian': iconName = 'restaurant_indian'; break;
 							case 'italian': iconName = 'restaurant_italian'; break;
@@ -643,10 +661,20 @@ function callback(data) {
 						type = 'club';
 					}
 					break;
-				case 'taxi': if (!e.tags.building) { name = e.tags.amenity + ' rank'; iconName = 'taxirank'; } break;
+				case 'taxi':
+					if (!e.tags.building) {
+						name = e.tags.amenity + ' rank';
+						iconName = 'taxirank';
+					}
+					break;
+				case 'training':
+					if (e.tags.training) {
+						name = e.tags.training + ' ' + e.tags.amenity;
+						iconName = 'presentation';
+					}
+					break;
 			}
 		}
-		if (e.tags.education === 'centre') name = 'education centre';
 		if (e.tags.highway) {
 			iconName = 'roadtype_tar';
 			switch (e.tags.highway) {
@@ -808,12 +836,13 @@ function callback(data) {
 				case 'fitness_centre':
 				case 'fitness_station': iconName = 'weights'; break;
 				case 'garden': iconName = 'urbanpark'; break;
-				case 'golf_course':  iconName = 'golfing'; break;
+				case 'golf_course': iconName = 'golfing'; break;
 				case 'horse_riding': iconName = 'horseriding'; break;
 				case 'nature_reserve': type = 'park'; break;
 			}
 			switch (e.tags.sport) {
 				case 'basketball': iconName = 'basketballfield'; break;
+				case 'billiards': iconName = 'billiard-2'; break;
 				case 'bmx': iconName = 'bike_rising'; break;
 				case 'boules': iconName = 'boccia'; break;
 				case 'bowls': iconName = 'bowls'; break;
@@ -852,7 +881,8 @@ function callback(data) {
 			}
 		}
 		if (e.tags.office) {
-			if (!name) name = (e.tags.office !== 'yes') ? e.tags.office + ' office' : 'office';
+			if (!name && e.tags.government) name = e.tags.government + ' office';
+			else if (!name) name = (e.tags.office !== 'yes') ? e.tags.office + ' office' : 'office';
 			if (!type) type = e.tags.office;
 			switch (type) {
 				case 'financial': type = 'accountant'; break;
@@ -991,6 +1021,7 @@ function callback(data) {
 			if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').click();
 			marker.openPopup();
 			markerId = marker._leaflet_id;
+			setPageTitle($(marker._popup._container).find($('.popup-header h3')).text());
 		}
 		else if (marker._leaflet_id === markerId) marker.openPopup().stopBounce();
 		setPoiList();
@@ -1075,7 +1106,7 @@ function pushPoiList(customSort) {
 	);
 	if (poiList.length === maxOpResults) {
 		$('#poi-results h3').append('<br/>(maximum number of results)');
-		setMsgStatus('fa-solid fa-circle-info', 'Max Results', 'Maximum number of results shown (' + maxOpResults + ').', 3);
+		setMsgStatus('fa-solid fa-circle-info', 'Max Results', 'Maximum number of results shown (' + maxOpResults + ').', 4);
 	}
 }
 
@@ -1109,11 +1140,12 @@ function generic_tag_parser(tags, tag, label, iconName) {
 }
 function generic_img_parser(img, id, attrib) {
 	var url, imgTmpl;
-	if (img.indexOf('File:') === 0) {
+	if (img.indexOf('Category:') === 0) imgTmpl = '<div class="popup-imgContainer">' + img + '</div>';
+	else if (img.indexOf('File:') === 0) {
 		url = img;
 		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(img);
 		imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
-			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=1280 1280w, {img}&width=800 800w, {img}&width=640 640w">' +
+			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=2560 1280w, {img}&width=1280 800w, {img}&width=800 640w">' +
 			'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;"/></a>' +
 			'<div class="popup-imgAttrib notloaded">Loading attribution...</div>' +
 		'</div>';

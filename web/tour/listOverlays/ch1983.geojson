@@ -54,7 +54,7 @@
 		"type": "Feature",
 		"properties": {
 			"id": "05",
-			"name": "West Parade, Polegrove"
+			"name": "Polegrove"
 		},
 		"geometry": {
 			"type": "Point",
@@ -64,7 +64,7 @@
 		"type": "Feature",
 		"properties": {
 			"id": "06",
-			"name": "West Parade, Egerton Park"
+			"name": "Egerton Park"
 		},
 		"geometry": {
 			"type": "Point",
@@ -94,7 +94,7 @@
 		"type": "Feature",
 		"properties": {
 			"id": "09",
-			"name": "East Parade, Marine Mansions"
+			"name": "Marine Mansions"
 		},
 		"geometry": {
 			"type": "Point",
@@ -104,7 +104,7 @@
 		"type": "Feature",
 		"properties": {
 			"id": "10",
-			"name": "East Parade, Bethune Road"
+			"name": "Bethune Road"
 		},
 		"geometry": {
 			"type": "Point",

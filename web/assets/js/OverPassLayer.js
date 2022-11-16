@@ -37,7 +37,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		statusMsg: function(icon, errMsg, indicatorMsg) {
 			$('.spinner').fadeOut(200);
 			clear_map('markers');
-			setMsgStatus('fa-solid fa-' + icon, errMsg, indicatorMsg, 3);
+			setMsgStatus('fa-solid fa-' + icon, errMsg, indicatorMsg, 4);
 		}
 	},
 	initialize: function(options) {
@@ -70,7 +70,12 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			success: function(xml) {
 				if (xml.elements) {
 					self.options.callback.call(reference, xml);
-					if (poiList.length === 0 && !rQuery) self.options.statusMsg('circle-info', 'No places found', 'Please try another area or query.');
+					if (poiList.length === 0 && !rQuery) self.options.statusMsg(
+						'circle-info',
+						'No places found',
+						'Please try another area or query.' +
+						($('#inputAttic').val() && !$('#inputBbox').is(':checked') ? '<br/>When using attic data, try "Use bbox instead of area" option.' : '')
+					);
 					// if not in iframe, cache to local storage
 					if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {
 						eleCache[self.options.cacheId] = xml;

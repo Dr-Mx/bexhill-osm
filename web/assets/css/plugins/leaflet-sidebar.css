@@ -139,8 +139,7 @@
 	cursor: pointer; }
 .sidebar-close::before {
 	content: '\f0d9';
-	font-family: 'Font Awesome 6 Free';
-	font-weight: 900; }
+	font: var(--fa-font-solid); }
 .sidebar-close {
 	position: absolute;
 	right: 0;

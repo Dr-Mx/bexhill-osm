@@ -437,10 +437,10 @@ var pois = {
 
 	school: {
 		name: 'Education Institutions',
-		query: 'nwr[amenity~"school|college"];nwr[education=centre];',
+		query: 'nwr[amenity~"school|college"];nwr[amenity=training];',
 		iconName: 'school2',
 		catName: 'Services',
-		tagKeyword: ['school', 'college', 'education'],
+		tagKeyword: ['school', 'college', 'education', 'training'],
 		tagParser: education_parser
 	},
 

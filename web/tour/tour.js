@@ -1,6 +1,6 @@
 // history tour pages
 
-var actImgLayer, slideShow = { firstrun: true, auto: true };
+var actImgLayer, wInterval = 0, slideShow = { firstrun: true, auto: true };
 function tour(ti, fromPermalink) {
 	var lID, dfltDir = 'tour/';
 	if (!fromPermalink) clear_map('markers');
@@ -19,7 +19,7 @@ function tour(ti, fromPermalink) {
 					shadowUrl: (icon.shadowUrl ? dfltDir + icon.shadowUrl + '.png' : null),
 					shadowAnchor: icon.shadowAnchor || null,
 					popupAnchor: icon.popupAnchor || null,
-					tooltipAnchor: [Math.round(icon.iconSize[0]/2)-8, 0]
+					tooltipAnchor: icon.tooltipAnchor || icon.popupAnchor || null
 				}),
 				interactive: interactive,
 				bounceOnAdd: (icon.iconNoBounce ? false : true),
@@ -63,10 +63,11 @@ function tour(ti, fromPermalink) {
 			autoPanPaddingBottomRight: [5, 50],
 			autoPan: noPermalink ? true : false
 		};
-		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long')));
+		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : date_parser(header[2], 'long'))) + '<div class="popup-body">';
 		toolTip += '<b>' + header[0] + '</b><br/><i>' + (header[1] ? header[1] : date_parser(header[2], 'short')) + '</i>';
-		if (layer._latlng) markerPopup += '<div class="popup-body"><span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
-		if (feature.properties.description) {
+		if (layer._latlng) markerPopup += '<span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
+		if (feature.properties.custom) markerPopup += feature.properties.custom;
+		else if (feature.properties.description) {
 			markerPopup += '<span class="popup-longDesc custscroll">' + feature.properties.description + '</span>';
 			toolTip += ' <i class="tooltip-icons fa-solid fa-bars fa-fw" title="Notes"></i>';
 		}
@@ -99,7 +100,7 @@ function tour(ti, fromPermalink) {
 			.bindTooltip(toolTip, {
 				className: pClass,
 				direction: 'top',
-				offset: [0, -18],
+				offset: [0, (pClass === 'popup-xmas' ? -40 : -18)],
 				opacity: noTouch ? 1 : 0
 			});
 	};
@@ -162,16 +163,17 @@ function tour(ti, fromPermalink) {
 					L.geoJSON(json, {
 						onEachFeature: function(feature, layer) {
 							var fp = feature.properties;
-							fp.description = '<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
-								'osm.org/note/' + fp.id + '</a><hr/>';
+							fp.custom = '';
 							$.each(fp.comments, function(c) {
-								if (fp.comments[c].text) fp.description += L.Util.template(tagTmpl, {
-									tag: (fp.comments[c].user ? '<a href="' + fp.comments[c].user_url + '" target="_blank" rel="noopener">' + fp.comments[c].user + '</a>' : 'Anonymous'),
+								if (fp.comments[c].text) fp.custom += L.Util.template(tagTmpl, {
+									tag: (fp.comments[c].user ? '<a href="' + fp.comments[c].user_url + '" target="_blank" rel="noopener" title="User">' + fp.comments[c].user + '</a>' : 'Anonymous'),
 									value: '<span title="' + fp.comments[c].date + '">' + fp.comments[c].text + '</span>',
 									iconName: 'fa-regular fa-comment'
 								});
 							});
-							fp.description += '<hr/><span class="comment"><i class="fa-solid fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + date_parser(fp.closed_at.split(' ')[0], 'long') : 'times"></i> Currently unresolved') + '</span>';
+							fp.custom += '</span><span class="popup-notes comment"><i class="fa-solid fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + date_parser(fp.closed_at.split(' ')[0], 'long') : 'times"></i> Currently unresolved') + '</span> | ' +
+								'<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
+								'osm.org/note/' + fp.id + '</a><span class="popup-longDesc custscroll">';
 							setJsonPopup(feature, layer, [titleCase(fp.status + ' note'), date_parser(fp.date_created.split(' ')[0], 'long')]);
 						},
 						pointToLayer: function(feature, latlng) {
@@ -205,10 +207,11 @@ function tour(ti, fromPermalink) {
 		case 'xmas2018': /* fall through */
 		case 'xmas2019': /* fall through */
 		case 'xmas2020': /* fall through */
+		case 'xmas2021': /* fall through */
 		case 'xmas':
-			var xmasYear = (ti.length > 4) ? ti.split('xmas')[1] : '2021';
+			var xmasYear = (ti.length > 4) ? ti.split('xmas')[1] : '2022';
 			$('.spinner').show();
-			if (actOverlayLayer === undefined) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
+			if (actOverlayLayer === undefined && $('#xmasTitle').length) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
 				url: dfltDir + 'itemXmas/' + xmasYear + '.geojson',
 				dataType: 'json',
@@ -230,8 +233,9 @@ function tour(ti, fromPermalink) {
 								iconAnchor: [16, 37],
 								iconNoBounce: true,
 								shadowUrl: '/../../assets/img/icons/000shadow',
-								shadowAnchor: [16, 35],
-								popupAnchor: [0, -18]
+								shadowAnchor: [16, 27],
+								popupAnchor: [0, -24],
+								tooltipAnchor: [0, 0]
 							}, true);
 							marker._leaflet_id = feature.properties.id;
 							poiList.push(marker);
@@ -319,7 +323,7 @@ function tour(ti, fromPermalink) {
 								'<img id="' + feature.properties.id + '" src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"/></a>';
 							// find number of images based on caption count
 							$.each(feature.properties.imgcaption, function(x) {
-								if (+x > 1) tnBody += '<a style="display:none;" href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(' + (x) + ').jpg" data-fancybox="' + feature.properties.id +
+								if (+x > 1) tnBody += '<a style="display:none;" href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(' + x + ').jpg" data-fancybox="' + feature.properties.id +
 								'" data-caption="' + feature.properties.imgcaption[x] + '"/></a>';
 							});
 							$('#thennow .sidebar-body div').append(tnBody + '<figcaption>' + feature.properties.desc + '</figcaption></figure>');
@@ -398,7 +402,6 @@ function tour(ti, fromPermalink) {
 							return true;
 						},
 						onEachFeature: function(feature, layer) {
-							// push any additional information into a popup
 							feature.properties.description =
 								generic_tag_parser({ ref: feature.properties.reference.toString() }, 'ref', 'Reference', 'fa-solid fa-hashtag') +
 								(feature.properties.year_known ? generic_tag_parser({ date: feature.properties.year_known.toString() }, 'date', 'Date', 'fa-solid fa-calendar-days') : '') +
@@ -621,11 +624,10 @@ function tour(ti, fromPermalink) {
 							return true;
 						},
 						onEachFeature: function(feature, layer) {
-							// push any additional information into a popup
 							if (feature.properties.name) setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], 'Bexhill Observer');
 						},
 						pointToLayer: function(feature, latlng) {
-							var marker = setMarker(latlng, interactive, { fillColor: fillColor, className: 'ww2bb' + (feature.properties.date ? ' ww2' + feature.properties.date.split(' ')[0] : '') }, true);
+							var marker = setMarker(latlng, interactive, { fillColor: fillColor, className: 'ww2bb' + (feature.properties.date ? ' ww2-' + feature.properties.date.split(' ')[0] : '') }, true);
 							if (interactive) {
 								dateRange[x] = feature.properties.date.split(' ')[0];
 								marker._leaflet_id = 'bb' + x++;
@@ -637,23 +639,48 @@ function tour(ti, fromPermalink) {
 						}
 					});
 					dateRange = [...new Set(dateRange.sort())];
+					// incident timeline
 					$('.leaflet-bottom.leaflet-right').prepend(
 						'<div id="inputWw2" class="leaflet-control leaflet-bar">' +
-							'<div><i>Incident timeline. Click markers for details.</i></div>' +
-							'<input value="' + dateRange.length + '" max="' + dateRange.length + '"type="range">' +
+							'<a title="Play timeline"><i class="fa-solid fa-circle-play fa-lg"></i></a>' +
+							'<div><i>Incident timeline. Click a marker for details.</i></div>' +
+							'<input value="' + dateRange.length + '" max="' + dateRange.length + '" data-oldvalue="' + dateRange.length + '"type="range">' +
 						'</div>'
 					);
 					L.DomEvent.disableClickPropagation($('#inputWw2')[0]).disableScrollPropagation($('#inputWw2')[0]);
-					$('#inputWw2 input').on('input change', function() {
-						$('path.ww2bb').hide();
+					$('#inputWw2 input').on('input', function() {
 						if (this.value == dateRange.length) {
 							$('#inputWw2 div').html('<i>All incidents ' + date_parser(dateRange[0], 'short') + ' to ' + date_parser(dateRange[dateRange.length-1], 'short') + '</i>');
 							$('path.ww2bb').show();
 						}
 						else {
 							$('#inputWw2 div').html('Incidents up to ' + date_parser(dateRange[this.value], 'long'));
-							for (var d = 0; d <= this.value; d++) $('path.ww2' + dateRange[d]).show();
+							if (this.value < +$(this).data('oldvalue') || this.value - +$(this).data('oldvalue') !== 1) {
+								$('path.ww2bb').hide();
+								for (var d = 0; d <= this.value; d++) $('path.ww2-' + dateRange[d]).show();
+							}
+							else $('path.ww2-' + dateRange[this.value]).fadeIn(wInterval ? 400 : 0);
 						}
+						$(this).data('oldvalue', this.value);
+					});
+					// play incident timeline
+					$('#inputWw2 a').on('click', function() {
+						var pauseInterval = function() {
+							clearInterval(wInterval);
+							wInterval = 0;
+							$('#inputWw2 a i').removeClass('fa-circle-pause').addClass('fa-circle-play');
+							$('#inputWw2 a').attr('title', 'Play timeline');
+						};
+						if ($(this).find('.fa-circle-play').length) {
+							$(this).attr('title', 'Pause timeline');
+							$('#inputWw2 a i').removeClass('fa-circle-play').addClass('fa-circle-pause');
+							if (+$('#inputWw2 input').val() >= +$('#inputWw2 input').attr('max')-1) $('#inputWw2 input').val(0).trigger('input');
+							wInterval = setInterval(() => {
+								$('#inputWw2 input').val(+$('#inputWw2 input').val()+1).trigger('input');
+								if (+$('#inputWw2 input').val() >= +$('#inputWw2 input').attr('max')-1) pauseInterval();
+							}, 250);
+						}
+						else pauseInterval();
 					});
 					map.fireEvent('zoomend');
 					setTimeout(function() { pushPoiList('feature.properties.date'); }, 250);

@@ -1,0 +1,368 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+			"type": "Feature",
+			"properties": {
+				"id": "ageuk",
+				"name": "Age UK",
+				"link": "https://www.ageuk.org.uk/eastsussex/shops/bexhill-on-sea-shop"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47534, 50.83973]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "aspens",
+				"name": "Aspens",
+				"link": "https://www.aspens.org.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47061, 50.83999]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "bycc",
+				"name": "Bexhill Youth and Community Centre",
+				"link": "https://www.bexhillyouthandcommunitycentre.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47426, 50.84116]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "birkdale",
+				"name": "Birkdale Nursery",
+				"link": "http://www.birkdalenursery.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46994, 50.84197]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "britheart",
+				"name": "British Heart Foundation",
+				"link": "https://www.bhf.org.uk/what-we-do/find-bhf-near-you/bexhill-on-sea-bhf-shop"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47389, 50.83936]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "caringcommunity",
+				"name": "Bexhill Caring Community",
+				"link": "http://www.bexhillcaringcommunity.org"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47007, 50.83885]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "ecohub",
+				"name": "Eco Hub",
+				"link": "https://www.communitysupporters.org.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47160, 50.84032]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "esspa",
+				"name": "ESSPA",
+				"link": "https://esspa.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47003, 50.84151]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "font",
+				"name": "Font",
+				"link": "01424 218420"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46969, 50.83937]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "gblackman",
+				"name": "George Blackman Business Equipment",
+				"link": "http://www.georgeblackman.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46964, 50.83960]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "loveria",
+				"name": "Love Ria",
+				"link": "https://www.facebook.com/LoveRiaxx"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47169, 50.84040]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "luxlocks",
+				"name": "Lux Locks",
+				"link": "https://www.facebook.com/luxlocksbyedie"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47302, 50.84020]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "kadampa",
+				"name": "Maitreya Kadampa Buddhist Centre",
+				"link": "http://meditateinsussex.org"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47740, 50.84077]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "kerrys",
+				"name": "Kerry's Café Bar",
+				"link": "01424 216973"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47662, 50.83809]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "madfish",
+				"name": "Madfish Performing Arts",
+				"link": "https://www.madfishstageschoolsussex.com/"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46897, 50.83998]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "makersloft",
+				"name": "Maker's Loft",
+				"link": "https://www.facebook.com/themakersloft"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46964, 50.83965]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "maltbys",
+				"name": "Maltbys",
+				"link": "https://www.maltbys.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47693, 50.83972]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mandystoys",
+				"name": "Mandy's Pocket Money Toys & Sweets",
+				"link": "https://www.facebook.com/groups/1864557457132238"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47171, 50.84033]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "maybugs",
+				"name": "Maybugs",
+				"link": "https://maybugs.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47370, 50.83879]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mummery",
+				"name": "Mummery Funeralcare",
+				"link": "http://www.mummeryfunerals.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47391, 50.83925]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "rspca",
+				"name": "RSPCA",
+				"link": "https://www.bluebellridge.org"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47240, 50.84028]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "scope",
+				"name": "Scope",
+				"link": "https://www.scope.org.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47016, 50.83845]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "saralee1",
+				"name": "The Sara Lee Trust, Western Rd",
+				"link": "https://www.saraleetrustretail.org/shop"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47079, 50.84001]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "saralee2",
+				"name": "The Sara Lee Trust, Endwell Rd",
+				"link": "https://www.saraleetrustretail.org/shop"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47506, 50.84066]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "sbsconsumables",
+				"name": "SBS Consumables",
+				"link": "https://www.facebook.com/sbsconsumables"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47016, 50.84137]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "starlings",
+				"name": "Starlings",
+				"link": "https://www.starlingsgifts.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47002, 50.83916]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "strive",
+				"name": "Strive Cafe",
+				"link": "https://www.strivecafe.org"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46953, 50.84013]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "sweetsonsea",
+				"name": "Sweets On-Sea",
+				"link": "https://www.facebook.com/sweetsonsea"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46967, 50.83948]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "towntaxis",
+				"name": "Town Taxis",
+				"link": "https://www.towntaxis.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47325, 50.84100]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "vintage",
+				"name": "Vintage At 25",
+				"link": "07977 754371"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47725, 50.84009]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "wards",
+				"name": "Wards",
+				"link": "https://wardsgroup.co.uk"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47366, 50.83901]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "wuth",
+				"name": "Warming Up The Homeless",
+				"link": "https://wuth.org"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47376, 50.83856]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "wickhambistro",
+				"name": "Wickham Bistro",
+				"link": "http://www.wickhambistro.com"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46920, 50.83985]
+			}
+		}
+	]
+}

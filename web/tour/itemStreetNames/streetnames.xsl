@@ -60,10 +60,10 @@
 		<p id="street-results"></p>
 	</div>
 	<div id="streetNames"><xsl:for-each select="streetNames/street"><xsl:sort select="name"/>
-		<p class="street">
-		<xsl:element name="strong"><xsl:attribute name="class"><xsl:value-of select="substring(name/text(),1,1)"/></xsl:attribute><xsl:value-of select="name"/> (<xsl:value-of select="date"/>)</xsl:element><br/>
-		<xsl:value-of select="desc"/></p>
-	</xsl:for-each><a id="anchor" title="Back to top"></a></div>
+		<xsl:element name="p"><xsl:attribute name="class"><xsl:value-of select="concat('street', ' ', substring(name/text(),1,1), ' ', class)"/></xsl:attribute>
+		<strong><xsl:value-of select="name"/> (<xsl:value-of select="date"/>)</strong><br/>
+		<xsl:value-of select="desc"/></xsl:element>
+	</xsl:for-each><a id="anchor" title="Return to top"></a></div>
 	<p id="endresults">END OF RESULTS</p>
 	<div id="outro">
 		<hr/>
@@ -124,18 +124,18 @@
 			<li>Margaret Cullingworth for her knowledge of Sidley</li>
 		</ul>
 	</div>
-	<script src="../js/plugins/jquery.min.js"></script>
+	<script src="../../assets/js/plugins/jquery.min.js"></script>
 	<script>
 		if (window.location.hash === '#darkMode' || (!window.location.hash &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)) $('html').addClass('darkMode');
 		if (window.location.hash) $('#btnTheme').hide();
-		if (window.location.host === 'bexhill-osm.org.uk') history.replaceState(null, null, '../../streetnames');
+		if (window.location.host === 'bexhill-osm.org.uk') history.replaceState(null, null, '/streetnames');
 		$(document).ready(function() {
 			$('#btnTheme').on('click', function() { $('html').toggleClass('darkMode'); });
 			$('#anchorLinks a').on('click', function() { $($(this).data('link')).prev()[0].scrollIntoView({ behavior: 'smooth' }); });
 			$('#street-index a').each(function() {
-				if ($('.street .' + $(this).text()).first().length === 0) $(this).css({ 'color':'inherit', 'pointer-events':'none' });
+				if ($('.street.' + $(this).text()).first().length === 0) $(this).css({ 'color':'inherit', 'pointer-events':'none' });
 				$(this).on('click', function() {
-					if ($('.street .' + $(this).text()).first().length) $('.street .' + $(this).text()).first()[0].scrollIntoView({ behavior: 'smooth' });
+					if ($('.street.' + $(this).text()).first().length) $('.street.' + $(this).text()).first()[0].scrollIntoView({ behavior: 'smooth' });
 				});
 			});
 			$('#street-filter-in').on('keyup', function() {

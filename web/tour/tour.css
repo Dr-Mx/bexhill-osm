@@ -45,8 +45,7 @@ body::-webkit-scrollbar-thumb {
 }
 #reference > a::before {
 	display: inline-block;
-	font-family: 'Font Awesome 6 Free';
-	font-weight: 900;
+	font: var(--fa-font-solid);
 	content: '\f053';
 	text-align: center;
 	width: 1.25em;
@@ -129,9 +128,7 @@ figcaption {
 	margin: 5px 0;
 }
 .maplink::before {
-	font-family: 'Font Awesome 6 Free';
-	font-weight: 900;
-	font-size: 110%;
+	font: var(--fa-font-solid);
 	content: '\f5a0';
 	float: right;
 }
@@ -162,13 +159,10 @@ figcaption {
 	text-align: right;
 }
 .link::before {
-	font-family: 'Font Awesome 6 Free';
-	font-weight: 900;
-	font-size: 110%;
-	font-style: normal;
+	font: var(--fa-font-solid);
 }
 .vid.link::before {
-	font-family: 'Font Awesome 6 Brands';
+	font: var(--fa-font-brands);
 	content: '\f167';
 }
 .txt.link::before {
