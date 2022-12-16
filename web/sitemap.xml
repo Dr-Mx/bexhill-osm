@@ -65,12 +65,20 @@
 		<changefreq>never</changefreq>
 	</url>
 	<url>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=film</loc>
+		<changefreq>never</changefreq>
+	</url>
+	<url>
 		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=clocks</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
 		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=surveying</loc>
 		<changefreq>never</changefreq>
+	</url>
+	<url>
+		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=overlays</loc>
+		<changefreq>monthly</changefreq>
 	</url>
 	<url>
 		<loc>https://bexhill-osm.org.uk/ww2</loc>

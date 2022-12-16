@@ -1,0 +1,269 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+			"type": "Feature",
+			"properties": {
+				"id": "sherlock1",
+				"name": "Sherlock Holmes",
+				"date": "1912",
+				"description": "Kursaal<br>Before the De La Warr Pavilion opened in 1935, this was Bexhill's principal place of entertainment and where Treville set up his Franco British Film Company.",
+				"img": {
+					"0": "listFilm/img/sherlock(0)"
+				},
+				"imgattrib": {
+					"0": "1912 | French Éclair company"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47725, 50.83757]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "sherlock2",
+				"name": "Sherlock Holmes",
+				"date": "1912",
+				"description": "Sidley<br>Auckland House was used for some of films exteriors, it has since been demolished and replaced with apartments.",
+				"img": {
+					"0": "listFilm/img/sherlock(1)",
+					"1": "listFilm/img/sherlock(2)"
+				},
+				"imgattrib": {
+					"0": "1912 | French Éclair company",
+					"1": "1912 | French Éclair company"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47561, 50.85437]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "itsabet",
+				"name": "It's a Bet",
+				"date": "1935",
+				"description": "Galley Hill<br>In the background of this shot you can see Sackville Lodge, a prominent bungalow (demolished 1968). Also note the unpaved roads.",
+				"img": {
+					"0": "listFilm/img/itsabet(0)",
+					"1": "listFilm/img/itsabet(1)"
+				},
+				"imgattrib": {
+					"0": "1935 | &copy; British International Pictures",
+					"1": "1935 | &copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.49455, 50.84108]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "dblconfess1",
+				"name": "Double Confession",
+				"date": "1950",
+				"description": "De La Warr Pavilion<br>The internal shots may look like they filmed in the DLWP, however is actually a film set, notice the main staircase spirals up in the opposite direction.",
+				"img": {
+					"0": "listFilm/img/dblconfess(0)",
+					"1": "listFilm/img/dblconfess(1)"
+				},
+				"imgattrib": {
+					"0": "1950 | &copy; Harry Reynolds Productions",
+					"1": "1950 | &copy; Harry Reynolds Productions"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47127, 50.83755]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "dblconfess2",
+				"name": "Double Confession",
+				"date": "1950",
+				"description": "East Parade<br>Notice the large chimney behind Galley Hill at what was once Glyne Gap Gas Works.",
+				"img": {
+					"0": "listFilm/img/dblconfess(2)",
+					"1": "listFilm/img/dblconfess(3)"
+				},
+				"imgattrib": {
+					"0": "1950 | &copy; Harry Reynolds Productions",
+					"1": "1950 | &copy; Harry Reynolds Productions"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.48275, 50.83895]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "quietwoman",
+				"name": "Quiet Woman",
+				"date": "1951",
+				"description": "Normans Bay<br>As well as the original frontage of the public house, the film includes scenes of the hamlet as a prominent fishing village.",
+				"img": {
+					"0": "listFilm/img/quietwoman(0)",
+					"1": "listFilm/img/quietwoman(1)"
+				},
+				"imgattrib": {
+					"0": "1951 | &copy; Tempean Films",
+					"1": "1951 | &copy; Tempean Films"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.39352, 50.82969]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "cadburys1",
+				"name": "Other Womens Lives: Talking Shop",
+				"date": "1953",
+				"description": "Sidley<br>Mrs Cowlard is shown cycling along Preston Road, towards her prefab at number 70 (a street directory confirms this the family's address).",
+				"img": {
+					"0": "listFilm/img/cadburys(0)",
+					"1": "listFilm/img/cadburys(1)"
+				},
+				"imgattrib": {
+					"0": "1953 | &copy; Anglo-Scottish Pictures Ltd",
+					"1": "1953 | &copy; Anglo-Scottish Pictures Ltd"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47093, 50.85837]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "cadburys2",
+				"name": "Other Womens Lives: Talking Shop",
+				"date": "1953",
+				"description": "Old Town<br>The High Street is shown and a pet shop located at what is now known as Trafalgar House. A later beach scene is possibly Cooden.",
+				"img": {
+					"0": "listFilm/img/cadburys(2)",
+					"1": "listFilm/img/cadburys(3)"
+				},
+				"imgattrib": {
+					"0": "1953 | &copy; Anglo-Scottish Pictures Ltd",
+					"1": "1953 | &copy; Anglo-Scottish Pictures Ltd"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47817, 50.84518]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "abcmurders",
+				"name": "The ABC Murders",
+				"date": "1991/2018",
+				"description": "Bexhill Beach<br>In the 1991 version, filming was mostly done around and near The Colonnade. In the 2018 adaptation, East Parade and around the Sailing Club was chosen.",
+				"img": {
+					"0": "listFilm/img/abcmurders(0)",
+					"1": "listFilm/img/abcmurders(1)",
+					"2": "listFilm/img/abcmurders(2)",
+					"3": "listFilm/img/abcmurders(3)"
+				},
+				"imgattrib": {
+					"0": "1991 | &copy; Granada Media",
+					"1": "1991 | &copy; Bexhill Museum",
+					"2": "2018 | &copy; Agatha Christie Productions",
+					"3": "2018 | &copy; Tony Shutt via Twitter"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47249, 50.83665]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "pieceofcake",
+				"name": "Piece of Cake",
+				"date": "1988",
+				"description": "Cooden Beach Station.<br>This was the original entrance hall and ticket office, it was converted in the early 2000's to a convenience store.",
+				"img": {
+					"0": "listFilm/img/pieceofcake(0)"
+				},
+				"imgattrib": {
+					"0": "1988 | &copy; London Weekend Television"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.42733, 50.83367]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "richardiii",
+				"name": "Richard III",
+				"date": "1995",
+				"description": "The Colonnade<br>Its dramatic transformation was to match the Indian style of Brighton Royal Pavilion (the royal family's seaside retreat in the film), which obviously doesn't have a seaside garden.",
+				"img": {
+					"0": "listFilm/img/richardiii(0)",
+					"1": "listFilm/img/richardiii(1)"
+				},
+				"imgattrib": {
+					"0": "1995 | &copy; Bayly/Paré Productions",
+					"1": "1995 | &copy; Bexhill Museum"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47176, 50.83709]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "neverletmego",
+				"name": "Never Let Me Go",
+				"date": "2010",
+				"description": "De La Warr Parade<br>The rear of Marine Mansions was transformed to look like the front of the building with a number of doors and garden gates swapped out.",
+				"img": {
+					"0": "listFilm/img/neverletmego(0)",
+					"1": "listFilm/img/neverletmego(1)"
+				},
+				"imgattrib": {
+					"0": "2010 | &copy; Searchlight Films",
+					"1": "2010 | &copy; Searchlight Films"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47982, 50.83804]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "keane",
+				"name": "Keane: Sovereign Light Café",
+				"date": "2012",
+				"description": "West Parade<br>Mostly set on West Parade, there are some shots of East Parade with a nod to motor racing history and of course the Bathing Station appears on the album cover.",
+				"img": {
+					"0": "listFilm/img/keane(0)",
+					"1": "listFilm/img/keane(1)",
+					"2": "listFilm/img/keane(2)",
+					"3": "listFilm/img/keane(3)"
+				},
+				"imgattrib": {
+					"0": "2012 | &copy; Love Commercial Production",
+					"1": "2012 | &copy; Love Commercial Production",
+					"2": "2012 | &copy; Love Commercial Production",
+					"3": "2012 | &copy; Jane Allan via Twitter"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46302, 50.83620]
+			}
+		}
+	]
+}

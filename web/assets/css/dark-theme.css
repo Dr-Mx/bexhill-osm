@@ -9,7 +9,7 @@
 .spinner svg circle {
 	fill: rgba(0, 0, 0, 0.75);
 }
-html, body, input, select, #map, .leaflet-control-layers-expanded, #msgStatusHead, .leaflet-control-attribution, .leaflet-tooltip, .leaflet-contextmenu a.leaflet-contextmenu-item,
+.leaflet-control-layers-expanded, #msgStatusHead, .leaflet-control-attribution, .leaflet-tooltip, .leaflet-contextmenu a.leaflet-contextmenu-item,
 .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line, .leaflet-routing-remove-waypoint:hover::after {
 	color: var(--text-color) !important;
 }
@@ -60,7 +60,7 @@ input[type=range] {
 .sidebar-header {
 	color: #dddddd;
 }
-.leaflet-control-layers-separator {
+.leaflet-control-layers-separator, #devTools {
 	border-top: 2px solid var(--bg-color);
 }
 #poi-results, #walkDesc img, #thennow img, #myprofile img, .popup-imgContainer > a > img, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar:not(#inputWw2) {

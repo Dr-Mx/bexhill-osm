@@ -54,7 +54,7 @@
 		<li><a data-link="#sou">Sources</a></li>
 	</ul>
 	<hr/>
-	<div id="street-index"><a>A</a>|<a>B</a>|<a>C</a>|<a>D</a>|<a>E</a>|<a>F</a>|<a>G</a>|<a>H</a>|<a>I</a>|<a>J</a>|<a>K</a>|<a>L</a>|<a>M</a>|<a>N</a>|<a>O</a>|<a>P</a>|<a>Q</a>|<a>R</a>|<a>S</a>|<a>T</a>|<a>U</a>|<a>V</a>|<a>W</a>|<a>X</a>|<a>Y</a>|<a>Z</a></div>
+	<div id="street-index"><a>B</a><a>C</a><a>D</a><a>E</a><a>F</a><a>G</a><a>H</a><a>I</a><a>J</a><a>K</a><a>L</a><a>M</a><a>N</a><a>O</a><a>P</a><a>Q</a><a>R</a><a>S</a><a>T</a><a>U</a><a>V</a><a>W</a><a>X</a><a>Y</a><a>Z</a></div>
 	<div id="street-filter">
 		<input id="street-filter-in" type="text" placeholder="Enter a street name or year"/><span id="street-filter-cl"></span>
 		<p id="street-results"></p>
@@ -133,7 +133,7 @@
 			$('#btnTheme').on('click', function() { $('html').toggleClass('darkMode'); });
 			$('#anchorLinks a').on('click', function() { $($(this).data('link')).prev()[0].scrollIntoView({ behavior: 'smooth' }); });
 			$('#street-index a').each(function() {
-				if ($('.street.' + $(this).text()).first().length === 0) $(this).css({ 'color':'inherit', 'pointer-events':'none' });
+				if ($('.street.' + $(this).text()).first().length === 0) $(this).hide();
 				$(this).on('click', function() {
 					if ($('.street.' + $(this).text()).first().length) $('.street.' + $(this).text()).first()[0].scrollIntoView({ behavior: 'smooth' });
 				});

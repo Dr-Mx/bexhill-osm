@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## v7.4.0
+
+**Date:** 16/12/2022
+
+Updated
+ - L.Control.Locate.min.js 0.79.0
+
+Site changes
+ - Update all var declarations to use const and let
+ - Improved some variable and function names
+ - Always default to language in html tag (en-GB) instead of using browsers navigator.language
+ - Encode URI's in img tags correctly
+ - Use startsWith function rather than indexOf
+ - New Film Locations tour
+ - Tour image galleries now have correct indexes and captions
+ - Tour zooms to overlay on load
+ - More specific regular expressions in OverPass queries
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.3.0
 
 **Date:** 16/11/2022

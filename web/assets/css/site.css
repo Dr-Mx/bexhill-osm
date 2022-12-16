@@ -1,6 +1,7 @@
 :root {
 	--main-color: #a04900;
 	--second-color: #ba5500;
+	--text-color: #000000;
 	--bg-hover-color: #f4f4f4;
 	--scr-thumb: #cdcdcd;
 	--scr-track: #f0f0f0;
@@ -55,6 +56,7 @@ body {
 html, body, #map {
 	height: 100%;
 	font: normal 11pt Helvetica, Arial, sans-serif;
+	color: var(--text-color);
 }
 @media (min-width: 768px) and (max-width: 1299px), (max-width: 400px) {
 	body { font-size: 10pt; }
@@ -67,6 +69,7 @@ html, body, #map {
 
 input, select {
 	font-size: 10pt;
+	color: var(--text-color);
 }
 input[type=text], input[type=date], input[type=number] {
 	height: 28px;
@@ -358,7 +361,7 @@ h3 {
 	width: 40px !important;
 	height: 40px !important;
 }
-.leaflet-control-layers-separator {
+.leaflet-control-layers-separator, #devTools {
 	border-top: 2px solid rgba(255, 255, 255, 0.6);
 }
 .leaflet-control-layers-list input + span:before {
@@ -809,6 +812,9 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 #poi-results-list tr:hover {
 	background-color: rgba(190, 190, 190, 0.5);
 	cursor: pointer;
+}
+#poi-results-list .openColor-list-depends, #poi-results-list .openColor-list-undefined {
+	background: linear-gradient(to right, rgba(153, 153, 153, 0.4), transparent);
 }
 .poi-result-selected {
 	background-color: rgba(255, 255, 255, 0.5);
@@ -1262,6 +1268,9 @@ a.controlTitle {
 	text-indent: -5px;
 	padding-left: 5px;
 }
+.popup-tagValue strong {
+	margin-right: 4px;
+}
 .popup-truncate {
 	display: inline-block;
 	overflow-x: hidden;
@@ -1371,13 +1380,15 @@ a.controlTitle {
 .popup-facilities span {
 	display: inline-block;
 }
-.facYes { color: darkgreen; }
-.facLtd { color: olive; }
-.facNo { color: darkred; }
+.facYes, .openColor-true { color: #006400; }
+.facLtd, .openColor-depends { color: #808000; }
+.facNo, .openColor-false { color: #8b0000; }
 .facGen { padding-left: 5px; white-space: nowrap; }
 .facRecyc { padding-left: 5px; color: #62745f; }
 .facPay { padding-left: 5px; color: #714b83; }
 .facDiet { padding-left: 5px; color: #00a275; }
+.openColor-list-true { background: linear-gradient(to right, rgba(0, 100, 0, 0.4), transparent); }
+.openColor-list-false { background: linear-gradient(to right, rgba(139, 0, 0, 0.4), transparent); }
 
 .fancybox-button .fa-2x, .fancybox-close-small .fa-2x {
 	opacity: 0.7;
@@ -1407,14 +1418,6 @@ a.controlTitle {
 .leaflet-tooltip.leaflet-clickable {
 	pointer-events: all;
 	cursor: pointer;
-}
-.openColor-list-true { background: linear-gradient(to right, rgba(0, 100, 0, 0.4), transparent); }
-.openColor-list-false { background: linear-gradient(to right, rgba(139, 0, 0, 0.4), transparent); }
-.openColor-true { color: #008000; }
-.openColor-false { color: #ff0000; }
-.openColor-depends { color: #808080; }
-#poi-results-list .openColor-list-depends, #poi-results-list .openColor-list-undefined {
-	background: linear-gradient(to right, rgba(153, 153, 153, 0.4), transparent);
 }
 .tooltip-icons {
 	color: #777777;
@@ -1451,7 +1454,7 @@ a.controlTitle {
 	right: 40px;
 	width: 50px;
 	opacity: 0.85;
-	filter: drop-shadow(1px 1px 2px);
+	filter: drop-shadow(0px 0px 3px #000000);
 	transition: opacity 150ms linear;
 }
 .xmasMapTree {
@@ -1461,12 +1464,13 @@ a.controlTitle {
 	to { background-position: 0 500px; }
 }
 #xmasMsg {
-	background-image: url('../../tour/itemXmas/popup-bg.png');
-	background-repeat: repeat-y;
+	font-weight: bold;
 	padding: 5px;
 	margin-top: 10px;
-	background-color: rgba(255, 255, 255, 0.6);
 	cursor: pointer;
+	background-image: url('../../tour/itemXmas/popup-bg.png');
+	background-repeat: repeat-y;
+	background-color: rgba(255, 255, 255, 0.6);
 	animation: xmasMsg-anim 15s linear infinite paused;
 }
 .popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {

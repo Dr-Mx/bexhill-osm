@@ -1,14 +1,13 @@
 {
     "type": "FeatureCollection",
-    "features": [
-        {
+    "features": [{
             "type": "Feature",
             "properties": {
-                "description": "Bishops of Chichester, before 1570.",
+                "id": "diningrm",
                 "title": "Dining Room",
                 "name": "Court Lodge",
                 "building": "yes",
-                "id": "diningrm"
+                "description": "Bishops of Chichester, before 1570."
             },
             "geometry": {
                 "type": "Polygon",
@@ -37,8 +36,7 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "title": "Butler's Pantry",
@@ -74,14 +72,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "id": "cowshed",
                 "name": "Manor House (grounds)",
+                "title": "Cow Shed",
                 "building": "yes",
-                "title": "Cow Shed"
+				"description": "Also later used as an aviary."
             },
             "geometry": {
                 "type": "Polygon",
@@ -110,15 +108,23 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "id": "dininghll",
-                "description": "Brook Family, early C19.",
                 "name": "Court Lodge",
+                "title": "Dining Hall",
                 "building": "yes",
-                "title": "Dining Hall"
+                "description": "Brook Family, early C19.",
+				"img": {
+					"0": "listManor/img/dininghll(0)",
+					"1": "listManor/img/dininghll(1)",
+					"2": "listManor/img/dininghll(2)"
+				},
+				"imgattrib": {
+					"0": "1965 | Historic England CC65/361",
+					"1": "1965 | Historic England BB65/3571"
+				}
             },
             "geometry": {
                 "type": "Polygon",
@@ -159,15 +165,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "description": "Bishops of Chichester, before 1570.",
                 "id": "inner",
-                "title": "Inner Hall",
                 "name": "Court Lodge",
-                "building": "yes"
+                "title": "Inner Hall",
+                "building": "yes",
+                "description": "Bishops of Chichester, before 1570."
             },
             "geometry": {
                 "type": "Polygon",
@@ -220,15 +225,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "title": "Hall",
-                "description": "Harmsworth Family, mid 1930s.",
-                "name": "Court Lodge",
                 "id": "hall",
-                "building": "yes"
+                "name": "Court Lodge",
+                "title": "Hall",
+                "building": "yes",
+                "description": "Harmsworth Family, mid 1930s."
             },
             "geometry": {
                 "type": "Polygon",
@@ -265,15 +269,21 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "id": "study",
-                "description": "North end: Brook Family, early C19.<br/>South end: Neven du Mont Family, early C20.",
-                "title": "Study",
                 "name": "Court Lodge",
-                "building": "yes"
+                "title": "Study",
+                "building": "yes",
+                "description": "North end: Brook Family, early C19.<br/>South end: Neven du Mont Family, early C20.",
+				"img": {
+					"0": "listManor/img/study(0)",
+					"1": "listManor/img/study(1)"
+				},
+				"imgattrib": {
+					"0": "1965 | Historic England BB65/3563"
+				}
             },
             "geometry": {
                 "type": "Polygon",
@@ -322,15 +332,20 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "id": "cloak",
                 "title": "Cloak Room",
-                "description": "Harmsworth Family, mid 1930s.",
                 "name": "Court Lodge",
-                "building": "yes"
+                "building": "yes",
+                "description": "Harmsworth Family, mid 1930s.",
+				"img": {
+					"0": "listManor/img/cloak(0)"
+				},
+				"imgattrib": {
+					"0": "1965 | Historic England BB65/3565"
+				}
             },
             "geometry": {
                 "type": "Polygon",
@@ -359,15 +374,20 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "id": "servantquarter",
-                "description": "Neven du Mont Family, early C20.",
                 "name": "Court Lodge",
                 "title": "Servants Quarters",
-                "building": "yes"
+                "building": "yes",
+                "description": "Neven du Mont Family, early C20.",
+				"img": {
+					"0": "listManor/img/servantquarter(0)"
+				},
+				"imgattrib": {
+					"0": "1965 | Historic England BB65/3573"
+				}
             },
             "geometry": {
                 "type": "Polygon",
@@ -400,15 +420,17 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "title": "Coach House",
-                "name": "Manor House (grounds)",
-                "description": "Built 1887.",
                 "id": "coach",
-                "building": "yes"
+                "name": "Manor House (grounds)",
+                "title": "Coach House",
+                "building": "yes",
+                "description": "Built 1887.",
+				"img": {
+					"0": "listManor/img/coach(0)"
+				}
             },
             "geometry": {
                 "type": "Polygon",
@@ -445,15 +467,17 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "id": "drawing",
-                "description": "North end: Sackville/Dorsets, C17.<br/>South end: Harmsworth Family, mid 1930s.",
-                "title": "Drawing Room",
                 "name": "Court Lodge",
-                "building": "yes"
+                "title": "Drawing Room",
+                "building": "yes",
+                "description": "North end: Sackville/Dorsets, C17.<br/>South end: Harmsworth Family, mid 1930s.",
+				"img": {
+					"0": "listManor/img/drawing(0)"
+				}
             },
             "geometry": {
                 "type": "Polygon",
@@ -514,14 +538,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "name": "Separate Dwelling",
                 "id": "cottage1",
+                "name": "Separate Dwelling",
                 "title": "1 The Cottage",
-                "building": "yes"
+                "building": "yes",
+				"description": "Used as servants quarters before the north-east wing was built."
             },
             "geometry": {
                 "type": "Polygon",
@@ -570,15 +594,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "name": "Separate Dwelling",
-                "description": "Also used for the servants living quarters.",
-                "title": "South Lodge",
                 "id": "slodge",
-                "building": "yes"
+                "name": "Separate Dwelling",
+                "title": "South Lodge",
+                "building": "yes",
+                "description": "Also used for the servants living quarters."
             },
             "geometry": {
                 "type": "Polygon",
@@ -615,15 +638,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "description": "Earl and Countess De La Warr, late C19.",
-                "title": "Larder",
                 "id": "larder",
                 "name": "Court Lodge",
-                "building": "yes"
+                "title": "Larder",
+                "building": "yes",
+                "description": "Earl and Countess De La Warr, late C19."
             },
             "geometry": {
                 "type": "Polygon",
@@ -660,14 +682,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "title": "Children's Nursery",
-                "name": "Manor House (grounds)",
                 "id": "nursery",
-                "building": "yes"
+                "name": "Manor House (grounds)",
+                "title": "Children's Nursery",
+                "building": "yes",
+				"description": "A place for nannies and children as to not disturb the manor."
             },
             "geometry": {
                 "type": "Polygon",
@@ -708,15 +730,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
+                "id": "barn",
                 "name": "Manor House (grounds)",
                 "title": "Barn",
-                "description": "Uses include kennels for the Neven du Mont family's foxhounds, and an aviary.",
                 "building": "yes",
-                "id": "barn"
+                "description": "Uses include kennels for the Neven du Mont family's foxhounds, and an aviary."
             },
             "geometry": {
                 "type": "Polygon",
@@ -745,15 +766,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
+                "id": "cottage2",
                 "name": "Separate Dwelling",
                 "title": "2 The Cottage",
-                "id": "cottage2",
-                "description": "Brook Family, early C19. Gardeners quarters.",
-                "building": "yes"
+                "building": "yes",
+                "description": "Brook Family, early C19. Gardeners quarters."
             },
             "geometry": {
                 "type": "Polygon",
@@ -806,15 +826,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
+                "id": "stables",
                 "name": "Manor House (grounds)",
                 "title": "Horse Stables",
-                "description": "The now demolished west section housed the horse carts.",
-                "id": "stables",
-                "building": "yes"
+                "building": "yes",
+                "description": "The now demolished west section housed the horse carts."
             },
             "geometry": {
                 "type": "Polygon",
@@ -867,15 +886,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "description": "Earl and Countess De La Warr, late C19.",
-                "title": "Porch",
+                "id": "porch",
                 "name": "Court Lodge",
+                "title": "Porch",
                 "building": "yes",
-                "id": "porch"
+                "description": "Earl and Countess De La Warr, late C19."
             },
             "geometry": {
                 "type": "Polygon",
@@ -904,15 +922,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "id": "kitchen",
                 "title": "Kitchen and Scullery",
-                "description": "Neven du Mont Family, early C20.",
                 "name": "Court Lodge",
-                "building": "yes"
+                "building": "yes",
+                "description": "Neven du Mont Family, early C20."
             },
             "geometry": {
                 "type": "Polygon",
@@ -965,15 +982,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
                 "id": "ballroom",
                 "name": "Manor House (grounds)",
-                "description": "Originally a barn for storing grain and hay. Converted into a pavilion in the late C19 by the 8th Earl De La Warr to host aristocratic parties.",
+                "title": "Ballroom",
                 "building": "yes",
-                "title": "Ballroom"
+                "description": "Originally a barn for storing grain and hay. Converted into a pavilion in the late C19 by the 8th Earl De La Warr to host aristocratic parties."
             },
             "geometry": {
                 "type": "Polygon",
@@ -1006,15 +1022,14 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "title": "Servants Dining Room",
-                "description": "Earl and Countess De La Warr, late C19.",
                 "id": "servantdining",
                 "name": "Court Lodge",
-                "building": "yes"
+                "title": "Servants Dining Room",
+                "building": "yes",
+                "description": "Earl and Countess De La Warr, late C19."
             },
             "geometry": {
                 "type": "Polygon",
@@ -1043,15 +1058,22 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
             "type": "Feature",
             "properties": {
-                "description": "Bishops of Chichester, before 1570.",
-                "title": "Boots and Cloaks",
-                "name": "Court Lodge",
                 "id": "boots",
-                "building": "yes"
+                "name": "Court Lodge",
+                "title": "Boots and Cloaks",
+                "building": "yes",
+                "description": "Bishops of Chichester, before 1570.",
+				"img": {
+					"0": "listManor/img/boots(0)",
+					"1": "listManor/img/boots(1)"
+				},
+				"imgattrib": {
+					"0": "1965 | Historic England BB65/3572",
+					"1": "1965 | Historic England BB65/3566"
+				}
             },
             "geometry": {
                 "type": "Polygon",
@@ -1088,8 +1110,139 @@
                     ]
                 ]
             }
-        },
-        {
+        }, {
+            "type": "Feature",
+            "properties": {
+                "id": "morning",
+                "name": "Court Lodge",
+                "title": "Morning Room",
+                "building": "yes",
+                "description": "Harmsworth Family, mid 1930s.",
+				"img": {
+					"0": "listManor/img/morning(0)"
+				},
+				"imgattrib": {
+					"0": "1965 | Historic England BB65/3562"
+				}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            0.47948508405,
+                            50.84520112828
+                        ],
+                        [
+                            0.47959669841,
+                            50.84520545784
+                        ],
+                        [
+                            0.47960286236,
+                            50.84514210461
+                        ],
+                        [
+                            0.47949124799,
+                            50.84513777504
+                        ],
+                        [
+                            0.47948508405,
+                            50.84520112828
+                        ]
+                    ]
+                ]
+            }
+        }, {
+            "type": "Feature",
+            "properties": {
+                "id": "servantsitting",
+                "name": "Court Lodge",
+                "title": "Servants Sitting Room",
+                "description": "Neven du Mont Family, early C20.",
+                "building": "yes",
+				"img": {
+					"0": "listManor/img/servantsitting(0)"
+				},
+				"imgattrib": {
+					"0": "1965 | Historic England BB65/3561"
+				}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            0.47949509599,
+                            50.84537672848
+                        ],
+                        [
+                            0.47954957271,
+                            50.84538766433
+                        ],
+                        [
+                            0.47957778340,
+                            50.84533163667
+                        ],
+                        [
+                            0.47952330668,
+                            50.84532070080
+                        ],
+                        [
+                            0.47949509599,
+                            50.84537672848
+                        ]
+                    ]
+                ]
+            }
+        }, {
+            "type": "Feature",
+            "properties": {
+                "id": "stairs",
+                "name": "Court Lodge",
+                "title": "Stairs to 1st floor",
+                "building": "yes",
+                "description": "Bishops of Chichester, before 1570."
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            0.47917125513,
+                            50.84514626670
+                        ],
+                        [
+                            0.47917334424,
+                            50.84512479474
+                        ],
+                        [
+                            0.47926489332,
+                            50.84512834597
+                        ],
+                        [
+                            0.47929413708,
+                            50.84512948034
+                        ],
+                        [
+                            0.47930909956,
+                            50.84513006075
+                        ],
+                        [
+                            0.47930701045,
+                            50.84515153270
+                        ],
+                        [
+                            0.47926048753,
+                            50.84514972806
+                        ],
+                        [
+                            0.47917125513,
+                            50.84514626670
+                        ]
+                    ]
+                ]
+            }
+        }, {
             "type": "Feature",
             "properties": {
                 "building": "yes"
@@ -1229,129 +1382,6 @@
                         [
                             0.47933090610,
                             50.84532857074
-                        ]
-                    ]
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "description": "Harmsworth Family, mid 1930s.",
-                "id": "morning",
-                "title": "Morning Room",
-                "name": "Court Lodge",
-                "building": "yes"
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            0.47948508405,
-                            50.84520112828
-                        ],
-                        [
-                            0.47959669841,
-                            50.84520545784
-                        ],
-                        [
-                            0.47960286236,
-                            50.84514210461
-                        ],
-                        [
-                            0.47949124799,
-                            50.84513777504
-                        ],
-                        [
-                            0.47948508405,
-                            50.84520112828
-                        ]
-                    ]
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "id": "servantsitting",
-                "title": "Servants Sitting Room",
-                "description": "Neven du Mont Family, early C20.",
-                "name": "Court Lodge",
-                "building": "yes"
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            0.47949509599,
-                            50.84537672848
-                        ],
-                        [
-                            0.47954957271,
-                            50.84538766433
-                        ],
-                        [
-                            0.47957778340,
-                            50.84533163667
-                        ],
-                        [
-                            0.47952330668,
-                            50.84532070080
-                        ],
-                        [
-                            0.47949509599,
-                            50.84537672848
-                        ]
-                    ]
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "description": "Bishops of Chichester, before 1570.",
-                "name": "Court Lodge",
-                "building": "yes",
-                "title": "Stairs to 1st floor",
-                "id": "stairs"
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            0.47917125513,
-                            50.84514626670
-                        ],
-                        [
-                            0.47917334424,
-                            50.84512479474
-                        ],
-                        [
-                            0.47926489332,
-                            50.84512834597
-                        ],
-                        [
-                            0.47929413708,
-                            50.84512948034
-                        ],
-                        [
-                            0.47930909956,
-                            50.84513006075
-                        ],
-                        [
-                            0.47930701045,
-                            50.84515153270
-                        ],
-                        [
-                            0.47926048753,
-                            50.84514972806
-                        ],
-                        [
-                            0.47917125513,
-                            50.84514626670
                         ]
                     ]
                 ]

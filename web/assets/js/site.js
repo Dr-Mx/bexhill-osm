@@ -1,32 +1,35 @@
 // all main functions for site
+
 // don't forget to create config.js with your api keys
-if (typeof BOSM === 'undefined') alert('Error: No API keys defined, please see config.example.js');
+if (typeof window.BOSM === 'undefined') window.alert('Error: No API keys defined, please see config.example.js');
 // map area
-var osmRelation = '12710197'; // osm relation for overpass queries, if blank bbox will be used
-var mapBounds = { south: 50.802, west: 0.372, north: 50.878, east: 0.525 };
-var LBounds = L.latLngBounds([mapBounds.south, mapBounds.west], [mapBounds.north, mapBounds.east]);
-var mapMinZoom = 10;
+const osmRelation = '12710197'; // osm relation for overpass queries, if blank bbox will be used
+const mapBounds = { south: 50.802, west: 0.372, north: 50.878, east: 0.525 };
+const LBounds = L.latLngBounds([mapBounds.south, mapBounds.west], [mapBounds.north, mapBounds.east]);
+const mapMinZoom = 10;
 // map open location
-var mapCentre = [50.8470, 0.4675];
-var mapZoom = ($(window).width() < 768) ? 13 : 14;
+const mapCentre = [50.8470, 0.4675];
+const mapZoom = ($(window).width() < 768) ? 13 : 14;
 // default map layers
-var defBaseTileLayer = 'osmstd', actBaseTileLayer = defBaseTileLayer, actOverlayLayer;
+const defBaseTileLayer = 'osmstd';
+let actBaseTileLayer = defBaseTileLayer, actOverlayLayer;
 // default tab to open
-var defTab = 'home', actTab = ($(window).width() < 768) ? 'none' : defTab;
+const defTab = 'home';
+let actTab = ($(window).width() < 768) ? 'none' : defTab;
 // set image width inside popups
-var imgSize = ($(window).width() < 512) ? 256 : 310;
+const imgSize = ($(window).width() < 512) ? 256 : 310;
 // maximum poi groups that can be selected
-var maxPOICheckbox = 3;
+const maxPOICheckbox = 3;
 // maximum overpass poi results
-var maxOpResults = 250;
+const maxOpResults = 250;
 // maximum nominatim search results
-var maxNomResults = 5;
+const maxNomResults = 5;
 // website checks
-var noTouch = window.ontouchstart === undefined;
-var noIframe = window.top === window.self;
-var noPermalink = !new URL(window.location.href).searchParams.toString() || new URL(window.location.href).searchParams.toString() === 'T=none';
+const noTouch = window.ontouchstart === undefined;
+const noIframe = window.top === window.self;
+let noPermalink = !new URL(window.location.href).searchParams.toString() || new URL(window.location.href).searchParams.toString() === 'T=none';
 // title tag tooltip defaults
-var tooltipDef = {
+const tooltipDef = {
 	disabled: noTouch ? false : true,
 	hide: false,
 	show: { delay: 200, duration: 50 },
@@ -34,8 +37,9 @@ var tooltipDef = {
 	position: { my: 'left+15 top+10' },
 	create: function() { $('.ui-helper-hidden-accessible').remove(); }
 };
-// email
-var email = 'info' + String.fromCharCode(64) + 'bexhill-osm.org.uk';
+// local
+const email = 'info' + String.fromCharCode(64) + 'bexhill-osm.org.uk';
+const lang = $('html').attr('lang');
 
 // https://fancyapps.com/fancybox/3
 // show popup images in a lightbox
@@ -91,8 +95,7 @@ $('.sidebar-tabs li').click(function() {
 	if (actTab === 'thennow' && actImgLayer !== 'thennow') tour('thennow', false);
 	// animate map recentre on sidebar open/close, matches sidebar transition-duration
 	if ($(window).width() >= 768 && $(window).width() < 1024) {
-		x = 0;
-		var timer = setInterval(function() {
+		let x = 0, timer = setInterval(function() {
 			map.invalidateSize({ animate: true });
 			if (++x === 4) clearInterval(timer);
 		}, 100);
@@ -107,7 +110,7 @@ $('.sidebar-close').click(function() {
 
 // ignore map single click in some cases
 L.Map.addInitHook(function() {
-	var that = this, h;
+	let that = this, h;
 	if (that.on) {
 		that.on('click', check_later);
 		that.on('dblclick', function() { setTimeout(clear_h); });
@@ -157,7 +160,7 @@ L.Map.addInitHook(function() {
 });
 
 // initialise map
-var map = new L.map('map', {
+const map = new L.map('map', {
 	maxBoundsViscosity: 0.9,
 	minZoom: mapMinZoom,
 	maxZoom: 20,
@@ -246,7 +249,7 @@ var map = new L.map('map', {
 	// tutorial modals
 	if (localStorageAvail() && !window.localStorage.tutorial) window.localStorage.tutorial = '';
 	if (noPermalink && noIframe && localStorageAvail() && window.localStorage.tutorial.indexOf('modals') === -1) {
-		var showModalTutor = function(txt, sty) {
+		const showModalTutor = function(txt, sty) {
 			sty.targ.before(
 				'<div id="modalT' + sty.id + '" class="modalTutor leaflet-control" style="' + sty.dir + ':' + sty.dist + 'px;position:' + sty.pos + ';">' +
 				'<div class="modalText"><span>' + (sty.id+1) + '/<span>0</span>:</span> ' + txt + '</div>' +
@@ -257,12 +260,12 @@ var map = new L.map('map', {
 			$('.modalText > span > span').text(sty.id+1);
 			$('#modalT' + sty.id + ' .modalButton').on('click', function() {
 				$(this).parent().fadeOut(100, function() { $(this).remove(); });
-				if ($('#modalT' + (sty.id+1)).length) $('#modalT' + (sty.id+1)).fadeIn(100);
+				if ($('#modalT' + (sty.id+1)).length) $('#modalT' + (sty.id+1)).fadeIn(100, function() { $(this).find('button').focus(); });
 				else window.localStorage.tutorial += 'modals;';
 			});
 		};
 		showModalTutor(
-			'Choose from a growing number of modern and historical maps.' + (noTouch ? '<br/>Tapping <kbd>CTRL</kbd> will fade loaded overlays in and out.' : ''),
+			'Choose from a growing number of modern and historical maps.' + (noTouch ? '<br>Tapping <kbd>CTRL</kbd> will fade loaded overlays in and out.' : ''),
 			{ id: 0, targ: $('.leaflet-control-layers'), dist: '50', dir: 'right', pos: 'fixed' }
 		);
 		showModalTutor(
@@ -270,9 +273,10 @@ var map = new L.map('map', {
 			{ id: 1, targ: $('li a[href="#tour"]').parent(), dist: '40', dir: 'left', pos: 'fixed' }
 		);
 		showModalTutor(
-			'Zoom in and ' + (noTouch ? 'click' : 'tap') + ' on the map to find information on almost any place.<br/>This button will clear any map markers.',
+			'Zoom in and ' + (noTouch ? 'click' : 'tap') + ' on the map to find information on almost any place.<br>This button will clear any map markers.',
 			{ id: 2, targ: $('#btnClearmap'), dist: '30', dir: 'left', pos: 'absolute' }	
 		);
+		$('#modalT0 button').focus();
 	}
 	// easter holiday decorations
 	if (new Date().getMonth() === 3 && new Date().getDate() >= 10 && new Date().getDate() <= 13) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F95A'));
@@ -285,7 +289,7 @@ var map = new L.map('map', {
 		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84090, 0.47320], [50.84055, 0.47370]], { className: 'xmasMapTree', opacity: 0.9 }).addTo(map);
 		// little common
 		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84545, 0.43400], [50.84510, 0.43350]], { className: 'xmasMapTree', opacity: 0.9 }).addTo(map);
-		sidebar.append('<img id="holidayImg" src="assets/img/holidays/xmasSb.png"/>');
+		sidebar.append('<img id="holidayImg" alt="" src="assets/img/holidays/xmasSb.png">');
 		$('#homeBox').after('<div id="xmasMsg" title="Show on map" onclick="tour(\'xmas\');">' +
 			'<div id="xmasTitle">~ <span>Christmas Window Display Competition</span> ~</div>' +
 			'<div class="comment">2022\'s theme is \'A Magical Christmas\', in association with Bexhill Festival of the Sea</div>' +
@@ -330,7 +334,7 @@ var map = new L.map('map', {
 		dataType: 'json',
 		mimeType: 'application/json',
 		success: function(json) {
-			if (json.status === 'OK') $('#copyGeos .ele').html('<br/>Elevation: ' + ($('#inputUnit').is(':checked') ? L.Util.formatNum(json.results[0].elevation, 2) + ' m' : L.Util.formatNum(json.results[0].elevation*3.280839895, 2) + ' ft'));
+			if (json.status === 'OK') $('#copyGeos .ele').html('<br>Elevation: ' + ($('#inputUnit').is(':checked') ? L.Util.formatNum(json.results[0].elevation, 2) + ' m' : L.Util.formatNum(json.results[0].elevation*3.280839895, 2) + ' ft'));
 			else this.error();
 		},
 		error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OPENTOPODATA:', encodeURI(this.url)); }
@@ -343,25 +347,25 @@ var map = new L.map('map', {
 }).on('tooltipclose', function(e) {
 	if (!e.tooltip._source.isPopupOpen()) highlightOutline(e.tooltip._source._leaflet_id, 0);
 }).on('popupopen', function(e) {
-	var popupThis = $(e.popup.getElement());
-	var osmId = e.popup._source._leaflet_id;
+	const popupThis = $(e.popup.getElement());
+	const osmId = e.popup._source._leaflet_id;
 	// add/remove favourites
-	if ($('.popup-bookm').length) {
+	if ($('a.popup-bookm').length) {
 		if (!window.localStorage.favourites) window.localStorage.favourites = '';
-		if (window.localStorage.favourites.indexOf(elementType(osmId) + '(' + osmId.slice(1) + ');') >= 0) popupThis.find($('.popup-bookm i').removeClass('fa-regular').addClass('fa-solid'));
-		$('.popup-bookm').click(function() {
-			if ($('.popup-bookm i.fa-solid').length) {
+		if (window.localStorage.favourites.indexOf(elementType(osmId) + '(' + osmId.slice(1) + ');') >= 0) popupThis.find($('a.popup-bookm i').removeClass('fa-regular').addClass('fa-solid'));
+		$('a.popup-bookm').unbind('click').click(function() {
+			if ($('a.popup-bookm i.fa-solid').length) {
 				window.localStorage.favourites = window.localStorage.favourites.replace(elementType(osmId) + '(' + osmId.slice(1) + ');', '');
-				popupThis.find($('.popup-bookm i').removeClass('fa-solid').addClass('fa-regular'));
+				popupThis.find($('a.popup-bookm i').removeClass('fa-solid').addClass('fa-regular'));
 			}
 			else {
 				window.localStorage.favourites = window.localStorage.favourites + elementType(osmId) + '(' + osmId.slice(1) + ');';
-				popupThis.find($('.popup-bookm i').removeClass('fa-regular').addClass('fa-solid'));
+				popupThis.find($('a.popup-bookm i').removeClass('fa-regular').addClass('fa-solid'));
 			}
 		});
 	}
 	// edit on osm.org
-	$('.popup-edit').click(function() {
+	$('.popup-edit').unbind('click').click(function() {
 		popupWindow('https://www.openstreetmap.org/edit?' + elementType(osmId) + '=' + osmId.slice(1) + '#map=19/' + e.popup._latlng.lat + '/' + e.popup._latlng.lng, 'popup', 'editWindow');
 	});
 	popupThis.find($('.popup-header > a, .popup-facilities i, .navigateItem a')).tooltip(tooltipDef);
@@ -375,15 +379,15 @@ var map = new L.map('map', {
 	// https://ratings.food.gov.uk/open-data/en-GB
 	// show food hygiene ratings
 	if (popupThis.find($('.popup-fhrs.notloaded')).length) $.ajax({
-		url: 'https://api.ratings.food.gov.uk/establishments/' + popupThis.find($('.popup-fhrs')).attr('fhrs-key'),
+		url: 'https://api.ratings.food.gov.uk/establishments/' + encodeURI(popupThis.find($('.popup-fhrs')).data('fhrs')),
 		headers: { 'x-api-version': 2 },
 		dataType: 'json',
 		cache: true,
 		success: function(result) {
-			var RatingDate = (result.RatingValue.length === 1) ? ' (' + new Date(result.RatingDate).toLocaleDateString(navigator.language) + ')' : '';
+			const RatingDate = (result.RatingValue.length === 1) ? ' (' + new Date(result.RatingDate).toLocaleDateString(lang) + ')' : '';
 			popupThis.find($('.popup-fhrs')).html(
-				'<a href="https://ratings.food.gov.uk/business/en-GB/' + result.FHRSID + '" title="Food Hygiene Rating\n' + result.BusinessName + RatingDate + '" target="_blank" rel="noopener">' +
-				'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"/></a>'
+				'<a href="https://ratings.food.gov.uk/business/en-GB/' + encodeURI(result.FHRSID) + '" title="Food Hygiene Rating\n' + result.BusinessName + RatingDate + '" target="_blank" rel="noopener">' +
+				'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"></a>'
 			).removeClass('notloaded');
 			if ($('#inputDebug').is(':checked')) console.debug('Food Hygiene Rating:', result);
 		},
@@ -397,7 +401,7 @@ var map = new L.map('map', {
 	if (popupThis.find($('.popup-bsTable')).length) $.ajax({
 		type: 'POST',
 		url: 'https://cors.bridged.cc/' + 'https://nextbus.mxdata.co.uk/nextbuses/1.0/1',
-		headers: { 'Authorization': 'Basic ' + btoa(BOSM.trvllneApi.u + ':' + BOSM.trvllneApi.p), 'x-cors-grida-api-key': BOSM.corsKey },
+		headers: { 'Authorization': 'Basic ' + btoa(window.BOSM.trvllneApi.u + ':' + window.BOSM.trvllneApi.p), 'x-cors-grida-api-key': window.BOSM.corsKey },
 		contentType: 'text/xml',
 		dataType: 'xml',
 		cache: false,
@@ -406,25 +410,25 @@ var map = new L.map('map', {
 			'<Siri version="1.0" xmlns="http://www.siri.org.uk/">' +
 			'<ServiceRequest>' +
 				'<RequestTimestamp>' + new Date().toISOString() + '</RequestTimestamp>' +
-				'<RequestorRef>' + BOSM.trvllneApi.u + '</RequestorRef>' +
+				'<RequestorRef>' + window.BOSM.trvllneApi.u + '</RequestorRef>' +
 				'<StopMonitoringRequest version="1.0">' +
 					'<RequestTimestamp>' + new Date().toISOString() + '</RequestTimestamp>' +
 					'<MessageIdentifier>12345</MessageIdentifier>' +
-					'<MonitoringRef>' + popupThis.find($('.popup-bsTable')).attr('naptan-key') + '</MonitoringRef>' +
+					'<MonitoringRef>' + popupThis.find($('.popup-bsTable')).data('naptan') + '</MonitoringRef>' +
 				'</StopMonitoringRequest>' +
 			'</ServiceRequest>' +
 			'</Siri>',
 		success: function(xml) {
-			var numResults = $(xml).find('MonitoredVehicleJourney').length;
+			const numResults = $(xml).find('MonitoredVehicleJourney').length;
 			if (numResults) {
 				popupThis.find($('.popup-bsTable')).empty();
-				for (var c = 0; c < numResults; c++) {
-					var departTime = $(xml).find('ExpectedDepartureTime').eq(c).text() ? $(xml).find('ExpectedDepartureTime').eq(c).text() : $(xml).find('AimedDepartureTime').eq(c).text();
-					var departTimer = time_parser((new Date(departTime) - new Date()) / 60000);
+				for (let c = 0; c < numResults; c++) {
+					const departTime = $(xml).find('ExpectedDepartureTime').eq(c).text() ? $(xml).find('ExpectedDepartureTime').eq(c).text() : $(xml).find('AimedDepartureTime').eq(c).text();
+					const departTimer = minToTime((new Date(departTime) - new Date()) / 60000);
 					popupThis.find($('.popup-bsTable')).append(
 						'<tr><td>' + $(xml).find('PublishedLineName').eq(c).text() + '</td>' +
 						'<td>' + $(xml).find('DirectionName').eq(c).text() + '</td>' +
-						'<td>' + (departTimer === -1 ? 'Due' : (departTimer + ' (' + new Date(departTime).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + ')')) + '</td></tr>'
+						'<td>' + (departTimer === -1 ? 'Due' : (departTimer + ' (' + new Date(departTime).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + ')')) + '</td></tr>'
 					);
 				}
 				popupThis.find($('.popup-bsTable')).after('<div class="popup-imgAttrib">Data: <a href="https://www.travelinedata.org.uk/" target="_blank" rel="noopener">Traveline NextBuses</div>');
@@ -496,7 +500,7 @@ var map = new L.map('map', {
 	if (noIframe && localStorageAvail() && window.localStorage.tutorial.indexOf('bouncedicon') === -1 && popupThis.find($('.pano .fa-bounce, .vid .fa-bounce')).length) window.localStorage.tutorial += 'bouncedicon;';
 	// photosphere and video attribution
 	$('.pano.notloaded, .vid.notloaded').each(function(i, element) {
-		$(element).data('caption', '<a href="https://commons.wikimedia.org/wiki/' + $(element).data('caption') + '" title="Wikimedia Commons" target="_blank" rel="noopener">Wikimedia Commons</a>').removeClass('notloaded');
+		$(element).data('caption', '<a href="https://commons.wikimedia.org/wiki/' + encodeURI($(element).data('caption')) + '" title="Wikimedia Commons" target="_blank" rel="noopener">Wikimedia Commons</a>').removeClass('notloaded');
 	});
 }).on('popupclose', function(e) {
 	if (e.popup._source._tooltip && !e.popup._source.isTooltipOpen()) highlightOutline(markerId, 0);
@@ -508,7 +512,7 @@ var map = new L.map('map', {
 	}
 }).on('baselayerchange', function(e) {
 	// get layer name on change
-	for (var c in baseTileList.name) if (e.name === baseTileList.name[c]) actBaseTileLayer = baseTileList.keyname[c];
+	for (let c in baseTileList.name) if (e.name === baseTileList.name[c]) actBaseTileLayer = baseTileList.keyname[c];
 	if (tileBaseLayer[actBaseTileLayer].offset) map.fire('zoomend');
 	if (noIframe && localStorageAvail()) window.localStorage.baseLayer = actBaseTileLayer;
 	permalinkSet();
@@ -518,7 +522,7 @@ var map = new L.map('map', {
 	setTimeout(function() {
 		if ($('.leaflet-control-layers-overlays input:checked').length > 1) map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);
 		// get layer name on change
-		for (var c in overlayTileList.name) if (e.name === overlayTileList.name[c]) actOverlayLayer = overlayTileList.keyname[c];
+		for (let c in overlayTileList.name) if (e.name === overlayTileList.name[c]) actOverlayLayer = overlayTileList.keyname[c];
 		if (darkMode && actOverlayLayer === 'xmas') {
 			tileOverlayLayer.xmas.opacity = 0.1;
 			tileOverlayLayers[tileOverlayLayer.xmas.name].setOpacity(tileOverlayLayer.xmas.opacity);
@@ -558,7 +562,7 @@ function highlightOutline(i, on) {
 	// outline highlighting
 	if (areaOutline.getLayer('o_' + i)) areaOutline.getLayer('o_' + i).setStyle({ opacity: on ? 0.7 : 0.3 });
 	if (Object.keys(imageOverlay._layers).length) {
-		var layer = imageOverlay.getLayer(i) || imageOverlay._layers[Object.keys(imageOverlay._layers)[0]].getLayer(i) || '';
+		const layer = imageOverlay.getLayer(i) || imageOverlay._layers[Object.keys(imageOverlay._layers)[0]].getLayer(i) || '';
 		if (layer && layer.options.fill) layer.setStyle({ fillOpacity: on ? 0.75 : 0.5, weight: on ? 3 : 2 });
 	}
 }
@@ -569,14 +573,14 @@ function setOverlayLabel() {
 		$('.leaflet-control-layers-overlays label:contains("Bing")').after('<div class="controlTitle">Historic overlays</div>');
 		$('.leaflet-control-layers-overlays label').last().after('<a class="controlTitle" onclick="switchTab(\'tour\', \'overlays\');">More...</a>');
 	}
-	for (var tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').hide();
-	for (var tileOverlay in tileOverlayLayer) if (tileOverlayLayer[tileOverlay].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tileOverlay].name + '")').hide();
+	for (let tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').hide();
+	for (let tileOverlay in tileOverlayLayer) if (tileOverlayLayer[tileOverlay].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tileOverlay].name + '")').hide();
 	if (!$('.leaflet-control-layers-list.custscroll').length) $('.leaflet-control-layers-list').addClass('custscroll');
 	if (!$('.leaflet-control-layers-toggle span').length) $('.leaflet-control-layers-toggle').html('<span style="margin:5px;" class="fa fa-solid fa-layer-group fa-2x"></span>');
 }
 function changeOffset(layer, container) {
 	// offset layer, metres to pixels
-	var metresPerPixel = 40075017 * Math.cos(map.getCenter().lat * (Math.PI/180)) / Math.pow(2, map.getZoom()+8);
+	const metresPerPixel = 40075017 * Math.cos(map.getCenter().lat * (Math.PI/180)) / Math.pow(2, map.getZoom()+8);
 	layer = (layer === 'base') ? tileBaseLayer[actBaseTileLayer] : tileOverlayLayer[actOverlayLayer];
 	$(container).css({
 		'left': Math.floor(layer.offset[0] / metresPerPixel) + 'px',
@@ -587,7 +591,7 @@ function changeOffset(layer, container) {
 // https://github.com/davidjbradshaw/image-map-resizer
 $('#minimap > map > area').click(function() {
 	// bounding coordinates for minimap
-	var mBounds = {
+	const mBounds = {
 		'Bexhill-on-Sea': LBounds,
 		'Barnhorn': [[50.8507, 0.4301], [50.8415, 0.4066]],
 		'Central': [[50.8425, 0.4801], [50.8351, 0.4649]],
@@ -608,46 +612,47 @@ $('#minimap > map > area').click(function() {
 	}
 });
 
-var rQuery = false;
+let rQuery = false;
 function reverseQuery(e, singlemapclick) {
-	var geocoder, geoMarker, geoServer = $('#inputRevServer').val();
+	const geoServer = $('#inputRevServer').val();
+	let geocoder, geoMarker;
 	if (singlemapclick) setMsgStatus('fa-solid fa-spinner fa-spin-pulse', '', '');
 	else $('.spinner').show();
 	if (geoServer === 'nominatim') geocoder = L.Control.Geocoder.nominatim({ reverseQueryParams: { format: 'jsonv2', namedetails: 1, email: email } });
-	else if (geoServer === 'opencage') geocoder = L.Control.Geocoder.opencage({ apiKey: BOSM.ocKey, reverseQueryParams: { limit: 1, roadinfo: (map.getZoom() < 17 ? 1 : 0) } });
+	else if (geoServer === 'opencage') geocoder = L.Control.Geocoder.opencage({ apiKey: window.BOSM.ocKey, reverseQueryParams: { limit: 1, roadinfo: (map.getZoom() < 17 ? 1 : 0) } });
 	else if (geoServer === 'photon') geocoder = L.Control.Geocoder.photon({ reverseQueryParams: { distance_sort: true, radius: 0.05 } });
-	else if (geoServer === 'openrouteservice') geocoder = L.Control.Geocoder.openrouteservice({ apiKey: BOSM.orsKey, reverseQueryParams: { 'boundary.circle.radius': 0.05, size: 1, sources: 'osm' } });
+	else if (geoServer === 'openrouteservice') geocoder = L.Control.Geocoder.openrouteservice({ apiKey: window.BOSM.orsKey, reverseQueryParams: { 'boundary.circle.radius': 0.05, size: 1, sources: 'osm' } });
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom() > 16 ? 18 : 17), function(results) {
 		if (geoServer === 'opencage') geoMarker = results[0];
 		else geoMarker = results[0] ? results[0].properties : '';
 		if ($('#inputDebug').is(':checked') && results[0]) console.debug(titleCase(geoServer) + 'reverse search:', results[0]);
 		if (geoMarker.osm_id || (geoMarker.source_id && geoMarker.source_id.indexOf('/')) > 0) {
 			if (singlemapclick && $('#msgStatus:visible').length) {
-				var msgStatusHead, msgStatusBody;
+				let msgStatusHead, msgStatusBody;
 				if (geoServer === 'nominatim') {
-					var geoName = geoMarker.namedetails.ref || geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '';
-					var geoRoad = geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || geoMarker.address.locality || '';
+					const geoName = geoMarker.namedetails.ref || geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '';
+					const geoRoad = geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || geoMarker.address.locality || '';
 					msgStatusHead = titleCase(geoMarker.type === 'yes' || geoMarker.type === geoMarker.addresstype ? geoMarker.category : geoMarker.type + (geoMarker.addresstype === 'road' ? ' road' : ''));
-					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoName ? '<b>' + geoName + '</b><br/>' : '') +
-						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + (geoMarker.address.postcode ? ', ' + geoMarker.address.postcode + '<br/>' : '') : '') +
+					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoName ? '<b>' + geoName + '</b><br>' : '') +
+						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + (geoMarker.address.postcode ? ', ' + geoMarker.address.postcode + '<br>' : '') : '') +
 						(geoMarker.address.retail ? geoMarker.address.retail : '') + '</a>';
 				}
 				else if (geoServer === 'opencage') {
 					msgStatusHead = titleCase(geoMarker.type);
-					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');"><b>' + geoMarker.name.replace(',', '</b><br/>').replace(', United Kingdom', '') + '</a>';
+					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');"><b>' + geoMarker.name.replace(',', '</b><br>').replace(', United Kingdom', '') + '</a>';
 				}
 				else if (geoServer === 'photon') {
 					msgStatusHead = geoMarker.osm_value !== 'yes' ? titleCase(geoMarker.osm_value + ' ' + geoMarker.osm_key) : '';
-					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoMarker.name ? '<b>' + geoMarker.name + '</b><br/>' : '') +
+					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoMarker.name ? '<b>' + geoMarker.name + '</b><br>' : '') +
 						(geoMarker.housenumber ? geoMarker.housenumber + ' ' : '') + (geoMarker.street + (geoMarker.postcode ? ', ' + geoMarker.postcode : '') ? geoMarker.street : '') + '</a>';
 				}
 				else if (geoServer === 'openrouteservice') {
 					msgStatusHead = titleCase(geoMarker.layer);
-					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.source_id.charAt(0) + '\', \'' + geoMarker.source_id.split('/')[1] + '\');">' + '<b>' + geoMarker.name + '</b><br/>' +
+					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.source_id.charAt(0) + '\', \'' + geoMarker.source_id.split('/')[1] + '\');">' + '<b>' + geoMarker.name + '</b><br>' +
 						(geoMarker.postalcode ? geoMarker.postalcode : '') + '</a>';
 				}
-				if ($('#inputAttic').val()) msgStatusBody += '<br/><span class="comment">Above result may differ to actual attic data.</span>';
-				if (actOverlayLayer === 'landreg') msgStatusBody += '<hr/><a onclick="popupWindow(\'https://search-property-information.service.gov.uk/search/map-search/find-by-map\', \'popup\', \'editWindow\');"><i>Land Registry Lookup</i> <i class="theme fa-solid fa-up-right-from-square fa-sm"></i></a>';
+				if ($('#inputAttic').val()) msgStatusBody += '<br><span class="comment">Above result may differ to actual attic data.</span>';
+				if (actOverlayLayer === 'landreg') msgStatusBody += '<hr><a onclick="popupWindow(\'https://search-property-information.service.gov.uk/search/map-search/find-by-map\', \'popup\', \'editWindow\');"><i>Land Registry Lookup</i> <i class="theme fa-solid fa-up-right-from-square fa-sm"></i></a>';
 				setMsgStatus('fa-solid fa-magnifying-glass-location', msgStatusHead, msgStatusBody);
 				// move click location to address location on hover
 				if (noTouch) $('#msgStatus .msgStatusBodyAddr').hover(
@@ -674,8 +679,8 @@ function reverseQueryOP(type, id) {
 function walkPoint(e) {
 	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').click();
 	// drop a walk marker if one doesn't exist
-	var wp = routingControl.getWaypoints();
-	for (var c in wp) if (!wp[c].name) {
+	const wp = routingControl.getWaypoints();
+	for (let c in wp) if (!wp[c].name) {
 		routingControl.spliceWaypoints(c, 1, e.latlng);
 		return;
 	}
@@ -708,7 +713,7 @@ function panoView(e, fromSequence) {
 		mimeType: 'application/json',
 		cache: true,
 		success: function(json) {
-			var imgId;
+			let imgId;
 			if (json.data.length > 0) json.data.forEach(x => { if (x.camera_type === 'equirectangular') imgId = x.id; });
 			if (imgId && ($('#inputStView').is(':checked') || fromSequence)) {
 				$('.spinner').hide();
@@ -726,7 +731,7 @@ function panoView(e, fromSequence) {
 	});
 }
 function copyGeos(e) {
-	var geos = L.Util.formatNum(e.latlng.lat, 5) + '°N ' + L.Util.formatNum(e.latlng.lng, 5) + '°E | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 6);
+	const geos = L.Util.formatNum(e.latlng.lat, 5) + '°N ' + L.Util.formatNum(e.latlng.lng, 5) + '°E | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 6);
 	navigator.clipboard.writeText(geos).then(
 		function() { setMsgStatus('fa-solid fa-copy', 'Clipboard', 'Coordinates copied successfully.<p class="comment">' + geos + '</p>', 4); },
 		function() { setMsgStatus('fa-solid fa-copy', 'Clipboard Error', 'Could not copy coordinates. Manually copy below <p class="comment">' + geos + '</p>'); }
@@ -734,7 +739,7 @@ function copyGeos(e) {
 }
 
 $('#walkList').change(function() {
-	$('#walkDesc').html('<figure><img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg"/><figcaption>' + suggestWalk($('#walkList').val(), 0) + '</figcaption></figure>');
+	$('#walkDesc').html('<figure><img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg"><figcaption>' + suggestWalk($('#walkList').val(), 0) + '</figcaption></figure>');
 });
 $('#walkSelect').click(function() {
 	clear_map('walk');
@@ -760,7 +765,7 @@ function suggestWalk(walkId, isWP) {
 		neye: [
 			'Pevensey Levels was a tidal inlet until the eastward drift of coastal shingle isolated it and a salt marsh developed. ' +
 			'The walk starts and ends at The Star Inn pub, heading north-west towards the archaeological site of Northeye, a village abandoned to flooding in the Middle Ages. ' +
-			'Before making your way back round, you will see evidence of a wooden sea defense from the 14th century called Crooked Ditch.<br/>' +
+			'Before making your way back round, you will see evidence of a wooden sea defense from the 14th century called Crooked Ditch.<br>' +
 			'Although sometimes rough and wet in places, there are great open views of countryside and plenty of grazing sheep to keep you company.',
 			[[50.83026, 0.39324], [50.83832, 0.38729], [50.83618, 0.40594], [50.83007, 0.39370]]
 		],
@@ -792,14 +797,10 @@ function suggestWalk(walkId, isWP) {
 }
 
 // navigation controls for history tour
-$('#tourNext').click(function() {
-	if ($('#tourList option:selected').next().is(':enabled')) $('#tourList option:selected').next().prop('selected', true).trigger('change');
-});
-$('#tourPrev').click(function() {
-	if ($('#tourList option:selected').prev().is(':enabled')) $('#tourList option:selected').prev().prop('selected', true).trigger('change');
-});
+$('#tourNext').click(function() { $('#tourList option:selected').nextAll(':enabled').eq(0).prop('selected', true).trigger('change'); });
+$('#tourPrev').click(function() { $('#tourList option:selected').prevAll(':enabled').eq(0).prop('selected', true).trigger('change'); });
 $('#tourList').change(function() {
-	var tourVal = $(this).val();
+	const tourVal = $(this).val();
 	// only load iframe on focus or a new item selected
 	if (actTab === 'tour' && $('#tourFrame')[0].contentWindow.location.href.indexOf('/list' + titleCase(tourVal)) === -1) {
 		$('#tourControls').children().prop('disabled', true);
@@ -811,15 +812,10 @@ $('#tourList').change(function() {
 			$(this).fadeIn();
 			$(this).contents().find('sup').click(function() { tourRef(tourVal, this.innerText); });
 			$(this).contents().find('sup').attr('title', 'View reference');
-			$(this).contents().find('img').not('h3 img').off('click').click(function() {
-				// create fancybox gallery from iframe images
-				var currentSrc = $(this)[0].currentSrc;
-				$.fancybox.open({ src: currentSrc, type: 'image', opts: { caption: $(this).attr('alt'), beforeLoad: function() {
-					if ($.fancybox.getInstance().firstRun) $.each($('#tourFrame').contents().find('img').not('.maplink img'), function() {
-						if (this.src !== currentSrc) $.fancybox.getInstance().addContent({ src: this.src, caption: this.alt });
-					});
-				}}});
-			});
+			// create fancybox gallery from iframe images
+			const tourImg = $(this).contents().find('img').not('.maplink img'), tourGall = [];
+			tourImg.each(function() { tourGall.push({ 'src': this.src, 'caption': $(this).parent('figure').find('figCaption').html() || this.alt }); });
+			tourImg.off('click').click(function() { $.fancybox.open(tourGall, {}, tourImg.index(this)); });
 			$('#tourControls').children().prop('disabled', false);
 			if ($('#tourList').prop('selectedIndex') === 0) $('#tourPrev').prop('disabled', true);
 			else if ($('#tourList').prop('selectedIndex') === $('#tourList option').length-1) $('#tourNext').prop('disabled', true);
@@ -830,9 +826,9 @@ $('#tourList').change(function() {
 });
 
 // https://github.com/Leaflet/Leaflet
-var iconLayer = new L.featureGroup(), clickOutline = new L.featureGroup(), areaOutline = new L.featureGroup(), imageOverlay = new L.featureGroup();
-var tileBaseLayer = {}, tileBaseLayers = {}, baseTileList = {name: [], keyname: []};
-var tileOverlayLayer = {}, tileOverlayLayers = {}, overlayTileList = {name: [], keyname: []};
+const iconLayer = new L.featureGroup(), clickOutline = new L.featureGroup(), areaOutline = new L.featureGroup(), imageOverlay = new L.featureGroup();
+let tileBaseLayer = {}, tileBaseLayers = {}, baseTileList = {name: [], keyname: []};
+let tileOverlayLayer = {}, tileOverlayLayers = {}, overlayTileList = {name: [], keyname: []};
 function setLeaflet() {
 	map.addLayer(iconLayer).addLayer(clickOutline).addLayer(imageOverlay).addLayer(areaOutline);
 	// leaflet icon image path
@@ -846,10 +842,10 @@ function setLeaflet() {
 			});
 		},
 		_quadKey: function(x, y, z) {
-			var quadKey = [];
-			for (var i = z; i > 0; i--) {
-				var digit = '0';
-				var mask = 1 << (i - 1);
+			const quadKey = [];
+			for (let i = z; i > 0; i--) {
+				let digit = '0';
+				let mask = 1 << (i - 1);
 				if ((x & mask) !== 0) {
 					digit++;
 				}
@@ -863,11 +859,11 @@ function setLeaflet() {
 		}
 	});
 	// baselayers
-	var attribution = '&copy; <a href="https://openstreetmap.org/copyright" title="Copyright and License" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
+	const attribution = '&copy; <a href="https://openstreetmap.org/copyright" title="Copyright and License" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
 	tileBaseLayer = {
 		bosm: {
 			name: 'Bexhill-OSM',
-			url: 'https://api.mapbox.com/styles/v1/drmx/cjyfrglvo1v3c1cqqlcvzyd07/tiles/256/{z}/{x}/{y}@2x?access_token=' + BOSM.mapboxKey,
+			url: 'https://api.mapbox.com/styles/v1/drmx/cjyfrglvo1v3c1cqqlcvzyd07/tiles/256/{z}/{x}/{y}@2x?access_token=' + window.BOSM.mapboxKey,
 			attribution: attribution + ', <a href="https://mapbox.com/" target="_blank" rel="noopener">MapBox</a>',
 			className: 'layerDark'
 		},
@@ -892,13 +888,13 @@ function setLeaflet() {
 		},
 		cycle: {
 			name: 'OpenCycleMap',
-			url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + BOSM.thuforKey,
+			url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
 			attribution: attribution + ', <a href="https://thunderforest.com/maps/opencyclemap/" target="_blank" rel="noopener">ThunderForest</a>',
 			className: 'layerDark'
 		},
 		trnsprt: {
 			name: 'Public Transport',
-			url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + BOSM.thuforKey,
+			url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
 			attribution: attribution + ', <a href="https://thunderforest.com/maps/transport/" target="_blank" rel="noopener">ThunderForest</a>',
 			className: 'layerDark'
 		},
@@ -913,8 +909,8 @@ function setLeaflet() {
 			offset: [-1, 1]
 		}
 	};
-	for (var tile in tileBaseLayer) {
-		var tbl = tileBaseLayer[tile], bOptions = {
+	for (let tile in tileBaseLayer) {
+		const tbl = tileBaseLayer[tile], bOptions = {
 			attribution: tbl.attribution || attribution,
 			subdomains: tbl.subdomains || 'abc',
 			maxZoom: map.getMaxZoom(),
@@ -1214,8 +1210,8 @@ function setLeaflet() {
 			className: 'layerNoclick'
 		}
 	};
-	for (tile in tileOverlayLayer) {
-		var tol = tileOverlayLayer[tile], oOptions = {
+	for (let tile in tileOverlayLayer) {
+		const tol = tileOverlayLayer[tile], oOptions = {
 			attribution: tol.attribution,
 			subdomains: tol.subdomains || 'abc',
 			bounds: tol.bounds,
@@ -1243,15 +1239,15 @@ $('.leaflet-control-zoom-in').html('<i class="fa-solid fa-plus"></i>');
 $('.leaflet-control-zoom-out').html('<i class="fa-solid fa-minus"></i>');
 
 // BUTTON full screen events
-var fcnFullscr = L.easyButton({
+const fcnFullscr = L.easyButton({
 	id: 'btnFullscr',
 	states: [{
 		stateName: 'normalScreen',
 		icon: 'fa-solid fa-expand',
 		title: 'Full screen',
 		onClick: function(control) {
-			var viewer = $('html')[0];
-			var rFS = viewer.requestFullscreen || viewer.webkitRequestFullscreen;
+			const viewer = $('html')[0];
+			const rFS = viewer.requestFullscreen || viewer.webkitRequestFullscreen;
 			rFS.call(viewer);
 			control.state('fullScreen');
 		}
@@ -1260,7 +1256,7 @@ var fcnFullscr = L.easyButton({
 		icon: 'fa-solid fa-compress',
 		title: 'Exit full screen',
 		onClick: function(control) {
-			var cFS = document.exitFullscreen || document.webkitExitFullscreen;
+			const cFS = document.exitFullscreen || document.webkitExitFullscreen;
 			cFS.call(document);
 			control.state('normalScreen');
 		}
@@ -1268,13 +1264,13 @@ var fcnFullscr = L.easyButton({
 }).addTo(map);
 $(document).on('fullscreenchange', btnFullscrState).on('webkitfullscreenchange', btnFullscrState);
 function btnFullscrState() {
-	var fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+	const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
 	if (!fullscreenElement) fcnFullscr.state('normalScreen');
 }
 
 // https://github.com/domoritz/leaflet-locatecontrol
 // BUTTON locate control
-var lc = L.control.locate({
+const lc = L.control.locate({
 	icon: 'fa-solid fa-location-arrow',
 	iconLoading: 'fas fa-compass fa-spin',
 	iconElementTag: 'i',
@@ -1303,7 +1299,7 @@ var lc = L.control.locate({
 
 // https://github.com/perliedman/leaflet-control-geocoder
 // BUTTON search
-var geocode = L.Control.geocoder({
+const geocode = L.Control.geocoder({
 	geocoder: L.Control.Geocoder.nominatim({
 		geocodingQueryParams: {
 			bounded: 1,
@@ -1320,7 +1316,7 @@ var geocode = L.Control.geocoder({
 }).on('markgeocode', function(e) {
 	// pass nominatim address query to overpass
 	if ($('#inputDebug').is(':checked')) console.debug('Nominatim search:', e.geocode);
-	var geoMarker = e.geocode.properties;
+	const geoMarker = e.geocode.properties;
 	if (geoMarker.osm_id) {
 		clear_map('markers');
 		rQuery = true;
@@ -1344,7 +1340,7 @@ function searchAddr(addr) {
 }
 
 // BUTTON mapillary sequences
-var fcnStLvl = L.easyButton({
+const fcnStLvl = L.easyButton({
 	id: 'btnStLvl',
 	states: [{
 		stateName: 'offStLvl',
@@ -1391,7 +1387,7 @@ L.easyButton({
 
 // https://github.com/ebrelsford/Leaflet.loading
 // BUTTON loading spinner
-var loadingControl = L.Control.loading({ separate: true });
+const loadingControl = L.Control.loading({ separate: true });
 map.addControl(loadingControl);
 $('.leaflet-control-loading').html('<i class="fa-solid fa-spinner fa-spin-pulse"></i>');
 
@@ -1423,13 +1419,13 @@ function switchTab(tab, anchorTour, poi, actImgLayer) {
 }
 
 // https://github.com/Turbo87/sidebar-v2/
-var sidebar = $('#sidebar').sidebar();
+const sidebar = $('#sidebar').sidebar();
 
 // https://github.com/mlevans/leaflet-hash
 new L.Hash(map);
 
 // https://github.com/perliedman/leaflet-routing-machine
-var routingControl;
+let routingControl;
 function setRoutingControl(units) {
 	routingControl = L.Routing.control({
 		units: units,
@@ -1438,7 +1434,7 @@ function setRoutingControl(units) {
 		reverseWaypoints: true,
 		routeWhileDragging: false,
 		showAlternatives: false,
-		router: L.Routing.mapbox(BOSM.mapboxKey, {
+		router: L.Routing.mapbox(window.BOSM.mapboxKey, {
 			profile: 'mapbox/walking'
 		}),
 		lineOptions: {
@@ -1490,20 +1486,20 @@ function setRoutingControl(units) {
 }
 
 function populatePoiTab() {
-	var poiTags = {}, category = [], categoryList = [], c;
-	for (var poi in pois) if (pois[poi].catName && pois[poi].tagKeyword) {
+	let poiTags = {}, category = [], categoryList = [], c;
+	for (let poi in pois) if (pois[poi].catName && pois[poi].tagKeyword) {
 		// get all keywords and put into categories
 		poiTags[poi] = pois[poi].tagKeyword;
-		category.push({ listLocation: poi, header: '<img data-key="poi" src="assets/img/icons/' + pois[poi].iconName + '.png"/>' + pois[poi].catName + ' - ' + pois[poi].name });
+		category.push({ listLocation: poi, header: '<img data-key="poi" src="assets/img/icons/' + pois[poi].iconName + '.png">' + pois[poi].catName + ' - ' + pois[poi].name });
 		// get unique category label for poi checkbox tab
 		if (categoryList.indexOf(pois[poi].catName) === -1) categoryList.push(pois[poi].catName);
 	}
 	for (c = 0; c < $('#tourList option').length - 1; c++) if ($('#tourList option:enabled').eq(c).data('keyword')) {
-		category.push({ listLocation: $('#tourList option').eq(c).text(), header: '<img data-key="' + $('#tourList option').eq(c).val() + '" src="assets/img/sb-tour.png"/>Tour - ' + $('#tourList option').eq(c).text() });
+		category.push({ listLocation: $('#tourList option').eq(c).text(), header: '<img data-key="' + $('#tourList option').eq(c).val() + '" src="assets/img/sb-tour.png">Tour - ' + $('#tourList option').eq(c).text() });
 		poiTags[$('#tourList option').eq(c).text()] = $('#tourList option').eq(c).data('keyword').split(', ');
 	}
 	// https://github.com/pawelczak/EasyAutocomplete
-	var options = {
+	const options = {
 		data: poiTags,
 		minCharNumber: 3,
 		list: {
@@ -1535,14 +1531,14 @@ function populatePoiTab() {
 	$('#autocomplete').easyAutocomplete(options);
 	$('div.easy-autocomplete').removeAttr('style');
 	// create checkbox tables using poi categories
-	var checkboxContent = '<div id="poi-filter"><input id="poi-filter-in" type="text" placeholder="Filter, e.g. \'dog\', \'park\', \'eat\', \'bed\'" title="Enter a keyword"/><span class="leaflet-routing-remove-waypoint"></span></div>' +
+	let checkboxContent = '<div id="poi-filter"><input id="poi-filter-in" type="text" placeholder="Filter, e.g. \'dog\', \'park\', \'eat\', \'bed\'" title="Enter a keyword"><span class="leaflet-routing-remove-waypoint"></span></div>' +
 			'<div class="comment" style="text-align:right;">Make up to ' + maxPOICheckbox + ' selections at a time.</div>';
-	for (c in categoryList) {
-		checkboxContent += '<div id="goto' + categoryList[c] + '" class="poi-group"><hr/><h3>' + categoryList[c] + '</h3>';
-		for (poi in pois) if (pois[poi].catName === categoryList[c]) checkboxContent += L.Util.template(
+	for (let c = 0; c < categoryList.length; c++) {
+		checkboxContent += '<div id="goto' + categoryList[c] + '" class="poi-group"><hr><h3>' + categoryList[c] + '</h3>';
+		for (let poi in pois) if (pois[poi].catName === categoryList[c]) checkboxContent += L.Util.template(
 			'<div class="poi-checkbox">' +
 				'<label title="{name}">' +
-					'<img src="assets/img/icons/{icon}.png"/>' +
+					'<img alt="" src="assets/img/icons/{icon}.png">' +
 					'<input type="checkbox" id="{key}" data-keyword="{keyword}"><span>{name}</span>' +
 				'</label>' +
 			'</div>',
@@ -1557,7 +1553,7 @@ populatePoiTab();
 // localStorage detection
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#testing_for_availability
 function localStorageAvail() {
-	var storage;
+	let storage;
 	try {
 		storage = window.localStorage;
 		const x = '__storage_test__';
@@ -1597,7 +1593,7 @@ function popupWindow(url, type, pTitle, iCap, iAni) {
 }
 
 // keyboard shortcuts
-var oInterval;
+let oInterval;
 $('html').keydown(function(e) {
 	clearInterval(oInterval);
 	// ALT-ENTER: full screen
@@ -1644,8 +1640,8 @@ function autocomplete() {
 	if ($('#autocomplete').val()) {
 		if ($(window).width() < 768) $('.sidebar-close:visible').click();
 		// grid reference lookup
-		if ($('#autocomplete').val().indexOf('TQ') === 0) {
-			var latlngPoint = GridRefToWgs84($('#autocomplete').val(), 5);
+		if ($('#autocomplete').val().startsWith('TQ')) {
+			const latlngPoint = new GridRefToWgs84($('#autocomplete').val(), 5);
 			clear_map('all');
 			if (actOverlayLayer) map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);
 			map.setView(latlngPoint, 18);
@@ -1665,10 +1661,10 @@ function autocomplete() {
 }
 
 // map display options
-var darkMode, scaleControl;
+let darkMode, scaleControl;
 $('#inputTheme').change(function() {
-	var cssVar = getComputedStyle($('html')[0],null);
-	if ((noIframe && window.matchMedia('(prefers-color-scheme: dark)').matches && $(this).val() === 'auto') || $(this).val() === 'dark') {
+	const cssVar = getComputedStyle($('html')[0],null);
+	if ((window.matchMedia('(prefers-color-scheme: dark)').matches && $(this).val() === 'auto') || $(this).val() === 'dark') {
 		$('#darkcss').prop('disabled', false);
 		$('#tourFrame').contents().find('html').css({
 			'--text-color': cssVar.getPropertyValue('--text-color'),
@@ -1690,7 +1686,7 @@ $('#inputTheme').change(function() {
 		'--scr-track': cssVar.getPropertyValue('--scr-track'),
 		'--scr-thumb': cssVar.getPropertyValue('--scr-thumb')
 	});
-	if (localStorageAvail()) window.localStorage.theme = $(this).prop('selectedIndex');
+	if (noIframe && localStorageAvail()) window.localStorage.theme = $(this).prop('selectedIndex');
 });
 $('#settings input').not('#inputDebug').change(function() {
 	if ($(this).attr('id') === 'inputUnit') {
@@ -1753,7 +1749,7 @@ function customQuery(q, fromInput) {
 	if (fromInput) clear_map('all');
 	if (q.charAt(0) === '[' && q.charAt(q.length-1) === ']') show_overpass_layer('(nw' + ($('#inputOverpassR input').is(':checked') ? 'r' : '') + q + ';);', '', true);
 	else if (q.charAt(0) === '(' && q.charAt(q.length-1) === ')') show_overpass_layer(q + ';', '', true);
-	else setMsgStatus('fa-solid fa-circle-info', 'Incorrect query', 'Enclose queries with [ ] for tags,<br/>and ( ) for element ids.', 4);
+	else setMsgStatus('fa-solid fa-circle-info', 'Incorrect query', 'Enclose queries with [ ] for tags,<br>and ( ) for element ids.', 4);
 	if (spinner > 0 && fromInput) spinner--;
 }
 $('#inputRevServer').change(function() { if (window.localStorage) window.localStorage.RevServer = $(this).prop('selectedIndex'); });
@@ -1806,13 +1802,15 @@ function clear_map(layer) {
 
 // fly to bounds of layer
 function zoom_area(closeTab) {
+	let padding = 0;
 	if ($(window).width() < 768 && closeTab) $('.sidebar-close:visible').click();
+	else if ($(window).width() >= 1024) padding = 0.1;
 	map.closePopup();
-	map.flyToBounds(areaOutline.getBounds().extend(iconLayer.getBounds()).extend(imageOverlay.getBounds()));
+	map.flyToBounds((areaOutline.getBounds().extend(iconLayer.getBounds()).extend(imageOverlay.getBounds())).pad(padding));
 }
 
 function poi_changed(newcheckbox) {
-	var poiChk = $('.poi-checkbox input:checked');
+	const poiChk = $('.poi-checkbox input:checked');
 	rQuery = false;
 	// limit number of active checkboxes
 	if (poiChk.length <= maxPOICheckbox) {
@@ -1833,7 +1831,7 @@ function poi_changed(newcheckbox) {
 			$('#poi-results-list').css('opacity', 0.5);
 			$('#poi-results').css('min-height', '');
 			//build overpass query
-			var query = '', selectedPois = '', poiLabels = '';
+			let query = '', selectedPois = '', poiLabels = '';
 			poiChk.each(function(i, element) {
 				query += pois[element.id].query;
 				selectedPois += element.id + '-';
@@ -1863,7 +1861,7 @@ $('.poi-checkbox input').click(function() {
 });
 // checkbox highlight
 $('.poi-checkbox input').change(function() {
-	var that = this;
+	const that = this;
 	// timeout fix for chrome not redrawing poi list
 	setTimeout(function() {
 		if ($(that).prop('checked')) $(that).parent().addClass('poi-checkbox-selected');
@@ -1897,7 +1895,8 @@ function setMsgStatus(headerIco, headerTxt, msgBody, closeTime) {
 
 // show tips
 function getTips(tip) {
-	var nextTip, tips = [
+	let nextTip;
+	const tips = [
 		'Right-click or long-press the map to see a context menu with information on that area.',
 		'Click an area of the above minimap to quickly <i class="fa-solid fa-magnifying-glass-plus fa-sm"></i> to that location.',
 		'Zoom into the map and click almost any place to see more details.',
@@ -1936,7 +1935,7 @@ function getTips(tip) {
 
 function showWeather() {
 	// get tides
-	var tideData = '', wtooltip = '';
+	let tideData = '', wtooltip = '';
 	$.ajax({
 		// downloaded twice weekly via cron job from https://admiraltyapi.portal.azure-api.net/
 		url: 'assets/data/tides.json',
@@ -1944,15 +1943,16 @@ function showWeather() {
 		mimeType: 'application/json',
 		cache: false,
 		success: function(json) {
-			var nextTide = '', iconTide = { HighWater: 'up', LowWater: 'down' };
+			let nextTide = '';
+			const iconTide = { HighWater: 'up', LowWater: 'down' };
 			$.each(json, function(i, element) { if (new Date().getTime() > new Date(element.DateTime + 'Z').getTime()) nextTide = i+1; });
 			if (nextTide && nextTide < json.length-1) {
-				wtooltip += '<hr/>' + json[nextTide].EventType + ': ' + L.Util.formatNum(json[nextTide].Height, 2) + 'm<br/>' +
+				wtooltip += '<hr>' + json[nextTide].EventType + ': ' + L.Util.formatNum(json[nextTide].Height, 2) + 'm<br>' +
 					json[nextTide+1].EventType + ': ' + L.Util.formatNum(json[nextTide+1].Height, 2) + 'm';
 				tideData =
 					'<span class="wtide1"><i class="fa-solid fa-water fa-2x"></i></span><span class="wtide2">' +
-					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide].EventType] + '"></i> ' + new Date(json[nextTide].DateTime + 'Z').toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '<br/>' +
-					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide+1].EventType] + '"></i> ' + new Date(json[nextTide+1].DateTime + 'Z').toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '</span>';
+					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide].EventType] + '"></i> ' + new Date(json[nextTide].DateTime + 'Z').toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<br>' +
+					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide+1].EventType] + '"></i> ' + new Date(json[nextTide+1].DateTime + 'Z').toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '</span>';
 			}
 			else this.error();
 		},
@@ -1967,7 +1967,7 @@ function showWeather() {
 		data: { id: '2655777', units: 'metric', appid: window.BOSM.owmKey },
 		success: function(json) {
 			if (json.weather) {
-				var tempIcon = {
+				const tempIcon = {
 					'01d': 'sun', '02d': 'cloud-sun', '03d': 'cloud', '04d': 'cloud', '09d': 'cloud-sun-rain', '10d': 'cloud-rain', '11d': 'cloud-showers-heavy', '13d': 'snowflake', '50d': 'smog',
 					'01n': 'moon', '02n': 'cloud-moon', '03n': 'cloud', '04n': 'cloud', '09n': 'cloud-moon-rain', '10n': 'cloud-rain', '11n': 'cloud-showers-heavy', '13n': 'snowflake', '50n': 'smog'
 				}, windDir = [
@@ -1979,21 +1979,21 @@ function showWeather() {
 				$('#weather').html(
 					'<span class="wtemp"><i class="fa-solid fa-' + tempIcon[json.weather[0].icon] + ' fa-2x"></i></span>' +
 					'<span class="wtemp">' +
-						json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1) + '<br/>' +
+						json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1) + '<br>' +
 						json.main.temp.toFixed(1) + '&deg;C' +
 					'</span>' +
 					'<span class="wwind"><i class="fa-solid fa-wind fa-2x"' + (json.wind.deg ? ' style="transform:rotate(' + (json.wind.deg + 90) + 'deg);"' : '') + '></i></span>' +
 					'<span class="wwind">' +
-						getWinddir + '<br/>' +
+						getWinddir + '<br>' +
 						'<span>' + (json.wind.speed * 2.236936).toFixed(1) + 'mph</span>' +
 					'</span>' +
 					(tideData ? tideData : '')
 				).show().attr('onclick', 'popupWindow("https://openweathermap.org/city/' + json.id + '", "popup", "owWindow");');
 				wtooltip =
-						'Sunrise: ' + new Date(json.sys.sunrise * 1000).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '<br/>' +
-						'Sunset: ' + new Date(json.sys.sunset * 1000).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + '<hr/>' +
-						'Gust: ' + (json.wind.gust * 2.236936).toFixed(1) + 'mph<br/>' +
-						'Cloud: ' + json.clouds.all + '%<br/>' +
+						'Sunrise: ' + new Date(json.sys.sunrise * 1000).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<br>' +
+						'Sunset: ' + new Date(json.sys.sunset * 1000).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<hr>' +
+						'Gust: ' + (json.wind.gust * 2.236936).toFixed(1) + 'mph<br>' +
+						'Cloud: ' + json.clouds.all + '%<br>' +
 						'Humidity: ' + json.main.humidity + '%' + wtooltip;
 				$('#weather').attr('title', '').tooltip({
 					classes: { 'ui-tooltip': 'wtooltip' },
@@ -2019,8 +2019,9 @@ function showWeather() {
 // https://github.com/mapbox/osmcha-frontend/wiki/API
 // display latest osm changesets
 function showEditFeed() {
-	var timeSince = function(date) {
-		var seconds = Math.floor((new Date() - new Date(date)) / 1000), str;
+	const timeSince = function(date) {
+		const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+		let str;
 		if (seconds / 31536000 > 1 && seconds / 31536000 < 2) str = 'One year ago';
 		if (seconds / 31536000 > 1) str = Math.floor(seconds / 31536000) + ' years ago';
 		else if (seconds / 2592000 > 1 && seconds / 2592000 < 2) str = 'One month ago';
@@ -2037,7 +2038,7 @@ function showEditFeed() {
 	};
 	$.ajax({
 		url: 'https://osmcha.org/api/v1/changesets/',
-		headers: { 'Authorization': 'Token ' + BOSM.osmchaTok },
+		headers: { 'Authorization': 'Token ' + window.BOSM.osmchaTok },
 		dataType: 'json',
 		cache: false,
 		data: {
@@ -2048,11 +2049,11 @@ function showEditFeed() {
 		},
 		success: function(data) {
 			if (data.features) {
-				var s = '';
+				let s = '';
 				$.each(data.features, function(e, itm) {
-					s += '<li><span class="fa-li"><i class="fa-solid fa-circle-check"></i></span><a href="https://overpass-api.de/achavi/?changeset=' + itm.id + '&layers=B0FTTFT"' +
-					' title="' + date_parser(itm.properties.date, 'short') + '\n' + itm.properties.create + ' created\n' + itm.properties.modify + ' modified\n' + itm.properties.delete + ' deleted\n">' + timeSince(itm.properties.date) + '</a>' +
-					' - <a href="https://www.openstreetmap.org/user/' + itm.properties.user + '" title="User">' + itm.properties.user + '</a>' +
+					s += '<li><span class="fa-li"><i class="fa-solid fa-circle-check"></i></span><a href="https://overpass-api.de/achavi/?changeset=' + encodeURI(itm.id) + '&layers=B0FTTFT"' +
+					' title="' + dateFormat(itm.properties.date, 'short') + '\n' + itm.properties.create + ' created\n' + itm.properties.modify + ' modified\n' + itm.properties.delete + ' deleted\n">' + timeSince(itm.properties.date) + '</a>' +
+					' - <a href="https://www.openstreetmap.org/user/' + encodeURI(itm.properties.user) + '" title="User">' + itm.properties.user + '</a>' +
 					'<span class="comment">' + itm.properties.comment + '</span></li>';
 				});
 				$('#osmFeed')
@@ -2076,9 +2077,9 @@ function showEditFeed() {
 // QG = geocode query, QO = overpass query, QL = location query
 function permalinkSet() {
 	// get clean url without parameters and hash
-	var uri = new URL(window.location.href.split('?')[0].split('#')[0]);
-	var selectedPois = '', walkCoords = '', setChk, overlayOpacity, c;
-	var walkWayp = routingControl ? routingControl.getWaypoints() : undefined;
+	const uri = new URL(window.location.href.split('?')[0].split('#')[0]);
+	let selectedPois = '', walkCoords = '', setChk, overlayOpacity, c;
+	const walkWayp = routingControl ? routingControl.getWaypoints() : undefined;
 	if (actTab !== defTab) uri.searchParams.set('T', actTab);
 	if (actBaseTileLayer !== defBaseTileLayer) uri.searchParams.set('M', actBaseTileLayer);
 	if (actImgLayer && actTab !== 'thennow') uri.searchParams.set('G', actImgLayer);
@@ -2089,7 +2090,7 @@ function permalinkSet() {
 		if (overlayOpacity) uri.searchParams.set('OP', overlayOpacity);
 	}
 	if (walkWayp) {
-		for (c in walkWayp) if (walkWayp[c].latLng) walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_';
+		for (c = 0; c < walkWayp.length; c++) if (walkWayp[c].latLng) walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_';
 		if (walkCoords) uri.searchParams.set('W', walkCoords.slice(0, -1));
 	}
 	if (actTab === 'tour' && $('#tourList option').eq(0).val() !== $('#tourList option:selected').eq(0).val()) uri.searchParams.set('U', $('#tourList option:selected').val());
@@ -2109,7 +2110,8 @@ function permalinkSet() {
 	window.history.replaceState(null, null, uri + window.location.hash);
 }
 function permalinkReturn() {
-	var uri = new URL(window.location.href).searchParams, junkQ = window.location.href.split('?'), c;
+	let uri = new URL(window.location.href).searchParams, junkQ = window.location.href.split('?');
+	let c;
 	// split fix for facebook and other junk trackers adding ?fbclid etc and busting queries
 	if (junkQ.length > 2) {
 		uri = URI(junkQ.slice(0, 2).join('?'));
@@ -2130,6 +2132,7 @@ function permalinkReturn() {
 		if (parseInt(window.localStorage.RevServer) >= 0 && parseInt(window.localStorage.RevServer) < $('#inputRevServer option').length) $('#inputRevServer').prop('selectedIndex', window.localStorage.RevServer);
 		if (parseInt(window.localStorage.OPServer) >= 0 && parseInt(window.localStorage.OPServer) < $('#inputOpServer option').length) $('#inputOpServer').prop('selectedIndex', window.localStorage.OPServer);
 	}
+	else if (!noIframe) $('#inputTheme').val('light');
 	$('#inputTheme, #inputUnit, #inputStView').trigger('change');
 	if (!noPermalink) {
 		if (uri.has('M') && tileBaseLayer[uri.get('M')]) actBaseTileLayer = uri.get('M');
@@ -2139,42 +2142,44 @@ function permalinkReturn() {
 			if (uri.has('OP')) tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].setOpacity(uri.get('OP') / 100);
 		}
 		if (uri.has('S')) {
-			var setChk = uri.get('S');
+			const setChk = uri.get('S');
 			for (c = 0; c < setChk.length; c++) $('#settings input[data-uri]:checkbox').eq(c).prop('checked', parseInt(setChk.charAt(c)));
 			if ($('#inputDebug').is(':checked')) $('#inputDebug').trigger('change');
 		}
 		if (uri.has('T')) actTab = uri.get('T');
 		if (uri.has('U')) {
-			var tourVal = uri.get('U');
+			const tourVal = uri.get('U');
 			if ($('#tourList option[value=' + tourVal + ']').length && !$('#tourList option[value=' + tourVal + ']')[0].disabled)
 				$('#tourList').val(tourVal).trigger('change');
 		}
 		if (uri.has('W')) {
-			var walkPoints = uri.get('W');
+			let walkPoints = uri.get('W');
 			walkPoints = walkPoints.split('_');
-			for (c in walkPoints) {
+			for (c = 0; c < walkPoints.length; c++) {
 				walkPoints[c] = walkPoints[c].replace('x', ', ');
 				routingControl.spliceWaypoints(c, 1, JSON.parse('[' + walkPoints[c] + ']'));
 			}
 		}
 		if (uri.has('G')) {
+			// if no latlng tell tour function to zoom to area
+			if (window.location.hash.indexOf('/') !== 3) tour(uri.get('G'), false);
+			else tour(uri.get('G'), true);
 			if (uri.has('I')) markerId = uri.get('I');
-			tour(uri.get('G'), true);
 		}
 		else if (uri.has('P')) {
-			var groupedPoi = uri.get('P');
+			let groupedPoi = uri.get('P');
 			if (groupedPoi.indexOf('-') !== -1) groupedPoi = groupedPoi.split('-');
 			if (uri.has('I')) markerId = uri.get('I');
 			setTimeout(function() {
 				if (!Array.isArray(groupedPoi)) $('#' + groupedPoi).prop('checked', true);
 				// the last poi has a '/' on it because leaflet-hash
-				else for (c in groupedPoi) { $('#' + groupedPoi[c].replace('/', '')).prop('checked', true); }
+				else for (c = 0; c < groupedPoi.length; c++) { $('#' + groupedPoi[c].replace('/', '')).prop('checked', true); }
 				poi_changed(groupedPoi);
 			}, 500);
 			spinner++;
 		}
 		else if (uri.has('QO')) {
-			var QO = decodeURIComponent(uri.get('QO'));
+			let QO = decodeURIComponent(uri.get('QO'));
 			if (QO.charAt(0) === 'r') {
 				QO = uri.get('QO').slice(1);
 				$('#inputOverpassR input').prop('checked', true);
@@ -2186,7 +2191,7 @@ function permalinkReturn() {
 			$('#devTools').accordion({ active: 0 });
 		}
 		else if (uri.has('I')) {
-			var singlePoi = uri.get('I');
+			const singlePoi = uri.get('I');
 			rQuery = true;
 			spinner++;
 			setTimeout(function() { show_overpass_layer(elementType(singlePoi) + '(' + singlePoi.slice(1) + ');', singlePoi.toUpperCase()); }, 500);
@@ -2207,7 +2212,7 @@ permalinkReturn();
 
 // allow postMessage from these websites when in an iframe
 window.addEventListener('message', function(event) {
-	var iframeAccess = ['//www.discoverbexhill.com', '//bexhillheritage.com', '//www.bexhillmuseum.org.uk'];
+	const iframeAccess = ['//www.discoverbexhill.com', '//bexhillheritage.com', '//www.bexhillmuseum.org.uk'];
 	if (!noIframe && iframeAccess.findIndex(x => x === event.origin.split(':')[1]) >= 0) {
 		clear_map('markers');
 		switchTab('none', '', event.data);

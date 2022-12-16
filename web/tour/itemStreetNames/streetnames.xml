@@ -10,6 +10,7 @@
 	<url>https://bexhill-osm.org.uk/streetnames</url>
 </info>
 <streetNames>
+	<!-- A -->
 	<street>
 		<name>Abbey View</name>
 		<date>1955</date>
@@ -141,6 +142,7 @@
 		<date>2013</date>
 		<desc>John Lambert Walker moved to Bexhill in 1875 and lived on the Woodsgate estate. He was by then a retired merchant who had travelled widely and had interests, amongst others, in Australia and New Zealand. He was the owner of a large house called Auckland House at the junction of Wrestwood Road and Ninfield Road opposite the former Pelham Hotel. The original Auckland House was built around 1912 and demolished in the 1970s to be replaced by a second development of the same name. This second development was demolished in 2012 to be replaced by third development which includes both Wellington House and Darwin House. Wellington is the capital of New Zealand and Auckland is an important city in its north island. Darwin is in the Northern Territory of Australia. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
+	<!-- B -->
 	<street>
 		<name>Badgers Mount</name>
 		<date>after 1974 but before 1983</date>
@@ -510,6 +512,7 @@
 		<desc>Small village in West Sussex, 1 mile south-east of Petworth. (Adopted by East Sussex County Council, 23rd February 1988).</desc>
 		<adopted>1988-02-23</adopted>
 	</street>
+	<!-- C -->
 	<street>
 		<name>Calgary Road</name>
 		<date>1950</date>
@@ -1040,6 +1043,12 @@
 		<desc>Alderman William Nicholson Cuthbert, JP was Bexhill Borough Mayor, 1936 to 1942. He received the Freedom of the Borough in 1943. (Paton Road is nearby). (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
 		<adopted>1956</adopted>
 	</street>
+	<!-- D -->
+	<street>
+		<name>Daffodil Way</name>
+		<date>2022</date>
+		<desc>Daffodil is the common name of a species of flowering plants belonging to the Amaryllidaceae family. (Bluebell Close, Buttercup Close, Clover Way, Daisy Way, Foxglove Avenue, Snowdrop Way, Tulip Way and Orchid Way are nearby).</desc>
+	</street>
 	<street>
 		<name>Daisy Way</name>
 		<date>2020</date>
@@ -1227,6 +1236,7 @@
 		<desc>An important local farming family during the 1800s. Thomas, Walter and William Duke owned and managed a number of farms around Bexhill including Birchington and Preston Farms. (Adopted by Borough of Bexhill 30th April 1973).</desc>
 		<adopted>1973-04-30</adopted>
 	</street>
+	<!-- E -->
 	<street>
 		<name>East Parade</name>
 		<date>1883</date>
@@ -1345,6 +1355,7 @@
 		<desc>This was one of the original roads on the Woodsgate Park Estate. The street directories list the road for over fifteen years but without indicating its exact location. No map has yet been seen with this road marked on it.</desc>
 		<class>superseded</class>
 	</street>
+	<!-- F -->
 	<street>
 		<name>Fairfield Chase</name>
 		<date>after 1974 but before 1995</date>
@@ -1441,6 +1452,11 @@
 		<desc>Village in East Sussex, 5 miles south of Tunbridge Wells. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
 	<street>
+		<name>Freshfields</name>
+		<date>1989</date>
+		<desc>Probably an attempt to project a positive public image to a road leading to Pebsham Landfill and Waste Water sites. (This road had not been adopted by East Sussex County Council).</desc>
+	</street>
+	<street>
 		<name>Freezeland Lane</name>
 		<date>road ~1841; name c1930</date>
 		<desc>Old parish lane which in 1797 was described as Shortwood Lane leading from Friesland to Cobshill. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. Freezeland Farm is close to the junction of this lane with Ninfield Road. (Taken over as a Public Highway by the Local Board of Bexhill in 1884).</desc>
@@ -1455,6 +1471,7 @@
 		<date>1971</date>
 		<desc>Hamlet in West Sussex, 6 miles west of Midhurst. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
 	</street>
+	<!-- G -->
 	<street>
 		<name>Gainsborough Road</name>
 		<date>after 1974 but before 1997</date>
@@ -1651,6 +1668,7 @@
 		<date>1967</date>
 		<desc>Family forename of one of the developers surnames, Davey-Casselden Limited. (Allen Way, Amanda Close, Angela Close, Christine Close, Diana Close, Ian Close and Lesley Close are nearby). (Adopted by Borough of Bexhill 7th February 1972).</desc>
 	</street>
+	<!-- H -->
 	<street>
 		<name>Haddocks Hill</name>
 		<date>road before 1841; name 1881 to 1936</date>
@@ -1865,6 +1883,7 @@
 		<date>after 1974 but before 1998</date>
 		<desc>High Hurstwood is a village in East Sussex, 3 miles north-east of Uckfield. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
+	<!-- I -->
 	<street>
 		<name>Ian Close</name>
 		<date>1968</date>
@@ -1881,6 +1900,7 @@
 		<date>1949</date>
 		<desc>Built on the site of Ingrams Farm which was originally part of the Manor of Ninfield. The name is derived from Robert and Andrew Ingeram as the first holders of land in Ninfield at the end of 13th century. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
 	</street>
+	<!-- J -->
 	<street>
 		<name>Jacobs Acre</name>
 		<date>after 1974 but before 1998</date>
@@ -1921,6 +1941,7 @@
 		<date>1952</date>
 		<desc>Built at the time of the Golden Jubilee of the Charter of Incorporation of the Borough of Bexhill (1902 to 1952). It is thought that the original name proposed for this road was Charter Grove. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1966).</desc>
 	</street>
+	<!-- K -->
 	<street>
 		<name>Kennedy Road</name>
 		<date>1968</date>
@@ -2001,6 +2022,7 @@
 		<date>1896</date>
 		<desc>Small village in Kent on the eastern edge of Sevenoaks. Knole is the ancestral home of the Sackville family. The Estate was given by Queen Elizabeth I to Sir Thomas Sackville in 1566. (Adopted by Borough of Bexhill 29th January 1912).</desc>
 	</street>
+	<!-- L -->
 	<street>
 		<name>Laburnum Gardens</name>
 		<date>1958</date>
@@ -2158,6 +2180,7 @@
 		<date>1972</date>
 		<desc>A lychgate is a roofed churchyard gate. This close is adjacent to St Peter's Church, Bexhill Old Town. (Church Vale Road, Rectory Way and St Peter's Crescent are nearby). (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
 	</street>
+	<!-- M -->
 	<street>
 		<name>Maberley Road</name>
 		<date>1899</date>
@@ -2388,6 +2411,7 @@
 		<date>after 1974 but before 1995</date>
 		<desc>Mulberries are deciduous trees belonging to the Morus genus. (Aspen Way and Spindlewood Drive are nearby). (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
+	<!-- N -->
 	<street>
 		<name>Nazareth Close</name>
 		<date>2007</date>
@@ -2455,6 +2479,7 @@
 		<desc>A former medieval farming village from 1229 to 1515, it stood on the northern part of Hooe Level between Norman's Bay and the higher ground of Barnhorn. Northeye became abandoned when a storm destroyed the villages' crops. Only the buried foundations of The Chapel of St James remain. A related Southeye can be seen close by, now called Rockhouse Bank.</desc>
 		<class>superseded</class>
 	</street>
+	<!-- O -->
 	<street>
 		<name>Oak Road</name>
 		<date>c1996</date>
@@ -2516,6 +2541,11 @@
 		<desc>An Ordinance Survey map of 1909 shows a large house called The Firs whose grounds included a designated area of trees, maybe an orchard. It is through this area of trees that the road has been built. (Adopted by Borough of Bexhill 28th March 1938).</desc>
 	</street>
 	<street>
+		<name>Orchid Way</name>
+		<date>2022</date>
+		<desc>Orchid is the common name of a species of flowering plants belonging to the Orchidaceae family. (Bluebell Close, Buttercup Close, Clover Way, Daisy Way, Daffodil Way, Foxglove Avenue, and Snowdrop Way, Tulip Way are nearby).</desc>
+	</street>
+	<street>
 		<name>Osbern Close</name>
 		<date>c1985</date>
 		<desc>Bishop Osbern of Exeter (1072 to 1103), is mentioned in Domesday Book as holding land in Bexhill from the Count Robert of Eu. (Adopted by East Sussex County Council on an unknown date).</desc>
@@ -2525,6 +2555,7 @@
 		<date>road before 1841; name 1928</date>
 		<desc>The names Kiln Bank and Over Kiln Bank appear to be interchangeable in early street directories. This section of road from present-day Little Common roundabout to the crossroad with Turkey Road and Whydown Road is now known as Peartree Lane. Kiln Bank Cottage still stands at the corner of Ocklynge Close and Peartree Lane. The crossroad between Peartree Lane, Turkey Road and Whydown Road in some early street directories is called "Four Turnings". The outline of the road can be seen on an Ordnance Survey map 1795 to 1825.</desc>
 	</street>
+	<!-- P -->
 	<street>
 		<name>Paddock Close</name>
 		<date>1970</date>
@@ -2748,11 +2779,13 @@
 		<date>1952</date>
 		<desc>William Putland was a miller who died in 1781 and his windmill was close to this area. Putlands Mill was one of the names on a list of Sidley windmills published in a Sussex magazine in the 1930s which were later used to name various roads. These are the nearby Blackmill Close, Mount Idol View and Pankhurst Close and Rise. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
 	</street>
+	<!-- Q -->
 	<street>
 		<name>Quebec Close</name>
 		<date>1964</date>
 		<desc>In 1910 a house called West Down was built near here. A new owner renamed it Quebec House in the early 1950s but it became vacant in the early 1960s and was then demolished. The close was built in the grounds of this former house. (Adopted by Borough of Bexhill 14th December 1970).</desc>
 	</street>
+	<!-- R -->
 	<street>
 		<name>Rafati Way</name>
 		<date>c2004</date>
@@ -2895,6 +2928,12 @@
 		<date>c1850 to c1880</date>
 		<desc>The road between Buckhurst Place and the crossroads with King Offa Way was originally known as Russells Lane. It was later recorded as Station Roads {1} and {2} and then Lower Station Road before becoming part of present-day London Road. The Russell family were long-established farmers around Bexhill by the 19th century.</desc>
 		<class>superseded</class>
+	</street>
+	<!-- S -->
+	<street>
+		<name>Sackville Mews</name>
+		<date>1970</date>
+		<desc>Herbrand de Sauqueville was a follower of William the Conqueror who came to Sussex in 1068. The Sackville family have been Lords of the Manor of Bexhill since 1570 when it was granted to Thomas Sackville by Queen Elizabeth I.</desc>
 	</street>
 	<street>
 		<name>Sackville Road North</name>
@@ -3287,6 +3326,11 @@
 		<desc>Councillor Allan Sidney John Stevens was Bexhill Borough Mayor (1964 to 1965) and Town Mayor of Bexhill (1984 to 1985). (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
 	<street>
+		<name>Stowe Drive</name>
+		<date>2022</date>
+		<desc>Stowe Corner is turn fifteen at Silverstone racing circuit, Northamptonshire. It takes its name from from a nearby landmark: Stowe School, which lies just south of the circuit.</desc>
+	</street>
+	<street>
 		<name>Suffolk Road</name>
 		<date>1899</date>
 		<desc>English county in East Anglia. (Norfolk Close, and previously Norfolk Road, is nearby). (Adopted by Borough of Bexhill 23rd December 1907).</desc>
@@ -3331,6 +3375,7 @@
 		<date>c2010</date>
 		<desc>Sycamore trees belong to the genus Acer. They have a number of common names including fake plane-trees, mock-plane and Scottish or Celtic maple. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
+	<!-- T -->
 	<street>
 		<name>Tamarisk Gardens</name>
 		<date>2007</date>
@@ -3389,8 +3434,8 @@
 	</street>
 	<street>
 		<name>The Covert</name>
-		<date>after 1974 but before 1993</date>
-		<desc>Covert means hidden or secret and this street could be considered to be hidden away. (Adopted by East Sussex County Council, 1st April 1993).</desc>
+		<date>after 1987 but before 1993</date>
+		<desc>Covert means hidden or secret and this street could be considered to be hidden away. This land was once the location of Caledonia School for Girls (1913-1937), which became Portsdown Lodge School (1937-1964). (Adopted by East Sussex County Council, 1st April 1993).</desc>
 	</street>
 	<street>
 		<name>The Down</name>
@@ -3554,6 +3599,7 @@
 		<date>after 1974 but before 1996</date>
 		<desc>William Tyndale (c1494 to 1536) was the first to translate considerable parts of the Bible into English. The land here was previously owned by The British and Foreign Bible Society. (Coverdale Avenue is nearby). (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
+	<!-- U -->
 	<street>
 		<name>Uplands Close</name>
 		<date>1954</date>
@@ -3576,6 +3622,7 @@
 		<desc>Previously known as Station Road {1} this road from Sea Road to Buckhurst Place then became Upper Station Road. It is now known as Station Road {3}. (Please see also Lower Station Road and Station Roads {1} {2} {3}).</desc>
 		<class>superseded</class>
 	</street>
+	<!-- V -->
 	<street>
 		<name>Venture Close</name>
 		<date>c1975</date>
@@ -3602,6 +3649,7 @@
 		<date>1986</date>
 		<desc>To be found near the centre of Little Common village. Originally a mews was a street or yard of stables often converted into dwelling-houses or garages. The name is often used now for a small modern development of houses either as a terrace or around a court-yard. There was formerly a forge and smithy in this area hence its previous association with horses. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
+	<!-- W -->
 	<street>
 		<name>Wainwright Road</name>
 		<date>after 1974 but before 1998</date>
@@ -3916,6 +3964,7 @@
 		<date>1939</date>
 		<desc>Wych means a tree with pliant branches such as the rowan. The word is also linked to wych-alder or witch-hazel as well as wych-elm. This development is built on woodland surrounding a large property and grounds called Wrest Wood, the former home of the British diplomat, Sir Edward Malet (1837 to 1908). St Mary's School and College is now on the Wrest Wood site. (The Briary and The Glades are nearby). (Adopted by Borough of Bexhill, 1st part 27th March 1957, 2nd part 1st January 1958 and last part 27th September 1971).</desc>
 	</street>
+	<!-- Y -->
 	<street>
 		<name>York Road</name>
 		<date>1937</date>
@@ -3936,7 +3985,7 @@
 	</newstreet>
 	<newstreet>
 		<name>Barnfield Close</name>
-		<date></date>
+		<date>2022</date>
 		<desc></desc>
 	</newstreet>
 	<newstreet>
@@ -3965,11 +4014,6 @@
 		<desc></desc>
 	</newstreet>
 	<newstreet>
-		<name>Daffodil Way</name>
-		<date></date>
-		<desc>Daffodil is the common name of a species of flowering plants belonging to the Amaryllidaceae family. (Bluebell Close, Buttercup Close, Clover Way, Daisy Way, Foxglove Avenue, Snowdrop Way, Tulip Way and Orchid Way are nearby).</desc>
-	</newstreet>
-	<newstreet>
 		<name>Filsham Lane</name>
 		<date>early 1940s</date>
 		<desc></desc>
@@ -3977,11 +4021,6 @@
 	<newstreet>
 		<name>Foxley Drive</name>
 		<date>2015</date>
-		<desc></desc>
-	</newstreet>
-	<newstreet>
-		<name>Freshfields</name>
-		<date></date>
 		<desc></desc>
 	</newstreet>
 	<newstreet>
@@ -4001,7 +4040,7 @@
 	</newstreet>
 	<newstreet>
 		<name>Millers Corner</name>
-		<date></date>
+		<date>2022</date>
 		<desc></desc>
 	</newstreet>
 	<newstreet>
@@ -4015,24 +4054,9 @@
 		<desc></desc>
 	</newstreet>
 	<newstreet>
-		<name>Orchid Way</name>
-		<date></date>
-		<desc>Orchid is the common name of a species of flowering plants belonging to the Orchidaceae family. (Bluebell Close, Buttercup Close, Clover Way, Daisy Way, Daffodil Way, Foxglove Avenue, and Snowdrop Way, Tulip Way are nearby).</desc>
-	</newstreet>
-	<newstreet>
 		<name>Pelton Close</name>
 		<date>2019</date>
 		<desc></desc>
-	</newstreet>
-	<newstreet>
-		<name>Sackville Mews</name>
-		<date></date>
-		<desc>Herbrand de Sauqueville was a follower of William the Conqueror who came to Sussex in 1068. The Sackville family have been Lords of the Manor of Bexhill since 1570 when it was granted to Thomas Sackville by Queen Elizabeth I. </desc>
-	</newstreet>
-	<newstreet>
-		<name>Stowe Drive</name>
-		<date></date>
-		<desc>Stowe Corner is turn fifteen at Silverstone racing circuit, Northamptonshire. It takes its name from from a nearby landmark: Stowe School, which lies just south of the circuit.</desc>
 	</newstreet>
 	<newstreet>
 		<name>Veness Gap</name>

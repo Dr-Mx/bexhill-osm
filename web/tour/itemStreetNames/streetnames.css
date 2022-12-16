@@ -139,18 +139,21 @@ ul {
 	text-align: center;
 	color: var(--main-color);
 	font-weight: bold;
-	margin-top: 0;
 }
 #street-index {
 	margin-bottom: 20px;
 	text-align: center;
 	font-size: 14pt;
 	font-weight: bold;
-	color: #aaaaaa;
 }
 #street-index a {
-	padding: 5px 0.95%;
+	padding: 0 1.1%;
 	display: inline-block;
+	border-left: 2px solid #aaaaaa;
+	margin: 5px 0;
+}
+#street-index a:first-child {
+	border: none;
 }
 #street-filter {
 	position: relative;
@@ -195,10 +198,14 @@ ul {
 }
 .street {
 	line-height: 1.3;
-	margin-bottom: 20px;
+	padding-top: 20px;
+	margin: 0;
+}
+.street:first-child {
+	padding: 0;
 }
 .superseded {
-	opacity: 0.75;
+	opacity: 0.5;
 }
 @media (min-width: 900px) {
 	html.darkMode {
@@ -215,8 +222,8 @@ html.darkMode body {
 html.darkMode #btnTheme svg path {
 	fill: #000000;
 }
-html.darkMode #street-index {
-	color: #777777;
+html.darkMode #street-index a {
+	border-color: #777777;
 }
 html.darkMode #street-filter-in {
 	border-color: #777777;

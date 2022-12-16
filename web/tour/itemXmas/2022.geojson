@@ -5,7 +5,10 @@
 			"properties": {
 				"id": "ageuk",
 				"name": "Age UK",
-				"link": "https://www.ageuk.org.uk/eastsussex/shops/bexhill-on-sea-shop"
+				"link": "https://www.ageuk.org.uk/eastsussex/shops/bexhill-on-sea-shop",
+				"img": {
+					"0": "itemXmas/2022/ageuk(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -16,7 +19,10 @@
 			"properties": {
 				"id": "aspens",
 				"name": "Aspens",
-				"link": "https://www.aspens.org.uk"
+				"link": "https://www.aspens.org.uk",
+				"img": {
+					"0": "itemXmas/2022/aspens(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -25,9 +31,25 @@
 		}, {
 			"type": "Feature",
 			"properties": {
+				"id": "bexemporium",
+				"name": "Bexhill Emporium",
+				"img": {
+					"0": "itemXmas/2022/bexemporium(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47209, 50.84012]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
 				"id": "bycc",
 				"name": "Bexhill Youth and Community Centre",
-				"link": "https://www.bexhillyouthandcommunitycentre.co.uk"
+				"link": "https://www.bexhillyouthandcommunitycentre.co.uk",
+				"img": {
+					"0": "itemXmas/2022/bycc(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -38,7 +60,10 @@
 			"properties": {
 				"id": "birkdale",
 				"name": "Birkdale Nursery",
-				"link": "http://www.birkdalenursery.co.uk"
+				"link": "https://www.birkdalenursery.co.uk",
+				"img": {
+					"0": "itemXmas/2022/birkdale(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -49,7 +74,10 @@
 			"properties": {
 				"id": "britheart",
 				"name": "British Heart Foundation",
-				"link": "https://www.bhf.org.uk/what-we-do/find-bhf-near-you/bexhill-on-sea-bhf-shop"
+				"link": "https://www.bhf.org.uk/what-we-do/find-bhf-near-you/bexhill-on-sea-bhf-shop",
+				"img": {
+					"0": "itemXmas/2022/britheart(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -58,9 +86,12 @@
 		}, {
 			"type": "Feature",
 			"properties": {
-				"id": "caringcommunity",
+				"id": "bcc",
 				"name": "Bexhill Caring Community",
-				"link": "http://www.bexhillcaringcommunity.org"
+				"link": "https://www.bexhillcaringcommunity.org",
+				"img": {
+					"0": "itemXmas/2022/bcc(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -71,7 +102,10 @@
 			"properties": {
 				"id": "ecohub",
 				"name": "Eco Hub",
-				"link": "https://www.communitysupporters.org.uk"
+				"link": "https://www.communitysupporters.org.uk",
+				"img": {
+					"0": "itemXmas/2022/ecohub(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -80,9 +114,26 @@
 		}, {
 			"type": "Feature",
 			"properties": {
+				"id": "ehwarford",
+				"name": "E.H. Warford",
+				"link": "http://www.eh-warford.co.uk",
+				"img": {
+					"0": "itemXmas/2022/ehwarford(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47416, 50.83808]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
 				"id": "esspa",
 				"name": "ESSPA",
-				"link": "https://esspa.co.uk"
+				"link": "https://esspa.co.uk",
+				"img": {
+					"0": "itemXmas/2022/esspa(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -93,7 +144,12 @@
 			"properties": {
 				"id": "font",
 				"name": "Font",
-				"link": "01424 218420"
+				"link": "01424 218420",
+				"img": {
+					"0": "itemXmas/2022/font(0)",
+					"1": "itemXmas/2022/font(1)"
+				},
+				"winner": 1
 			},
 			"geometry": {
 				"type": "Point",
@@ -104,7 +160,10 @@
 			"properties": {
 				"id": "gblackman",
 				"name": "George Blackman Business Equipment",
-				"link": "http://www.georgeblackman.co.uk"
+				"link": "http://www.georgeblackman.co.uk",
+				"img": {
+					"0": "itemXmas/2022/gblackman(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -113,31 +172,40 @@
 		}, {
 			"type": "Feature",
 			"properties": {
-				"id": "loveria",
-				"name": "Love Ria",
-				"link": "https://www.facebook.com/LoveRiaxx"
+				"id": "greenelliott",
+				"name": "Green & Elliott Optometrists",
+				"link": "http://www.greenandelliott.co.uk/",
+				"img": {
+					"0": "itemXmas/2022/greenelliott(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.47169, 50.84040]
+				"coordinates": [0.46975, 50.83913]
 			}
 		}, {
 			"type": "Feature",
 			"properties": {
-				"id": "luxlocks",
-				"name": "Lux Locks",
-				"link": "https://www.facebook.com/luxlocksbyedie"
+				"id": "jfs",
+				"name": "JFS Properites",
+				"link": "https://jfsproperties.co",
+				"img": {
+					"0": "itemXmas/2022/jfs(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.47302, 50.84020]
+				"coordinates": [0.46977, 50.84086]
 			}
 		}, {
 			"type": "Feature",
 			"properties": {
 				"id": "kadampa",
 				"name": "Maitreya Kadampa Buddhist Centre",
-				"link": "http://meditateinsussex.org"
+				"link": "https://meditateinsussex.org",
+				"img": {
+					"0": "itemXmas/2022/kadampa(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -148,7 +216,10 @@
 			"properties": {
 				"id": "kerrys",
 				"name": "Kerry's Café Bar",
-				"link": "01424 216973"
+				"link": "01424 216973",
+				"img": {
+					"0": "itemXmas/2022/kerrys(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -157,9 +228,54 @@
 		}, {
 			"type": "Feature",
 			"properties": {
+				"id": "loveria",
+				"name": "Love Ria",
+				"link": "https://www.facebook.com/LoveRiaxx",
+				"img": {
+					"0": "itemXmas/2022/loveria(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47169, 50.84040]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "luxlocks",
+				"name": "Lux Locks",
+				"link": "https://www.facebook.com/luxlocksbyedie",
+				"img": {
+					"0": "itemXmas/2022/luxlocks(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47302, 50.84020]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "lamaison",
+				"name": "La Maison",
+				"link": "https://bexhillgiftshop.com",
+				"img": {
+					"0": "itemXmas/2022/lamaison(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47249, 50.84016]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
 				"id": "madfish",
 				"name": "Madfish Performing Arts",
-				"link": "https://www.madfishstageschoolsussex.com/"
+				"link": "https://www.madfishstageschoolsussex.com",
+				"img": {
+					"0": "itemXmas/2022/madfish(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -170,7 +286,10 @@
 			"properties": {
 				"id": "makersloft",
 				"name": "Maker's Loft",
-				"link": "https://www.facebook.com/themakersloft"
+				"link": "https://www.facebook.com/themakersloft",
+				"img": {
+					"0": "itemXmas/2022/makersloft(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -181,18 +300,24 @@
 			"properties": {
 				"id": "maltbys",
 				"name": "Maltbys",
-				"link": "https://www.maltbys.uk"
+				"link": "https://www.maltbys.uk",
+				"img": {
+					"0": "itemXmas/2022/maltbys(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.47693, 50.83972]
+				"coordinates": [0.47249, 50.83963]
 			}
 		}, {
 			"type": "Feature",
 			"properties": {
-				"id": "mandystoys",
+				"id": "mandys",
 				"name": "Mandy's Pocket Money Toys & Sweets",
-				"link": "https://www.facebook.com/groups/1864557457132238"
+				"link": "https://www.facebook.com/groups/1864557457132238",
+				"img": {
+					"0": "itemXmas/2022/mandys(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -203,7 +328,10 @@
 			"properties": {
 				"id": "maybugs",
 				"name": "Maybugs",
-				"link": "https://maybugs.co.uk"
+				"link": "https://maybugs.co.uk",
+				"img": {
+					"0": "itemXmas/2022/maybugs(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -212,9 +340,27 @@
 		}, {
 			"type": "Feature",
 			"properties": {
+				"id": "mind",
+				"name": "Mind",
+				"link": "https://www.mind.org.uk/",
+				"img": {
+					"0": "itemXmas/2022/mind(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47419, 50.83799]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
 				"id": "mummery",
 				"name": "Mummery Funeralcare",
-				"link": "http://www.mummeryfunerals.co.uk"
+				"link": "https://www.coop.co.uk/funeralcare/funeral-directors/bexhill-on-sea/TN40-1AH/mummery-funeralcare/29-31-devonshire-road",
+				"img": {
+					"0": "itemXmas/2022/mummery(0)"
+				},
+				"winner": 4
 			},
 			"geometry": {
 				"type": "Point",
@@ -223,9 +369,54 @@
 		}, {
 			"type": "Feature",
 			"properties": {
+				"id": "naturallycrafted",
+				"name": "Naturally Crafted",
+				"link": "https://www.facebook.com/100087161167873",
+				"img": {
+					"0": "itemXmas/2022/naturallycrafted(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.471699, 50.840367]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "number10",
+				"name": "Number10",
+				"link": "01424 211498",
+				"img": {
+					"0": "itemXmas/2022/number10(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47530, 50.84066]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "picturecrafts",
+				"name": "Picture Crafts",
+				"link": "http://www.picturecrafts.co.uk",
+				"img": {
+					"0": "itemXmas/2022/picturecrafts(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47025, 50.84009]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
 				"id": "rspca",
 				"name": "RSPCA",
-				"link": "https://www.bluebellridge.org"
+				"link": "https://www.bluebellridge.org",
+				"img": {
+					"0": "itemXmas/2022/rspca(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -236,7 +427,12 @@
 			"properties": {
 				"id": "scope",
 				"name": "Scope",
-				"link": "https://www.scope.org.uk"
+				"link": "https://www.scope.org.uk",
+				"img": {
+					"0": "itemXmas/2022/scope(0)",
+					"1": "itemXmas/2022/scope(1)"
+				},
+				"winner": 3
 			},
 			"geometry": {
 				"type": "Point",
@@ -247,7 +443,12 @@
 			"properties": {
 				"id": "saralee1",
 				"name": "The Sara Lee Trust, Western Rd",
-				"link": "https://www.saraleetrustretail.org/shop"
+				"link": "https://www.saraleetrustretail.org/shop",
+				"img": {
+					"0": "itemXmas/2022/saralee1(0)",
+					"1": "itemXmas/2022/saralee1(1)"
+				},
+				"winner": 4
 			},
 			"geometry": {
 				"type": "Point",
@@ -258,7 +459,10 @@
 			"properties": {
 				"id": "saralee2",
 				"name": "The Sara Lee Trust, Endwell Rd",
-				"link": "https://www.saraleetrustretail.org/shop"
+				"link": "https://www.saraleetrustretail.org/shop",
+				"img": {
+					"0": "itemXmas/2022/saralee2(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -267,9 +471,12 @@
 		}, {
 			"type": "Feature",
 			"properties": {
-				"id": "sbsconsumables",
+				"id": "sbs",
 				"name": "SBS Consumables",
-				"link": "https://www.facebook.com/sbsconsumables"
+				"link": "https://www.facebook.com/sbsconsumables",
+				"img": {
+					"0": "itemXmas/2022/sbs(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -280,7 +487,10 @@
 			"properties": {
 				"id": "starlings",
 				"name": "Starlings",
-				"link": "https://www.starlingsgifts.co.uk"
+				"link": "https://www.starlingsgifts.co.uk",
+				"img": {
+					"0": "itemXmas/2022/starlings(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -291,7 +501,10 @@
 			"properties": {
 				"id": "strive",
 				"name": "Strive Cafe",
-				"link": "https://www.strivecafe.org"
+				"link": "https://www.strivecafe.org",
+				"img": {
+					"0": "itemXmas/2022/strive(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -302,7 +515,11 @@
 			"properties": {
 				"id": "sweetsonsea",
 				"name": "Sweets On-Sea",
-				"link": "https://www.facebook.com/sweetsonsea"
+				"link": "https://www.facebook.com/sweetsonsea",
+				"img": {
+					"0": "itemXmas/2022/sweetsonsea(0)",
+					"1": "itemXmas/2022/sweetsonsea(1)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -313,7 +530,10 @@
 			"properties": {
 				"id": "towntaxis",
 				"name": "Town Taxis",
-				"link": "https://www.towntaxis.co.uk"
+				"link": "https://www.towntaxis.co.uk",
+				"img": {
+					"0": "itemXmas/2022/towntaxis(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -324,7 +544,12 @@
 			"properties": {
 				"id": "vintage",
 				"name": "Vintage At 25",
-				"link": "07977 754371"
+				"link": "07977 754371",
+				"img": {
+					"0": "itemXmas/2022/vintage(0)",
+					"1": "itemXmas/2022/vintage(1)"
+				},
+				"winner": 2
 			},
 			"geometry": {
 				"type": "Point",
@@ -335,7 +560,11 @@
 			"properties": {
 				"id": "wards",
 				"name": "Wards",
-				"link": "https://wardsgroup.co.uk"
+				"link": "https://wardsgroup.co.uk",
+				"img": {
+					"0": "itemXmas/2022/wards(0)"
+				},
+				"winner": 4
 			},
 			"geometry": {
 				"type": "Point",
@@ -346,7 +575,10 @@
 			"properties": {
 				"id": "wuth",
 				"name": "Warming Up The Homeless",
-				"link": "https://wuth.org"
+				"link": "https://wuth.org",
+				"img": {
+					"0": "itemXmas/2022/wuth(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -357,7 +589,10 @@
 			"properties": {
 				"id": "wickhambistro",
 				"name": "Wickham Bistro",
-				"link": "http://www.wickhambistro.com"
+				"link": "https://www.wickhambistro.com",
+				"img": {
+					"0": "itemXmas/2022/wickhambistro(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",

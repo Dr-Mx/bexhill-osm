@@ -1,6 +1,6 @@
 // query overpass server - based on https://github.com/kartenkarsten/leaflet-layer-overpass
 
-var eleCache = [], queryBbox = '';
+let eleCache = [], queryBbox = '';
 function show_overpass_layer(query, cacheId, bound, forceBbox) {
 	if (!query || query === '();') return;
 	else {
@@ -22,7 +22,7 @@ function show_overpass_layer(query, cacheId, bound, forceBbox) {
 		queryBbox += ';(' + query + ');';
 		$('#btnExportQuery').prop('disabled', false);
 	}
-	var opl = new L.OverPassLayer({
+	const opl = new L.OverPassLayer({
 		debug: $('#inputDebug').is(':checked'),
 		query: queryBbox + 'out geom qt ' + maxOpResults + ';',
 		endpoint: 'https://' + $('#inputOpServer').val() + '/api/interpreter',
@@ -46,9 +46,9 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		this._ids = {};
 	},
 	onMoveEnd: function() {
-		var url = this.options.endpoint + '?data=' + this.options.query + '&contact=' + email;
-		var self = this;
-		var reference = { instance: self };
+		const url = this.options.endpoint + '?data=' + this.options.query + '&contact=' + email;
+		const self = this;
+		const reference = { instance: self };
 		if (self.options.debug) console.debug('Overpass query:', encodeURI(url));
 		// check if cached in variable
 		if (eleCache[self.options.cacheId] && !$('#inputAttic').val() && $('#inputOpCache').val() > 0) {
@@ -74,7 +74,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						'circle-info',
 						'No places found',
 						'Please try another area or query.' +
-						($('#inputAttic').val() && !$('#inputBbox').is(':checked') ? '<br/>When using attic data, try "Use bbox instead of area" option.' : '')
+						($('#inputAttic').val() && !$('#inputBbox').is(':checked') ? '<br>When using attic data, try "Use bbox instead of area" option.' : '')
 					);
 					// if not in iframe, cache to local storage
 					if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {
@@ -87,7 +87,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			},
 			complete: function(e) {
 				if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
-					var erMsg = 'Something went wrong. Please try again later.';
+					let erMsg = 'Something went wrong. Please try again later.';
 					switch (e.status) {
 						case 0: /* fall through */
 						case 504:
@@ -99,7 +99,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 							}
 							// fallback to main overpass server if failed on alternative
 							if ($('#inputOpServer').val() !== $('#inputOpServer option').eq(0).val()) {
-								var that = this;
+								const that = this;
 								that.url = this.url.replace($('#inputOpServer').val(), $('#inputOpServer option').eq(0).val());
 								$.ajax(that);
 								$('#inputOpServer').prop('selectedIndex', 0);

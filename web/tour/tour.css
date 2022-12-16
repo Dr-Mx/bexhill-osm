@@ -113,12 +113,16 @@ figcaption {
 	-webkit-text-stroke: 2px black;
 	opacity: 0.75;
 }
+.comment {
+	opacity: 0.6;
+	font-style: italic;
+}
 
-.person > div {
+.inlineimg > div {
 	display: table;
 	width: 100%;
 }
-.person > div p {
+.inlineimg > div p {
 	margin-top: 0px;
 }
 .overlayLink > div {
@@ -170,6 +174,9 @@ figcaption {
 }
 .cam.link::before {
 	content: '\f030';
+}
+.url.link::before {
+	content: '\f35d';
 }
 .sm {
 	margin-top: 5px;
