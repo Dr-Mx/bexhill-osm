@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fbexhill-osm.org.uk)](https://bexhill-osm.org.uk)
 [![Twitter](https://img.shields.io/twitter/follow/BexhillOSM.svg?label=Twitter)](https://twitter.com/BexhillOSM)
-[![YouTube](https://img.shields.io/youtube/channel/subscribers/UCS3phqTevP6eHysdqvoU1_w?label=YouTube&style=plastic)](https://www.youtube.com/@bexhillosm)
+[![YouTube](https://img.shields.io/youtube/channel/subscribers/UCS3phqTevP6eHysdqvoU1_w?label=YouTube&style=flat)](https://www.youtube.com/@bexhillosm)
 
 Searchable OpenStreetMap data showing POIs, walking directions, overlays, history and other information for the town of Bexhill-on-Sea, UK
 
