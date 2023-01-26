@@ -1110,6 +1110,9 @@ input:indeterminate + .slider::before {
 #devTools > div p {
 	margin: 10px 0;
 }
+#devTools > div p:first-child {
+	margin-top: 0;
+}
 
 /* information tab */
 #info ul {
@@ -1127,17 +1130,23 @@ input:indeterminate + .slider::before {
 #myprofile {
 	display: inline-block;
 }
+#myprofile p {
+	margin-top: 0;
+}
 #myprofile img {
+	cursor: pointer;
+	width: 90px;
 	float: left;
 	margin-right: 10px;
 	border: 2px solid #cccccc;
-	border-radius: 100%;
+	border-radius: 100% 100% 10px 10px;
+	shape-outside: margin-box;
 }
 .mylinks {
-	line-height: 25px;
+	text-align: center;
 }
-.mylinks .fa-fw {
-	padding: 0 5px;
+.mylinks img {
+	border-radius: 10px;
 }
 #gotoprivacy .fa-border {
 	border: 1px solid #cccccc;

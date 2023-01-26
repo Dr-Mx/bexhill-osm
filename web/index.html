@@ -38,8 +38,8 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=7.4.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.4.0" disabled id="darkcss">
+	<link rel="stylesheet" href="assets/css/site.css?v=7.5.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.5.0" disabled id="darkcss">
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -220,6 +220,7 @@
 						</select><label for="inputTheme">Appearance</label></p>
 						<p class="setLabel switch" title="Switch between mi/ft (default) or km/m"><input id="inputUnit" data-cache type="checkbox"><label for="inputUnit" class="slider"></label><label for="inputUnit">Metric for measurements</label></p>
 						<p class="setLabel switch" title="Use Mapillary instead of Google where possible"><input id="inputStView" data-cache type="checkbox"><label for="inputStView" class="slider"></label><label for="inputStView">Mapillary street-level imagery</label></p>
+						<p class="setLabel switch" title="Zoom to History Tour overlays on load"><input id="inputAutoZoom" data-cache type="checkbox" checked><label for="inputAutoZoom" class="slider"></label><label for="inputAutoZoom">Auto-zoom History Tour overlays</label></p>
 						<p class="setLabel" title="Clears local stored data"><button id="btnReset" type="button"><i class="fa-solid fa-rotate-left"></i></button><label for="btnReset">Reset to defaults</label></p>
 					</div>
 					<div id="devTools">
@@ -274,23 +275,21 @@
 					<div id="gotoabout"><hr>
 					<h3>About &amp; Contact</h3>
 						<p>Bexhill-OSM is part of a community of mappers that want to create a free, editable map of the world. You can learn about the global project at the official <a href="https://www.openstreetmap.org/about" target="_blank" rel="noopener">OpenStreetMap website</a>.</p>
-						<p>Since 2006, this independent website has been continuously archiving Bexhill-on-Sea as it stands today; heralding history, community and business in an informative, accessible form.</p>
+						<p>Since 2016, this independent website has been continuously archiving Bexhill-on-Sea as it stands today; heralding history, community and business in an informative, accessible form.</p>
 						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we welcome listings on all publicly visitable places.</p>
-						<span id="myprofile"><img alt="Alexis Markwick" title="Alexis Markwick" src="assets/img/info-me.jpg">Web-development and the underlying map data is maintained by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</span>
-						<p>If you're involved with a local group, I'll be happy to come and speak at one of your events about the project and give demonstrations.</p>
+						<div id="myprofile">
+							<img alt="Alexis Markwick" title="Receiving the 'Freedom of Bexhill' award, May 2022." src="assets/img/info-me.jpg" onclick="popupWindow('youtube', 'xdhRKsva-Pg');">
+							<p>Web-development and the underlying map data is maintained by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</p>
+							If you're involved with a local group, I'll be happy to come and speak at one of your events about the project and give a demonstration.
+						</div>
 						<p class="mylinks">
-							<a href="#" onclick="this.href='mailto:' + email;" title="Email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><br>
-							<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter"><i style="color:#1da1f2;" class="fa-brands fa-twitter fa-fw fa-lg"></i>@BexhillOSM</a><br>
-							<a href="https://www.youtube.com/@bexhillosm" target="_blank" rel="noopener" title="YouTube"><i style="color:#ff0000;" class="fa-brands fa-youtube fa-fw fa-lg"></i>BexhillOSM</a><br>
-							<a href="https://osm.org/user/Bexhill-OSM" target="_blank" rel="noopener" title="OpenStreetMap"><i style="color:#6aa755;" class="fa-solid fa-map fa-fw fa-lg"></i>OpenStreetMap profile</a><br>
-							<a href="https://commons.wikimedia.org/wiki/Special:ListFiles?limit=100&user=Dr-Mx" target="_blank" rel="noopener" title="Wikimedia Commons"><i style="color:#01639a;" class="fa-solid fa-photo-film fa-fw fa-lg"></i>Wikimedia uploads</a><br>
-							<a href="https://archive.org/details/@dr-mx" target="_blank" rel="noopener" title="Internet Archive"><i style="color:var(--text-color);" class="fa-solid fa-building-columns fa-fw fa-lg"></i>Internet Archive uploads</a>
+							<a href="#" onclick="this.href='mailto:' + email;" title="Email"><img src="assets/img/info-email.svg"></a>
 						</p>
 					</div>
 					<div id="gotosoftware"><hr>
 					<h3>Software</h3>
-						<p>Bexhill-OSM is openly available under the GNU General Public License.</p>
-						<p class="mylinks"><a href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><i style="color:var(--text-color);" class="fa-brands fa-github fa-fw fa-lg"></i>Bexhill-OSM</a> &copy; Alexis Markwick</p>
+						<p>Bexhill-OpenStreetMap is open-source and freely available to use as you wish.</p>
+						<p class="mylinks"><a href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><img src="assets/img/info-github.svg"></a></p>
 						Thanks to these developers:
 						<ul>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
@@ -367,11 +366,11 @@
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=7.4.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=7.4.0"></script>
-	<script src="assets/js/tags-parsers.js?v=7.4.0"></script>
-	<script src="assets/js/pois-type.js?v=7.4.0"></script>
-	<script src="tour/tour.js?v=7.4.0"></script>
-	<script src="assets/js/site.js?v=7.4.0"></script>
+	<script src="assets/js/config.js?v=7.5.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=7.5.0"></script>
+	<script src="assets/js/tags-parsers.js?v=7.5.0"></script>
+	<script src="assets/js/pois-type.js?v=7.5.0"></script>
+	<script src="tour/tour.js?v=7.5.0"></script>
+	<script src="assets/js/site.js?v=7.5.0"></script>
  </body>
 </html>

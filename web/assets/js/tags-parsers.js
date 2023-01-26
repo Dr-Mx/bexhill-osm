@@ -252,12 +252,12 @@ function parse_tags(element, titlePopup, poiParser) {
 				dataType: 'xml',
 				cache: true,
 				success: function(xml) {
-					const street = $(xml).find('name').filter(function() { return ($(this).text() === tags.name || $(this).text() === tags.alt_name); }).closest('street');
+					const street = $(xml).find('name').filter(function() { return $(this).text() === tags.name; }).closest('street');
 					const streetDate = $('date', street).text();
 					const streetDesc = $('desc', street).text();
 					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { key: 'Start date', keyVal: streetDate, iconName: 'fa-solid fa-calendar' });
 					if (streetDesc) markerPopup += '<span class="popup-longDesc custscroll">' + L.Util.template(tagTmpl, { key: 'Etymology', keyVal: '<i>' + streetDesc + '</i>', iconName: 'fa-solid fa-book' }) + '</span>';
-					if (markerPopup) markerPopup += '<span class="popup-streetSource"><a onclick="popupWindow(\'streetBook\');" title="' + $(xml).find('url').text() + '">' + $(xml).find('title').text() + '</a></span>';
+					if (markerPopup) markerPopup += '<span class="popup-streetSource"><a onclick="popupWindow(\'streetbook\');" title="' + $(xml).find('url').text() + '">' + $(xml).find('title').text() + '</a></span>';
 					if ($('#inputDebug').is(':checked')) console.debug('Street-names:', xml);
 				},
 				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }

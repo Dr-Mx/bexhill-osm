@@ -1,7 +1,7 @@
 // query overpass server - based on https://github.com/kartenkarsten/leaflet-layer-overpass
 
 let eleCache = [], queryBbox = '';
-function show_overpass_layer(query, cacheId, bound, forceBbox) {
+function show_overpass_layer(query, cacheId, options) {
 	if (!query || query === '();') return;
 	else {
 		// show spinner, disable poi checkboxes
@@ -9,9 +9,9 @@ function show_overpass_layer(query, cacheId, bound, forceBbox) {
 		$('.poi-checkbox').addClass('poi-loading');
 		queryBbox = '[out:json]';
 		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
-		// select within area
-		if (bound)
-			if (osmRelation && !$('#inputBbox').is(':checked') && !forceBbox) {
+		// select within area, not needed for a single poi
+		if (options && options.bound)
+			if (osmRelation && !$('#inputBbox').is(':checked') && !options.forceBbox) {
 				queryBbox += ';rel(' + osmRelation + ');map_to_area->.a';
 				query = query.replace(/\[/g, '(area.a)[');
 			}
@@ -27,7 +27,8 @@ function show_overpass_layer(query, cacheId, bound, forceBbox) {
 		query: queryBbox + 'out geom qt ' + maxOpResults + ';',
 		endpoint: 'https://' + $('#inputOpServer').val() + '/api/interpreter',
 		callback: callback,
-		cacheId: cacheId ? 'OPL' + cacheId : ''
+		cacheId: cacheId ? 'OPL' + cacheId : '',
+		zoomTo: (options && options.zoomTo) || false
 	});
 	iconLayer.addLayer(opl);
 }
@@ -53,6 +54,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		// check if cached in variable
 		if (eleCache[self.options.cacheId] && !$('#inputAttic').val() && $('#inputOpCache').val() > 0) {
 			self.options.callback.call(reference, eleCache[self.options.cacheId]);
+			if (self.options.zoomTo) zoom_area();
 			if (self.options.debug) console.debug('Query received from eleCache.', self.options.cacheId);
 		}
 		// check if cached in localStorage and not expired
@@ -60,6 +62,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			(new Date(JSON.parse(window.localStorage[self.options.cacheId]).osm3s.timestamp_osm_base).getTime()+(parseInt($('#inputOpCache').val())*60*60*1000) > new Date().getTime())) {
 				eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
 				self.options.callback.call(reference, eleCache[self.options.cacheId]);
+				if (self.options.zoomTo) zoom_area();
 				if (self.options.debug) console.debug('Query received from localStorage.', self.options.cacheId);
 		}
 		// get from overpass
@@ -70,6 +73,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 			success: function(xml) {
 				if (xml.elements) {
 					self.options.callback.call(reference, xml);
+					if (self.options.zoomTo) zoom_area();
 					if (poiList.length === 0 && !rQuery) self.options.statusMsg(
 						'circle-info',
 						'No places found',

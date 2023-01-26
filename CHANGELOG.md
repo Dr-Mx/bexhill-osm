@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v7.5.0
+
+**Date:** 26/01/2023
+
+Site changes
+ - zoom_area function now pads for sidebar if open
+ - Add setting to bypass automatic zooming to tour overlay on load
+ - Change tour function to accept marker id as a parameter
+ - popupWindow function now accepts YouTube links
+ - Change show_overpass_layer function to pass settings as an object parameter
+ - Redesigned and updated streetnames book, js is now an external file
+ - Add meta badges for Info page
+ - Add Cronjob shell script
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.4.0
 
 **Date:** 16/12/2022

@@ -44,7 +44,7 @@
 				"id": "itsabet",
 				"name": "It's a Bet",
 				"date": "1935",
-				"description": "Galley Hill<br>In the background of this shot you can see Sackville Lodge, a prominent bungalow (demolished 1968). Also note the unpaved roads.",
+				"description": "Galley Hill<br>In the background of this shot you can see Sackville Lodge, a prominent bungalow (demolished 1968), back when the road was unpaved.",
 				"img": {
 					"0": "listFilm/img/itsabet(0)",
 					"1": "listFilm/img/itsabet(1)"
@@ -64,7 +64,7 @@
 				"id": "dblconfess1",
 				"name": "Double Confession",
 				"date": "1950",
-				"description": "De La Warr Pavilion<br>The internal shots may look like they filmed in the DLWP, however is actually a film set, notice the main staircase spirals up in the opposite direction.",
+				"description": "De La Warr Pavilion<br>The internal shots may look like they filmed in the DLWP, however is actually a film set - notice how the fictional staircase spirals up in the opposite direction.",
 				"img": {
 					"0": "listFilm/img/dblconfess(0)",
 					"1": "listFilm/img/dblconfess(1)"
@@ -104,7 +104,7 @@
 				"id": "quietwoman",
 				"name": "Quiet Woman",
 				"date": "1951",
-				"description": "Normans Bay<br>As well as the original frontage of the public house, the film includes scenes of the hamlet as a prominent fishing village.",
+				"description": "The Star Inn<br>A clear look at the frontage of the public house and Sluice Road. Filming was made in Rye for the harbour areas.",
 				"img": {
 					"0": "listFilm/img/quietwoman(0)",
 					"1": "listFilm/img/quietwoman(1)"
@@ -124,7 +124,7 @@
 				"id": "cadburys1",
 				"name": "Other Womens Lives: Talking Shop",
 				"date": "1953",
-				"description": "Sidley<br>Mrs Cowlard is shown cycling along Preston Road, towards her prefab at number 70 (a street directory confirms this the family's address).",
+				"description": "Sidley<br>Mrs Cowlard is shown cycling along Preston Road, towards her prefab at number 70 (a street directory confirms this the family's address). Today this would be houses numbered 28-29 (built in the early 60s).",
 				"img": {
 					"0": "listFilm/img/cadburys(0)",
 					"1": "listFilm/img/cadburys(1)"
@@ -144,7 +144,7 @@
 				"id": "cadburys2",
 				"name": "Other Womens Lives: Talking Shop",
 				"date": "1953",
-				"description": "Old Town<br>The High Street is shown and a pet shop located at what is now known as Trafalgar House. A later beach scene is possibly Cooden.",
+				"description": "Old Town<br>The High Street is shown and a pet shop occupies half of what is now Trafalgar House. A later beach scene is possibly around the Cooden area.",
 				"img": {
 					"0": "listFilm/img/cadburys(2)",
 					"1": "listFilm/img/cadburys(3)"
@@ -203,6 +203,24 @@
 		}, {
 			"type": "Feature",
 			"properties": {
+				"id": "setofsix",
+				"name": "A Set of Six",
+				"date": "1990",
+				"description": "18 Sackville Road<br>This was the location of the Bexhill-on-Sea Observer offices until July 2012. There are also various scenes of Bexhill's beach and promenade featured throughout the episode.",
+				"img": {
+					"0": "listFilm/img/setofsix(0)"
+				},
+				"imgattrib": {
+					"0": "1990 | &copy; Channel X"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46952, 50.83965]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
 				"id": "richardiii",
 				"name": "Richard III",
 				"date": "1995",
@@ -246,7 +264,7 @@
 				"id": "keane",
 				"name": "Keane: Sovereign Light Café",
 				"date": "2012",
-				"description": "West Parade<br>Mostly set on West Parade, there are some shots of East Parade with a nod to motor racing history and of course the Bathing Station appears on the album cover.",
+				"description": "West Parade<br>Although mostly set on West Parade, there are some shots of East Parade with a nod to motor racing history and of course the Bathing Station café appears on the album cover.",
 				"img": {
 					"0": "listFilm/img/keane(0)",
 					"1": "listFilm/img/keane(1)",

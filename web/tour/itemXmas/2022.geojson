@@ -35,7 +35,8 @@
 				"name": "Bexhill Emporium",
 				"img": {
 					"0": "itemXmas/2022/bexemporium(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -49,7 +50,8 @@
 				"link": "https://www.bexhillyouthandcommunitycentre.co.uk",
 				"img": {
 					"0": "itemXmas/2022/bycc(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -63,7 +65,8 @@
 				"link": "https://www.birkdalenursery.co.uk",
 				"img": {
 					"0": "itemXmas/2022/birkdale(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -77,7 +80,8 @@
 				"link": "https://www.bhf.org.uk/what-we-do/find-bhf-near-you/bexhill-on-sea-bhf-shop",
 				"img": {
 					"0": "itemXmas/2022/britheart(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -133,7 +137,8 @@
 				"link": "https://esspa.co.uk",
 				"img": {
 					"0": "itemXmas/2022/esspa(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -275,7 +280,8 @@
 				"link": "https://www.madfishstageschoolsussex.com",
 				"img": {
 					"0": "itemXmas/2022/madfish(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -289,7 +295,8 @@
 				"link": "https://www.facebook.com/themakersloft",
 				"img": {
 					"0": "itemXmas/2022/makersloft(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -331,7 +338,8 @@
 				"link": "https://maybugs.co.uk",
 				"img": {
 					"0": "itemXmas/2022/maybugs(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -345,7 +353,8 @@
 				"link": "https://www.mind.org.uk/",
 				"img": {
 					"0": "itemXmas/2022/mind(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -374,7 +383,8 @@
 				"link": "https://www.facebook.com/100087161167873",
 				"img": {
 					"0": "itemXmas/2022/naturallycrafted(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -416,7 +426,8 @@
 				"link": "https://www.bluebellridge.org",
 				"img": {
 					"0": "itemXmas/2022/rspca(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -490,7 +501,8 @@
 				"link": "https://www.starlingsgifts.co.uk",
 				"img": {
 					"0": "itemXmas/2022/starlings(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -504,7 +516,8 @@
 				"link": "https://www.strivecafe.org",
 				"img": {
 					"0": "itemXmas/2022/strive(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -519,7 +532,8 @@
 				"img": {
 					"0": "itemXmas/2022/sweetsonsea(0)",
 					"1": "itemXmas/2022/sweetsonsea(1)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -533,7 +547,8 @@
 				"link": "https://www.towntaxis.co.uk",
 				"img": {
 					"0": "itemXmas/2022/towntaxis(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
@@ -578,7 +593,8 @@
 				"link": "https://wuth.org",
 				"img": {
 					"0": "itemXmas/2022/wuth(0)"
-				}
+				},
+				"winner": 0
 			},
 			"geometry": {
 				"type": "Point",
