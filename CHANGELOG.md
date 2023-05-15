@@ -1,12 +1,31 @@
 # CHANGELOG
 
+## v7.6.0
+
+**Date:** 15/05/2023
+
+Updated
+ - fontawesome 6.4.0
+
+Site changes
+ - 1950 Ordinance Survey aerial overlay
+ - Categorise overlays into aerial and historical maps
+ - Then and Now slideshows are now permalinked
+ - Add a link to Bexhill Museum street directories database on road lookups
+ - opening_date prioritises over opening_hours
+ - streetnames book interactive header image
+ - Various links to archive.org books in history tours
+ - New Northeye Prison overlay showing 1986 riot damage
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.5.0
 
 **Date:** 26/01/2023
 
 Site changes
  - zoom_area function now pads for sidebar if open
- - Add setting to bypass automatic zooming to tour overlay on load
+ - Add setting to bypass automatic zooming to tour on overlay load
  - Change tour function to accept marker id as a parameter
  - popupWindow function now accepts YouTube links
  - Change show_overpass_layer function to pass settings as an object parameter
