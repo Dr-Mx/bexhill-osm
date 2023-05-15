@@ -1,7 +1,16 @@
 // the story of bexhill street names
 
-// random header image
-$('#header').attr('src', 'img/street' + Math.round(Math.random()*14) + '.jpg');
+// open with random header image
+const imgPath = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/img', imgCount = 15;
+let imgCurrent = Math.round(Math.random() * imgCount);
+function setHeaderImg() {
+	$('#header').attr({
+		src: imgPath + '/street' + imgCurrent + '.jpg',
+		title: 'Image ' + (imgCurrent+1) + ' of ' + (imgCount+1)
+	});
+	imgCurrent = (imgCurrent === imgCount) ? 0 : imgCurrent+1;
+}
+setHeaderImg();
 
 // darkmode
 if (window.location.hash === '#darkMode' || (!window.location.hash && window.matchMedia('(prefers-color-scheme: dark)').matches)) $('html').addClass('darkMode');
@@ -37,6 +46,7 @@ $(document).ready(function() {
 			$('.divider').show();
 		}
 	});
+	$('.divider').css('background-image', 'url(' + imgPath + '/div.png)');
 	$('#street-filter-in').trigger('input');
 	$('#street-filter-cl').on('click', function() { $('#street-filter-in').val('').trigger('input').focus(); });
 	// anchor

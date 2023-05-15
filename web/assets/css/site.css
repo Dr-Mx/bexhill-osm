@@ -1040,7 +1040,7 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 	border-radius: 50%;
 	transition: transform 200ms linear;
 }
-.switch:hover > .slider {
+input:not(:checked):hover + .slider {
 	background-color: #999999;
 }
 input:checked + .slider {
@@ -1144,9 +1144,7 @@ input:indeterminate + .slider::before {
 }
 .mylinks {
 	text-align: center;
-}
-.mylinks img {
-	border-radius: 10px;
+	line-height: 20px;
 }
 #gotoprivacy .fa-border {
 	border: 1px solid #cccccc;
@@ -1186,6 +1184,9 @@ input:indeterminate + .slider::before {
 .leaflet-control-layers-expanded, #msgStatusBody {
 	background-color: rgba(235, 235, 235, 0.95);
 	border: none !important;
+}
+.leaflet-control-layers .hideLayer {
+	display: none;
 }
 .controlTitle {
 	font-weight: bold;

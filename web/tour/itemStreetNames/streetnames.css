@@ -103,7 +103,6 @@ button svg path {
 }
 .divider {
 	margin: 20px 30% -10px 30%;
-	background-image: url('img/div.png');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;

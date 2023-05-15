@@ -1,6 +1,6 @@
 // query overpass server - based on https://github.com/kartenkarsten/leaflet-layer-overpass
 
-let eleCache = [], queryBbox = '';
+let eleCache = [], queryBbox = '', queryCustom = false;
 function show_overpass_layer(query, cacheId, options) {
 	if (!query || query === '();') return;
 	else {
@@ -10,7 +10,7 @@ function show_overpass_layer(query, cacheId, options) {
 		queryBbox = '[out:json]';
 		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
 		// select within area, not needed for a single poi
-		if (options && options.bound)
+		if (options && options.bound) {
 			if (osmRelation && !$('#inputBbox').is(':checked') && !options.forceBbox) {
 				queryBbox += ';rel(' + osmRelation + ');map_to_area->.a';
 				query = query.replace(/\[/g, '(area.a)[');
@@ -19,7 +19,9 @@ function show_overpass_layer(query, cacheId, options) {
 				queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
 				cacheId += cacheId ? 'BB' : '';
 			}
+		}
 		queryBbox += ';(' + query + ');';
+		queryCustom = options && options.custom ? true : false;
 		$('#btnExportQuery').prop('disabled', false);
 	}
 	const opl = new L.OverPassLayer({

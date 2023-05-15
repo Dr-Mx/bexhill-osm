@@ -34,7 +34,7 @@
  </head>
 
  <body>
-	<img id="header" alt="Street scenes in Bexhill-on-Sea."/>
+	<img id="header" alt="Street scenes in Bexhill-on-Sea." onclick="setHeaderImg();"/>
 	<button id="btnTheme" title="Dark/Light Theme">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="m12.5,3.33c-2.98,1.92 -5,5.3 -5,9.17c0,3.87 2.02,7.25 5.05,9.17c-5.12,0 -9.22,-4.1 -9.22,-9.17c0,-5.06 4.11,-9.17 9.17,-9.17m19.29,2.5l2.44,2.44l-26.02,25.9l-2.38,-2.38l25.96,-25.96m-10.31,4.05l-2.46,-1.55l-2.4,1.67l0.7,-2.83l-2.32,-1.77l2.92,-0.2l0.96,-2.75l1.12,2.72l2.88,0.04l-2.25,1.89l0.85,2.78m-5.5,6.02l-1.93,-1.22l-1.87,1.3l0.57,-2.19l-1.82,-1.39l2.27,-0.15l0.75,-2.15l0.85,2.11l2.27,0.06l-1.75,1.44l0.66,2.19m15.69,6.6c0,5.06 -4.11,9.17 -9.17,9.17c-2.04,0 -3.92,-0.67 -5.43,-1.79l12.81,-12.81c1.12,1.51 1.79,3.39 1.79,5.43m-7.34,10.96l4.62,-1.91l-0.4,5.58l-4.22,-3.67m7.22,-4.5l1.91,-4.61l3.67,4.23l-5.58,0.38m1.91,-8.26l-1.89,-4.63l5.56,0.39l-3.67,4.24m-17.41,10.85l4.62,1.91l-4.22,3.66l-0.4,-5.57zm0,0"/></svg>
 	</button>
@@ -69,6 +69,7 @@
 		<p>Please email us if you can help with any of the following:</p>
 		<p id="wipdesc"><xsl:for-each select="streetNames/newstreet"><xsl:sort select="date"/><xsl:value-of select="name"/> (<xsl:value-of select="date"/>); </xsl:for-each></p>
 		<h2 id="app">Appendix</h2>
+		<p><a href="https://bexhillmac.co.uk/research/street-directories-3/" target="_blank" rel="noopener">Bexhill Museum Street Directories</a> (website)</p>
 		<p><a href="https://www.rother.gov.uk/SNN" target="_blank" rel="noopener">Rother District Council - Street Naming and Numbering</a> (website)</p>
 		<p><a href="https://battlehistorysociety.com/Road%20Names/" target="_blank" rel="noopener">The Battle and District Historical Society - Road Names Project</a> (website)</p>
 		<p>The routes and numbers of various trunk and county roads through Bexhill have changed over the years. Four examples are included here for comparison and interest:</p>

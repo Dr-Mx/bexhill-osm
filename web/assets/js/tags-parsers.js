@@ -281,10 +281,13 @@ function parse_tags(element, titlePopup, poiParser) {
 		return markerPopup;
 	};
 	const furtherreading_parser = function(tags) {
+		const streetDirs = 'https://bexhillmac.co.uk/research/street-directories-3/?wdt_column_filter[3]=';
 		let readingVal = '';
 		markerPopup = '';
 		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'] && LBounds.contains(element.center))
-			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="Lookup street">Street history</a>; ';
+			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ' +
+				'<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
+		if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) readingVal += '<a href="' + streetDirs + encodeURI(eName.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			const w = tags.wikipedia || tags['site:wikipedia'];
 			readingVal += '<a href="https://' + encodeURI(w.split(':')[0]) + '.wikipedia.org/wiki/' + encodeURI(w.split(':')[1]) + '" title="The Free Encyclopaedia" target="_blank" rel="noopener">Wikipedia</a>; ';
@@ -379,7 +382,6 @@ function parse_tags(element, titlePopup, poiParser) {
 	// https://github.com/opening-hours/opening_hours.js
 	const opening_hours_parser = function(tags) {
 		markerPopup = '';
-		if (tags.opening_date) markerPopup += L.Util.template(tagTmpl, { key: 'Opening date', keyVal: dateFormat(tags.opening_date, 'long'), iconName: 'fa-solid fa-calendar' });
 		const drawTable = function(oh, date_today) {
 			const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 			const weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -477,6 +479,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		catch(err) {
 			if (tags.opening_hours && $('#inputDebug').is(':checked')) console.debug('ERROR: Object "' + eName + '" cannot parse hours:', tags.opening_hours + '. ' + err);
 		}
+		if (tags.opening_date && new Date(tags.opening_date).valueOf() > new Date().valueOf()) markerPopup = L.Util.template(tagTmpl, { key: 'Opening date', keyVal: dateFormat(tags.opening_date, 'long'), iconName: 'fa-solid fa-calendar' });
 		return markerPopup;
 	};
 	const functions = [

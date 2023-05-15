@@ -29,7 +29,7 @@
 	<meta name="theme-color" content="#a04900">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.2.1">
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.7.1">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
@@ -38,8 +38,8 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=7.5.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.5.0" disabled id="darkcss">
+	<link rel="stylesheet" href="assets/css/site.css?v=7.6.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.6.0" disabled id="darkcss">
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -108,11 +108,11 @@
 					<div id="newFeed">
 						<div>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>May 23 - <a onclick="switchTab('tour', 'northeye', '', 'prison');">Northeye Prison layout</a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Mar 23 - 1950 Aerial</li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Dec 22 - <a onclick="switchTab('tour', 'film', '', 'filmingLoc');">Filming Locations tour</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Aug 22 - <a onclick="switchTab('tour', 'overlays');">1983 coastal aerial photographs</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jul 22 - <a onclick="switchTab('tour', 'manor', '', 'manorHouse');">The Manor House layout</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Apr 22 - <a onclick="switchTab('tour', 'prehistory', '', 'boreholes');">Geology and boreholes</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Mar 22 - 1938 Ordnance Survey</li>
 							</ul>
 						</div>
 						<div id="osmFeed"></div><!-- div auto-populated -->
@@ -226,7 +226,7 @@
 					<div id="devTools">
 						<h3>Development tools</h3>
 						<div>
-							<p class="setLabel"><button id="btnNotes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button><label for="btnNotes">Show OSM map notes</label></p>
+							<p class="setLabel"><button id="btnNotes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button><label for="btnNotes">Display OSM map notes</label></p>
 							<p class="setLabel"><button disabled id="btnExportQuery" type="button"><i class="fa-solid fa-upload"></i></button><label for="btnExportQuery">Export current query to Overpass Turbo</label></p>
 							<p class="setLabel"><button id="btnDownloadBB" type="button"><i class="fa-solid fa-download"></i></button><label for="btnDownloadBB">Download all OSM data within map bounds (xml)</label></p>
 							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
@@ -240,25 +240,25 @@
 								</datalist>
 								<span class="setLabel smallCheckbox"><input id="inputOverpassR" type="checkbox"><label for="inputOverpassR">Include relations</label></span>
 							</p>
-							<p>Attic data (date) <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
+							<p>OverpassAPI Attic Data <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener" title="Display data from a specific date"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
 								<input id="inputAttic" type="date" min="2016-01-01"></p>
-							<p>localStorage cache duration for POIs :<br>
+							<p>localStorage cache duration for Overpass queries :<br>
 								<span class="setLabel inputOpCacheL"><input id="inputOpCache" value="120" min="0" max="720" type="number"><label for="inputOpCache">hours (set to 0 to bypass)</label></span></p>
-							<p>Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Leaflet Control Geocoder providers"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
+							<p>Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
 								<select id="inputRevServer" class="theme">
 									<option selected value="nominatim">nominatim.openstreetmap.org</option>
 									<option disabled value="opencage">api.opencagedata.com</option>
 									<option value="photon">photon.komoot.io</option>
 									<option value="openrouteservice">api.openrouteservice.org</option>
 								</select></p>
-							<p>OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Overpass Query Servers"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
+							<p>OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
 								<select id="inputOpServer" class="theme">
 									<option value="overpass-api.de">overpass-api.de</option>
 									<option value="overpass.openstreetmap.ru">overpass.openstreetmap.ru</option>
 									<option value="overpass.kumi.systems">overpass.kumi.systems</option>
 									<option selected value="maps.mail.ru/osm/tools/overpass">maps.mail.ru</option>
 								</select></p>
-							<p class="setLabel switch"><input id="inputBbox" data-uri type="checkbox"><label for="inputBbox" class="slider"></label><label for="inputBbox">Use bbox instead of area</label></p>
+							<p class="setLabel switch"><input id="inputBbox" data-uri type="checkbox"><label for="inputBbox" class="slider"></label><label for="inputBbox">OverpassAPI uses bbox instead of area id</label></p>
 							<p class="setLabel switch"><input id="inputDebug" type="checkbox"><label for="inputDebug" class="slider"></label><label for="inputDebug">Debug mode</label></p>
 						</div>
 					</div>
@@ -283,13 +283,13 @@
 							If you're involved with a local group, I'll be happy to come and speak at one of your events about the project and give a demonstration.
 						</div>
 						<p class="mylinks">
-							<a href="#" onclick="this.href='mailto:' + email;" title="Email"><img src="assets/img/info-email.svg"></a>
+							<a href="#" onclick="this.href='mailto:' + email;" title="Email me"><img src="assets/img/info-email.svg"></a>
 						</p>
 					</div>
 					<div id="gotosoftware"><hr>
 					<h3>Software</h3>
-						<p>Bexhill-OpenStreetMap is open-source and freely available to use as you wish.</p>
-						<p class="mylinks"><a href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><img src="assets/img/info-github.svg"></a></p>
+						<p>Bexhill-OSM is completely open-source. The project is freely available for anyone to inspect, modify and enhance.</p>
+						<p class="mylinks"><a title="Github repository" href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><img src="assets/img/info-github.svg"></a></p>
 						Thanks to these developers:
 						<ul>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
@@ -366,11 +366,11 @@
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=7.5.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=7.5.0"></script>
-	<script src="assets/js/tags-parsers.js?v=7.5.0"></script>
-	<script src="assets/js/pois-type.js?v=7.5.0"></script>
-	<script src="tour/tour.js?v=7.5.0"></script>
-	<script src="assets/js/site.js?v=7.5.0"></script>
+	<script src="assets/js/config.js?v=7.6.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=7.6.0"></script>
+	<script src="assets/js/tags-parsers.js?v=7.6.0"></script>
+	<script src="assets/js/pois-type.js?v=7.6.0"></script>
+	<script src="tour/tour.js?v=7.6.0"></script>
+	<script src="assets/js/site.js?v=7.6.0"></script>
  </body>
 </html>

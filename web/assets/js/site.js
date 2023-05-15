@@ -228,7 +228,7 @@ const map = new L.map('map', {
 	// metadata badges updated via cronjob.sh
 	const dailyCache = '?d=' + new Date().getFullYear() + new Date().getMonth() + new Date().getDate();
 	$('#info #gotoabout .mylinks').append('<br><br>' +
-		'<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter followers"><img src="assets/img/info-twitter.svg' + dailyCache +'"></a>&nbsp;&nbsp;' +
+		'<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter followers"><img src="assets/img/info-twitter.svg' + dailyCache +'"></a><br>' +
 		'<a href="https://www.youtube.com/@bexhillosm" target="_blank" rel="noopener" title="YouTube subscribers"><img src="assets/img/info-youtube.svg' + dailyCache +'"></a><br><br>' +
 		'<a href="https://osm.org/user/Bexhill-OSM" target="_blank" rel="noopener" title="OpenStreetMap edits"><img src="assets/img/info-osm.svg' + dailyCache +'"></a><br>' +
 		'<a href="https://commons.wikimedia.org/wiki/Special:ListFiles?user=Dr-Mx" target="_blank" rel="noopener" title="Wikimedia Commons uploads"><img src="assets/img/info-wikimedia.svg' + dailyCache +'"></a><br>' +
@@ -287,7 +287,7 @@ const map = new L.map('map', {
 		$('#modalT0 button').focus();
 	}
 	// easter holiday decorations
-	if (new Date().getMonth() === 3 && new Date().getDate() >= 10 && new Date().getDate() <= 13) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F95A'));
+	if (new Date().getMonth() === 2 && new Date().getDate() >= 29 && new Date().getDate() <= 31) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F95A'));
 	// halloween holiday decorations
 	else if (new Date().getMonth() === 9) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F383;'));
 	// xmas holiday decorations
@@ -306,7 +306,7 @@ const map = new L.map('map', {
 	// prevent click-through on map controls
 	L.DomEvent.disableClickPropagation($('#inputOpacity')[0]).disableScrollPropagation($('#inputOpacity')[0]);
 	L.DomEvent.disableClickPropagation($('#msgStatus')[0]).disableScrollPropagation($('#msgStatus')[0]);
-	$('.leaflet-control').on('contextmenu', function(e) { e.stopPropagation(); });
+	$('.leaflet-control, .leaflet-popup').on('contextmenu', function(e) { e.stopPropagation(); });
 	$('.leaflet-control-geocoder-form').click(function(e) { e.stopPropagation(); });
 	// refocus status message on mouseover
 	$('#msgStatus').on('mouseover tap', function() { if ($(this).is(':animated')) $(this).stop(true).css('opacity', 1); });
@@ -577,12 +577,13 @@ function highlightOutline(i, on) {
 function setOverlayLabel() {
 	// adds a title and hides some layers in control
 	if (!$('.controlTitle').length) {
-		$('.leaflet-control-layers-overlays label').first().before('<div class="controlTitle">Modern overlays</div>');
-		$('.leaflet-control-layers-overlays label:contains("Bing")').after('<div class="controlTitle">Historic overlays</div>');
+		$('.leaflet-control-layers-overlays label').first().before('<div class="controlTitle">Overlays</div>');
+		$('.leaflet-control-layers-overlays label:contains("Bing")').first().before('<div class="controlTitle">Air photography</div>');
+		$('.leaflet-control-layers-overlays label:contains("Ordnance")').first().before('<div class="controlTitle">Historical maps</div>');
 		$('.leaflet-control-layers-overlays label').last().after('<a class="controlTitle" onclick="switchTab(\'tour\', \'overlays\');">More...</a>');
 	}
-	for (let tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').hide();
-	for (let tileOverlay in tileOverlayLayer) if (tileOverlayLayer[tileOverlay].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tileOverlay].name + '")').hide();
+	for (let tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').addClass('hideLayer');
+	for (let tileOverlay in tileOverlayLayer) if (tileOverlayLayer[tileOverlay].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tileOverlay].name + '")').addClass('hideLayer');
 	if (!$('.leaflet-control-layers-list.custscroll').length) $('.leaflet-control-layers-list').addClass('custscroll');
 	if (!$('.leaflet-control-layers-toggle span').length) $('.leaflet-control-layers-toggle').html('<span style="margin:5px;" class="fa fa-solid fa-layer-group fa-2x"></span>');
 }
@@ -773,7 +774,7 @@ function suggestWalk(walkId, isWP) {
 		neye: [
 			'Pevensey Levels was a tidal inlet until the eastward drift of coastal shingle isolated it and a salt marsh developed. ' +
 			'The walk starts and ends at The Star Inn pub, heading north-west towards the archaeological site of Northeye, a village abandoned to flooding in the Middle Ages. ' +
-			'Before making your way back round, you will see evidence of a wooden sea defense from the 14th century called Crooked Ditch.<br>' +
+			'Before making your way back round, you will see evidence of a wooden sea defence from the 14th century called Crooked Ditch.<br>' +
 			'Although sometimes rough and wet in places, there are great open views of countryside and plenty of grazing sheep to keep you company.',
 			[[50.83026, 0.39324], [50.83832, 0.38729], [50.83618, 0.40594], [50.83007, 0.39370]]
 		],
@@ -869,39 +870,39 @@ function setLeaflet() {
 	// baselayers
 	const attribution = '&copy; <a href="https://openstreetmap.org/copyright" title="Copyright and License" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
 	tileBaseLayer = {
-		bosm: {
-			name: 'Bexhill-OSM',
-			url: 'https://api.mapbox.com/styles/v1/drmx/cjyfrglvo1v3c1cqqlcvzyd07/tiles/256/{z}/{x}/{y}@2x?access_token=' + window.BOSM.mapboxKey,
-			attribution: attribution + ', <a href="https://mapbox.com/" target="_blank" rel="noopener">MapBox</a>',
-			className: 'layerDark'
-		},
 		osmstd: {
 			name: 'OpenStreetMap',
 			url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 			maxNativeZoom: 19,
 			className: 'layerDark'
 		},
+		bosm: {
+			name: 'OSM Bexhill',
+			url: 'https://api.mapbox.com/styles/v1/drmx/cjyfrglvo1v3c1cqqlcvzyd07/tiles/256/{z}/{x}/{y}@2x?access_token=' + window.BOSM.mapboxKey,
+			attribution: attribution + ', <a href="https://mapbox.com/" target="_blank" rel="noopener">MapBox</a>',
+			className: 'layerDark'
+		},
+		osmuk: {
+			name: 'OSM UK',
+			url: 'https://map.atownsend.org.uk/hot/{z}/{x}/{y}.png',
+			attribution: attribution + ', <a href="https://map.atownsend.org.uk/maps/map/map.html" target="_blank" rel="noopener">Andy Townsend</a>',
+			className: 'layerDark'
+		},
 		general: {
-			name: 'General Purpose',
+			name: 'OSM Humanitarian',
 			url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 			attribution: attribution + ', <a href="https://www.hotosm.org/" target="_blank" rel="noopener">HOTOSM</a>',
 			maxNativeZoom: 20,
 			className: 'layerDark'
 		},
-		osmuk: {
-			name: 'OpenStreetMap UK',
-			url: 'https://map.atownsend.org.uk/hot/{z}/{x}/{y}.png',
-			attribution: attribution + ', <a href="https://map.atownsend.org.uk/maps/map/map.html" target="_blank" rel="noopener">Andy Townsend</a>',
-			className: 'layerDark'
-		},
 		cycle: {
-			name: 'OpenCycleMap',
+			name: 'OSM OpenCycleMap',
 			url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
 			attribution: attribution + ', <a href="https://thunderforest.com/maps/opencyclemap/" target="_blank" rel="noopener">ThunderForest</a>',
 			className: 'layerDark'
 		},
 		trnsprt: {
-			name: 'Public Transport',
+			name: 'OSM Public Transport',
 			url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
 			attribution: attribution + ', <a href="https://thunderforest.com/maps/transport/" target="_blank" rel="noopener">ThunderForest</a>',
 			className: 'layerDark'
@@ -934,17 +935,6 @@ function setLeaflet() {
 	}
 	// overlays, set an offset by using metres (offset: [left, top])
 	tileOverlayLayer = {
-		lidar: {
-			name: 'Lidar DTM 1m',
-			url: 'https://environment.data.gov.uk/spatialdata/lidar-composite-digital-terrain-model-dtm-1m-2020/wms',
-			wms: {
-				layers: '1',
-				format: 'image/png',
-				transparent: true
-			},
-			attribution: '<a href="https://www.gov.uk/government/organisations/environment-agency/" target="_blank" rel="noopener">Environment Agency</a>',
-			opacity: 0.8
-		},
 		landreg: {
 			name: 'Land Registry',
 			url: 'https://tiles.osmuk.org/PropertyBoundaries/{z}/{x}/{y}.png',
@@ -954,6 +944,17 @@ function setLeaflet() {
 			maxNativeZoom: 20,
 			minZoom: 16,
 			offset: [-1, 1]
+		},
+		lidar: {
+			name: 'Lidar DTM 1m',
+			url: 'https://environment.data.gov.uk/spatialdata/lidar-composite-digital-terrain-model-dtm-1m-2022/wms',
+			wms: {
+				layers: '1',
+				format: 'image/png',
+				transparent: true
+			},
+			attribution: '<a href="https://www.gov.uk/government/organisations/environment-agency/" target="_blank" rel="noopener">Environment Agency</a>',
+			opacity: 0.8
 		},
 		tpo: {
 			name: 'Tree Preservation Orders',
@@ -966,6 +967,21 @@ function setLeaflet() {
 			attribution: '<a href="https://maps.rother.gov.uk/tpo.html" target="_blank" rel="noopener">Rother District Council</a>',
 			opacity: 1
 		},
+		osm2012: {
+			name: '2012 OpenStreetMap',
+			url: 'https://map.fosm.org/default/{z}/{x}/{y}.png',
+			opacity: 1,
+			hide: 1,
+			className: 'layerNoclick layerDark'
+		},
+		xmas: {
+			name: 'Xmas Snow',
+			url: 'tour/itemXmas/overlay-snow.gif',
+			opacity: 0.5,
+			hide: 1,
+			className: 'layerNoclick'
+		},
+		// air photography
 		bing: {
 			name: 'Bing Aerial',
 			url: 'https://ecn.t{s}.tiles.virtualearth.net/tiles/a{q}?g=737&n=z',
@@ -975,14 +991,6 @@ function setLeaflet() {
 			maxNativeZoom: 19,
 			quadkey: true,
 			offset: [-1, 1]
-		},
-		// historic
-		osm2012: {
-			name: '2012 OpenStreetMap',
-			url: 'https://map.fosm.org/default/{z}/{x}/{y}.png',
-			opacity: 1,
-			hide: 1,
-			className: 'layerNoclick'
 		},
 		bm1975: {
 			name: '1975 Aerial (coast)',
@@ -1002,18 +1010,8 @@ function setLeaflet() {
 			maxNativeZoom: 18,
 			className: 'layerNoclick'
 		},
-		os1962: {
-			name: '1962 Ordnance Survey',
-			url: 'https://mapseries-tilesets.s3.amazonaws.com/os/britain10knatgrid/{z}/{x}/{y}.png',
-			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
-			bounds: LBounds,
-			opacity: 1,
-			maxNativeZoom: 16,
-			offset: [5, 3],
-			className: 'layerNoclick'
-		},
 		br1959: {
-			name: '1959 Aerial (west branch)',
+			name: '1959 Aerial (railway)',
 			url: 'https://tiles.bexhillheritage.com/br1959/{z}/{x}/{y}.png',
 			attribution: 'British Rail, <a href="https://car57.zenfolio.com/" target="_blank" rel="noopener">Michael Pannell</a>',
 			bounds: L.latLngBounds([50.83722, 0.45732], [50.8907, 0.5134]),
@@ -1021,24 +1019,13 @@ function setLeaflet() {
 			maxNativeZoom: 18,
 			className: 'layerNoclick'
 		},
-		os1955: {
-			name: '1955 Ordnance Survey',
-			url: 'https://mapseries-tilesets.s3.amazonaws.com/london_1940s/{z}/{x}/{y}.png',
+		os1950: {
+			name: '1950 Aerial',
+			url: 'https://tiles.bexhillheritage.com/os1950/{z}/{x}/{y}.png',
 			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
-			maxNativeZoom: 19,
-			offset: [1, 1],
-			className: 'layerNoclick'
-		},
-		wl1950: {
-			name: '1950 Ward Lock',
-			url: 'https://tiles.bexhillheritage.com/wl1950/{z}/{x}/{y}.png',
-			attribution: '<a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
-			bounds: L.latLngBounds([50.852, 0.445], [50.832, 0.494]),
-			opacity: 1,
-			maxNativeZoom: 18,
-			hide: 1,
+			maxNativeZoom: 17,
 			className: 'layerNoclick'
 		},
 		raf1946t: {
@@ -1063,6 +1050,48 @@ function setLeaflet() {
 			hide: 1,
 			className: 'layerNoclick'
 		},
+		raf1941c: {
+			name: '1941 RAF (central)',
+			url: 'https://tiles.bexhillheritage.com/raf1941c/{z}/{x}/{y}.png',
+			attribution: 'RAF CPEUK',
+			bounds: L.latLngBounds([50.841, 0.474], [50.836, 0.480]),
+			opacity: 1,
+			minNativeZoom: 15,
+			maxNativeZoom: 19,
+			hide: 1,
+			className: 'layerNoclick'
+		},
+		// historical maps
+		os1962: {
+			name: '1962 Ordnance Survey',
+			url: 'https://mapseries-tilesets.s3.amazonaws.com/os/britain10knatgrid/{z}/{x}/{y}.png',
+			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			bounds: LBounds,
+			opacity: 1,
+			maxNativeZoom: 16,
+			offset: [5, 3],
+			className: 'layerNoclick'
+		},
+		os1955: {
+			name: '1955 Ordnance Survey',
+			url: 'https://mapseries-tilesets.s3.amazonaws.com/london_1940s/{z}/{x}/{y}.png',
+			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			bounds: LBounds,
+			opacity: 1,
+			maxNativeZoom: 19,
+			offset: [1, 1],
+			className: 'layerNoclick'
+		},
+		wl1950: {
+			name: '1950 Ward Lock',
+			url: 'https://tiles.bexhillheritage.com/wl1950/{z}/{x}/{y}.png',
+			attribution: '<a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
+			bounds: L.latLngBounds([50.852, 0.445], [50.832, 0.494]),
+			opacity: 1,
+			maxNativeZoom: 18,
+			hide: 1,
+			className: 'layerNoclick'
+		},
 		ob1944: {
 			name: '1944 Observer Bomb Map',
 			url: 'https://tiles.bexhillheritage.com/ob1944/{z}/{x}/{y}.png',
@@ -1079,17 +1108,6 @@ function setLeaflet() {
 			bounds: L.latLngBounds([50.8292, 0.4157], [50.8713, 0.5098]),
 			opacity: 1,
 			maxNativeZoom: 18,
-			hide: 1,
-			className: 'layerNoclick'
-		},
-		raf1941c: {
-			name: '1941 RAF (central)',
-			url: 'https://tiles.bexhillheritage.com/raf1941c/{z}/{x}/{y}.png',
-			attribution: 'RAF CPEUK',
-			bounds: L.latLngBounds([50.841, 0.474], [50.836, 0.480]),
-			opacity: 1,
-			minNativeZoom: 15,
-			maxNativeZoom: 19,
 			hide: 1,
 			className: 'layerNoclick'
 		},
@@ -1208,13 +1226,6 @@ function setLeaflet() {
 			bounds: L.latLngBounds([50.810, 0.320], [50.890, 0.631]),
 			opacity: 1,
 			maxNativeZoom: 16,
-			className: 'layerNoclick'
-		},
-		xmas: {
-			name: 'Xmas Snow',
-			url: 'tour/itemXmas/overlay-snow.gif',
-			opacity: 0.5,
-			hide: 1,
 			className: 'layerNoclick'
 		}
 	};
@@ -1770,10 +1781,12 @@ function customQuery(q, fromInput) {
 	spinner++;
 	if (fromInput) clear_map('all');
 	if (q.charAt(0) === '[' && q.charAt(q.length-1) === ']') show_overpass_layer('(nw' + ($('#inputOverpassR input').is(':checked') ? 'r' : '') + q + ';);', '', {
+		custom: true,
 		bound: true,
 		forceBbox: false
 	});
 	else if (q.charAt(0) === '(' && q.charAt(q.length-1) === ')') show_overpass_layer(q + ';', '', {
+		custom: true,
 		bound: true,
 		forceBbox: false
 	});
@@ -1948,7 +1961,7 @@ function getTips(tip) {
 		'You can find booking information on accommodation under <a onclick="switchTab(\'pois\', \'Leisure-Tourism\');">Leisure-Tourism</a>.',
 		'Get the latest food hygiene ratings on businesses under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
 		'Find your closest <i class="fa-solid fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
-		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', 9);">History <i class="fa-solid fa-book fa-sm"></i></a>.',
+		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', \'ww2\', \'\', \'bombmap\');">History <i class="fa-solid fa-book fa-sm"></i></a>.',
 		'Some places have a photosphere view, click <i class="fa-solid fa-street-view fa-fw"></i> in a popup to view it.',
 		'View superimposed and colourised images of Bexhill past and present under <a onclick="switchTab(\'thennow\');">Then and Now <i class="fa-regular fa-image fa-sm"></i></a>.',
 		'Notice something wrong or missing on the map? Right-click the area and <i class="fa-regular fa-sticky-note fa-sm"></i> Leave a note.',
@@ -2105,7 +2118,7 @@ function showEditFeed() {
 }
 
 // M = basemap, O = overlay, OP = overlay opacity, S = settings, T = tab, U = tour frame, G = image layer, P = grouped pois, I = single poi, W = walkpoints
-// QG = geocode query, QO = overpass query, QL = location query
+// TN = thennow slideshow, QG = geocode query, QO = overpass query, QL = location query
 function permalinkSet() {
 	// get clean url without parameters and hash
 	const uri = new URL(window.location.href.split('?')[0].split('#')[0]);
@@ -2125,9 +2138,10 @@ function permalinkSet() {
 		if (walkCoords) uri.searchParams.set('W', walkCoords.slice(0, -1));
 	}
 	if (actTab === 'tour' && $('#tourList option').eq(0).val() !== $('#tourList option:selected').eq(0).val()) uri.searchParams.set('U', $('#tourList option:selected').val());
+	if ($('[data-thennow]').length) uri.searchParams.set('TN', $('[data-thennow]').attr('data-thennow'));
 	$('.poi-checkbox input:checked').each(function(i, element) { selectedPois += element.id + '-'; });
 	if (selectedPois) uri.searchParams.set('P', selectedPois.slice(0, -1));
-	else if (queryBbox && queryBbox.indexOf($('#inputOverpass').val()) > 0) uri.searchParams.set('QO', ($('#inputOverpassR input').is(':checked') ? 'r' : '') + $('#inputOverpass').val());
+	else if (queryCustom && queryBbox && $('#inputOverpass').val()) uri.searchParams.set('QO', ($('#inputOverpassR input').is(':checked') ? 'r' : '') + $('#inputOverpass').val());
 	if ($('#settings input[data-uri]:checkbox:checked').length) {
 		setChk = '';
 		for (c = 0; c < $('#settings input[data-uri]:checkbox').length; c++) setChk += $('#settings input[data-uri]:checkbox').eq(c).is(':checked') ? '1' : '0';
@@ -2194,6 +2208,7 @@ function permalinkReturn() {
 		if (uri.has('G')) {
 			// if no latlng tell tour function to zoom to area
 			if (window.location.hash.indexOf('/') !== 3) tour(uri.get('G'), '', false);
+			else if (uri.get('G') === 'thennow') tour('thennow', uri.has('TN') ? uri.get('TN') : '', true);
 			else tour(uri.get('G'), uri.has('I') ? uri.get('I') : '', true);
 		}
 		else if (uri.has('P')) {
@@ -2234,7 +2249,7 @@ function permalinkReturn() {
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
 	if ($('.sidebar-pane#' + actTab).length) {
 		sidebar.open(actTab);
-		if (actTab === 'thennow') tour('thennow', '', true);
+		if (actTab === 'thennow' && !uri.has('I')) tour('thennow', uri.has('TN') ? uri.get('TN') : '', true);
 	}
 	else actTab = 'none';
 	// animate sidebar close button on smaller devices if layers underneath

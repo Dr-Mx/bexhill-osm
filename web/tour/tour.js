@@ -124,8 +124,6 @@ function tour(tName, tID, fromPermalink) {
 			$('.spinner').show();
 			fcnStLvl.state('onStLvl');
 			$.ajax({
-				// downloaded daily via cron job
-				// url: 'https://a.mapillary.com/v3/sequences?bbox=' + [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(',') + '&usernames=bexhill_osm&client_id=' + window.BOSM.mpllryKey,
 				url: 'assets/data/panoramas.geojson',
 				dataType: 'json',
 				mimeType: 'application/json',
@@ -335,11 +333,16 @@ function tour(tName, tID, fromPermalink) {
 								'" data-caption="' + feature.properties.imgcaption[x] + '"></a>';
 							});
 							$('#thennow .sidebar-body div').append(tnBody + '<figcaption>' + feature.properties.desc + '</figcaption></figure>');
-							$('[data-fancybox="' + feature.properties.id + '"]').fancybox({
+							$('a[data-fancybox="' + feature.properties.id + '"]').fancybox({
+								baseClass: 'fancybox-thennow',
 								protect: true,
 								transitionEffect: 'fade',
 								transitionDuration: 7500,
 								slideShow: { speed: 2500 },
+								beforeLoad: function() {
+									$('.fancybox-thennow').attr('data-thennow', feature.properties.id);
+									permalinkSet();
+								},
 								afterLoad: function() {
 									// cancel slideshow user manually advances
 									$('.fancybox-button--arrow_left, .fancybox-button--arrow_right').on('click touchstart', function() {
@@ -356,6 +359,10 @@ function tour(tName, tID, fromPermalink) {
 									// remember slideshow state
 									slideShow.auto = ($('.fancybox-button--play').length) ? false : true;
 									slideShow.firstrun = true;
+								},
+								afterClose: function() {
+									$('.fancybox-thennow').removeAttr('data-thennow');
+									permalinkSet();
 								}
 							});
 							const marker = setMarker(latlng, true, false, false);
@@ -382,6 +389,10 @@ function tour(tName, tID, fromPermalink) {
 					if (autoZoom) zoom_area();
 					else map.fireEvent('zoomend');
 					$('.spinner').fadeOut('fast');
+					if (tID) {
+						markerId = undefined;
+						imageOverlay.getLayer(tID).fire('click');
+					}
 				}
 			});
 			actImgLayer = tName;
@@ -765,6 +776,53 @@ function tour(tName, tID, fromPermalink) {
 			setTour('ww2');
 			break;
 		case 'prison':
+			$('.spinner').show();
+			$.ajax({
+				url: dfltDir + 'listNortheye/prison.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function(json) {
+					imageOverlay.clearLayers().addLayer(L.geoJSON(json, {
+						onEachFeature: function(feature, layer) {
+							const pSubtitle = {
+								preriot: 'Destroyed by \'86 riot',
+								postriot: 'After \'86 riot'
+							};
+							setJsonPopup(feature, layer, [feature.properties.name, feature.properties.timeline ? pSubtitle[feature.properties.timeline] : '', ''], 'Bexhill Observer');
+							layer._leaflet_id = feature.properties.id;
+							if (feature.properties.name) poiList.push(layer);
+						},
+						style: function(feature) {
+							const buildingCol = feature.properties.timeline === 'preriot' ?  'orange' : '#b22222';
+							const pStyle = {
+								boundary: [ '#000000', '#9dcdbb', 1, 2, 0.8 ],
+								building: [ '#000000', buildingCol, 0.75, 2, 0.5 ],
+								fence: [ '#000000', '#000000', 1, 2, 0 ],
+								pitch: [ '#000000', '#90ee90', 0.75, 2, 0.5 ],
+								road: [ '#ffffff', '#ffffff', 1, 5, 0 ]
+							};
+							return {
+								interactive: feature.properties.name ? true : false,
+								color: pStyle[feature.properties.type][0],
+								fillColor: pStyle[feature.properties.type][1],
+								opacity: pStyle[feature.properties.type][2],
+								weight: pStyle[feature.properties.type][3],
+								fillOpacity: pStyle[feature.properties.type][4]
+							};
+						}
+					}));
+					setTimeout(pushPoiList, 250);
+					setPageTitle('HMP Northeye');
+					if (autoZoom) zoom_area();
+					else map.fireEvent('zoomend');
+					if (tID) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]].getLayer(tID).openPopup();
+					$('.spinner').fadeOut('fast');
+				}
+			});
+			setTour('northeye');
+			break;
+		case 'campus':
 			rQuery = true;
 			show_overpass_layer('way(28940913);', tName);
 			setTour('northeye');
@@ -949,7 +1007,7 @@ function tour(tName, tID, fromPermalink) {
 		case 'mc1925':
 			if (actOverlayLayer !== tName) {
 				map.addLayer(tileOverlayLayers[tileOverlayLayer[tName].name]);
-				zoom_area(false, tileOverlayLayer[tName].bounds);
+				if (autoZoom) zoom_area(false, tileOverlayLayer[tName].bounds);
 			}
 			setPageTitle(tileOverlayLayer[tName].name);
 			break;
