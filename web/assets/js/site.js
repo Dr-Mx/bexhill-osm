@@ -88,6 +88,7 @@ $('.sidebar-tabs li').click(function() {
 		if (!$('#weather:visible').length && noIframe) { showWeather(); showEditFeed(); }
 		setTimeout(function() { $('#minimap > map').imageMapResize(); }, 400);
 	}
+	if (actTab === 'pois') $('#poi-filter-in').trigger('input');
 	if (actTab === 'tour') {
 		$('#tourList').trigger('change');
 		$('.sidebar-tabs ul li [href="#tour"] .sidebar-notif:visible').hide();
