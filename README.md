@@ -1,4 +1,4 @@
-<h1> <img src="https://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill OpenStreetMap - https://bexhill-osm.org.uk </h1>
+# ![Header icon](https://bexhill-osm.org.uk/favicon-32x32.png) Bexhill OpenStreetMap - [bexhill-osm.org.uk](https://bexhill-osm.org.uk)
 
 [![License](https://bexhill-osm.org.uk/assets/img/info-github.svg)](https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE)
 [![Twitter](https://bexhill-osm.org.uk/assets/img/info-twitter.svg)](https://twitter.com/BexhillOSM)
