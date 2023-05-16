@@ -1,13 +1,12 @@
 <h1> <img src="https://bexhill-osm.org.uk/favicon-32x32.png"> Bexhill OpenStreetMap - https://bexhill-osm.org.uk </h1>
 
-[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE)
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fbexhill-osm.org.uk)](https://bexhill-osm.org.uk)
-[![Twitter](https://img.shields.io/twitter/follow/BexhillOSM.svg?label=Twitter)](https://twitter.com/BexhillOSM)
-[![YouTube](https://img.shields.io/youtube/channel/subscribers/UCS3phqTevP6eHysdqvoU1_w?label=YouTube&style=flat)](https://www.youtube.com/@bexhillosm)
+[![License](https://bexhill-osm.org.uk/assets/img/info-github.svg)](https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE)
+[![Twitter](https://bexhill-osm.org.uk/assets/img/info-twitter.svg)](https://twitter.com/BexhillOSM)
+[![YouTube](https://bexhill-osm.org.uk/assets/img/info-youtube.svg)](https://www.youtube.com/@bexhillosm)
 
 Searchable OpenStreetMap data showing POIs, walking directions, overlays, history and other information for the town of Bexhill-on-Sea, UK
 
-![Image of Bexhill-OSM](https://bexhill-osm.org.uk/assets/img/og-preview.jpg)
+![Cover image of Bexhill-OSM](https://bexhill-osm.org.uk/assets/img/og-image.jpg)
 
 ## Features
 - Mobile and desktop friendly
@@ -65,6 +64,10 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
   - Custom OverpassAPI queries
   - Query OSM attic data from a certain date
   - Output debug info to console
+
+## Demo
+
+[web/assets/img/og-preview.mp4](https://github.com/Dr-Mx/bexhill-osm/raw/master/web/assets/img/og-preview.mp4)
 
 ## Futher Reading on the Project
 
