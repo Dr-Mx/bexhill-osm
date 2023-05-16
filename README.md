@@ -67,7 +67,7 @@ Searchable OpenStreetMap data showing POIs, walking directions, overlays, histor
 
 ## Demo
 
-[web/assets/img/og-preview.mp4](https://github.com/Dr-Mx/bexhill-osm/raw/master/web/assets/img/og-preview.mp4)
+https://github.com/Dr-Mx/bexhill-osm/assets/20068052/219ff558-a94b-46af-8f66-8eb8652f461c
 
 ## Futher Reading on the Project
 
