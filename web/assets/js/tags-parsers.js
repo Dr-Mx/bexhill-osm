@@ -31,10 +31,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		markerPopup = '';
 		if (phoneTag) phoneVal = '<a href="tel:' + encodeURI(phoneTag) + '" title="Telephone">' + phoneTag + '</a>';
 		if (tags['contact:mobile']) phoneVal = (phoneVal ? phoneVal + ' / ' : '') + '<a href="tel:' + encodeURI(tags['contact:mobile']) + '" title="Mobile">' + tags['contact:mobile'] + '</a>';
-		if (phoneVal) {
-			if (navigator.language === lang) phoneVal = phoneVal.replaceAll('+44 ', '0');
-			markerPopup += L.Util.template(tagTmpl, { key: 'Phone', keyVal: phoneVal, iconName: 'fa-solid fa-phone' });
-		}
+		if (phoneVal) markerPopup += L.Util.template(tagTmpl, { key: 'Phone', keyVal: (navigator.language === lang ? phoneVal.replaceAll('+44 ', '0') : phoneVal), iconName: 'fa-solid fa-phone' });
 		return markerPopup;
 	};
 	const website_parser = function(tags) {
@@ -974,7 +971,7 @@ function callback(data) {
 		// tooltip
 		const customTOptions = {
 			direction: 'top',
-			offset: [0, -40],
+			offset: [0, -30],
 			interactive: poi ? poi.permTooltip : 0,
 			permanent: poi ? poi.permTooltip : 0,
 			opacity: (noTouch || (poi && poi.permTooltip)) ? 1 : 0
@@ -1053,8 +1050,10 @@ function pushPoiList(customSort) {
 		const openColorTitle = (state === true || state === false) ? ' title="' + (state === true ? 'Open' : 'Closed') + '"' : '';
 		let poiIcon = '';
 		if (poiList[c]._icon) poiIcon = '<img alt="" src="' + poiList[c]._icon.src + '">';
+		else if (poiList[c].options.className === 'circleMarker')
+			poiIcon = '<i class="poi-results-circleMarker fa-solid fa-circle fa-lg fa-fw" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		else if (poiList[c].options.color)
-			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fa-solid fa-circle fa-lg fa-fw" title=' + poiList[c].desc + '></i>';
+			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fa-solid fa-circle fa-lg fa-fw" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
 			'<td class="openColor-list-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
 			'<td>' + poiList[c]._tooltip._content + '</td>' +
@@ -1092,11 +1091,11 @@ function pushPoiList(customSort) {
 		map._layers[this.id].openPopup();
 		if ($(window).width() < 768) $('.sidebar-close:visible').click();
 		else if (map._layers[this.id]._latlng) {
-			// get bounds of area, focus 150px above marker to allow room for popup
+			// get bounds of area, focus 150px above marker and find sidebar-width to allow room for popup
 			let zm = areaOutline.getLayer('o_' + this.id) ? map.getBoundsZoom(areaOutline.getLayer('o_' + this.id)._bounds.pad(0.5)) : map.getZoom();
 			if (zm > 18) zm = 18;
 			const px = map.project(map._layers[this.id]._latlng, zm);
-			map.stop().flyTo(map.unproject([px.x, px.y -= 150], zm), zm);
+			map.stop().flyTo(map.unproject([px.x -= ($(window).width() >= 1024 ? Math.round(sidebar.width()/2) : 0), px.y -= 150], zm), zm);
 		}
 	});
 	$('#poi-results h3').html(
@@ -1301,7 +1300,7 @@ function hotel_parser(tags, titlePopup) {
 			hotelVal = hotelVal.substring(0, hotelVal.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { key: 'Accomodation', keyVal: hotelVal, iconName: 'fa-solid fa-bed' });
 		}
-		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { key: 'Check avalibility', keyVal: '<a href="https://www.booking.com/hotel/gb/' + encodeURI(tags['url:booking_com']) + '.en-gb.html" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"></a>', iconName: 'fa-solid fa-file' });
+		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { key: 'Check availability', keyVal: '<a href="https://www.booking.com/hotel/gb/' + encodeURI(tags['url:booking_com']) + '.en-gb.html" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"></a>', iconName: 'fa-solid fa-file' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[

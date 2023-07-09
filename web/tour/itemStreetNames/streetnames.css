@@ -64,6 +64,9 @@ ul {
 button svg path {
 	fill: #eeeeee;
 }
+#links, .divider {
+	scroll-margin-top: 10px;
+}
 #btnTheme, #anchor {
 	display: block;
 	opacity: 0.6;

@@ -40,12 +40,11 @@ function tour(tName, tID, fromPermalink) {
 			});
 		}
 		else marker = L.circleMarker(latlng, {
+			className: 'circleMarker',
 			interactive: interactive,
 			radius: 12,
 			weight: 2,
-			color: $('html').css('--main-color'),
 			opacity: 1,
-			fillColor: darkMode ? '#000' : '#fff',
 			fillOpacity: 0.5
 		});
 		if (popup) marker.on('click', function(e) {
@@ -104,7 +103,7 @@ function tour(tName, tID, fromPermalink) {
 			.bindTooltip(toolTip, {
 				className: pClass,
 				direction: 'top',
-				offset: [0, (pClass === 'popup-xmas' ? -40 : -18)],
+				offset: [0, (pClass === 'popup-xmas' ? -30 : -8)],
 				opacity: noTouch ? 1 : 0
 			});
 	};
@@ -1004,7 +1003,9 @@ function tour(tName, tID, fromPermalink) {
 		case 'raf1946p': /* fall through */
 		case 'raf1941c': /* fall through */
 		case 'arp1942':  /* fall through */
-		case 'mc1925':
+		case 'mc1925':   /* fall through */
+		case 'yg1795':   /* fall through */
+		case 'yg1778':
 			if (actOverlayLayer !== tName) {
 				map.addLayer(tileOverlayLayers[tileOverlayLayer[tName].name]);
 				if (autoZoom) zoom_area(false, tileOverlayLayer[tName].bounds);

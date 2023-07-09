@@ -25,7 +25,7 @@ const maxOpResults = 250;
 // maximum nominatim search results
 const maxNomResults = 5;
 // website checks
-const noTouch = window.ontouchstart === undefined;
+const noTouch = !L.Browser.mobile;
 const noIframe = window.top === window.self;
 let noPermalink = !new URL(window.location.href).searchParams.toString() || new URL(window.location.href).searchParams.toString() === 'T=none';
 // title tag tooltip defaults
@@ -94,7 +94,7 @@ $('.sidebar-tabs li').click(function() {
 		$('.sidebar-tabs ul li [href="#tour"] .sidebar-notif:visible').hide();
 	}
 	if (actTab === 'thennow' && actImgLayer !== 'thennow') tour('thennow', '', false);
-	// animate map recentre on sidebar open/close, matches sidebar transition-duration
+	// animate map recentre on sidebar open/close, matches sidebar transition-duration of 400ms
 	if ($(window).width() >= 768 && $(window).width() < 1024) {
 		let x = 0, timer = setInterval(function() {
 			map.invalidateSize({ animate: true });
@@ -130,11 +130,10 @@ L.Map.addInitHook(function() {
 			// drop marker and reverse lookup on single click
 			h = setTimeout(function() {
 				clickOutline.clearLayers().addLayer(L.circleMarker(e.latlng, {
+					className: 'circleMarker',
 					radius: 10,
 					weight: 2,
-					color: $('html').css('--main-color'),
 					opacity: 1,
-					fillColor: darkMode ? '#000' : '#fff',
 					fillOpacity: 0.5,
 					interactive: noTouch ? true : false,
 					bubblingMouseEvents: false
@@ -162,6 +161,7 @@ L.Map.addInitHook(function() {
 
 // initialise map
 const map = new L.map('map', {
+	renderer: L.svg(),
 	maxBoundsViscosity: 0.9,
 	minZoom: mapMinZoom,
 	maxZoom: 20,
@@ -229,11 +229,11 @@ const map = new L.map('map', {
 	// metadata badges updated via cronjob.sh
 	const dailyCache = '?d=' + new Date().getFullYear() + new Date().getMonth() + new Date().getDate();
 	$('#info #gotoabout .mylinks').append('<br><br>' +
-		'<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter followers"><img src="assets/img/info-twitter.svg' + dailyCache +'"></a><br>' +
-		'<a href="https://www.youtube.com/@bexhillosm" target="_blank" rel="noopener" title="YouTube subscribers"><img src="assets/img/info-youtube.svg' + dailyCache +'"></a><br><br>' +
-		'<a href="https://osm.org/user/Bexhill-OSM" target="_blank" rel="noopener" title="OpenStreetMap edits"><img src="assets/img/info-osm.svg' + dailyCache +'"></a><br>' +
-		'<a href="https://commons.wikimedia.org/wiki/Special:ListFiles?user=Dr-Mx" target="_blank" rel="noopener" title="Wikimedia Commons uploads"><img src="assets/img/info-wikimedia.svg' + dailyCache +'"></a><br>' +
-		'<a href="https://archive.org/details/@dr-mx" target="_blank" rel="noopener" title="Internet Archive uploads"><img src="assets/img/info-archive.svg' + dailyCache +'"></a>'
+		'<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter followers"><img src="assets/img/info-twitter.svg' + dailyCache +'" loading="lazy"></a><br>' +
+		'<a href="https://www.youtube.com/@bexhillosm" target="_blank" rel="noopener" title="YouTube subscribers"><img src="assets/img/info-youtube.svg' + dailyCache +'" loading="lazy"></a><br><br>' +
+		'<a href="https://osm.org/user/Bexhill-OSM" target="_blank" rel="noopener" title="OpenStreetMap edits"><img src="assets/img/info-osm.svg' + dailyCache +'" loading="lazy"></a><br>' +
+		'<a href="https://commons.wikimedia.org/wiki/Special:ListFiles?user=Dr-Mx" target="_blank" rel="noopener" title="Wikimedia Commons uploads"><img src="assets/img/info-wikimedia.svg' + dailyCache +'" loading="lazy"></a><br>' +
+		'<a href="https://archive.org/details/@dr-mx" target="_blank" rel="noopener" title="Internet Archive uploads"><img src="assets/img/info-archive.svg' + dailyCache +'" loading="lazy"></a>'
 	);
 	// add overlay opacity slider to layer control
 	$('.leaflet-top.leaflet-right').append(
@@ -262,15 +262,22 @@ const map = new L.map('map', {
 			sty.targ.before(
 				'<div id="modalT' + sty.id + '" class="modalTutor leaflet-control" style="' + sty.dir + ':' + sty.dist + 'px;position:' + sty.pos + ';">' +
 				'<div class="modalText"><span>' + (sty.id+1) + '/<span>0</span>:</span> ' + txt + '</div>' +
-				'<button type="button" class="modalButton theme">Got it</button>' +
+				'<button type="button" class="modalButton theme">' + (!sty.last ? 'Next' : 'Got it') + '</button>' +
+				(!sty.last ? ' <button type="button" class="modalButton theme"><i class="fa-solid fa-xmark fa-sm"></i></button>' : '') +
 				'<div class="modalArrow" style="' + sty.dir + ':-5px;"></div></div>'
 			);
 			L.DomEvent.disableClickPropagation($('#modalT' + sty.id)[0]).disableScrollPropagation($('#modalT' + sty.id)[0]);
 			$('.modalText > span > span').text(sty.id+1);
-			$('#modalT' + sty.id + ' .modalButton').on('click', function() {
+			$('#modalT' + sty.id + ' .modalButton').first().on('click', function() {
 				$(this).parent().fadeOut(100, function() { $(this).remove(); });
-				if ($('#modalT' + (sty.id+1)).length) $('#modalT' + (sty.id+1)).fadeIn(100, function() { $(this).find('button').focus(); });
+				if ($('#modalT' + (sty.id+1)).length) $('#modalT' + (sty.id+1)).fadeIn(100, function() { $(this).find('button').first().focus(); });
 				else window.localStorage.tutorial += 'modals;';
+			});
+			if (!sty.last) $('#modalT' + sty.id + ' .modalButton').last().on('click', function() {
+				$(this).parent().fadeOut(100, function() { $('.modalTutor').remove(); });
+			});
+			$('#modalT' + sty.id).keydown(function(e) {
+				if (e.keyCode === 27) $('#modalT' + sty.id + ' .modalButton').last().click();
 			});
 		};
 		showModalTutor(
@@ -283,9 +290,9 @@ const map = new L.map('map', {
 		);
 		showModalTutor(
 			'Zoom in and ' + (noTouch ? 'click' : 'tap') + ' on the map to find information on almost any place.<br>This button will clear any map markers.',
-			{ id: 2, targ: $('#btnClearmap'), dist: '30', dir: 'left', pos: 'absolute' }	
+			{ id: 2, targ: $('#btnClearmap'), dist: '30', dir: 'left', pos: 'absolute', last: true }	
 		);
-		$('#modalT0 button').focus();
+		$('#modalT0 button').first().focus();
 	}
 	// easter holiday decorations
 	if (new Date().getMonth() === 2 && new Date().getDate() >= 29 && new Date().getDate() <= 31) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F95A'));
@@ -295,9 +302,9 @@ const map = new L.map('map', {
 	else if ((new Date().getMonth() === 10 && new Date().getDate() >= 25) || new Date().getMonth() === 11) {
 		$('html').css({ '--main-color': '#b00000', '--second-color': '#993c3c' });
 		// central
-		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84090, 0.47320], [50.84055, 0.47370]], { className: 'xmasMapTree', opacity: 0.9 }).addTo(map);
+		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84090, 0.47320], [50.84055, 0.47370]], { className: 'xmasMapTree' }).addTo(map);
 		// little common
-		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84545, 0.43400], [50.84510, 0.43350]], { className: 'xmasMapTree', opacity: 0.9 }).addTo(map);
+		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84545, 0.43400], [50.84510, 0.43350]], { className: 'xmasMapTree' }).addTo(map);
 		sidebar.append('<img id="holidayImg" alt="" src="assets/img/holidays/xmasSb.png">');
 		$('#homeBox').after('<div id="xmasMsg" title="Show on map" onclick="tour(\'xmas\');">' +
 			'<div id="xmasTitle">~ <span>Christmas Window Display Competition</span> ~</div>' +
@@ -749,7 +756,7 @@ function copyGeos(e) {
 }
 
 $('#walkList').change(function() {
-	$('#walkDesc').html('<figure><img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg"><figcaption>' + suggestWalk($('#walkList').val(), 0) + '</figcaption></figure>');
+	$('#walkDesc').html('<figure><img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg" loading="lazy"><figcaption>' + suggestWalk($('#walkList').val(), 0) + '</figcaption></figure>');
 });
 $('#walkSelect').click(function() {
 	clear_map('walk');
@@ -1220,13 +1227,24 @@ function setLeaflet() {
 			maxNativeZoom: 17,
 			className: 'layerNoclick'
 		},
+		yg1795: {
+			name: '1795 Yeakell, Gardner & Gream',
+			url: 'https://tiles.bexhillheritage.com/yg1795/{z}/{x}/{y}.png',
+			attribution: '<a href="https://digitalarchive.mcmaster.ca/islandora/object/macrepo:80922" target="_blank" rel="noopener">McMaster University</a>',
+			bounds: L.latLngBounds([50.810, 0.320], [50.890, 0.554]),
+			opacity: 1,
+			maxNativeZoom: 15,
+			hide: 1,
+			className: 'layerNoclick'
+		},
 		yg1778: {
 			name: '1778 Yeakell & Gardner',
 			url: 'https://tiles.bexhillheritage.com/yg1778/{z}/{x}/{y}.png',
-			attribution: '<a href="http://www.envf.port.ac.uk/geo/research/historical/webmap/sussexmap/" target="_blank" rel="noopener">University of Portsmouth</a>',
-			bounds: L.latLngBounds([50.810, 0.320], [50.890, 0.631]),
+			attribution: '<a href="http://www.envf.port.ac.uk/geo/research/historical/webmap/sussexmap/Yeakell_36.htm" target="_blank" rel="noopener">University of Portsmouth</a>',
+			bounds: L.latLngBounds([50.810, 0.320], [50.890, 0.554]),
 			opacity: 1,
 			maxNativeZoom: 16,
+			hide: 1,
 			className: 'layerNoclick'
 		}
 	};
@@ -1555,7 +1573,7 @@ function populatePoiTab() {
 		for (let poi in pois) if (pois[poi].catName === categoryList[c]) checkboxContent += L.Util.template(
 			'<div class="poi-checkbox">' +
 				'<label title="{name}">' +
-					'<img alt="" src="assets/img/icons/{icon}.png">' +
+					'<img alt="" src="assets/img/icons/{icon}.png" loading="lazy">' +
 					'<input type="checkbox" id="{key}" data-keyword="{keyword}"><span>{name}</span>' +
 				'</label>' +
 			'</div>',
@@ -1623,7 +1641,7 @@ function popupWindow(type, url, pTitle, iCap, iAni) {
 		}
 	}]);
 	// popup window
-	else if (type === 'popup' || type === 'auto') window.open(url, pTitle || 'aWindow', 'noopener width=1024, height=768, menubar=0, toolbar=0, resizable=1').focus();
+	else if (type === 'popup' || type === 'auto') window.open(encodeURI(url), pTitle || 'aWindow', 'popup,width=1024,height=768').focus();
 }
 
 // keyboard shortcuts

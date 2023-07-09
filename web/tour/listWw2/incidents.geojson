@@ -2543,7 +2543,11 @@
 			"type": "Feature",
 			"properties": {
 				"name": "Railway yard, Reginald Road",
-				"date": "1940-11-01"
+				"date": "1940-11-01",
+				"description": "Builders merchants M.P. Harris' crane was 'blown about like a feather' by the bomb blast, landing on the cement store.",
+				"img": {
+					"0": "listWw2/bomb/weststationgoods(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",

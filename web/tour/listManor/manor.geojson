@@ -299,7 +299,10 @@
 			"name": "Separate Dwelling",
 			"title": "1 The Cottage",
 			"type": "building",
-			"description": "Used as servants quarters before the north-east wing was built."
+			"description": "Used as servants quarters before the north-east wing was built.",
+			"img": {
+				"0": "listManor/img/cottage1(0)"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -325,7 +328,10 @@
 			"name": "Separate Dwelling",
 			"title": "South Lodge",
 			"type": "building",
-			"description": "Also used for the servants living quarters."
+			"description": "Also used for the servants living quarters.",
+			"img": {
+				"0": "listManor/img/southlodge(0)"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -491,7 +497,10 @@
 			"title": "Kitchen and Scullery",
 			"name": "Court Lodge",
 			"type": "building",
-			"description": "Neven du Mont Family, early C20."
+			"description": "Neven du Mont Family, early C20.",
+			"img": {
+				"0": "listManor/img/kitchen(0)"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",

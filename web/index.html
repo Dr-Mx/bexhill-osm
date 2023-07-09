@@ -30,7 +30,7 @@
 
 	<!-- CSS | site plugins -->
 	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.4.0">
-	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.7.1">
+	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.9.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/easy-button.css?v=2.3.0">
@@ -80,7 +80,7 @@
 					<div id="homeBox">
 						<div id="weather"><span class="comment">Loading weather...</span></div>
 						<div id="minimap">
-							<img class="darkbaselayer" src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap">
+							<img class="darkbaselayer" src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap" loading="lazy">
 							<map name="m_minimap">
 								<area title="Bexhill-on-Sea" shape="rect" coords="211,154,315,172">
 								<area title="Barnhorn" shape="rect" coords="0,141,74,174">
@@ -108,11 +108,11 @@
 					<div id="newFeed">
 						<div>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jul 23 - <a onclick="switchTab('tour', 'overlays', '', '');">1795 Yeakell, Gardner &amp; Gream</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>May 23 - <a onclick="switchTab('tour', 'northeye', '', 'prison');">Northeye Prison layout</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Mar 23 - 1950 Aerial</li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Dec 22 - <a onclick="switchTab('tour', 'film', '', 'filmingLoc');">Filming Locations tour</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Aug 22 - <a onclick="switchTab('tour', 'overlays');">1983 coastal aerial photographs</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jul 22 - <a onclick="switchTab('tour', 'manor', '', 'manorHouse');">The Manor House layout</a></li>
 							</ul>
 						</div>
 						<div id="osmFeed"></div><!-- div auto-populated -->
@@ -160,7 +160,7 @@
 					</div>
 					<hr>
 					<h3>Other local walking tours</h3>
-					<p><a href="https://www.bexhillmuseum.org.uk/events" target="_blank" rel="noopener" title="Guided walks by Bexhill Museum (summer)"><img src="assets/img/walking-bexhillmuseum.png" alt="Bexhill Museum"></a></p>
+					<p><a href="https://www.bexhillmuseum.org.uk/events" target="_blank" rel="noopener" title="Guided walks by Bexhill Museum (summer)"><img src="assets/img/walking-bexhillmuseum.png" alt="Bexhill Museum" loading="lazy"></a></p>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="tour">
@@ -169,26 +169,26 @@
 					<div id="tourControls">
 						<button disabled type="button" id="tourPrev" title="Previous article"><i class="fa-solid fa-chevron-left"></i></button>
 						<select id="tourList" class="theme" title="Select article">
-							<option value="bexhill" data-keyword="bexhill, history, heraldry">Bexhill-on-Sea</option>
-							<option value="prehistory" data-keyword="prehistory, geology, dinosaur, fossil">Prehistory</option>
-							<option value="manor" data-keyword="old town manor house, manor gardens">Old Town Manor</option>
-							<option value="amsterdam" data-keyword="amsterdam shipwreck">The Amsterdam Shipwreck</option>
-							<option value="smuggling" data-keyword="smuggling, sidley green">Smuggling</option>
-							<option value="martello" data-keyword="martello, tower, fort">Martello Towers</option>
-							<option value="racing" data-keyword="motor racing">Motor Racing</option>
-							<option value="railways" data-keyword="railway, west branch line">Railways</option>
-							<option value="trams" data-keyword="tram, trollybus">Tramway &amp; Trolleybuses</option>
-							<option value="dlwp" data-keyword="de la warr pavilion, dlwp">De La Warr Pavilion</option>
-							<option value="ww2" data-keyword="world war, ww2, wwii, bomb map, air-raid shelter, pillbox">World War II</option>
-							<option value="northeye" data-keyword="northeye prison, royal air force, raf">Northeye Prison Site</option>
-							<option value="heritage" data-keyword="lost heritage, ruin">Lost Heritage</option>
-							<option value="boundary" data-keyword="boundary stone, marker">Boundary Stones</option>
-							<option value="people" data-keyword="famous notable people, john logie baird, canon basil davis ixion, desmond llewelyn, spike milligan, maharaja cooch behar">Notable People</option>
-							<option value="film" data-keyword="filming locations, television, cinema">Filming Locations</option>
-							<option value="clocks" data-keyword="public street clock">Public Clocks</option>
-							<option value="surveying" data-keyword="ordnance survey point, benchmark">OS Surveying Points</option>
-							<option value="overlays" data-keyword="maps, aerial photographs">Other Overlays</option>
-							<option value="zrefs">~ References &amp; further reading</option>
+							<option value="bexhill" data-keyword="bexhill, history, heraldry">&#x1F3D6;&#xFE0F; Bexhill-on-Sea</option>
+							<option value="prehistory" data-keyword="prehistory, geology, dinosaur, fossil">&#x1F996; Prehistory</option>
+							<option value="manor" data-keyword="old town manor house, manor gardens">&#x1F3E0; Old Town Manor</option>
+							<option value="amsterdam" data-keyword="amsterdam shipwreck">&#x2693; The Amsterdam Shipwreck</option>
+							<option value="smuggling" data-keyword="smuggling, sidley green">&#x1F4E6; Smuggling</option>
+							<option value="martello" data-keyword="martello, tower, fort">&#x1F9F1; Martello Towers</option>
+							<option value="racing" data-keyword="motor racing">&#x1F3C1; Motor Racing</option>
+							<option value="railways" data-keyword="railway, west branch line">&#x1F6E4;&#xFE0F; Railways</option>
+							<option value="trams" data-keyword="tram, trollybus">&#x1F68E; Tramway &amp; Trolleybuses</option>
+							<option value="dlwp" data-keyword="de la warr pavilion, dlwp">&#x1F3AD; De La Warr Pavilion</option>
+							<option value="ww2" data-keyword="world war, ww2, wwii, bomb map, air-raid shelter, pillbox">&#x1FA96; World War II</option>
+							<option value="northeye" data-keyword="northeye prison, royal air force, raf">&#x26D3;&#xFE0F; Northeye Prison Site</option>
+							<option value="heritage" data-keyword="lost heritage, ruin">&#x1F3DB;&#xFE0F; Lost Heritage</option>
+							<option value="boundary" data-keyword="boundary stone, marker">&#x1FAA8; Boundary Stones</option>
+							<option value="people" data-keyword="famous notable people, john logie baird, canon basil davis ixion, desmond llewelyn, spike milligan, maharaja cooch behar">&#x1F934;&#x1F3FB; Notable People</option>
+							<option value="film" data-keyword="filming locations, television, cinema">&#x1F3A5; Filming Locations</option>
+							<option value="clocks" data-keyword="public street clock">&#x1F570;&#xFE0F; Public Clocks</option>
+							<option value="surveying" data-keyword="ordnance survey point, benchmark">&#x1F4D0; OS Surveying Points</option>
+							<option value="overlays" data-keyword="maps, aerial photographs">&#x1F5FA;&#xFE0F; Other Overlays</option>
+							<option value="zrefs">&#x3030;&#xFE0F; References &amp; further reading</option>
 						</select>
 						<button type="button" id="tourNext" title="Next article"><i class="fa-solid fa-chevron-right"></i></button>
 					</div>
@@ -213,53 +213,55 @@
 				<div class="sidebar-body custscroll">
 					<h3>Map display options</h3>
 					<div id="setOptions">
-						<p class="setLabel"><select id="inputTheme" class="theme">
-							<option selected value="auto">Device theme</option>
-							<option value="light">Light theme</option>
-							<option value="dark">Dark theme</option>
-						</select><label for="inputTheme">Appearance</label></p>
-						<p class="setLabel switch" title="Switch between mi/ft (default) or km/m"><input id="inputUnit" data-cache type="checkbox"><label for="inputUnit" class="slider"></label><label for="inputUnit">Metric for measurements</label></p>
-						<p class="setLabel switch" title="Use Mapillary instead of Google where possible"><input id="inputStView" data-cache type="checkbox"><label for="inputStView" class="slider"></label><label for="inputStView">Mapillary street-level imagery</label></p>
-						<p class="setLabel switch" title="Zoom to History Tour overlays on load"><input id="inputAutoZoom" data-cache type="checkbox" checked><label for="inputAutoZoom" class="slider"></label><label for="inputAutoZoom">Auto-zoom History Tour overlays</label></p>
-						<p class="setLabel" title="Clears local stored data"><button id="btnReset" type="button"><i class="fa-solid fa-rotate-left"></i></button><label for="btnReset">Reset to defaults</label></p>
+						<p class="setLabel"><label for="inputTheme">Appearance</label>
+							<select id="inputTheme" class="theme">
+								<option selected value="auto">Device theme</option>
+								<option value="light">Light theme</option>
+								<option value="dark">Dark theme</option>
+							</select></p>
+						<p class="setLabel switch"><label for="inputUnit">Metric for measurements</label><input id="inputUnit" data-cache type="checkbox"><label for="inputUnit" class="slider"></label></p>
+						<p class="setLabel switch"><label for="inputStView">Mapillary street-level imagery</label><input id="inputStView" data-cache type="checkbox"><label for="inputStView" class="slider"></label></p>
+						<p class="setLabel switch"><label for="inputAutoZoom">Auto-zoom History Tour overlays</label><input id="inputAutoZoom" data-cache type="checkbox" checked><label for="inputAutoZoom" class="slider"></label></p>
+						<p class="setLabel"><label for="btnReset">Clear locally stored data</label><button id="btnReset" type="button"><i class="fa-solid fa-rotate-left"></i></button></p>
 					</div>
 					<div id="devTools">
 						<h3>Development tools</h3>
 						<div>
-							<p class="setLabel"><button id="btnNotes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button><label for="btnNotes">Display OSM map notes</label></p>
-							<p class="setLabel"><button disabled id="btnExportQuery" type="button"><i class="fa-solid fa-upload"></i></button><label for="btnExportQuery">Export current query to Overpass Turbo</label></p>
-							<p class="setLabel"><button id="btnDownloadBB" type="button"><i class="fa-solid fa-download"></i></button><label for="btnDownloadBB">Download all OSM data within map bounds (xml)</label></p>
-							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
-								<input id="inputOverpass" list="inputOverpassQ" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="customQuery($(this).prev().val(), true);"></span>
-								<datalist id="inputOverpassQ">
-									<option value="[fixme]">
-									<option value="[note]">
-									<option value="[shop=vacant]">
-									<option value="['wikimedia_commons:pano']">
-									<option value="['wikimedia_commons:video']">
-								</datalist>
-								<span class="setLabel smallCheckbox"><input id="inputOverpassR" type="checkbox"><label for="inputOverpassR">Include relations</label></span>
-							</p>
-							<p>OverpassAPI Attic Data <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener" title="Display data from a specific date"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
+							<p class="setLabel"><label for="btnNotes">Display OSM map notes</label><button id="btnNotes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button></p>
+							<p class="setLabel"><label for="btnExportQuery">Export current query to Overpass Turbo</label><button disabled id="btnExportQuery" type="button"><i class="fa-solid fa-upload"></i></button></p>
+							<p class="setLabel"><label for="btnDownloadBB">Download all OSM data within map bounds (xml)</label><button id="btnDownloadBB" type="button"><i class="fa-solid fa-download"></i></button></p>
+							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a>
+								<div style="text-align:right;">
+									<input id="inputOverpass" list="inputOverpassQ" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="customQuery($(this).prev().val(), true);"></span>
+									<datalist id="inputOverpassQ">
+										<option value="[fixme]">
+										<option value="[note]">
+										<option value="[shop=vacant]">
+										<option value="['wikimedia_commons:pano']">
+										<option value="['wikimedia_commons:video']">
+									</datalist>
+									<span class="setLabel smallCheckbox"><input id="inputOverpassR" type="checkbox"><label for="inputOverpassR">Include relations</label></span>
+								</div></p>
+							<p class="setLabel"><label for="inputAttic">OverpassAPI Attic Data <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener" title="Display data from a specific date"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<input id="inputAttic" type="date" min="2016-01-01"></p>
-							<p>localStorage cache duration for Overpass queries :<br>
-								<span class="setLabel inputOpCacheL"><input id="inputOpCache" value="120" min="0" max="720" type="number"><label for="inputOpCache">hours (set to 0 to bypass)</label></span></p>
-							<p>Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
+							<p class="setLabel"><label for="inputOpCacheL">localStorage cache hours for Overpass queries</label>
+								<input id="inputOpCache" value="120" min="0" max="720" type="number"></p>
+							<p class="setLabel"><label for="inputRevServer">Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<select id="inputRevServer" class="theme">
 									<option selected value="nominatim">nominatim.openstreetmap.org</option>
 									<option disabled value="opencage">api.opencagedata.com</option>
 									<option value="photon">photon.komoot.io</option>
 									<option value="openrouteservice">api.openrouteservice.org</option>
 								</select></p>
-							<p>OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a> :<br>
+							<p class="setLabel"><label for="inputOpServer">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<select id="inputOpServer" class="theme">
 									<option value="overpass-api.de">overpass-api.de</option>
 									<option value="overpass.openstreetmap.ru">overpass.openstreetmap.ru</option>
 									<option value="overpass.kumi.systems">overpass.kumi.systems</option>
 									<option selected value="maps.mail.ru/osm/tools/overpass">maps.mail.ru</option>
 								</select></p>
-							<p class="setLabel switch"><input id="inputBbox" data-uri type="checkbox"><label for="inputBbox" class="slider"></label><label for="inputBbox">OverpassAPI uses bbox instead of area id</label></p>
-							<p class="setLabel switch"><input id="inputDebug" type="checkbox"><label for="inputDebug" class="slider"></label><label for="inputDebug">Debug mode</label></p>
+							<p class="setLabel switch"><label for="inputBbox">OverpassAPI uses bbox instead of area id</label><input id="inputBbox" data-uri type="checkbox"><label for="inputBbox" class="slider"></label></p>
+							<p class="setLabel switch"><label for="inputDebug">Debug mode</label><input id="inputDebug" type="checkbox"><label for="inputDebug" class="slider"></label></p>
 						</div>
 					</div>
 				</div>
@@ -278,18 +280,18 @@
 						<p>Since 2016, this independent website has been continuously archiving Bexhill-on-Sea as it stands today; heralding history, community and business in an informative, accessible form.</p>
 						<p>Although Bexhill-OSM is not a business directory as such, nor a place for direct advertising, we welcome listings on all publicly visitable places.</p>
 						<div id="myprofile">
-							<img alt="Alexis Markwick" title="Receiving the 'Freedom of Bexhill' award, May 2022." src="assets/img/info-me.jpg" onclick="popupWindow('youtube', 'xdhRKsva-Pg');">
+							<img alt="Alexis Markwick" title="Receiving the 'Freedom of Bexhill' award, May 2022." src="assets/img/info-me.jpg" onclick="popupWindow('youtube', 'xdhRKsva-Pg');" loading="lazy">
 							<p>Web-development and the underlying map data is maintained by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</p>
 							If you're involved with a local group, I'll be happy to come and speak at one of your events about the project and give a demonstration.
 						</div>
 						<p class="mylinks">
-							<a href="#" onclick="this.href='mailto:' + email;" title="Email me"><img src="assets/img/info-email.svg"></a>
+							<a href="#" onclick="this.href='mailto:' + email;" title="Email me"><img src="assets/img/info-email.svg" loading="lazy"></a>
 						</p>
 					</div>
 					<div id="gotosoftware"><hr>
 					<h3>Software</h3>
 						<p>Bexhill-OSM is completely open-source. The project is freely available for anyone to inspect, modify and enhance.</p>
-						<p class="mylinks"><a title="Github repository" href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><img src="assets/img/info-github.svg"></a></p>
+						<p class="mylinks"><a title="Github repository" href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><img src="assets/img/info-github.svg" loading="lazy"></a></p>
 						Thanks to these developers:
 						<ul>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
@@ -333,7 +335,7 @@
 					<div id="gotoprivacy"><hr>
 					<h3>Privacy Policy</h3>
 						<p>No ads, trackers, registrations, or data collections. You can verify the privacy of this site using <a href="https://themarkup.org/blacklight?url=bexhill-osm.org.uk" target="_blank" rel="noopener">Blacklight Real-Time Website Privacy Inspector.</a></p>
-						Your browser's local-storage is used only to remember settings, bookmarks and to cache POIs. You may clear this storage at any time by clicking Settings > <i class="theme fa-solid fa-rotate-left fa-border fa-fw"></i> Reset to defaults.
+						Your browser's local-storage is used only to remember settings, bookmarks and to cache POIs. You may clear this storage at any time by clicking Settings > <i class="theme fa-solid fa-rotate-left fa-border fa-fw"></i> Clear locally stored data.
 					</div>
 					<a class="theme anchor"></a>
 				</div>
@@ -345,12 +347,12 @@
 	<div id="map" class="sidebar-map leaflet-touch"></div>
 
 	<!-- JavaScript | site plugins -->
-	<script src="assets/js/plugins/jquery.min.js?v=3.6.0"></script>
+	<script src="assets/js/plugins/jquery.min.js?v=3.7.0"></script>
 	<script src="assets/js/plugins/jquery-ui.min.js?v=1.13.1"></script>
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v=1.5.0rc1"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v=1.3.4"></script>
 	<script src="assets/js/plugins/imageMapResizer.min.js?v=1.0.10"></script>
-	<script src="assets/js/plugins/leaflet.js?v=1.7.1"></script>
+	<script src="assets/js/plugins/leaflet.js?v=1.9.4"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v=0.2.1"></script>
 	<script src="assets/js/plugins/L.VisualClick.js?v=1.1.0"></script>
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v=0.4.0"></script>

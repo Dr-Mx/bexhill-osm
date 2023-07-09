@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v7.7.0
+
+**Date:** 09/07/2023
+
+Updated
+ - leaflet.js 1.9.4
+ - jquery.js 3.7.0
+
+Site changes
+ - Enable lazy loading of most images in sidebar
+ - Emoticons added to tour index
+ - Refactored settings menu
+ - 1795 Yeakell & Gardener overlay
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.6.0
 
 **Date:** 15/05/2023
@@ -763,7 +779,7 @@ Site changes
  - New sidebar icons
  - Custom POI icons for food cuisine and various other elements
  - Adjusted sidebar sizes slightly
- - Added Yeakell & Gardener 1776 overlay
+ - Added Yeakell & Gardener 1778 overlay
 
 
 ## v2.10.0 - POI result list
