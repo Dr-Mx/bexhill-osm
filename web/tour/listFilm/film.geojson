@@ -11,7 +11,7 @@
 					"0": "listFilm/img/sherlock(0)"
 				},
 				"imgattrib": {
-					"0": "1912 | French Éclair company"
+					"0": "1912 | &copy; French Éclair company"
 				}
 			},
 			"geometry": {
@@ -30,8 +30,8 @@
 					"1": "listFilm/img/sherlock(2)"
 				},
 				"imgattrib": {
-					"0": "1912 | French Éclair company",
-					"1": "1912 | French Éclair company"
+					"0": "1912 | &copy; French Éclair company",
+					"1": "1912 | &copy; French Éclair company"
 				}
 			},
 			"geometry": {

@@ -36,9 +36,9 @@
 				},
 				"imgattrib": {
 					"0": "1865",
-					"1": "c1908 | East Sussex Libraries",
-					"2": "c1908 | East Sussex Libraries",
-					"3": "c1908 | East Sussex Libraries"
+					"1": "c1908 | &copy; East Sussex Libraries",
+					"2": "c1908 | &copy; East Sussex Libraries",
+					"3": "c1908 | &copy; East Sussex Libraries"
 				}
 			},
 			"geometry": {
@@ -56,7 +56,7 @@
 					"0": "listMartello/img/mt53(0)"
 				},
 				"imgattrib": {
-					"0": "2020 | Derek Smith"
+					"0": "2020 | &copy; Derek Smith"
 				}
 			},
 			"geometry": {
@@ -74,7 +74,7 @@
 					"0": "listMartello/img/mt52(0)"
 				},
 				"imgattrib": {
-					"0": "2020 | Derek Smith"
+					"0": "2020 | &copy; Derek Smith"
 				}
 			},
 			"geometry": {

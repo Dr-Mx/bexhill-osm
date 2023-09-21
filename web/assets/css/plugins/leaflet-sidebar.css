@@ -27,11 +27,11 @@
 @media (min-width: 1024px) and (max-width: 1299px) {
 	.sidebar {
 		width: 350px;
-		max-height: 850px; } }
+		max-height: 950px; } }
 @media (min-width: 1300px) {
 	.sidebar {
 		width: 450px;
-		max-height: 850px; } }
+		max-height: 950px; } }
 .sidebar.collapsed {
 	width: 35px; }
 .sidebar.collapsed .sidebar-pane.active .sidebar-body, .sidebar.collapsed #holidayImg {

@@ -20,7 +20,11 @@ body {
 	height: 100%;
 	scrollbar-color: var(--scr-thumb) var(--scr-track);
 	scrollbar-width: thin;
-}
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(var(--scroll-shadow), 0.5));
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: 100% 20px;
+}}
 body::-webkit-scrollbar {
 	width: 7px;
 	background-color: var(--scr-track);
@@ -37,18 +41,14 @@ body::-webkit-scrollbar-thumb {
 #reference {
 	text-align: left;
 }
-#reference ol {
+#refList ol {
 	margin-top: 5px;
 }
-#reference > a > b {
-	color: var(--text-color);
+#refList #reading {
+	list-style-type: lower-roman;
 }
-#reference > a::before {
-	display: inline-block;
-	font: var(--fa-font-solid);
-	content: '\f053';
-	text-align: center;
-	width: 1.25em;
+#refList > a > b {
+	color: var(--text-color);
 }
 
 h3 {
@@ -56,13 +56,16 @@ h3 {
 }
 
 sup {
-	font-size: 60%;
+	font-size: 70%;
+	background: var(--main-color);
+	border-radius: 3px;
+	color: var(--bg-color);
+	text-align: center;
+	margin: 0 2px;
 	cursor: pointer;
+	padding: 0 2px;
 }
-sup:hover { color: var(--main-color); }
-sup::before { content: "["; }
-sup::after { content: "]"; }
-
+sup:hover { background: var(--text-color); }
 ul, ol {
 	padding-left: 20px;
 }
@@ -188,10 +191,10 @@ figcaption {
 a {
 	text-decoration: none;
 }
-a:link, a:visited, a:hover, a, sup {
+a:link, a:visited, a:hover, a {
 	color: var(--main-color);
 	cursor: pointer;
 }
-a:hover, sup:hover {
+a:hover {
 	text-decoration: underline;
 }

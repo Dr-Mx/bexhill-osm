@@ -332,8 +332,8 @@
 					"2": "listWw2/shelter/eastparade(2)"
 				},
 				"imgattrib": {
-					"0": "The Royal Windsor Website & Forum",
-					"1": "ESRO CA/5/3B [40]"
+					"0": "&copy; The Royal Windsor Website & Forum",
+					"1": "&copy; ESRO CA/5/3B [40]"
 				}
 			},
 			"geometry": {
@@ -351,7 +351,7 @@
 					"1": "listWw2/shelter/wickhamavenue(1)"
 				},
 				"imgattrib": {
-					"0": "Bexhill Observer"
+					"0": "&copy; Bexhill Observer"
 				}
 			},
 			"geometry": {
@@ -584,7 +584,7 @@
 					"2": "listWw2/shelter/sidleygreen(2)"
 				},
 				"imgattrib": {
-					"2": "ESRO SPA 1944"
+					"2": "&copy; ESRO SPA 1944"
 				}
 			},
 			"geometry": {
@@ -779,10 +779,10 @@
 					"3": "listWw2/shelter/townhallsquare(3)"
 				},
 				"imgattrib": {
-					"0": "Bexhill Observer",
-					"1": "Bexhill Observer",
-					"2": "Bexhill Observer",
-					"3": "Bexhill Observer"
+					"0": "&copy; Bexhill Observer",
+					"1": "&copy; Bexhill Observer",
+					"2": "&copy; Bexhill Observer",
+					"3": "&copy; Bexhill Observer"
 				}
 			},
 			"geometry": {

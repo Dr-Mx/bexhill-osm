@@ -5,6 +5,8 @@
 	--bg-color2: rgba(35, 35, 39, 0.95);
 	--scr-thumb: #555555;
 	--scr-track: #0c0c0d;
+	--scroll-shadow: 0, 0, 0;
+	--scroll-shadow-popup: 0, 0, 0;
 }
 .spinner svg circle {
 	fill: rgba(0, 0, 0, 0.75);
@@ -39,7 +41,7 @@
 #weather, #newFeed ul {
 	color: #688c81;
 }
-.leaflet-bar a, .leaflet-bar a:hover {
+.leaflet-bar a, .leaflet-bar a:hover, .setLabel {
 	border-bottom: 1px solid var(--bg-color);
 }
 .leaflet-bar a:last-child {
@@ -60,7 +62,7 @@ input[type=range] {
 .sidebar-header {
 	color: #dddddd;
 }
-.leaflet-control-layers-separator, #devTools {
+.leaflet-control-layers-separator {
 	border-top: 2px solid var(--bg-color);
 }
 #poi-results, #walkDesc img, #thennow img, #myprofile img, .popup-imgContainer > a > img, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar:not(#inputWw2) {
@@ -87,7 +89,7 @@ input[type=range]:hover::-moz-range-thumb { background-color: var(--hover-color)
 	border-color: #666666;
 }
 button:disabled, button:disabled:hover, button:disabled::after, button:disabled:hover::after {
-	color: #555555;
+	color: #555555 !important;
 }
 input:not([type=range]), select, #sidebar button:not(.modalButton), .leaflet-tooltip {
 	border: 1px solid #333 !important;
@@ -111,7 +113,7 @@ input:not([type=range]), select, #sidebar button:not(.modalButton), .leaflet-too
 	background-color: rgba(12, 12, 13, 0.5) !important;
 }
 .popup-fhrs > a > img {
-	filter: brightness(0.75);
+	filter: brightness(75%);
 }
 .leaflet-container a.leaflet-popup-close-button {
 	border: 3px solid #333333;

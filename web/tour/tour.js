@@ -498,7 +498,7 @@ function tour(tName, tID, fromPermalink) {
 				success: function(json) {
 					imageOverlay.clearLayers().addLayer(L.geoJSON(json, {
 						onEachFeature: function(feature, layer) {
-							setJsonPopup(feature, layer, [feature.properties.title, feature.properties.name, ''], 'Bexhill Museum');
+							setJsonPopup(feature, layer, [feature.properties.title, feature.properties.name, ''], '&copy; Bexhill Museum');
 							layer._leaflet_id = feature.properties.id;
 							if (feature.properties.name) poiList.push(layer);
 						},
@@ -552,7 +552,7 @@ function tour(tName, tID, fromPermalink) {
 				success: function(json) {
 					L.geoJSON(json, {
 						onEachFeature: function(feature, layer) {
-							setJsonPopup(feature, layer, [feature.properties.name, feature.properties.date, ''], 'Bexhill Museum');
+							setJsonPopup(feature, layer, [feature.properties.name, feature.properties.date, ''], '&copy; Bexhill Museum');
 						},
 						pointToLayer: function(feature, latlng) {
 							const marker = setMarker(latlng, true, {
@@ -599,15 +599,16 @@ function tour(tName, tID, fromPermalink) {
 			setPageTitle('The Motor Trail');
 			setTour('racing');
 			break;
-		case 'bexhillStation':
-			rQuery = true;
-			show_overpass_layer('way(397839677);', tName);
-			setTour('railways');
-			break;
 		case 'westBranch':
 			show_overpass_layer('(node(6528018966);node(318219478););', tName);
 			if (actOverlayLayer !== 'br1959') map.addLayer(tileOverlayLayers[tileOverlayLayer.br1959.name]);
 			if (!fromPermalink) zoom_area(false, tileOverlayLayer.br1959.bounds);
+			setPageTitle('Bexhill West Railway');
+			setTour('railways');
+			break;
+		case 'bexhillStation':
+			rQuery = true;
+			show_overpass_layer('way(397839677);', tName);
 			setTour('railways');
 			break;
 		case 'glynegapStation':
@@ -665,7 +666,7 @@ function tour(tName, tID, fromPermalink) {
 							return true;
 						},
 						onEachFeature: function(feature, layer) {
-							if (feature.properties.name) setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], 'Bexhill Observer');
+							if (feature.properties.name) setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], '&copy; Bexhill Observer');
 						},
 						pointToLayer: function(feature, latlng) {
 							const marker = setMarker(latlng, interactive, { fillColor: fillColor, className: 'ww2bb' + (feature.properties.date ? ' ww2-' + feature.properties.date.split(' ')[0] : '') }, true);
@@ -744,7 +745,7 @@ function tour(tName, tID, fromPermalink) {
 					let x = 0;
 					L.geoJSON(json, {
 						onEachFeature: function(feature, layer) {
-							setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], 'Bexhill Museum');
+							setJsonPopup(feature, layer, [feature.properties.name, '', feature.properties.date], '&copy; Bexhill Museum');
 						},
 						pointToLayer: function(feature, latlng) {
 							const marker = setMarker(latlng, true, { fillColor: '#008800' }, true);
@@ -788,7 +789,7 @@ function tour(tName, tID, fromPermalink) {
 								preriot: 'Destroyed by \'86 riot',
 								postriot: 'After \'86 riot'
 							};
-							setJsonPopup(feature, layer, [feature.properties.name, feature.properties.timeline ? pSubtitle[feature.properties.timeline] : '', ''], 'Bexhill Observer');
+							setJsonPopup(feature, layer, [feature.properties.name, feature.properties.timeline ? pSubtitle[feature.properties.timeline] : '', ''], '&copy; Bexhill Observer');
 							layer._leaflet_id = feature.properties.id;
 							if (feature.properties.name) poiList.push(layer);
 						},
@@ -994,6 +995,7 @@ function tour(tName, tID, fromPermalink) {
 				}
 			});
 			actImgLayer = tName;
+			setPageTitle('1983 Chorley Handford');
 			setTour('overlays');
 			break;
 		case 'wl1950':   /* fall through */
@@ -1029,7 +1031,10 @@ function tourFocus(tName, tID) {
 function tourRef(tourVal, item) {
 	$('#tourList').val('zrefs').trigger('change');
 	$('#tourFrame').one('load', function() {
-		$(this).contents().find('#' + tourVal + ' > li').eq(item - 1).css('background-color', $('html').css('--main-color') + '55');
+		$(this).contents().find('#' + tourVal + ' > li').eq(item - 1).css({
+			'background-color': $('html').css('--main-color') + '22',
+			'border-radius': '2px'
+		});
 		$(this).contents().find('#' + tourVal).prev()[0].scrollIntoView({ behavior: 'smooth' });
 	});
 }

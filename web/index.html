@@ -29,7 +29,7 @@
 	<meta name="theme-color" content="#a04900">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.4.0">
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.4.2">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.9.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
@@ -38,8 +38,8 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=7.7.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.7.0" disabled id="darkcss">
+	<link rel="stylesheet" href="assets/css/site.css?v=7.8.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.8.0" disabled id="darkcss">
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -108,21 +108,21 @@
 					<div id="newFeed">
 						<div>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Sep 23 - Public Rights-of-Way overlay</li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jul 23 - <a onclick="switchTab('tour', 'overlays', '', '');">1795 Yeakell, Gardner &amp; Gream</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>May 23 - <a onclick="switchTab('tour', 'northeye', '', 'prison');">Northeye Prison layout</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Mar 23 - 1950 Aerial</li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Dec 22 - <a onclick="switchTab('tour', 'film', '', 'filmingLoc');">Filming Locations tour</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Aug 22 - <a onclick="switchTab('tour', 'overlays');">1983 coastal aerial photographs</a></li>
 							</ul>
 						</div>
 						<div id="osmFeed"></div><!-- div auto-populated -->
 					</div>
 				</div>
-				<div id="creditFooter"><img src="favicon-32x32.png" alt="logo"><span><i class="fa-regular fa-copyright"></i> Bexhill-OSM 2016-</span></div>
+				<div id="creditFooter"><span><a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE" target="_blank" rel="noopener" title="Copyright and Licence"><i class="fa-regular fa-copyright"></i> Bexhill-OSM</a> 2016-</span></div>
 			</div>
 			<div class="sidebar-pane" id="pois">
 				<div class="sidebar-header"><span class="sidebar-header-text">Find Places</span><span class="sidebar-close" title="Collapse"></span></div>
-				<div class="sidebar-body custscroll">
+				<div class="sidebar-body">
 					<div id="poi-results" class="custscroll">
 						<h3>Results</h3>
 						<button type="button" id="btnPoiResultsClear" title="Clear results" onclick="clear_map('markers');"><i class="fa-solid fa-trash"></i></button>
@@ -165,7 +165,7 @@
 			</div>
 			<div class="sidebar-pane" id="tour">
 				<div class="sidebar-header"><span class="sidebar-header-text">History Tour</span><span class="sidebar-close" title="Collapse"></span></div>
-				<div class="sidebar-body custscroll">
+				<div class="sidebar-body">
 					<div id="tourControls">
 						<button disabled type="button" id="tourPrev" title="Previous article"><i class="fa-solid fa-chevron-left"></i></button>
 						<select id="tourList" class="theme" title="Select article">
@@ -215,8 +215,8 @@
 					<div id="setOptions">
 						<p class="setLabel"><label for="inputTheme">Appearance</label>
 							<select id="inputTheme" class="theme">
-								<option selected value="auto">Device theme</option>
-								<option value="light">Light theme</option>
+								<option value="auto">Device theme</option>
+								<option selected value="light">Light theme</option>
 								<option value="dark">Dark theme</option>
 							</select></p>
 						<p class="setLabel switch"><label for="inputUnit">Metric for measurements</label><input id="inputUnit" data-cache type="checkbox"><label for="inputUnit" class="slider"></label></p>
@@ -261,7 +261,7 @@
 									<option selected value="maps.mail.ru/osm/tools/overpass">maps.mail.ru</option>
 								</select></p>
 							<p class="setLabel switch"><label for="inputBbox">OverpassAPI uses bbox instead of area id</label><input id="inputBbox" data-uri type="checkbox"><label for="inputBbox" class="slider"></label></p>
-							<p class="setLabel switch"><label for="inputDebug">Debug mode</label><input id="inputDebug" type="checkbox"><label for="inputDebug" class="slider"></label></p>
+							<p class="setLabel switch"><label for="inputDebug">DEBUG MODE</label><input id="inputDebug" type="checkbox"><label for="inputDebug" class="slider"></label></p>
 						</div>
 					</div>
 				</div>
@@ -328,7 +328,7 @@
 							<li><a href="https://www.opentopodata.org/" target="_blank" rel="noopener">Open Topo Data API</a> &copy; Andrew Nisbet</li>
 							<li><a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeather API</a> &copy; OpenWeather</li>
 							<li><a href="https://osmcha.org" target="_blank" rel="noopener">OSM Changeset Analyser API</a> &copy; OSMCha</li>
-							<li><a href="https://ratings.food.gov.uk/open-data/en-GB" target="_blank" rel="noopener">UK Food Hygiene API</a> &copy; Food Standards Agency</li>
+							<li><a href="https://ratings.food.gov.uk/open-data" target="_blank" rel="noopener">UK Food Hygiene API</a> &copy; Food Standards Agency</li>
 							<li><a href="https://admiraltyapi.portal.azure-api.net/" target="_blank" rel="noopener">UK Tidal API</a> &copy; UK Hydrographic Office</li>
 						</ul>
 					</div>
@@ -368,11 +368,11 @@
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=7.7.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=7.7.0"></script>
-	<script src="assets/js/tags-parsers.js?v=7.7.0"></script>
-	<script src="assets/js/pois-type.js?v=7.7.0"></script>
-	<script src="tour/tour.js?v=7.7.0"></script>
-	<script src="assets/js/site.js?v=7.7.0"></script>
+	<script src="assets/js/config.js?v=7.8.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=7.8.0"></script>
+	<script src="assets/js/tags-parsers.js?v=7.8.0"></script>
+	<script src="assets/js/pois-type.js?v=7.8.0"></script>
+	<script src="tour/tour.js?v=7.8.0"></script>
+	<script src="assets/js/site.js?v=7.8.0"></script>
  </body>
 </html>

@@ -264,3 +264,12 @@ button svg path {
 		font-size: 8.5vw;
 	}
 }
+@media (min-width: 2000px) {
+	body {
+		margin: 20px auto;
+		max-width: 1400px;
+	}
+	h1 {
+		font-size: 40pt;
+	}
+}

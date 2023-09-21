@@ -1051,7 +1051,7 @@
 					"0": "listWw2/bomb/harriettidd(0)"
 				},
 				"imgattrib": {
-					"0": "Harriet Tidd's wedding, Bexhill Observer 1937"
+					"0": "Harriet Tidd's wedding | &copy; Bexhill Observer 1937"
 				}
 			},
 			"geometry": {
@@ -1146,7 +1146,7 @@
 					"1": "listWw2/bomb/35stationroad(1)"
 				},
 				"imgattrib": {
-					"0": "Bexhill Museum"
+					"0": "&copy; Bexhill Museum"
 				}	
 			},
 			"geometry": {
@@ -1619,7 +1619,7 @@
 					"0": "listWw2/bomb/stbarnabasvicarage(0)"
 				},
 				"imgattrib": {
-					"0": "St Barnabas' Bexhill 1891-1951, Gowing King Bros & Potts Ltd | C. Hollyfield"
+					"0": "St Barnabas' Bexhill 1891-1951, Gowing King Bros & Potts Ltd | &copy; C. Hollyfield"
 				}
 			},
 			"geometry": {
@@ -1659,7 +1659,7 @@
 					"1": "listWw2/bomb/johncroft(0)"
 				},
 				"imgattrib": {
-					"0": "John Croft"
+					"0": "&copy; John Croft"
 				}
 			},
 			"geometry": {
@@ -1842,8 +1842,8 @@
 					"1": "listWw2/bomb/dlwp(1)"
 				},
 				"imgattrib": {
-					"0": "Bexhill Museum",
-					"1": "Bexhill Museum"
+					"0": "&copy; Bexhill Museum",
+					"1": "&copy; Bexhill Museum"
 				}
 			},
 			"geometry": {
@@ -2063,8 +2063,8 @@
 					"1": "listWw2/bomb/knolecourt(1)"
 				},
 				"imgattrib": {
-					"0": "J. Stewart, 1952",
-					"1": "Bexhill Museum"
+					"0": "&copy; J. Stewart, 1952",
+					"1": "&copy; Bexhill Museum"
 				}
 			},
 			"geometry": {
@@ -2242,11 +2242,11 @@
 					"4": "listWw2/bomb/motcombecourt(4)"
 				},
 				"imgattrib": {
-					"0": "Bexhill Observer",
-					"1": "National Archives HO 192/1016",
-					"2": "National Archives HO 192/1016",
-					"3": "National Archives HO 192/1016",
-					"4": "National Archives HO 192/1016"
+					"0": "&copy; Bexhill Observer",
+					"1": "&copy; National Archives HO 192/1016",
+					"2": "&copy; National Archives HO 192/1016",
+					"3": "&copy; National Archives HO 192/1016",
+					"4": "&copy; National Archives HO 192/1016"
 				}
 			},
 			"geometry": {
@@ -2263,7 +2263,7 @@
 					"0": "listWw2/bomb/newparkavenue(0)"
 				},
 				"imgattrib": {
-					"0": "National Archives HO 192/1016"
+					"0": "&copy; National Archives HO 192/1016"
 				}
 			},
 			"geometry": {
@@ -3387,7 +3387,7 @@
 					"2": "listWw2/aircraft/ju88(2)"
 				},
 				"imgattrib": {
-					"0": "Andy Saunders"
+					"0": "&copy; Andy Saunders"
 				}
 			},
 			"geometry": {
@@ -3405,7 +3405,7 @@
 					"0": "listWw2/aircraft/p9550(0)"
 				},
 				"imgattrib": {
-					"0": "P R Arnold collection via W Matusiak"
+					"0": "&copy; P R Arnold collection via W Matusiak"
 				}
 			},
 			"geometry": {
@@ -3423,7 +3423,7 @@
 					"0": "listWw2/aircraft/spitfireXIV(0)"
 				},
 				"imgattrib": {
-					"0": "Ann Attewell"
+					"0": "&copy; Ann Attewell"
 				}
 			},
 			"geometry": {
@@ -3465,7 +3465,7 @@
 					"0": "listWw2/aircraft/fockewulf190(0)"
 				},
 				"imgattrib": {
-					"0": "Andy Saunders"
+					"0": "&copy; Andy Saunders"
 				}
 			},
 			"geometry": {

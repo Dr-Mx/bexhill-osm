@@ -493,6 +493,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		{callback: street_parser},
 		{callback: furtherreading_parser},
 		{callback: facility_parser},
+		{callback: generic_tag_parser, tag: 'substance', label: 'Substance', iconName: 'fa-solid fa-droplet'},
 		{callback: generic_tag_parser, tag: 'artwork_subject', label: ' ', iconName: 'fa-solid fa-palette'},
 		{callback: generic_tag_parser, tag: 'inscription', label: ' ', iconName: 'fa-solid fa-quote-left'},
 		{callback: generic_tag_parser, tag: 'description', label: ' ', iconName: 'fa-solid fa-clipboard'}
@@ -742,6 +743,7 @@ function callback(data) {
 					case 'pin': iconName = 'sprivet'; break;
 				}
 			}
+			if (type === 'outfall') iconName = 'outfall';
 		}
 		if (e.tags.power) {
 			title = 'power ' + e.tags.power;
@@ -760,8 +762,6 @@ function callback(data) {
 				case 'butcher': type = 'deli'; iconName = 'butcher-2'; break;
 				case 'car_parts': type = 'car_repair'; break;
 				case 'department_store': iconName = 'departmentstore';
-					/* fall through */
-				case 'boutique': type = 'clothes';
 					/* fall through */
 				case 'clothes': title = (e.tags.clothes && e.tags.clothes.indexOf(';') === -1 ? e.tags.clothes + ' ' : '') + title; break;
 				case 'collector': type = 'games'; break;
@@ -786,6 +786,10 @@ function callback(data) {
 			}
 			if (e.tags['service:bicycle:retail'] === 'yes') type = 'bicycle';
 		}
+		if (e.tags.craft) {
+			if (!title) title = e.tags.craft;
+			if (!type) type = e.tags.craft;
+		}
 		if (e.tags.tourism) {
 			if (!title) title = e.tags.tourism;
 			if (!type) type = e.tags.tourism;
@@ -793,6 +797,7 @@ function callback(data) {
 				case 'apartment': type = 'guest_house'; iconName = 'villa'; break;
 				case 'artwork': if (e.tags.artwork_type) title = e.tags.artwork_type + ' ' + e.tags.tourism; break;
 				case 'caravan_site': type = 'guest_house'; iconName = 'campingcar'; break;
+				case 'camp_site': type = 'guest_house'; iconName = 'tents'; break;
 				case 'gallery': type = 'artwork'; iconName = 'museum_paintings'; break;
 				case 'hotel': type = 'guest_house'; iconName = 'hotel_0star'; break;
 				case 'information':
@@ -971,7 +976,7 @@ function callback(data) {
 		// tooltip
 		const customTOptions = {
 			direction: 'top',
-			offset: [0, -30],
+			offset: [0, -40],
 			interactive: poi ? poi.permTooltip : 0,
 			permanent: poi ? poi.permTooltip : 0,
 			opacity: (noTouch || (poi && poi.permTooltip)) ? 1 : 0

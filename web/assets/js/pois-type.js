@@ -49,7 +49,7 @@ const pois = {
 
 	guest_house: {
 		name: 'Where to stay',
-		query: 'nwr[tourism~"^guest_house$|^hotel$|^apartment$|^caravan_site$"];',
+		query: 'nwr[tourism~"^guest_house$|^hotel$|^apartment$|^caravan_site$|^camp_site$"];',
 		iconName: 'bed_breakfast1-2',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['tourism', 'apartment', 'self-cater', 'bed-and-breakfast', 'hotel', 'guest-house', 'lodge', 'sleep', 'caravan-site', 'camp'],
@@ -143,14 +143,6 @@ const pois = {
 		iconName: 'conversation-map-icon',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['hobby', 'social', 'events', 'venue', 'sport', 'club']
-	},
-
-	boat_rental: {
-		name: 'Boat Rentals',
-		query: 'nwr[amenity=boat_rental];',
-		iconName: 'rowboat',
-		catName: 'Leisure-Tourism',
-		tagKeyword: ['boat', 'hire', 'rental', 'children']
 	},
 
 	amusement_arcade: {
@@ -691,7 +683,7 @@ const pois = {
 
 	clothes: {
 		name: 'Clothes',
-		query: 'nwr[shop~"^clothes$|^boutique$|^department_store$"];',
+		query: 'nwr[shop~"^clothes$|^department_store$"];',
 		iconName: 'clothers_female',
 		catName: 'Shops',
 		tagKeyword: ['clothes', 'boutique', 'department-store'],

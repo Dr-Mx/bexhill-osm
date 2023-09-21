@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v7.8.0
+
+**Date:** 18/09/2023
+
+Updated
+ - fontawesome 6.4.2
+
+Site changes
+ - Add a bottom shadow to overflowing-scrolling elements
+ - Sources and references for history tour now dynamically populated by refs.js
+ - Better support for 'craft' and 'substance' tags
+ - Update Food Hygiene Rating graphics
+ - Default to light theme
+ - Public Rights-of-Way overlay
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.7.0
 
 **Date:** 09/07/2023

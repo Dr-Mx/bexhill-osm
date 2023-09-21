@@ -519,6 +519,11 @@
 		<adopted>1967-07-03</adopted>
 	</street>
 	<street>
+		<name>Buttercup Close</name>
+		<date>2023</date>
+		<desc>Buttercup is the common name of a species of flowering plants belonging to the Ranunculaceae family. (Bluebell Close, Clover Way, Daisy Way, Daffodil Way, Foxglove Avenue, Snowdrop Way, Tulip Way and Orchid Way are nearby).</desc>
+	</street>
+	<street>
 		<name>Buxton Drive</name>
 		<date>1928</date>
 		<desc>Alderman Frank C Buxton was a local politician between about 1926 and 1937. He was proprietor of Sidley's Sussex Hotel (now Sussex House). (Bodle Crescent is nearby). (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
@@ -3996,11 +4001,6 @@
 		<name>Millers Corner</name>
 		<date>2022</date>
 		<desc></desc>
-	</newstreet>
-	<newstreet>
-		<name>Buttercup Close</name>
-		<date>construction</date>
-		<desc>Buttercup is the common name of a species of flowering plants belonging to the Ranunculaceae family. (Bluebell Close, Clover Way, Daisy Way, Daffodil Way, Foxglove Avenue, Snowdrop Way, Tulip Way and Orchid Way are nearby).</desc>
 	</newstreet>
 	<newstreet>
 		<name>Wrestwood Parade</name>

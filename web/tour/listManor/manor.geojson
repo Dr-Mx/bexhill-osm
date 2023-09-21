@@ -77,8 +77,8 @@
 				"2": "listManor/img/dininghll(2)"
 			},
 			"imgattrib": {
-				"0": "1965 | Historic England CC65/361",
-				"1": "1965 | Historic England BB65/3571"
+				"0": "1965 | &copy; Historic England CC65/361",
+				"1": "1965 | &copy; Historic England BB65/3571"
 			}
 		},
 		"geometry": {
@@ -159,7 +159,7 @@
 				"1": "listManor/img/study(1)"
 			},
 			"imgattrib": {
-				"0": "1965 | Historic England BB65/3563"
+				"0": "1965 | &copy; Historic England BB65/3563"
 			}
 		},
 		"geometry": {
@@ -191,7 +191,7 @@
 				"0": "listManor/img/cloak(0)"
 			},
 			"imgattrib": {
-				"0": "1965 | Historic England BB65/3565"
+				"0": "1965 | &copy; Historic England BB65/3565"
 			}
 		},
 		"geometry": {
@@ -218,7 +218,7 @@
 				"0": "listManor/img/servantquarter(0)"
 			},
 			"imgattrib": {
-				"0": "1965 | Historic England BB65/3573"
+				"0": "1965 | &copy; Historic England BB65/3573"
 			}
 		},
 		"geometry": {
@@ -576,8 +576,8 @@
 				"1": "listManor/img/boots(1)"
 			},
 			"imgattrib": {
-				"0": "1965 | Historic England BB65/3572",
-				"1": "1965 | Historic England BB65/3566"
+				"0": "1965 | &copy; Historic England BB65/3572",
+				"1": "1965 | &copy; Historic England BB65/3566"
 			}
 		},
 		"geometry": {
@@ -606,7 +606,7 @@
 				"0": "listManor/img/morning(0)"
 			},
 			"imgattrib": {
-				"0": "1965 | Historic England BB65/3562"
+				"0": "1965 | &copy; Historic England BB65/3562"
 			}
 		},
 		"geometry": {
@@ -633,7 +633,7 @@
 				"0": "listManor/img/servantsitting(0)"
 			},
 			"imgattrib": {
-				"0": "1965 | Historic England BB65/3561"
+				"0": "1965 | &copy; Historic England BB65/3561"
 			}
 		},
 		"geometry": {
