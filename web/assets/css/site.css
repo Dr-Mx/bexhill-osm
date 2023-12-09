@@ -191,10 +191,18 @@ input[type=text], input[type=date], input[type=number] {
 	content: '\f002';
 	top: 6px;
 }
+.navigateBg {
+	background-color: rgba(255, 255, 255, 0.75);
+	border-radius: 5px;
+	backdrop-filter: blur(7px);
+	padding: 2px;
+}
 .navigateItem {
+	display: none;
+	font-size: 10pt;
 	position: absolute;
-	right: 17px;
-	bottom: 6px;
+	right: 25px;
+	bottom: 18px;
 }
 .navigateItem a:hover {
 	color: #333333;
@@ -238,7 +246,7 @@ input[type=text], input[type=date], input[type=number] {
 	white-space: normal;
 	opacity: 1;
 }
-#creditFooter {
+footer {
 	position: absolute;
 	bottom: 0;
 	line-height: 15px;
@@ -248,15 +256,13 @@ input[type=text], input[type=date], input[type=number] {
 	text-align: center;
 	white-space: nowrap;
 }
-#creditFooter > span {
+footer > span {
 	font: normal 10pt BerlinSans, Helvetica, Arial, sans-serif;
 	color: #666666;
 	padding: 5px 0;
 	display: inline-block;
 	vertical-align: middle;
-}
-#creditFooter a {
-	color: inherit;
+	color: var(--main-color);
 }
 
 a {
@@ -475,7 +481,6 @@ h3 {
 }
 #msgStatusBody {
 	padding: 15px;
-	border-radius: 0 0 10px 10px;
 	min-height: 20px;
 }
 #msgStatusBody .msgStatusBodyAddr {
@@ -551,10 +556,19 @@ h3 {
 	color: white;
 	border-radius: 10px;
 	border: none;
-	box-shadow: 0 1px 5px rgb(0 0 0 / 40%);
+	box-shadow: 0 1px 5px rgb(0 0 0 / 75%);
 	font-size: 90%;
 	text-align: center;
-	z-index: 1100;
+	z-index: 1200;
+	position: absolute;
+}
+.modalArrow {
+	top: 6px;
+	background: inherit;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	transform: rotate(45deg);
 }
 .modalText {
 	text-align: left;
@@ -580,20 +594,6 @@ button.modalButton:hover {
 }
 button.modalButton:nth-of-type(2) {
 	width: 26px !important;
-}
-.modalArrow {
-	content: '';
-	top: 5px;
-	background: inherit;
-	position: absolute;
-	width: 16px;
-	height: 16px;
-	transform: rotate(45deg);
-	z-index: -1;
-}
-
-.layerProw {
-	filter: blur(1px) hue-rotate(130deg);
 }
 
 #inputOpacity {
@@ -665,6 +665,9 @@ input[type=range]:-moz-focusring {
 	font: bold 17pt Helvetica, Arial, sans-serif;
 	cursor: pointer;
 	color: var(--main-color);
+}
+.layerDropshadow {
+	filter: drop-shadow(0px 2px 1px black);
 }
 
 .circleMarker {
@@ -959,9 +962,7 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 	font-size: 75%;
 }
 #walking a img {
-	margin: auto;
 	padding: 5px 10px 5px 10px;
-	display: block;
 	border-radius: 20px;
 	background-color: #ffffff;
 }
@@ -977,6 +978,9 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 }
 #walkSelect {
 	position: absolute;
+}
+#pdfContainer li {
+	margin-bottom: 10px;
 }
 #thennow .sidebar-body {
 	overflow-y: scroll;
@@ -1112,9 +1116,13 @@ input:indeterminate + .slider::before {
 	margin: auto 5px auto 0;
 	flex: min-content;
 }
+.setLabel:last-child {
+	border-bottom: none;
+}
 .smallCheckbox {
-	width: 100%;
 	line-height: 20px;
+	display: inline-block;
+	margin-top: 5px;
 }
 .smallCheckbox label {
 	margin-left: 5px;
@@ -1142,6 +1150,7 @@ input:indeterminate + .slider::before {
 	display: block;
 	position: relative;
 	top: 5px;
+	border-top: 1px solid rgba(255, 255, 255, 0.6);
 }
 #devTools > div {
 	margin: 0 3%;
@@ -1152,9 +1161,6 @@ input:indeterminate + .slider::before {
 }
 #devTools > div p:first-child {
 	margin-top: 0;
-}
-#devTools > div p:last-child {
-	border-bottom: none;
 }
 
 /* information tab */
@@ -1209,8 +1215,11 @@ input:indeterminate + .slider::before {
 	.leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-form-no-error {
 		font-size: 9pt !important;
 	}
-	.popup-imgContainer > a > img {
-		max-width: 80% !important;
+	.popup-imgContainer, .popup-imgContainer > a {
+		max-height: 175px !important;
+	}
+	.popup-fhrs > a > img {
+		height: 38px;
 	}
 	#btnPoiResultsNext {
 		display: none !important;
@@ -1230,9 +1239,10 @@ input:indeterminate + .slider::before {
 .leaflet-control-layers-expanded {
 	box-shadow: 0 1px 5px rgb(0 0 0 / 40%) !important;
 }
-.leaflet-control-layers-expanded, #msgStatusBody {
-	background-color: rgba(235, 235, 235, 0.95);
+.leaflet-control-layers-expanded, #msgStatus {
+	background-color: rgba(235, 235, 235, 0.8);
 	border: none !important;
+	backdrop-filter: blur(7px);
 }
 .leaflet-control-layers .hideLayer {
 	display: none;
@@ -1252,7 +1262,6 @@ a.controlTitle {
 	cursor: pointer;
 }
 .leaflet-popup-content {
-	margin: 0 15px 10px 15px;
 	min-width: 150px;
 	margin: 13px 19px;
 	line-height: 1.4;
@@ -1308,12 +1317,13 @@ a.controlTitle {
 	position: relative;
 	float: right;
 	clear: right;
-	padding-top: 2px;
+	padding: 2px 0 0 2px;
 }
 .popup-fhrs > a > img {
 	white-space: nowrap;
-	box-shadow: 0 0 5px rgba(0,0,0,0.5);
 	border-radius: 5px;
+	border: 1px solid #000000;
+	filter: saturate(50%);
 }
 .popup-body {
 	min-height: 5px;
@@ -1368,7 +1378,7 @@ a.controlTitle {
 .popup-streetSource {
 	display: block;
 	font-size: 80%;
-	padding: 5px 0 5px 25px;
+	padding: 2px 0 5px 25px;
 }
 .popup-ohContainer .popup-tagValue {
 	width: 100%;
@@ -1405,32 +1415,55 @@ a.controlTitle {
 .popup-bsTable td:nth-child(2) { width: 100%; }
 .popup-bsTable td:nth-child(3) { white-space: nowrap; text-align: right; }
 #img0 {
-	display: inherit;
+	display: block;
 }
 .popup-imgContainer {
-	margin-top: 5px;
-	text-align: center;
 	display: none;
+	height: 200px;
+	margin-top: 5px;
+	border: 2px solid #cccccc;
+	border-radius: 5px;
+	overflow: hidden;
+	transition: height 200ms ease-in-out;
+}
+.popup-imgContainer.notloaded {
+	height: 25px;
 }
 .popup-imgContainer > a {
+	height: inherit;
+	max-height: 200px;
 	display: block;
 	outline: 0;
 	cursor: zoom-in;
-	min-height: 80px;
 }
 .popup-imgContainer > a > img {
-	border: 2px solid #cccccc;
-	border-radius: 5px;
-	max-width: 85%;
-	line-height: 80px;
+	height: inherit;
+	max-height: inherit;
+	width: 100%;
+	object-position: center 75%;
+	object-fit: cover;
+	transition: transform 250ms ease-in-out;
+}
+.popup-imgContainer > a > img:hover {
+	transform: scale(1.1);
 }
 .popup-imgAttrib {
-	padding-top: 4px;
-	line-height: 6pt;
-	font-size: 6pt;
-	min-height: 5px;
+	position: relative;
+	bottom: 25px;
+	background-color: rgba(255, 255, 255, 0.75);
+	backdrop-filter: blur(5px);
+	transition: padding-right 200ms ease-in-out;
 }
-.popup-imgAttrib, .popup-imgAttrib a, .navigateItem .fa-images {
+.popup-imgAttrib a, .popup-imgAttrib span {
+	height: 25px;
+	line-height: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-size: 6pt;
+}
+.popup-imgAttrib, .popup-imgAttrib a, .navigateItem {
 	color: #808080;
 }
 .popup-imgAttrib .imgOpen {
@@ -1466,7 +1499,8 @@ a.controlTitle {
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-tooltip {
-	background-color: rgba(244, 244, 244, 0.95) !important;
+	background-color: rgba(244, 244, 244, 0.8) !important;
+	backdrop-filter: blur(7px);
 }
 .leaflet-popup-tip {
 	margin: -17px auto 0;
@@ -1505,14 +1539,22 @@ a.controlTitle {
 	display: none;
 }
 
-@keyframes holiday-anim {
-	0%,100% { transform: rotate(-5deg); }
-	50% { transform: rotate(5deg); }
+#bexhilldayImg {
+	z-index: 1;
+	position: absolute;
+	top: 5px;
+	right: 40px;
+	width: 65px;
+	filter: drop-shadow(1px 1px 2px #666);
 }
-#holidayImg:hover {
-	animation: holiday-anim 0.7s infinite ease-in-out;
+@keyframes xmas-anim {
+	25% { transform: rotate(-5deg); }
+	75% { transform: rotate(5deg); }
 }
-#holidayImg {
+#xmasImg:hover {
+	animation: xmas-anim 0.5s 3 linear;
+}
+#xmasImg {
 	z-index: 1;
 	position: absolute;
 	top: 5px;
@@ -1534,13 +1576,13 @@ a.controlTitle {
 	padding: 5px;
 	margin-top: 10px;
 	cursor: pointer;
-	background-image: url('../../tour/itemXmas/popup-bg.png');
+	background-image: url('../../tour/itemXmas/img/popup-bg.png');
 	background-repeat: repeat-y;
 	background-color: rgba(255, 255, 255, 0.6);
 	animation: xmasMsg-anim 15s linear infinite paused;
 }
 .popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {
-	background-blend-mode: difference;
+	background-blend-mode: darken;
 }
 #xmasMsg:hover {
 	box-shadow: inset 0 0 4px darkred;
@@ -1563,7 +1605,7 @@ a.controlTitle {
 	margin: 15px auto;
 }
 .popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas {
-	background-image: url('../../tour/itemXmas/popup-bg.png');
+	background-image: url('../../tour/itemXmas/img/popup-bg.png');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -1596,11 +1638,13 @@ a.controlTitle {
 .commended1 { color: #ffd700; }
 .commended2 { color: #bbbbbb; }
 .commended3 { color: #d2b48c; }
-.commended4 { color: #4d7480; }
-.commended5 { color: #52804d; }
+.commended4, .commended5, .commended6 { color: #4d7480; }
 
+.fa-beat {
+	--fa-animation-iteration-count: 1;
+}
 .fa-fade {
-	--fa-animation-iteration-count: 6;
+	--fa-animation-iteration-count: 10;
 }
 .fa-bounce {
 	--fa-animation-iteration-count: 4;

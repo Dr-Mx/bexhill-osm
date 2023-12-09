@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v7.9.0
+
+**Date:** 09/12/2023
+
+Updated
+ - fontawesome 6.5.1
+
+Site changes
+ - Redesigned images in popup so attribution and navigation controls are shown overlayed
+ - Hide tooltip if popup is open
+ - Add option to use screen as a bounding box in dev tools
+ - RAF overlays
+ - Tracestrack basemap
+ - Xmas updates
+ - Update Manor House tour with more detail
+ - Links to guided walks
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.8.0
 
 **Date:** 18/09/2023

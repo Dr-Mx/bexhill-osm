@@ -7,8 +7,8 @@
 				"name": "Age UK",
 				"link": "https://directory.ageuk.org.uk/charity-shops/age-uk-east-sussex-bexhill-on-sea-shop",
 				"img": {
-					"0": "itemXmas/2019/ageuk(0)",
-					"1": "itemXmas/2019/ageuk(1)"
+					"0": "itemXmas/img/2019/ageuk(0)",
+					"1": "itemXmas/img/2019/ageuk(1)"
 				},
 				"winner": 0
 			},
@@ -23,7 +23,7 @@
 				"name": "The Bexhill Florist",
 				"link": "http://www.thebexhillflorist.co.uk",
 				"img": {
-					"0": "itemXmas/2019/bexhillflorist(0)"
+					"0": "itemXmas/img/2019/bexhillflorist(0)"
 				},
 				"winner": 0
 			},
@@ -38,9 +38,9 @@
 				"name": "Bexhill Youth and Community Centre",
 				"link": "http://www.bexhillyouthandcommunitycentre.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/youthcentre(0)",
-					"1": "itemXmas/2019/youthcentre(1)",
-					"2": "itemXmas/2019/youthcentre(2)"
+					"0": "itemXmas/img/2019/youthcentre(0)",
+					"1": "itemXmas/img/2019/youthcentre(1)",
+					"2": "itemXmas/img/2019/youthcentre(2)"
 				},
 				"winner": 0
 			},
@@ -55,7 +55,7 @@
 				"name": "Birkdale Nursery",
 				"link": "http://www.birkdalenursery.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/birkdale(0)"
+					"0": "itemXmas/img/2019/birkdale(0)"
 				},
 				"winner": 0
 			},
@@ -70,9 +70,9 @@
 				"name": "Barby Keel",
 				"link": "http://barbykeel.btck.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/barbykeel(0)",
-					"1": "itemXmas/2019/barbykeel(1)",
-					"2": "itemXmas/2019/barbykeel(2)"
+					"0": "itemXmas/img/2019/barbykeel(0)",
+					"1": "itemXmas/img/2019/barbykeel(1)",
+					"2": "itemXmas/img/2019/barbykeel(2)"
 				}
 			},
 			"geometry": {
@@ -86,10 +86,10 @@
 				"name": "Bexhill Caring Community",
 				"link": "http://www.bexhillcaringcommunity.org",
 				"img": {
-					"0": "itemXmas/2019/caringcommunity(0)",
-					"1": "itemXmas/2019/caringcommunity(1)",
-					"2": "itemXmas/2019/caringcommunity(2)",
-					"3": "itemXmas/2019/caringcommunity(3)"
+					"0": "itemXmas/img/2019/caringcommunity(0)",
+					"1": "itemXmas/img/2019/caringcommunity(1)",
+					"2": "itemXmas/img/2019/caringcommunity(2)",
+					"3": "itemXmas/img/2019/caringcommunity(3)"
 				},
 				"winner": 2
 			},
@@ -104,8 +104,8 @@
 				"name": "Dorothy Marchant Florists",
 				"link": "http://www.dorothymarchant.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/dorothymarchant(0)",
-					"1": "itemXmas/2019/dorothymarchant(1)"
+					"0": "itemXmas/img/2019/dorothymarchant(0)",
+					"1": "itemXmas/img/2019/dorothymarchant(1)"
 				},
 				"winner": 1
 			},
@@ -120,8 +120,8 @@
 				"name": "Esspa",
 				"link": "http://www.esspa.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/esspa(0)",
-					"1": "itemXmas/2019/esspa(1)"
+					"0": "itemXmas/img/2019/esspa(0)",
+					"1": "itemXmas/img/2019/esspa(1)"
 				}
 			},
 			"geometry": {
@@ -135,8 +135,8 @@
 				"name": "Green & Elliott Optometrists",
 				"link": "http://www.greenandelliott.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/greenelliott(0)",
-					"1": "itemXmas/2019/greenelliott(1)"
+					"0": "itemXmas/img/2019/greenelliott(0)",
+					"1": "itemXmas/img/2019/greenelliott(1)"
 				}
 			},
 			"geometry": {
@@ -150,8 +150,8 @@
 				"name": "H&H Confectionery",
 				"link": "https://www.facebook.com/HandHconfectionery.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/hh(0)",
-					"1": "itemXmas/2019/hh(1)"
+					"0": "itemXmas/img/2019/hh(0)",
+					"1": "itemXmas/img/2019/hh(1)"
 				}
 			},
 			"geometry": {
@@ -165,9 +165,9 @@
 				"name": "Mind",
 				"link": "https://www.mind.org.uk/",
 				"img": {
-					"0": "itemXmas/2019/mind(0)",
-					"1": "itemXmas/2019/mind(1)",
-					"2": "itemXmas/2019/mind(2)"
+					"0": "itemXmas/img/2019/mind(0)",
+					"1": "itemXmas/img/2019/mind(1)",
+					"2": "itemXmas/img/2019/mind(2)"
 				},
 				"winner": 0
 			},
@@ -182,7 +182,7 @@
 				"name": "Mummery",
 				"link": "http://www.mummeryfunerals.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/mummery(0)"
+					"0": "itemXmas/img/2019/mummery(0)"
 				},
 				"winner": 3
 			},
@@ -197,7 +197,7 @@
 				"name": "Number10",
 				"link": "01424 211498",
 				"img": {
-					"0": "itemXmas/2019/number10(0)"
+					"0": "itemXmas/img/2019/number10(0)"
 				}
 			},
 			"geometry": {
@@ -211,7 +211,7 @@
 				"name": "Poppyseed Bakery",
 				"link": "http://www.farmkitchen.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/poppyseed(0)"
+					"0": "itemXmas/img/2019/poppyseed(0)"
 				}
 			},
 			"geometry": {
@@ -225,8 +225,8 @@
 				"name": "RSPCA",
 				"link": "https://www.rspca.org.uk/",
 				"img": {
-					"0": "itemXmas/2019/rspca(0)",
-					"1": "itemXmas/2019/rspca(1)"
+					"0": "itemXmas/img/2019/rspca(0)",
+					"1": "itemXmas/img/2019/rspca(1)"
 				},
 				"winner": 4
 			},
@@ -241,7 +241,7 @@
 				"name": "Sara Lee Trust",
 				"link": "http://www.saraleetrust.org",
 				"img": {
-					"0": "itemXmas/2019/saralee(0)"
+					"0": "itemXmas/img/2019/saralee(0)"
 				}
 			},
 			"geometry": {
@@ -255,8 +255,8 @@
 				"name": "Top Dog Grooming",
 				"link": "https://www.facebook.com/topdogbexhill2/",
 				"img": {
-					"0": "itemXmas/2019/topdog(0)",
-					"1": "itemXmas/2019/topdog(1)"
+					"0": "itemXmas/img/2019/topdog(0)",
+					"1": "itemXmas/img/2019/topdog(1)"
 				}
 			},
 			"geometry": {
@@ -270,7 +270,7 @@
 				"name": "Town Taxis",
 				"link": "http://www.towntaxis.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/towntaxis(0)"
+					"0": "itemXmas/img/2019/towntaxis(0)"
 				}
 			},
 			"geometry": {
@@ -284,8 +284,8 @@
 				"name": "Wards Group",
 				"link": "http://www.wardsgroup.co.uk/",
 				"img": {
-					"0": "itemXmas/2019/wards(0)",
-					"1": "itemXmas/2019/wards(1)"
+					"0": "itemXmas/img/2019/wards(0)",
+					"1": "itemXmas/img/2019/wards(1)"
 				},
 				"winner": 0
 			},
@@ -300,8 +300,8 @@
 				"name": "Wickham Bistro",
 				"link": "http://www.wickhambistro.com/",
 				"img": {
-					"0": "itemXmas/2019/wickhambistro(0)",
-					"1": "itemXmas/2019/wickhambistro(1)"
+					"0": "itemXmas/img/2019/wickhambistro(0)",
+					"1": "itemXmas/img/2019/wickhambistro(1)"
 				}
 			},
 			"geometry": {
@@ -315,7 +315,7 @@
 				"name": "Wooster's",
 				"link": "01424 730998",
 				"img": {
-					"0": "itemXmas/2019/woosters(0)"
+					"0": "itemXmas/img/2019/woosters(0)"
 				},
 				"winner": 5
 			},

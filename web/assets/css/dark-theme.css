@@ -1,10 +1,10 @@
 :root {
 	--text-color: #aaaaaa;
 	--hover-color: #999999;
-	--bg-color: #0c0c0d;
-	--bg-color2: rgba(35, 35, 39, 0.95);
+	--bg-color: #111111;
+	--bg-color2: rgba(35, 35, 39, 0.9);
 	--scr-thumb: #555555;
-	--scr-track: #0c0c0d;
+	--scr-track: #111111;
 	--scroll-shadow: 0, 0, 0;
 	--scroll-shadow-popup: 0, 0, 0;
 }
@@ -21,22 +21,17 @@
 .popup-ohContainer .popup-tagValue:hover::after, .leaflet-control-layers-list input:not(:checked,:disabled) + span:hover:before {
 	color: var(--hover-color) !important;
 }
-.sidebar-tabs, #creditFooter, #homeBox, #xmasMsg, .anchor, input:not([type="range"]), hr, select, button, .leaflet-control-geocoder input, .slider::before,
+.sidebar-tabs, footer, #homeBox, #xmasMsg, .anchor, input:not([type="range"]), hr, select, button, .leaflet-control-geocoder input, .slider::before,
 .leaflet-control-geocoder, .leaflet-contextmenu, #msgStatusHead, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected, .fancybox-bg,
 #poi-results-list tr:hover, .poi-checkbox-selected, .poi-checkbox > label:hover, .leaflet-touch .leaflet-bar:not(#inputWw2, #inputOpacity), #walking a img {
 	background-color: var(--bg-color) !important;
 }
-#msgStatusBody, #inputOpacity, .leaflet-bar > a, .leaflet-bar button, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded,
-.leaflet-control-layers, .leaflet-control-geocoder, .leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-alternatives li:hover, .leaflet-tooltip {
+#msgStatus, #inputOpacity, .leaflet-bar > a, .leaflet-bar button, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded, .leaflet-control-layers,
+.leaflet-control-geocoder, .leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-alternatives li:hover, .leaflet-tooltip, .popup-imgAttrib, .navigateBg {
 	background-color: var(--bg-color2) !important;
 }
 .leaflet-control-layers-list input + span:before {
 	color: #444444;
-}
-@media (min-width: 1024px) {
-	.sidebar.collapsed .sidebar-tabs {
-		background-color: rgba(0, 0, 0, 0.5) !important;
-	}
 }
 #weather, #newFeed ul {
 	color: #688c81;
@@ -46,6 +41,9 @@
 }
 .leaflet-bar a:last-child {
 	border-bottom: none;
+}
+#devTools {
+	border-top: 1px solid var(--bg-color);
 }
 #inputOpacity input[type=range] {
 	background-image: linear-gradient(to right, #333, #666);
@@ -57,7 +55,7 @@ input[type=range] {
 	scrollbar-color: var(--scr-thumb) var(--scr-track) !important;
 }
 .layerDark, #minimap > img {
-	filter: invert(90%) hue-rotate(180deg) contrast(0.8);
+	filter: invert(90%) hue-rotate(180deg) contrast(80%);
 }
 .sidebar-header {
 	color: #dddddd;
@@ -65,7 +63,7 @@ input[type=range] {
 .leaflet-control-layers-separator {
 	border-top: 2px solid var(--bg-color);
 }
-#poi-results, #walkDesc img, #thennow img, #myprofile img, .popup-imgContainer > a > img, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar:not(#inputWw2) {
+#poi-results, #walkDesc img, #thennow img, #myprofile img, .popup-imgContainer, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar:not(#inputWw2) {
 	border: 2px solid var(--bg-color);
 }
 input[type=range]::-webkit-slider-thumb { border-color: var(--bg-color); }
@@ -113,7 +111,7 @@ input:not([type=range]), select, #sidebar button:not(.modalButton), .leaflet-too
 	background-color: rgba(12, 12, 13, 0.5) !important;
 }
 .popup-fhrs > a > img {
-	filter: brightness(75%);
+	opacity: 75%;
 }
 .leaflet-container a.leaflet-popup-close-button {
 	border: 3px solid #333333;
@@ -146,6 +144,9 @@ input:not([type=range]), select, #sidebar button:not(.modalButton), .leaflet-too
 .xmasMapTree { filter: drop-shadow(0px 10px 9px #000000); }
 .circleMarker { fill: #000000; }
 .poi-results-circleMarker { color: #000000; }
+.popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {
+	background-blend-mode: lighten;
+}
 
 .custscroll::-webkit-scrollbar {
 	background-color: var(--scr-track);

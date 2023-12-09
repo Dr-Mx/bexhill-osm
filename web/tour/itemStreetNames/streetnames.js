@@ -1,7 +1,7 @@
 // the story of bexhill street names
 
 // open with random header image
-const imgPath = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/img', imgCount = 15;
+const imgPath = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/img', imgCount = 17;
 let imgCurrent = Math.round(Math.random() * imgCount);
 function setHeaderImg() {
 	$('#header').attr({

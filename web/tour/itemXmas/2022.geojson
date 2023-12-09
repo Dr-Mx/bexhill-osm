@@ -7,7 +7,7 @@
 				"name": "Age UK",
 				"link": "https://www.ageuk.org.uk/eastsussex/shops/bexhill-on-sea-shop",
 				"img": {
-					"0": "itemXmas/2022/ageuk(0)"
+					"0": "itemXmas/img/2022/ageuk(0)"
 				}
 			},
 			"geometry": {
@@ -21,7 +21,7 @@
 				"name": "Aspens",
 				"link": "https://www.aspens.org.uk",
 				"img": {
-					"0": "itemXmas/2022/aspens(0)"
+					"0": "itemXmas/img/2022/aspens(0)"
 				}
 			},
 			"geometry": {
@@ -34,7 +34,7 @@
 				"id": "bexemporium",
 				"name": "Bexhill Emporium",
 				"img": {
-					"0": "itemXmas/2022/bexemporium(0)"
+					"0": "itemXmas/img/2022/bexemporium(0)"
 				},
 				"winner": 0
 			},
@@ -49,7 +49,7 @@
 				"name": "Bexhill Youth and Community Centre",
 				"link": "https://www.bexhillyouthandcommunitycentre.co.uk",
 				"img": {
-					"0": "itemXmas/2022/bycc(0)"
+					"0": "itemXmas/img/2022/bycc(0)"
 				},
 				"winner": 0
 			},
@@ -64,7 +64,7 @@
 				"name": "Birkdale Nursery",
 				"link": "https://www.birkdalenursery.co.uk",
 				"img": {
-					"0": "itemXmas/2022/birkdale(0)"
+					"0": "itemXmas/img/2022/birkdale(0)"
 				},
 				"winner": 0
 			},
@@ -79,7 +79,7 @@
 				"name": "British Heart Foundation",
 				"link": "https://www.bhf.org.uk/what-we-do/find-bhf-near-you/bexhill-on-sea-bhf-shop",
 				"img": {
-					"0": "itemXmas/2022/britheart(0)"
+					"0": "itemXmas/img/2022/britheart(0)"
 				},
 				"winner": 0
 			},
@@ -94,7 +94,7 @@
 				"name": "Bexhill Caring Community",
 				"link": "https://www.bexhillcaringcommunity.org",
 				"img": {
-					"0": "itemXmas/2022/bcc(0)"
+					"0": "itemXmas/img/2022/bcc(0)"
 				}
 			},
 			"geometry": {
@@ -108,7 +108,7 @@
 				"name": "Eco Hub",
 				"link": "https://www.communitysupporters.org.uk",
 				"img": {
-					"0": "itemXmas/2022/ecohub(0)"
+					"0": "itemXmas/img/2022/ecohub(0)"
 				}
 			},
 			"geometry": {
@@ -122,7 +122,7 @@
 				"name": "E.H. Warford",
 				"link": "http://www.eh-warford.co.uk",
 				"img": {
-					"0": "itemXmas/2022/ehwarford(0)"
+					"0": "itemXmas/img/2022/ehwarford(0)"
 				}
 			},
 			"geometry": {
@@ -136,7 +136,7 @@
 				"name": "ESSPA",
 				"link": "https://esspa.co.uk",
 				"img": {
-					"0": "itemXmas/2022/esspa(0)"
+					"0": "itemXmas/img/2022/esspa(0)"
 				},
 				"winner": 0
 			},
@@ -151,8 +151,8 @@
 				"name": "Font",
 				"link": "01424 218420",
 				"img": {
-					"0": "itemXmas/2022/font(0)",
-					"1": "itemXmas/2022/font(1)"
+					"0": "itemXmas/img/2022/font(0)",
+					"1": "itemXmas/img/2022/font(1)"
 				},
 				"winner": 1
 			},
@@ -167,7 +167,7 @@
 				"name": "George Blackman Business Equipment",
 				"link": "http://www.georgeblackman.co.uk",
 				"img": {
-					"0": "itemXmas/2022/gblackman(0)"
+					"0": "itemXmas/img/2022/gblackman(0)"
 				}
 			},
 			"geometry": {
@@ -181,7 +181,7 @@
 				"name": "Green & Elliott Optometrists",
 				"link": "http://www.greenandelliott.co.uk/",
 				"img": {
-					"0": "itemXmas/2022/greenelliott(0)"
+					"0": "itemXmas/img/2022/greenelliott(0)"
 				}
 			},
 			"geometry": {
@@ -195,7 +195,7 @@
 				"name": "JFS Properites",
 				"link": "https://jfsproperties.co",
 				"img": {
-					"0": "itemXmas/2022/jfs(0)"
+					"0": "itemXmas/img/2022/jfs(0)"
 				}
 			},
 			"geometry": {
@@ -209,7 +209,7 @@
 				"name": "Maitreya Kadampa Buddhist Centre",
 				"link": "https://meditateinsussex.org",
 				"img": {
-					"0": "itemXmas/2022/kadampa(0)"
+					"0": "itemXmas/img/2022/kadampa(0)"
 				}
 			},
 			"geometry": {
@@ -223,7 +223,7 @@
 				"name": "Kerry's Café Bar",
 				"link": "01424 216973",
 				"img": {
-					"0": "itemXmas/2022/kerrys(0)"
+					"0": "itemXmas/img/2022/kerrys(0)"
 				}
 			},
 			"geometry": {
@@ -237,7 +237,7 @@
 				"name": "Love Ria",
 				"link": "https://www.facebook.com/LoveRiaxx",
 				"img": {
-					"0": "itemXmas/2022/loveria(0)"
+					"0": "itemXmas/img/2022/loveria(0)"
 				}
 			},
 			"geometry": {
@@ -251,7 +251,7 @@
 				"name": "Lux Locks",
 				"link": "https://www.facebook.com/luxlocksbyedie",
 				"img": {
-					"0": "itemXmas/2022/luxlocks(0)"
+					"0": "itemXmas/img/2022/luxlocks(0)"
 				}
 			},
 			"geometry": {
@@ -265,7 +265,7 @@
 				"name": "La Maison",
 				"link": "https://bexhillgiftshop.com",
 				"img": {
-					"0": "itemXmas/2022/lamaison(0)"
+					"0": "itemXmas/img/2022/lamaison(0)"
 				}
 			},
 			"geometry": {
@@ -279,7 +279,7 @@
 				"name": "Madfish Performing Arts",
 				"link": "https://www.madfishstageschoolsussex.com",
 				"img": {
-					"0": "itemXmas/2022/madfish(0)"
+					"0": "itemXmas/img/2022/madfish(0)"
 				},
 				"winner": 0
 			},
@@ -294,7 +294,7 @@
 				"name": "Maker's Loft",
 				"link": "https://www.facebook.com/themakersloft",
 				"img": {
-					"0": "itemXmas/2022/makersloft(0)"
+					"0": "itemXmas/img/2022/makersloft(0)"
 				},
 				"winner": 0
 			},
@@ -309,7 +309,7 @@
 				"name": "Maltbys",
 				"link": "https://www.maltbys.uk",
 				"img": {
-					"0": "itemXmas/2022/maltbys(0)"
+					"0": "itemXmas/img/2022/maltbys(0)"
 				}
 			},
 			"geometry": {
@@ -323,7 +323,7 @@
 				"name": "Mandy's Pocket Money Toys & Sweets",
 				"link": "https://www.facebook.com/groups/1864557457132238",
 				"img": {
-					"0": "itemXmas/2022/mandys(0)"
+					"0": "itemXmas/img/2022/mandys(0)"
 				}
 			},
 			"geometry": {
@@ -337,7 +337,7 @@
 				"name": "Maybugs",
 				"link": "https://maybugs.co.uk",
 				"img": {
-					"0": "itemXmas/2022/maybugs(0)"
+					"0": "itemXmas/img/2022/maybugs(0)"
 				},
 				"winner": 0
 			},
@@ -352,7 +352,7 @@
 				"name": "Mind",
 				"link": "https://www.mind.org.uk/",
 				"img": {
-					"0": "itemXmas/2022/mind(0)"
+					"0": "itemXmas/img/2022/mind(0)"
 				},
 				"winner": 0
 			},
@@ -367,7 +367,7 @@
 				"name": "Mummery Funeralcare",
 				"link": "https://www.coop.co.uk/funeralcare/funeral-directors/bexhill-on-sea/TN40-1AH/mummery-funeralcare/29-31-devonshire-road",
 				"img": {
-					"0": "itemXmas/2022/mummery(0)"
+					"0": "itemXmas/img/2022/mummery(0)"
 				},
 				"winner": 4
 			},
@@ -382,7 +382,7 @@
 				"name": "Naturally Crafted",
 				"link": "https://www.facebook.com/100087161167873",
 				"img": {
-					"0": "itemXmas/2022/naturallycrafted(0)"
+					"0": "itemXmas/img/2022/naturallycrafted(0)"
 				},
 				"winner": 0
 			},
@@ -397,7 +397,7 @@
 				"name": "Number10",
 				"link": "01424 211498",
 				"img": {
-					"0": "itemXmas/2022/number10(0)"
+					"0": "itemXmas/img/2022/number10(0)"
 				}
 			},
 			"geometry": {
@@ -411,7 +411,7 @@
 				"name": "Picture Crafts",
 				"link": "http://www.picturecrafts.co.uk",
 				"img": {
-					"0": "itemXmas/2022/picturecrafts(0)"
+					"0": "itemXmas/img/2022/picturecrafts(0)"
 				}
 			},
 			"geometry": {
@@ -425,7 +425,7 @@
 				"name": "RSPCA",
 				"link": "https://www.bluebellridge.org",
 				"img": {
-					"0": "itemXmas/2022/rspca(0)"
+					"0": "itemXmas/img/2022/rspca(0)"
 				},
 				"winner": 0
 			},
@@ -440,8 +440,8 @@
 				"name": "Scope",
 				"link": "https://www.scope.org.uk",
 				"img": {
-					"0": "itemXmas/2022/scope(0)",
-					"1": "itemXmas/2022/scope(1)"
+					"0": "itemXmas/img/2022/scope(0)",
+					"1": "itemXmas/img/2022/scope(1)"
 				},
 				"winner": 3
 			},
@@ -456,8 +456,8 @@
 				"name": "The Sara Lee Trust, Western Rd",
 				"link": "https://www.saraleetrustretail.org/shop",
 				"img": {
-					"0": "itemXmas/2022/saralee1(0)",
-					"1": "itemXmas/2022/saralee1(1)"
+					"0": "itemXmas/img/2022/saralee1(0)",
+					"1": "itemXmas/img/2022/saralee1(1)"
 				},
 				"winner": 4
 			},
@@ -472,7 +472,7 @@
 				"name": "The Sara Lee Trust, Endwell Rd",
 				"link": "https://www.saraleetrustretail.org/shop",
 				"img": {
-					"0": "itemXmas/2022/saralee2(0)"
+					"0": "itemXmas/img/2022/saralee2(0)"
 				}
 			},
 			"geometry": {
@@ -486,7 +486,7 @@
 				"name": "SBS Consumables",
 				"link": "https://www.facebook.com/sbsconsumables",
 				"img": {
-					"0": "itemXmas/2022/sbs(0)"
+					"0": "itemXmas/img/2022/sbs(0)"
 				}
 			},
 			"geometry": {
@@ -500,7 +500,7 @@
 				"name": "Starlings",
 				"link": "https://www.starlingsgifts.co.uk",
 				"img": {
-					"0": "itemXmas/2022/starlings(0)"
+					"0": "itemXmas/img/2022/starlings(0)"
 				},
 				"winner": 0
 			},
@@ -515,7 +515,7 @@
 				"name": "Strive Cafe",
 				"link": "https://www.strivecafe.org",
 				"img": {
-					"0": "itemXmas/2022/strive(0)"
+					"0": "itemXmas/img/2022/strive(0)"
 				},
 				"winner": 0
 			},
@@ -530,8 +530,8 @@
 				"name": "Sweets On-Sea",
 				"link": "https://www.facebook.com/sweetsonsea",
 				"img": {
-					"0": "itemXmas/2022/sweetsonsea(0)",
-					"1": "itemXmas/2022/sweetsonsea(1)"
+					"0": "itemXmas/img/2022/sweetsonsea(0)",
+					"1": "itemXmas/img/2022/sweetsonsea(1)"
 				},
 				"winner": 0
 			},
@@ -546,7 +546,7 @@
 				"name": "Town Taxis",
 				"link": "https://www.towntaxis.co.uk",
 				"img": {
-					"0": "itemXmas/2022/towntaxis(0)"
+					"0": "itemXmas/img/2022/towntaxis(0)"
 				},
 				"winner": 0
 			},
@@ -561,8 +561,8 @@
 				"name": "Vintage At 25",
 				"link": "07977 754371",
 				"img": {
-					"0": "itemXmas/2022/vintage(0)",
-					"1": "itemXmas/2022/vintage(1)"
+					"0": "itemXmas/img/2022/vintage(0)",
+					"1": "itemXmas/img/2022/vintage(1)"
 				},
 				"winner": 2
 			},
@@ -577,7 +577,7 @@
 				"name": "Wards",
 				"link": "https://wardsgroup.co.uk",
 				"img": {
-					"0": "itemXmas/2022/wards(0)"
+					"0": "itemXmas/img/2022/wards(0)"
 				},
 				"winner": 4
 			},
@@ -592,7 +592,7 @@
 				"name": "Warming Up The Homeless",
 				"link": "https://wuth.org",
 				"img": {
-					"0": "itemXmas/2022/wuth(0)"
+					"0": "itemXmas/img/2022/wuth(0)"
 				},
 				"winner": 0
 			},
@@ -607,7 +607,7 @@
 				"name": "Wickham Bistro",
 				"link": "https://www.wickhambistro.com",
 				"img": {
-					"0": "itemXmas/2022/wickhambistro(0)"
+					"0": "itemXmas/img/2022/wickhambistro(0)"
 				}
 			},
 			"geometry": {

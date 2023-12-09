@@ -7,7 +7,7 @@
 				"name": "The Bexhill Florist",
 				"link": "http://www.thebexhillflorist.co.uk",
 				"img": {
-					"0": "itemXmas/2020/bexhillflorist(0)"
+					"0": "itemXmas/img/2020/bexhillflorist(0)"
 				}
 			},
 			"geometry": {
@@ -21,7 +21,7 @@
 				"name": "Birkdale Nursery",
 				"link": "http://www.birkdalenursery.co.uk/",
 				"img": {
-					"0": "itemXmas/2020/birkdale(0)"
+					"0": "itemXmas/img/2020/birkdale(0)"
 				},
 				"winner": 0
 			},
@@ -36,7 +36,7 @@
 				"name": "Brickmaker's Alehouse",
 				"link": "https://brickmakersalehouse.co.uk/",
 				"img": {
-					"0": "itemXmas/2020/brickmakers(0)"
+					"0": "itemXmas/img/2020/brickmakers(0)"
 				}
 			},
 			"geometry": {
@@ -50,7 +50,7 @@
 				"name": "Bexhill Caring Community",
 				"link": "http://www.bexhillcaringcommunity.org",
 				"img": {
-					"0": "itemXmas/2020/caringcommunity(0)"
+					"0": "itemXmas/img/2020/caringcommunity(0)"
 				},
 				"winner": 0
 			},
@@ -65,7 +65,7 @@
 				"name": "Evo Taxis",
 				"link": "https://www.bookevo.co.uk/",
 				"img": {
-					"0": "itemXmas/2020/evo(0)"
+					"0": "itemXmas/img/2020/evo(0)"
 				}
 			},
 			"geometry": {
@@ -79,7 +79,7 @@
 				"name": "Holly Blakeley Hair",
 				"link": "https://www.hollyblakeleyhair.co.uk/",
 				"img": {
-					"0": "itemXmas/2020/holly(0)"
+					"0": "itemXmas/img/2020/holly(0)"
 				}
 			},
 			"geometry": {
@@ -93,8 +93,8 @@
 				"name": "Mind",
 				"link": "https://www.mind.org.uk/",
 				"img": {
-					"0": "itemXmas/2020/mind(0)",
-					"1": "itemXmas/2020/mind(1)"
+					"0": "itemXmas/img/2020/mind(0)",
+					"1": "itemXmas/img/2020/mind(1)"
 				},
 				"winner": 0
 			},
@@ -109,8 +109,8 @@
 				"name": "Milzar's Florist",
 				"link": "https://www.facebook.com/MilzarsFlorist/",
 				"img": {
-					"0": "itemXmas/2020/milzar(0)",
-					"1": "itemXmas/2020/milzar(1)"
+					"0": "itemXmas/img/2020/milzar(0)",
+					"1": "itemXmas/img/2020/milzar(1)"
 				}
 			},
 			"geometry": {
@@ -124,7 +124,7 @@
 				"name": "Mummery",
 				"link": "https://www.coop.co.uk/funeralcare/funeral-directors/bexhill-on-sea/TN40-1AH/mummery-funeralcare/29-31-devonshire-road",
 				"img": {
-					"0": "itemXmas/2020/mummery(0)"
+					"0": "itemXmas/img/2020/mummery(0)"
 				},
 				"winner": 4
 			},
@@ -139,7 +139,7 @@
 				"name": "RSPCA",
 				"link": "https://www.rspca.org.uk/",
 				"img": {
-					"0": "itemXmas/2020/rspca(0)"
+					"0": "itemXmas/img/2020/rspca(0)"
 				}
 			},
 			"geometry": {
@@ -153,7 +153,7 @@
 				"name": "Sara Lee Trust",
 				"link": "http://www.saraleetrust.org",
 				"img": {
-					"0": "itemXmas/2020/saralee1(0)"
+					"0": "itemXmas/img/2020/saralee1(0)"
 				},
 				"winner": 3
 			},
@@ -168,7 +168,7 @@
 				"name": "Scope",
 				"link": "https://www.scope.org.uk/",
 				"img": {
-					"0": "itemXmas/2020/scope(0)"
+					"0": "itemXmas/img/2020/scope(0)"
 				},
 				"winner": 1
 			},
@@ -183,7 +183,7 @@
 				"name": "Starlings",
 				"link": "https://www.starlingsgifts.co.uk/",
 				"img": {
-					"0": "itemXmas/2020/starlings(0)"
+					"0": "itemXmas/img/2020/starlings(0)"
 				},
 				"winner": 0
 			},
@@ -198,7 +198,7 @@
 				"name": "Strive",
 				"link": "https://www.strivecafe.org/",
 				"img": {
-					"0": "itemXmas/2020/strive(0)"
+					"0": "itemXmas/img/2020/strive(0)"
 				},
 				"winner": 0
 			},
@@ -213,8 +213,8 @@
 				"name": "Sweets On-Sea",
 				"link": "https://www.facebook.com/sweetsonsea/",
 				"img": {
-					"0": "itemXmas/2020/sweets(0)",
-					"1": "itemXmas/2020/sweets(1)"
+					"0": "itemXmas/img/2020/sweets(0)",
+					"1": "itemXmas/img/2020/sweets(1)"
 				},
 				"winner": 0
 			},
@@ -229,8 +229,8 @@
 				"name": "Wards Group",
 				"link": "http://www.wardsgroup.co.uk/",
 				"img": {
-					"0": "itemXmas/2020/wards(0)",
-					"1": "itemXmas/2020/wards(1)"
+					"0": "itemXmas/img/2020/wards(0)",
+					"1": "itemXmas/img/2020/wards(1)"
 				},
 				"winner": 2
 			},
@@ -245,7 +245,7 @@
 				"name": "Warming Up The Homeless",
 				"link": "https://wuth.org/",
 				"img": {
-					"0": "itemXmas/2020/warming(0)"
+					"0": "itemXmas/img/2020/warming(0)"
 				}
 			},
 			"geometry": {

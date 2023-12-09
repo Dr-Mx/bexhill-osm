@@ -38,7 +38,8 @@
 	opacity : 0; }
 @media (min-width: 1024px) {
 	.sidebar.collapsed .sidebar-tabs {
-		background-color: rgba(204, 204, 204, 0.5);
+		background-color: transparent !important;
+		backdrop-filter: blur(7px);
 		transition: background-color 400ms ease-out; }
 	.sidebar.collapsed {
 		width: 35px;
@@ -99,8 +100,9 @@
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	background-color: rgba(235, 235, 235, 0.95);
-	overflow: hidden; }
+	background-color: rgba(235, 235, 235, 0.8);
+	overflow: hidden;
+	backdrop-filter: blur(7px); }
 @media (min-width: 768px) and (max-width: 1023px) {
 	.sidebar-content {
 		background-color: #ececec; } }

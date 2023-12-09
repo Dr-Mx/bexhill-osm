@@ -1,7 +1,7 @@
 {
     "data_format": 1,
     "data_url": "https://bexhill-osm.org.uk/assets/data/taginfo.json",
-	"data_updated": "20220923T200000Z",
+	"data_updated": "20231012T200000Z",
     "project": {
         "name": "Bexhill OpenStreetMap",
         "description": "A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.",
@@ -25,7 +25,7 @@
             "key": "wikimedia_commons",
             "description": "Link to a photo, displayed in an elements popup."
         }, {
-            "key": "wikimedia_commons_1",
+            "key": "wikimedia_commons:1",
             "description": "Links to multiple photos when separated by semicolons, displayed in an elements popup."
         }, {
             "key": "wikimedia_commons:pano",
@@ -37,7 +37,7 @@
             "key": "image",
             "description": "Direct url link to a photo, displayed in an elements popup."
         }, {
-            "key": "image_1",
+            "key": "image:1",
             "description": "Direct url links to multiple photos when separated by semicolons, displayed in an elements popup."
         }, {
             "key": "image:source",
@@ -54,6 +54,9 @@
         }, {
             "key": "ref:publicsculpturesofsussex",
             "description": "Public Sculptures of Sussex object ID, linked in an elements popup."
+        }, {
+            "key": "ref:iwm",
+            "description": "Imperial War Museum: War Memorials Register reference, linked in an elements popup."
         }, {
             "key": "url:bexhillhistorytrail",
             "description": "URL path to an article on The Bexhill History Trail website, linked in an elements popup."

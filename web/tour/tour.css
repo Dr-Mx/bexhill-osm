@@ -24,7 +24,7 @@ body {
 	background-repeat: no-repeat;
 	background-position: center bottom;
 	background-size: 100% 20px;
-}}
+}
 body::-webkit-scrollbar {
 	width: 7px;
 	background-color: var(--scr-track);

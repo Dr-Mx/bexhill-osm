@@ -8,12 +8,13 @@ RewriteCond %{HTTPS} on
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
-Redirect /ww2 /?M=general&T=tour&U=ww2&G=bombmap
-Redirect /xmas /?M=bosm&T=none&G=xmas
-Redirect /scarecrow /?M=general&T=none&G=scarecrow
 Redirect /ext /?M=general&T=none#13/50.8470/0.4670
+Redirect /scarecrow /?M=general&T=none&G=scarecrow
 Redirect /streetnames /tour/itemStreetNames/streetnames.xml
+Redirect /manorhouse /?T=tour&G=manorHouse&U=manor&O=os1955
 Redirect /millifest /?T=none&G=milligan
+Redirect /ww2 /?M=general&T=tour&G=bombmap&U=ww2
+Redirect /xmas /?T=none&G=xmas
 
 # php -- BEGIN cPanel-generated handler, do not edit
 # This domain inherits the “PHP” package.

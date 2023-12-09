@@ -3,7 +3,7 @@
 // don't forget to create config.js with your api keys
 if (typeof window.BOSM === 'undefined') window.alert('Error: No API keys defined, please see config.example.js');
 // map area
-const osmRelation = '12710197'; // osm relation for overpass queries, if blank bbox will be used
+const osmRelation = '12710197'; // osm relation for area id overpass queries, if blank bbox will be used
 const mapBounds = { south: 50.802, west: 0.372, north: 50.878, east: 0.525 };
 const LBounds = L.latLngBounds([mapBounds.south, mapBounds.west], [mapBounds.north, mapBounds.east]);
 const mapMinZoom = 10;
@@ -82,7 +82,6 @@ $('#tourControls')
 $('.sidebar-tabs li').click(function() {
 	// get current sidebar-tab
 	actTab = ($('.sidebar.collapsed').length || actTab === 'closing') ? 'none' : $('.sidebar-pane.active').attr('id');
-	$('.sidebar-close').removeClass('wobble');
 	// resize links on minimap
 	if (actTab === 'home') {
 		if (!$('#weather:visible').length && noIframe) { showWeather(); showEditFeed(); }
@@ -124,10 +123,11 @@ L.Map.addInitHook(function() {
 			clickOutline.clearLayers();
 			$('#msgStatus').hide();
 		}
-		// ignore map click if... low zoom / dragging walk markers / overlay control is open / layerNoclick / spinner is shown / popup is open on screen
-		else if (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .leaflet-control-layers-expanded, .layerNoclick').length && !imageOverlay.getLayers().length &&
+		// ignore map click if... low zoom / dragging walk markers / layerNoclick / overlay control is open / spinner is shown / popup is open on screen
+		else if (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .layerNoclick').length && $('.leaflet-control-layers').outerWidth() === 44 && !imageOverlay.getLayers().length &&
 		 !$('.spinner:visible').length && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) {
 			that.fire('visualclick', L.Util.extend(e, { type: 'visualclick' }));
+			console.log($('.leaflet-control-layers').outerWidth());
 			// drop marker and reverse lookup on single click
 			h = setTimeout(function() {
 				clickOutline.clearLayers().addLayer(L.circleMarker(e.latlng, {
@@ -204,7 +204,7 @@ const map = new L.map('map', {
 		callback: copyGeos
 	}]
 }).whenReady(function() {
-	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'software\');" title="Attribution"><i class="fa-solid fa-circle-info fa-fw"></i></a>');
+	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'#gotosoftware\');" title="Attribution"><i class="fa-solid fa-circle-info fa-fw"></i></a>');
 	if (!noIframe) {
 		$('#devTools').hide();
 		$('.leaflet-control-locate').hide();
@@ -222,11 +222,12 @@ const map = new L.map('map', {
 	getTips('random');
 	if (actTab === defTab && noIframe) { showWeather(); showEditFeed(); }
 	else $('#weather').hide();
-	$('#creditFooter > span').append(
+	$('footer > span').append(
 		new Date().getFullYear() + ' | <a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/CHANGELOG.md" title="Changelog" target="_blank" rel="noopener">v' +
 		$('script').last().attr('src').split('v=')[1] + '</a>'
 	);
 	$('#walkList, #tourList').trigger('change');
+	if (!noTouch) $('#pdfContainer a').removeAttr('data-fancybox');
 	// metadata badges updated via cronjob.sh
 	const dailyCache = '?d=' + new Date().getFullYear() + new Date().getMonth() + new Date().getDate();
 	$('#info #gotoabout .mylinks').append('<br><br>' +
@@ -266,12 +267,13 @@ const map = new L.map('map', {
 	if (localStorageAvail() && !window.localStorage.tutorial) window.localStorage.tutorial = '';
 	if (noPermalink && noIframe && localStorageAvail() && window.localStorage.tutorial.indexOf('modals') === -1) {
 		const showModalTutor = function(txt, sty) {
-			sty.targ.before(
-				'<div id="modalT' + sty.id + '" class="modalTutor leaflet-control" style="' + sty.dir + ':' + sty.dist + 'px;position:' + sty.pos + ';">' +
-				'<div class="modalText"><span>' + (sty.id+1) + '/<span>0</span>:</span> ' + txt + '</div>' +
-				'<button type="button" class="modalButton theme">' + (!sty.last ? 'Next' : 'Got it') + '</button>' +
-				(!sty.last ? ' <button type="button" class="modalButton theme"><i class="fa-solid fa-xmark fa-sm"></i></button>' : '') +
-				'<div class="modalArrow" style="' + sty.dir + ':-5px;"></div></div>'
+			$('#sidebar').before(
+				'<div id="modalT' + sty.id + '" class="modalTutor leaflet-control" style="top:' + sty.pos[0] + 'px;' + sty.dir + ':' + sty.pos[1] + 'px;">' +
+					'<div class="modalArrow" style="' + sty.dir + ':-5px;"></div>' +
+					'<div class="modalText"><span>' + (sty.id+1) + '/<span>0</span>:</span> ' + txt + '</div>' +
+					'<button type="button" class="modalButton theme">' + (!sty.last ? 'Next' : 'Got it') + '</button>' +
+					(!sty.last ? ' <button type="button" class="modalButton theme"><i class="fa-solid fa-xmark fa-sm"></i></button>' : '') +
+				'</div>'
 			);
 			L.DomEvent.disableClickPropagation($('#modalT' + sty.id)[0]).disableScrollPropagation($('#modalT' + sty.id)[0]);
 			$('.modalText > span > span').text(sty.id+1);
@@ -289,33 +291,35 @@ const map = new L.map('map', {
 		};
 		showModalTutor(
 			'Choose from a growing number of modern and historical maps.' + (noTouch ? '<br>Tapping <kbd>CTRL</kbd> will fade loaded overlays in and out.' : ''),
-			{ id: 0, targ: $('.leaflet-control-layers'), dist: '50', dir: 'right', pos: 'fixed' }
+			{ id: 0, pos: [10, 70], dir: 'right' }
 		);
 		showModalTutor(
 			'Display articles on Bexhill\'s history; from dinosaurs, to Martello towers, to WWII incidents.',
-			{ id: 1, targ: $('li a[href="#tour"]').parent(), dist: '40', dir: 'left', pos: 'fixed' }
+			{ id: 1, pos: [140, 45], dir: 'left' }
 		);
 		showModalTutor(
-			'Zoom in and ' + (noTouch ? 'click' : 'tap') + ' on the map to find information on almost any place.<br>This button will clear any map markers.',
-			{ id: 2, targ: $('#btnClearmap'), dist: '30', dir: 'left', pos: 'absolute', last: true }	
+			'This button will clear any map markers.<br>Zoom in and ' + (noTouch ? 'click' : 'tap') + ' on the map to find information on almost any place.',
+			{ id: 2, pos: [250, 65 + Math.round(sidebar.width())], dir: 'left', last: true }	
 		);
 		$('#modalT0 button').first().focus();
 	}
 	// easter holiday decorations
-	if (new Date().getMonth() === 2 && new Date().getDate() >= 29 && new Date().getDate() <= 31) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F95A'));
+	if (new Date().getMonth() === 2 && new Date().getDate() >= 29 && new Date().getDate() <= 31) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Easter!">&#x1F95A</span>'));
+	// bexhill day holiday decorations
+	else if (new Date().getMonth() === 7 && new Date().getDate() === 22) sidebar.append('<img id="bexhilldayImg" alt="" title="It\'s Bexhill Day!" src="assets/img/holidays/bexhilldaySb.png">');
 	// halloween holiday decorations
-	else if (new Date().getMonth() === 9) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '&#x1F383;'));
+	else if (new Date().getMonth() === 9 && new Date().getDate() >= 15 ) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Halloween!">&#x1F383;</span>'));
 	// xmas holiday decorations
-	else if ((new Date().getMonth() === 10 && new Date().getDate() >= 25) || new Date().getMonth() === 11) {
+	else if ((new Date().getMonth() === 10 && new Date().getDate() >= 30) || new Date().getMonth() === 11) {
 		$('html').css({ '--main-color': '#b00000', '--second-color': '#993c3c' });
 		// central
 		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84090, 0.47320], [50.84055, 0.47370]], { className: 'xmasMapTree' }).addTo(map);
 		// little common
 		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84545, 0.43400], [50.84510, 0.43350]], { className: 'xmasMapTree' }).addTo(map);
-		sidebar.append('<img id="holidayImg" alt="" src="assets/img/holidays/xmasSb.png">');
+		sidebar.append('<img id="xmasImg" title="Merry Christmas!" alt="" src="assets/img/holidays/xmasSb.png">');
 		$('#homeBox').after('<div id="xmasMsg" title="Show on map" onclick="tour(\'xmas\');">' +
 			'<div id="xmasTitle">~ <span>Christmas Window Display Competition</span> ~</div>' +
-			'<div class="comment">2022\'s theme is \'A Magical Christmas\', in association with Bexhill Festival of the Sea</div>' +
+			'<div class="comment">2023\'s theme is \'Christmas Celebrations\', in association with Bexhill Community Events Group</div>' +
 		'</div>');
 	}
 	// prevent click-through on map controls
@@ -372,6 +376,8 @@ const map = new L.map('map', {
 }).on('popupopen', function(e) {
 	const popupThis = $(e.popup.getElement());
 	const osmId = e.popup._source._leaflet_id;
+	// hide tooltip
+	if (e.popup._source.getTooltip()) e.popup._source.getTooltip().setOpacity(0);
 	// add/remove favourites
 	if ($('a.popup-bookm').length) {
 		if (!window.localStorage.favourites) window.localStorage.favourites = '';
@@ -379,11 +385,11 @@ const map = new L.map('map', {
 		$('a.popup-bookm').unbind('click').click(function() {
 			if ($('a.popup-bookm i.fa-solid').length) {
 				window.localStorage.favourites = window.localStorage.favourites.replace(elementType(osmId) + '(' + osmId.slice(1) + ');', '');
-				popupThis.find($('a.popup-bookm i').removeClass('fa-solid').addClass('fa-regular'));
+				popupThis.find($('a.popup-bookm i').removeClass('fa-solid fa-beat').addClass('fa-regular'));
 			}
 			else {
 				window.localStorage.favourites = window.localStorage.favourites + elementType(osmId) + '(' + osmId.slice(1) + ');';
-				popupThis.find($('a.popup-bookm i').removeClass('fa-regular').addClass('fa-solid'));
+				popupThis.find($('a.popup-bookm i').removeClass('fa-regular').addClass('fa-solid fa-beat'));
 			}
 		});
 	}
@@ -454,7 +460,7 @@ const map = new L.map('map', {
 						'<td>' + (departTimer === -1 ? 'Due' : (departTimer + ' (' + new Date(departTime).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + ')')) + '</td></tr>'
 					);
 				}
-				popupThis.find($('.popup-bsTable')).after('<div class="popup-imgAttrib">Data: <a href="https://www.travelinedata.org.uk/" target="_blank" rel="noopener">Traveline NextBuses</div>');
+				popupThis.find($('.popup-bsTable')).after('<div class="popup-imgAttrib" style="bottom:5px;"><a href="https://www.travelinedata.org.uk/" target="_blank" rel="noopener">Data: Traveline NextBuses</div>');
 				if (e.popup.options.autoPan) e.popup._adjustPan();
 			}
 			else popupThis.find($('.popup-bsTable')).html('<span class="comment">No buses due at this time.</span>');
@@ -479,10 +485,10 @@ const map = new L.map('map', {
 		setTimeout(function() {
 			popupThis.find($('.popup-imgContainer').each(function(i, element) {
 				// dynamically load images and attribution
-				$(element).find('img').attr('src', $(element).find('a').attr('href') + ($(element).find('a').data('srcset') ? '&width=' + imgSize : ''));
-				if (popupThis.find($(element).find('.notloaded')).length) getWikiAttrib(popupThis.find($(element)));
+				$(element).find('img').attr('src', $(element).find('a').attr('href') + ($(element).find('a').data('srcset') ? '&width=320' : ''));
+				if (popupThis.find($(element).find('.popup-imgAttrib.notloaded')).length) getWikiAttrib(popupThis.find($(element)));
 				// save popup content
-				else if (!popupThis.find('.notloaded').length) map._layers[osmId].setPopupContent();
+				else if (!popupThis.find('.popup-imgAttrib.notloaded').length) map._layers[osmId].setPopupContent();
 			}));
 		}, 200);
 		popupThis.find($('.popup-imgContainer img'))
@@ -493,11 +499,13 @@ const map = new L.map('map', {
 				else if (e.originalEvent.deltaY > 0) navImg(1);
 				e.preventDefault();
 			})
-			.on('error', function() {
+			.on('error', function(e) {
 				// error if image not found
-				popupThis.find($('.popup-imgContainer img')).attr('alt', 'Error: Image not found');
-				popupThis.find($('.popup-imgContainer').css('pointer-events', 'none'));
-				popupThis.find($('.popup-imgAttrib')).empty();
+				if (!popupThis.find($('.popup-imgContainer:visible')).length) popupThis.find($('#img0')).show();
+				if (!popupThis.find($('.navigateItem:visible')).length) popupThis.find($('.navigateItem')).show();
+				$(e.currentTarget).attr('alt', 'Error: Image not found');
+				$(e.currentTarget).parent().css('pointer-events', 'none');
+				$(e.currentTarget).parent().next().html('<span>Error: Image not found</span>');
 			});
 		popupThis.find($('.popup-imgContainer, .navigateItem'))
 			.on('dragstart', false)
@@ -508,9 +516,15 @@ const map = new L.map('map', {
 					// stop placeholder images from being zoomed
 					if (popupThis.find($('.popup-imgContainer img')).attr('src').indexOf('000placehldr') >= 0) popupThis.find($('.popup-imgContainer').css('pointer-events', 'none'));
 					popupThis.find($('.popup-imgContainer img')).attr('alt', 'Image of ' + popupThis.find($('.popup-header h3')).text());
-					// add padding on attribution for navigation buttons
-					if (popupThis.find($('.navigateItem')).length) popupThis.find($('.popup-imgAttrib')).css('padding-right', 20*popupThis.find($('.navigateItem i:visible')).length + 'px');
-					if (e.popup.options.autoPan && map.getBounds().contains(e.popup._latlng)) e.popup._adjustPan();
+					if (popupThis.find($('.navigateItem')).length) {
+						// apply background to navigation buttons if no attribution
+						if (!popupThis.find($('.popup-imgAttrib')).length && popupThis.find($('.navigateItem')).length) popupThis.find($('.navigateItem')).addClass('navigateBg');
+						// add padding on attribution for navigation buttons
+						else popupThis.find($('.popup-imgAttrib')).css('padding-right', popupThis.find($('.navigateItem')).width()+5 + 'px');
+						if (!popupThis.find($('.navigateItem:visible')).length) popupThis.find($('.navigateItem')).fadeIn();
+					}
+					popupThis.find($('.popup-imgContainer')).removeClass('notloaded');
+					if (e.popup.options.autoPan && map.getBounds().contains(e.popup._latlng)) setTimeout(function() { e.popup._adjustPan(); }, 200);
 				}
 				catch(err) {
 					if ($('#inputDebug').is(':checked')) console.debug(err + '- Popup was probably closed.');
@@ -518,7 +532,10 @@ const map = new L.map('map', {
 			});
 	}
 	// add padding for navigation icons without image
-	else if (popupThis.find($('.navigateItem')).length && !popupThis.find($('.popup-imgContainer')).length) popupThis.find($('.popup-body')).css('padding-bottom', '12px');
+	else if (popupThis.find($('.navigateItem')).length && !popupThis.find($('.popup-imgContainer')).length) {
+		popupThis.find($('.navigateItem')).css('bottom', 'auto').fadeIn();
+		popupThis.find($('.popup-body')).css('padding-bottom', '12px');
+	}
 	// scroll shadow
 	if (popupThis.find($('.custscroll')).length) setTimeout(function() {
 		popupThis.find($('.custscroll')).scroll(function() {
@@ -534,7 +551,11 @@ const map = new L.map('map', {
 		$(element).data('caption', '<a href="https://commons.wikimedia.org/wiki/' + encodeURI($(element).data('caption')) + '" title="Wikimedia Commons" target="_blank" rel="noopener">Wikimedia Commons</a>').removeClass('notloaded');
 	});
 }).on('popupclose', function(e) {
-	if (e.popup._source._tooltip && !e.popup._source.isTooltipOpen()) highlightOutline(markerId, 0);
+	// hide tooltip
+	if (e.popup._source.getTooltip()) {
+		e.popup._source.getTooltip().setOpacity(1);
+		if (!e.popup._source.isTooltipOpen()) highlightOutline(markerId, 0);
+	}
 	// unselect from poi list
 	if (poiList.length) {
 		$('#poi-results-list tr').removeClass('poi-result-selected');
@@ -562,10 +583,13 @@ const map = new L.map('map', {
 		$('#inputOpacity').show(100);
 		$('#inputOpacity input')
 			.val(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].options.opacity)
-			.on('input', function() { tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].setOpacity(this.value); })
+			.on('input', function() {
+				tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].setOpacity(this.value);
+				$(this).attr('title', tileOverlayLayer[actOverlayLayer].name + '\n' + Math.floor(this.value*100) + '% opacity');
+			})
 			.on('change', permalinkSet)
 			.on('mouseover', function() { this.focus(); })
-			.attr('title', tileOverlayLayer[actOverlayLayer].name + ' opacity');
+			.attr('title', tileOverlayLayer[actOverlayLayer].name + '\n' + Math.floor($('#inputOpacity input').val()*100) + '% opacity');
 		setOverlayLabel();
 		permalinkSet();
 		if (actOverlayLayer && tileOverlayLayer[actOverlayLayer].offset) {
@@ -614,10 +638,7 @@ function changeOffset(layer, container) {
 	// offset layer, metres to pixels
 	const metresPerPixel = 40075017 * Math.cos(map.getCenter().lat * (Math.PI/180)) / Math.pow(2, map.getZoom()+8);
 	layer = (layer === 'base') ? tileBaseLayer[actBaseTileLayer] : tileOverlayLayer[actOverlayLayer];
-	$(container).css({
-		'left': Math.floor(layer.offset[0] / metresPerPixel) + 'px',
-		'top': Math.floor(layer.offset[1] / metresPerPixel) + 'px'
-	});
+	$(container).css('transform', 'translate3d(' + Math.floor(layer.offset[0] / metresPerPixel) + 'px,' + Math.floor(layer.offset[1] / metresPerPixel) + 'px, 0px)');
 }
 
 // https://github.com/davidjbradshaw/image-map-resizer
@@ -696,7 +717,7 @@ function reverseQuery(e, singlemapclick) {
 		}
 		else {
 			$('.spinner').fadeOut(200);
-			setMsgStatus('fa-solid fa-circle-info', 'No places found', 'Please try another area.', 4);
+			setMsgStatus('fa-solid fa-circle-info', 'No Places Found', 'Please try another area.', 4);
 			clickOutline.clearLayers();
 		}
 	});
@@ -894,7 +915,7 @@ function setLeaflet() {
 		}
 	});
 	// baselayers
-	const attribution = '&copy; <a href="https://openstreetmap.org/copyright" title="Copyright and License" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
+	const attribution = '&copy; <a href="https://openstreetmap.org/copyright" title="Copyright and License" target="_blank" rel="noopener">OpenStreetMap</a>';
 	tileBaseLayer = {
 		osmstd: {
 			name: 'OpenStreetMap',
@@ -908,11 +929,19 @@ function setLeaflet() {
 			attribution: attribution + ', <a href="https://mapbox.com/" target="_blank" rel="noopener">MapBox</a>',
 			className: 'layerDark'
 		},
+		osmtopo: {
+			name: 'OSM Topo',
+			url: 'https://tile.tracestrack.com/topo__/{z}/{x}/{y}.png?key=' + window.BOSM.tracestrackKey,
+			attribution: attribution + ', <a href="https://www.tracestrack.com/" target="_blank" rel="noopener">Tracestrack</a>',
+			maxNativeZoom: 19,
+			className: 'layerDark'
+		},
 		osmuk: {
 			name: 'OSM UK',
 			url: 'https://map.atownsend.org.uk/hot/{z}/{x}/{y}.png',
 			attribution: attribution + ', <a href="https://map.atownsend.org.uk/maps/map/map.html" target="_blank" rel="noopener">Andy Townsend</a>',
-			className: 'layerDark'
+			className: 'layerDark',
+			hide: 1
 		},
 		general: {
 			name: 'OSM Humanitarian',
@@ -991,7 +1020,8 @@ function setLeaflet() {
 				transparent: true
 			},
 			attribution: '<a href="https://maps.rother.gov.uk/tpo.html" target="_blank" rel="noopener">Rother District Council</a>',
-			opacity: 1
+			opacity: 1,
+			className: 'layerDropshadow'
 		},
 		osm2012: {
 			name: '2012 OpenStreetMap',
@@ -1000,17 +1030,23 @@ function setLeaflet() {
 			hide: 1,
 			className: 'layerNoclick layerDark'
 		},
+		osmlabels: {
+			name: 'OSM Labels',
+			url: 'https://tile.tracestrack.com/_-name/{z}/{x}/{y}.png?key=' + window.BOSM.tracestrackKey,
+			opacity: 1,
+			hide: 1
+		},
 		prow: {
 			name: 'Public Rights-of-Way',
 			url: 'https://osm.cycle.travel/rights_of_way/{z}/{x}/{y}.png',
 			attribution: '<a href="https://row.eastsussex.gov.uk/standardmap.aspx" target="_blank" rel="noopener">East Sussex County Council</a>',
 			opacity: 1,
 			maxNativeZoom: 18,
-			className: 'layerDark'
+			className: 'layerDark layerDropshadow'
 		},
 		xmas: {
 			name: 'Xmas Snow',
-			url: 'tour/itemXmas/overlay-snow.gif',
+			url: 'tour/itemXmas/img/overlay-snow.gif',
 			opacity: 0.5,
 			hide: 1,
 			className: 'layerNoclick'
@@ -1062,22 +1098,21 @@ function setLeaflet() {
 			maxNativeZoom: 17,
 			className: 'layerNoclick'
 		},
-		raf1946t: {
-			name: '1946 RAF (town)',
-			url: 'https://tiles.bexhillheritage.com/raf1946t/{z}/{x}/{y}.png',
+		raf1959: {
+			name: '1959 RAF (L.Common)',
+			url: 'https://tiles.bexhillheritage.com/raf1959/{z}/{x}/{y}.png',
 			attribution: 'RAF CPEUK',
-			bounds: L.latLngBounds([50.853, 0.473], [50.835, 0.499]),
+			bounds: L.latLngBounds([50.877, 0.402], [50.838, 0.444]),
 			opacity: 1,
 			minNativeZoom: 14,
 			maxNativeZoom: 18,
 			hide: 1,
 			className: 'layerNoclick'
 		},
-		raf1946p: {
-			name: '1946 RAF (p.levels)',
-			url: 'https://tiles.bexhillheritage.com/raf1946p/{z}/{x}/{y}.png',
+		raf1946: {
+			name: '1946 RAF',
+			url: 'https://tiles.bexhillheritage.com/raf1946/{z}/{x}/{y}.png',
 			attribution: 'RAF CPEUK',
-			bounds: L.latLngBounds([50.857, 0.379], [50.828, 0.428]),
 			opacity: 1,
 			minNativeZoom: 14,
 			maxNativeZoom: 18,
@@ -1227,12 +1262,12 @@ function setLeaflet() {
 		},
 		os1873: {
 			name: '1873 Ordnance Survey',
-			url: 'https://tiles.bexhillheritage.com/os1873/{z}/{x}/{y}.png',
-			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Crown Copyright Ordnance Survey</a>',
+			url: 'https://geo.nls.uk/mapdata2/os/six-inch-sussex/{z}/{x}/{y}.png',
+			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
-			maxNativeZoom: 16,
-			offset: [5, -7],
+			maxNativeZoom: 17,
+			offset: [8, -4],
 			className: 'layerNoclick'
 		},
 		bt1839: {
@@ -1462,12 +1497,12 @@ function switchTab(tab, anchorTour, poi, actImgLayer) {
 				$('#' + (tab === 'pois' ? tab + ' #poi-icons,' : tab) + ' .sidebar-body').scrollTop(0);
 			}
 		}
-		if (anchorTour) {
+		if (anchorTour) { 
 			if (tab === 'tour') {
 				$('#tourList').val(anchorTour).trigger('change');
 				if (tab !== actTab) $('a[href="#tour"]').click();
 			}
-			else $('#goto' + anchorTour)[0].scrollIntoView({ behavior: 'instant' });
+			else setTimeout(function() { $(anchorTour)[0].scrollIntoView({ behavior: 'smooth' }); }, actTab === 'none' ? 200 : 20);
 		}
 	}
 	if (poi) {
@@ -1801,7 +1836,7 @@ $('#devTools').accordion({
 	animate: 150,
 	collapsible: true,
 	active: $('#inputDebug').is(':checked') ? 0 : false,
-	activate: function(event, ui) { if (ui.oldPanel[0]) $('#inputOverpass, #inputAttic').val(''); }
+	activate: function(e, ui) { if (ui.oldPanel[0]) $('#inputOverpass, #inputAttic').val(''); }
 });
 $('#btnExportQuery').click(function() {
 	// https://wiki.openstreetmap.org/wiki/Overpass_turbo/Development
@@ -1836,7 +1871,7 @@ function customQuery(q, fromInput) {
 		bound: true,
 		forceBbox: false
 	});
-	else setMsgStatus('fa-solid fa-circle-info', 'Incorrect query', 'Enclose queries with [ ] for tags,<br>and ( ) for element ids.', 4);
+	else setMsgStatus('fa-solid fa-circle-info', 'Incorrect Query', 'Enclose queries with [ ] for tags,<br>and ( ) for element ids.', 4);
 	if (spinner > 0 && fromInput) spinner--;
 }
 $('#inputRevServer').change(function() { if (window.localStorage) window.localStorage.RevServer = $(this).prop('selectedIndex'); });
@@ -2004,9 +2039,9 @@ function getTips(tip) {
 		'We have a number of historical map overlays, select them using the top-right layer control <i class="fa-solid fa-layer-group fa-sm"></i> .',
 		'Results in Places are coloured to show currently open (green) or closed (red).',
 		'Zoom into the map and click a postbox <i class="fa-solid fa-envelope fa-sm"></i> to see the next post collection.',
-		'You can find booking information on accommodation under <a onclick="switchTab(\'pois\', \'Leisure-Tourism\');">Leisure-Tourism</a>.',
-		'Get the latest food hygiene ratings on businesses under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
-		'Find your closest <i class="fa-solid fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'Amenities\');">Amenities</a>.',
+		'You can find booking information on accommodation under <a onclick="switchTab(\'pois\', \'#gotoLeisure-Tourism\');">Leisure-Tourism</a>.',
+		'Get the latest food hygiene ratings on businesses under <a onclick="switchTab(\'pois\', \'#gotoAmenities\');">Amenities</a>.',
+		'Find your closest <i class="fa-solid fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'#gotoAmenities\');">Amenities</a>.',
 		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', \'ww2\', \'\', \'bombmap\');">History <i class="fa-solid fa-book fa-sm"></i></a>.',
 		'Some places have a photosphere view, click <i class="fa-solid fa-street-view fa-fw"></i> in a popup to view it.',
 		'View superimposed and colourised images of Bexhill past and present under <a onclick="switchTab(\'thennow\');">Then and Now <i class="fa-regular fa-image fa-sm"></i></a>.',
@@ -2187,7 +2222,7 @@ function permalinkSet() {
 	if ($('[data-thennow]').length) uri.searchParams.set('TN', $('[data-thennow]').attr('data-thennow'));
 	$('.poi-checkbox input:checked').each(function(i, element) { selectedPois += element.id + '-'; });
 	if (selectedPois && !$('#inputAttic').val()) uri.searchParams.set('P', selectedPois.slice(0, -1));
-	else if (queryCustom && queryBbox && $('#inputOverpass').val() && !$('#inputAttic').val()) uri.searchParams.set('QO', ($('#inputOverpassR input').is(':checked') ? 'r' : '') + $('#inputOverpass').val());
+	else if (queryCustom && queryBbox && $('#inputOverpass').val() && ($('#inputBbox').val() !== 'screen') && !$('#inputAttic').val()) uri.searchParams.set('QO', ($('#inputOverpassR input').is(':checked') ? 'r' : '') + $('#inputOverpass').val());
 	if ($('#settings input[data-uri]:checkbox:checked').length) {
 		setChk = '';
 		for (c = 0; c < $('#settings input[data-uri]:checkbox').length; c++) setChk += $('#settings input[data-uri]:checkbox').eq(c).is(':checked') ? '1' : '0';
@@ -2225,6 +2260,10 @@ function permalinkReturn() {
 	}
 	else if (!noIframe) $('#inputTheme').val('light');
 	$('#inputTheme, #inputUnit, #inputStView').trigger('change');
+	if (!osmRelation) {
+		$('#inputBbox option[value="area_id"]').prop('disabled', true);
+		$('#inputBbox option[value="bbox"]').prop('selected', true);
+	}
 	if (!noPermalink) {
 		if (uri.has('M') && tileBaseLayer[uri.get('M')]) actBaseTileLayer = uri.get('M');
 		if (uri.has('O') && tileOverlayLayer[uri.get('O')]) {

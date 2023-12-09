@@ -103,7 +103,7 @@ function tour(tName, tID, fromPermalink) {
 			.bindTooltip(toolTip, {
 				className: pClass,
 				direction: 'top',
-				offset: [0, (pClass === 'popup-xmas' ? -30 : -8)],
+				offset: [0, (pClass === 'popup-xmas' ? -35 : -8)],
 				opacity: noTouch ? 1 : 0
 			});
 	};
@@ -210,8 +210,10 @@ function tour(tName, tID, fromPermalink) {
 		case 'xmas2019': /* fall through */
 		case 'xmas2020': /* fall through */
 		case 'xmas2021': /* fall through */
+		case 'xmas2022': /* fall through */
+		case 'xmas2023': /* fall through */
 		case 'xmas':
-			const xmasYear = (tName.length > 4) ? tName.split('xmas')[1] : '2022';
+			const xmasYear = (tName.length > 4) ? tName.split('xmas')[1] : '2023';
 			$('.spinner').show();
 			if (actOverlayLayer === undefined && $('#xmasTitle').length) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
@@ -222,16 +224,17 @@ function tour(tName, tID, fromPermalink) {
 				success: function(json) {
 					L.geoJSON(json, {
 						onEachFeature: function(feature, layer) {
-							const winner = feature.properties.winner, winnerTxt = ['Highly Commended', 'First Prize', 'Second Prize', 'Third Prize', 'Fourth Prize', 'Fifth Prize'],
-								winnerIco = ['award', 'trophy', 'medal', 'medal', 'medal', 'medal'];
+							const winner = feature.properties.winner, winnerTxt = ['Highly Commended', 'First Prize', 'Second Prize', 'Third Prize', 'Fourth Prize', 'Fifth Prize', 'Sixth Prize'],
+								winnerIco = ['award', 'trophy', 'medal', 'medal', 'medal', 'medal', 'medal'];
 							let winnerEle = '';
 							if (winner >= 0) winnerEle = '<i class="award commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner];
-							if (!feature.properties.img) feature.properties.img = { '0': 'itemXmas/000placehldr' };
+							if (!feature.properties.img) feature.properties.img = { '0': 'itemXmas/img/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, winnerEle, ''], '', 'popup-xmas');
+							feature.properties.sortby = winner > 0 ? winner : winner === 0 ? 9 : 99;
 						},
 						pointToLayer: function(feature, latlng) {
 							const marker = setMarker(latlng, true, {
-								iconUrl: 'itemXmas/window',
+								iconUrl: 'itemXmas/img/window',
 								iconSize: [32, 37],
 								iconAnchor: [16, 37],
 								iconNoBounce: true,
@@ -246,7 +249,7 @@ function tour(tName, tID, fromPermalink) {
 							return marker;
 						}
 					});
-					setTimeout(pushPoiList, 250);
+					setTimeout(function() { pushPoiList('feature.properties.sortby'); }, 250);
 					setPageTitle('Xmas Window Competition ' + xmasYear);
 					if (autoZoom) zoom_area();
 					else map.fireEvent('zoomend');
@@ -279,14 +282,13 @@ function tour(tName, tID, fromPermalink) {
 								winnerIco = ['', 'trophy', 'medal'];
 							let subtitleEle = feature.properties.ward;
 							if (winner > 0) subtitleEle = '<i class="award commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner] + ' - ' + subtitleEle;
-							if (!feature.properties.img) feature.properties.img = { '0': 'itemScarecrow/000placehldr' };
+							if (!feature.properties.img) feature.properties.img = { '0': 'itemScarecrow/img/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, subtitleEle], '', 'popup-scarecrow');
 							feature.properties.sortby = feature.properties.winner ? feature.properties.ward + feature.properties.winner : feature.properties.ward + '9';
-							if ($('#inputDebug').is(':checked')) console.debug(feature.properties.name + '|' + feature.properties.ward + '|' + (feature.properties.img ? 'yes' : 'no'));
 						},
 						pointToLayer: function(feature, latlng) {
 							const marker = setMarker(latlng, true, {
-								iconUrl: 'itemScarecrow/scarecrow' + (feature.properties.winner === 1 ? 'Win' : ''),
+								iconUrl: 'itemScarecrow/img/scarecrow' + (feature.properties.winner === 1 ? 'Win' : ''),
 								iconSize: [35, 37],
 								iconAnchor: [17, 37],
 								iconNoBounce: true,
@@ -525,7 +527,7 @@ function tour(tName, tID, fromPermalink) {
 			break;
 		case 'shipwreck':
 			rQuery = true;
-			show_overpass_layer('node(3192282124);', tName);
+			show_overpass_layer('way(1212359648);', tName);
 			setTour('amsterdam');
 			break;
 		case 'smugglingPanels':
@@ -767,7 +769,7 @@ function tour(tName, tID, fromPermalink) {
 			setTour('ww2');
 			break;
 		case 'structures':
-			show_overpass_layer('(node(3572364302);node(3944803214);node(2542995381);node(4056582954);node["military"];way["military"];);', tName, {
+			show_overpass_layer('(node(3572364302);node["memorial:conflict"~"WW2"];way["memorial:conflict"~"WW2"];node["military"];way["military"];);', tName, {
 				bound: true,
 				forceBbox: true,
 				zoomTo: autoZoom
@@ -1001,8 +1003,8 @@ function tour(tName, tID, fromPermalink) {
 		case 'wl1950':   /* fall through */
 		case 'wl1940':   /* fall through */
 		case 'wl1911':   /* fall through */
-		case 'raf1946t': /* fall through */
-		case 'raf1946p': /* fall through */
+		case 'raf1959': /* fall through */
+		case 'raf1946': /* fall through */
 		case 'raf1941c': /* fall through */
 		case 'arp1942':  /* fall through */
 		case 'mc1925':   /* fall through */

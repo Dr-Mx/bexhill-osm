@@ -6,7 +6,7 @@
 				"id": "ageuk",
 				"name": "Age UK",
 				"img": {
-					"0": "itemXmas/2017/ageuk(0)"
+					"0": "itemXmas/img/2017/ageuk(0)"
 				},
 				"winner": 3
 			},
@@ -20,7 +20,7 @@
 				"id": "barbykeel",
 				"name": "Barby Keel",
 				"img": {
-					"0": "itemXmas/2017/barbykeel(0)"
+					"0": "itemXmas/img/2017/barbykeel(0)"
 				},
 				"winner": 0
 			},
@@ -34,7 +34,7 @@
 				"id": "beflawless",
 				"name": "Be Flawless",
 				"img": {
-					"0": "itemXmas/2017/beflawless(0)"
+					"0": "itemXmas/img/2017/beflawless(0)"
 				},
 				"winner": 0
 			},
@@ -48,7 +48,7 @@
 				"id": "bexhillflorist",
 				"name": "The Bexhill Florist",
 				"img": {
-					"0": "itemXmas/2017/bexhillflorist(0)"
+					"0": "itemXmas/img/2017/bexhillflorist(0)"
 				}
 			},
 			"geometry": {
@@ -61,7 +61,7 @@
 				"id": "bloomers",
 				"name": "Bloomers",
 				"img": {
-					"0": "itemXmas/2017/bloomers(0)"
+					"0": "itemXmas/img/2017/bloomers(0)"
 				}
 			},
 			"geometry": {
@@ -74,7 +74,7 @@
 				"id": "birkdale",
 				"name": "Birkdale Nursery",
 				"img": {
-					"0": "itemXmas/2017/birkdale(0)"
+					"0": "itemXmas/img/2017/birkdale(0)"
 				},
 				"winner": 0
 			},
@@ -88,7 +88,7 @@
 				"id": "caringcommunity",
 				"name": "Bexhill Caring Community",
 				"img": {
-					"0": "itemXmas/2017/caringcommunity(0)"
+					"0": "itemXmas/img/2017/caringcommunity(0)"
 				},
 				"winner": 0
 			},
@@ -102,7 +102,7 @@
 				"id": "debnhair",
 				"name": "Deb N Hair",
 				"img": {
-					"0": "itemXmas/2017/debnhair(0)"
+					"0": "itemXmas/img/2017/debnhair(0)"
 				}
 			},
 			"geometry": {
@@ -115,7 +115,7 @@
 				"id": "dorothymarchant",
 				"name": "Dorothy Marchant Florists",
 				"img": {
-					"0": "itemXmas/2017/dorothymarchant(0)"
+					"0": "itemXmas/img/2017/dorothymarchant(0)"
 				},
 				"winner": 0
 			},
@@ -129,7 +129,7 @@
 				"id": "emmahellier",
 				"name": "Emma Hellier",
 				"img": {
-					"0": "itemXmas/2017/emmahellier(0)"
+					"0": "itemXmas/img/2017/emmahellier(0)"
 				},
 				"winner": 0
 			},
@@ -143,7 +143,7 @@
 				"id": "hearingcentre",
 				"name": "Bexhill Hearing Centre",
 				"img": {
-					"0": "itemXmas/2017/hearingcentre(0)"
+					"0": "itemXmas/img/2017/hearingcentre(0)"
 				},
 				"winner": 0
 			},
@@ -157,7 +157,7 @@
 				"id": "inperspective",
 				"name": "In Perspective: Arts and Craft",
 				"img": {
-					"0": "itemXmas/2017/inperspective(0)"
+					"0": "itemXmas/img/2017/inperspective(0)"
 				}
 			},
 			"geometry": {
@@ -170,7 +170,7 @@
 				"id": "jellybeans",
 				"name": "JellyBeans Toy Shop",
 				"img": {
-					"0": "itemXmas/2017/jellybeans(0)"
+					"0": "itemXmas/img/2017/jellybeans(0)"
 				}
 			},
 			"geometry": {
@@ -183,7 +183,7 @@
 				"id": "ljcollis",
 				"name": "L.J. Collis & Co",
 				"img": {
-					"0": "itemXmas/2017/ljcollis(0)"
+					"0": "itemXmas/img/2017/ljcollis(0)"
 				}
 			},
 			"geometry": {
@@ -196,7 +196,7 @@
 				"id": "madexpectations",
 				"name": "Mad Expectations",
 				"img": {
-					"0": "itemXmas/2017/madexpectations(0)"
+					"0": "itemXmas/img/2017/madexpectations(0)"
 				}
 			},
 			"geometry": {
@@ -209,7 +209,7 @@
 				"id": "milzarsflorist",
 				"name": "Milzar's Florist",
 				"img": {
-					"0": "itemXmas/2017/milzarsflorist(0)"
+					"0": "itemXmas/img/2017/milzarsflorist(0)"
 				},
 				"winner": 0
 			},
@@ -223,7 +223,7 @@
 				"id": "mind",
 				"name": "Mind",
 				"img": {
-					"0": "itemXmas/2017/mind(0)"
+					"0": "itemXmas/img/2017/mind(0)"
 				},
 				"winner": 4
 			},
@@ -237,7 +237,7 @@
 				"id": "mummery",
 				"name": "Mummery",
 				"img": {
-					"0": "itemXmas/2017/mummery(0)"
+					"0": "itemXmas/img/2017/mummery(0)"
 				},
 				"winner": 0
 			},
@@ -251,7 +251,7 @@
 				"id": "number10",
 				"name": "Number10",
 				"img": {
-					"0": "itemXmas/2017/number10(0)"
+					"0": "itemXmas/img/2017/number10(0)"
 				}
 			},
 			"geometry": {
@@ -264,8 +264,8 @@
 				"id": "salvridges",
 				"name": "Salvridges",
 				"img": {
-					"0": "itemXmas/2017/salvridges(0)",
-					"1": "itemXmas/2017/salvridges(1)"
+					"0": "itemXmas/img/2017/salvridges(0)",
+					"1": "itemXmas/img/2017/salvridges(1)"
 				},
 				"winner": 1
 			},
@@ -279,7 +279,7 @@
 				"id": "saralee",
 				"name": "Sara Lee Trust",
 				"img": {
-					"0": "itemXmas/2017/saralee(0)"
+					"0": "itemXmas/img/2017/saralee(0)"
 				},
 				"winner": 0
 			},
@@ -293,7 +293,7 @@
 				"id": "thimbleinas",
 				"name": "Thimble-Inas",
 				"img": {
-					"0": "itemXmas/2017/thimbleinas(0)"
+					"0": "itemXmas/img/2017/thimbleinas(0)"
 				},
 				"winner": 2
 			},
@@ -307,7 +307,7 @@
 				"id": "rushwittwilson",
 				"name": "Rush Witt & Wilson",
 				"img": {
-					"0": "itemXmas/2017/rushwittwilson(0)"
+					"0": "itemXmas/img/2017/rushwittwilson(0)"
 				},
 				"winner": 0
 			},
@@ -321,7 +321,7 @@
 				"id": "stmichaelshospice",
 				"name": "St. Michael's Hospice",
 				"img": {
-					"0": "itemXmas/2017/stmichaelshospice(0)"
+					"0": "itemXmas/img/2017/stmichaelshospice(0)"
 				}
 			},
 			"geometry": {
@@ -334,7 +334,7 @@
 				"id": "topdoggrooming",
 				"name": "Top Dog Grooming",
 				"img": {
-					"0": "itemXmas/2017/topdoggrooming(0)"
+					"0": "itemXmas/img/2017/topdoggrooming(0)"
 				}
 			},
 			"geometry": {
@@ -347,7 +347,7 @@
 				"id": "wards",
 				"name": "Wards Group",
 				"img": {
-					"0": "itemXmas/2017/wards(0)"
+					"0": "itemXmas/img/2017/wards(0)"
 				},
 				"winner": 0
 			},
@@ -361,7 +361,7 @@
 				"id": "whitefeather",
 				"name": "The White Feather Card Company",
 				"img": {
-					"0": "itemXmas/2017/whitefeather(0)"
+					"0": "itemXmas/img/2017/whitefeather(0)"
 				},
 				"winner": 0
 			},
@@ -375,7 +375,7 @@
 				"id": "wickhambistro",
 				"name": "Wickham Bistro",
 				"img": {
-					"0": "itemXmas/2017/wickhambistro(0)"
+					"0": "itemXmas/img/2017/wickhambistro(0)"
 				},
 				"winner": 0
 			},

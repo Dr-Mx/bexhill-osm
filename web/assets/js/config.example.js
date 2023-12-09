@@ -7,6 +7,7 @@ window.BOSM = {
 	orsKey: '',						// Reverse geocoding				https://openrouteservice.org/dev/#/home
 	mapboxKey: '',					// Map tiles, directions			https://account.mapbox.com/access-tokens		
 	thuforKey: '',					// Map tiles						https://manage.thunderforest.com/dashboard
+	tracestrackKey: '',				// Map tiles						https://console.tracestrack.com
 	mpllryKey: '',					// Panoramic street level images	https://www.mapillary.com/dashboard/developers
 	googleKey: '',					// Panoramic street level images	https://cloud.google.com/maps-platform
 	trvllneApi: { u: '', p: '' },	// Bus times						https://www.travelinedata.org.uk

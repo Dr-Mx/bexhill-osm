@@ -1,10 +1,11 @@
 web/assets/data/tides.json
 web/assets/maptiles/
-web/tour/*/*/*
+web/tour/*/img/
 web/assets/other/*
 web/assets/img/uploads/
 web/assets/js/config.js
 web/robots.txt
+*.pdf
 
 #############
 ## Windows detritus

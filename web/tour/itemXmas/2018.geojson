@@ -7,7 +7,7 @@
 				"name": "aFic",
 				"link": "http://www.afic.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/afic(0)"
+					"0": "itemXmas/img/2018/afic(0)"
 				}
 			},
 			"geometry": {
@@ -21,7 +21,7 @@
 				"name": "Age UK",
 				"link": "https://directory.ageuk.org.uk/charity-shops/age-uk-east-sussex-bexhill-on-sea-shop",
 				"img": {
-					"0": "itemXmas/2018/ageuk(0)"
+					"0": "itemXmas/img/2018/ageuk(0)"
 				},
 				"winner": 0
 			},
@@ -36,7 +36,7 @@
 				"name": "Ark Residential",
 				"link": "http://www.arkresidential.co.uk",
 				"img": {
-					"0": "itemXmas/2018/ark(0)"
+					"0": "itemXmas/img/2018/ark(0)"
 				},
 				"winner": 0
 			},
@@ -51,7 +51,7 @@
 				"name": "Barby Keel",
 				"link": "http://barbykeel.btck.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/barbykeel(0)"
+					"0": "itemXmas/img/2018/barbykeel(0)"
 				},
 				"winner": 0
 			},
@@ -66,7 +66,7 @@
 				"name": "Bexhill Caring Community",
 				"link": "http://www.bexhillcaringcommunity.org",
 				"img": {
-					"0": "itemXmas/2018/caringcommunity(0)"
+					"0": "itemXmas/img/2018/caringcommunity(0)"
 				},
 				"winner": 0
 			},
@@ -81,7 +81,7 @@
 				"name": "The Bexhill Florist",
 				"link": "http://www.thebexhillflorist.co.uk",
 				"img": {
-					"0": "itemXmas/2018/bexhillflorist(0)"
+					"0": "itemXmas/img/2018/bexhillflorist(0)"
 				},
 				"winner": 3
 			},
@@ -96,7 +96,7 @@
 				"name": "Bexhill Youth and Community Centre",
 				"link": "http://www.bexhillyouthandcommunitycentre.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/youthcentre(0)"
+					"0": "itemXmas/img/2018/youthcentre(0)"
 				},
 				"winner": 0
 			},
@@ -111,7 +111,7 @@
 				"name": "Birkdale Nursery",
 				"link": "http://www.birkdalenursery.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/birkdale(0)"
+					"0": "itemXmas/img/2018/birkdale(0)"
 				},
 				"winner": 0
 			},
@@ -126,7 +126,7 @@
 				"name": "Carnegie Loft",
 				"link": "http://carnegieloft.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/carnegieloft(0)"
+					"0": "itemXmas/img/2018/carnegieloft(0)"
 				}
 			},
 			"geometry": {
@@ -140,7 +140,7 @@
 				"name": "Dorothy Marchant Florists",
 				"link": "http://www.dorothymarchant.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/dorothymarchant(0)"
+					"0": "itemXmas/img/2018/dorothymarchant(0)"
 				},
 				"winner": 0
 			},
@@ -155,7 +155,7 @@
 				"name": "Esspa",
 				"link": "http://www.esspa.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/esspa(0)"
+					"0": "itemXmas/img/2018/esspa(0)"
 				},
 				"winner": 0
 			},
@@ -170,7 +170,7 @@
 				"name": "Funnell & Perring Solicitors",
 				"link": "http://www.funnellandperring.co.uk",
 				"img": {
-					"0": "itemXmas/2018/funnelperring(0)"
+					"0": "itemXmas/img/2018/funnelperring(0)"
 				}
 			},
 			"geometry": {
@@ -184,7 +184,7 @@
 				"name": "Green & Elliott Optometrists",
 				"link": "http://www.greenandelliott.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/greenelliott(0)"
+					"0": "itemXmas/img/2018/greenelliott(0)"
 				},
 				"winner": 0
 			},
@@ -199,7 +199,7 @@
 				"name": "H&H Confectionery",
 				"link": "https://www.facebook.com/HandHconfectionery.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/hh(0)"
+					"0": "itemXmas/img/2018/hh(0)"
 				},
 				"winner": 0
 			},
@@ -214,7 +214,7 @@
 				"name": "Honey Barrett",
 				"link": "http://www.honeybarrett.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/honeybarrett(0)"
+					"0": "itemXmas/img/2018/honeybarrett(0)"
 				}
 			},
 			"geometry": {
@@ -228,7 +228,7 @@
 				"name": "In Perspective: Arts and Craft",
 				"link": "http://www.inperspectiveart.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/inperspective(0)"
+					"0": "itemXmas/img/2018/inperspective(0)"
 				}
 			},
 			"geometry": {
@@ -242,7 +242,7 @@
 				"name": "La Collina Gardens",
 				"link": "http://www.lacollinagardens.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/lacollina(0)"
+					"0": "itemXmas/img/2018/lacollina(0)"
 				},
 				"winner": 0
 			},
@@ -257,7 +257,7 @@
 				"name": "L.J. Collis & Co",
 				"link": "http://www.paydenspharmacy.co.uk/pharmacy_l-j-collis-&-co-bexhill.asp",
 				"img": {
-					"0": "itemXmas/2018/ljcollis(0)"
+					"0": "itemXmas/img/2018/ljcollis(0)"
 				}
 			},
 			"geometry": {
@@ -271,7 +271,7 @@
 				"name": "Maker's Loft",
 				"link": "https://www.facebook.com/themakersloft",
 				"img": {
-					"0": "itemXmas/2018/makersloft(0)"
+					"0": "itemXmas/img/2018/makersloft(0)"
 				},
 				"winner": 0
 			},
@@ -286,7 +286,7 @@
 				"name": "Mind",
 				"link": "https://www.mind.org.uk/",
 				"img": {
-					"0": "itemXmas/2018/mind(0)"
+					"0": "itemXmas/img/2018/mind(0)"
 				},
 				"winner": 0
 			},
@@ -301,7 +301,7 @@
 				"name": "Mummery",
 				"link": "http://www.mummeryfunerals.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/mummery(0)"
+					"0": "itemXmas/img/2018/mummery(0)"
 				},
 				"winner": 1
 			},
@@ -316,7 +316,7 @@
 				"name": "Number10",
 				"link": "01424 211498",
 				"img": {
-					"0": "itemXmas/2018/number10(0)"
+					"0": "itemXmas/img/2018/number10(0)"
 				}
 			},
 			"geometry": {
@@ -330,7 +330,7 @@
 				"name": "Oxfam",
 				"link": "https://www.oxfam.org.uk/shop/local-shops/oxfam-shop-bexhillonsea",
 				"img": {
-					"0": "itemXmas/2018/oxfam(0)"
+					"0": "itemXmas/img/2018/oxfam(0)"
 				}
 			},
 			"geometry": {
@@ -344,7 +344,7 @@
 				"name": "Premier Travel",
 				"link": "http://www.premiertravelbexhill.co.uk",
 				"img": {
-					"0": "itemXmas/2018/premiertravel(0)"
+					"0": "itemXmas/img/2018/premiertravel(0)"
 				}
 			},
 			"geometry": {
@@ -358,7 +358,7 @@
 				"name": "Sara Lee Trust",
 				"link": "http://www.saraleetrust.org",
 				"img": {
-					"0": "itemXmas/2018/saralee(western)(0)"
+					"0": "itemXmas/img/2018/saralee(western)(0)"
 				},
 				"winner": 2
 			},
@@ -373,7 +373,7 @@
 				"name": "Sara Lee Trust",
 				"link": "http://www.saraleetrust.org",
 				"img": {
-					"0": "itemXmas/2018/saralee(endwell)(0)"
+					"0": "itemXmas/img/2018/saralee(endwell)(0)"
 				},
 				"winner": 0
 			},
@@ -388,7 +388,7 @@
 				"name": "Scope",
 				"link": "https://www.scope.org.uk/Get-Involved/charity-shops/Charity-shops-directory/Bexhill-On-Sea-charity-shop",
 				"img": {
-					"0": "itemXmas/2018/scope(0)"
+					"0": "itemXmas/img/2018/scope(0)"
 				},
 				"winner": 0
 			},
@@ -403,7 +403,7 @@
 				"name": "St. Michael's Hospice",
 				"link": "http://stmichaelshospice.com",
 				"img": {
-					"0": "itemXmas/2018/stmichaelshospice(0)"
+					"0": "itemXmas/img/2018/stmichaelshospice(0)"
 				},
 				"winner": 0
 			},
@@ -418,7 +418,7 @@
 				"name": "The Studio",
 				"link": "http://www.thestudiobexhill.co.uk",
 				"img": {
-					"0": "itemXmas/2018/thestudio(0)"
+					"0": "itemXmas/img/2018/thestudio(0)"
 				}
 			},
 			"geometry": {
@@ -432,7 +432,7 @@
 				"name": "Top Dog Grooming",
 				"link": "https://www.facebook.com/topdogbexhill2/",
 				"img": {
-					"0": "itemXmas/2018/topdog(0)"
+					"0": "itemXmas/img/2018/topdog(0)"
 				}
 			},
 			"geometry": {
@@ -446,7 +446,7 @@
 				"name": "Wards Group",
 				"link": "http://www.wardsgroup.co.uk/",
 				"img": {
-					"0": "itemXmas/2018/wards(0)"
+					"0": "itemXmas/img/2018/wards(0)"
 				},
 				"winner": 0
 			},
@@ -461,7 +461,7 @@
 				"name": "Wickham Bistro",
 				"link": "http://www.wickhambistro.com/",
 				"img": {
-					"0": "itemXmas/2018/wickhambistro(0)"
+					"0": "itemXmas/img/2018/wickhambistro(0)"
 				},
 				"winner": 0
 			},

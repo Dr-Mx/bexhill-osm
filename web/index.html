@@ -29,7 +29,7 @@
 	<meta name="theme-color" content="#a04900">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.4.2">
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.5.1">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.9.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
@@ -38,8 +38,8 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=7.8.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.8.0" disabled id="darkcss">
+	<link rel="stylesheet" href="assets/css/site.css?v=7.9.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=7.9.0" id="darkcss" disabled>
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -74,11 +74,11 @@
 		<div class="sidebar-content">
 			<!-- Upper tabs -->
 			<div class="sidebar-pane" id="home">
-				<div class="sidebar-header"><span class="sidebar-header-text" onclick="$(window.location).attr('href', window.location.pathname);">Bexhill OpenStreetMap</span><span class="sidebar-close" title="Collapse"></span></div>
+				<div class="sidebar-header"><span class="sidebar-header-text" onclick="$(window.location).attr('href', window.location.pathname);">Bexhill OpenStreetMap</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body custscroll">
 					<p><input id="autocomplete" type="text" class="autocomplete" placeholder="Search, e.g. 'coffee', 'ww2', 'western road'" title="Enter a keyword, grid reference, or an address"><span class="leaflet-routing-remove-waypoint" onclick="autocomplete();"></span></p>
 					<div id="homeBox">
-						<div id="weather"><span class="comment">Loading weather...</span></div>
+						<div id="weather"><span class="comment">Loading weather...</span></div><!-- div auto-populated -->
 						<div id="minimap">
 							<img class="darkbaselayer" src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap" loading="lazy">
 							<map name="m_minimap">
@@ -108,20 +108,21 @@
 					<div id="newFeed">
 						<div>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 23 - <a onclick="switchTab('tour', 'overlays', '', '');">RAF aerial overlays</a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Oct 23 - <a onclick="switchTab('', '', '', 'xmas');">Xmas Window Display Competition 2023</a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Oct 23 - <a onclick="switchTab('walking', '#pdfContainer');">PDF walking guides</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Sep 23 - Public Rights-of-Way overlay</li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jul 23 - <a onclick="switchTab('tour', 'overlays', '', '');">1795 Yeakell, Gardner &amp; Gream</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>May 23 - <a onclick="switchTab('tour', 'northeye', '', 'prison');">Northeye Prison layout</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Mar 23 - 1950 Aerial</li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Dec 22 - <a onclick="switchTab('tour', 'film', '', 'filmingLoc');">Filming Locations tour</a></li>
 							</ul>
 						</div>
 						<div id="osmFeed"></div><!-- div auto-populated -->
 					</div>
 				</div>
-				<div id="creditFooter"><span><a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE" target="_blank" rel="noopener" title="Copyright and Licence"><i class="fa-regular fa-copyright"></i> Bexhill-OSM</a> 2016-</span></div>
+				<footer><span><a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE" target="_blank" rel="noopener" title="Copyright and Licence"><i class="fa-regular fa-copyright"></i> Bexhill-OSM</a> 2016-</span></footer>
 			</div>
 			<div class="sidebar-pane" id="pois">
-				<div class="sidebar-header"><span class="sidebar-header-text">Find Places</span><span class="sidebar-close" title="Collapse"></span></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">Find Places</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body">
 					<div id="poi-results" class="custscroll">
 						<h3>Results</h3>
@@ -134,7 +135,7 @@
 				</div>
 			</div>
 			<div class="sidebar-pane" id="walking">
-				<div class="sidebar-header"><span class="sidebar-header-text">Walking Routes</span><span class="sidebar-close" title="Collapse"></span></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">Walking Routes</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body custscroll">
 					<h3>Find a walking route</h3>
 					Use the map context-menu, or type an address:
@@ -146,7 +147,7 @@
 					<hr>
 					<h3>Suggested leisure walks</h3>
 					<div id="walkContainer">
-						<select id="walkList" class="theme" title="Select walk">
+						<select id="walkList" class="theme" title="Select a walk">
 							<option value="ww2h">Walking the Way to Health (0.7mi / 1km)</option>
 							<option value="tmrt">The Motor Trail (1.3mi / 2km)</option>
 							<option value="hwds">Little Common to Highwoods (1.6mi / 2.6km)</option>
@@ -155,20 +156,29 @@
 							<option value="ad1066">1066 Country Walk (3.0mi / 4.7km)</option>
 							<option value="bcr1">Bexhill Circular (6.3mi / 10.2km)</option>
 						</select>
-						<button type="button" id="walkSelect" title="Show walk"><i class="fa-solid fa-map-location-dot"></i></button>
+						<button type="button" id="walkSelect" title="Display walk on map"><i class="fa-solid fa-map-location-dot"></i></button>
 						<div id="walkDesc"></div>
 					</div>
 					<hr>
-					<h3>Other local walking tours</h3>
-					<p><a href="https://www.bexhillmuseum.org.uk/events" target="_blank" rel="noopener" title="Guided walks by Bexhill Museum (summer)"><img src="assets/img/walking-bexhillmuseum.png" alt="Bexhill Museum" loading="lazy"></a></p>
+					<h3>Stepping Out with Bexhill Museum</h3>
+					Throughout the summer Bexhill Museum's Local History Study Group does a number of 'Stepping Out' guided walks around the town and the local area. You can find the event listings here:
+					<p style="text-align:center;"><a href="https://www.bexhillmuseum.org.uk/events" target="_blank" rel="noopener" title="Guided walks by Bexhill Museum (summer)"><img src="assets/img/walking-bexhillmuseum.png" alt="Bexhill Museum" loading="lazy"></a></p>
+					<p>You are welcome to download a number of guides created for these events below. If you found them useful please consider <a href="https://www.bexhillmuseum.org.uk/about/donate-to-bexhill-museum/" target="_blank" rel="noopener" >donating to Bexhill Museum</a>.</p>
+					<ul id="pdfContainer" class="theme fa-ul">
+						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/So_Filming_Locations_(2023).pdf" rel="nofollow">Filming Locations (2023)</a></li>
+						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/So_Shelters_Bandstands_(2022).pdf" rel="nofollow">Shelters &amp; Bandstands (2022)</a></li>
+						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/So_Combe_Valley_(2019).pdf" rel="nofollow">Combe Valley Countryside Park (2019)</a></li>
+						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/So_Bexhills_Heritage_(2019).pdf" rel="nofollow">Exploring Bexhill's Heritage (2019)</a></li>
+						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/So_Clock_Stories_Sussex_Day_(2018).pdf" rel="nofollow">Clock Stories for Sussex Day (2018)</a></li>
+					</ul>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="tour">
-				<div class="sidebar-header"><span class="sidebar-header-text">History Tour</span><span class="sidebar-close" title="Collapse"></span></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">History Tour</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body">
 					<div id="tourControls">
 						<button disabled type="button" id="tourPrev" title="Previous article"><i class="fa-solid fa-chevron-left"></i></button>
-						<select id="tourList" class="theme" title="Select article">
+						<select id="tourList" class="theme" title="Select an article">
 							<option value="bexhill" data-keyword="bexhill, history, heraldry">&#x1F3D6;&#xFE0F; Bexhill-on-Sea</option>
 							<option value="prehistory" data-keyword="prehistory, geology, dinosaur, fossil">&#x1F996; Prehistory</option>
 							<option value="manor" data-keyword="old town manor house, manor gardens">&#x1F3E0; Old Town Manor</option>
@@ -197,7 +207,7 @@
 				</div>
 			</div>
 			<div class="sidebar-pane" id="thennow">
-				<div class="sidebar-header"><span class="sidebar-header-text">Then and Now</span><span class="sidebar-close" title="Collapse"></span></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">Then and Now</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body custscroll">
 					<p>Explore how buildings and places have changed over the years with <span id="thennowNum">these</span> superimposed and colourised images. Click each one to see them fade from then to now.</p>
 					<span class="comment">"Beauty is vanishing from our world because we live as though it did not matter." - Sir Roger Scruton.</span>
@@ -209,7 +219,7 @@
 			</div>
 			<!-- Lower tabs -->
 			<div class="sidebar-pane" id="settings">
-				<div class="sidebar-header"><span class="sidebar-header-text">Settings</span><span class="sidebar-close" title="Collapse"></span></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">Settings</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body custscroll">
 					<h3>Map display options</h3>
 					<div id="setOptions">
@@ -230,29 +240,28 @@
 							<p class="setLabel"><label for="btnNotes">Display OSM map notes</label><button id="btnNotes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button></p>
 							<p class="setLabel"><label for="btnExportQuery">Export current query to Overpass Turbo</label><button disabled id="btnExportQuery" type="button"><i class="fa-solid fa-upload"></i></button></p>
 							<p class="setLabel"><label for="btnDownloadBB">Download all OSM data within map bounds (xml)</label><button id="btnDownloadBB" type="button"><i class="fa-solid fa-download"></i></button></p>
-							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a>
-								<div style="text-align:right;">
-									<input id="inputOverpass" list="inputOverpassQ" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="customQuery($(this).prev().val(), true);"></span>
-									<datalist id="inputOverpassQ">
-										<option value="[fixme]">
-										<option value="[note]">
-										<option value="[shop=vacant]">
-										<option value="['wikimedia_commons:pano']">
-										<option value="['wikimedia_commons:video']">
-									</datalist>
-									<span class="setLabel smallCheckbox"><input id="inputOverpassR" type="checkbox"><label for="inputOverpassR">Include relations</label></span>
-								</div></p>
+							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a></p>
+							<div class="setLabel" style="text-align:right;display:block;">
+								<input id="inputOverpass" list="inputOverpassQ" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="customQuery($(this).prev().val(), true);"></span>
+								<datalist id="inputOverpassQ">
+									<option value="[fixme]">
+									<option value="[note]">
+									<option value="[shop=vacant]">
+									<option value="['wikimedia_commons:pano']">
+									<option value="['wikimedia_commons:video']">
+								</datalist>
+								<span class="smallCheckbox"><input id="inputOverpassR" type="checkbox"><label for="inputOverpassR">Include relations</label></span>
+							</div>
+							<p class="setLabel"><label for="inputBbox">OverpassAPI bounding box</label>
+								<select id="inputBbox" class="theme">
+									<option selected value="area_id">OSM relation</option>
+									<option value="bbox">Map bbox</option>
+									<option value="screen">Screen area</option>
+								</select></p>
+							<p class="setLabel"><label for="inputOpCache">OverpassAPI localStorage cache hours</label>
+								<input id="inputOpCache" value="120" min="0" max="720" type="number"></p>
 							<p class="setLabel"><label for="inputAttic">OverpassAPI Attic Data <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener" title="Display data from a specific date"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<input id="inputAttic" type="date" min="2016-01-01"></p>
-							<p class="setLabel"><label for="inputOpCacheL">localStorage cache hours for Overpass queries</label>
-								<input id="inputOpCache" value="120" min="0" max="720" type="number"></p>
-							<p class="setLabel"><label for="inputRevServer">Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
-								<select id="inputRevServer" class="theme">
-									<option selected value="nominatim">nominatim.openstreetmap.org</option>
-									<option disabled value="opencage">api.opencagedata.com</option>
-									<option value="photon">photon.komoot.io</option>
-									<option value="openrouteservice">api.openrouteservice.org</option>
-								</select></p>
 							<p class="setLabel"><label for="inputOpServer">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<select id="inputOpServer" class="theme">
 									<option value="overpass-api.de">overpass-api.de</option>
@@ -260,14 +269,20 @@
 									<option value="overpass.kumi.systems">overpass.kumi.systems</option>
 									<option selected value="maps.mail.ru/osm/tools/overpass">maps.mail.ru</option>
 								</select></p>
-							<p class="setLabel switch"><label for="inputBbox">OverpassAPI uses bbox instead of area id</label><input id="inputBbox" data-uri type="checkbox"><label for="inputBbox" class="slider"></label></p>
-							<p class="setLabel switch"><label for="inputDebug">DEBUG MODE</label><input id="inputDebug" type="checkbox"><label for="inputDebug" class="slider"></label></p>
+							<p class="setLabel"><label for="inputRevServer">Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
+								<select id="inputRevServer" class="theme">
+									<option selected value="nominatim">nominatim.openstreetmap.org</option>
+									<option disabled value="opencage">api.opencagedata.com</option>
+									<option value="photon">photon.komoot.io</option>
+									<option value="openrouteservice">api.openrouteservice.org</option>
+								</select></p>
+							<p class="setLabel switch"><label for="inputDebug">Debug</label><input id="inputDebug" type="checkbox"><label for="inputDebug" class="slider"></label></p>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="info">
-				<div class="sidebar-header"><span class="sidebar-header-text">Information</span><span class="sidebar-close" title="Collapse"></span></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">Information</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body custscroll">
 					<p>
 						<a href="#gotoabout">About &amp; Contact</a><br>
@@ -368,11 +383,11 @@
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=7.8.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=7.8.0"></script>
-	<script src="assets/js/tags-parsers.js?v=7.8.0"></script>
-	<script src="assets/js/pois-type.js?v=7.8.0"></script>
-	<script src="tour/tour.js?v=7.8.0"></script>
-	<script src="assets/js/site.js?v=7.8.0"></script>
+	<script src="assets/js/config.js?v=7.9.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=7.9.0"></script>
+	<script src="assets/js/tags-parsers.js?v=7.9.0"></script>
+	<script src="assets/js/pois-type.js?v=7.9.0"></script>
+	<script src="tour/tour.js?v=7.9.0"></script>
+	<script src="assets/js/site.js?v=7.9.0"></script>
  </body>
 </html>

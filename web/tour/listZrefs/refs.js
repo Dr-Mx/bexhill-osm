@@ -33,11 +33,16 @@ var tourRefs = {
 			media: 'Book'
 		},
 		2: {
+			name: 'An Historical Atlas of Sussex',
+			url: 'https://www.amazon.co.uk/s?k=9781860771125',
+			media: 'Book'
+		},
+		3: {
 			name: 'Flag of Bexhill (Sussex) - UK Flag Registry - Flag Institute',
 			url: 'https://www.flaginstitute.org/wp/flags/bexhill-sussex/',
 			media: 'Website'
 		},
-		3: {
+		4: {
 			name: 'The Charter Trustees of Bexhill - Civic Handbook',
 			url: 'https://bexhillheritage.com/wp-content/uploads/docs/CIVIC_HANDBOOK_rev_2017_website.pdf#page=5',
 			media: 'PDF'

@@ -2,22 +2,27 @@
 
 let eleCache = [], queryBbox = '', queryCustom = false;
 function show_overpass_layer(query, cacheId, options) {
-	if (!query || query === '();') return;
+	if (!query || query === '();') { setMsgStatus('fa-solid fa-circle-info', 'No Query', 'The OverpassAPI query string was empty.', 4); return; }
+	else if ($('#inputBbox').val() === 'screen' && !options.forceBbox && map.getZoom() < 15) { setMsgStatus('fa-solid fa-circle-info', 'Query Area Too Large', 'Please try zooming in to at least level 15.', 4); return; }
 	else {
 		// show spinner, disable poi checkboxes
 		$('.spinner').show();
 		$('.poi-checkbox').addClass('poi-loading');
 		queryBbox = '[out:json]';
 		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
-		// select within area, not needed for a single poi
+		// select within an area, bypassed for single poi
 		if (options && options.bound) {
-			if (osmRelation && !$('#inputBbox').is(':checked') && !options.forceBbox) {
+			if ($('#inputBbox').val() === 'area_id' && !options.forceBbox) {
 				queryBbox += ';rel(' + osmRelation + ');map_to_area->.a';
 				query = query.replace(/\[/g, '(area.a)[');
 			}
-			else {
+			else if ($('#inputBbox').val() === 'bbox' || options.forceBbox) {
 				queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
 				cacheId += cacheId ? 'BB' : '';
+			}
+			else if ($('#inputBbox').val() === 'screen' && !options.forceBbox) {
+				queryBbox += '[bbox:' + [map.getBounds()._southWest.lat, map.getBounds()._southWest.lng, map.getBounds()._northEast.lat, map.getBounds()._northEast.lng].join(',') + ']';
+				cacheId = '';
 			}
 		}
 		queryBbox += ';(' + query + ');';
@@ -80,7 +85,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						'circle-info',
 						'No places found',
 						'Please try another area or query.' +
-						($('#inputAttic').val() && !$('#inputBbox').is(':checked') ? '<br>When using attic data, try "Use bbox instead of area" option.' : '')
+						($('#inputAttic').val() && ($('#inputBbox').val() === 'area_id') ? '<br>When using attic data, try changing the bounding box to something other than ' + $('#inputBbox option:selected').text() + '.' : '')
 					);
 					// if not in iframe, cache to local storage
 					if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {

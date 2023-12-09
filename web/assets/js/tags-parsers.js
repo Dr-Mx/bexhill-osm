@@ -52,7 +52,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		markerPopup = '';
 		if (tagMail) contactVal += '<a href="mailto:' + encodeURI(tagMail) + '"><i class="fa-solid fa-envelope fa-fw" title="E-mail: ' + tagMail + '"></i></a> ';
 		if (tagFb) contactVal += '<a href="' + encodeURI(tagFb) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-facebook fa-fw" title="Facebook: ' + tagFb + '" style="color:#3b5998;"></i></a> ';
-		if (tagTwit) contactVal += '<a href="https://twitter.com/' + encodeURI(tagTwit) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-twitter fa-fw" title="Twitter: @' + tagTwit + '" style="color:#1da1f2;"></i></a> ';
+		if (tagTwit) contactVal += '<a href="https://twitter.com/' + encodeURI(tagTwit) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-x-twitter fa-fw" title="X-twitter: @' + tagTwit + '" style="color:#000000;"></i></a> ';
 		if (tagInstg) contactVal += '<a href="https://instagram.com/' + encodeURI(tagInstg) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-instagram fa-fw" title="Instagram: ' + tagInstg + '" style="color:#d93175;"></i></a> ';
 		if (tagYtube) contactVal += '<a href="' + encodeURI(tagYtube) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-youtube fa-fw" title="YouTube: ' + tagYtube + '" style="color:#ff0000;"></i></a> ';
 		if (contactVal) markerPopup += L.Util.template(tagTmpl, { key: 'Contact', keyVal: contactVal, iconName: 'fa-solid fa-circle-user' });
@@ -254,7 +254,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					const streetDesc = $('desc', street).text();
 					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { key: 'Start date', keyVal: streetDate, iconName: 'fa-solid fa-calendar' });
 					if (streetDesc) markerPopup += '<span class="popup-longDesc custscroll">' + L.Util.template(tagTmpl, { key: 'Etymology', keyVal: '<i>' + streetDesc + '</i>', iconName: 'fa-solid fa-book' }) + '</span>';
-					if (markerPopup) markerPopup += '<span class="popup-streetSource"><a onclick="popupWindow(\'streetbook\');" title="' + $(xml).find('url').text() + '">' + $(xml).find('title').text() + '</a></span>';
+					if (markerPopup) markerPopup += '<span class="popup-streetSource">- <a onclick="popupWindow(\'streetbook\');" title="' + $(xml).find('url').text() + '">' + $(xml).find('title').text() + '</a></span>';
 					if ($('#inputDebug').is(':checked')) console.debug('Street-names:', xml);
 				},
 				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }
@@ -278,13 +278,14 @@ function parse_tags(element, titlePopup, poiParser) {
 		return markerPopup;
 	};
 	const furtherreading_parser = function(tags) {
-		const streetDirs = 'https://bexhillmac.co.uk/research/street-directories-3/?wdt_column_filter[3]=';
+		const streetDirs = 'https://www.bexhillmuseum.org.uk/access-centre/research/street-directories-3/?wdt_column_filter[3]=';
 		let readingVal = '';
 		markerPopup = '';
-		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'] && LBounds.contains(element.center))
-			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ' +
-				'<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
-		if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) readingVal += '<a href="' + streetDirs + encodeURI(eName.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
+		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'] && LBounds.contains(element.center)) {
+			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ';
+			// readingVal += '<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
+		}
+		// if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) readingVal += '<a href="' + streetDirs + encodeURI(eName.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			const w = tags.wikipedia || tags['site:wikipedia'];
 			readingVal += '<a href="https://' + encodeURI(w.split(':')[0]) + '.wikipedia.org/wiki/' + encodeURI(w.split(':')[1]) + '" title="The Free Encyclopaedia" target="_blank" rel="noopener">Wikipedia</a>; ';
@@ -293,6 +294,8 @@ function parse_tags(element, titlePopup, poiParser) {
 			readingVal += '<a class="nowrap" href="https://www.heritagegateway.org.uk/Gateway/Results_Single.aspx?uid=' + encodeURI(tags['ref:esher']) + '&resourceID=1026#content" title="East Sussex Historic Environment Record" target="_blank" rel="noopener">ESHER</a>; ';
 		if (tags['ref:publicsculpturesofsussex'])
 			readingVal += '<a class="nowrap" href="https://publicsculpturesofsussex.co.uk/index.php/object?id=' + encodeURI(tags['ref:publicsculpturesofsussex']) + '" title="Public Sculptures of Sussex" target="_blank" rel="noopener">Public Sculptures</a>; ';
+		if (tags['ref:iwm'])
+			readingVal += '<a class="nowrap" href="https://www.iwm.org.uk/memorials/item/memorial/' + encodeURI(tags['ref:iwm']) + '" title="Imperial War Museum: War Memorials Register" target="_blank" rel="noopener">IWM</a>; ';
 		if (tags['url:bexhillhistorytrail'])
 			readingVal += '<a class="nowrap" href="https://thebexhillhistorytrail.wordpress.com/' + encodeURI(tags['url:bexhillhistorytrail']) + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
 		if (tags['url:bexhillnature'])
@@ -317,8 +320,8 @@ function parse_tags(element, titlePopup, poiParser) {
 			// support semicolon separated images
 			const multiImage =
 				(tags.image +
-				(tags.image_1 ? ';' + tags.image_1 : '') +
-				(tags.image_2 ? ';' + tags.image_2 : '')
+				(tags['image:1'] ? ';' + tags['image:1'] : '') +
+				(tags['image:2'] ? ';' + tags['image:2'] : '')
 			).split(';');
 			const multiImageSource = tags['source:image'] ?
 				(tags['source:image'] +
@@ -334,8 +337,8 @@ function parse_tags(element, titlePopup, poiParser) {
 			// support semicolon separated commons images
 			const multiCommons =
 				(tags.wikimedia_commons +
-				(tags.wikimedia_commons_1 ? ';' + tags.wikimedia_commons_1 : '') +
-				(tags.wikimedia_commons_2 ? ';' + tags.wikimedia_commons_2 : '')
+				(tags['wikimedia_commons:1'] ? ';' + tags['wikimedia_commons:1'] : '') +
+				(tags['wikimedia_commons:2'] ? ';' + tags['wikimedia_commons:2'] : '')
 			).split(';');
 			/* CATEGORIES SUPPORT TODO
 			if (multiCommons[0].startsWith('Category:')) {
@@ -1147,22 +1150,20 @@ function generic_tag_parser(tags, key, label, iconName) {
 // image name | image number | attribution
 function generic_img_parser(img, id, attrib) {
 	let url, imgTmpl;
-	if (img.startsWith('Category:')) imgTmpl = '<div class="popup-imgContainer">' + img + '</div>';
-	else if (img.startsWith('File:')) {
+	// if (img.startsWith('Category:')) imgTmpl = '<div class="popup-imgContainer">' + img + '</div>'; else
+	if (img.startsWith('File:')) {
 		url = img;
 		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(img);
-		imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
-			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=2560 1280w, {img}&width=1280 800w, {img}&width=800 640w">' +
-			'<img data-url="{url}" alt="Loading image..." style="max-height:{maxheight}px;"></a>' +
-			'<div class="popup-imgAttrib notloaded">Loading attribution...</div>' +
+		imgTmpl = '<div id="img{id}" class="popup-imgContainer' + (+id === 0 ? ' notloaded' : '') + '">' +
+			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=2560 1280w, {img}&width=1280 800w, {img}&width=800 640w"><img data-url="{url}"></a>' +
+			'<div class="popup-imgAttrib notloaded"><span>Image loading...</span></div>' +
 		'</div>';
 	}
-	else imgTmpl = '<div id="img{id}" class="popup-imgContainer">' +
-			'<a data-fancybox="gallery" data-caption="' + $('<span>' + attrib + '</span>').text() + '" href="{img}">' +
-			'<img alt="Loading image..." style="max-height:{maxheight}px;"></a>' +
-			'<div class="popup-imgAttrib">{attrib}</div>' +
+	else imgTmpl = '<div id="img{id}" class="popup-imgContainer ' + (+id === 0 ? ' notloaded' : '') + '">' +
+			'<a data-fancybox="gallery" data-caption="' + $('<span>' + attrib + '</span>').text() + '" href="{img}"><img></a>' +
+			(attrib ? '<div class="popup-imgAttrib"><span>{attrib}</span></div>' : '') +
 		'</div>';
-	return L.Util.template(imgTmpl, { id: id, url: url, maxheight: Math.round(imgSize / 1.5), img: img, attrib: attrib });
+	return L.Util.template(imgTmpl, { id: id, url: url, img: img, attrib: attrib });
 }
 
 // poi callback parsers
@@ -1469,7 +1470,7 @@ function show_img_controls(imgMax, img360, vid) {
 	}
 	if (imgMax > 1) ctrlTmpl +=
 		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fa-solid fa-square-caret-left fa-fw"></i></a></span>' +
-		'<i class="fa-solid fa-images fa-fw" title="Gallery (1 of ' + imgMax + ')"></i>' +
+		'<i class="navigateItemCount fa-solid fa-1 fa-fw" title="Gallery (1 of ' + imgMax + ')"></i>' +
 		'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fa-solid fa-square-caret-right fa-fw"></i></a></span>';
 	return ctrlTmpl + '</div>';
 }
@@ -1480,9 +1481,11 @@ function navImg(direction) {
 		const lID = parseInt($('.popup-imgContainer').last().attr('id').split('img')[1]);
 		// get the next image
 		const swapImg = function(nID) {
-			$('.popup-imgContainer#img' + cID).hide(300);
-			$('.popup-imgContainer#img' + nID).show(300);
-			$('.navigateItem > .fa-images').attr('title', 'Gallery (' + parseInt(nID+1) + ' of ' + parseInt(lID+1) + ')');
+			$('.popup-imgContainer#img' + cID).fadeOut(200, function() { $('.popup-imgContainer#img' + nID).fadeIn(200); });
+			$('.navigateItemCount')
+				.removeClass()
+				.addClass('navigateItemCount fa-solid fa-fw fa-' + parseInt(nID+1))
+				.attr('title', 'Gallery (' + parseInt(nID+1) + ' of ' + parseInt(lID+1) + ')');
 		};
 		// navigate through multiple images. 0 = previous, 1 = next
 		if (direction === 0 && cID > 0) swapImg(cID - 1);

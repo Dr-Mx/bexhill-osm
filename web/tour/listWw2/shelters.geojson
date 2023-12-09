@@ -128,7 +128,7 @@
 				"date": "1939",
 				"description": "School trench. Capacity 220. Bunks 48.",
 				"img": {
-					"0": "listWw2/bomb/barrackroad(0)"
+					"0": "listWw2/img/bomb/barrackroad(0)"
 				}
 			},
 			"geometry": {
@@ -142,7 +142,7 @@
 				"date": "1940",
 				"description": "Surface. Capacity 90. Bunks 44.",
 				"img": {
-					"0": "listWw2/shelter/bellehilljunction(0)"
+					"0": "listWw2/img/shelter/bellehilljunction(0)"
 				}
 			},
 			"geometry": {
@@ -156,7 +156,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 50. Bunks 24.",
 				"img": {
-					"0": "listWw2/shelter/bendingcrescent(0)"
+					"0": "listWw2/img/shelter/bendingcrescent(0)"
 				}
 			},
 			"geometry": {
@@ -170,7 +170,7 @@
 				"date": "1943",
 				"description": "Emergency shelters. Possibly x4. No other details known.",
 				"img": {
-					"0": "listWw2/shelter/bexhillgrammar(0)"
+					"0": "listWw2/img/shelter/bexhillgrammar(0)"
 				}
 			},
 			"geometry": {
@@ -248,7 +248,13 @@
 			"properties": {
 				"name": "Collington Mansions",
 				"date": "1943",
-				"description": "Surface. Capacity 20."
+				"description": "Surface. Capacity 20.",
+				"img": {
+					"0": "listWw2/img/shelter/collingtonmansions(0)"
+				},
+				"imgattrib": {
+					"0": "&copy; Mark Clarke"
+				}
 			},
 			"geometry": {
 				"type": "Point",
@@ -261,9 +267,9 @@
 				"date": "1939",
 				"description": "Surface. Capacity 150.",
 				"img": {
-					"0": "listWw2/shelter/thecolonnade(0)",
-					"1": "listWw2/shelter/thecolonnade(1)",
-					"2": "listWw2/shelter/thecolonnade(2)"
+					"0": "listWw2/img/shelter/thecolonnade(0)",
+					"1": "listWw2/img/shelter/thecolonnade(1)",
+					"2": "listWw2/img/shelter/thecolonnade(2)"
 				}
 			},
 			"geometry": {
@@ -288,7 +294,7 @@
 				"date": "1939",
 				"description": "Existing bus shelter. Surface. Capacity 10.",
 				"img": {
-					"0": "listWw2/shelter/delawarrroad(0)"
+					"0": "listWw2/img/shelter/delawarrroad(0)"
 				}
 			},
 			"geometry": {
@@ -302,7 +308,7 @@
 				"date": "1940",
 				"description": "Surface. Capacity 80.",
 				"img": {
-					"0": "listWw2/shelter/devonshiresquare(0)"
+					"0": "listWw2/img/shelter/devonshiresquare(0)"
 				}
 			},
 			"geometry": {
@@ -327,9 +333,9 @@
 				"date": "1939",
 				"description": "Trench. Capacity 64.",
 				"img": {
-					"0": "listWw2/shelter/eastparade(0)",
-					"1": "listWw2/shelter/eastparade(1)",
-					"2": "listWw2/shelter/eastparade(2)"
+					"0": "listWw2/img/shelter/eastparade(0)",
+					"1": "listWw2/img/shelter/eastparade(1)",
+					"2": "listWw2/img/shelter/eastparade(2)"
 				},
 				"imgattrib": {
 					"0": "&copy; The Royal Windsor Website & Forum",
@@ -347,8 +353,8 @@
 				"date": "1939",
 				"description": "Surface. Capacity 92.",
 				"img": {
-					"0": "listWw2/shelter/wickhamavenue(0)",
-					"1": "listWw2/shelter/wickhamavenue(1)"
+					"0": "listWw2/img/shelter/wickhamavenue(0)",
+					"1": "listWw2/img/shelter/wickhamavenue(1)"
 				},
 				"imgattrib": {
 					"0": "&copy; Bexhill Observer"
@@ -387,7 +393,7 @@
 				"date": "1941",
 				"description": "Surface. Capacity 50. Bunks 45.",
 				"img": {
-					"0": "listWw2/shelter/havelockroad(0)"
+					"0": "listWw2/img/shelter/havelockroad(0)"
 				}
 			},
 			"geometry": {
@@ -460,7 +466,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 20.",
 				"img": {
-					"0": "listWw2/shelter/channelview(0)"
+					"0": "listWw2/img/shelter/channelview(0)"
 				}
 			},
 			"geometry": {
@@ -507,7 +513,7 @@
 				"date": "1940",
 				"description": "Surface. Capacity 70.",
 				"img": {
-					"0": "listWw2/shelter/peartreelane(0)"
+					"0": "listWw2/img/shelter/peartreelane(0)"
 				}
 			},
 			"geometry": {
@@ -565,7 +571,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 70.",
 				"img": {
-					"0": "listWw2/shelter/shortlane(0)"
+					"0": "listWw2/img/shelter/shortlane(0)"
 				}
 			},
 			"geometry": {
@@ -579,9 +585,9 @@
 				"date": "1939",
 				"description": "Rebuilt 1943. Trench. Capacity 135.",
 				"img": {
-					"0": "listWw2/shelter/sidleygreen(0)",
-					"1": "listWw2/shelter/sidleygreen(1)",
-					"2": "listWw2/shelter/sidleygreen(2)"
+					"0": "listWw2/img/shelter/sidleygreen(0)",
+					"1": "listWw2/img/shelter/sidleygreen(1)",
+					"2": "listWw2/img/shelter/sidleygreen(2)"
 				},
 				"imgattrib": {
 					"2": "&copy; ESRO SPA 1944"
@@ -609,7 +615,7 @@
 				"date": "1943",
 				"description": "Emergency shelters. 2x. No other details known.",
 				"img": {
-					"0": "listWw2/shelter/stbarnabas(0)"
+					"0": "listWw2/img/shelter/stbarnabas(0)"
 				}
 			},
 			"geometry": {
@@ -623,7 +629,7 @@
 				"date": "1941",
 				"description": "Basement. Capacity 200. Bunks 99.",
 				"img": {
-					"0": "listWw2/shelter/millerfranklin(0)"
+					"0": "listWw2/img/shelter/millerfranklin(0)"
 				}
 			},
 			"geometry": {
@@ -758,8 +764,8 @@
 				"date": "1939",
 				"description": "School trench. Capacity 300.",
 				"img": {
-					"0": "listWw2/shelter/thedown(0)",
-					"1": "listWw2/shelter/thedown(1)"
+					"0": "listWw2/img/shelter/thedown(0)",
+					"1": "listWw2/img/shelter/thedown(1)"
 				}
 			},
 			"geometry": {
@@ -773,10 +779,10 @@
 				"date": "1939",
 				"description": "Surface. Capacity 60. Bunks 18.",
 				"img": {
-					"0": "listWw2/shelter/townhallsquare(0)",
-					"1": "listWw2/shelter/townhallsquare(1)",
-					"2": "listWw2/shelter/townhallsquare(2)",
-					"3": "listWw2/shelter/townhallsquare(3)"
+					"0": "listWw2/img/shelter/townhallsquare(0)",
+					"1": "listWw2/img/shelter/townhallsquare(1)",
+					"2": "listWw2/img/shelter/townhallsquare(2)",
+					"3": "listWw2/img/shelter/townhallsquare(3)"
 				},
 				"imgattrib": {
 					"0": "&copy; Bexhill Observer",
@@ -807,7 +813,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 42. Bunks 12.",
 				"img": {
-					"0": "listWw2/shelter/searoad(0)",
+					"0": "listWw2/img/shelter/searoad(0)",
 					"1": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (2).jpg",
 					"2": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor).jpg",
 					"3": "File:Personnel Shelter, Sea Road, Bexhill-on-Sea (indoor) (2).jpg"
@@ -857,7 +863,7 @@
 				"date": "1939",
 				"description": "Surface. Capacity 70. Bunks 30.",
 				"img": {
-					"0": "listWw2/shelter/wrestwoodroad(0)"
+					"0": "listWw2/img/shelter/wrestwoodroad(0)"
 				}
 			},
 			"geometry": {
