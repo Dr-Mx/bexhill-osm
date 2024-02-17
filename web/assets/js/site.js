@@ -40,8 +40,9 @@ const tooltipDef = {
 // local
 const email = 'info' + String.fromCharCode(64) + 'bexhill-osm.org.uk';
 const lang = $('html').attr('lang');
+const version = $('script').last().attr('src').split('v=')[1];
 
-// https://fancyapps.com/fancybox/3
+// https://web.archive.org/web/20210325170940/https://fancyapps.com/fancybox/3/docs/
 // show popup images in a lightbox
 $.extend($.fancybox.defaults, {
 	spinnerTpl: '<div class="spinner" style="left:0;" title="Loading...">' + $('.spinner').html() + '</div>',
@@ -68,32 +69,32 @@ $.extend($.fancybox.defaults, {
 
 // set swipe triggers for touch devices
 // close sidebar
-$('.sidebar-header').on('swipeleft', function() { $('.sidebar-close:visible').click(); });
+$('.sidebar-header').on('swipeleft', function() { $('.sidebar-close:visible').trigger('click'); });
 // prev/next tour iframe
-$('#tourControls')
-	.on('swiperight', function() { $('#tourPrev').trigger('click'); })
-	.on('swipeleft', function() { $('#tourNext').trigger('click'); })
+$('#tour-controls')
+	.on('swiperight', function() { $('#tour-controls-prev').trigger('click'); })
+	.on('swipeleft', function() { $('#tour-controls-next').trigger('click'); })
 	.on('wheel', function(e) {
-		if (e.originalEvent.deltaY > 0) $('#tourNext').trigger('click');
-		else if (e.originalEvent.deltaY < 0) $('#tourPrev').trigger('click');
+		if (e.originalEvent.deltaY > 0) $('#tour-controls-next').trigger('click');
+		else if (e.originalEvent.deltaY < 0) $('#tour-controls-prev').trigger('click');
 		e.preventDefault();
 	});
 
-$('.sidebar-tabs li').click(function() {
+$('.sidebar-tabs li').on('click', function() {
 	// get current sidebar-tab
 	actTab = ($('.sidebar.collapsed').length || actTab === 'closing') ? 'none' : $('.sidebar-pane.active').attr('id');
 	// resize links on minimap
 	if (actTab === 'home') {
-		if (!$('#weather:visible').length && noIframe) { showWeather(); showEditFeed(); }
-		setTimeout(function() { $('#minimap > map').imageMapResize(); }, 400);
+		if (!$('#home-weather:visible').length && noIframe) { showWeather(); showEditFeed(); }
+		setTimeout(function() { $('#home-minimap > map').imageMapResize(); }, 400);
 	}
-	if (actTab === 'pois') $('#poi-filter-in').trigger('input');
+	if (actTab === 'pois') $('#pois-filter-in').trigger('input');
 	if (actTab === 'tour') {
-		$('#tourList').trigger('change');
+		$('#tour-controls-list').trigger('change');
 		$('.sidebar-tabs ul li [href="#tour"] .sidebar-notif:visible').hide();
 	}
 	if (actTab === 'thennow' && actImgLayer !== 'thennow') tour('thennow', '', false);
-	setTimeout(function() { $('.custscroll').trigger('scroll'); }, 10);
+	setTimeout(function() { $('.theme-scroll').trigger('scroll'); }, 10);
 	// animate map recentre on sidebar open/close, matches sidebar transition-duration of 400ms
 	if ($(window).width() >= 768 && $(window).width() < 1024) {
 		let x = 0, timer = setInterval(function() {
@@ -104,9 +105,9 @@ $('.sidebar-tabs li').click(function() {
 	permalinkSet();
 });
 // no sidebar-tab
-$('.sidebar-close').click(function() {
+$('.sidebar-close').on('click', function() {
 	actTab = 'closing';
-	$('.sidebar-tabs li.active').click();
+	$('.sidebar-tabs li.active').trigger('click');
 });
 
 // ignore map single click in some cases
@@ -119,19 +120,18 @@ L.Map.addInitHook(function() {
 	function check_later(e) {
 		clear_h();
 		// clear msg status box
-		if ($('#msgStatus:visible').length) {
+		if ($('#modal:visible').length) {
 			clickOutline.clearLayers();
-			$('#msgStatus').hide();
+			$('#modal').hide();
 		}
-		// ignore map click if... low zoom / dragging walk markers / layerNoclick / overlay control is open / spinner is shown / popup is open on screen
-		else if (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .layerNoclick').length && $('.leaflet-control-layers').outerWidth() === 44 && !imageOverlay.getLayers().length &&
+		// ignore map click if... low zoom / dragging walk markers / layer-noclick / overlay control is open / spinner is shown / popup is open on screen
+		else if (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .layer-noclick').length && ($('.leaflet-control-layers').outerWidth() <= 44) && !imageOverlay.getLayers().length &&
 		 !$('.spinner:visible').length && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) {
 			that.fire('visualclick', L.Util.extend(e, { type: 'visualclick' }));
-			console.log($('.leaflet-control-layers').outerWidth());
 			// drop marker and reverse lookup on single click
 			h = setTimeout(function() {
 				clickOutline.clearLayers().addLayer(L.circleMarker(e.latlng, {
-					className: 'circleMarker',
+					className: 'circleMarker layer-visualclick',
 					radius: 10,
 					weight: 2,
 					opacity: 1,
@@ -139,20 +139,20 @@ L.Map.addInitHook(function() {
 					interactive: noTouch ? true : false,
 					bubblingMouseEvents: false
 				}).on('click' , function() {
-					if ($('#msgStatus .msgStatusBodyAddr').length) $('#msgStatus .msgStatusBodyAddr').click();
+					if ($('#modal .modal-body-addr').length) $('#modal .modal-body-addr').trigger('click');
 				}));
 				reverseQuery(e, 1);
 			}, 350);
 		}
 		// highlight action to enable map click again
 		else if (!$('.leaflet-popup, .leaflet-control-layers-expanded, .leaflet-marker-draggable').length) {
-			if (imageOverlay.getLayers().length) $('#btnClearmap .fa-solid').addClass('fa-beat-fade');
-			else if ($('.layerNoclick').length) $('#inputOpacity .fa-solid').addClass('fa-beat-fade');
+			if (imageOverlay.getLayers().length) $('#control-clearlayers .fa-solid').addClass('fa-beat-fade');
+			else if ($('.layer-noclick').length) $('#control-opacity .fa-solid').addClass('fa-beat-fade');
 			else if (map.getZoom() < 15) $('.leaflet-control-zoom-in .fa-solid').addClass('fa-beat-fade');
 		}
 	}
 	function clear_h() {
-		$('#btnClearmap .fa-solid, #inputOpacity .fa-solid, .leaflet-control-zoom-in .fa-solid').removeClass('fa-beat-fade');
+		$('#control-clearlayers .fa-solid, #control-opacity .fa-solid, .leaflet-control-zoom-in .fa-solid').removeClass('fa-beat-fade');
 		if (h !== null) {
 			clearTimeout(h);
 			h = null;
@@ -199,38 +199,36 @@ const map = new L.map('map', {
 		index: 6,
 		callback: panoView
 	}, '-', {
-		text: '<span id="copyGeos" class="comment" title="Copy to clipboard"></span>',
+		text: '<span id="contextmenu-item-copygeos" class="comment" title="Copy to clipboard"></span>',
 		index: 7,
 		callback: copyGeos
 	}]
 }).whenReady(function() {
-	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'#gotosoftware\');" title="Attribution"><i class="fa-solid fa-circle-info fa-fw"></i></a>');
+	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'#info-software\');" title="Attribution"><i class="fa-solid fa-circle-info fa-fw"></i></a>');
 	if (!noIframe) {
-		$('#devTools').hide();
+		$('#settings-devtools').hide();
 		$('.leaflet-control-locate').hide();
-		$('#btnBookm').parent().hide();
+		$('#control-bookmarks').parent().hide();
 		map.attributionControl.addAttribution('<a href="/" target="_blank">Bexhill-OSM</a>');
 	}
 	if (!localStorageAvail()) {
-		$('#devTools').hide();
-		$('#btnReset').parent().hide();
-		$('#btnBookm').parent().hide();
+		$('#settings-devtools').hide();
+		$('#settings-cleardata').parent().hide();
+		$('#control-bookmarks').parent().hide();
 	}
 	// sidebar information
 	sidebar.fadeIn();
-	$('.sidebar-tabs, .sidebar-close, .leaflet-bar a, button, #setOptions .setLabel').tooltip(tooltipDef);
+	$('body').removeClass('preload');
+	$('.sidebar-tabs, .sidebar-close, .leaflet-bar a, button, #settings-options .settings-label').tooltip(tooltipDef);
 	getTips('random');
 	if (actTab === defTab && noIframe) { showWeather(); showEditFeed(); }
-	else $('#weather').hide();
-	$('footer > span').append(
-		new Date().getFullYear() + ' | <a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/CHANGELOG.md" title="Changelog" target="_blank" rel="noopener">v' +
-		$('script').last().attr('src').split('v=')[1] + '</a>'
-	);
-	$('#walkList, #tourList').trigger('change');
-	if (!noTouch) $('#pdfContainer a').removeAttr('data-fancybox');
+	else $('#home-weather').hide();
+	$('footer > span').append(new Date().getFullYear() + ' | <a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/CHANGELOG.md" title="Changelog" target="_blank" rel="noopener">v' + version + '</a>');
+	$('#walk-list, #tour-controls-list').trigger('change');
+	if (!noTouch) $('#walk-container-pdf a').removeAttr('data-fancybox');
 	// metadata badges updated via cronjob.sh
 	const dailyCache = '?d=' + new Date().getFullYear() + new Date().getMonth() + new Date().getDate();
-	$('#info #gotoabout .mylinks').append('<br><br>' +
+	$('#info-about .info-links').append('<br><br>' +
 		'<a href="https://www.twitter.com/bexhillosm" target="_blank" rel="noopener" title="Twitter followers"><img src="assets/img/info-twitter.svg' + dailyCache +'" loading="lazy"></a><br>' +
 		'<a href="https://www.youtube.com/@bexhillosm" target="_blank" rel="noopener" title="YouTube subscribers"><img src="assets/img/info-youtube.svg' + dailyCache +'" loading="lazy"></a><br><br>' +
 		'<a href="https://osm.org/user/Bexhill-OSM" target="_blank" rel="noopener" title="OpenStreetMap edits"><img src="assets/img/info-osm.svg' + dailyCache +'" loading="lazy"></a><br>' +
@@ -239,54 +237,108 @@ const map = new L.map('map', {
 	);
 	// add overlay opacity slider to layer control
 	$('.leaflet-top.leaflet-right').append(
-		'<div id="inputOpacity" class="leaflet-control leaflet-bar">' +
+		'<div id="control-opacity" class="leaflet-control leaflet-bar">' +
 			'<input type="range" min="0.05" max="1" step="0.05">' +
 			'<div class="leaflet-popup-close-button" title="Remove overlay" onclick="map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);"><i class="fa-solid fa-xmark fa-sm"></i></div>' +
 		'</div>'
 	);
-	$('.leaflet-bottom.leaflet-right').prepend('<div id="msgStatus" class="leaflet-control"></div>');
+	$('.leaflet-bottom.leaflet-right').prepend('<div id="modal" class="leaflet-control"></div>');
 	// back to top button
-	$('.anchor')
+	$('.sidebar-anchor')
 		.hide()
 		.attr('title', 'Return to top')
-		.click(function() {
-			$(this).parent()[0].scroll({ top: 0, behavior: 'smooth' });
+		.on('click', function() {
+			$(this).parent().scrollTop(0);
 		})
-		.parent().scroll(function() {
-			if ($(this).scrollTop() > 350) $(this).find('.anchor').fadeIn(200);
-			else $(this).find('.anchor').fadeOut(200);
+		.parent().on('scroll', function() {
+			if ($(this).scrollTop() > 350) $(this).find('.sidebar-anchor').fadeIn(200);
+			else $(this).find('.sidebar-anchor').fadeOut(200);
 		});
 	// scroll shadow
-	$('.custscroll').scroll(function() {
+	$('.theme-scroll').on('scroll', function() {
 		const scrollPos = Math.abs(this.scrollHeight - this.clientHeight - this.scrollTop);
 		const scrollOpacity = scrollPos < 300 ? Math.round(scrollPos / 60) / 10 : 0.5;
-		$(this).css('background-image', 'linear-gradient(rgba(0, 0, 0, 0), rgba(var(--scroll-shadow), ' + scrollOpacity + '))');
+		$(this).css('background-image', 'linear-gradient(transparent, rgba(var(--scroll-shadow), ' + scrollOpacity + '))');
 	}).trigger('scroll');
 	setTimeout(setOverlayLabel, 10);
+	// easter holiday decorations
+	if (new Date().getMonth() === 2 && new Date().getDate() >= 29 && new Date().getDate() <= 31) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Easter!">&#x1F95A</span>'));
+	// bexhill day holiday decorations
+	else if (new Date().getMonth() === 7 && new Date().getDate() === 22) sidebar.append('<img id="holiday-bexhillday" alt="" title="It\'s Bexhill Day!" src="assets/img/holidays/bexhilldaySb.png">');
+	// halloween holiday decorations
+	else if (new Date().getMonth() === 9 && new Date().getDate() >= 15 ) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Halloween!">&#x1F383;</span>'));
+	// xmas holiday decorations
+	else if ((new Date().getMonth() === 10 && new Date().getDate() >= 30) || new Date().getMonth() === 11) {
+		$('html').css({ '--main-color': '#ca3535', '--second-color': '#a23030' });
+		// central
+		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84090, 0.47320], [50.84055, 0.47370]], { className: 'holiday-xmas-tree' }).addTo(map);
+		// little common
+		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84545, 0.43400], [50.84510, 0.43350]], { className: 'holiday-xmas-tree' }).addTo(map);
+		// sidley
+		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.85600, 0.47330], [50.85570, 0.47280]], { className: 'holiday-xmas-tree' }).addTo(map);
+		// santa hat
+		sidebar.append('<img id="holiday-xmas-hat" title="Merry Christmas!" alt="" src="assets/img/holidays/xmasSb.png" tabindex="0">');
+		// window competition
+		$('#home-box').after('<div id="holiday-xmas-msg" title="Show on map" onclick="tour(\'xmas\');">' +
+			'<div id="xmasTitle">~ <span>Christmas Window Display Competition</span> ~</div>' +
+			'<div class="comment">2023\'s theme is \'Christmas Celebrations\', in association with Bexhill Community Events Group</div>' +
+		'</div>');
+	}
+	// prevent click-through on map controls
+	L.DomEvent.disableClickPropagation($('#control-opacity')[0]).disableScrollPropagation($('#control-opacity')[0]);
+	L.DomEvent.disableClickPropagation($('#modal')[0]).disableScrollPropagation($('#modal')[0]);
+	$('.leaflet-control, .leaflet-popup').on('contextmenu', function(e) { e.stopPropagation(); });
+	$('.leaflet-control-geocoder-form').on('click', function(e) { e.stopPropagation(); });
+	// refocus status message on mouseover
+	$('#modal').on('mouseenter tap', function() { if ($(this).is(':animated')) $(this).stop(true).css('opacity', 1); });
+	// add delay after load for sidebar to animate open
+	setTimeout(function() {
+		$('#home-minimap > map').imageMapResize();
+		if ($(window).width() >= 768 && $(window).width() < 1024) map.invalidateSize();
+	}, 500);
+	// filter poi using keywords
+	$('#pois-filter-in').on('input', function() {
+		$('.pois-checkbox input').each(function() {
+			if ($(this).data('keyword').indexOf($('#pois-filter-in').val().toLowerCase()) != -1 || $(this).parent('.pois-checkbox-selected').length) $(this).parent().parent().show();
+			else $(this).parent().parent().hide();
+		});
+		$('.pois-group').each(function() {
+			$(this).show();
+			if (!$(this).find('.pois-checkbox:visible').length) $(this).hide();
+		});
+		$('#pois-filter').css('position', $('#pois-filter-in').val() ? 'sticky' : '');
+		$('#pois-icons .comment').html(!$('.pois-group .pois-checkbox:visible').length ? 'No places found.' : 'Make up to ' + maxPOICheckbox + ' selections at a time.');
+	});
+	$('#pois-filter .leaflet-routing-remove-waypoint').on('click', function() { $('#pois-filter-in').val('').trigger('input'); });
+	// set attic data max date
+	$('#settings-overpass-attic').prop('max', new Date().toISOString().substring(0,10));
+	// clear loading elements
+	if (spinner > 0) spinner--;
+	else $('.spinner').fadeOut(500);
 	// tutorial modals
 	if (localStorageAvail() && !window.localStorage.tutorial) window.localStorage.tutorial = '';
-	if (noPermalink && noIframe && localStorageAvail() && window.localStorage.tutorial.indexOf('modals') === -1) {
+	if (noPermalink && noIframe && localStorageAvail() && window.localStorage.tutorial.indexOf('modals') === -1) { setTimeout(function() {
 		const showModalTutor = function(txt, sty) {
 			$('#sidebar').before(
-				'<div id="modalT' + sty.id + '" class="modalTutor leaflet-control" style="top:' + sty.pos[0] + 'px;' + sty.dir + ':' + sty.pos[1] + 'px;">' +
-					'<div class="modalArrow" style="' + sty.dir + ':-5px;"></div>' +
-					'<div class="modalText"><span>' + (sty.id+1) + '/<span>0</span>:</span> ' + txt + '</div>' +
-					'<button type="button" class="modalButton theme">' + (!sty.last ? 'Next' : 'Got it') + '</button>' +
-					(!sty.last ? ' <button type="button" class="modalButton theme"><i class="fa-solid fa-xmark fa-sm"></i></button>' : '') +
+				'<div id="tutorial' + sty.id + '" class="tutorial leaflet-control" style="top:' + sty.pos[0] + 'px;' + sty.dir + ':' + sty.pos[1] + 'px;">' +
+					'<div class="tutorial-arrow" style="' + sty.dir + ':-5px;"></div>' +
+					'<div class="tutorial-text"><span>' + (sty.id+1) + '/<span>0</span>:</span> ' + txt + '</div>' +
+					'<button type="button" class="tutorial-button theme-color">' + (!sty.last ? 'Next' : 'Got it') + '</button>' +
+					(!sty.last ? ' <button type="button" class="tutorial-button theme-color"><i class="fa-solid fa-xmark fa-sm"></i></button>' : '') +
 				'</div>'
 			);
-			L.DomEvent.disableClickPropagation($('#modalT' + sty.id)[0]).disableScrollPropagation($('#modalT' + sty.id)[0]);
-			$('.modalText > span > span').text(sty.id+1);
-			$('#modalT' + sty.id + ' .modalButton').first().on('click', function() {
+			L.DomEvent.disableClickPropagation($('#tutorial' + sty.id)[0]).disableScrollPropagation($('#tutorial' + sty.id)[0]);
+			$('.tutorial-text > span > span').text(sty.id+1);
+			$('#tutorial' + sty.id + ' .tutorial-button').first().on('click', function() {
 				$(this).parent().fadeOut(100, function() { $(this).remove(); });
-				if ($('#modalT' + (sty.id+1)).length) $('#modalT' + (sty.id+1)).fadeIn(100, function() { $(this).find('button').first().focus(); });
+				if ($('#tutorial' + (sty.id+1)).length) $('#tutorial' + (sty.id+1)).fadeIn(100, function() { $(this).find('button').first().trigger('focus'); });
 				else window.localStorage.tutorial += 'modals;';
 			});
-			if (!sty.last) $('#modalT' + sty.id + ' .modalButton').last().on('click', function() {
-				$(this).parent().fadeOut(100, function() { $('.modalTutor').remove(); });
+			if (!sty.last) $('#tutorial' + sty.id + ' .tutorial-button').last().on('click', function() {
+				$(this).parent().fadeOut(100, function() { $('.tutorial').remove(); });
 			});
-			$('#modalT' + sty.id).keydown(function(e) {
-				if (e.keyCode === 27) $('#modalT' + sty.id + ' .modalButton').last().click();
+			$('#tutorial' + sty.id).on('keydown', function(e) {
+				if (e.keyCode === 27) $('#tutorial' + sty.id + ' .tutorial-button').last().trigger('click');
 			});
 		};
 		showModalTutor(
@@ -301,70 +353,21 @@ const map = new L.map('map', {
 			'This button will clear any map markers.<br>Zoom in and ' + (noTouch ? 'click' : 'tap') + ' on the map to find information on almost any place.',
 			{ id: 2, pos: [250, 65 + Math.round(sidebar.width())], dir: 'left', last: true }	
 		);
-		$('#modalT0 button').first().focus();
-	}
-	// easter holiday decorations
-	if (new Date().getMonth() === 2 && new Date().getDate() >= 29 && new Date().getDate() <= 31) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Easter!">&#x1F95A</span>'));
-	// bexhill day holiday decorations
-	else if (new Date().getMonth() === 7 && new Date().getDate() === 22) sidebar.append('<img id="bexhilldayImg" alt="" title="It\'s Bexhill Day!" src="assets/img/holidays/bexhilldaySb.png">');
-	// halloween holiday decorations
-	else if (new Date().getMonth() === 9 && new Date().getDate() >= 15 ) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Halloween!">&#x1F383;</span>'));
-	// xmas holiday decorations
-	else if ((new Date().getMonth() === 10 && new Date().getDate() >= 30) || new Date().getMonth() === 11) {
-		$('html').css({ '--main-color': '#b00000', '--second-color': '#993c3c' });
-		// central
-		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84090, 0.47320], [50.84055, 0.47370]], { className: 'xmasMapTree' }).addTo(map);
-		// little common
-		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84545, 0.43400], [50.84510, 0.43350]], { className: 'xmasMapTree' }).addTo(map);
-		sidebar.append('<img id="xmasImg" title="Merry Christmas!" alt="" src="assets/img/holidays/xmasSb.png">');
-		$('#homeBox').after('<div id="xmasMsg" title="Show on map" onclick="tour(\'xmas\');">' +
-			'<div id="xmasTitle">~ <span>Christmas Window Display Competition</span> ~</div>' +
-			'<div class="comment">2023\'s theme is \'Christmas Celebrations\', in association with Bexhill Community Events Group</div>' +
-		'</div>');
-	}
-	// prevent click-through on map controls
-	L.DomEvent.disableClickPropagation($('#inputOpacity')[0]).disableScrollPropagation($('#inputOpacity')[0]);
-	L.DomEvent.disableClickPropagation($('#msgStatus')[0]).disableScrollPropagation($('#msgStatus')[0]);
-	$('.leaflet-control, .leaflet-popup').on('contextmenu', function(e) { e.stopPropagation(); });
-	$('.leaflet-control-geocoder-form').click(function(e) { e.stopPropagation(); });
-	// refocus status message on mouseover
-	$('#msgStatus').on('mouseover tap', function() { if ($(this).is(':animated')) $(this).stop(true).css('opacity', 1); });
-	// add delay after load for sidebar to animate open
-	setTimeout(function() {
-		$('#minimap > map').imageMapResize();
-		if ($(window).width() >= 768 && $(window).width() < 1024) map.invalidateSize();
-	}, 500);
-	// filter poi using keywords
-	$('#poi-filter-in').on('input', function() {
-		$('.poi-checkbox input').each(function() {
-			if ($(this).data('keyword').indexOf($('#poi-filter-in').val().toLowerCase()) != -1 || $(this).parent('.poi-checkbox-selected').length) $(this).parent().parent().show();
-			else $(this).parent().parent().hide();
-		});
-		$('.poi-group').each(function() {
-			$(this).show();
-			if (!$(this).find('.poi-checkbox:visible').length) $(this).hide();
-		});
-		$('#poi-filter').css('position', $('#poi-filter-in').val() ? 'sticky' : '');
-		$('#poi-icons .comment').html(!$('.poi-group .poi-checkbox:visible').length ? 'No places found.' : 'Make up to ' + maxPOICheckbox + ' selections at a time.');
-	});
-	$('#poi-filter .leaflet-routing-remove-waypoint').on('click', function() { $('#poi-filter-in').val('').trigger('input'); });
-	// set attic data max date
-	$('#inputAttic').prop('max', new Date().toISOString().substring(0,10));
-	// clear loading elements
-	if (spinner > 0) spinner--;
-	else $('.spinner').fadeOut(500);
+		$('#tutorial0').fadeIn(500);
+		$('#tutorial0 button').first().trigger('focus');
+	}, 1000); }
 }).on('contextmenu.show', function(e) {
-	$('#copyGeos').html(L.Util.formatNum(e.latlng.lat, 3) + ', ' + L.Util.formatNum(e.latlng.lng, 3) + ' | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 3) + '<span class="ele"></span>');
+	$('#contextmenu-item-copygeos').html(L.Util.formatNum(e.latlng.lat, 3) + ', ' + L.Util.formatNum(e.latlng.lng, 3) + ' | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 3) + '<span class="ele"></span>');
 	// https://www.opentopodata.org
 	$.ajax({
 		url: 'https://bexhill-osm.opentopodata.org/v1/eudem25m?locations=' + e.latlng.lat + ',' + e.latlng.lng,
 		dataType: 'json',
 		mimeType: 'application/json',
 		success: function(json) {
-			if (json.status === 'OK') $('#copyGeos .ele').html('<br>Elevation: ' + ($('#inputUnit').is(':checked') ? L.Util.formatNum(json.results[0].elevation, 2) + ' m' : L.Util.formatNum(json.results[0].elevation*3.280839895, 2) + ' ft'));
+			if (json.status === 'OK') $('#contextmenu-item-copygeos .ele').html('<br>Elevation: ' + ($('#settings-unit').is(':checked') ? L.Util.formatNum(json.results[0].elevation, 2) + ' m' : L.Util.formatNum(json.results[0].elevation*3.280839895, 2) + ' ft'));
 			else this.error();
 		},
-		error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OPENTOPODATA:', encodeURI(this.url)); }
+		error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR OPENTOPODATA:', encodeURI(this.url)); }
 	});
 	// show walkHere if user located within map and accuracy is high
 	if (lc._active && lc._event && map.options.maxBounds && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14 && lc._circle.getRadius() <= 100) $('.leaflet-contextmenu-item').eq(1).show();
@@ -379,27 +382,27 @@ const map = new L.map('map', {
 	// hide tooltip
 	if (e.popup._source.getTooltip()) e.popup._source.getTooltip().setOpacity(0);
 	// add/remove favourites
-	if ($('a.popup-bookm').length) {
+	if ($('a.popup-bookmark').length) {
 		if (!window.localStorage.favourites) window.localStorage.favourites = '';
-		if (window.localStorage.favourites.indexOf(elementType(osmId) + '(' + osmId.slice(1) + ');') >= 0) popupThis.find($('a.popup-bookm i').removeClass('fa-regular').addClass('fa-solid'));
-		$('a.popup-bookm').unbind('click').click(function() {
-			if ($('a.popup-bookm i.fa-solid').length) {
+		if (window.localStorage.favourites.indexOf(elementType(osmId) + '(' + osmId.slice(1) + ');') >= 0) popupThis.find($('a.popup-bookmark i').removeClass('fa-regular').addClass('fa-solid'));
+		$('a.popup-bookmark').off('click').on('click', function() {
+			if ($('a.popup-bookmark i.fa-solid').length) {
 				window.localStorage.favourites = window.localStorage.favourites.replace(elementType(osmId) + '(' + osmId.slice(1) + ');', '');
-				popupThis.find($('a.popup-bookm i').removeClass('fa-solid fa-beat').addClass('fa-regular'));
+				popupThis.find($('a.popup-bookmark i').removeClass('fa-solid fa-beat').addClass('fa-regular'));
 			}
 			else {
 				window.localStorage.favourites = window.localStorage.favourites + elementType(osmId) + '(' + osmId.slice(1) + ');';
-				popupThis.find($('a.popup-bookm i').removeClass('fa-regular').addClass('fa-solid fa-beat'));
+				popupThis.find($('a.popup-bookmark i').removeClass('fa-regular').addClass('fa-solid fa-beat'));
 			}
 		});
 	}
 	// edit on osm.org
-	$('.popup-edit').unbind('click').click(function() {
+	$('.popup-edit').off('click').on('click', function() {
 		popupWindow('popup', 'https://www.openstreetmap.org/edit?' + elementType(osmId) + '=' + osmId.slice(1) + '#map=19/' + e.popup._latlng.lat + '/' + e.popup._latlng.lng, 'editWindow');
 	});
-	popupThis.find($('.popup-header > a, .popup-facilities i, .navigateItem a')).tooltip(tooltipDef);
+	popupThis.find($('.popup-header > a, .popup-facilities i, .popup-navigate [title]')).tooltip(tooltipDef);
 	// opening-hours accordion
-	popupThis.find($('.popup-ohContainer')).accordion({
+	popupThis.find($('.popup-openhrs')).accordion({
 		heightStyle: 'content',
 		animate: 150,
 		collapsible: true,
@@ -418,16 +421,16 @@ const map = new L.map('map', {
 				'<a href="https://ratings.food.gov.uk/business/' + encodeURI(result.FHRSID) + '" title="Food Hygiene Rating\n' + result.BusinessName + RatingDate + '" target="_blank" rel="noopener">' +
 				'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"></a>'
 			).removeClass('notloaded');
-			if ($('#inputDebug').is(':checked')) console.debug('Food Hygiene Rating:', result);
+			if ($('#settings-debug').is(':checked')) console.debug('Food Hygiene Rating:', result);
 		},
 		error: function() {
 			popupThis.find($('.popup-fhrs')).empty();
-			if ($('#inputDebug').is(':checked')) console.debug('ERROR FHRS:', encodeURI(this.url));
+			if ($('#settings-debug').is(':checked')) console.debug('ERROR FHRS:', encodeURI(this.url));
 		}
 	});
 	// https://www.travelinedata.org.uk/traveline-open-data/nextbuses-api
 	// show bus times
-	if (popupThis.find($('.popup-bsTable')).length) $.ajax({
+	if (popupThis.find($('.popup-bustime-table')).length) $.ajax({
 		type: 'POST',
 		url: 'https://cors.bridged.cc/' + 'https://nextbus.mxdata.co.uk/nextbuses/1.0/1',
 		headers: { 'Authorization': 'Basic ' + btoa(window.BOSM.trvllneApi.u + ':' + window.BOSM.trvllneApi.p), 'x-cors-grida-api-key': window.BOSM.corsKey },
@@ -443,105 +446,104 @@ const map = new L.map('map', {
 				'<StopMonitoringRequest version="1.0">' +
 					'<RequestTimestamp>' + new Date().toISOString() + '</RequestTimestamp>' +
 					'<MessageIdentifier>12345</MessageIdentifier>' +
-					'<MonitoringRef>' + popupThis.find($('.popup-bsTable')).data('naptan') + '</MonitoringRef>' +
+					'<MonitoringRef>' + popupThis.find($('.popup-bustime-table')).data('naptan') + '</MonitoringRef>' +
 				'</StopMonitoringRequest>' +
 			'</ServiceRequest>' +
 			'</Siri>',
 		success: function(xml) {
 			const numResults = $(xml).find('MonitoredVehicleJourney').length;
 			if (numResults) {
-				popupThis.find($('.popup-bsTable')).empty();
+				popupThis.find($('.popup-bustime-table')).empty();
 				for (let c = 0; c < numResults; c++) {
 					const departTime = $(xml).find('ExpectedDepartureTime').eq(c).text() ? $(xml).find('ExpectedDepartureTime').eq(c).text() : $(xml).find('AimedDepartureTime').eq(c).text();
 					const departTimer = minToTime((new Date(departTime) - new Date()) / 60000);
-					popupThis.find($('.popup-bsTable')).append(
+					popupThis.find($('.popup-bustime-table')).append(
 						'<tr><td>' + $(xml).find('PublishedLineName').eq(c).text() + '</td>' +
 						'<td>' + $(xml).find('DirectionName').eq(c).text() + '</td>' +
 						'<td>' + (departTimer === -1 ? 'Due' : (departTimer + ' (' + new Date(departTime).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + ')')) + '</td></tr>'
 					);
 				}
-				popupThis.find($('.popup-bsTable')).after('<div class="popup-imgAttrib" style="bottom:5px;"><a href="https://www.travelinedata.org.uk/" target="_blank" rel="noopener">Data: Traveline NextBuses</div>');
+				popupThis.find($('.popup-bustime-table')).after('<div class="popup-comment">- <a href="https://www.travelinedata.org.uk/" target="_blank" rel="noopener">Traveline NextBuses</div>');
 				if (e.popup.options.autoPan) e.popup._adjustPan();
 			}
-			else popupThis.find($('.popup-bsTable')).html('<span class="comment">No buses due at this time.</span>');
-			if ($('#inputDebug').is(':checked')) console.debug('Nextbus:', xml);
+			else popupThis.find($('.popup-bustime-table')).html('<span class="comment">No buses due at this time.</span>');
+			if ($('#settings-debug').is(':checked')) console.debug('Nextbus:', xml);
 		},
 		error: function() {
-			popupThis.find($('.popup-bsTable').empty());
-			if ($('#inputDebug').is(':checked')) console.debug('ERROR BUSES:', encodeURI(this.url));
+			popupThis.find($('.popup-bustime-table').empty());
+			if ($('#settings-debug').is(':checked')) console.debug('ERROR BUSES:', encodeURI(this.url));
 		}
 	});
 	highlightOutline(osmId, 1);
 	// highlight in results list and add openpopup to permalink
-	if (poiList.length && !popupThis.find($('span#userLoc')).length && !$('#inputDebug').is(':checked')) {
-		popupThis.find($('#poi-results-list tr#' + osmId).addClass('poi-result-selected'));
-		if ($('.poi-result-selected').length) $('.poi-result-selected')[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+	if (poiList.length && !popupThis.find($('#popup-userloc')).length && !$('#settings-debug').is(':checked')) {
+		popupThis.find($('#pois-results-list tr#' + osmId).addClass('pois-result-selected'));
+		if ($('.pois-result-selected').length) $('.pois-result-selected')[0].scrollIntoView({ block: 'center' });
 		markerId = osmId;
 		permalinkSet();
 	}
-	if (popupThis.find($('.popup-imgContainer')).length) {
+	if (popupThis.find($('.popup-img')).length) {
 		// reduce height of long descriptions if image exists
-		if (popupThis.find($('.popup-longDesc')).length) popupThis.find($('.popup-longDesc')).css('--popup-long-desc-height', '150px');
+		if (popupThis.find($('.popup-tag-long')).length) popupThis.find($('.popup-tag-long')).css('--popup-tag-long-height', '150px');
 		setTimeout(function() {
-			popupThis.find($('.popup-imgContainer').each(function(i, element) {
+			popupThis.find($('.popup-img-item').each(function(i, element) {
 				// dynamically load images and attribution
 				$(element).find('img').attr('src', $(element).find('a').attr('href') + ($(element).find('a').data('srcset') ? '&width=320' : ''));
-				if (popupThis.find($(element).find('.popup-imgAttrib.notloaded')).length) getWikiAttrib(popupThis.find($(element)));
+				if (popupThis.find($(element).find('.popup-img-attrib.notloaded')).length) getWikiAttrib(popupThis.find($(element)));
 				// save popup content
-				else if (!popupThis.find('.popup-imgAttrib.notloaded').length) map._layers[osmId].setPopupContent();
+				else if (!popupThis.find('.popup-img-attrib.notloaded').length) map._layers[osmId].setPopupContent();
 			}));
 		}, 200);
-		popupThis.find($('.popup-imgContainer img'))
+		popupThis.find($('.popup-img'))
 			.on('swiperight', function() { navImg(0); })
 			.on('swipeleft', function() { navImg(1); })
+			.on('dragstart', false)
+			.on('selectstart', false)
 			.on('wheel', function(e) {
 				if (e.originalEvent.deltaY < 0) navImg(0);
 				else if (e.originalEvent.deltaY > 0) navImg(1);
 				e.preventDefault();
-			})
-			.on('error', function(e) {
+			});
+		popupThis.find($('.popup-img-item img')).on('error', function(e) {
 				// error if image not found
-				if (!popupThis.find($('.popup-imgContainer:visible')).length) popupThis.find($('#img0')).show();
-				if (!popupThis.find($('.navigateItem:visible')).length) popupThis.find($('.navigateItem')).show();
+				if (!popupThis.find($('.popup-img-item:visible')).length) popupThis.find($('#img0')).show();
+				if (!popupThis.find($('.popup-navigate:visible')).length) popupThis.find($('.popup-navigate')).show();
 				$(e.currentTarget).attr('alt', 'Error: Image not found');
 				$(e.currentTarget).parent().css('pointer-events', 'none');
 				$(e.currentTarget).parent().next().html('<span>Error: Image not found</span>');
 			});
-		popupThis.find($('.popup-imgContainer, .navigateItem'))
-			.on('dragstart', false)
-			.on('selectstart', false);
 		popupThis.find($('#img0 img'))
 			.on('load', function() {
 				try {
 					// stop placeholder images from being zoomed
-					if (popupThis.find($('.popup-imgContainer img')).attr('src').indexOf('000placehldr') >= 0) popupThis.find($('.popup-imgContainer').css('pointer-events', 'none'));
-					popupThis.find($('.popup-imgContainer img')).attr('alt', 'Image of ' + popupThis.find($('.popup-header h3')).text());
-					if (popupThis.find($('.navigateItem')).length) {
+					if (popupThis.find($('.popup-img-item img')).attr('src').indexOf('000placehldr') >= 0) popupThis.find($('.popup-img').css('pointer-events', 'none'));
+					popupThis.find($('.popup-img-item img')).attr('alt', 'Image of ' + popupThis.find($('.popup-header h3')).text());
+					if (popupThis.find($('.popup-navigate')).length) {
 						// apply background to navigation buttons if no attribution
-						if (!popupThis.find($('.popup-imgAttrib')).length && popupThis.find($('.navigateItem')).length) popupThis.find($('.navigateItem')).addClass('navigateBg');
+						if (!popupThis.find($('.popup-img-attrib')).length && popupThis.find($('.popup-navigate')).length) popupThis.find($('.popup-navigate')).addClass('popup-navigate-background');
 						// add padding on attribution for navigation buttons
-						else popupThis.find($('.popup-imgAttrib')).css('padding-right', popupThis.find($('.navigateItem')).width()+5 + 'px');
-						if (!popupThis.find($('.navigateItem:visible')).length) popupThis.find($('.navigateItem')).fadeIn();
+						else popupThis.find($('.popup-img-attrib')).css('padding-right', popupThis.find($('.popup-navigate')).width()+5 + 'px');
+						if (!popupThis.find($('.popup-navigate:visible')).length) popupThis.find($('.popup-navigate')).fadeIn();
 					}
-					popupThis.find($('.popup-imgContainer')).removeClass('notloaded');
+					popupThis.find($('.popup-img-item')).removeClass('notloaded');
 					if (e.popup.options.autoPan && map.getBounds().contains(e.popup._latlng)) setTimeout(function() { e.popup._adjustPan(); }, 200);
 				}
 				catch(err) {
-					if ($('#inputDebug').is(':checked')) console.debug(err + '- Popup was probably closed.');
+					if ($('#settings-debug').is(':checked')) console.debug(err + '- Popup was probably closed.');
 				}
 			});
 	}
 	// add padding for navigation icons without image
-	else if (popupThis.find($('.navigateItem')).length && !popupThis.find($('.popup-imgContainer')).length) {
-		popupThis.find($('.navigateItem')).css('bottom', 'auto').fadeIn();
+	else if (popupThis.find($('.popup-navigate')).length && !popupThis.find($('.popup-img')).length) {
+		popupThis.find($('.popup-navigate')).css('bottom', 'auto').fadeIn();
 		popupThis.find($('.popup-body')).css('padding-bottom', '12px');
 	}
 	// scroll shadow
-	if (popupThis.find($('.custscroll')).length) setTimeout(function() {
-		popupThis.find($('.custscroll')).scroll(function() {
+	if (popupThis.find($('.theme-scroll')).length) setTimeout(function() {
+		popupThis.find($('.theme-scroll')).on('scroll', function() {
 			const scrollPos = Math.abs($(this)[0].scrollHeight - $(this)[0].clientHeight - $(this).scrollTop());
 			const scrollOpacity = scrollPos < 50 ? Math.round(scrollPos / 10) / 10 : 0.5;
-			$(this).css('background-image', 'linear-gradient(rgba(0, 0, 0, 0), rgba(var(--scroll-shadow-popup), ' + scrollOpacity + '))');
+			$(this).css('background-image', 'linear-gradient(transparent, rgba(var(--scroll-shadow-popup), ' + scrollOpacity + '))');
 		}).trigger('scroll');
 	}, 10);
 	// set that user has already seen bouncing navigation icons
@@ -558,7 +560,7 @@ const map = new L.map('map', {
 	}
 	// unselect from poi list
 	if (poiList.length) {
-		$('#poi-results-list tr').removeClass('poi-result-selected');
+		$('#pois-results-list tr').removeClass('pois-result-selected');
 		if (!rQuery) markerId = undefined;
 		permalinkSet();
 	}
@@ -580,16 +582,16 @@ const map = new L.map('map', {
 			tileOverlayLayers[tileOverlayLayer.xmas.name].setOpacity(tileOverlayLayer.xmas.opacity);
 		}
 		// set overlay opacity controls
-		$('#inputOpacity').show(100);
-		$('#inputOpacity input')
+		$('#control-opacity').show(100);
+		$('#control-opacity input')
 			.val(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].options.opacity)
 			.on('input', function() {
 				tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].setOpacity(this.value);
 				$(this).attr('title', tileOverlayLayer[actOverlayLayer].name + '\n' + Math.floor(this.value*100) + '% opacity');
 			})
 			.on('change', permalinkSet)
-			.on('mouseover', function() { this.focus(); })
-			.attr('title', tileOverlayLayer[actOverlayLayer].name + '\n' + Math.floor($('#inputOpacity input').val()*100) + '% opacity');
+			.on('mouseenter', function() { $(this).trigger('focus'); })
+			.attr('title', tileOverlayLayer[actOverlayLayer].name + '\n' + Math.floor($('#control-opacity input').val()*100) + '% opacity');
 		setOverlayLabel();
 		permalinkSet();
 		if (actOverlayLayer && tileOverlayLayer[actOverlayLayer].offset) {
@@ -604,7 +606,7 @@ const map = new L.map('map', {
 	if (tileOverlayLayer[actOverlayLayer].offset && tileOverlayLayer[actOverlayLayer].wmsOverlay) $(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]).off('load');
 	if (!$('.leaflet-control-layers-overlays input:checked').length) {
 		actOverlayLayer = undefined;
-		$('#inputOpacity').fadeOut(100);
+		$('#control-opacity').fadeOut(100);
 	}
 	setOverlayLabel();
 	permalinkSet();
@@ -623,15 +625,15 @@ function highlightOutline(i, on) {
 }
 function setOverlayLabel() {
 	// adds titles and hides certain layers in control
-	if (!$('.controlTitle').length) {
-		$('.leaflet-control-layers-overlays label').first().before('<div class="controlTitle">Overlays</div>');
-		$('.leaflet-control-layers-overlays label:contains("Bing")').first().before('<div class="controlTitle">Air photography</div>');
-		$('.leaflet-control-layers-overlays label:contains("Ordnance")').first().before('<div class="controlTitle">Historical maps</div>');
-		$('.leaflet-control-layers-overlays label').last().after('<a class="controlTitle" onclick="switchTab(\'tour\', \'overlays\');">More...</a>');
+	if (!$('.control-layers-title').length) {
+		$('.leaflet-control-layers-overlays label').first().before('<div class="control-layers-title">Overlays</div>');
+		$('.leaflet-control-layers-overlays label:contains("Bing")').first().before('<div class="control-layers-title">Air photography</div>');
+		$('.leaflet-control-layers-overlays label:contains("Ordnance")').first().before('<div class="control-layers-title">Historical maps</div>');
+		$('.leaflet-control-layers-overlays label').last().after('<a class="control-layers-title" onclick="switchTab(\'tour\', \'overlays\');">More...</a>');
 	}
 	for (let tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').addClass('hideLayer');
 	for (let tileOverlay in tileOverlayLayer) if (tileOverlayLayer[tileOverlay].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tileOverlay].name + '")').addClass('hideLayer');
-	if (!$('.leaflet-control-layers-list.custscroll').length) $('.leaflet-control-layers-list').addClass('custscroll');
+	if (!$('.leaflet-control-layers-list.theme-scroll').length) $('.leaflet-control-layers-list').addClass('theme-scroll');
 	if (!$('.leaflet-control-layers-toggle span').length) $('.leaflet-control-layers-toggle').html('<span style="margin:5px 4px;" class="fa fa-solid fa-layer-group fa-2x"></span>');
 }
 function changeOffset(layer, container) {
@@ -642,7 +644,7 @@ function changeOffset(layer, container) {
 }
 
 // https://github.com/davidjbradshaw/image-map-resizer
-$('#minimap > map > area').click(function() {
+$('#home-minimap > map > area').on('click', function() {
 	// bounding coordinates for minimap
 	const mBounds = {
 		'Bexhill-on-Sea': LBounds,
@@ -661,13 +663,13 @@ $('#minimap > map > area').click(function() {
 	}[$(this).attr('title')];
 	if (mBounds) {
 		map.flyToBounds(L.latLngBounds(mBounds));
-		if ($(window).width() < 768) $('.sidebar-close:visible').click();
+		if ($(window).width() < 768) $('.sidebar-close:visible').trigger('click');
 	}
 });
 
 let rQuery = false;
 function reverseQuery(e, singlemapclick) {
-	const geoServer = $('#inputRevServer').val();
+	const geoServer = $('#settings-reverse-server').val();
 	let geocoder, geoMarker;
 	if (singlemapclick) setMsgStatus('fa-solid fa-spinner fa-spin-pulse', '', '');
 	else $('.spinner').show();
@@ -678,40 +680,39 @@ function reverseQuery(e, singlemapclick) {
 	geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom() > 16 ? 18 : 17), function(results) {
 		if (geoServer === 'opencage') geoMarker = results[0];
 		else geoMarker = results[0] ? results[0].properties : '';
-		if ($('#inputDebug').is(':checked') && results[0]) console.debug(titleCase(geoServer) + 'reverse search:', results[0]);
+		if ($('#settings-debug').is(':checked') && results[0]) console.debug(titleCase(geoServer) + 'reverse search:', results[0]);
 		if (geoMarker.osm_id || (geoMarker.source_id && geoMarker.source_id.indexOf('/')) > 0) {
-			if (singlemapclick && $('#msgStatus:visible').length) {
+			if (singlemapclick && $('#modal:visible').length) {
 				let msgStatusHead, msgStatusBody;
 				if (geoServer === 'nominatim') {
 					const geoName = geoMarker.namedetails ? geoMarker.namedetails.ref || geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '' : '';
 					const geoRoad = geoMarker.address ? geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || geoMarker.address.locality || '' : '';
 					msgStatusHead = titleCase(geoMarker.type === 'yes' || geoMarker.type === geoMarker.addresstype ? geoMarker.category : geoMarker.type + (geoMarker.addresstype === 'road' ? ' road' : ''));
-					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoName ? '<b>' + geoName + '</b><br>' : '') +
+					msgStatusBody = '<a class="modal-body-addr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoName ? '<b>' + geoName + '</b><br>' : '') +
 						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + (geoMarker.address.postcode ? ', ' + geoMarker.address.postcode + '<br>' : '') : '') +
 						(geoMarker.address.retail ? geoMarker.address.retail : '') + '</a>';
 				}
 				else if (geoServer === 'opencage') {
 					msgStatusHead = titleCase(geoMarker.type);
-					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');"><b>' + geoMarker.name.replace(',', '</b><br>').replace(', United Kingdom', '') + '</a>';
+					msgStatusBody = '<a class="modal-body-addr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');"><b>' + geoMarker.name.replace(',', '</b><br>').replace(', United Kingdom', '') + '</a>';
 				}
 				else if (geoServer === 'photon') {
 					msgStatusHead = geoMarker.osm_value !== 'yes' ? titleCase(geoMarker.osm_value + ' ' + geoMarker.osm_key) : '';
-					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoMarker.name ? '<b>' + geoMarker.name + '</b><br>' : '') +
+					msgStatusBody = '<a class="modal-body-addr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoMarker.name ? '<b>' + geoMarker.name + '</b><br>' : '') +
 						(geoMarker.housenumber ? geoMarker.housenumber + ' ' : '') + (geoMarker.street + (geoMarker.postcode ? ', ' + geoMarker.postcode : '') ? geoMarker.street : '') + '</a>';
 				}
 				else if (geoServer === 'openrouteservice') {
 					msgStatusHead = titleCase(geoMarker.layer);
-					msgStatusBody = '<a class="msgStatusBodyAddr" onclick="reverseQueryOP(\'' + geoMarker.source_id.charAt(0) + '\', \'' + geoMarker.source_id.split('/')[1] + '\');">' + '<b>' + geoMarker.name + '</b><br>' +
+					msgStatusBody = '<a class="modal-body-addr" onclick="reverseQueryOP(\'' + geoMarker.source_id.charAt(0) + '\', \'' + geoMarker.source_id.split('/')[1] + '\');">' + '<b>' + geoMarker.name + '</b><br>' +
 						(geoMarker.postalcode ? geoMarker.postalcode : '') + '</a>';
 				}
-				if ($('#inputAttic').val()) msgStatusBody += '<br><span class="comment">Above result may differ to actual attic data.</span>';
-				if (actOverlayLayer === 'landreg') msgStatusBody += '<hr><a onclick="popupWindow(\'popup\', \'https://search-property-information.service.gov.uk/search/map-search/find-by-map\', \'editWindow\');"><i>Land Registry Lookup</i> <i class="theme fa-solid fa-up-right-from-square fa-sm"></i></a>';
+				if ($('#settings-overpass-attic').val()) msgStatusBody += '<br><span class="comment">Above result may differ to actual attic data.</span>';
+				if (actOverlayLayer === 'landreg') msgStatusBody += '<hr><a onclick="popupWindow(\'popup\', \'https://search-property-information.service.gov.uk/search/map-search/find-by-map\', \'editWindow\');"><i>Land Registry Lookup</i> <i class="theme-color fa-solid fa-up-right-from-square fa-sm"></i></a>';
 				setMsgStatus('fa-solid fa-magnifying-glass-location', msgStatusHead, msgStatusBody);
 				// move click location to address location on hover
-				if (noTouch) $('#msgStatus .msgStatusBodyAddr').hover(
-					function() { if (clickOutline.getLayers()[0]) clickOutline.getLayers()[0].setLatLng(results[0].center); },
-					function() { if (clickOutline.getLayers()[0]) clickOutline.getLayers()[0].setLatLng(e.latlng); }
-				);
+				$('#modal .modal-body-addr')
+					.on('mouseenter', function() { if (clickOutline.getLayers()[0]) clickOutline.getLayers()[0].setLatLng(results[0].center); })
+					.on('mouseleave', function() { if (clickOutline.getLayers()[0]) clickOutline.getLayers()[0].setLatLng(e.latlng); });
 			}
 			else reverseQueryOP(geoMarker.osm_type || geoMarker.source_id.charAt(0), geoMarker.osm_id || geoMarker.source_id.split('/')[1]);
 		}
@@ -726,11 +727,11 @@ function reverseQueryOP(type, id) {
 	// pass reverse lookup to overpass
 	clear_map('markers');
 	rQuery = true;
-	$('#msgStatus').fadeOut(200);
+	$('#modal').fadeOut(200);
 	show_overpass_layer(elementType(type) + '(' + id + ');', type.charAt(0).toUpperCase() + id);
 }
 function walkPoint(e) {
-	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').click();
+	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').trigger('click');
 	// drop a walk marker if one doesn't exist
 	const wp = routingControl.getWaypoints();
 	for (let c in wp) if (!wp[c].name) {
@@ -740,7 +741,7 @@ function walkPoint(e) {
 	routingControl.spliceWaypoints(wp.length, 0, e.latlng);
 }
 function walkHere(e) {
-	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').click();
+	if ($(window).width() >= 768 && actTab !== 'walking' && actTab !== 'none') $('a[href="#walking"]').trigger('click');
 	routingControl.setWaypoints([
 		[lc._event.latlng.lat, lc._event.latlng.lng],
 		[e.latlng.lat, e.latlng.lng]
@@ -768,14 +769,14 @@ function panoView(e, fromSequence) {
 		success: function(json) {
 			let imgId;
 			if (json.data.length > 0) json.data.forEach(x => { if (x.camera_type === 'equirectangular') imgId = x.id; });
-			if (imgId && ($('#inputStView').is(':checked') || fromSequence)) {
+			if (imgId && ($('#settings-mapillary').is(':checked') || fromSequence)) {
 				$('.spinner').hide();
 				popupWindow('iframe', 'https://www.mapillary.com/embed?image_key=' + imgId + '&x=0.5&y=0.5&style=photo', '', 'Mapillary Street-Level');
 			}
 			else this.error();
 		},
 		error: function() {
-			if ($('#inputDebug').is(':checked') && $('#inputStView').is(':checked')) console.debug('ERROR MAPILLARY IMAGES:', encodeURI(this.url));
+			if ($('#settings-debug').is(':checked') && $('#settings-mapillary').is(':checked')) console.debug('ERROR MAPILLARY IMAGES:', encodeURI(this.url));
 			if (!fromSequence) {
 				$('.spinner').hide();
 				popupWindow('iframe', 'https://www.google.com/maps/embed/v1/streetview?location=' + e.latlng.lat + ',' + e.latlng.lng + '&fov=90&key=' + window.BOSM.googleKey, '', 'Google Street View');
@@ -791,14 +792,14 @@ function copyGeos(e) {
 	);
 }
 
-$('#walkList').change(function() {
-	$('#walkDesc').html('<figure><img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg" loading="lazy"><figcaption>' + suggestWalk($('#walkList').val(), 0) + '</figcaption></figure>');
+$('#walk-list').on('change', function() {
+	$('#walk-desc').html('<figure><img alt="Walk preview" src="assets/img/walks/' + $(this).val() + '.jpg" loading="lazy"><figcaption>' + suggestWalk($('#walk-list').val(), 0) + '</figcaption></figure>');
 });
-$('#walkSelect').click(function() {
+$('#walk-select').on('click', function() {
 	clear_map('walk');
 	routingControl.zoomBounds = true;
-	routingControl.setWaypoints(suggestWalk($('#walkList').val(), 1));
-	if ($(window).width() < 768) $('.sidebar-close:visible').click();
+	routingControl.setWaypoints(suggestWalk($('#walk-list').val(), 1));
+	if ($(window).width() < 768) $('.sidebar-close:visible').trigger('click');
 });
 function suggestWalk(walkId, isWP) {
 	return {
@@ -812,7 +813,7 @@ function suggestWalk(walkId, isWP) {
 			'In May 1902 Bexhill-on-Sea became "The Birthplace of British Motor Racing". ' +
 			'Follow five seafront Motoring Heritage panels and two galleries dedicated to the story of those intrepid ' +
 			'early motoring pioneers (the 5th panel is situated outside ' +
-			'<a class="theme" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel <i class="theme fa-solid fa-magnifying-glass fa-sm"></i></a>).',
+			'<a class="theme-color" onclick="map.flyTo([50.833, 0.427], 18);">Cooden Beach Hotel <i class="fa-solid fa-magnifying-glass fa-sm"></i></a>).',
 			[[50.84059, 0.49121], [50.83729, 0.47612], [50.83647, 0.46637], [50.83732, 0.46639]]
 		],
 		neye: [
@@ -836,7 +837,7 @@ function suggestWalk(walkId, isWP) {
 		ad1066: [
 			'The route commemorates the 1066 Battle of Hastings, linking the places and the people of that important time. ' +
 			'This is a section of the Bexhill - Battle link, the full route can be found on ' +
-			'<a href="https://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank" rel="noopener">waymarkedtrails.org <i class="theme fa-solid fa-up-right-from-square fa-sm"></i></a>.',
+			'<a href="https://hiking.waymarkedtrails.org/#route?id=3161493&map=13!50.8789!0.4901" target="_blank" rel="noopener">waymarkedtrails.org <i class="theme-color fa-solid fa-up-right-from-square fa-sm"></i></a>.',
 			[[50.84522, 0.48044], [50.85591, 0.49312], [50.87800, 0.50009]]
 		],
 		bcr1: [
@@ -850,36 +851,36 @@ function suggestWalk(walkId, isWP) {
 }
 
 // navigation controls for history tour
-$('#tourNext').click(function() { $('#tourList option:selected').nextAll(':enabled').eq(0).prop('selected', true).trigger('change'); });
-$('#tourPrev').click(function() { $('#tourList option:selected').prevAll(':enabled').eq(0).prop('selected', true).trigger('change'); });
-$('#tourList').change(function() {
+$('#tour-controls-prev').on('click', function() { $('#tour-controls-list option:selected').prevAll(':enabled').eq(0).prop('selected', true).trigger('change'); });
+$('#tour-controls-list').on('change', function() {
 	const tourVal = $(this).val();
 	// only load iframe on focus or a new item selected
-	if (actTab === 'tour' && $('#tourFrame')[0].contentWindow.location.href.indexOf('/list' + titleCase(tourVal)) === -1) {
-		$('#tourControls').children().prop('disabled', true);
-		$('#tourFrame').hide();
-		$('#tourLoading').show();
-		$('#tourFrame')[0].contentWindow.location.replace(window.location.origin + '/' + 'tour/list' + titleCase(tourVal) + '/index.html');
-		$('#tourFrame').one('load', function() {
-			$('#tourLoading').hide();
+	if (actTab === 'tour' && $('#tour-frame')[0].contentWindow.location.href.indexOf('/list' + titleCase(tourVal)) === -1) {
+		$('#tour-controls').children().prop('disabled', true);
+		$('#tour-frame').hide();
+		$('#tour-loading').show();
+		$('#tour-frame')[0].contentWindow.location.replace(window.location.origin + '/' + 'tour/list' + titleCase(tourVal) + '/index.html?v=' + version);
+		$('#tour-frame').one('load', function() {
+			$('#tour-loading').hide();
 			$(this).fadeIn();
 			// set theme
-			$('#inputTheme').trigger('change');
+			$('#settings-theme').trigger('change');
 			// set reference links
-			$(this).contents().find('sup').click(function() { tourRef(tourVal, this.innerText); });
-			$(this).contents().find('sup').each(function() { $(this).attr('title', $('#tourFrame')[0].contentWindow.tourRefs[tourVal][this.innerText].name); });
+			$(this).contents().find('sup').on('click', function() { tourRef(tourVal, this.innerText); });
+			$(this).contents().find('sup').each(function() { $(this).attr('title', $('#tour-frame')[0].contentWindow.tourRefs[tourVal][this.innerText].name); });
 			// create fancybox gallery from iframe images
-			const tourImg = $(this).contents().find('img').not('.maplink img'), tourGall = [];
+			const tourImg = $(this).contents().find('img').not('.link-map img'), tourGall = [];
 			tourImg.each(function() { tourGall.push({ 'src': this.src, 'caption': $(this).parent('figure').find('figCaption').html() || this.alt }); });
-			tourImg.off('click').click(function() { $.fancybox.open(tourGall, {}, tourImg.index(this)); });
-			$('#tourControls').children().prop('disabled', false);
-			if ($('#tourList').prop('selectedIndex') === 0) $('#tourPrev').prop('disabled', true);
-			else if ($('#tourList').prop('selectedIndex') === $('#tourList option').length-1) $('#tourNext').prop('disabled', true);
+			tourImg.off('click').on('click', function() { $.fancybox.open(tourGall, {}, tourImg.index(this)); });
+			$('#tour-controls').children().prop('disabled', false);
+			if ($('#tour-controls-list').prop('selectedIndex') === 0) $('#tour-controls-prev').prop('disabled', true);
+			else if ($('#tour-controls-list').prop('selectedIndex') === $('#tour-controls-list option').length-1) $('#tour-controls-next').prop('disabled', true);
 		});
 		permalinkSet();
 	}
-	else $('#inputTheme').trigger('change');
+	else $('#settings-theme').trigger('change');
 });
+$('#tour-controls-next').on('click', function() { $('#tour-controls-list option:selected').nextAll(':enabled').eq(0).prop('selected', true).trigger('change'); });
 
 // https://github.com/Leaflet/Leaflet
 const iconLayer = new L.featureGroup(), clickOutline = new L.featureGroup(), areaOutline = new L.featureGroup(), imageOverlay = new L.featureGroup();
@@ -921,26 +922,26 @@ function setLeaflet() {
 			name: 'OpenStreetMap',
 			url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 			maxNativeZoom: 19,
-			className: 'layerDark'
+			className: 'theme-invert'
 		},
 		bosm: {
 			name: 'OSM Bexhill',
 			url: 'https://api.mapbox.com/styles/v1/drmx/cjyfrglvo1v3c1cqqlcvzyd07/tiles/256/{z}/{x}/{y}@2x?access_token=' + window.BOSM.mapboxKey,
 			attribution: attribution + ', <a href="https://mapbox.com/" target="_blank" rel="noopener">MapBox</a>',
-			className: 'layerDark'
+			className: 'theme-invert'
 		},
 		osmtopo: {
 			name: 'OSM Topo',
 			url: 'https://tile.tracestrack.com/topo__/{z}/{x}/{y}.png?key=' + window.BOSM.tracestrackKey,
 			attribution: attribution + ', <a href="https://www.tracestrack.com/" target="_blank" rel="noopener">Tracestrack</a>',
 			maxNativeZoom: 19,
-			className: 'layerDark'
+			className: 'theme-invert'
 		},
 		osmuk: {
 			name: 'OSM UK',
 			url: 'https://map.atownsend.org.uk/hot/{z}/{x}/{y}.png',
 			attribution: attribution + ', <a href="https://map.atownsend.org.uk/maps/map/map.html" target="_blank" rel="noopener">Andy Townsend</a>',
-			className: 'layerDark',
+			className: 'theme-invert',
 			hide: 1
 		},
 		general: {
@@ -948,19 +949,19 @@ function setLeaflet() {
 			url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 			attribution: attribution + ', <a href="https://www.hotosm.org/" target="_blank" rel="noopener">HOTOSM</a>',
 			maxNativeZoom: 20,
-			className: 'layerDark'
+			className: 'theme-invert'
 		},
 		cycle: {
 			name: 'OSM OpenCycleMap',
 			url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
 			attribution: attribution + ', <a href="https://thunderforest.com/maps/opencyclemap/" target="_blank" rel="noopener">ThunderForest</a>',
-			className: 'layerDark'
+			className: 'theme-invert'
 		},
 		trnsprt: {
 			name: 'OSM Public Transport',
 			url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
 			attribution: attribution + ', <a href="https://thunderforest.com/maps/transport/" target="_blank" rel="noopener">ThunderForest</a>',
-			className: 'layerDark'
+			className: 'theme-invert'
 		},
 		bing: {
 			name: 'Bing Aerial',
@@ -998,13 +999,13 @@ function setLeaflet() {
 			minNativeZoom: 18,
 			maxNativeZoom: 20,
 			minZoom: 16,
-			offset: [-1, 1]
+			offset: [-0.5, 0.5]
 		},
 		lidar: {
 			name: 'Lidar DTM 1m',
-			url: 'https://environment.data.gov.uk/spatialdata/lidar-composite-digital-terrain-model-dtm-1m-2022/wms',
+			url: 'https://environment.data.gov.uk/spatialdata/lidar-composite-digital-terrain-model-dtm-1m/wms',
 			wms: {
-				layers: '1',
+				layers: 'Lidar_Composite_DTM_1m',
 				format: 'image/png',
 				transparent: true
 			},
@@ -1021,14 +1022,14 @@ function setLeaflet() {
 			},
 			attribution: '<a href="https://maps.rother.gov.uk/tpo.html" target="_blank" rel="noopener">Rother District Council</a>',
 			opacity: 1,
-			className: 'layerDropshadow'
+			className: 'theme-dropshadow'
 		},
 		osm2012: {
 			name: '2012 OpenStreetMap',
 			url: 'https://map.fosm.org/default/{z}/{x}/{y}.png',
 			opacity: 1,
 			hide: 1,
-			className: 'layerNoclick layerDark'
+			className: 'layer-noclick theme-invert'
 		},
 		osmlabels: {
 			name: 'OSM Labels',
@@ -1042,14 +1043,14 @@ function setLeaflet() {
 			attribution: '<a href="https://row.eastsussex.gov.uk/standardmap.aspx" target="_blank" rel="noopener">East Sussex County Council</a>',
 			opacity: 1,
 			maxNativeZoom: 18,
-			className: 'layerDark layerDropshadow'
+			className: 'theme-invert theme-dropshadow'
 		},
 		xmas: {
 			name: 'Xmas Snow',
 			url: 'tour/itemXmas/img/overlay-snow.gif',
 			opacity: 0.5,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		// air photography
 		bing: {
@@ -1069,7 +1070,7 @@ function setLeaflet() {
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 18,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		bm1967: {
 			name: '1967 Aerial',
@@ -1078,7 +1079,7 @@ function setLeaflet() {
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 18,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		br1959: {
 			name: '1959 Aerial (railway)',
@@ -1087,7 +1088,7 @@ function setLeaflet() {
 			bounds: L.latLngBounds([50.83722, 0.45732], [50.8907, 0.5134]),
 			opacity: 1,
 			maxNativeZoom: 18,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		os1950: {
 			name: '1950 Aerial',
@@ -1096,7 +1097,7 @@ function setLeaflet() {
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		raf1959: {
 			name: '1959 RAF (L.Common)',
@@ -1107,7 +1108,7 @@ function setLeaflet() {
 			minNativeZoom: 14,
 			maxNativeZoom: 18,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		raf1946: {
 			name: '1946 RAF',
@@ -1117,7 +1118,7 @@ function setLeaflet() {
 			minNativeZoom: 14,
 			maxNativeZoom: 18,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		raf1941c: {
 			name: '1941 RAF (central)',
@@ -1128,7 +1129,7 @@ function setLeaflet() {
 			minNativeZoom: 15,
 			maxNativeZoom: 19,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		// historical maps
 		os1962: {
@@ -1139,7 +1140,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 16,
 			offset: [5, 3],
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		os1955: {
 			name: '1955 Ordnance Survey',
@@ -1149,7 +1150,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 19,
 			offset: [1, 1],
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		wl1950: {
 			name: '1950 Ward Lock',
@@ -1159,7 +1160,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 18,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		ob1944: {
 			name: '1944 Observer Bomb Map',
@@ -1168,7 +1169,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 16,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		arp1942: {
 			name: '1942 Air Raid Precautions',
@@ -1178,7 +1179,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 18,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		wl1940: {
 			name: '1940 Ward Lock',
@@ -1188,7 +1189,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 18,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		os1938: {
 			name: '1938 Ordnance Survey',
@@ -1197,7 +1198,7 @@ function setLeaflet() {
 			bounds: L.latLngBounds([50.874, 0.380], [50.833, 0.518]),
 			opacity: 1,
 			maxNativeZoom: 17,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		os1930: {
 			name: '1930 Ordnance Survey',
@@ -1207,7 +1208,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 17,
 			offset: [-2, -2],
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		mc1925: {
 			name: '1925 Maynards Chronicle',
@@ -1217,7 +1218,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 17,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		wl1911: {
 			name: '1911 Ward Lock',
@@ -1227,7 +1228,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 18,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		os1909: {
 			name: '1909 Ordnance Survey',
@@ -1237,7 +1238,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 18,
 			offset: [2, 2],
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		mt1902: {
 			name: '1902 Motor Track',
@@ -1248,7 +1249,7 @@ function setLeaflet() {
 			minNativeZoom: 12,
 			maxNativeZoom: 19,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		os1899: {
 			name: '1899 Ordnance Survey',
@@ -1258,7 +1259,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 17,
 			offset: [7, 2],
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		os1873: {
 			name: '1873 Ordnance Survey',
@@ -1268,7 +1269,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 17,
 			offset: [8, -4],
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		bt1839: {
 			name: '1839 Bexhill Tithe',
@@ -1277,7 +1278,7 @@ function setLeaflet() {
 			bounds: L.latLngBounds([50.815, 0.351], [50.890, 0.536]),
 			opacity: 1,
 			maxNativeZoom: 18,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		mb1805: {
 			name: '1805 Manor of Bexhill',
@@ -1286,7 +1287,7 @@ function setLeaflet() {
 			bounds: L.latLngBounds([50.805, 0.376], [50.883, 0.511]),
 			opacity: 1,
 			maxNativeZoom: 17,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		yg1795: {
 			name: '1795 Yeakell, Gardner & Gream',
@@ -1296,7 +1297,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 15,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		},
 		yg1778: {
 			name: '1778 Yeakell & Gardner',
@@ -1306,7 +1307,7 @@ function setLeaflet() {
 			opacity: 1,
 			maxNativeZoom: 16,
 			hide: 1,
-			className: 'layerNoclick'
+			className: 'layer-noclick'
 		}
 	};
 	for (let tile in tileOverlayLayer) {
@@ -1339,32 +1340,32 @@ $('.leaflet-control-zoom-out').html('<i class="fa-solid fa-minus"></i>');
 
 // BUTTON full screen events
 const fcnFullscr = L.easyButton({
-	id: 'btnFullscr',
+	id: 'control-fullscreen',
 	states: [{
-		stateName: 'normalScreen',
+		stateName: 'control-fullscreen-off',
 		icon: 'fa-solid fa-expand',
 		title: 'Full screen',
 		onClick: function(control) {
 			const viewer = $('html')[0];
 			const rFS = viewer.requestFullscreen || viewer.webkitRequestFullscreen;
 			rFS.call(viewer);
-			control.state('fullScreen');
+			control.state('control-fullscreen-on');
 		}
 	}, {
-		stateName: 'fullScreen',
+		stateName: 'control-fullscreen-on',
 		icon: 'fa-solid fa-compress',
 		title: 'Exit full screen',
 		onClick: function(control) {
 			const cFS = document.exitFullscreen || document.webkitExitFullscreen;
 			cFS.call(document);
-			control.state('normalScreen');
+			control.state('control-fullscreen-off');
 		}
 	}]
 }).addTo(map);
 $(document).on('fullscreenchange', btnFullscrState).on('webkitfullscreenchange', btnFullscrState);
 function btnFullscrState() {
 	const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
-	if (!fullscreenElement) fcnFullscr.state('normalScreen');
+	if (!fullscreenElement) fcnFullscr.state('control-fullscreen-off');
 }
 
 // https://github.com/domoritz/leaflet-locatecontrol
@@ -1382,7 +1383,7 @@ const lc = L.control.locate({
 	markerStyle: { radius: 8 },
 	strings: {
 		title: 'Show your location',
-		popup: '<span id="userLoc">Accuracy: {distance} {unit}</span>'
+		popup: '<div id="popup-userloc"><strong>Accuracy:</strong> {distance} {unit}</div>'
 	},
 	locateOptions: {
 		enableHighAccuracy: false
@@ -1391,7 +1392,7 @@ const lc = L.control.locate({
 		setMsgStatus('fa-solid fa-triangle-exclamation', 'Location Error', 'Sorry, we could not locate you.', 4);
 	},
 	onLocationOutsideMapBounds: function() {
-		setMsgStatus('fa-solid fa-circle-info', 'Out of Bounds', 'You appear to be located outside the map area. Come visit us!', 4);
+		setMsgStatus('fa-solid fa-circle-info', 'Out of Bounds', 'You appear to be located outside the map area.', 4);
 		lc.stop();
 	}
 }).addTo(map);
@@ -1414,7 +1415,7 @@ const geocode = L.Control.geocoder({
 	placeholder: 'Type address or place name...'
 }).on('markgeocode', function(e) {
 	// pass nominatim address query to overpass
-	if ($('#inputDebug').is(':checked')) console.debug('Nominatim search:', e.geocode);
+	if ($('#settings-debug').is(':checked')) console.debug('Nominatim search:', e.geocode);
 	const geoMarker = e.geocode.properties;
 	if (geoMarker.osm_id) {
 		clear_map('markers');
@@ -1423,7 +1424,7 @@ const geocode = L.Control.geocoder({
 		// hide geocoder controls
 		setTimeout(function() {
 			$('.leaflet-control-geocoder-alternatives').addClass('leaflet-control-geocoder-alternatives-minimized');
-			$('.leaflet-control-geocoder-form input').blur();
+			$('.leaflet-control-geocoder-form input').trigger('blur');
 			$('.leaflet-control-geocoder').removeClass('leaflet-control-geocoder-expanded');
 		}, 50);
 	}
@@ -1440,29 +1441,29 @@ function searchAddr(addr) {
 
 // BUTTON mapillary sequences
 const fcnStLvl = L.easyButton({
-	id: 'btnStLvl',
+	id: 'control-mapillary',
 	states: [{
-		stateName: 'offStLvl',
+		stateName: 'control-mapillary-off',
 		icon: 'fa-solid fa-street-view',
-		title: 'Photosphere views',
+		title: 'Show Mapillary street-level views',
 		onClick: function() { tour('pano'); }
 	}, {
-		stateName: 'onStLvl',
+		stateName: 'control-mapillary-on',
 		icon: 'fa-solid fa-street-view',
-		title: 'Photosphere views',
+		title: 'Zoom Mapillary street-level views',
 		onClick: function() { zoom_area(); }
 	}]
 }).addTo(map);
 
 // BUTTON bookmarks
 L.easyButton({
-	id: 'btnBookm',
+	id: 'control-bookmarks',
 	states: [{
 		icon: 'fa-solid fa-bookmark',
 		title: 'Show bookmarks',
 		onClick: function() {
 			if (window.localStorage.favourites) {
-				$('#inputOverpass').val('(' + window.localStorage.favourites + ')');
+				$('#settings-overpass-query').val('(' + window.localStorage.favourites + ')');
 				customQuery('(' + window.localStorage.favourites + ')', true);
 			}
 			else setMsgStatus('fa-solid fa-circle-info', 'Bookmarks', 'Add your favourite places by clicking <i class="fa-regular fa-bookmark fa-fw"></i> within a popup.', 4);
@@ -1473,7 +1474,7 @@ L.easyButton({
 // https://github.com/cliffcloud/Leaflet.EasyButton
 // BUTTON clear map
 L.easyButton({
-	id: 'btnClearmap',
+	id: 'control-clearlayers',
 	states: [{
 		icon: 'fa-solid fa-trash',
 		title: 'Clear layers',
@@ -1491,22 +1492,22 @@ $('.leaflet-control-loading').html('<i class="fa-solid fa-spinner fa-spin-pulse"
 function switchTab(tab, anchorTour, poi, actImgLayer) {
 	if (tab) {
 		if (tab !== actTab) {
-			if (tab === 'none') $('.sidebar-close:visible').click();
+			if (tab === 'none') $('.sidebar-close:visible').trigger('click');
 			else {
-				$('a[href="#' + tab + '"]').click();
-				$('#' + (tab === 'pois' ? tab + ' #poi-icons,' : tab) + ' .sidebar-body').scrollTop(0);
+				$('a[href="#' + tab + '"]').trigger('click');
+				$('#' + (tab === 'pois' ? tab + ' #pois-icons,' : tab) + ' .sidebar-body').scrollTop(0);
 			}
 		}
 		if (anchorTour) { 
 			if (tab === 'tour') {
-				$('#tourList').val(anchorTour).trigger('change');
-				if (tab !== actTab) $('a[href="#tour"]').click();
+				$('#tour-controls-list').val(anchorTour).trigger('change');
+				if (tab !== actTab) $('a[href="#tour"]').trigger('click');
 			}
-			else setTimeout(function() { $(anchorTour)[0].scrollIntoView({ behavior: 'smooth' }); }, actTab === 'none' ? 200 : 20);
+			else setTimeout(function() { $(anchorTour)[0].scrollIntoView(); }, actTab === 'none' ? 200 : 20);
 		}
 	}
 	if (poi) {
-		if (!tab && $(window).width() < 768) $('.sidebar-close:visible').click();
+		if (!tab && $(window).width() < 768) $('.sidebar-close:visible').trigger('click');
 		clear_map('markers');
 		$('#' + poi).prop('checked', true);
 		poi_changed();
@@ -1560,7 +1561,7 @@ function setRoutingControl(units) {
 			if (e.waypoints[0].latLng) {
 				$('.sidebar-tabs ul li [href="#walking"] .sidebar-notif').text($('.leaflet-marker-draggable').length).show();
 				$('.leaflet-routing-delete-waypoints, .leaflet-routing-reverse-waypoints').prop('disabled', false);
-				if ($('#inputDebug').is(':checked')) console.debug('Nominatim walkpoint:', e.waypoints);
+				if ($('#settings-debug').is(':checked')) console.debug('Nominatim walkpoint:', e.waypoints);
 			}
 			else {
 				$('.sidebar-tabs ul li [href="#walking"] .sidebar-notif').hide();
@@ -1574,7 +1575,7 @@ function setRoutingControl(units) {
 			routingControl.zoomBounds = false;
 		}
 	});
-	$('#routingControl').html(routingControl.onAdd(map));
+	$('#routing-control').html(routingControl.onAdd(map));
 	$('.leaflet-routing-geocoders').append('<button class="leaflet-routing-delete-waypoints" type="button" onclick="clear_map(\'walk\');" title="Clear waypoints"><i class="fa-solid fa-trash"></i></i></button>');
 	$('.leaflet-routing-reverse-waypoints').html('<i class="fa-solid fa-retweet"></i>').attr('title', 'Reverse waypoints');
 	$('.leaflet-routing-add-waypoint').html('<i class="fa-solid fa-plus"></i>').attr('title', 'Add a waypoint');
@@ -1590,9 +1591,9 @@ function populatePoiTab() {
 		// get unique category label for poi checkbox tab
 		if (categoryList.indexOf(pois[poi].catName) === -1) categoryList.push(pois[poi].catName);
 	}
-	for (c = 0; c < $('#tourList option').length - 1; c++) if ($('#tourList option:enabled').eq(c).data('keyword')) {
-		category.push({ listLocation: $('#tourList option').eq(c).text(), header: '<img data-key="' + $('#tourList option').eq(c).val() + '" src="assets/img/sb-tour.png">Tour - ' + $('#tourList option').eq(c).text() });
-		poiTags[$('#tourList option').eq(c).text()] = $('#tourList option').eq(c).data('keyword').split(', ');
+	for (c = 0; c < $('#tour-controls-list option').length - 1; c++) if ($('#tour-controls-list option:enabled').eq(c).data('keyword')) {
+		category.push({ listLocation: $('#tour-controls-list option').eq(c).text(), header: '<img data-key="' + $('#tour-controls-list option').eq(c).val() + '" src="assets/img/sb-tour.png">Tour - ' + $('#tour-controls-list option').eq(c).text() });
+		poiTags[$('#tour-controls-list option').eq(c).text()] = $('#tour-controls-list option').eq(c).data('keyword').split(', ');
 	}
 	// https://github.com/pawelczak/EasyAutocomplete
 	const options = {
@@ -1612,14 +1613,14 @@ function populatePoiTab() {
 				if ($('#eac-container-autocomplete .selected').prevAll('.eac-category').eq(0).find('img').data('key') === 'poi') {
 					// find selected items category and split it to get checkbox, then display
 					clear_map('markers');
-					$('a[href="#pois"]').click();
-					$('.poi-checkbox label[title="' + $('#eac-container-autocomplete .selected').prevAll('.eac-category').eq(0).text().split(' - ')[1] + '"] input').prop('checked', true);
+					$('a[href="#pois"]').trigger('click');
+					$('.pois-checkbox label[title="' + $('#eac-container-autocomplete .selected').prevAll('.eac-category').eq(0).text().split(' - ')[1] + '"] input').prop('checked', true);
 					poi_changed();
 				}
 				// select tour
 				else switchTab('tour', $('#eac-container-autocomplete .selected').prevAll('.eac-category').eq(0).find('img').data('key'));
 				$('#autocomplete').val('');
-				if ($('#poi-filter-in').val().length) $('#poi-filter-in').val('').trigger('input');
+				if ($('#pois-filter-in').val().length) $('#pois-filter-in').val('').trigger('input');
 			}
 		},
 		categories: category
@@ -1627,12 +1628,12 @@ function populatePoiTab() {
 	$('#autocomplete').easyAutocomplete(options);
 	$('div.easy-autocomplete').removeAttr('style');
 	// create checkbox tables using poi categories
-	let checkboxContent = '<div id="poi-filter"><input id="poi-filter-in" type="text" placeholder="Filter, e.g. \'dog\', \'park\', \'eat\', \'bed\'" title="Enter a keyword"><span class="leaflet-routing-remove-waypoint"></span></div>' +
+	let checkboxContent = '<div id="pois-filter"><input id="pois-filter-in" type="text" placeholder="Filter, e.g. \'dog\', \'park\', \'eat\', \'bed\'" title="Enter a keyword"><span class="leaflet-routing-remove-waypoint"></span></div>' +
 			'<div class="comment" style="text-align:right;">Make up to ' + maxPOICheckbox + ' selections at a time.</div>';
 	for (let c = 0; c < categoryList.length; c++) {
-		checkboxContent += '<div id="goto' + categoryList[c] + '" class="poi-group"><hr><h3>' + categoryList[c] + '</h3>';
+		checkboxContent += '<div id="pois-' + categoryList[c].toLowerCase() + '" class="pois-group"><hr><h3>' + categoryList[c] + '</h3>';
 		for (let poi in pois) if (pois[poi].catName === categoryList[c]) checkboxContent += L.Util.template(
-			'<div class="poi-checkbox">' +
+			'<div class="pois-checkbox">' +
 				'<label title="{name}">' +
 					'<img alt="" src="assets/img/icons/{icon}.png" loading="lazy">' +
 					'<input type="checkbox" id="{key}" data-keyword="{keyword}"><span>{name}</span>' +
@@ -1642,7 +1643,7 @@ function populatePoiTab() {
 		);
 		checkboxContent += '</div>';
 	}
-	$('#poi-icons').append(checkboxContent + '<a class="theme anchor"></a>');
+	$('#pois-icons').append(checkboxContent + '<a class="theme-color anchor"></a>');
 }
 populatePoiTab();
 
@@ -1663,7 +1664,7 @@ function localStorageAvail() {
 }
 
 // highlight textboxes on focus
-$(':text').on('focus', function() { $(this).select(); });
+$(':text').on('focus', function() { $(this).trigger('select'); });
 
 // iframe and popup window
 // type of popup, url, popup title, iframe caption, iframe animation
@@ -1707,38 +1708,38 @@ function popupWindow(type, url, pTitle, iCap, iAni) {
 
 // keyboard shortcuts
 let oInterval;
-$('html').keydown(function(e) {
+$('html').on('keydown', function(e) {
 	clearInterval(oInterval);
 	// ALT-ENTER: full screen
 	if (e.keyCode === $.ui.keyCode.ENTER && e.altKey) {
-		$('#btnFullscr').click();
+		$('#control-fullscreen').trigger('click');
 		e.preventDefault();
 	}
 	// CTRL-F: address search
 	else if (e.keyCode === 70 && e.ctrlKey) {
-		$('.leaflet-control-geocoder-icon').click();
+		$('.leaflet-control-geocoder-icon').trigger('click');
 		e.preventDefault();
 	}
 	// CTRL-DEL: clear all layers
 	else if (e.keyCode === $.ui.keyCode.DELETE && e.ctrlKey) {
-		$('#btnClearmap').click();
+		$('#control-clearlayers').trigger('click');
 		e.preventDefault();
 	}
-}).keyup(function(e) {
+}).on('keyup', function(e) {
 	// CTRL down: switch overlay transparency on
 	if (e.keyCode === 17 && actOverlayLayer) {
-		if ($('#inputOpacity input').val() >= 0.5) oInterval = setInterval(() => {
-			$('#inputOpacity input').val(+$('#inputOpacity input').val() - 0.05).trigger('input');
-			if ($('#inputOpacity input').val() == 0.05) {
+		if ($('#control-opacity input').val() >= 0.5) oInterval = setInterval(() => {
+			$('#control-opacity input').val(+$('#control-opacity input').val() - 0.05).trigger('input');
+			if ($('#control-opacity input').val() == 0.05) {
 				clearInterval(oInterval);
-				$('#inputOpacity input').trigger('change');
+				$('#control-opacity input').trigger('change');
 			}
 		}, 40);
-		else if ($('#inputOpacity input').val() < 0.5) oInterval = setInterval(() => {
-			$('#inputOpacity input').val(+$('#inputOpacity input').val() + 0.05).trigger('input');
-			if ($('#inputOpacity input').val() == 1) {
+		else if ($('#control-opacity input').val() < 0.5) oInterval = setInterval(() => {
+			$('#control-opacity input').val(+$('#control-opacity input').val() + 0.05).trigger('input');
+			if ($('#control-opacity input').val() == 1) {
 				clearInterval(oInterval);
-				$('#inputOpacity input').trigger('change');
+				$('#control-opacity input').trigger('change');
 			}
 		}, 40);
 		e.preventDefault();
@@ -1746,12 +1747,12 @@ $('html').keydown(function(e) {
 });
 
 // if user presses ENTER instead of selecting a category on home search bar
-$('#autocomplete').keydown(function(e) {
+$('#autocomplete').on('keydown', function(e) {
 	if (e.keyCode === $.ui.keyCode.ENTER && !$('#eac-container-autocomplete ul:visible').length) autocomplete();
 });
 function autocomplete() {
 	if ($('#autocomplete').val()) {
-		if ($(window).width() < 768) $('.sidebar-close:visible').click();
+		if ($(window).width() < 768) $('.sidebar-close:visible').trigger('click');
 		// grid reference lookup
 		if ($('#autocomplete').val().startsWith('TQ')) {
 			const latlngPoint = new GridRefToWgs84($('#autocomplete').val(), 5);
@@ -1766,7 +1767,7 @@ function autocomplete() {
 		}
 		// address search
 		else {
-			$('.leaflet-control-geocoder-icon').click();
+			$('.leaflet-control-geocoder-icon').trigger('click');
 			$('.leaflet-control-geocoder-form input').val($('#autocomplete').val());
 			geocode._geocode();
 		}
@@ -1775,26 +1776,24 @@ function autocomplete() {
 
 // map display options
 let darkMode, scaleControl;
-$('#inputTheme').change(function() {
+$('#settings-theme').on('change', function() {
 	const cssVar = getComputedStyle($('html')[0],null);
 	if ((window.matchMedia('(prefers-color-scheme: dark)').matches && $(this).val() === 'auto') || $(this).val() === 'dark') {
 		$('#darkcss').prop('disabled', false);
-		$('#tourFrame').contents().find('html').css({
+		$('#tour-frame').contents().find('html').css({
 			'--text-color': cssVar.getPropertyValue('--text-color'),
 			'--bg-color': cssVar.getPropertyValue('--bg-color'),
 			'--bg-color2': cssVar.getPropertyValue('--bg-color2')
 		});
-		$('#map').css('background', '#0f0f0f');
 		darkMode = true;
 	}
 	else {
 		$('#darkcss').prop('disabled', true);
-		$('#tourFrame').contents().find('html').prop('style', '');
-		$('#map').css('background', '#e6e6e6');
+		$('#tour-frame').contents().find('html').prop('style', '');
 		darkMode = false;
 	}
 	// apply theme to iframes
-	$('#tourFrame').contents().find('html').css({
+	$('#tour-frame').contents().find('html').css({
 		'--main-color': cssVar.getPropertyValue('--main-color'),
 		'--scr-track': cssVar.getPropertyValue('--scr-track'),
 		'--scr-thumb': cssVar.getPropertyValue('--scr-thumb'),
@@ -1802,10 +1801,10 @@ $('#inputTheme').change(function() {
 	});
 	if (noIframe && localStorageAvail()) window.localStorage.theme = $(this).prop('selectedIndex');
 });
-$('#settings input').not('#inputDebug').change(function() {
-	if ($(this).attr('id') === 'inputUnit') {
+$('#settings input').not('#settings-debug').on('change', function() {
+	if ($(this).attr('id') === 'settings-unit') {
 		// change unit of measurement
-		if (routingControl) $('#btnClearmap').click();
+		if (routingControl) $('#control-clearlayers').trigger('click');
 		if (scaleControl) scaleControl.remove();
 		if ($(this).is(':checked')) {
 			scaleControl = L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
@@ -1818,50 +1817,50 @@ $('#settings input').not('#inputDebug').change(function() {
 			lc.options.metric = false;
 		}
 	}
-	else if ($(this).attr('id') === 'inputStView') {
-		if ($(this).is(':checked')) $('#btnStLvl').parent().show();
-		else $('#btnStLvl').parent().hide();
+	else if ($(this).attr('id') === 'settings-mapillary') {
+		if ($(this).is(':checked')) $('#control-mapillary').parent().show();
+		else $('#control-mapillary').parent().hide();
 	}
 	permalinkSet();
 });
-$('#btnReset').click(function() {
+$('#settings-cleardata').on('click', function() {
 	window.localStorage.clear();
 	window.location.href = window.location.origin;
 	return false;
 });
 
 // developer tools
-$('#devTools').accordion({
+$('#settings-devtools').accordion({
 	heightStyle: 'content',
 	animate: 150,
 	collapsible: true,
-	active: $('#inputDebug').is(':checked') ? 0 : false,
-	activate: function(e, ui) { if (ui.oldPanel[0]) $('#inputOverpass, #inputAttic').val(''); }
+	active: $('#settings-debug').is(':checked') ? 0 : false,
+	activate: function(e, ui) { if (ui.oldPanel[0]) $('#settings-overpass-query, #settings-overpass-attic').val(''); }
 });
-$('#btnExportQuery').click(function() {
+$('#settings-overpass-export').on('click', function() {
 	// https://wiki.openstreetmap.org/wiki/Overpass_turbo/Development
 	window.open('https://overpass-turbo.eu/?Q=' + encodeURIComponent(queryBbox.replace('[out:json];', '') + '(._;>;);out meta qt;') + '&C=' + mapCentre.join(';') + ';' + mapZoom + '&R', '_blank');
 });
-$('#btnDownloadBB').click(function() {
+$('#settings-overpass-download').on('click', function() {
 	// https://wiki.openstreetmap.org/wiki/Overpass_API/XAPI_Compatibility_Layer
-	window.location = 'https://' + $('#inputOpServer').val() + '/api/map?bbox=' + [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(',');
+	window.location = 'https://' + $('#settings-overpass-server').val() + '/api/map?bbox=' + [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(',');
 	$(this).prop('disabled', true);
-	setTimeout(function() { $('#btnDownloadBB').prop('disabled', false); }, 20000);
+	setTimeout(function() { $('#settings-overpass-download').prop('disabled', false); }, 20000);
 });
-$('#inputOpCache').change(function() {
+$('#settings-overpass-cache').on('change', function() {
 	if ($(this).val() > 720) $(this).val(720);
 	else if ($(this).val() < 0) $(this).val(0);
 	else if ($(this).val() === '') $(this).val(120);
 	if (window.localStorage) window.localStorage.OPLCacheDur = $(this).val();
 	eleCache = [];
 });
-$('#inputOverpass').keydown(function(e) {
+$('#settings-overpass-query').on('keydown', function(e) {
 	if (e.keyCode == $.ui.keyCode.ENTER && $(this).val()) customQuery($(this).val(), true);
 });
 function customQuery(q, fromInput) {
 	spinner++;
 	if (fromInput) clear_map('all');
-	if (q.charAt(0) === '[' && q.charAt(q.length-1) === ']') show_overpass_layer('(nw' + ($('#inputOverpassR input').is(':checked') ? 'r' : '') + q + ';);', '', {
+	if (q.charAt(0) === '[' && q.charAt(q.length-1) === ']') show_overpass_layer('(nw' + ($('#settings-overpass-relation').is(':checked') ? 'r' : '') + q + ';);', '', {
 		custom: true,
 		bound: true,
 		forceBbox: false
@@ -1874,84 +1873,84 @@ function customQuery(q, fromInput) {
 	else setMsgStatus('fa-solid fa-circle-info', 'Incorrect Query', 'Enclose queries with [ ] for tags,<br>and ( ) for element ids.', 4);
 	if (spinner > 0 && fromInput) spinner--;
 }
-$('#inputRevServer').change(function() { if (window.localStorage) window.localStorage.RevServer = $(this).prop('selectedIndex'); });
-$('#inputOpServer').change(function() { if (window.localStorage) window.localStorage.OPServer = $(this).prop('selectedIndex'); });
-$('#inputDebug').change(function(e, init) {
+$('#settings-reverse-server').on('change', function() { if (window.localStorage) window.localStorage.RevServer = $(this).prop('selectedIndex'); });
+$('#settings-overpass-server').on('change', function() { if (window.localStorage) window.localStorage.OPServer = $(this).prop('selectedIndex'); });
+$('#settings-debug').on('change', function(e, init) {
 	if ($(this).is(':checked')) {
-		console.debug('%cDEBUG MODE%c\nAPI requests output to console, map bounds unlocked.', 'color:' + $('html').css('--main-color') + ';font-weight:bold;');
+		console.debug('%cDEBUG MODE ON%c\nAPI requests output to console, map bounds unlocked.', 'color:' + $('html').css('--main-color') + ';font-weight:bold;');
 		setMsgStatus('fa-solid fa-bug', 'Debug Mode Enabled', 'Check web console for details.', 4);
-		$('#devTools').accordion({ collapsible: false });
+		$('#settings-devtools').accordion({ collapsible: false });
 		$('.sidebar-tabs ul li [href="#settings"] .sidebar-notif').show();
 		map.setMaxBounds();
 		map.options.minZoom = 1;
 	}
 	else {
-		$('#devTools').accordion({ collapsible: true });
+		$('#settings-devtools').accordion({ collapsible: true });
 		$('.sidebar-tabs ul li [href="#settings"] .sidebar-notif').hide();
 		map.setMaxBounds(LBounds.pad(1));
 		map.options.minZoom = mapMinZoom;
 		if (!init) console.debug('%cDEBUG MODE OFF%c', 'color:' + $('html').css('--main-color') + ';font-weight:bold;');
 	}
 });
-$('#inputDebug').trigger('change', [true]);
+$('#settings-debug').trigger('change', [true]);
 
 // clear layers
 function clear_map(layer) {
 	if (layer === 'markers' || layer === 'all') {
-		$('.poi-checkbox input:checked').prop('checked', false);
+		$('.pois-checkbox input:checked').prop('checked', false);
 		poi_changed();
-		$('.poi-checkbox').removeClass('poi-loading');
+		$('.pois-checkbox').removeClass('pois-loading');
 		queryBbox = undefined;
-		$('#btnExportQuery').prop('disabled', true);
+		$('#settings-overpass-export').prop('disabled', true);
 		rQuery = false;
 		imageOverlay.clearLayers();
-		fcnStLvl.state('offStLvl');
+		fcnStLvl.state('control-mapillary-off');
 		$('.sidebar-tabs ul li [href="#tour"] .sidebar-notif').hide();
 		actImgLayer = undefined;
 		$('#thennow img').off('mouseenter mouseleave');
-		$('#inputWw2').remove();
+		$('#control-ww2').remove();
 		$('div[role="tooltip"]').remove();
 		if (actOverlayLayer && tileOverlayLayer[actOverlayLayer].hide) map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);
 		setPageTitle();
 	}
-	if (layer === 'all' && $('#poi-filter-in').val().length) $('#poi-filter-in').val('').trigger('input');
+	if (layer === 'all' && $('#pois-filter-in').val().length) $('#pois-filter-in').val('').trigger('input');
 	if (layer === 'walk' || layer === 'all') routingControl.setWaypoints([]);
 	spinner = 0;
 	$('.spinner').hide();
-	$('#msgStatus').hide();
+	$('#modal').hide();
 	permalinkSet();
 }
 
 // fly to bounds of layer
 function zoom_area(closeTab, layer) {
 	let offset = 0, layers = layer || areaOutline.getBounds().extend(iconLayer.getBounds()).extend(imageOverlay.getBounds());
-	if ($(window).width() < 768 && closeTab) $('.sidebar-close:visible').click();
+	if ($(window).width() < 768 && closeTab) $('.sidebar-close:visible').trigger('click');
 	else if ($(window).width() >= 1024 && !$('.sidebar.collapsed').length) offset = Math.round(sidebar.width());
 	map.closePopup();
 	map.flyToBounds(layers, { paddingTopLeft: [offset, 0] } );
 }
 
 function poi_changed(newcheckbox) {
-	const poiChk = $('.poi-checkbox input:checked');
+	const poiChk = $('.pois-checkbox input:checked');
 	rQuery = false;
 	// limit number of active checkboxes
 	if (poiChk.length <= maxPOICheckbox) {
 		// remove old poi markers and results
-		$('#poi-results').css('pointer-events', '');
-		$('#poi-results button').prop('disabled', true);
+		$('#pois-results').css('pointer-events', '');
+		$('#pois-results button').prop('disabled', true);
 		map.closePopup();
 		iconLayer.clearLayers();
 		clickOutline.clearLayers();
 		areaOutline.clearLayers();
 		imageOverlay.clearLayers();
-		fcnStLvl.state('offStLvl');
+		fcnStLvl.state('control-mapillary-off');
 		actImgLayer = undefined;
 		setPageTitle();
 		poiList = [];
 		if (poiChk.is(':checked')) {
-			$('#poi-results h3').html('Results loading...');
-			$('#poi-results-list').css('opacity', 0.5);
-			$('#poi-results').css('min-height', '');
+			$('#pois-results h3').html('Results loading...');
+			$('#pois-results-list').css('opacity', 0.5);
+			$('#pois-results').css('min-height', '');
 			//build overpass query
 			let query = '', selectedPois = '', poiLabels = '';
 			poiChk.each(function(i, element) {
@@ -1967,9 +1966,9 @@ function poi_changed(newcheckbox) {
 		}
 		else {
 			markerId = undefined;
-			$('#poi-results h3').html('Results cleared.');
-			$('#poi-results-list').fadeOut(250, function() { $(this).empty(); });
-			$('#poi-results').css('min-height', 'unset').slideUp(400, function() { $(this).css('height', ''); });
+			$('#pois-results h3').html('Results cleared.');
+			$('#pois-results-list').fadeOut(250, function() { $(this).empty(); });
+			$('#pois-results').css('min-height', 'unset').slideUp(400, function() { $(this).css('height', ''); });
 			$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').hide();
 			permalinkSet();
 		}
@@ -1979,25 +1978,30 @@ function poi_changed(newcheckbox) {
 		poiChk.parent().fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
 		$('#' + newcheckbox).prop('checked', false);
 	}
-	$('.poi-checkbox input').trigger('change');
+	$('.pois-checkbox input').trigger('change');
 }
-$('.poi-checkbox input').click(function() {
+$('.pois-checkbox input').on('click', function() {
 	poi_changed($(this).attr('id'));
 });
 // checkbox highlight
-$('.poi-checkbox input').change(function() {
+$('.pois-checkbox input').on('change', function() {
 	const that = this;
 	// timeout fix for chrome not redrawing poi list
 	setTimeout(function() {
-		if ($(that).prop('checked')) $(that).parent().addClass('poi-checkbox-selected');
-		else $(that).parent().removeClass('poi-checkbox-selected');
+		if ($(that).prop('checked')) $(that).parent().addClass('pois-checkbox-selected');
+		else $(that).parent().removeClass('pois-checkbox-selected');
 	}, 500);
 });
+function poi_list_reverse(sortBy) {
+	sortBy = ($('#pois-results-sort.fa-arrow-down-' + sortBy).length ? sortBy : sortBy.split('').reverse().join(''));
+	$('#pois-results-sort').removeClass('fa-arrow-down-' + sortBy).addClass('fa-arrow-down-' + sortBy.split('').reverse().join(''));
+	$('#pois-results-list tbody').append($.makeArray($('tr', $('#pois-results-list tbody')).detach()).reverse());
+}
 // jump to next result item
 function poi_next() {
 	$('#btnPoiResultsNext').prop('disabled', true);
-	if (!$('.poi-result-selected').length || $('#poi-results-list tr').last().hasClass('poi-result-selected')) $('#poi-results-list tr').eq(0).click();
-	else $('#poi-results-list tr').eq($('#poi-results-list tr.poi-result-selected').index('tr')+1).click();
+	if (!$('.pois-result-selected').length || $('#pois-results-list tr').last().hasClass('pois-result-selected')) $('#pois-results-list tr').eq(0).trigger('click');
+	else $('#pois-results-list tr').eq($('#pois-results-list tr.pois-result-selected').index('tr')+1).trigger('click');
 	setTimeout(function() { $('#btnPoiResultsNext').prop('disabled', false); }, 1000);
 }
 
@@ -2008,14 +2012,14 @@ function setPageTitle(subTitle) {
 
 // set status message modal
 function setMsgStatus(headerIco, headerTxt, msgBody, closeTime) {
-	$('#msgStatus').stop(true).html(
-		'<div id="msgStatusHead">' +
+	$('#modal').stop(true).html(
+		'<div id="modal-head">' +
 			'<i class="' + headerIco + ' fa-lg fa-fw"></i> ' + headerTxt +
-			'<div class="leaflet-popup-close-button" onclick="clickOutline.clearLayers();$(\'#msgStatus\').stop(true).hide();"><i class="fa-solid fa-xmark fa-sm"></i></div>' +
+			'<div class="leaflet-popup-close-button" onclick="clickOutline.clearLayers();$(\'#modal\').stop(true).hide();"><i class="fa-solid fa-xmark fa-sm"></i></div>' +
 		'</div>' +
-		'<div id="msgStatusBody">' + msgBody + '</div>'
+		'<div id="modal-body">' + msgBody + '</div>'
 	).fadeIn(200);
-	if (closeTime > 0) $('#msgStatus').delay(closeTime*1000).fadeOut(3000);
+	if (closeTime > 0) $('#modal').delay(closeTime*1000).fadeOut(3000);
 }
 
 // show tips
@@ -2039,9 +2043,9 @@ function getTips(tip) {
 		'We have a number of historical map overlays, select them using the top-right layer control <i class="fa-solid fa-layer-group fa-sm"></i> .',
 		'Results in Places are coloured to show currently open (green) or closed (red).',
 		'Zoom into the map and click a postbox <i class="fa-solid fa-envelope fa-sm"></i> to see the next post collection.',
-		'You can find booking information on accommodation under <a onclick="switchTab(\'pois\', \'#gotoLeisure-Tourism\');">Leisure-Tourism</a>.',
-		'Get the latest food hygiene ratings on businesses under <a onclick="switchTab(\'pois\', \'#gotoAmenities\');">Amenities</a>.',
-		'Find your closest <i class="fa-solid fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'#gotoAmenities\');">Amenities</a>.',
+		'You can find booking information on accommodation under <a onclick="switchTab(\'pois\', \'#pois-leisure-tourism\');">Leisure-Tourism</a>.',
+		'Get the latest food hygiene ratings on businesses under <a onclick="switchTab(\'pois\', \'#pois-amenities\');">Amenities</a>.',
+		'Find your closest <i class="fa-solid fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'#pois-amenities\');">Amenities</a>.',
 		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', \'ww2\', \'\', \'bombmap\');">History <i class="fa-solid fa-book fa-sm"></i></a>.',
 		'Some places have a photosphere view, click <i class="fa-solid fa-street-view fa-fw"></i> in a popup to view it.',
 		'View superimposed and colourised images of Bexhill past and present under <a onclick="switchTab(\'thennow\');">Then and Now <i class="fa-regular fa-image fa-sm"></i></a>.',
@@ -2052,10 +2056,10 @@ function getTips(tip) {
 		'Anyone can help with building the <i class="fa-regular fa-map fa-sm"></i>, visit <a href="https://osm.org" target="_blank" rel="noopener">OpenStreetMap.org</a> on how to get started.'
 	];
 	if (tip === 'random') nextTip = Math.floor(Math.random() * tips.length);
-	else if (parseInt($('#tipsText').data('tip')) === tips.length - 1) nextTip = 0;
-	else nextTip = parseInt($('#tipsText').data('tip')) + 1;
-	$('#tipsText').stop(true).fadeOut(150, function() { $(this).html(tips[nextTip]).data('tip', nextTip); }).fadeIn(150);
-	$('#tipsButton').attr('title', 'Next tip (' + (nextTip + 1) + ' of ' + tips.length + ')');
+	else if (parseInt($('#home-tips-text').data('tip')) === tips.length - 1) nextTip = 0;
+	else nextTip = parseInt($('#home-tips-text').data('tip')) + 1;
+	$('#home-tips-text').stop(true).fadeOut(150, function() { $(this).html(tips[nextTip]).data('tip', nextTip); }).fadeIn(150);
+	$('#home-tips-button').attr('title', 'Next tip (' + (nextTip + 1) + ' of ' + tips.length + ')');
 }
 
 function showWeather() {
@@ -2075,13 +2079,13 @@ function showWeather() {
 				wtooltip += '<hr>' + json[nextTide].EventType + ': ' + L.Util.formatNum(json[nextTide].Height, 2) + 'm<br>' +
 					json[nextTide+1].EventType + ': ' + L.Util.formatNum(json[nextTide+1].Height, 2) + 'm';
 				tideData =
-					'<span class="wtide1"><i class="fa-solid fa-water fa-2x"></i></span><span class="wtide2">' +
+					'<span class="home-weather-tide"><i class="fa-solid fa-water fa-2x"></i></span><span class="home-weather-tide">' +
 					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide].EventType] + '"></i> ' + new Date(json[nextTide].DateTime + 'Z').toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<br>' +
 					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide+1].EventType] + '"></i> ' + new Date(json[nextTide+1].DateTime + 'Z').toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '</span>';
 			}
 			else this.error();
 		},
-		error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR TIDES:', encodeURI(this.url)); }
+		error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR TIDES:', encodeURI(this.url)); }
 	});
 	// get weather
 	$.ajax({
@@ -2101,14 +2105,14 @@ function showWeather() {
 					'South', 'South-southwest', 'Southwest', 'West-southwest',
 					'West',  'West-northwest', 'Northwest', 'North-northwest'
 				], getWinddir = json.wind.deg ? windDir[(Math.floor((json.wind.deg / 22.5) + 0.5)) % 16] : 'Calm';
-				$('#weather').html(
-					'<span class="wtemp"><i class="fa-solid fa-' + tempIcon[json.weather[0].icon] + ' fa-2x"></i></span>' +
-					'<span class="wtemp">' +
+				$('#home-weather').html(
+					'<span class="home-weather-temp"><i class="fa-solid fa-' + tempIcon[json.weather[0].icon] + ' fa-2x"></i></span>' +
+					'<span class="home-weather-temp">' +
 						json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1) + '<br>' +
 						json.main.temp.toFixed(1) + '&deg;C' +
 					'</span>' +
-					'<span class="wwind"><i class="fa-solid fa-wind fa-2x"' + (json.wind.deg ? ' style="transform:rotate(' + (json.wind.deg + 90) + 'deg);"' : '') + '></i></span>' +
-					'<span class="wwind">' +
+					'<span class="home-weather-wind"><i class="fa-solid fa-wind fa-2x"' + (json.wind.deg ? ' style="transform:rotate(' + (json.wind.deg + 90) + 'deg);"' : '') + '></i></span>' +
+					'<span class="home-weather-wind">' +
 						getWinddir + '<br>' +
 						'<span>' + (json.wind.speed * 2.236936).toFixed(1) + 'mph</span>' +
 					'</span>' +
@@ -2120,8 +2124,8 @@ function showWeather() {
 						'Gust: ' + (json.wind.gust * 2.236936).toFixed(1) + 'mph<br>' +
 						'Cloud: ' + json.clouds.all + '%<br>' +
 						'Humidity: ' + json.main.humidity + '%' + wtooltip;
-				$('#weather').attr('title', '').tooltip({
-					classes: { 'ui-tooltip': 'wtooltip' },
+				$('#home-weather').attr('title', '').tooltip({
+					classes: { 'ui-tooltip': 'weather-wtooltip' },
 					position: tooltipDef.position,
 					content: wtooltip,
 					disabled: noTouch ? false : true,
@@ -2131,12 +2135,12 @@ function showWeather() {
 				});
 			}
 			else this.error();
-			if ($('#inputDebug').is(':checked')) console.debug('Openweather:', json);
+			if ($('#settings-debug').is(':checked')) console.debug('Openweather:', json);
 		},
 		error: function() {
-			if ($('#inputDebug').is(':checked')) console.debug('ERROR OPENWEATHER:', encodeURI(this.url));
-			$('#weather').hide();
-			$('#minimap').css('padding-top', '2px');
+			if ($('#settings-debug').is(':checked')) console.debug('ERROR OPENWEATHER:', encodeURI(this.url));
+			$('#home-weather').hide();
+			$('#home-minimap').css('padding-top', '2px');
 		}
 	});
 }
@@ -2181,62 +2185,63 @@ function showEditFeed() {
 					' - <a href="https://www.openstreetmap.org/user/' + encodeURI(itm.properties.user) + '" title="User">' + itm.properties.user + '</a>' +
 					'<span class="comment">' + itm.properties.comment + '</span></li>';
 				});
-				$('#osmFeed')
+				$('#home-osm-feed')
 					.html('Recent map edits:<ul class="fa-ul">' + s + '</ul>')
 					.slideDown();
-				$('#osmFeed a')
+				$('#home-osm-feed a')
 					.attr({
 						'onClick': 'return window.confirm("This link will open an external website to review.");',
 						'target': '_blank',
 						'rel': 'noopener'
 					});
-				if ($('#inputDebug').is(':checked')) console.debug('OSM feed:', data);
+				if ($('#settings-debug').is(':checked')) console.debug('OSM feed:', data);
 			}
 			else this.error();
 		},
-		error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-FEED:', encodeURI(this.url)); }
+		error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR OSM-FEED:', encodeURI(this.url)); }
 	});
 }
 
-// M = basemap, O = overlay, OP = overlay opacity, S = settings, T = tab, U = tour frame, G = image layer, P = grouped pois, I = single poi, W = walkpoints
-// TN = thennow slideshow, QG = geocode query, QO = overpass query, QL = location query
+// m = basemap, o = overlay, op = overlay opacity, s = settings, t = tab, u = tour frame, g = image layer, p = grouped pois, i = single poi, w = walkpoints
+// tn = thennow slideshow, qg = geocode query, qo = overpass query, ql = location query
 function permalinkSet() {
 	// get clean url without parameters and hash
 	const uri = new URL(window.location.href.split('?')[0].split('#')[0]);
 	let selectedPois = '', walkCoords = '', setChk, overlayOpacity, c;
 	const walkWayp = routingControl ? routingControl.getWaypoints() : undefined;
-	if (actTab !== defTab) uri.searchParams.set('T', actTab);
-	if (actBaseTileLayer !== defBaseTileLayer) uri.searchParams.set('M', actBaseTileLayer);
-	if (actImgLayer && actTab !== 'thennow') uri.searchParams.set('G', actImgLayer);
+	if (actTab !== defTab) uri.searchParams.set('t', actTab);
+	if (actBaseTileLayer !== defBaseTileLayer) uri.searchParams.set('m', actBaseTileLayer);
+	if (actImgLayer && actTab !== 'thennow') uri.searchParams.set('g', actImgLayer);
 	if (actOverlayLayer) {
-		uri.searchParams.set('O', actOverlayLayer);
+		uri.searchParams.set('q', actOverlayLayer);
 		overlayOpacity = Math.floor(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].options.opacity * 100);
 		if (overlayOpacity === tileOverlayLayer[actOverlayLayer].opacity * 100) overlayOpacity = undefined;
-		if (overlayOpacity) uri.searchParams.set('OP', overlayOpacity);
+		if (overlayOpacity) uri.searchParams.set('op', overlayOpacity);
 	}
 	if (walkWayp) {
 		for (c = 0; c < walkWayp.length; c++) if (walkWayp[c].latLng) walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_';
-		if (walkCoords) uri.searchParams.set('W', walkCoords.slice(0, -1));
+		if (walkCoords) uri.searchParams.set('w', walkCoords.slice(0, -1));
 	}
-	if (actTab === 'tour' && $('#tourList option').eq(0).val() !== $('#tourList option:selected').eq(0).val()) uri.searchParams.set('U', $('#tourList option:selected').val());
-	if ($('[data-thennow]').length) uri.searchParams.set('TN', $('[data-thennow]').attr('data-thennow'));
-	$('.poi-checkbox input:checked').each(function(i, element) { selectedPois += element.id + '-'; });
-	if (selectedPois && !$('#inputAttic').val()) uri.searchParams.set('P', selectedPois.slice(0, -1));
-	else if (queryCustom && queryBbox && $('#inputOverpass').val() && ($('#inputBbox').val() !== 'screen') && !$('#inputAttic').val()) uri.searchParams.set('QO', ($('#inputOverpassR input').is(':checked') ? 'r' : '') + $('#inputOverpass').val());
+	if (actTab === 'tour' && $('#tour-controls-list option').eq(0).val() !== $('#tour-controls-list option:selected').eq(0).val()) uri.searchParams.set('u', $('#tour-controls-list option:selected').val());
+	if ($('[data-thennow]').length) uri.searchParams.set('tn', $('[data-thennow]').attr('data-thennow'));
+	$('.pois-checkbox input:checked').each(function(i, element) { selectedPois += element.id + '-'; });
+	if (selectedPois && !$('#settings-overpass-attic').val()) uri.searchParams.set('p', selectedPois.slice(0, -1));
+	else if (queryCustom && queryBbox && $('#settings-overpass-query').val() && ($('#settings-bbox').val() !== 'screen') && !$('#settings-overpass-attic').val()) uri.searchParams.set('qo', ($('#settings-overpass-relation').is(':checked') ? 'r' : '') + $('#settings-overpass-query').val());
 	if ($('#settings input[data-uri]:checkbox:checked').length) {
 		setChk = '';
 		for (c = 0; c < $('#settings input[data-uri]:checkbox').length; c++) setChk += $('#settings input[data-uri]:checkbox').eq(c).is(':checked') ? '1' : '0';
-		uri.searchParams.set('S', setChk);
+		uri.searchParams.set('s', setChk);
 	}
 	if (noIframe && localStorageAvail()) {
 		window.localStorage.setChk = '';
 		for (c = 0; c < $('#settings input[data-cache]:checkbox').length; c++) window.localStorage.setChk += $('#settings input[data-cache]:checkbox').eq(c).is(':checked') ? '1' : '0';
 	}
-	if (markerId && !(rQuery && actImgLayer) && !$('#inputAttic').val()) uri.searchParams.set('I', markerId);
+	if (markerId && !(rQuery && actImgLayer) && !$('#settings-overpass-attic').val()) uri.searchParams.set('i', markerId);
 	window.history.replaceState(null, null, uri + window.location.hash);
 }
 function permalinkReturn() {
-	let uri = new URL(window.location.href).searchParams, junkQ = window.location.href.split('?');
+	let uri = new URLSearchParams(Array.from(new URL(window.location.href).searchParams, ([key, value]) => [key.toLowerCase(), value]));
+	let junkQ = window.location.href.split('?');
 	let c;
 	// split fix for facebook and other junk trackers adding ?fbclid etc and busting queries
 	if (junkQ.length > 2) {
@@ -2246,60 +2251,60 @@ function permalinkReturn() {
 	// check localstorage for settings
 	if (noIframe && localStorageAvail()) {
 		// set theme
-		if (parseInt(window.localStorage.theme) >= 0 && parseInt(window.localStorage.theme) < $('#inputTheme option').length) $('#inputTheme').prop('selectedIndex', window.localStorage.theme);
+		if (parseInt(window.localStorage.theme) >= 0 && parseInt(window.localStorage.theme) < $('#settings-theme option').length) $('#settings-theme').prop('selectedIndex', window.localStorage.theme);
 		// set checkboxes
 		if (window.localStorage.setChk) for (c = 0; c < window.localStorage.setChk.length; c++)	$('#settings input[data-cache]:checkbox').eq(c).prop('checked', parseInt(window.localStorage.setChk.charAt(c)));
 		// set basemap if none specified
 		if (window.localStorage.baseLayer) actBaseTileLayer = window.localStorage.baseLayer;
 		// set cache duration
-		if (parseInt(window.localStorage.OPLCacheDur) >= 0 && parseInt(window.localStorage.OPLCacheDur) <= 240)	$('#inputOpCache').val(parseInt(window.localStorage.OPLCacheDur));
-		else $('#inputOpCache').val($('#inputOpCache').attr('value'));
+		if (parseInt(window.localStorage.OPLCacheDur) >= 0 && parseInt(window.localStorage.OPLCacheDur) <= 240)	$('#settings-overpass-cache').val(parseInt(window.localStorage.OPLCacheDur));
+		else $('#settings-overpass-cache').val($('#settings-overpass-cache').attr('value'));
 		// set servers
-		if (parseInt(window.localStorage.RevServer) >= 0 && parseInt(window.localStorage.RevServer) < $('#inputRevServer option').length) $('#inputRevServer').prop('selectedIndex', window.localStorage.RevServer);
-		if (parseInt(window.localStorage.OPServer) >= 0 && parseInt(window.localStorage.OPServer) < $('#inputOpServer option').length) $('#inputOpServer').prop('selectedIndex', window.localStorage.OPServer);
+		if (parseInt(window.localStorage.RevServer) >= 0 && parseInt(window.localStorage.RevServer) < $('#settings-reverse-server option').length) $('#settings-reverse-server').prop('selectedIndex', window.localStorage.RevServer);
+		if (parseInt(window.localStorage.OPServer) >= 0 && parseInt(window.localStorage.OPServer) < $('#settings-overpass-server option').length) $('#settings-overpass-server').prop('selectedIndex', window.localStorage.OPServer);
 	}
-	else if (!noIframe) $('#inputTheme').val('light');
-	$('#inputTheme, #inputUnit, #inputStView').trigger('change');
+	else if (!noIframe) $('#settings-theme').val('light');
+	$('#settings-theme, #settings-unit, #settings-mapillary').trigger('change');
 	if (!osmRelation) {
-		$('#inputBbox option[value="area_id"]').prop('disabled', true);
-		$('#inputBbox option[value="bbox"]').prop('selected', true);
+		$('#settings-bbox option[value="area_id"]').prop('disabled', true);
+		$('#settings-bbox option[value="bbox"]').prop('selected', true);
 	}
 	if (!noPermalink) {
-		if (uri.has('M') && tileBaseLayer[uri.get('M')]) actBaseTileLayer = uri.get('M');
-		if (uri.has('O') && tileOverlayLayer[uri.get('O')]) {
-			actOverlayLayer = uri.get('O');
+		if (uri.has('m') && tileBaseLayer[uri.get('m')]) actBaseTileLayer = uri.get('m');
+		if (uri.has('o') && tileOverlayLayer[uri.get('o')]) {
+			actOverlayLayer = uri.get('o');
 			tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].addTo(map);
-			if (uri.has('OP')) tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].setOpacity(uri.get('OP') / 100);
+			if (uri.has('op')) tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name].setOpacity(uri.get('op') / 100);
 		}
-		if (uri.has('S')) {
-			const setChk = uri.get('S');
+		if (uri.has('s')) {
+			const setChk = uri.get('s');
 			for (c = 0; c < setChk.length; c++) $('#settings input[data-uri]:checkbox').eq(c).prop('checked', parseInt(setChk.charAt(c)));
-			if ($('#inputDebug').is(':checked')) $('#inputDebug').trigger('change');
+			if ($('#settings-debug').is(':checked')) $('#settings-debug').trigger('change');
 		}
-		if (uri.has('T')) actTab = uri.get('T');
-		if (uri.has('U')) {
-			const tourVal = uri.get('U');
-			if ($('#tourList option[value=' + tourVal + ']').length && !$('#tourList option[value=' + tourVal + ']')[0].disabled)
-				$('#tourList').val(tourVal).trigger('change');
+		if (uri.has('t')) actTab = uri.get('t');
+		if (uri.has('u')) {
+			const tourVal = uri.get('u');
+			if ($('#tour-controls-list option[value=' + tourVal + ']').length && !$('#tour-controls-list option[value=' + tourVal + ']')[0].disabled)
+				$('#tour-controls-list').val(tourVal).trigger('change');
 		}
-		if (uri.has('W')) {
-			let walkPoints = uri.get('W');
+		if (uri.has('w')) {
+			let walkPoints = uri.get('w');
 			walkPoints = walkPoints.split('_');
 			for (c = 0; c < walkPoints.length; c++) {
 				walkPoints[c] = walkPoints[c].replace('x', ', ');
 				routingControl.spliceWaypoints(c, 1, JSON.parse('[' + walkPoints[c] + ']'));
 			}
 		}
-		if (uri.has('G')) {
+		if (uri.has('g')) {
 			// if no latlng tell tour function to zoom to area
-			if (window.location.hash.indexOf('/') !== 3) tour(uri.get('G'), '', false);
-			else if (uri.get('G') === 'thennow') tour('thennow', uri.has('TN') ? uri.get('TN') : '', true);
-			else setTimeout(function() { tour(uri.get('G'), uri.has('I') ? uri.get('I') : '', true); }, 100);
+			if (window.location.hash.indexOf('/') !== 3) tour(uri.get('g'), '', false);
+			else if (uri.get('g') === 'thennow') tour('thennow', uri.has('tn') ? uri.get('tn') : '', true);
+			else setTimeout(function() { tour(uri.get('g'), uri.has('i') ? uri.get('i') : '', true); }, 100);
 		}
-		else if (uri.has('P')) {
-			let groupedPoi = uri.get('P');
+		else if (uri.has('p')) {
+			let groupedPoi = uri.get('p');
 			if (groupedPoi.indexOf('-') !== -1) groupedPoi = groupedPoi.split('-');
-			if (uri.has('I')) markerId = uri.get('I');
+			if (uri.has('i')) markerId = uri.get('i');
 			setTimeout(function() {
 				if (!Array.isArray(groupedPoi)) $('#' + groupedPoi).prop('checked', true);
 				// the last poi has a '/' on it because leaflet-hash
@@ -2308,37 +2313,37 @@ function permalinkReturn() {
 			}, 500);
 			spinner++;
 		}
-		else if (uri.has('QO')) {
-			let QO = decodeURIComponent(uri.get('QO'));
+		else if (uri.has('qo')) {
+			let QO = decodeURIComponent(uri.get('qo'));
 			if (QO.charAt(0) === 'r') {
-				QO = uri.get('QO').slice(1);
-				$('#inputOverpassR input').prop('checked', true);
+				QO = uri.get('qo').slice(1);
+				$('#settings-overpass-relation').prop('checked', true);
 			}
-			else $('#inputOverpassR').prop('checked', false);
-			$('#inputOverpass').val(QO);
+			else $('#settings-overpass-relation').prop('checked', false);
+			$('#settings-overpass-query').val(QO);
 			customQuery(QO);
-			if (uri.has('I')) markerId = uri.get('I');
-			$('#devTools').accordion({ active: 0 });
+			if (uri.has('i')) markerId = uri.get('i');
+			$('#settings-devtools').accordion({ active: 0 });
 		}
-		else if (uri.has('I')) {
-			const singlePoi = uri.get('I');
+		else if (uri.has('i')) {
+			const singlePoi = uri.get('i');
 			rQuery = true;
 			spinner++;
 			setTimeout(function() { show_overpass_layer(elementType(singlePoi) + '(' + singlePoi.slice(1) + ');', singlePoi.toUpperCase()); }, 500);
 		}
-		else if (uri.has('QG')) searchAddr(decodeURIComponent(uri.get('QG')));
-		if (uri.has('QL')) setTimeout(function() { lc.start(); }, 500);
+		else if (uri.has('qg')) searchAddr(decodeURIComponent(uri.get('qg')));
+		if (uri.has('ql')) setTimeout(function() { lc.start(); }, 500);
 	}
-	else if (uri.has('T')) actTab = uri.get('T');
+	else if (uri.has('t')) actTab = uri.get('t');
 	tileBaseLayers[tileBaseLayer[actBaseTileLayer].name].addTo(map);
 	if (window.location.hash.indexOf('/') !== 3) map.setView(mapCentre, mapZoom);
 	if ($('.sidebar-pane#' + actTab).length) {
 		sidebar.open(actTab);
-		if (actTab === 'thennow' && !uri.has('I')) tour('thennow', uri.has('TN') ? uri.get('TN') : '', true);
+		if (actTab === 'thennow' && !uri.has('i')) tour('thennow', uri.has('tn') ? uri.get('tn') : '', true);
 	}
 	else actTab = 'none';
 	// animate sidebar close button on smaller devices if layers underneath
-	if ($('.sidebar-pane#' + actTab).length && $(window).width() < 768 && (uri.has('O') || uri.has('G') || uri.has('P') || uri.has('I') || uri.has('W')))
+	if ($('.sidebar-pane#' + actTab).length && $(window).width() < 768 && (uri.has('o') || uri.has('g') || uri.has('p') || uri.has('i') || uri.has('w')))
 		$('.sidebar-close').addClass('fa-fade');
 }
 permalinkReturn();

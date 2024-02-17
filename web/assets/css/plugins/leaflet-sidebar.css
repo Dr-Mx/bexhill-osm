@@ -21,7 +21,10 @@
 		bottom: 10px;
 		resize: vertical;
 		min-height: 500px; } }
+
 @media (min-width: 768px) and (max-width: 1023px) {
+	body {
+		background-color: #eeeeee; }
 	.sidebar {
 		width: 350px; } }
 @media (min-width: 1024px) and (max-width: 1299px) {
@@ -33,17 +36,15 @@
 		width: 450px;
 		max-height: 950px; } }
 .sidebar.collapsed {
-	width: 35px; }
-.sidebar.collapsed .sidebar-pane.active .sidebar-body, .sidebar.collapsed #holidayImg {
-	opacity : 0; }
+	width: 35px;
+	resize: none; }
+.sidebar.collapsed .sidebar-body {
+	opacity: 0; }
 @media (min-width: 1024px) {
 	.sidebar.collapsed .sidebar-tabs {
 		background-color: transparent !important;
 		backdrop-filter: blur(7px);
-		transition: background-color 400ms ease-out; }
-	.sidebar.collapsed {
-		width: 35px;
-		resize: none; } }
+		transition: background-color 400ms ease-out; } }
 .sidebar-left {
 	left: 0; }
 @media (min-width: 1024px) {
@@ -53,7 +54,7 @@
 	top: 0;
 	bottom: 0;
 	height: 100%;
-	background-color: #ddd }
+	background-color: #e5e5e5 }
 .sidebar-left .sidebar-tabs {
 	left: 0; }
 .sidebar-tabs, .sidebar-tabs > ul {
@@ -100,12 +101,9 @@
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	background-color: rgba(235, 235, 235, 0.8);
+	background-color: rgba(240, 240, 240, 0.8);
 	overflow: hidden;
 	backdrop-filter: blur(7px); }
-@media (min-width: 768px) and (max-width: 1023px) {
-	.sidebar-content {
-		background-color: #ececec; } }
 .sidebar-left .sidebar-content {
 	left: 35px;
 	right: 0; }
@@ -131,18 +129,19 @@
 	white-space: nowrap;
 	margin: 0;
 	font: normal 16pt BerlinSans, "Helvetica Neue", Arial, Helvetica, sans-serif;
-	color: #fff;
 	background-color: var(--main-color);
 	line-height: 45px; }
 .sidebar-header-text {
-	width: 100%;
+	color: #fff;
 	padding: 0 15px; }
 #home .sidebar-header-text {
-	cursor: pointer; }
+	color: #fff;
+	text-decoration: none; }
 .sidebar-close::before {
 	content: '\f0d9';
 	font: var(--fa-font-solid); }
 .sidebar-close {
+	color: #fff;
 	position: absolute;
 	right: 0;
 	min-width: 8px;
@@ -161,7 +160,8 @@
 	width: 94%;
 	padding: 0 3%; 
 	min-width: 250px;
-	transition: opacity 300ms linear; }
+	opacity: 1;
+	transition: opacity 200ms linear; }
 .sidebar-left ~ .sidebar-map {
 	margin-left: 35px; }
 @media (min-width: 768px) and (max-width: 1023px) {

@@ -215,7 +215,7 @@ var tourRefs = {
 		},
 		2: {
 			name: 'Cinema Treasures',
-			url: 'http://cinematreasures.org/theaters/38377',
+			url: 'https://cinematreasures.org/theaters/38377',
 			media: 'Website'
 		},
 		3: {
@@ -307,7 +307,7 @@ if (document.body.id === 'reference') {
 	Object.entries(tourRefs).forEach(tour => {
 		const [tourKey, tourVal] = tour;
 		if (tourVal.title) list += '<a onclick="window.parent.switchTab(\'tour\', \'' + tourKey + '\');"><i class="fa-solid fa-chevron-left fa-fw"></i><b>' + tourVal.title + '</b></a>';
-		list += '<ol id="' + tourKey + '">';
+		list += '<ol id="reference-' + tourKey + '">';
 		Object.entries(tourVal).forEach(refs => {
 			const [refKey, refVal] = refs;
 			if (refVal.url) list += '<li><a href="' + refVal.url + '" title="' + refVal.media + '" target="_blank" rel="noopener">' + refVal.name + '</a></li>';
@@ -315,5 +315,5 @@ if (document.body.id === 'reference') {
 		});
 		list += '</ol>';
 	});
-	document.getElementById('refList').innerHTML = list;
+	document.getElementById('reference-list').innerHTML = list;
 }

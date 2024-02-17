@@ -6,6 +6,6 @@ else document.addEventListener('DOMContentLoaded', function() {
 	document.body.addEventListener('scroll', function() {
 		const scrollPos = Math.abs(this.scrollHeight - this.clientHeight - this.scrollTop);
 		const scrollOpacity = scrollPos < 300 ? Math.round(scrollPos / 60) / 10 : 0.5;
-		this.style['background-image'] = 'linear-gradient(rgba(0, 0, 0, 0), rgba(var(--scroll-shadow), ' + scrollOpacity + '))';
+		this.style['background-image'] = 'linear-gradient(transparent, rgba(var(--scroll-shadow), ' + scrollOpacity + '))';
 	});
 });

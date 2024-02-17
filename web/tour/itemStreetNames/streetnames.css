@@ -19,7 +19,7 @@ html.darkMode body {
 html.darkMode button svg path {
 	fill: #000000;
 }
-html.darkMode #street-filter-in {
+html.darkMode #street-filter-input {
 	background-color: #000000;
 	color: #777777;
 }
@@ -45,7 +45,7 @@ a:hover {
 	aspect-ratio: 4/1;
 	object-fit: cover;
 }
-h1, .divider, #endresults {
+h1, .divider, #street-results-end {
 	font-family: Garamond, serif;
 }
 h1 {
@@ -67,7 +67,7 @@ button svg path {
 #links, .divider {
 	scroll-margin-top: 10px;
 }
-#btnTheme, #anchor {
+#button-theme, #button-anchor {
 	display: block;
 	opacity: 0.6;
 	transition: opacity 100ms linear;
@@ -77,14 +77,14 @@ button svg path {
 	cursor: pointer;
 	z-index: 1;
 }
-#anchor:hover, #btnTheme:hover {
+#button-anchor:hover, #button-theme:hover {
 	opacity: 1;
 	text-decoration: none;
 }
-#btnTheme {
+#button-theme {
 	position: absolute;
 }
-#anchor {
+#button-anchor {
 	display: none;
 	position: sticky;
 	position: -webkit-sticky;
@@ -116,16 +116,16 @@ button svg path {
 	opacity: 75%;
 	user-select: none;
 }
-#endresults {
+#street-results-end {
 	font-size: 150%;
 	text-align: center;
 	color: var(--main-color);
 	font-weight: bold;
 	opacity: 75%;
 }
-#endresults::before, #endresults::after {
-	content: '\2022';
-	margin: 0 2%;
+#street-results-end::before, #street-results-end::after {
+	content: '\26AC';
+	padding: 0 2%;
 }
 #street-index {
 	display: flex;
@@ -149,7 +149,7 @@ button svg path {
 	width: 100%;
 	margin: 0 auto;
 }
-#street-filter-in {
+#street-filter-input {
 	background-color: #ffffff;
 	border: 1px solid var(--main-color);
 	border-radius: 5px;
@@ -158,13 +158,13 @@ button svg path {
 	width: 100%;
 	box-sizing: border-box;
 }
-#street-filter-cl {
+#street-filter-close {
 	background-color: transparent;
 	display: inline-block;
 	vertical-align: middle;
 	cursor: pointer;
 }
-#street-filter-cl::after {
+#street-filter-close::after {
 	position: absolute;
 	width: 20px;
 	height: 0;
@@ -177,7 +177,7 @@ button svg path {
 	color: var(--main-color);
 	padding-bottom: 20px;
 }
-#street-results {
+#street-filter-text {
 	color: #555555;
 	text-align: right;
 	margin: 10px 0 20px 0;
@@ -191,7 +191,15 @@ button svg path {
 .street:first-child {
 	padding: 0;
 }
-.old {
+.bygone {
+	opacity: 0.5;
+}
+#rsrchdesc span {
+	display: inline-block;
+}
+#rsrchdesc span:not(:last-child)::after {
+	content: "\26AC";
+	padding: 0 5px;
 	opacity: 0.5;
 }
 @media (min-width: 900px) {
@@ -215,7 +223,7 @@ button svg path {
 		margin: -5%;
 		border-radius: 10px 10px 0 0;
 	}
-	#btnTheme, #anchor {
+	#button-theme, #button-anchor {
 		width: 40px;
 		height: 40px;
 		padding: 5px 2px 2px 2px;
@@ -234,12 +242,12 @@ button svg path {
 		width: 111%;
 		height: 175px;
 	}
-	#btnTheme, #anchor {
+	#button-theme, #button-anchor {
 		width: 30px;
 		height: 30px;
 		padding: 2px;
 	}		
-	#btnTheme {
+	#button-theme {
 		top: 150px;
 		left: 10px;
 	}
@@ -247,7 +255,7 @@ button svg path {
 		width: 26px;
 		height: 26px;
 	}
-	#anchor {
+	#button-anchor {
 		margin-left: calc(105.5% - 30px);
 		border-right: none;
 		border-radius: 100% 0px 0px 100%;
@@ -257,7 +265,7 @@ button svg path {
 	}
 }
 @media (max-width: 500px) {
-	#btnTheme {
+	#button-theme {
 		top: 125px;
 	}
 	h1 {

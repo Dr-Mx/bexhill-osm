@@ -20,7 +20,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags['addr:suburb']) addrVal += ', <span title="Suburb">' + tags['addr:suburb'] + '</span>';
 			else if (tags['addr:hamlet']) addrVal += ', <span title="Hamlet">' + tags['addr:hamlet'] + '</span>';
 			if (tags['addr:city'] && tags['addr:city'] !== 'Bexhill-on-Sea') addrVal += ', <span title="City">' + tags['addr:city'] + '</span>';
-			if (tags['addr:postcode']) addrVal += ', <span class="nowrap" title="Postcode">' + tags['addr:postcode'] + '</span>';
+			if (tags['addr:postcode']) addrVal += ', <span class="theme-nowrap" title="Postcode">' + tags['addr:postcode'] + '</span>';
 			markerPopup += L.Util.template(tagTmpl, { key: 'Address', keyVal: addrVal, iconName: 'fa-solid fa-location-pin' });
 		}
 		return markerPopup;
@@ -41,7 +41,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (websiteTag) {
 			websiteVal = (websiteTag.indexOf('://www.') > 0) ? websiteTag.split('://www.')[1] : ((websiteTag.indexOf('://') > 0) ? websiteTag.split('://')[1] : websiteTag);
 			websiteVal = websiteVal.endsWith('/') ? websiteVal.slice(0, -1) : websiteVal;
-			websiteVal = '<a class="popup-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px;" href="' + encodeURI(websiteTag) + '" title="' + websiteTag + '" target="_blank" rel="noopener nofollow">' + websiteVal + '</a>';
+			websiteVal = '<a class="popup-tag-value-truncate" style="max-width:' + ($(window).width() >= 512 ? imgSize - 70 : imgSize - 100) + 'px;" href="' + encodeURI(websiteTag) + '" title="' + websiteTag + '" target="_blank" rel="noopener nofollow">' + websiteVal + '</a>';
 			markerPopup += L.Util.template(tagTmpl, { key: 'Website', keyVal: websiteVal, iconName: 'fa-solid fa-globe' });
 		}
 		return markerPopup;
@@ -78,8 +78,8 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['wreck:date_sunk']) siteVal += '<span title="Date sunk">Sunk: ' + dateFormat(tags['wreck:date_sunk'], 'short') + '</span>; ';
 		if (tags['ref:planningapp']) planningVal = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + encodeURI(tags['ref:planningapp']) + '" target="_blank" rel="noopener">' + tags['ref:planningapp'] + '</a>';
 		else if (tags['ref:historicplanningapp']) planningVal = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/historyDetails?reference=' + encodeURI(tags['ref:historicplanningapp']) + '" target="_blank" rel="noopener">' + tags['ref:historicplanningapp'] + '</a>';
-		if (planningVal) siteVal += '<span class="nowrap" title="Planning application">' + planningVal + '</span>; ';
-		if (tags.HE_ref) siteVal += '<a class="nowrap" href="https://historicengland.org.uk/listing/the-list/list-entry/' + encodeURI(tags.HE_ref) + '?section=official-list-entry" title="Historic England Listing" target="_blank" rel="noopener">Listed ' + (tags.listed_status || tags.HE_ref) + '</a>; ';
+		if (planningVal) siteVal += '<span class="theme-nowrap" title="Planning application">' + planningVal + '</span>; ';
+		if (tags.HE_ref) siteVal += '<a class="theme-nowrap" href="https://historicengland.org.uk/listing/the-list/list-entry/' + encodeURI(tags.HE_ref) + '?section=official-list-entry" title="Historic England Listing" target="_blank" rel="noopener">Listed ' + (tags.listed_status || tags.HE_ref) + '</a>; ';
 		if (tags.disused) siteVal += '<span title="Disused">Currently disused</span>; ';
 		if (tags.building) {
 			if (tags.building === 'garage') siteType = ['Garage', 'warehouse'];
@@ -95,36 +95,36 @@ function parse_tags(element, titlePopup, poiParser) {
 	const facility_parser = function(tags) {
 		let facVal = '';
 		markerPopup = '';
-		if (tags.indoor === 'yes') facVal += '<i class="facYes fa-solid fa-door-closed fa-fw" title="place is indoors"></i>';
-		if (tags.wheelchair === 'yes') facVal += '<i class="facYes fa-solid fa-wheelchair fa-fw" title="wheelchair access"></i>';
-		else if (tags.wheelchair === 'limited') facVal += '<i class="facLtd fa-solid fa-wheelchair fa-fw" title="limited wheelchair access"></i>';
-		else if (tags.wheelchair === 'no') facVal += '<i class="facNo fa-solid fa-wheelchair fa-fw" title="no wheelchair access"></i>';
-		if (tags.elevator === 'yes') facVal += '<i class="facYes fa-solid fa-elevator fa-fw" title="lift access"></i>';
-		if (tags['hearing_impaired:induction_loop'] === 'yes') facVal += '<i class="facYes fa-solid fa-ear-deaf fa-fw" title="induction loop"></i>';
-		if (tags['tactile_writing:braille'] === 'yes') facVal += '<i class="facYes fa-solid fa-braille fa-fw" title="braille"></i>';
-		if (tags.dog === 'yes') facVal += '<i class="facYes fa-solid fa-dog fa-fw" title="dogs allowed"></i>';
-		else if (tags.dog === 'no') facVal += '<i class="facNo fa-solid fa-dog fa-fw" title="no dogs allowed"></i>';
-		else if (tags.dog === 'leashed') facVal += '<i class="facYes fa-solid fa-dog-leashed fa-fw" title="leashed dogs only"></i>';
-		if (tags.internet_access === 'wlan') facVal += '<i class="facYes fa-solid fa-wifi fa-fw" title="wireless internet"></i>';
-		else if (tags.internet_access === 'terminal') facVal += '<i class="facYes fa-solid fa-desktop fa-fw" title="internet terminal"></i>';
+		if (tags.indoor === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-door-closed fa-fw" title="place is indoors"></i>';
+		if (tags.wheelchair === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-wheelchair fa-fw" title="wheelchair access"></i>';
+		else if (tags.wheelchair === 'limited') facVal += '<i class="popup-tag-value-limited fa-solid fa-wheelchair fa-fw" title="limited wheelchair access"></i>';
+		else if (tags.wheelchair === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-wheelchair fa-fw" title="no wheelchair access"></i>';
+		if (tags.elevator === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-elevator fa-fw" title="lift access"></i>';
+		if (tags['hearing_impaired:induction_loop'] === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-ear-deaf fa-fw" title="induction loop"></i>';
+		if (tags['tactile_writing:braille'] === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-braille fa-fw" title="braille"></i>';
+		if (tags.dog === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-dog fa-fw" title="dogs allowed"></i>';
+		else if (tags.dog === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-dog fa-fw" title="no dogs allowed"></i>';
+		else if (tags.dog === 'leashed') facVal += '<i class="popup-tag-value-yes fa-solid fa-dog-leashed fa-fw" title="leashed dogs only"></i>';
+		if (tags.internet_access === 'wlan') facVal += '<i class="popup-tag-value-yes fa-solid fa-wifi fa-fw" title="wireless internet"></i>';
+		else if (tags.internet_access === 'terminal') facVal += '<i class="popup-tag-value-yes fa-solid fa-desktop fa-fw" title="internet terminal"></i>';
 		if (tags['drinking_water:refill'] === 'yes') facVal += '<i class="fa-solid fa-bottle-droplet fa-fw" style="color:#0082ff;" title="free drinking water refills"></i>';
-		if (tags.live_music === 'yes') facVal += '<i class="facYes fa-solid fa-music fa-fw" title="live music"></i>';
-		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') facVal += '<i class="facYes fa-solid fa-umbrella fa-fw" title="sheltered"></i>';
+		if (tags.live_music === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-music fa-fw" title="live music"></i>';
+		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') facVal += '<i class="popup-tag-value-yes fa-solid fa-umbrella fa-fw" title="sheltered"></i>';
 		if (tags.highway === 'bus_stop') {
-			if (tags.bench === 'yes') facVal += '<i class="facYes fa-solid fa-chair fa-fw" title="seating"></i>';
-			if (tags.bin === 'yes') facVal += '<i class="facYes fa-solid fa-trash-can fa-fw" title="rubbish bin"></i>';
+			if (tags.bench === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-chair fa-fw" title="seating"></i>';
+			if (tags.bin === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-trash-can fa-fw" title="rubbish bin"></i>';
 		}
 		if (tags.amenity === 'telephone') {
-			if (tags.internet_access === 'yes') facVal += '<i class="facYes fa-solid fa-at fa-fw" title="internet access"></i>';
-			if (tags.sms === 'yes') facVal += '<i class="facYes fa-solid fa-comment-sms fa-fw" title="sms"></i>';
+			if (tags.internet_access === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-at fa-fw" title="internet access"></i>';
+			if (tags.sms === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-comment-sms fa-fw" title="sms"></i>';
 		}
 		if (tags.amenity === 'toilets') {
-			if (tags.unisex === 'yes') facVal += '<i class="facYes fa-solid fa-restroom fa-fw" title="unisex"></i>';
-			if (tags.male === 'yes') facVal += '<i class="facYes fa-solid fa-person fa-fw" title="male"></i>';
-			if (tags.female === 'yes') facVal += '<i class="facYes fa-solid fa-person-dress fa-fw" title="female"></i>';
-			if (tags.changing_table === 'yes') facVal += '<i class="facYes fa-solid fa-baby fa-fw" title="baby changing"></i>';
+			if (tags.unisex === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-restroom fa-fw" title="unisex"></i>';
+			if (tags.male === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-person fa-fw" title="male"></i>';
+			if (tags.female === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-person-dress fa-fw" title="female"></i>';
+			if (tags.changing_table === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-baby fa-fw" title="baby changing"></i>';
 		}
-		if (facVal) facVal = '<span class="facGen">' + facVal + '</span>';
+		if (facVal) facVal = '<span class="popup-tag-value-facility">' + facVal + '</span>';
 		if (tags.amenity === 'recycling') {
 			let recycTag = '', recycList = '';
 			const recycIcon = {
@@ -175,7 +175,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				if (recycIcon[recyc]) recycTag += '<i class="' + recycIcon[recyc] + ' fa-fw" title="' + recyc + '"></i>';
 			}
 			if (recycList) markerPopup += L.Util.template(tagTmpl, { key: 'Recycling options', keyVal: listTidy(recycList, true), iconName: 'fa-solid fa-recycle' });
-			if (recycTag) facVal += '<span class="facRecyc"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + recycTag + '</span>';
+			if (recycTag) facVal += '<span class="popup-tag-value-recycling"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + recycTag + '</span>';
 		}
 		if (Object.keys(tags).some(function(k){ return ~k.indexOf('payment:'); })) {
 			let payTag = '', payList = '';
@@ -208,7 +208,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				if (payIcon[pay]) payTag += '<i class="' + payIcon[pay] + ' fa-fw" title="' + pay + '"></i>';
 			}
 			if (payList) markerPopup += L.Util.template(tagTmpl, { key: 'Payment options', keyVal: listTidy(payList, true), iconName: 'fa-solid fa-cash-register' });
-			if (payTag) facVal += '<span class="facPay"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + payTag + '</span>';
+			if (payTag) facVal += '<span class="popup-tag-value-payment"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + payTag + '</span>';
 		}
 		if (tags.fee) {
 			let feeTag = '';
@@ -233,7 +233,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				if (dietKey.startsWith('diet:') && tags[dietKey] === 'yes') diet = dietKey.split(':')[1];
 				if (dietIcon[diet]) dietTag += '<i class="' + dietIcon[diet] + ' fa-fw" title="' + diet + ' options"></i>';
 			}
-			if (dietTag) facVal += '<span class="facDiet"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + dietTag + '</span>';
+			if (dietTag) facVal += '<span class="popup-tag-value-diet"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + dietTag + '</span>';
 		}
 		if (facVal) markerPopup += L.Util.template(tagTmpl, { key: 'Facilities', keyVal: '<span class="popup-facilities">' + facVal + '</span>', iconName: 'fa-solid fa-circle-info' });
 		return markerPopup;
@@ -253,11 +253,12 @@ function parse_tags(element, titlePopup, poiParser) {
 					const streetDate = $('date', street).text();
 					const streetDesc = $('desc', street).text();
 					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { key: 'Start date', keyVal: streetDate, iconName: 'fa-solid fa-calendar' });
-					if (streetDesc) markerPopup += '<span class="popup-longDesc custscroll">' + L.Util.template(tagTmpl, { key: 'Etymology', keyVal: '<i>' + streetDesc + '</i>', iconName: 'fa-solid fa-book' }) + '</span>';
-					if (markerPopup) markerPopup += '<span class="popup-streetSource">- <a onclick="popupWindow(\'streetbook\');" title="' + $(xml).find('url').text() + '">' + $(xml).find('title').text() + '</a></span>';
-					if ($('#inputDebug').is(':checked')) console.debug('Street-names:', xml);
+					if (streetDesc) markerPopup += '<span class="popup-tag-long theme-scroll">' + L.Util.template(tagTmpl, { key: 'Etymology', keyVal: '<i>' + streetDesc + '</i>', iconName: 'fa-solid fa-book' }) +
+						'<span class="popup-comment"><a onclick="popupWindow(\'streetbook\');" title="' + $(xml).find('url').text() + '">' + $(xml).find('title').text() + '</a></span>' +
+					'</span>';
+					if ($('#settings-debug').is(':checked')) console.debug('Street-names:', xml);
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }
+				error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }
 			});
 			if (tags.maxspeed) streetVal += tags.maxspeed + '; ';
 			if (tags.maxwidth) streetVal += tags.maxwidth + '; ';
@@ -278,34 +279,34 @@ function parse_tags(element, titlePopup, poiParser) {
 		return markerPopup;
 	};
 	const furtherreading_parser = function(tags) {
-		const streetDirs = 'https://www.bexhillmuseum.org.uk/access-centre/research/street-directories-3/?wdt_column_filter[3]=';
+		const streetDirs = 'https://www.bexhillmuseum.org.uk/access-centre/bexhill-street-directories/?wdt_column_filter[road]=';
 		let readingVal = '';
 		markerPopup = '';
 		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'] && LBounds.contains(element.center)) {
 			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ';
-			// readingVal += '<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
+			readingVal += '<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories 1886-1931" target="_blank" rel="noopener">Street directories</a>; ';
 		}
-		// if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) readingVal += '<a href="' + streetDirs + encodeURI(eName.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
+		if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) readingVal += '<a href="' + streetDirs + encodeURI(eName.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			const w = tags.wikipedia || tags['site:wikipedia'];
 			readingVal += '<a href="https://' + encodeURI(w.split(':')[0]) + '.wikipedia.org/wiki/' + encodeURI(w.split(':')[1]) + '" title="The Free Encyclopaedia" target="_blank" rel="noopener">Wikipedia</a>; ';
 		}
 		if (tags['ref:esher'])
-			readingVal += '<a class="nowrap" href="https://www.heritagegateway.org.uk/Gateway/Results_Single.aspx?uid=' + encodeURI(tags['ref:esher']) + '&resourceID=1026#content" title="East Sussex Historic Environment Record" target="_blank" rel="noopener">ESHER</a>; ';
+			readingVal += '<a class="theme-nowrap" href="https://www.heritagegateway.org.uk/Gateway/Results_Single.aspx?uid=' + encodeURI(tags['ref:esher']) + '&resourceID=1026#content" title="East Sussex Historic Environment Record" target="_blank" rel="noopener">ESHER</a>; ';
 		if (tags['ref:publicsculpturesofsussex'])
-			readingVal += '<a class="nowrap" href="https://publicsculpturesofsussex.co.uk/index.php/object?id=' + encodeURI(tags['ref:publicsculpturesofsussex']) + '" title="Public Sculptures of Sussex" target="_blank" rel="noopener">Public Sculptures</a>; ';
+			readingVal += '<a class="theme-nowrap" href="https://publicsculpturesofsussex.co.uk/index.php/object?id=' + encodeURI(tags['ref:publicsculpturesofsussex']) + '" title="Public Sculptures of Sussex" target="_blank" rel="noopener">Public Sculptures</a>; ';
 		if (tags['ref:iwm'])
-			readingVal += '<a class="nowrap" href="https://www.iwm.org.uk/memorials/item/memorial/' + encodeURI(tags['ref:iwm']) + '" title="Imperial War Museum: War Memorials Register" target="_blank" rel="noopener">IWM</a>; ';
+			readingVal += '<a class="theme-nowrap" href="https://www.iwm.org.uk/memorials/item/memorial/' + encodeURI(tags['ref:iwm']) + '" title="Imperial War Museum: War Memorials Register" target="_blank" rel="noopener">IWM</a>; ';
 		if (tags['url:bexhillhistorytrail'])
-			readingVal += '<a class="nowrap" href="https://thebexhillhistorytrail.wordpress.com/' + encodeURI(tags['url:bexhillhistorytrail']) + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
+			readingVal += '<a class="theme-nowrap" href="https://thebexhillhistorytrail.wordpress.com/' + encodeURI(tags['url:bexhillhistorytrail']) + '" title="The Bexhill History Trail" target="_blank" rel="noopener">History Trail</a>; ';
 		if (tags['url:bexhillnature'])
-			readingVal += '<a class="nowrap" href="https://bexhillnature.uk/places/' + encodeURI(tags['url:bexhillnature']) + '.php" title="Wild animals and plants" target="_blank" rel="noopener">Bexhill Nature</a>; ';
+			readingVal += '<a class="theme-nowrap" href="https://bexhillnature.uk/places/' + encodeURI(tags['url:bexhillnature']) + '.php" title="Wild animals and plants" target="_blank" rel="noopener">Bexhill Nature</a>; ';
 		if (tags['ref:edubase'])
-			readingVal += '<a class="nowrap" href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + encodeURI(tags['ref:edubase']) + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
+			readingVal += '<a class="theme-nowrap" href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + encodeURI(tags['ref:edubase']) + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
 		if (tags['ref:charity'])
-			readingVal += '<a class="nowrap" href="https://register-of-charities.charitycommission.gov.uk/charity-details/?regId=' + encodeURI(tags['ref:charity']) + '&subId=0" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
+			readingVal += '<a class="theme-nowrap" href="https://register-of-charities.charitycommission.gov.uk/charity-details/?regId=' + encodeURI(tags['ref:charity']) + '&subId=0" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
 		if (tags.tpuk_ref)
-			readingVal += '<a class="nowrap" href="http://trigpointing.uk/trig/' + encodeURI(tags.tpuk_ref.split('TP')[1]) + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
+			readingVal += '<a class="theme-nowrap" href="http://trigpointing.uk/trig/' + encodeURI(tags.tpuk_ref.split('TP')[1]) + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
 		if (readingVal) {
 			readingVal = readingVal.substring(0, readingVal.length - 2);
 			markerPopup = L.Util.template(tagTmpl, { key: 'Further reading', keyVal: readingVal, iconName: 'fa-solid fa-book' });
@@ -352,9 +353,9 @@ function parse_tags(element, titlePopup, poiParser) {
 							markerPopup += generic_img_parser(result.query.categorymembers[x].title, imgCount, '');
 							imgCount++;
 						}
-						if ($('#inputDebug').is(':checked')) console.debug('Wikimedia-categories:', result);
+						if ($('#settings-debug').is(':checked')) console.debug('Wikimedia-categories:', result);
 					},
-					error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKIMEDIA-CATEGORIES:', encodeURI(this.url)); }
+					error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR WIKIMEDIA-CATEGORIES:', encodeURI(this.url)); }
 				});
 			} else */
 			for (let x = 0; x < multiCommons.length; x++) if (multiCommons[x].startsWith('File:')) {
@@ -377,6 +378,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			).split(';');
 		}
 		if (imgCount > 1 || multiPano.length || multiVid.length) markerPopup += show_img_controls(imgCount, multiPano, multiVid);
+		if (imgCount > 0) markerPopup = '<div class="popup-img">' + markerPopup + '</div>';
 		return markerPopup;
 	};
 	// https://github.com/opening-hours/opening_hours.js
@@ -461,23 +463,23 @@ function parse_tags(element, titlePopup, poiParser) {
 			}
 			// create readable table
 			let ohTable = drawTable(oh, new Date());
-			if (tags.opening_hours.indexOf('PH ') === -1 && ohTable) ohTable += '<div class="comment" style="font-size:80%;text-align:left;padding-top:5px;">Holiday periods may differ.</div>';
+			if (tags.opening_hours.indexOf('PH ') === -1 && ohTable) ohTable += '<div class="popup-comment">Holiday periods may differ.</div>';
 			// show tag and collapsible accordion
 			if (ohState === true) openhrsState = 'Open until';
 			else if (ohState === false) openhrsState = 'Closed until';
 			else if (ohState === 'depends') openhrsState = 'Depends on';
 			if (openhrsState) {	markerPopup =
-				'<div style="min-width:' + (ohTable ? '270px;" class="popup-ohContainer' : '100px;') + '">' +
-					'<span class="popup-tagContainer" title="' + tags.opening_hours.replace(/"/g, '\'') + '">' +
-						'<i class="popup-tagIcon popup-openhrsState openColor-' + ohState + ' fa-solid fa-clock fa-fw"></i>' +
-						'<span class="popup-tagValue"><strong>' + openhrsState + ':</strong>' + strNextChange + '</span>' +
+				'<div style="min-width:' + (ohTable ? '270px;" class="popup-openhrs' : '100px;') + '">' +
+					'<span class="popup-tag" title="' + tags.opening_hours.replaceAll('"', '\'') + '">' +
+						'<i class="popup-tag-icon popup-openhrs-color-' + ohState + ' fa-solid fa-clock fa-fw"></i>' +
+						'<span class="popup-tag-value"><strong>' + openhrsState + ':</strong>' + strNextChange + '</span>' +
 					'</span>' +
-					'<div class="popup-ohTable">' + ohTable + '</div>' +
+					'<div class="popup-openhrs-table">' + ohTable + '</div>' +
 				'</div>';
 			}
 		}
 		catch(err) {
-			if (tags.opening_hours && $('#inputDebug').is(':checked')) console.debug('ERROR: Object "' + eName + '" cannot parse hours:', tags.opening_hours + '. ' + err);
+			if (tags.opening_hours && $('#settings-debug').is(':checked')) console.debug('ERROR: Object "' + eName + '" cannot parse hours:', tags.opening_hours + '. ' + err);
 		}
 		if (tags.opening_date && new Date(tags.opening_date).valueOf() > new Date().valueOf()) markerPopup = L.Util.template(tagTmpl, { key: 'Opening date', keyVal: dateFormat(tags.opening_date, 'long'), iconName: 'fa-solid fa-calendar' });
 		return markerPopup;
@@ -523,7 +525,7 @@ function parse_tags(element, titlePopup, poiParser) {
 }
 
 function callback(data) {
-	if ($('#inputDebug').is(':checked') && data.elements.length) console.debug('Overpass callback:', data);
+	if ($('#settings-debug').is(':checked') && data.elements.length) console.debug('Overpass callback:', data);
 	let title, type, iconName, markerPopup;
 	// define poi elements
 	for (let c = 0; c < data.elements.length; c++) {
@@ -624,8 +626,14 @@ function callback(data) {
 				case 'college': type = 'school'; break;
 				case 'fire_station': type = 'police'; iconName = 'firetruck'; break;
 				case 'place_of_worship':
-					if (e.tags.religion && e.tags.denomination) title = e.tags.religion + ' ' +  e.tags.denomination;
-					else if (e.tags.religion) title = e.tags.religion;
+					if (e.tags.religion) {
+						title = e.tags.religion + (e.tags.denomination ? ' ' +  e.tags.denomination : '');
+						switch (e.tags.religion) {
+							case 'christian': iconName = 'church-2'; break;
+							case 'buddhist': iconName = 'bouddha'; break;
+							case 'muslim': iconName = 'mosquee'; break;
+						}
+					}
 					break;
 				case 'public_bookcase': type = 'library'; break;
 				case 'nightclub': type = 'bar'; break;
@@ -947,7 +955,7 @@ function callback(data) {
 		}
 		const marker = L.marker((e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lng), {
 			// do not bounce marker: when single poi, in debug mode, over 50 markers
-			bounceOnAdd: (!rQuery && !$('#inputDebug').is(':checked') && (data.elements.length < 50)),
+			bounceOnAdd: (!rQuery && !$('#settings-debug').is(':checked') && (data.elements.length < 50)),
 			icon: L.icon({
 				iconUrl: 'assets/img/icons/' + iconName + '.png',
 				iconSize: [32, 37],
@@ -1011,13 +1019,13 @@ function callback(data) {
 			autoPanPaddingBottomRight: [5, 50]
 		};
 		markerPopup = (poi && poi.tagParser) ? poi.tagParser(e, title) : parse_tags(e, title, []);
-		customTOptions.className = (ohState !== undefined) ? 'openColor-list-' + ohState : 'openColor-list-' + ctState;
+		customTOptions.className = (ohState !== undefined) ? 'openhrs-color-' + ohState : 'openhrs-color-' + ctState;
 		marker.bindPopup(markerPopup, customPOptions);
 		marker.bindTooltip(toolTip, customTOptions);
 		marker.addTo(iconLayer);
 		// single poi
 		if (rQuery) {
-			if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').click();
+			if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').trigger('click');
 			marker.openPopup();
 			markerId = marker._leaflet_id;
 			setPageTitle($(marker._popup._container).find($('.popup-header h3')).text());
@@ -1037,7 +1045,7 @@ function callback(data) {
 	else {
 		$('.spinner').fadeOut(200);
 		// timeout to stop double-clicking on fast loads
-		setTimeout(function() { $('.poi-checkbox').removeClass('poi-loading'); }, 250);
+		setTimeout(function() { $('.pois-checkbox').removeClass('pois-loading'); }, 250);
 	}
 	permalinkSet();
 }
@@ -1059,15 +1067,15 @@ function pushPoiList(customSort) {
 		let poiIcon = '';
 		if (poiList[c]._icon) poiIcon = '<img alt="" src="' + poiList[c]._icon.src + '">';
 		else if (poiList[c].options.className === 'circleMarker')
-			poiIcon = '<i class="poi-results-circleMarker fa-solid fa-circle fa-lg fa-fw" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
+			poiIcon = '<i class="pois-results-circleMarker fa-solid fa-circle fa-lg fa-fw" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		else if (poiList[c].options.color)
 			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fa-solid fa-circle fa-lg fa-fw" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
-			'<td class="openColor-list-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
+			'<td class="openhrs-color-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
 			'<td>' + poiList[c]._tooltip._content + '</td>' +
 			'<td>' + (poiList[c].facilities ? poiList[c].facilities : '') + '</td>';
 		if (poiList[c].distance) {
-			if ($('#inputUnit').is(':checked')) {
+			if ($('#settings-unit').is(':checked')) {
 				if (poiList[c].distance < 1000) poiResultsList += '<td>' + Math.round(poiList[c].distance) + ' m</td>';
 				else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1000) * 100) / 100 + ' km</td>';
 			}
@@ -1079,25 +1087,24 @@ function pushPoiList(customSort) {
 		poiResultsList += '</tr>';
 	}
 	poiResultsList += '</table>';
-	$('#poi-results-list').html(poiResultsList).show();
-	$('#poi-results').slideDown(400, function() {
-		$('#poi-results-list').css('opacity', 1);
-		$('#poi-results button').prop('disabled', false);
-		$(this).css('pointer-events', 'auto');
+	$('#pois-results-list').html(poiResultsList).show();
+	$('#pois-results').slideDown(400, function() {
+		$('#pois-results-list').css('opacity', 1);
+		$('#pois-results button').prop('disabled', false);
+		$(this).css('pointer-events', 'auto').trigger('scroll');
 		// keep checkbox in view
-		if ($('.poi-checkbox input:checked').length === 1) $('.poi-checkbox input:checked').parent()[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+		if ($('.pois-checkbox input:checked').length === 1) $('.pois-checkbox input:checked').parent()[0].scrollIntoView({ block: 'center' });
 	});
-	$('#poi-results-list td:nth-child(3) i').tooltip(tooltipDef);
+	$('#pois-results-list td:nth-child(3) i').tooltip(tooltipDef);
 	$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
 	// interact with map
-	if (noTouch) $('#poi-results-list tr').hover(
-		function() { map._layers[this.id].openTooltip(); },
-		function() { if (!map._layers[this.id]._tooltip.options.permanent) map._layers[this.id].closeTooltip(); }
-	);
-	$('#poi-results-list tr').click(function() {
-		if ($('#inputWw2').length) $('#inputWw2 input').val($('#inputWw2 input')[0].max).change();
+	$('#pois-results-list tr')
+		.on('mouseenter', function() { map._layers[this.id].openTooltip(); })
+		.on('mouseleave', function() { if (!map._layers[this.id]._tooltip.options.permanent) map._layers[this.id].closeTooltip(); });
+	$('#pois-results-list tr').on('click', function() {
+		if ($('#control-ww2').length) $('#control-ww2 input').val($('#control-ww2 input')[0].max).trigger('change');
 		map._layers[this.id].openPopup();
-		if ($(window).width() < 768) $('.sidebar-close:visible').click();
+		if ($(window).width() < 768) $('.sidebar-close:visible').trigger('click');
 		else if (map._layers[this.id]._latlng) {
 			// get bounds of area, focus 150px above marker and find sidebar-width to allow room for popup
 			let zm = areaOutline.getLayer('o_' + this.id) ? map.getBoundsZoom(areaOutline.getLayer('o_' + this.id)._bounds.pad(0.5)) : map.getZoom();
@@ -1106,13 +1113,15 @@ function pushPoiList(customSort) {
 			map.stop().flyTo(map.unproject([px.x -= ($(window).width() >= 1024 ? Math.round(sidebar.width()/2) : 0), px.y -= 150], zm), zm);
 		}
 	});
-	$('#poi-results h3').html(
+	// results table header
+	const sortBy = poiList[0].distance ? '1-9' : 'a-z';
+	$('#pois-results h3').html(
 		poiList.length + ' result' + (poiList.length > 1 ? 's' : '') +
-			($('#inputAttic').val() ? ' from ' + dateFormat($('#inputAttic').val(), 'short') : '') +
-			(customSort ? '' : ' <i style="color:#777;" class="fa-solid fa-sort-' + (poiList[0].distance ? 'numeric' : 'alpha') + '-down fa-fw"></i>')
+			($('#settings-overpass-attic').val() ? ' from ' + dateFormat($('#settings-overpass-attic').val(), 'short') : '') +
+			((!customSort || poiList[0].distance) && poiList.length > 1 ? ' <i id="pois-results-sort" class="fa-solid fa-arrow-down-' + sortBy + ' fa-fw" title="Sort" onclick="poi_list_reverse(\'' + sortBy + '\')"></i>' : '')
 	);
 	if (poiList.length === maxOpResults) {
-		$('#poi-results h3').append('<br>(maximum number of results)');
+		$('#pois-results h3').append('<br>(maximum number of results)');
 		setMsgStatus('fa-solid fa-circle-info', 'Max Results', 'Maximum number of results shown (' + maxOpResults + ').', 4);
 	}
 }
@@ -1121,17 +1130,17 @@ function pushPoiList(customSort) {
 // main header | sub header | food hygiene rating id | osm id | wikidata id
 function generic_header_parser(header, subheader, fhrs, osmId, wikidata) {
 	let markerPopup = '<div class="popup-header">';
-	if (osmId && !$('#inputAttic').val()) {
+	if (osmId && !$('#settings-overpass-attic').val()) {
 		markerPopup += '<a class="popup-edit popup-header-button" title="Edit on OpenStreetMap"><i class="fa-solid fa-pen-to-square fa-fw"></i></a>';
 		if (wikidata) markerPopup += '<a class="popup-header-button" title="Edit Wikidata" href="https://www.wikidata.org/wiki/' + encodeURI(wikidata) + '" target="_blank" rel="noopener"><i class="fa-solid fa-barcode fa-fw"></i></a>';
-		if (noIframe && localStorageAvail()) markerPopup += '<a class="popup-bookm popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark fa-fw"></i></a>';
+		if (noIframe && localStorageAvail()) markerPopup += '<a class="popup-bookmark popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark fa-fw"></i></a>';
 		if (fhrs) markerPopup += '<span class="popup-fhrs notloaded" data-fhrs="' + fhrs + '"><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>';
 	}
 	if (header || fhrs) markerPopup += '<h3>' + (header !== undefined ? header : '&hellip;') + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
 	return markerPopup + '</div>';
 }
-const tagTmpl = '<div class="popup-tagContainer"><i class="popup-tagIcon {iconName} fa-fw"></i><span class="popup-tagValue"><strong>{key}:</strong>{keyVal}</span></div>';
+const tagTmpl = '<div class="popup-tag"><i class="popup-tag-icon {iconName} fa-fw"></i><span class="popup-tag-value"><strong>{key}:</strong>{keyVal}</span></div>';
 // tags | key | label | icon
 function generic_tag_parser(tags, key, label, iconName) {
 	let markerPopup = '', resultVal;
@@ -1142,26 +1151,26 @@ function generic_tag_parser(tags, key, label, iconName) {
 		else if (tags[key] === 'no') resultVal = '<i class="fa-solid fa-xmark fa-fw" title="no"></i>';
 		else if (key.indexOf('_date') > -1 || key.indexOf('date_') > -1) resultVal = dateFormat(tags[key], 'long');
 		else resultVal = listTidy(tags[key]);
-		markerPopup += L.Util.template(tagTmpl, { key: label, keyVal: resultVal, iconName: iconName }).replace(/<strong> :<\/strong>/g, '');
+		markerPopup += L.Util.template(tagTmpl, { key: label, keyVal: resultVal, iconName: iconName }).replaceAll('<strong> :</strong>', '');
 	}
-	if ((key === 'description' || key === 'inscription' || key === 'artwork_subject') && markerPopup) markerPopup = '<span style="font-style:italic;" class="popup-longDesc custscroll">' + markerPopup + '</span>';
+	if ((key === 'description' || key === 'inscription' || key === 'artwork_subject') && markerPopup) markerPopup = '<span style="font-style:italic;" class="popup-tag-long theme-scroll">' + markerPopup + '</span>';
 	return markerPopup;
 }
 // image name | image number | attribution
 function generic_img_parser(img, id, attrib) {
 	let url, imgTmpl;
-	// if (img.startsWith('Category:')) imgTmpl = '<div class="popup-imgContainer">' + img + '</div>'; else
+	// if (img.startsWith('Category:')) imgTmpl = '<div class="popup-img-item">' + img + '</div>'; else
 	if (img.startsWith('File:')) {
 		url = img;
 		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(img);
-		imgTmpl = '<div id="img{id}" class="popup-imgContainer' + (+id === 0 ? ' notloaded' : '') + '">' +
+		imgTmpl = '<div id="img{id}" class="popup-img-item' + (+id === 0 ? ' notloaded' : '') + '">' +
 			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=2560 1280w, {img}&width=1280 800w, {img}&width=800 640w"><img data-url="{url}"></a>' +
-			'<div class="popup-imgAttrib notloaded"><span>Image loading...</span></div>' +
+			'<div class="popup-img-attrib notloaded"><span>Image loading...</span></div>' +
 		'</div>';
 	}
-	else imgTmpl = '<div id="img{id}" class="popup-imgContainer ' + (+id === 0 ? ' notloaded' : '') + '">' +
+	else imgTmpl = '<div id="img{id}" class="popup-img-item' + (+id === 0 ? ' notloaded' : '') + '">' +
 			'<a data-fancybox="gallery" data-caption="' + $('<span>' + attrib + '</span>').text() + '" href="{img}"><img></a>' +
-			(attrib ? '<div class="popup-imgAttrib"><span>{attrib}</span></div>' : '') +
+			(attrib ? '<div class="popup-img-attrib"><span>{attrib}</span></div>' : '') +
 		'</div>';
 	return L.Util.template(imgTmpl, { id: id, url: url, img: img, attrib: attrib });
 }
@@ -1194,7 +1203,7 @@ function busstop_parser(tags, titlePopup) {
 			NE: 'North-east', NW: 'North-west', SE: 'South-east', SW: 'South-west'
 		}[tags['naptan:Bearing']];
 		if (bearing) markerPopup += L.Util.template(tagTmpl, { key: 'Bearing', keyVal: bearing, iconName: 'fa-solid fa-compass' });
-		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bsTable custscroll notloaded" style="width:' + imgSize + 'px;" data-naptan="' + tags['naptan:AtcoCode'] + '">' +
+		if (tags['naptan:AtcoCode']) markerPopup += '<div class="popup-bustime-table theme-scroll notloaded" style="width:' + imgSize + 'px;" data-naptan="' + tags['naptan:AtcoCode'] + '">' +
 				'<i class="fa-solid fa-spinner fa-spin-pulse"></i></div>';
 		return markerPopup;
 	};
@@ -1266,7 +1275,7 @@ function food_parser(tags, titlePopup) {
 		else if (tags.outdoor_seating === 'yes') serviceVal += 'outdoor seating, ';
 		if (tags.reservation === 'yes') serviceVal += 'takes reservation, ';
 		else if (tags.reservation === 'required') serviceVal += 'needs reservation, ';
-		if (tags['url:ordering']) serviceVal += '<a href="' + encodeURI(tags['url:ordering']) + '" title="Ordering" target="_blank" rel="noopener">online ordering</a>, ';
+		if (tags['website:orders']) serviceVal += '<a href="' + encodeURI(tags['website:orders']) + '" title="Ordering" target="_blank" rel="noopener">online ordering</a>, ';
 		if (serviceVal) {
 			serviceVal = serviceVal.substring(0, serviceVal.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { key: 'Service', keyVal: serviceVal, iconName: 'fa-solid fa-bag-shopping' });
@@ -1302,16 +1311,16 @@ function hotel_parser(tags, titlePopup) {
 		if (tags.view) hotelVal += tags.view + ' view, ';
 		if (tags.balcony) hotelVal += 'balcony, ';
 		if (tags.cooking) hotelVal += 'self-catering, ';
+		if (tags.rooms) hotelVal += tags.rooms + ' rooms, ';
+		if (tags['website:booking']) hotelVal += '<a href="' + encodeURI(tags['website:booking']) + '" title="Booking" target="_blank" rel="noopener">online booking</a>, ';
 		if (hotelVal) {
 			hotelVal = hotelVal.substring(0, hotelVal.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { key: 'Accomodation', keyVal: hotelVal, iconName: 'fa-solid fa-bed' });
 		}
-		if (tags['url:booking_com']) markerPopup += L.Util.template(tagTmpl, { key: 'Check availability', keyVal: '<a href="https://www.booking.com/hotel/gb/' + encodeURI(tags['url:booking_com']) + '.en-gb.html" title="booking.com" target="_blank" rel="noopener"><img alt="booking.com" class="popup-imgBooking" src="assets/img/booking_com.png"></a>', iconName: 'fa-solid fa-file' });
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup,	[
-		{callback: hotelservices_parser},
-		{callback: generic_tag_parser, tag: 'rooms', label: 'Rooms', iconName: 'fa-solid fa-bed'}
+		{callback: hotelservices_parser}
 	]);
 }
 function hospital_parser(tags, titlePopup) {
@@ -1343,7 +1352,7 @@ function post_parser(tags, titlePopup) {
 			else if (ct.getDate() === new Date(new Date().getDate() + 1).getDate()) strNextChange = 'Tomorrow ' + ct.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
 			else if (ct.getDate() > new Date(new Date().getDate() + 1).getDate()) strNextChange = ct.toLocaleDateString(lang, { weekday: 'long' }) + ' ' + ct.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
 			ctState = (ct.getDate() === new Date().getDate() && ct.getDate() >= new Date().getDate()) ? true : false;
-			markerPopup += L.Util.template(tagTmpl, { key: 'Next collection', keyVal: strNextChange + '<br><span class="comment">(' + tags.collection_times + ')</span>', iconName: 'openColor-' + ctState + ' fa-solid fa-clock' });
+			markerPopup += L.Util.template(tagTmpl, { key: 'Next collection', keyVal: strNextChange + '<br><span class="comment">(' + tags.collection_times + ')</span>', iconName: 'popup-openhrs-color-' + ctState + ' fa-solid fa-clock' });
 		}
 		return markerPopup;
 	};
@@ -1356,17 +1365,15 @@ function post_parser(tags, titlePopup) {
 function socialf_parser(tags, titlePopup) {
 	const socialfservices_parser = function(tags) {
 		let markerPopup = '', socialVal = '';
-		if (tags['social_facility:for']) socialVal += tags['social_facility:for'] + ' ';
-		if (tags.social_facility) socialVal += tags.social_facility;
+		if (tags.capacity) socialVal += tags.capacity + ' capacity; ';
 		if (socialVal) {
-			socialVal = socialVal.replace(/_/g, ' ');
+			socialVal = socialVal.replaceAll('_', ' ').substring(0, socialVal.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { key: 'Social facility', keyVal: socialVal, iconName: 'fa-solid fa-users' });
 		}
 		return markerPopup;
 	};
 	return parse_tags(tags, titlePopup, [
-		{callback: socialfservices_parser},
-		{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'fa-solid fa-users'}
+		{callback: socialfservices_parser}
 	]);
 }
 function surveyp_parser(tags, titlePopup) {
@@ -1435,17 +1442,17 @@ function getWikiAttrib(element) {
 					const imgArtist = $('<span>' + imgAttrib.Artist.value + '</span>').text();
 					const imgDate = new Date(imgAttrib.DateTimeOriginal ? imgAttrib.DateTimeOriginal.value : imgAttrib.DateTime.value).getFullYear();
 					const imgAttribUrl = '<a href="https://commons.wikimedia.org/wiki/' + encodeURI(img) + '" title="Wikimedia Commons" target="_blank" rel="noopener">' +
-						(imgDate ? imgDate + ' | ' : '') + '&copy; ' + imgArtist + ' | ';
-					element.find($('.popup-imgAttrib')).html(imgAttribUrl + imgAttrib.LicenseShortName.value + '</a>');
+						(imgDate ? imgDate + ' | ' : '') + '&copy; ' + titleCase(imgArtist, 1) + ' | ';
+					element.find($('.popup-img-attrib')).html(imgAttribUrl + imgAttrib.LicenseShortName.value + '</a>');
 					element.find('a').data('caption', 'Wikimedia Commons: ' + imgAttribUrl + imgAttrib.UsageTerms.value + '</a>');
 				}
-				else element.find($('.popup-imgAttrib')).html('Error: Attribution not found');
-				element.find($('.popup-imgAttrib')).removeClass('notloaded');
+				else element.find($('.popup-img-attrib')).html('Error: Attribution not found');
+				element.find($('.popup-img-attrib')).removeClass('notloaded');
 				// set the popup content so it includes dynamically loaded content
 				if (markerId && !element.find($('.notloaded')).length) map._layers[markerId].setPopupContent();
-				if ($('#inputDebug').is(':checked')) console.debug('Wikimedia-attrib:', result);
+				if ($('#settings-debug').is(':checked')) console.debug('Wikimedia-attrib:', result);
 			},
-			error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR WIKIMEDIA-ATTRIB:', encodeURI(this.url)); }
+			error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR WIKIMEDIA-ATTRIB:', encodeURI(this.url)); }
 		});
 	}
 }
@@ -1453,7 +1460,7 @@ function show_img_controls(imgMax, img360, vid) {
 	// add image navigation controls to popup
 	// check if user has already seen bouncing icons
 	const bouncedicon = (localStorageAvail() && window.localStorage.tutorial.indexOf('bouncedicon') === -1) ? ' fa-bounce' : '';
-	let ctrlTmpl = '<div class="navigateItem">', x;
+	let ctrlTmpl = '<div class="popup-navigate">', x;
 	if (vid && vid.length) for (x = 0; x < vid.length; x++) {
 		if (vid[x].startsWith('File:') && vid[x].endsWith('webm')) ctrlTmpl +=
 			'<a class="vid notloaded" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-base-class="noslideshow" data-loop="false"' +
@@ -1469,23 +1476,20 @@ function show_img_controls(imgMax, img360, vid) {
 			'</a>';
 	}
 	if (imgMax > 1) ctrlTmpl +=
-		'<span class="theme navigateItemPrev"><a title="Previous image" onclick="navImg(0);"><i class="fa-solid fa-square-caret-left fa-fw"></i></a></span>' +
-		'<i class="navigateItemCount fa-solid fa-1 fa-fw" title="Gallery (1 of ' + imgMax + ')"></i>' +
-		'<span class="theme navigateItemNext"><a title="Next image" onclick="navImg(1);"><i class="fa-solid fa-square-caret-right fa-fw"></i></a></span>';
+		'<span class="theme-color"><a title="Previous image" onclick="navImg(0);"><i class="fa-solid fa-square-caret-left fa-fw"></i></a></span>' +
+		'<i class="popup-navigate-count fa-solid fa-1 fa-fw"></i>/<i class="fa-solid fa-' + imgMax + ' fa-fw"></i>' +
+		'<span class="theme-color"><a title="Next image" onclick="navImg(1);"><i class="fa-solid fa-square-caret-right fa-fw"></i></a></span>';
 	return ctrlTmpl + '</div>';
 }
 function navImg(direction) {
-	if (!$('.popup-imgContainer').is(':animated')) {
+	if (!$('.popup-img-item').is(':animated')) {
 		// get the current and last image
-		const cID = parseInt($('.popup-imgContainer:visible').attr('id').split('img')[1]);
-		const lID = parseInt($('.popup-imgContainer').last().attr('id').split('img')[1]);
+		const cID = parseInt($('.popup-img-item:visible').attr('id').split('img')[1]);
+		const lID = parseInt($('.popup-img-item').last().attr('id').split('img')[1]);
 		// get the next image
 		const swapImg = function(nID) {
-			$('.popup-imgContainer#img' + cID).fadeOut(200, function() { $('.popup-imgContainer#img' + nID).fadeIn(200); });
-			$('.navigateItemCount')
-				.removeClass()
-				.addClass('navigateItemCount fa-solid fa-fw fa-' + parseInt(nID+1))
-				.attr('title', 'Gallery (' + parseInt(nID+1) + ' of ' + parseInt(lID+1) + ')');
+			$('.popup-img-item#img' + cID).fadeOut(200, function() { $('.popup-img-item#img' + nID).fadeIn(200); });
+			$('.popup-navigate-count').removeClass().addClass('popup-navigate-count fa-solid fa-fw fa-' + parseInt(nID+1));
 		};
 		// navigate through multiple images. 0 = previous, 1 = next
 		if (direction === 0 && cID > 0) swapImg(cID - 1);
@@ -1498,14 +1502,14 @@ function navImg(direction) {
 // formatting parsers
 function titleCase(str, force) {
 	// remove underscore, replace semi-colon with comma, convert to title-case
-	str = str.replace(/;/g, ', ').replace(/_/g, ' ');
+	str = str.replaceAll(';', ', ').replaceAll('_', ' ');
 	if (str === str.toUpperCase() && force === undefined) return str;
-	else return str.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+	else return str.replace(/\w*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 function listTidy(str, trunc) {
 	// truncate trail end, replace semi-colon non-spaced lists with spaced commas, replace underscores with dashes
 	if (trunc) str = str.substring(0, str.length - 2);
-	return str.replace(/;(?=\S)/g, ', ').replace(/_/g, '-');
+	return str.replace(/;(?=\S)/g, ', ').replaceAll('_', '-');
 }
 function dateFormat(dtStr, style) {
 	// parse ISO 8601 dates using local offset

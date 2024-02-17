@@ -1051,7 +1051,7 @@
 					"0": "listWw2/img/bomb/harriettidd(0)"
 				},
 				"imgattrib": {
-					"0": "Harriet Tidd's wedding | &copy; Bexhill Observer 1937"
+					"0": "Harriet Tidd's wedding 1937 | &copy; Bexhill Observer"
 				}
 			},
 			"geometry": {
@@ -2057,14 +2057,16 @@
 			"properties": {
 				"name": "Knole Court, Knole Road",
 				"date": "1940-09-19",
-				"description": "A bomb removed one of the gables and the two entrances. The gable wasn't restored until the late 1950s - early 1960s with the two entrances replaced in a 1950s style that broke the symmetry of the northern elevation. These were restored to the original style in 2016.",
+				"description": "A bomb destroyed one of the gables and severely damaged the two entrances. The gable wasn't restored until the 1960s with the two entrances replaced in a style that broke the symmetry of the northern elevation; these were restored to the original style in 2016.",
 				"img": {
 					"0": "listWw2/img/bomb/knolecourt(0)",
-					"1": "listWw2/img/bomb/knolecourt(1)"
+					"1": "listWw2/img/bomb/knolecourt(1)",
+					"2": "listWw2/img/bomb/knolecourt(2)"
 				},
 				"imgattrib": {
-					"0": "&copy; J. Stewart, 1952",
-					"1": "&copy; Bexhill Museum"
+					"0": "1952 | &copy; J. Stewart",
+					"1": "1951 | &copy; Bexhill Museum",
+					"2": "1940 | &copy; Bexhill Observer"
 				}
 			},
 			"geometry": {
@@ -2098,10 +2100,7 @@
 			"properties": {
 				"name": "Carlton Hotel, Knole Road",
 				"date": "1940-09-24",
-				"description": "Gable destroyed, not restored until the late 1950s - early 1960s.",
-				"img": {
-					"0": "listWw2/img/bomb/carltonhotel(0)"
-				}
+				"description": "Gable damaged."
 			},
 			"geometry": {
 				"type": "Point",
@@ -2543,11 +2542,7 @@
 			"type": "Feature",
 			"properties": {
 				"name": "Railway yard, Reginald Road",
-				"date": "1940-11-01",
-				"description": "Builders merchants M.P. Harris' crane was 'blown about like a feather' by the bomb blast, landing on the cement store.",
-				"img": {
-					"0": "listWw2/img/bomb/weststationgoods(0)"
-				}
+				"date": "1940-11-01"
 			},
 			"geometry": {
 				"type": "Point",
@@ -2577,7 +2572,11 @@
 			"type": "Feature",
 			"properties": {
 				"name": "Railway yard, Reginald Road",
-				"date": "1940-11-01"
+				"date": "1940-11-01",
+				"description": "Builders merchants M.P. Harris' crane was 'blown about like a feather' by the bomb blast, landing on the cement store.",
+				"img": {
+					"0": "listWw2/img/bomb/weststationgoods(0)"
+				}
 			},
 			"geometry": {
 				"type": "Point",

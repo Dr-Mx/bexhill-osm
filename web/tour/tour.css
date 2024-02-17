@@ -20,7 +20,7 @@ body {
 	height: 100%;
 	scrollbar-color: var(--scr-thumb) var(--scr-track);
 	scrollbar-width: thin;
-	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(var(--scroll-shadow), 0.5));
+	background-image: linear-gradient(transparent, rgba(var(--scroll-shadow), 0.5));
 	background-repeat: no-repeat;
 	background-position: center bottom;
 	background-size: 100% 20px;
@@ -41,13 +41,13 @@ body::-webkit-scrollbar-thumb {
 #reference {
 	text-align: left;
 }
-#refList ol {
+#reference-list ol {
 	margin-top: 5px;
 }
-#refList #reading {
+#reference-list #reading {
 	list-style-type: lower-roman;
 }
-#refList > a > b {
+#reference-list > a > b {
 	color: var(--text-color);
 }
 
@@ -104,10 +104,10 @@ figcaption {
 	color: #808080;
 }
 
-#bombKey {
+#ww2-bombkey {
 	margin: -10px auto auto 10px;
 }
-#bombKey span {
+#ww2-bombkey span {
 	display: inline-block;
 	margin-right: 5px;
 	font-size: 35pt;
@@ -121,25 +121,25 @@ figcaption {
 	font-style: italic;
 }
 
-.inlineimg > div {
+.img-inline > div {
 	display: table;
 	width: 100%;
 }
-.inlineimg > div p {
+.img-inline > div p {
 	margin-top: 0px;
 }
-.overlayLink > div {
+.link-overlay > div {
 	padding-bottom: 10px;
 }
-.overlayLink .maplink p {
+.link-overlay .link-map p {
 	margin: 5px 0;
 }
-.maplink::before {
+.link-map::before {
 	font: var(--fa-font-solid);
 	content: '\f5a0';
 	float: right;
 }
-.maplink {
+.link-map {
 	cursor: pointer;
 	padding: 5px;
 	margin-right: -5px;
@@ -150,13 +150,19 @@ figcaption {
 	transition: background-color 100ms;
 	color: var(--main-color);
 }
-.maplink:hover {
+.link-map:hover {
 	background-color: var(--bg-color);
 	color: var(--text-color);
 }
-.maplink img {
+.link-map img {
 	width: 94%;
 	margin: 0 3%;
+}
+.link-small {
+	margin-top: 5px;
+	margin-bottom: 2px;
+	font-size: 95%;
+	background-size: 18px 18px;
 }
 .link {
 	display: block;
@@ -180,12 +186,6 @@ figcaption {
 }
 .url.link::before {
 	content: '\f35d';
-}
-.sm {
-	margin-top: 5px;
-	margin-bottom: 2px;
-	font-size: 95%;
-	background-size: 18px 18px;
 }
 
 a {

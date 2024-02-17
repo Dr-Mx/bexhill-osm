@@ -8,72 +8,75 @@
 	--scroll-shadow: 0, 0, 0;
 	--scroll-shadow-popup: 0, 0, 0;
 }
+body {
+	background-color: #111111;
+}
 .spinner svg circle {
 	fill: rgba(0, 0, 0, 0.75);
 }
-.leaflet-control-layers-expanded, #msgStatusHead, .leaflet-control-attribution, .leaflet-tooltip, .leaflet-contextmenu a.leaflet-contextmenu-item,
+.leaflet-control-layers-expanded, #modal-head, .leaflet-control-attribution, .leaflet-tooltip, .leaflet-contextmenu a.leaflet-contextmenu-item,
 .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line, .leaflet-routing-remove-waypoint:hover::after {
 	color: var(--text-color) !important;
 }
-.anchor:hover, select:hover:enabled, #home .sidebar-body a i:hover, #inputWw2 div, .leaflet-control-attribution .fa-circle-info:hover, button:hover:enabled:not(.fancybox-button),
-.leaflet-bar a:hover, .navigateItem a:hover, .leaflet-container a.leaflet-popup-close-button:hover, #msgStatus div.leaflet-popup-close-button:hover,
-#inputOpacity div.leaflet-popup-close-button:hover, .popup-header-button:hover, .leaflet-routing-geocoders button:hover::after, #devTools h3:hover::after,
-.popup-ohContainer .popup-tagValue:hover::after, .leaflet-control-layers-list input:not(:checked,:disabled) + span:hover:before {
+.sidebar-anchor:hover, select:hover:enabled, #home .sidebar-body a i:hover, #control-ww2 div, .leaflet-control-attribution .fa-circle-info:hover, button:hover:enabled:not(.fancybox-button),
+.leaflet-bar a:hover, .popup-navigate a:hover, .leaflet-container a.leaflet-popup-close-button:hover, #modal div.leaflet-popup-close-button:hover,
+#control-opacity div.leaflet-popup-close-button:hover, .popup-header-button:hover, .leaflet-routing-geocoders button:hover::after, #settings-devtools h3:hover::after,
+.popup-openhrs .popup-tag-value:hover::after, .leaflet-control-layers-list input:not(:checked,:disabled) + span:hover:before {
 	color: var(--hover-color) !important;
 }
-.sidebar-tabs, footer, #homeBox, #xmasMsg, .anchor, input:not([type="range"]), hr, select, button, .leaflet-control-geocoder input, .slider::before,
-.leaflet-control-geocoder, .leaflet-contextmenu, #msgStatusHead, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected, .fancybox-bg,
-#poi-results-list tr:hover, .poi-checkbox-selected, .poi-checkbox > label:hover, .leaflet-touch .leaflet-bar:not(#inputWw2, #inputOpacity), #walking a img {
+.sidebar-tabs, footer, #home-box, #holiday-xmas-msg, .sidebar-anchor, input:not([type="range"]), hr, select, button, .leaflet-control-geocoder input, .slider::before,
+.leaflet-control-geocoder, .leaflet-contextmenu, #modal-head, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected, .fancybox-bg,
+#pois-results-list tr:hover, .pois-checkbox-selected, .pois-checkbox > label:hover, .leaflet-touch .leaflet-bar:not(#control-ww2, #control-opacity), #walking a img {
 	background-color: var(--bg-color) !important;
 }
-#msgStatus, #inputOpacity, .leaflet-bar > a, .leaflet-bar button, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded, .leaflet-control-layers,
-.leaflet-control-geocoder, .leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-alternatives li:hover, .leaflet-tooltip, .popup-imgAttrib, .navigateBg {
+#modal, #control-opacity, .leaflet-bar > a, .leaflet-bar button, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded, .leaflet-control-layers,
+.leaflet-control-geocoder, .leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-alternatives li:hover, .leaflet-tooltip, .popup-img-attrib, .popup-navigate-background {
 	background-color: var(--bg-color2) !important;
 }
 .leaflet-control-layers-list input + span:before {
 	color: #444444;
 }
-#weather, #newFeed ul {
+#home-weather, #home-new-feed ul {
 	color: #688c81;
 }
-.leaflet-bar a, .leaflet-bar a:hover, .setLabel {
+.leaflet-bar a, .leaflet-bar a:hover, .settings-label {
 	border-bottom: 1px solid var(--bg-color);
 }
 .leaflet-bar a:last-child {
 	border-bottom: none;
 }
-#devTools {
+#settings-devtools {
 	border-top: 1px solid var(--bg-color);
 }
-#inputOpacity input[type=range] {
+#control-opacity input[type=range] {
 	background-image: linear-gradient(to right, #333, #666);
 }
 input[type=range] {
 	background-color: #666666;
 }
-.custscroll {
+.theme-scroll {
 	scrollbar-color: var(--scr-thumb) var(--scr-track) !important;
 }
-.layerDark, #minimap > img {
+.theme-invert {
 	filter: invert(90%) hue-rotate(180deg) contrast(80%);
 }
-.sidebar-header {
+.sidebar-header-text, .sidebar-close {
 	color: #dddddd;
 }
 .leaflet-control-layers-separator {
 	border-top: 2px solid var(--bg-color);
 }
-#poi-results, #walkDesc img, #thennow img, #myprofile img, .popup-imgContainer, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar:not(#inputWw2) {
+#pois-results, #walk-desc img, #thennow img, #info-profile img, .popup-img, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar:not(#control-ww2) {
 	border: 2px solid var(--bg-color);
 }
 input[type=range]::-webkit-slider-thumb { border-color: var(--bg-color); }
 input[type=range]:hover::-webkit-slider-thumb {	background-color: var(--hover-color); }
 input[type=range]::-moz-range-thumb { border-color: var(--bg-color); }
 input[type=range]:hover::-moz-range-thumb { background-color: var(--hover-color); }
-#poi-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li:not(:last-child) {
+#pois-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li:not(:last-child) {
 	border-bottom: 2px solid var(--bg-color) !important;
 }
-.leaflet-control-scale-line, .poi-result-selected {
+.leaflet-control-scale-line, .pois-result-selected {
 	background-color: rgba(0, 0, 0, 0.5);
 }
 .leaflet-control-scale-line {
@@ -83,16 +86,16 @@ input[type=range]:hover::-moz-range-thumb { background-color: var(--hover-color)
 .leaflet-container .leaflet-control-attribution {
 	background: rgba(0, 0, 0, 0.7);
 }
-.anchor, .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
+.sidebar-anchor, .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
 	border-color: #666666;
 }
 button:disabled, button:disabled:hover, button:disabled::after, button:disabled:hover::after {
 	color: #555555 !important;
 }
-input:not([type=range]), select, #sidebar button:not(.modalButton), .leaflet-tooltip {
+input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet-tooltip {
 	border: 1px solid #333 !important;
 }
-.leaflet-control-geocoder input, .leaflet-control-geocoder-alternatives a, .fancybox-button, .modalButton {
+.leaflet-control-geocoder input, .leaflet-control-geocoder-alternatives a, .fancybox-button, .tutorial-button {
 	border: none !important;
 }
 .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
@@ -116,14 +119,14 @@ input:not([type=range]), select, #sidebar button:not(.modalButton), .leaflet-too
 .leaflet-container a.leaflet-popup-close-button {
 	border: 3px solid #333333;
 }
-.leaflet-popup .award {
+.leaflet-popup .competition-award {
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 15px black;
 }
 .leaflet-tooltip-right::before { border-right-color: var(--bg-color2); }
 .leaflet-tooltip-left::before { border-left-color: var(--bg-color2); }
 .leaflet-tooltip-top::before { border-top-color: var(--bg-color2); }
 .leaflet-tooltip-bottom::before { border-bottom-color: var(--bg-color2); }
-.modalButton {
+.tutorial-button {
 	background-color: #222 !important;
 }
 .leaflet-contextmenu a.leaflet-contextmenu-item.over {
@@ -134,31 +137,32 @@ input:not([type=range]), select, #sidebar button:not(.modalButton), .leaflet-too
 .leaflet-contextmenu-separator {
 	border-bottom: 1px solid #333333;
 }
-.popup-ohTable tr, .popup-bsTable tr { border: 1px solid black; }
-.popup-bsTable tr, .popup-ohTable td.times { background-color: #222222; }
-.popup-bsTable tr:nth-child(1) { color: #eeeeee; }
-.popup-ohTable td.workday { background-color: #333333; }
-.popup-ohTable td.weekend { background-color: #444444; }
+.popup-img { background-color: #333333; }
+.popup-openhrs-table tr, .popup-bustime-table tr { border: 1px solid black; }
+.popup-bustime-table tr, .popup-openhrs-table td.times { background-color: #222222; }
+.popup-bustime-table tr:nth-child(1) { color: #eeeeee; }
+.popup-openhrs-table td.workday { background-color: #333333; }
+.popup-openhrs-table td.weekend { background-color: #444444; }
 .sidebar-close:hover { color: #bbbbbb; }
 .sidebar-notif { border-color: var(--bg-color); }
 .xmasMapTree { filter: drop-shadow(0px 10px 9px #000000); }
 .circleMarker { fill: #000000; }
-.poi-results-circleMarker { color: #000000; }
-.popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #xmasMsg {
+.pois-results-circleMarker { color: #000000; }
+.popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #holiday-xmas-msg {
 	background-blend-mode: lighten;
 }
 
-.custscroll::-webkit-scrollbar {
+.theme-scroll::-webkit-scrollbar {
 	background-color: var(--scr-track);
 }
-.custscroll::-webkit-scrollbar-thumb {
+.theme-scroll::-webkit-scrollbar-thumb {
 	background-color: var(--scr-thumb);
 }
-#gotocontrols .fa-border, #gotoprivacy .fa-border {
+#info-privacy .fa-border {
 	border: 1px solid #333333;
 	border-radius: 5px;
 	background-color: var(--bg-color);
 }
-.comment, figcaption {
+.popup-comment, .comment, figcaption {
 	color: #888888;
 }

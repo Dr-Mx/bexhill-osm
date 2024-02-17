@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## v8.0.0
+
+**Date:** 17/02/2024
+
+Site changes
+ - Overhauled html/css naming conventions to be more consistent
+ - Replace jQuery depreciations
+ - Animate visual click to POI address when hovering over modal
+ - Allow reverse sorting in POI results list
+ - Separate map icons for different Places of Worship
+ - streetnames book to use hashed anchors
+ - Delay tutorial modal opening
+ - More of the usual bug fixes and code improvements
+
+
 ## v7.9.0
 
 **Date:** 09/12/2023

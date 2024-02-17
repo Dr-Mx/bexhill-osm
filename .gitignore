@@ -6,6 +6,7 @@ web/assets/img/uploads/
 web/assets/js/config.js
 web/robots.txt
 *.pdf
+*.pbf
 
 #############
 ## Windows detritus

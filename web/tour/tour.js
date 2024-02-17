@@ -3,10 +3,10 @@
 const slideShow = { firstrun: true, auto: true };
 let actImgLayer, wInterval = 0;
 function tour(tName, tID, fromPermalink) {
-	const dfltDir = 'tour/', autoZoom = !fromPermalink && !tID && $('#inputAutoZoom').is(':checked');
+	const dfltDir = 'tour/', autoZoom = !fromPermalink && !tID && $('#settings-autozoom').is(':checked');
 	if (!fromPermalink) clear_map('markers');
 	if (tID) markerId = tID;
-	if ($(window).width() < 768 && !fromPermalink && tName !== 'thennow') $('.sidebar-close:visible').click();
+	if ($(window).width() < 768 && !fromPermalink && tName !== 'thennow') $('.sidebar-close:visible').trigger('click');
 	// general markers
 	// coordinates | clickable | icon | has popup
 	const setMarker = function(latlng, interactive, icon, popup) {
@@ -71,16 +71,17 @@ function tour(tName, tID, fromPermalink) {
 		if (layer._latlng) markerPopup += '<span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
 		if (feature.properties.custom) markerPopup += feature.properties.custom;
 		else if (feature.properties.description) {
-			markerPopup += '<span class="popup-longDesc custscroll">' + feature.properties.description + '</span>';
+			markerPopup += '<span class="popup-tag-long theme-scroll">' + feature.properties.description + '</span>';
 			toolTip += ' <i class="tooltip-icons fa-solid fa-bars fa-fw" title="Notes"></i>';
 		}
 		if (feature.properties.link) {
-			markerPopup += '<span class="popup-tagValue"><a class="popup-truncate" style="max-width:' + imgSize + 'px;" href="' +
+			markerPopup += '<span class="popup-tag-value"><a class="popup-tag-value-truncate" style="max-width:' + imgSize + 'px;" href="' +
 				(feature.properties.link.startsWith('http') ? feature.properties.link : 'tel:' + feature.properties.link) +
 				'" target="_blank" rel="noopener" title="' + feature.properties.link + '">' + feature.properties.link + '</a></span>';
 		}
 		if (feature.properties.img) {
 			let imgIcon = 'image', imgAttrib = '', lID;
+			markerPopup += '<div class="popup-img">';
 			customPOptions.minWidth = imgSize;
 			$.each(feature.properties.img, function(x) {
 				if (feature.properties.imgattrib && feature.properties.imgattrib[x]) {
@@ -95,6 +96,7 @@ function tour(tName, tID, fromPermalink) {
 				markerPopup += show_img_controls(parseInt(+lID+1));
 				imgIcon += 's';
 			}
+			markerPopup += '</div>';
 			if (feature.properties.img[0].indexOf('000placehldr') === -1) toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
 		}
 		markerPopup += '</div>';
@@ -112,7 +114,7 @@ function tour(tName, tID, fromPermalink) {
 		actImgLayer = tName;
 		if (actTab !== 'tour' && fromPermalink) {
 			$('.sidebar-tabs ul li [href="#tour"] .sidebar-notif').show();
-			$('#tourList').val(tourVal).trigger('change');
+			$('#tour-controls-list').val(tourVal).trigger('change');
 		}
 	};
 	// timeout hack to stop iframe breaking on ff
@@ -121,7 +123,7 @@ function tour(tName, tID, fromPermalink) {
 			// https://www.mapillary.com/developer/api-documentation/#search-sequences
 			// get mapillary sequences
 			$('.spinner').show();
-			fcnStLvl.state('onStLvl');
+			fcnStLvl.state('control-mapillary-on');
 			$.ajax({
 				url: 'assets/data/panoramas.geojson',
 				dataType: 'json',
@@ -147,7 +149,7 @@ function tour(tName, tID, fromPermalink) {
 					}));
 					$('.spinner').fadeOut(200);
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR PANORAMAS:', encodeURI(this.url)); }
+				error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR PANORAMAS:', encodeURI(this.url)); }
 			});
 			actImgLayer = 'pano';
 			break;
@@ -174,7 +176,7 @@ function tour(tName, tID, fromPermalink) {
 							});
 							fp.custom += '</span><span class="popup-notes comment"><i class="fa-solid fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + dateFormat(fp.closed_at.split(' ')[0], 'short') : 'times"></i> Currently unresolved') + '</span> | ' +
 								'<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
-								'osm.org/note/' + fp.id + '</a><span class="popup-longDesc custscroll">';
+								'osm.org/note/' + fp.id + '</a><span class="popup-tag-long theme-scroll">';
 							setJsonPopup(feature, layer, [titleCase(fp.status + ' note'), dateFormat(fp.date_created.split(' ')[0], 'long')]);
 						},
 						pointToLayer: function(feature, latlng) {
@@ -193,7 +195,7 @@ function tour(tName, tID, fromPermalink) {
 							return marker;
 						}
 					});
-					if ($('#inputDebug').is(':checked')) console.debug('OSM Notes:', json);
+					if ($('#settings-debug').is(':checked')) console.debug('OSM Notes:', json);
 					setTimeout(function() { pushPoiList('feature.properties.id'); }, 250);
 					setPageTitle('OSM Notes');
 					if (autoZoom) zoom_area();
@@ -201,7 +203,7 @@ function tour(tName, tID, fromPermalink) {
 					if (tID) imageOverlay.getLayer(tID).openPopup().stopBounce();
 					$('.spinner').fadeOut('fast');
 				},
-				error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-NOTES:', encodeURI(this.url)); }
+				error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR OSM-NOTES:', encodeURI(this.url)); }
 			});
 			actImgLayer = tName;
 			break;
@@ -227,7 +229,7 @@ function tour(tName, tID, fromPermalink) {
 							const winner = feature.properties.winner, winnerTxt = ['Highly Commended', 'First Prize', 'Second Prize', 'Third Prize', 'Fourth Prize', 'Fifth Prize', 'Sixth Prize'],
 								winnerIco = ['award', 'trophy', 'medal', 'medal', 'medal', 'medal', 'medal'];
 							let winnerEle = '';
-							if (winner >= 0) winnerEle = '<i class="award commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner];
+							if (winner >= 0) winnerEle = '<i class="competition-award competition-commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner];
 							if (!feature.properties.img) feature.properties.img = { '0': 'itemXmas/img/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, winnerEle, ''], '', 'popup-xmas');
 							feature.properties.sortby = winner > 0 ? winner : winner === 0 ? 9 : 99;
@@ -281,7 +283,7 @@ function tour(tName, tID, fromPermalink) {
 							const winner = feature.properties.winner, winnerTxt = ['', 'First Prize', 'Second Prize'],
 								winnerIco = ['', 'trophy', 'medal'];
 							let subtitleEle = feature.properties.ward;
-							if (winner > 0) subtitleEle = '<i class="award commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner] + ' - ' + subtitleEle;
+							if (winner > 0) subtitleEle = '<i class="competition-award competition-commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner] + ' - ' + subtitleEle;
 							if (!feature.properties.img) feature.properties.img = { '0': 'itemScarecrow/img/000placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, subtitleEle], '', 'popup-scarecrow');
 							feature.properties.sortby = feature.properties.winner ? feature.properties.ward + feature.properties.winner : feature.properties.ward + '9';
@@ -313,7 +315,7 @@ function tour(tName, tID, fromPermalink) {
 			actImgLayer = tName;
 			break;
 		case 'thennow':
-			if (actTab === 'thennow') $('#thennowLoading').show();
+			if (actTab === 'thennow') $('#thennow-loading').show();
 			else $('.spinner').show();
 			$.ajax({
 				url: dfltDir + 'itemThenNow/thennow.geojson',
@@ -327,7 +329,7 @@ function tour(tName, tID, fromPermalink) {
 						pointToLayer: function(feature, latlng) {
 							let tnBody = '<hr><h3>' + feature.properties.imgcaption['1'] + ' (' + feature.properties.date + ')</h3>' +
 								'<figure><a href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(1).jpg" data-fancybox="' + feature.properties.id + '" data-caption="' + feature.properties.imgcaption['1'] + '">' +
-								'<img id="' + feature.properties.id + '" src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"></a>';
+								'<img src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"></a>';
 							// find number of images based on caption count
 							$.each(feature.properties.imgcaption, function(x) {
 								if (+x > 1) tnBody += '<a style="display:none;" href="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(' + x + ').jpg" data-fancybox="' + feature.properties.id +
@@ -368,24 +370,23 @@ function tour(tName, tID, fromPermalink) {
 							});
 							const marker = setMarker(latlng, true, false, false);
 							marker.bindTooltip('<img src="' + dfltDir + 'itemThenNow/img/' + feature.properties.id + '(0).jpg"><br><span>' + feature.properties.imgcaption['1'] + '</span>', {
-								className: 'thennowTip',
+								className: 'tooltip-thennow',
 								direction: 'top',
 								offset: [0, -18],
 								opacity: noTouch ? 1 : 0
 							});
 							marker.on('click', function() {
-								$('#' + feature.properties.id)[0].scrollIntoView({ block: 'center' });
-								$('#' + feature.properties.id).click();
+								$('a[data-fancybox=' + feature.properties.id + ']').parent()[0].scrollIntoView({ block: 'center' });
+								$('a[data-fancybox=' + feature.properties.id + ']').eq(0).trigger('click');
 							});
 							marker._leaflet_id = feature.properties.id;
 							imageOverlay.addLayer(marker);
 							return marker;
 						}
 					});
-					if (noTouch) $('#thennow img').hover(
-						function() { imageOverlay.getLayer(this.id).openTooltip(); highlightOutline(this.id, 1); },
-						function() { imageOverlay.getLayer(this.id).closeTooltip(); highlightOutline(this.id, 0); }
-					);
+					$('#thennow a')
+						.on('mouseenter', function() { imageOverlay.getLayer($(this).data('fancybox')).openTooltip(); highlightOutline($(this).data('fancybox'), 1); })
+						.on('mouseleave', function() { imageOverlay.getLayer($(this).data('fancybox')).closeTooltip(); highlightOutline($(this).data('fancybox'), 0); });
 					setPageTitle('Then and Now');
 					if (autoZoom) zoom_area();
 					else map.fireEvent('zoomend');
@@ -593,12 +594,12 @@ function tour(tName, tID, fromPermalink) {
 			setTour('racing');
 			break;
 		case 'motorTrail':
-			show_overpass_layer('(node["ref"~"^TMT"];node(5059264455);node(5059264456););', tName, {
+			show_overpass_layer('(node["ref"~"^MHT"];node(5059264455););', tName, {
 				bound: true,
 				forceBbox: false,
 				zoomTo: autoZoom
 			});
-			setPageTitle('The Motor Trail');
+			setPageTitle('Motoring Heritage Trail');
 			setTour('racing');
 			break;
 		case 'westBranch':
@@ -637,7 +638,7 @@ function tour(tName, tID, fromPermalink) {
 			$('.spinner').show();
 			// bomb radius outline
 			for (let x = 1; x <= 5; x++) imageOverlay.addLayer(L.circle([50.84150, 0.47150], {
-				className: 'ww2radius',
+				className: 'layer-ww2-radius',
 				color: '#888',
 				weight: 2,
 				fill: false,
@@ -685,20 +686,20 @@ function tour(tName, tID, fromPermalink) {
 					dateRange = [...new Set(dateRange.sort())];
 					// incident timeline
 					$('.leaflet-bottom.leaflet-right').prepend(
-						'<div id="inputWw2" class="leaflet-control leaflet-bar">' +
+						'<div id="control-ww2" class="leaflet-control leaflet-bar">' +
 							'<a title="Play timeline"><i class="fa-solid fa-circle-play fa-lg"></i></a>' +
 							'<div><i>Incident timeline. Click a marker for details.</i></div>' +
 							'<input value="' + dateRange.length + '" max="' + dateRange.length + '" data-oldvalue="' + dateRange.length + '"type="range">' +
 						'</div>'
 					);
-					L.DomEvent.disableClickPropagation($('#inputWw2')[0]).disableScrollPropagation($('#inputWw2')[0]);
-					$('#inputWw2 input').on('input', function() {
+					L.DomEvent.disableClickPropagation($('#control-ww2')[0]).disableScrollPropagation($('#control-ww2')[0]);
+					$('#control-ww2 input').on('input', function() {
 						if (this.value == dateRange.length) {
-							$('#inputWw2 div').html('<i>All incidents ' + dateFormat(dateRange[0], 'short') + ' to ' + dateFormat(dateRange[dateRange.length-1], 'short') + '</i>');
+							$('#control-ww2 div').html('<i>All incidents ' + dateFormat(dateRange[0], 'short') + ' to ' + dateFormat(dateRange[dateRange.length-1], 'short') + '</i>');
 							$('path.ww2bb').show();
 						}
 						else {
-							$('#inputWw2 div').html('Incidents up to ' + dateFormat(dateRange[this.value], 'long'));
+							$('#control-ww2 div').html('Incidents up to ' + dateFormat(dateRange[this.value], 'long'));
 							if (this.value < +$(this).data('oldvalue') || this.value - +$(this).data('oldvalue') !== 1) {
 								$('path.ww2bb').hide();
 								for (let d = 0; d <= this.value; d++) $('path.ww2-' + dateRange[d]).show();
@@ -708,20 +709,20 @@ function tour(tName, tID, fromPermalink) {
 						$(this).data('oldvalue', this.value);
 					});
 					// play incident timeline
-					$('#inputWw2 a').on('click', function() {
+					$('#control-ww2 a').on('click', function() {
 						const pauseInterval = function() {
 							clearInterval(wInterval);
 							wInterval = 0;
-							$('#inputWw2 a i').removeClass('fa-circle-pause').addClass('fa-circle-play');
-							$('#inputWw2 a').attr('title', 'Play timeline');
+							$('#control-ww2 a i').removeClass('fa-circle-pause').addClass('fa-circle-play');
+							$('#control-ww2 a').attr('title', 'Play timeline');
 						};
 						if ($(this).find('.fa-circle-play').length) {
 							$(this).attr('title', 'Pause timeline');
-							$('#inputWw2 a i').removeClass('fa-circle-play').addClass('fa-circle-pause');
-							if (+$('#inputWw2 input').val() >= +$('#inputWw2 input').attr('max')-1) $('#inputWw2 input').val(0).trigger('input');
+							$('#control-ww2 a i').removeClass('fa-circle-play').addClass('fa-circle-pause');
+							if (+$('#control-ww2 input').val() >= +$('#control-ww2 input').attr('max')-1) $('#control-ww2 input').val(0).trigger('input');
 							wInterval = setInterval(() => {
-								$('#inputWw2 input').val(+$('#inputWw2 input').val()+1).trigger('input');
-								if (+$('#inputWw2 input').val() >= +$('#inputWw2 input').attr('max')-1) pauseInterval();
+								$('#control-ww2 input').val(+$('#control-ww2 input').val()+1).trigger('input');
+								if (+$('#control-ww2 input').val() >= +$('#control-ww2 input').attr('max')-1) pauseInterval();
 							}, 250);
 						}
 						else pauseInterval();
@@ -1003,8 +1004,8 @@ function tour(tName, tID, fromPermalink) {
 		case 'wl1950':   /* fall through */
 		case 'wl1940':   /* fall through */
 		case 'wl1911':   /* fall through */
-		case 'raf1959': /* fall through */
-		case 'raf1946': /* fall through */
+		case 'raf1959':  /* fall through */
+		case 'raf1946':  /* fall through */
 		case 'raf1941c': /* fall through */
 		case 'arp1942':  /* fall through */
 		case 'mc1925':   /* fall through */
@@ -1021,7 +1022,7 @@ function tour(tName, tID, fromPermalink) {
 
 // focus on individual pois
 function tourFocus(tName, tID) {
-	if ($(window).width() < 768) $('.sidebar-close:visible').click();
+	if ($(window).width() < 768) $('.sidebar-close:visible').trigger('click');
 	if (actImgLayer === tName) setTimeout(function() {
 		if (imageOverlay.getLayers().length) imageOverlay.getLayer(tID).fire('click');
 		else iconLayer.getLayer(tID).fire('click');
@@ -1031,12 +1032,12 @@ function tourFocus(tName, tID) {
 
 // load references page, highlight and scroll to item
 function tourRef(tourVal, item) {
-	$('#tourList').val('zrefs').trigger('change');
-	$('#tourFrame').one('load', function() {
-		$(this).contents().find('#' + tourVal + ' > li').eq(item - 1).css({
+	$('#tour-controls-list').val('zrefs').trigger('change');
+	$('#tour-frame').one('load', function() {
+		$(this).contents().find('#reference-' + tourVal + ' > li').eq(item - 1).css({
 			'background-color': $('html').css('--main-color') + '22',
 			'border-radius': '2px'
 		});
-		$(this).contents().find('#' + tourVal).prev()[0].scrollIntoView({ behavior: 'smooth' });
+		$(this).contents().find('#reference-' + tourVal).prev()[0].scrollIntoView({ behavior: 'smooth' });
 	});
 }

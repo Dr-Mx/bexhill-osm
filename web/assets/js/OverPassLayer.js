@@ -3,36 +3,36 @@
 let eleCache = [], queryBbox = '', queryCustom = false;
 function show_overpass_layer(query, cacheId, options) {
 	if (!query || query === '();') { setMsgStatus('fa-solid fa-circle-info', 'No Query', 'The OverpassAPI query string was empty.', 4); return; }
-	else if ($('#inputBbox').val() === 'screen' && !options.forceBbox && map.getZoom() < 15) { setMsgStatus('fa-solid fa-circle-info', 'Query Area Too Large', 'Please try zooming in to at least level 15.', 4); return; }
+	else if ($('#settings-bbox').val() === 'screen' && !options.forceBbox && map.getZoom() < 15) { setMsgStatus('fa-solid fa-circle-info', 'Query Area Too Large', 'Please try zooming in to at least level 15.', 4); return; }
 	else {
 		// show spinner, disable poi checkboxes
 		$('.spinner').show();
-		$('.poi-checkbox').addClass('poi-loading');
+		$('.pois-checkbox').addClass('pois-loading');
 		queryBbox = '[out:json]';
-		if ($('#inputAttic').val()) queryBbox += '[date:"' + new Date($('#inputAttic').val()).toISOString() + '"]';
+		if ($('#settings-overpass-attic').val()) queryBbox += '[date:"' + new Date($('#settings-overpass-attic').val()).toISOString() + '"]';
 		// select within an area, bypassed for single poi
 		if (options && options.bound) {
-			if ($('#inputBbox').val() === 'area_id' && !options.forceBbox) {
+			if ($('#settings-bbox').val() === 'area_id' && !options.forceBbox) {
 				queryBbox += ';rel(' + osmRelation + ');map_to_area->.a';
-				query = query.replace(/\[/g, '(area.a)[');
+				query = query.replaceAll('[', '(area.a)[');
 			}
-			else if ($('#inputBbox').val() === 'bbox' || options.forceBbox) {
+			else if ($('#settings-bbox').val() === 'bbox' || options.forceBbox) {
 				queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
 				cacheId += cacheId ? 'BB' : '';
 			}
-			else if ($('#inputBbox').val() === 'screen' && !options.forceBbox) {
+			else if ($('#settings-bbox').val() === 'screen' && !options.forceBbox) {
 				queryBbox += '[bbox:' + [map.getBounds()._southWest.lat, map.getBounds()._southWest.lng, map.getBounds()._northEast.lat, map.getBounds()._northEast.lng].join(',') + ']';
 				cacheId = '';
 			}
 		}
 		queryBbox += ';(' + query + ');';
 		queryCustom = options && options.custom ? true : false;
-		$('#btnExportQuery').prop('disabled', false);
+		$('#settings-overpass-export').prop('disabled', false);
 	}
 	const opl = new L.OverPassLayer({
-		debug: $('#inputDebug').is(':checked'),
+		debug: $('#settings-debug').is(':checked'),
 		query: queryBbox + 'out geom qt ' + maxOpResults + ';',
-		endpoint: 'https://' + $('#inputOpServer').val() + '/api/interpreter',
+		endpoint: 'https://' + $('#settings-overpass-server').val() + '/api/interpreter',
 		callback: callback,
 		cacheId: cacheId ? 'OPL' + cacheId : '',
 		zoomTo: (options && options.zoomTo) || false
@@ -59,18 +59,18 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		const reference = { instance: self };
 		if (self.options.debug) console.debug('Overpass query:', encodeURI(url));
 		// check if cached in variable
-		if (eleCache[self.options.cacheId] && !$('#inputAttic').val() && $('#inputOpCache').val() > 0) {
+		if (eleCache[self.options.cacheId] && !$('#settings-overpass-attic').val() && $('#settings-overpass-cache').val() > 0) {
 			self.options.callback.call(reference, eleCache[self.options.cacheId]);
 			if (self.options.zoomTo) zoom_area();
-			if (self.options.debug) console.debug('Query received from eleCache.', self.options.cacheId);
+			if (self.options.debug) console.debug('Query received from eleCache.' + self.options.cacheId);
 		}
 		// check if cached in localStorage and not expired
-		else if (noIframe && localStorageAvail() && !$('#inputAttic').val() && window.localStorage[self.options.cacheId] && $('#inputOpCache').val() > 0 &&
-			(new Date(JSON.parse(window.localStorage[self.options.cacheId]).osm3s.timestamp_osm_base).getTime()+(parseInt($('#inputOpCache').val())*60*60*1000) > new Date().getTime())) {
+		else if (noIframe && localStorageAvail() && !$('#settings-overpass-attic').val() && window.localStorage[self.options.cacheId] && $('#settings-overpass-cache').val() > 0 &&
+			(new Date(JSON.parse(window.localStorage[self.options.cacheId]).osm3s.timestamp_osm_base).getTime()+(parseInt($('#settings-overpass-cache').val())*60*60*1000) > new Date().getTime())) {
 				eleCache[self.options.cacheId] = JSON.parse(window.localStorage[self.options.cacheId]);
 				self.options.callback.call(reference, eleCache[self.options.cacheId]);
 				if (self.options.zoomTo) zoom_area();
-				if (self.options.debug) console.debug('Query received from localStorage.', self.options.cacheId);
+				if (self.options.debug) console.debug('Query received from localStorage.' + self.options.cacheId);
 		}
 		// get from overpass
 		else $.ajax({
@@ -85,14 +85,14 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						'circle-info',
 						'No places found',
 						'Please try another area or query.' +
-						($('#inputAttic').val() && ($('#inputBbox').val() === 'area_id') ? '<br>When using attic data, try changing the bounding box to something other than ' + $('#inputBbox option:selected').text() + '.' : '')
+						($('#settings-overpass-attic').val() && ($('#settings-bbox').val() === 'area_id') ? '<br>When using attic data, try changing the bounding box to something other than ' + $('#settings-bbox option:selected').text() + '.' : '')
 					);
 					// if not in iframe, cache to local storage
-					if (self.options.cacheId && poiList.length && !$('#inputAttic').val()) {
+					if (self.options.cacheId && poiList.length && !$('#settings-overpass-attic').val()) {
 						eleCache[self.options.cacheId] = xml;
 						if (noIframe && localStorageAvail()) window.localStorage[self.options.cacheId] = JSON.stringify(xml);
 					}
-					if (self.options.debug) console.debug('Query received from ' + $('#inputOpServer').val());
+					if (self.options.debug) console.debug('Query received from server ' + $('#settings-overpass-server option:selected').text());
 				}
 				else self.options.statusMsg('face-frown', 'Error', 'Bad response from data server. Please try again later.');
 			},
@@ -109,11 +109,11 @@ L.OverPassLayer = L.FeatureGroup.extend({
 								return;
 							}
 							// fallback to main overpass server if failed on alternative
-							if ($('#inputOpServer').val() !== $('#inputOpServer option').eq(0).val()) {
+							if ($('#settings-overpass-server').val() !== $('#settings-overpass-server option').eq(0).val()) {
 								const that = this;
-								that.url = this.url.replace($('#inputOpServer').val(), $('#inputOpServer option').eq(0).val());
+								that.url = this.url.replace($('#settings-overpass-server').val(), $('#settings-overpass-server option').eq(0).val());
 								$.ajax(that);
-								$('#inputOpServer').prop('selectedIndex', 0);
+								$('#settings-overpass-server').prop('selectedIndex', 0);
 								return;
 							}
 							else {
@@ -134,7 +134,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				}
 			},
 			error: function() {
-				if ($('#inputDebug').is(':checked')) console.debug('ERROR OVERPASS:', encodeURI(this.url));
+				if ($('#settings-debug').is(':checked')) console.debug('ERROR OVERPASS:', encodeURI(this.url));
 			}
 		});
 	},
@@ -145,7 +145,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 	onRemove: function(map) {
 		L.LayerGroup.prototype.onRemove.call(this, map);
 		this._ids = {};
-		$('#msgStatus').hide();
+		$('#modal').hide();
 		map.off({ 'moveend': this.onMoveEnd }, this);
 		this._map = null;
 	}

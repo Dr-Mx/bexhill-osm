@@ -1,7 +1,7 @@
 {
     "data_format": 1,
     "data_url": "https://bexhill-osm.org.uk/assets/data/taginfo.json",
-	"data_updated": "20231012T200000Z",
+	"data_updated": "20240121T200000Z",
     "project": {
         "name": "Bexhill OpenStreetMap",
         "description": "A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.",
@@ -64,10 +64,10 @@
             "key": "url:bexhillnature",
             "description": "URL path to an article on Bexhill Nature website, linked in an elements popup."
         }, {
-            "key": "url:booking_com",
-            "description": "URL path to accommodation on Booking.com, linked in an elements popup."
+            "key": "website:booking",
+            "description": "Full URL to accommodation on Booking.com, linked in an elements popup."
         }, {
-            "key": "url:ordering",
+            "key": "website:orders",
             "description": "Full URL to online food ordering for restaurants, linked in an elements popup."
         }, {
             "key": "naptan:AtcoCode",

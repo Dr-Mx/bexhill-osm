@@ -5,11 +5,11 @@
 <!-- Schema created by Alexis Markwick, Bexhill OpenStreetMap, 2020 -->
 
 <book>
-<info>
+ <info>
 	<title>The Story of Bexhill Street Names</title>
 	<url>https://bexhill-osm.org.uk/streetnames</url>
-</info>
-<streetNames>
+ </info>
+ <street-names>
 	<!-- A -->
 	<street>
 		<name>Abbey View</name>
@@ -41,12 +41,12 @@
 		<desc>Viscount Alexander of Hillsborough (1885 to 1965) was a British Labour Co-operative politician who was the First Lord of the Admiralty on three occasions. (Eden Drive and Winston Drive are nearby). (Adopted by Borough of Bexhill, 27th June 1962).</desc>
 		<adopted>1962-06-27</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Alexander Road</name>
 		<date>1902 to 1917</date>
 		<desc>Previous name for the road between the present-day Woodsgate Park and Woodgate Avenue; now part of London Road.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Alexandra Road</name>
 		<date>1897 to 1930</date>
 		<desc>Previous name for the road between Cambridge Road and Sedgewick Road; now part of London Road. Initially this road ran at right angles to both Albert Road {1} and Victoria Road {1}. The name is probably derived from Queen Victoria's first given name, Alexandrina.</desc>
@@ -159,12 +159,6 @@
 		<adopted>1970-02-01</adopted>
 	</street>
 	<street>
-		<name>Bancroft Road</name>
-		<date>1901</date>
-		<desc>The origin of the name remains unknown. (Adopted by Borough of Bexhill 30th April 1958).</desc>
-		<adopted>1958-04-30</adopted>
-	</street>
-	<street>
 		<name>Bank Road</name>
 		<date>1936</date>
 		<desc>Descriptive name for this road which leads up a slope away from Ninfield Road. (Adopted by Borough of Bexhill 2nd January 1957).</desc>
@@ -191,7 +185,7 @@
 		<desc>The former manor of Barnhorne, first described in the 12th century, is on the western side of Bexhill. The name may be derived from Byrnahorna meaning Byrna's corner of land. Modern maps still show variations of spelling including Barnhorne Farm, Barnhorn Oast Farm and Barnhorne Hill Farm. This close was previously known as Northeye Close until 1971. (Adopted by Borough of Bexhill 3rd January 1962).</desc>
 		<adopted>1962-01-03</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Barnhorn Lane</name>
 		<date>before 1841 to 1889</date>
 		<desc>This is an old parish lane now known as Barnhorn Road. Some early maps record this road as Barnhorn Hill. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825.</desc>
@@ -305,18 +299,12 @@
 		<desc>Near here the former independent preparatory school, Bicton Place, was opened by Mr Harry and Mr Carr in 1927 and closed about 1929. (Adopted by Borough of Bexhill 25th October 1961).</desc>
 		<adopted>1961-10-25</adopted>
 	</street>
-	<street>
-		<name>Bidwell Avenue</name>
-		<date>1936</date>
-		<desc>The origin of the name remains unknown. (Adopted by Borough of Bexhill, 1st part 28th June 1937 and last part 26th March 1958).</desc>
-		<adopted>1937-06-28;1958-03-26</adopted>
-	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Biggs Hill</name>
 		<date>before 1841 to 1881</date>
 		<desc>Later known as Haddocks Hill but now part of present-day Wrestwood Road. Thomas Bigg was a local 18th century farmer at the former Cowlands Farm on Wrestwood Road. It ran from the present-day junction of Ninfield Road to about the junction of Chantry Avenue and Wrestwood Road. The outline of the road can be seen on an Ordnance Survey map 1795-1825.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Birchington Avenue</name>
 		<date>1925 to 1955</date>
 		<desc>Built across land which previously formed part of Birchington and Little Birchington Farms. The name may be derived from a 12th century person’s name of Bychinton or Bychyngton. This avenue ran from the present-day Cooden Sea Road then north of the site of the former Metropolitan Convalescent Home across Kewhurst Avenue and along part of the present-day Gillam Wood Road.</desc>
@@ -411,15 +399,10 @@
 		<date>1986</date>
 		<desc>Perhaps a misspelling of 'Bracken', a common name of a genus of coarse ferns (Pteridium) belonging to the Dennstaedtiaceae family. Also note the alternative name 'Brackern Close' which differs to the road signs.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Braggs Lane</name>
 		<date>before 1841 to 1912</date>
 		<desc>This lane ran from about the present-day junction of Eastwood Road and Little Common Road past the junction of Holmesdale Road and Collington Avenue and across the railway as a level crossing at Collington Halt. The present-day footbridge over the railway was built in 1912 to replace the level crossing. The lane no longer exists but its outline can be seen on an Ordnance Survey map 1795 to 1825. Braggs Wood covered much of the area later used for Bexhill West Station and goods yard. In addition there was a Braggs Farm, which was also known as Fatlands, in this area.</desc>
-	</street>
-	<street>
-		<name>Bramlea Close</name>
-		<date>2006</date>
-		<desc>The origin of the name remains unknown. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
 	<street>
 		<name>Brampton Avenue</name>
@@ -623,12 +606,6 @@
 		<adopted>1987-02-01</adopted>
 	</street>
 	<street>
-		<name>Chalden Place</name>
-		<date>1972</date>
-		<desc>The origin of this name remains unknown. (Date of adoption by Borough of Bexhill uncertain but there is an agreement to adopt the road dated 15th February 1967).</desc>
-		<adopted>1967-02-15</adopted>
-	</street>
-	<street>
 		<name>Chandler Road</name>
 		<date>road ~1886; name 1908</date>
 		<desc>The origin of this name remains uncertain but it has been suggested that a builders yard in the area was run by a Mr Chandler and the name for the road came into common usage. Although street directories published around 1908 show houses in this road occupied by people with the surname Chandler, the directories do not give their occupations. This road was known as Hamilton Road until 1907. (Adopted by Borough of Bexhill 3rd March 1902).</desc>
@@ -672,7 +649,6 @@
 		<name>Chapel Walk</name>
 		<date>2009</date>
 		<desc>In the grounds of the former Nazareth House which included a chapel consecrated at the Feast of the Immaculate Conception. Opened in 1894, this was a home for the elderly, the poor and orphaned girls run by the Sisters of Nazareth. An east wing was added in 1937 which housed a primary school run by the Sisters. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
-		<adopted>2014-01</adopted>
 	</street>
 	<street>
 		<name>Charter Grove</name>
@@ -692,14 +668,9 @@
 		<adopted>1971-09-27;1972-08-07</adopted>
 	</street>
 	<street>
-		<name>Chelgates</name>
-		<date>after 1974 but before 1995</date>
-		<desc>The origin of this name remains unknown. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
-	</street>
-	<street>
 		<name>Chelsea Close</name>
 		<date>road 1905; name 1965</date>
-		<desc>The origin of this name remains unknown. Maybe the developer or landowner had connections with London. Previously known as Manor Lane before the modern housing development. (Adopted by Borough of Bexhill 12th August 1968).</desc>
+		<desc>The origin of this name remains unknown. Previously known as Manor Lane before the modern housing development. (Adopted by Borough of Bexhill 12th August 1968).</desc>
 		<adopted>1968-08-12</adopted>
 	</street>
 	<street>
@@ -738,12 +709,12 @@
 		<desc>Leads up the hill from Cooden Sea Road towards St Mark's Church. The street directories between about 1915 and 1927 usually name this road Churchill Avenue. (Adopted by Borough of Bexhill 27th April 1955).</desc>
 		<adopted>1955-04-27</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Church Hill</name>
 		<date>before 1841 to 1912</date>
 		<desc>Sometimes referred to as Church Hill Road, this is now part of the present-day Little Common Road. It ran from the Little Common roundabout, past St Marks Church until about the junction with the present-day White Hill Avenue. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Church Road</name>
 		<date>1902 to 1917</date>
 		<desc>Usually referred to as St Stephen's Road, but called Church Road on some maps, this road was part of the Woodsgate Park Estate near St Stephen's Church close to the present-day Park Lane.</desc>
@@ -766,7 +737,7 @@
 		<desc>Thomas, Baron Brassey, 1st Earl Brassey (1836 to 1918), was the eldest son of Thomas Brassey, the great railway contractor. The second Thomas Brassey was Bexhill Borough Mayor, 1907 to 1908. He also received the Freedom of the Borough in 1907. Claremont, a Venetian Gothic house, in Hastings was the name of his residence before moving to Normanhurst Court at Catsfield. Claremont became the Brassey Institute and now houses Hastings public library. His daughter, Muriel, married Viscount Cantelupe, later 8th Earl De La Warr, in 1891. (Adopted by Borough of Bexhill 25th April 1956).</desc>
 		<adopted>1956-04-25</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Clarence Street</name>
 		<date>1899 to c1932</date>
 		<desc>King William IV (1765 to 1837), who was Queen Victoria's predecessor, was created Duke of Clarence and St Andrews in 1789 before his accession in 1830. This street ran from Ninfield Road to the corner with Camperdown Street until about 1932. It is now part of the present-day Camperdown Street.</desc>
@@ -863,7 +834,7 @@
 		<desc>The name Collington is probably derived from Cola's farmstead. This avenue is situated in the area previously occupied by Great Collington Farm. (Taken over as a Public Highway by the Local Board of Bexhill in 1884).</desc>
 		<adopted>1884</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Collington Lane</name>
 		<date>before 1841 to 1958</date>
 		<desc>Old parish lane which was divided into East and West following extensive housing development in the surrounding area during the 1950s. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825.</desc>
@@ -923,10 +894,10 @@
 	<street>
 		<name>Cooden Close</name>
 		<date>1962</date>
-		<desc>The former manor of Cooden is on costal land at the eastern side of Bexhill. John de Coding was the first tenant in the 11th century. (Adopted by Borough of Bexhill, 1st part 6th November 1967 and last part 30th June 1969).</desc>
+		<desc>The former manor of Cooden is on costal land at the western side of Bexhill. John de Coding was the first tenant in the 11th century. (Adopted by Borough of Bexhill, 1st part 6th November 1967 and last part 30th June 1969).</desc>
 		<adopted>1967-11-06;1969-06-30</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Cooden Down</name>
 		<date>before 1861 to 1917</date>
 		<desc>The road and area between Little Common and the sea at Cooden Beach, which is now part of present-day Cooden Sea Road, was previously known as Cooden Down.</desc>
@@ -934,13 +905,13 @@
 	<street>
 		<name>Cooden Drive</name>
 		<date>tramway 1906; road 1914</date>
-		<desc>The former manor of Cooden is on costal land at the eastern side of Bexhill. John de Coding was the first tenant in the 11th century. The Hastings Tramways line was extended from Marina to Cooden Beach, via Egerton Road and Brockley Road and opened on 28th July 1906. At that time the greater part of this section of line ran through open cornfields. In 1914 work began to make up the road and this was completed in 1918. Between about 1915 and 1916 the section of road closer to Cooden was called Cooden Beach in the street directories. The tramway service ended during 1929 and the tracks were eventually removed. (Adopted by Borough of Bexhill, Richmond Road to Brockley Road 30th November 1925. Also adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
+		<desc>The former manor of Cooden is on costal land at the western side of Bexhill. John de Coding was the first tenant in the 11th century. The Hastings Tramways line was extended from Marina to Cooden Beach, via Egerton Road and Brockley Road and opened on 28th July 1906. At that time the greater part of this section of line ran through open cornfields. In 1914 work began to make up the road and this was completed in 1918. Between about 1915 and 1916 the section of road closer to Cooden was called Cooden Beach in the street directories. The tramway service ended during 1929 and the tracks were eventually removed. (Adopted by Borough of Bexhill, Richmond Road to Brockley Road 30th November 1925. Also adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
 		<adopted>1925-11-30</adopted>
 	</street>
 	<street>
 		<name>Cooden Sea Road</name>
 		<date>road ~1841; name 1930</date>
-		<desc>The former manor of Cooden is on costal land at the eastern side of Bexhill. John de Coding was the first tenant in the 11th century. This road was simply known as Sea Road until 1929. Occasionally Cooden Sea Lane has been noted in the records. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825. When the railway came to Bexhill in 1846 it was necessary to establish cattle arches at Cooden Beach, Westcourt Drive, Sackville Road and Glyne Gap, to enable farmers north of the railway line to move their stock to summer grazing on the low-lying marshland to the south of the railway. Because of the increasing volume and size of road traffic the cattle arch was later demolished and replaced by a number of bridges. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
+		<desc>The former manor of Cooden is on costal land at the western side of Bexhill. John de Coding was the first tenant in the 11th century. This road was simply known as Sea Road until 1929. Occasionally Cooden Sea Lane has been noted in the records. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825. When the railway came to Bexhill in 1846 it was necessary to establish cattle arches at Cooden Beach, Westcourt Drive, Sackville Road and Glyne Gap, to enable farmers north of the railway line to move their stock to summer grazing on the low-lying marshland to the south of the railway. Because of the increasing volume and size of road traffic the cattle arch was later demolished and replaced by a number of bridges. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
 		<adopted>unknown</adopted>
 	</street>
 	<street>
@@ -994,7 +965,7 @@
 	<street>
 		<name>Cranleigh Close</name>
 		<date>1964</date>
-		<desc>The origin of this name is uncertain. Cranleigh can mean a woodland clearing frequented by cranes and herons. It is also the name of a town in Surrey. This cul-de-sac is adjacent to the site of the former St John's School for Girls, opened in 1910, which became the Royal Merchant Navy School from 1947. The school buildings were demolished and replaced in 1972 by Thrift House, the headquarters for Hastings and Thanet Building Society and now Conquest House, home to Hastings Direct insurance services. However no link between these schools or businesses and Cranleigh has been established yet. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
+		<desc>John Ernest Stanley Griffiths,  a family solicitor in Bexhill, owned 23A Sutherland Road, a small detached 2-bedroomed house, which he had converted after the war from some stables/garage. This property backed onto a disused apple orchard into which Cranleigh Close eventually provided access from Collington Avenue. The origin of this name is uncertain. Cranleigh can mean a woodland clearing frequented by cranes and herons. It is also the name of a town in Surrey. This cul-de-sac is adjacent to the site of the former St John's School for Girls, opened in 1910, which became the Royal Merchant Navy School from 1947. The school buildings were demolished and replaced in 1972 by Thrift House, the headquarters for Hastings and Thanet Building Society and now Conquest House, home to Hastings Direct insurance services. However no link between these schools or businesses and Cranleigh has been established yet. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
 	<street>
 		<name>Cranston Avenue</name>
@@ -1014,7 +985,7 @@
 		<desc>Built on a former estate owned by the Cranston family since the 18th century. Built along a gentle slope between Cranston Avenue and Walton Park. (Adopted by Borough of Bexhill 30th January 1939).</desc>
 		<adopted>1939-01-30</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Crescent Drive</name>
 		<date>1925 to 1926</date>
 		<desc>Descriptive name for this curving street. Now known as Popps Lane.</desc>
@@ -1037,7 +1008,7 @@
 		<desc>Crowmere was a small estate to the east of Holliers Hill which was absorbed by the Manor of Bexhill in the 18th century. According to a tithe map / schedule of 1839 / 1843 this area was called Crowmare and was owned by the Earl of Amherst. Between 1924 to 1928 the local street directories included Woodsgate Park Estate within Crowmere Avenue. (Adopted by Borough of Bexhill 22nd July 1935).</desc>
 		<adopted>1935-07-22</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Crowmere Crescent</name>
 		<date>1932 to 1934</date>
 		<desc>Now known as St Patrick's Crescent.</desc>
@@ -1075,12 +1046,6 @@
 		<name>Daisy Way</name>
 		<date>2020</date>
 		<desc>Daisy is the common name of a species of flowering plants belonging to the Asteraceae family. (Bluebell Close, Buttercup Close, Clover Way, Daffodil Way, Foxglove Avenue, Snowdrop Way, Tulip Way and Orchid Way are nearby).</desc>
-	</street>
-	<street>
-		<name>Dalehurst Road</name>
-		<date>1937</date>
-		<desc>Origin of this name remains unknown. (Adopted by Borough of Bexhill 25th February 1953).</desc>
-		<adopted>1953-02-25</adopted>
 	</street>
 	<street>
 		<name>Dallington Close</name>
@@ -1159,12 +1124,12 @@
 		<desc>Named after The Denbigh, a local public house and restaurant, which dates as the Denbigh Arms from between 1840 and 1863. The name is thought to have a Welsh origin maybe from Denbighshire. There is also a connection between a battalion under the command of Lord Abervenny (short for Abergavenny) being based in Bexhill during 1798 as the battalion included men from Wales, including Denbighshire.</desc>
 		<adopted>unknown</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Depot Road</name>
 		<date>road before 1881; name 1912 to 1927</date>
 		<desc>Although described in street directories as from Station Road to Reginald Road it was probably that section of present-day Station Road which runs along the side of Sainsbury's car-park. The South East and Chatham Railway goods yard was located here following the opening of the town's first railway in 1846.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Devonshire Place</name>
 		<date>square 1886; name 1910 to 1920</date>
 		<desc>Previously known as Station Yard then Station Square. Now known as Devonshire Square.</desc>
@@ -1197,12 +1162,12 @@
 		<desc>Descendants of Thomas Sackville would become Earls of Dorset from 1603 and Dukes of Dorset from 1714. The titles became extinct in 1843 when the unmarried 5th Duke died. The present-day road from De La Warr Parade to the junction of Magdalen Road and Ashdown Road. The level crossing over the railway closed soon after the then Manor Road (now Bridge Road) bridge was built in 1927 thereby creating two unequal parts to the present-day road. (Adopted by Borough of Bexhill, 1st part 20th October 1902, 2nd 3rd and 4th parts 20th December 1909 and 5th part 1915).</desc>
 		<adopted>1902-10-20;1909-12-20;1915</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Dorset Road {1}</name>
 		<date>1897 to 1898</date>
 		<desc>Descendants of Thomas Sackville would become Earls of Dorset from 1603 and Dukes of Dorset from 1714. The titles became extinct in 1843 when the unmarried 5th Duke died. The original Dorset Road ran from the present-day De La Warr Parade to Cantelupe Road. In 1899 the road was extended to the present-day De La Warr Road and named Lower Dorset Road. (See also Upper Dorset Road).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Dorset Road {2}</name>
 		<date>road 1899; name 1907 to 1929</date>
 		<desc>In 1907 both Lower Dorset Road and Upper Dorset Road were renamed as one road, Dorset Road, from De La Warr Parade to Hastings Road.</desc>
@@ -1242,6 +1207,11 @@
 		<date>1969</date>
 		<desc>Lord George Sackville (1716 to 1785), the third son of the 1st Duke of Dorset, inherited the house and estate of Drayton on the Leicestershire / Northamptonshire border from Lady Elizabeth Germain. He was created Viscount Sackville of Drayton and Baron Bolebrooke in 1782. This road is built along a gentle slope away from Collington Lane West. (Adopted by Borough of Bexhill 8th November 1971).</desc>
 		<adopted>1971-11-08</adopted>
+	</street>
+	<street>
+		<name>Drove Road</name>
+		<date>before 1778</date>
+		<desc>Farm track named after a group of animals moving together in a group.</desc>
 	</street>
 	<street>
 		<name>Druids Close</name>
@@ -1301,7 +1271,7 @@
 		<desc>Near here the former independent school called Effingham House School for Girls was opened by Miss Ismay in 1908, having moved to Bexhill from Folkestone. The school subsequently closed in about 1969. (Adopted by East Sussex County Council on an unknown date).</desc>
 		<adopted>unknown</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Egerton Park Road</name>
 		<date>1897 to 1904</date>
 		<desc>Charles Augustus Egerton of The Banks, Mountfield near Battle, married Mabelle Brassey, older sister of Muriel who was the first wife of Gilbert, 8th Earl De La Warr. Charles Egerton was a wealthy local farmer. Initially this road ran from the Sackville Road and Marina roundabout to Egerton Park. In 1904 the road was extended to Brockley Road and in 1905 the whole road was re-named Egerton Road.</desc>
@@ -1366,7 +1336,7 @@
 		<desc>The origin of the name remains uncertain but maybe named after Charles Shaw-Lefevre, 1st Viscount Eversley (1794 to 1888), a British Whig politician representing constituencies in Hampshire. He was the second longest serving Speaker of the House of Commons (1839 to 1857) as well as a Governor of the Isle of Wight. He died the year this road was first developed. The Eversley School for the Daughters of Gentlemen was founded at 43 Eversley Road in 1888 by the Misses Poulton. It closed about 1910 although the house is still there in January 2014. (Adopted by Borough of Bexhill 1st June 1894).</desc>
 		<adopted>1894-06-01</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Excelsior Road</name>
 		<date>1902 to 1917</date>
 		<desc>This was one of the original roads on the Woodsgate Park Estate. The street directories list the road for over fifteen years but without indicating its exact location. No map has yet been seen with this road marked on it.</desc>
@@ -1376,36 +1346,43 @@
 		<name>Fairfield Chase</name>
 		<date>after 1974 but before 1995</date>
 		<desc>Village in Kent, 5 miles north-east of Rye. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Fairlight Close</name>
 		<date>1966</date>
 		<desc>Village in East Sussex, 3 miles east of Hastings. (Adopted by Borough of Bexhill 7th November 1966).</desc>
+		<adopted>1996-11-07</adopted>
 	</street>
 	<street>
 		<name>Fairmount Road</name>
 		<date>1891</date>
 		<desc>Built on the former Fairmount Estate, which in 1887 was bordered approximately by the present-day Hastings Road, Elmstead Road, Dorset Road and De La Warr Road. In the 1886 street directory, Fairmount and Elmstead were both large detached houses on St Johns Road. Elmstead is still there in March 2013 but Fairmount was demolished in about 1923. Although Fairmount Road is close to Elmstead Road it is uncertain whether the two properties in St Johns Road had any influence on the choice of these two road names. (Adopted by Borough of Bexhill 20th October 1902).</desc>
+		<adopted>1902-10-20</adopted>
 	</street>
 	<street>
 		<name>Falconbury Drive</name>
 		<date>c1975</date>
 		<desc>Near here the former independent school called Falconbury Preparatory School for Boys was opened by Mr and Mrs Faulkner in 1930 and closed about 1968. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Faygate Close</name>
 		<date>1969</date>
 		<desc>Hamlet in West Sussex, 3 miles south-west of Crawley. (Adopted by Borough of Bexhill 1st February 1970).</desc>
+		<adopted>1970-02-01</adopted>
 	</street>
 	<street>
 		<name>Festival Gardens</name>
 		<date>1952</date>
 		<desc>Commemorates the 1951 Festival of Britain. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
+		<adopted>1956</adopted>
 	</street>
 	<street>
 		<name>Filsham Drive</name>
 		<date>1934</date>
 		<desc>Named after a nearby area of St Leonards-on-Sea, East Sussex. (Adopted by Borough of Bexhill 16th August 1971).</desc>
+		<adopted>1971-08-16</adopted>
 	</street>
 	<street>
 		<name>Filsham Lane</name>
@@ -1416,16 +1393,19 @@
 		<name>Findon Close</name>
 		<date>1968</date>
 		<desc>Village in West Sussex, 4 miles north of Worthing. (Adopted by Borough of Bexhill 3rd February 1969).</desc>
+		<adopted>1969-02-03</adopted>
 	</street>
 	<street>
 		<name>Firtree Close</name>
 		<date>1971</date>
 		<desc>Firs belong to the genus Abies and comprise around 50 species of evergreen coniferous trees. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Firle Road</name>
 		<date>1964</date>
 		<desc>Village in East Sussex, 4 miles east of Lewes. (Adopted by Borough of Bexhill 5th July 1965).</desc>
+		<adopted>1965-07-05</adopted>
 	</street>
 	<street>
 		<name>First Avenue</name>
@@ -1441,6 +1421,7 @@
 		<name>Fontwell Avenue</name>
 		<date>1970</date>
 		<desc>Village in West Sussex, 4 miles west of Arundel. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Four Turnings</name>
@@ -1451,6 +1432,7 @@
 		<name>Fowlers Close</name>
 		<date>1963</date>
 		<desc>The origin of the name remains uncertain but maybe it is the rural occupation of a fowler as a keeper of poultry; land in this area was previously meadows and orchards belonging to Hurchington Farm. (Bale Close and Riders Bolt are nearby). (Adopted by Borough of Bexhill 21st September 1970).</desc>
+		<adopted>1970-09-21</adopted>
 	</street>
 	<street>
 		<name>Foxglove Avenue</name>
@@ -1461,6 +1443,7 @@
 		<name>Foxhill</name>
 		<date>after 1974 but before 1983</date>
 		<desc>Foxes are wild animals belonging to the Canidae family who have red or grey fur, long narrow snouts and a bushy tail. (Badgers Mount, Deerswood Lane and Squirrel Close are nearby). (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Foxley Drive</name>
@@ -1471,26 +1454,30 @@
 		<name>Frant Avenue</name>
 		<date>1971</date>
 		<desc>Village in East Sussex, 5 miles south of Tunbridge Wells. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Frant Close</name>
 		<date>1971</date>
 		<desc>Village in East Sussex, 5 miles south of Tunbridge Wells. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Freshfields</name>
 		<date>1989</date>
-		<desc>Probably an attempt to project a positive public image to a road leading to Pebsham Landfill and Waste Water sites. (This road had not been adopted by East Sussex County Council).</desc>
+		<desc>A building developer called Freshfield Properties Ltd was based in Little Common in the 1980's. Alternatively it may just be an attempt to project a positive public image to a road leading to Pebsham Landfill and Waste Water sites. (This road had not been adopted by East Sussex County Council).</desc>
 	</street>
 	<street>
 		<name>Freezeland Lane</name>
 		<date>road ~1841; name c1930</date>
 		<desc>Old parish lane which in 1797 was described as Shortwood Lane leading from Friesland to Cobshill. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. Freezeland Farm is close to the junction of this lane with Ninfield Road. (Taken over as a Public Highway by the Local Board of Bexhill in 1884).</desc>
+		<adopted>1884</adopted>
 	</street>
 	<street>
 		<name>Fryatts Way</name>
 		<date>after 1974 but before 1984</date>
 		<desc>Charles F Fryatt was a local developer / builder and farmer at Oldborne or Little Broadoak Farm. This development was built on some of the farmland. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Furnells Way</name>
@@ -1501,17 +1488,20 @@
 		<name>Fyning Place</name>
 		<date>1971</date>
 		<desc>Hamlet in West Sussex, 6 miles west of Midhurst. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<!-- G -->
 	<street>
 		<name>Gainsborough Road</name>
 		<date>after 1974 but before 1997</date>
 		<desc>Thomas Gainsborough (1727 to 1788) was an English portrait and landscape painter. (Constable Way, Reynolds Drive and Turner Close are nearby). (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Galley Hill View</name>
 		<date>c2000</date>
 		<desc>The origin of the name Galley Hill remains uncertain but probably it was an earlier Gallows Hill although there is no known evidence to confirm this. Galley Hill can be seen from here. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Galley Hill</name>
@@ -1522,6 +1512,7 @@
 		<name>Garden Close</name>
 		<date>1966</date>
 		<desc>Built in the grounds of a former large home called The Garden House which was built in the early 1950s and demolished about 1964. (Adopted by Borough of Bexhill 29th June 1970).</desc>
+		<adopted>1970-06-29</adopted>
 	</street>
 	<street>
 		<name>Garth Close</name>
@@ -1537,13 +1528,15 @@
 		<name>Gatelands Drive</name>
 		<date>1964</date>
 		<desc>Name probably relates to an entrance to the former Woodsgate Farm which was located very near here. There was also a Gatelands Guest House at 17 Amherst Road during the 1950s but no connection to Gatelands Drive has been established. (Adopted by Borough of Bexhill, 1st part 16th August 1965 and 2nd part 30th January 1967).</desc>
+		<adopted>1965-08-16;1967-01-30</adopted>
 	</street>
 	<street>
 		<name>Gavin Astor Close</name>
 		<date>1971</date>
 		<desc>Gavin Astor, 2nd Baron Astor of Hever (1918 to 1984), was a British soldier and publisher. (There is also a Hever Crescent in Bexhill). (Adopted by Borough of Bexhill 30th April 1973).</desc>
+		<adopted>1973-04-30</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Gay Close</name>
 		<date>1972 to 1974</date>
 		<desc>This road, without any properties, was listed in the street directories from 1972 to 1974, the last published directory. The road was described as being at 63 Gwyneth Close but that does not correspond to any present-day road development. Maybe this road was only a proposal which was never built.</desc>
@@ -1552,56 +1545,55 @@
 		<name>Georgian Close</name>
 		<date>1961</date>
 		<desc>The houses in this road resemble the Georgian style of architecture. (Adopted by Borough of Bexhill 30th January 1963).</desc>
+		<adopted>1963-01-30</adopted>
 	</street>
 	<street>
 		<name>Gibb Close</name>
 		<date>1957</date>
 		<desc>The origin of the name remains uncertain. Either the name relates to Alderman James Gibb who was Bexhill Borough Mayor, 1920 to 1921, he also farmed Glyne Farm, or Councillor Ronald Gibb, CBE who was Bexhill Borough Mayor, 1922 to 1923. Maybe the road name commemorates them both as they have the same surname and their mayorships were consecutive. (Adopted by Borough of Bexhill 28th January 1959).</desc>
+		<adopted>1959-01-28</adopted>
 	</street>
 	<street>
 		<name>Gillham Wood Avenue</name>
 		<date>1927</date>
 		<desc>George Gillham (1773 to 1831), leader of the ruthless Little Common Gang of smugglers, is said to have had a hide-out in these woods. Later the Gillham family became builders and carpenters and were responsible for much of the 19th century development of Little Common. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Gillham Wood Road</name>
 		<date>road 1925; name 1928</date>
 		<desc>George Gillham (1773 to 1831), leader of the ruthless Little Common Gang of smugglers, is said to have had a hide-out in these woods. Later the Gillham family became builders and carpenters and were responsible for much of the 19th century development of Little Common. Part of this road between Kewhurst Avenue and Tilgate Drive previously formed part of the former Birchington Avenue. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Glassenbury Drive</name>
 		<date>1925</date>
 		<desc>Village in Kent, 2 miles west of Cranbrook. (Adopted by Borough of Bexhill 30th September 1959).</desc>
+		<adopted>1959-09-30</adopted>
 	</street>
 	<street>
 		<name>Glebe Close</name>
 		<date>after 1974 but before 1995</date>
 		<desc>A glebe, also known as a Church furlong, means an area of land the income from which is used to support a clergyman. Over the years St Peters Church has held land in Kewhurst, Collington and Peartree Lane although documentary proof that the land upon which this development has taken place belonged to the Church has not yet been established. (Adopted by East Sussex County Council on an unknown date).</desc>
-	</street>
-	<street>
-		<name>Glenburn Close</name>
-		<date>2000</date>
-		<desc>The origin of the name remains unknown. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Gleneagles Close</name>
 		<date>after 1974 but before 1995</date>
 		<desc>Gleneagles in Perthshire, Scotland, is home to three championship golf courses. This close is built near the former Bexhill Golf Club course on Galley Hill and the adjacent land north of the railway line. (Links Drive and Sunningdale Close are nearby). (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Glenleigh Avenue</name>
 		<date>1939</date>
 		<desc>Alternative spelling for Glynleigh. Part of Pevensey Levels south of Hailsham, East Sussex, is called Glynleigh Level. (Adopted by Borough of Bexhill 27th May 1940).</desc>
+		<adopted>1940-05-27</adopted>
 	</street>
 	<street>
 		<name>Glenleigh Park Road</name>
 		<date>1937</date>
 		<desc>Alternative spelling for Glynleigh. Part of Pevensey Levels south of Hailsham, East Sussex, is called Glynleigh Level. Known simply as Glenleigh Park until 1939. (Adopted by Borough of Bexhill, 1st part 27th May 1940, 2nd part 27th June 1956 and last part 25th July 1956).</desc>
-	</street>
-	<street>
-		<name>Glenthorn Road</name>
-		<date>1935</date>
-		<desc>The origin of the name remains unknown. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
+		<adopted>1940-05-27;1956-06-27;1956-07-25</adopted>
 	</street>
 	<street>
 		<name>Gloucester Avenue</name>
@@ -1617,21 +1609,25 @@
 		<name>Glovers Lane</name>
 		<date>1895</date>
 		<desc>Lane leading to Glovers Farm to the north-east of Sidley Green. The name Glovers Farm can be seen in records as far back as 1567. (Adopted by Borough of Bexhill 25th April 1956).</desc>
+		<adopted>1956-04-25</adopted>
 	</street>
 	<street>
 		<name>Glyne Ascent</name>
 		<date>1925</date>
 		<desc>The former manor of Glyne, founded in the 16th century, was on coastal land at the eastern side of Bexhill. Glyne Manor Farm is recorded in 1263 as the home of John de Glynde. This road is built on a gentle slope between Hastings Road and De La Warr Road. (Adopted by Borough of Bexhill 29th October 1958).</desc>
+		<adopted>1958-10-29</adopted>
 	</street>
 	<street>
 		<name>Glyne Barn Close</name>
 		<date>1957</date>
 		<desc>The former manor of Glyne, founded in the 16th century, was on coastal land at the eastern side of Bexhill. Glyne Manor Farm is recorded in 1263 as the home of John de Glynde. (Adopted by Borough of Bexhill 29th April 1959).</desc>
+		<adopted>1959-04-29</adopted>
 	</street>
 	<street>
 		<name>Glyne Drive</name>
 		<date>1939</date>
 		<desc>The former manor of Glyne, founded in the 16th century, was on coastal land at the eastern side of Bexhill. Glyne Manor Farm is recorded in 1263 as the home of John de Glynde. (Adopted by Borough of Bexhill 29th April 1959).</desc>
+		<adopted>1959-04-29</adopted>
 	</street>
 	<street>
 		<name>Glyne Gap</name>
@@ -1642,11 +1638,7 @@
 		<name>Goodwood Close</name>
 		<date>1969</date>
 		<desc>Village in West Sussex, with a racecourse, 5 miles north of Chichester. (Plumpton Close and Paddock Close are nearby). (Adopted by Borough of Bexhill 30th June 1969).</desc>
-	</street>
-	<street>
-		<name>Gordon Place</name>
-		<date>1961</date>
-		<desc>The origin of the name remains unknown. (Adopted by Borough of Bexhill 1st March 1961).</desc>
+		<adopted>1969-06-30</adopted>
 	</street>
 	<street>
 		<name>Gotham</name>
@@ -1662,11 +1654,13 @@
 		<name>Grand Avenue</name>
 		<date>1940</date>
 		<desc>Originally called Grand Drive, this is a descriptive name probably meaning the main avenue linking First, Second and Third Avenues. (Date of adoption of part of this avenue by Borough of Bexhill or later East Sussex County Council not known; the other part had not been adopted by January 2014).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Grange Court Drive</name>
 		<date>1938</date>
 		<desc>Near here the former independent girls' school called Grange Court School was open during the 1930s. Miss Edkins had originally opened the school in Dorset Road during the 1920s. (Adopted by Borough of Bexhill, 1st part 30th April 1958 and last part 2nd February 1970).</desc>
+		<adopted>1958-04-30;1970-02-02</adopted>
 	</street>
 	<street>
 		<name>Grazebrook Close</name>
@@ -1677,34 +1671,45 @@
 		<name>Green Lane</name>
 		<date>1902</date>
 		<desc>A green lane usually describes an ancient track which provided farmers, drovers, pack-horses and horse-drawn carts with accessible routes through the countryside. (Adopted by Borough of Bexhill 24th April 1963).</desc>
+		<adopted>1963-04-24</adopted>
 	</street>
 	<street>
 		<name>Greenways</name>
 		<date>1959</date>
 		<desc>Greenway can mean a grassy country track. This land, as well as the small woodland on the opposite northern side of Turkey Road, was part of Clinch Green Wood. (Clinch Green Avenue is nearby). (Adopted by Borough of Bexhill 3rd January 1962).</desc>
+		<adopted>1962-01-03</adopted>
 	</street>
 	<street>
 		<name>Grenada Close</name>
 		<date>1969</date>
 		<desc>R A Larkin and Bros Ltd were major developers and house builders in Bexhill between 1924 to 1988. This Caribbean island was one of the Larkin family's holiday destinations. (Adopted by Borough of Bexhill 27th September 1971).</desc>
+		<adopted>1971-09-27</adopted>
+	</street>
+	<street>
+		<name>Gullivers Mews</name>
+		<date>2023</date>
+		<desc>Charles Gulliver came to Bexhill in 1925 and founded Gullivers Bowls Club in 1952. Gulliver was Managing Director of the London Theatres of Variety Limited, owning some thirty music halls, including the London Palladium and the Holborn Empire. He passed away in June 1961.</desc>
+		<source>https://gulliversbowlsclub.co.uk/pages/page_29698/history.aspx</source>
 	</street>
 	<street>
 		<name>Gunters Lane</name>
 		<date>~1841</date>
 		<desc>An old parish lane; the outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. There was a small tenement called Gunters at the corner of present-day Gunters Lane and Turkey Road; it was owned by John Gunter in the 17th century. (Taken over as a Public Highway by the Local Board of Bexhill in 1884).</desc>
+		<adopted>1884</adopted>
 	</street>
 	<street>
 		<name>Gwyneth Grove</name>
 		<date>1967</date>
 		<desc>Family forename of one of the developers surnames, Davey-Casselden Limited. (Allen Way, Amanda Close, Angela Close, Christine Close, Diana Close, Ian Close and Lesley Close are nearby). (Adopted by Borough of Bexhill 7th February 1972).</desc>
+		<adopted>1972-02-07</adopted>
 	</street>
 	<!-- H -->
-	<street style="old">
+	<street style="bygone">
 		<name>Haddocks Hill</name>
 		<date>road before 1841; name 1881 to 1936</date>
 		<desc>Previously known as Biggs Hill, then called Haddocks Hill after Mr Shoesmith, a fisherman, who lived in Haddocks House and was nicknamed "Haddock's Eyes". In some records between about 1890 and 1920 it is called Haddocks Hill Road. It ran from the present-day junction of Ninfield Road to about the junction of Chantry Avenue and Wrestwood Road; it is now part of Wrestwood Road. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Hamilton Road</name>
 		<date>before 1886 to 1907</date>
 		<desc>Now known as Chandler Road.</desc>
@@ -1713,21 +1718,25 @@
 		<name>Hamilton Terrace</name>
 		<date>1898</date>
 		<desc>The origin of the name remains uncertain. Either there is an unidentified link to the Dukes of Hamilton in Scotland, remembering Sutherland Avenue, also with possible Scottish links, was developed at the same time. Maybe there is a connection to Hamilton Hall, now the Bexhill Christian Assembly, which was originally a corrugated iron building opened on Hamilton Terrace and Eastwood Road in 1898. Hamilton is also the name of a village in south Lancashire. (Adopted by Borough of Bexhill 3rd March 1902).</desc>
+		<adopted>1902-03-03</adopted>
 	</street>
 	<street>
 		<name>Hanover Close</name>
 		<date>1959</date>
 		<desc>Built near the site of the Kings German Legion's barracks, 1804 to 1814. These troops were Hanoverians. (Barrack Road is nearby). (Adopted by Borough of Bexhill 26th June 1963).</desc>
+		<adopted>1963-06-26</adopted>
 	</street>
 	<street>
 		<name>Harewood Close</name>
 		<date>1973</date>
 		<desc>Near here the former independent school called Harewood Preparatory School for Boys was opened by the Reverend Whicker in 1920. It amalgamated with its neighbouring school Normandale in 1963, finally closing in 1971. (Normandale is nearby). (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Hartfield Road</name>
 		<date>1924</date>
 		<desc>Village in East Sussex, 7 miles south-west of Tunbridge Wells. Buckhurst Park, the ancestral home of the Sackville family since the 16th century, is near this village. (Adopted by Borough of Bexhill 13th March 1967).</desc>
+		<adopted>1967-03-13</adopted>
 	</street>
 	<street>
 		<name>Hartfield Place</name>
@@ -1738,8 +1747,9 @@
 		<name>Haslam Crescent</name>
 		<date>1933</date>
 		<desc>The origin of the name is uncertain but on 2nd June 1931 land at Pebsham was purchased by an Ethel Clarice Haslam. (Adopted by Borough of Bexhill, 1st part 24th April 1963 and last part 15th August 1966).</desc>
+		<adopted>1963-04-24;1966-08-15</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Hastings Lane</name>
 		<date>before 1841 to 1887</date>
 		<desc>Neighbouring town in East Sussex. This lane was once part of the medieval "King's Highway" leading from Bexhill to Hastings. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. Now known as Hastings Road.</desc>
@@ -1748,11 +1758,13 @@
 		<name>Hastings Road</name>
 		<date>road ~1841; name 1888</date>
 		<desc>Neighbouring town in East Sussex. This lane was once part of the medieval “King's Highway” leading from Bexhill to Hastings. Previously known as Hastings Lane. The present-day road is split into two unequal parts by King Offa Way. (Part adopted at an unknown date as a publicly maintainable highway [Trunk Road] under the 1835 Highways Act) and part taken over as a Public Highway by the Local Board of Bexhill in 1884).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Havelock Road</name>
 		<date>road ~1886; name 1899</date>
 		<desc>Major-General Sir Henry Havelock KCB (1795 to 1857) was the hero of the relief of Lucknow (1857) during the Indian Mutiny. This road was previously known as Albert Road. (Adopted by Borough of Bexhill 3rd March 1902).</desc>
+		<adopted>1902-03-03</adopted>
 	</street>
 	<street>
 		<name>Haven Brook Avenue</name>
@@ -1763,16 +1775,19 @@
 		<name>Hawkhurst Way</name>
 		<date>1961</date>
 		<desc>Village in Kent, 10 miles south-east of Tunbridge Wells. This road is now continuous with Withyham Road which was developed in 1924. (Adopted by Borough of Bexhill, 1st part 4th July 1966, 2nd part 3rd February 1969 and 3rd part 26th April 1971).</desc>
+		<adopted>1966-07-04;1969-02-03;1971-04-26</adopted>
 	</street>
 	<street>
 		<name>Hawthorn Avenue</name>
 		<date>after 1974 but before 1996</date>
 		<desc>Hawthorn, also known as thornapple and hawberry, belongs to the genus Crataegus and comprises a large group of shrubs and trees. This site used to be occupied by Seafield School, which in turn was used as a prisoner of war camp during the Second World War. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Hazel Grove</name>
 		<date>2004</date>
 		<desc>Hazels are deciduous trees and large shrubs belonging to the genus Corylus. The nuts of all hazels are edible. (Alder Gardens, Elm Close, Hornbeam Avenue and Poplar Close are nearby). (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Hazelwood Close</name>
@@ -1788,16 +1803,19 @@
 		<name>Heighton Close</name>
 		<date>c1975</date>
 		<desc>South Heighton is a village in East Sussex, 1 mile north of Newhaven. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Herbrand Walk</name>
 		<date>road ~1841; name 1925</date>
 		<desc>Earliest known ancestor of the Sackville family is Herbrand de Salcherville or Salkaville from the name of the village of Saqueville between Dieppe and Longueville, France. Herbrand is also a Christian name of both the 9th and 10th Earls De La Warr. The 8th Earl developed the Cooden Beach Golf Club in 1912 and the 9th Earl created the Cooden Beach Hotel in 1931. Herbrand Walk is adjacent to both properties. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825. (Adopted by Borough of Bexhill 30th November 1931).</desc>
+		<adopted>1931-11-30</adopted>
 	</street>
 	<street>
 		<name>Hever Crescent</name>
 		<date>1922</date>
 		<desc>Village in Kent, 7 miles north-west of Tunbridge Wells. Gavin Astor Close in Pebsham is derived from Gavin Astor, 2nd Baron Astor of Hever (1918 to 1984). (Adopted by Borough of Bexhill 24th November 1930).</desc>
+		<adopted>1930-11-24</adopted>
 	</street>
 	<street>
 		<name>High Branches</name>
@@ -1808,11 +1826,13 @@
 		<name>High Peartree Lane</name>
 		<date>road ~1841; name 1925</date>
 		<desc>Name sometimes used to describe Peartree Lane from the Turkey Road and Whydown Road crossroads to Ninfield Road. High Peartree Wood is at the southern end of High Woods. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>High Street</name>
 		<date>before 1841</date>
 		<desc>High streets were originally so named because they were in an elevated position, clear of flood water and likely to be easier to travel along, as is the case in Bexhill Old Town. Since these streets generally attracted shops and inns as a result, the name later became synonymous with the main street of a town.This is one of Bexhill’s old parish streets and its outline can be seen on an Ordnance Survey map 1795 to 1825.(Adopted at an unknown date as a publicly maintainable highway [Trunk Road] under the 1835 Highways Act until the opening of King Offa Way in 1980).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Highfield Gardens</name>
@@ -1823,26 +1843,31 @@
 		<name>Highlands Close</name>
 		<date>1958</date>
 		<desc>The Highlands is an area of high ground bordered by Turkey Road, Ninfield Road and Bexhill Cemetery. (Adopted by Borough of Bexhill 3rd January 1962).</desc>
+		<adopted>1962-01-03</adopted>
 	</street>
 	<street>
 		<name>Highwoods Avenue</name>
 		<date>1965</date>
 		<desc>Close to the High Woods; there are records for these woods since at least 1583. (Beech Close and Holly Close are nearby). (Adopted by Borough of Bexhill 11th August 1969).</desc>
+		<adopted>1969-08-11</adopted>
 	</street>
 	<street>
 		<name>Hillborough Close</name>
 		<date>c1995</date>
 		<desc>This close runs through the former back garden of a large detached house called Hillborough House, built in about 1948, which still stands on Little Common Road. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Hillcrest Avenue</name>
 		<date>1936</date>
 		<desc>Descriptive name for this avenue which runs on the top, or crest, of a hill. (Adopted by Borough of Bexhill, 1st part 28th June 1937 and last part 26th March 1958).</desc>
+		<adopted>1937-06-28;1958-03-26</adopted>
 	</street>
 	<street>
 		<name>Hillside Road</name>
 		<date>1924</date>
 		<desc>Descriptive name for this road which runs along the slope of a hill between London Road and Barrack Road. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
+		<adopted>1956</adopted>
 	</street>
 	<street>
 		<name>Holland Avenue</name>
@@ -1853,33 +1878,38 @@
 		<name>Holliers Hill</name>
 		<date>~1841</date>
 		<desc>Holliers field was on the east side of this road. Richard Hollier is recorded as living in this area in 1543. The outline of the road can be seen on an Ordnance Survey map 1795 to 1825. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Holly Close</name>
 		<date>1965</date>
 		<desc>Holly comprises 400 to 600 species of flowering plants in the genus Ilex. The plants are evergreen and deciduous trees, shrubs or climbers. (Beech Close and Highwoods Avenue are nearby). (Adopted by Borough of Bexhill 11th August 1969).</desc>
+		<adopted>1969-08-11</adopted>
 	</street>
 	<street>
 		<name>Holm Oak Close</name>
 		<date>1962</date>
 		<desc>Holm Oak is a large evergreen oak belonging to the genus Quercus. It is also called the Holly Oak as the word holm is an ancient name for holly. (Adopted by Borough of Bexhill 4th July 1966).</desc>
+		<adopted>1966-07-04</adopted>
 	</street>
 	<street>
 		<name>Holmesdale Road</name>
 		<date>1914</date>
 		<desc>William Pitt Amherst, 2nd Earl Amherst (1805 to 1886) and William Archer Amherst, 3rd Earl Amherst (1836 to 1910) were both given the courtesy title of Viscount Holmesdale. There is also an Amherst Road in Bexhill. (Adopted by Borough of Bexhill 27th November 1933).</desc>
+		<adopted>1933-11-27</adopted>
 	</street>
 	<street>
 		<name>Homelands Close</name>
 		<date>1954</date>
 		<desc>The entrance to this close was built through land belonging to a property called Homeland. Homelands mean a native or familiar land. (There is an interconnecting footpath with Uplands Close). (Adopted by Borough of Bexhill 24th May 1957).</desc>
+		<adopted>1957-05-24</adopted>
 	</street>
 	<street>
 		<name>Honies Estate</name>
 		<date>1887</date>
 		<desc>This estate was bounded approximately by the present-day London Road, Springfield Road, Beaconsfield Road, Holliers Hill and Sedgewick Road. The name is likely to be derived from the surname Honey, usually spelt Hony or Huny, which was fairly common in East Sussex during the Middle Ages, although confined to less well-to-do folk. One such family probably gave its name to that area of Bexhill.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Hooe Road</name>
 		<date>before 1841 to 1917</date>
 		<desc>Hooe is an ancient name meaning a place at a spur of land. Centuries ago the whole of the local coast was much more indented than it is today. The settlement of Hooe would be on higher ground from the nearby Hooe Level. Some early street directories describe this road as running from the present-day crossroad of Peartree Lane, Turkey Road and Whydown Road to Whydown whereas other street directories have never used this name and have always called this section of road Whydown Road. Regardless of name the outline of the road can be seen on an Ordnance Survey map 1795 to 1825.</desc>
@@ -1888,16 +1918,19 @@
 		<name>Hornbeam Avenue</name>
 		<date>2003</date>
 		<desc>Hornbeams are relatively small hardwood trees belonging to the genus Carpinus. (Alder Gardens, Elm Close, Hazel Grove and Poplar Close are nearby). (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Howards Crescent</name>
 		<date>1933</date>
 		<desc>This crescent takes its name from the former Howard's Lodge and Farm which are recorded on a tithe map / schedule of 1839 / 1843. (Adopted by Borough of Bexhill 24th April 1933).</desc>
+		<adopted>1933-04-24</adopted>
 	</street>
 	<street>
 		<name>Hunting Close</name>
 		<date>1961</date>
 		<desc>The origin of the name remains uncertain. Maybe because this development was built near the site of the Bexhill Harriers' former kennels at Brook Lodge (now The Grange) on Upper Sea Road. They were a pack of the now extinct Southern hound which existed from about 1785 until 1915. The pack was owned until 1891 by the Brook family after which it was acquired by Viscount Cantelupe who had new kennels built at Cooden. (Adopted by Borough of Bexhill 27th September 1961).</desc>
+		<adopted>1961-09-27</adopted>
 	</street>
 	<street>
 		<name>Hurchington Drive</name>
@@ -1908,14 +1941,16 @@
 		<name>Hurstwood Close</name>
 		<date>after 1974 but before 1998</date>
 		<desc>High Hurstwood is a village in East Sussex, 3 miles north-east of Uckfield. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<!-- I -->
 	<street>
 		<name>Ian Close</name>
 		<date>1968</date>
 		<desc>Family forename of one of the developers surnames, Davey-Casselden Limited. This road was called Ian Crescent between 1968 and 1970. (Allen Way, Amanda Close, Angela Close, Christine Close, Diana Close, Gwyneth Grove and Lesley Close are nearby). (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Ingram Road</name>
 		<date>1902 to c1945</date>
 		<desc>Road linking Preston Road to the top of North Road but whose precise location remains uncertain.</desc>
@@ -1924,12 +1959,14 @@
 		<name>Ingrams Avenue</name>
 		<date>1949</date>
 		<desc>Built on the site of Ingrams Farm which was originally part of the Manor of Ninfield. The name is derived from Robert and Andrew Ingeram as the first holders of land in Ninfield at the end of 13th century. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
+		<adopted>1956</adopted>
 	</street>
 	<!-- J -->
 	<street>
 		<name>Jacobs Acre</name>
 		<date>after 1974 but before 1998</date>
 		<desc>The origin of the name remains uncertain. Maybe relates to a Jacob Russell who, according to a tithe map / schedule of 1839 / 1843, occupied, with Thomas Winborn, a plot of land close to the site of the present-day Bexhill Leisure Centre. That plot of land was owned by the Parish Officers of Bexhill. Also Jacobs Acre occupies land which was formerly part of the Kings German Legion's barrack grounds, including a small burial ground. Later this land was close to the site of the town's first formally established school, St Peters, in 1853 as well as allotment gardens which are shown on an Ordnance Survey map of 1909. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>James Walk</name>
@@ -1945,11 +1982,13 @@
 		<name>Jameson Road</name>
 		<date>1897</date>
 		<desc>Probable a corruption of the name Jamestown. Thomas West, 3rd Baron De La Warr, brought food to the starving inhabitants of Jamestown, Virginia, USA. Later he was appointed Governor and Captain-General of the colony of Virginia in 1610 and died there in 1618. The state of Delaware, one of the 13 founding-members of the United States of America, is named after him. (Adopted by Borough of Bexhill 26th September 1904).</desc>
+		<adopted>1904-09-26</adopted>
 	</street>
 	<street>
 		<name>Jarvis Brook Close</name>
 		<date>c1975</date>
 		<desc>Village in East Sussex, 2 miles east of Crowborough. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Jasmine Way</name>
@@ -1960,11 +1999,13 @@
 		<name>Jevington Close</name>
 		<date>1967</date>
 		<desc>Village in East Sussex, 1 mile south of Polegate. (Adopted by Borough of Bexhill 6th November 1967).</desc>
+		<adopted>1967-11-06</adopted>
 	</street>
 	<street>
 		<name>Jubilee Road</name>
 		<date>1952</date>
 		<desc>Built at the time of the Golden Jubilee of the Charter of Incorporation of the Borough of Bexhill (1902 to 1952). It is thought that the original name proposed for this road was Charter Grove. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1966).</desc>
+		<adopted>1966</adopted>
 	</street>
 	<street>
 		<name>Juniper Place</name>
@@ -1976,6 +2017,7 @@
 		<name>Kennedy Road</name>
 		<date>1968</date>
 		<desc>The origin of the name remains uncertain. Maybe relates to John Fitzgerald Kennedy (1917 to 1963), 35th President of the United States from 1961 to 1963. (Adopted by Borough of Bexhill 2nd November 1970).</desc>
+		<adopted>1970-11-02</adopted>
 	</street>
 	<street>
 		<name>Kennel Lane</name>
@@ -1991,26 +2033,25 @@
 		<name>Kenton Close</name>
 		<date>1963</date>
 		<desc>The origin of the name remains unknown. There are four towns or villages around the United Kingdom called Kenton but none are in the south-east of England. (Adopted by Borough of Bexhill 21st December 1964).</desc>
+		<adopted>1964-12-21</adopted>
 	</street>
 	<street>
 		<name>Kestrel Close</name>
 		<date>after 1974 but before 1995</date>
 		<desc>Kestrels are birds of prey belonging to the falcon (Falco) family. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Kewhurst Avenue</name>
 		<date>1926</date>
 		<desc>Built on land forming part of Kewhurst farmland. The name means Caega's enclosure and in 1306 was spelt Kayworth. The present-day Kewhurst Manor was built in 1895 and converted to flats in 1955. (Adopted by Borough of Bexhill 19th December 1967).</desc>
-	</street>
-	<street>
-		<name>Kiln Bank</name>
-		<date>road before 1841; name 1928</date>
-		<desc>Please see details given in the Over Kiln Bank entry.</desc>
+		<adopted>1967-12-19</adopted>
 	</street>
 	<street>
 		<name>King Offa Way</name>
 		<date>1980</date>
 		<desc>King Offa ruled Mercia for 39 years from 757 until his death in 796; he also controlled much of Kent and Sussex. King Offa's Charter of 772 AD granted land in Bexhill and is the first recorded reference to the town. (Adopted at an unknown date as a publicly maintainable highway [Trunk Road] under the 1835 Highways Act).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Kingfisher Close</name>
@@ -2021,21 +2062,19 @@
 		<name>Kings Close</name>
 		<date>1939</date>
 		<desc>The origin of the name is uncertain but may refer to this development taking place early in King George VI's reign which began in 1936. (Adopted by Borough of Bexhill 24th April 1963).</desc>
-	</street>
-	<street>
-		<name>Kingscott Close</name>
-		<date>c1996</date>
-		<desc>The origin of the name is unknown. (Adopted by East Sussex County Council on an unknown date).</desc>
+		<adopted>1963-04-24</adopted>
 	</street>
 	<street>
 		<name>Kingswood Avenue</name>
 		<date>1939</date>
 		<desc>Kingswood Builders Ltd was a local company involved in house building during the 1930s. (Adopted by Borough of Bexhill 27th June 1956).</desc>
+		<adopted>1956-06-27</adopted>
 	</street>
 	<street>
 		<name>Kinver Lane</name>
 		<date>1938</date>
 		<desc>The origin of the name remains unknown. Originally, Kinver Lane ran from Martyns Way to Pebsham Lane before Mistley Close was developed. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
+		<adopted>unknown</adopted>
 	</street>
 	<street>
 		<name>Kites Nest Walk</name>
@@ -2158,7 +2197,7 @@
 		<date>1932</date>
 		<desc>Probably a descriptive name for one of the original roads to be built in Pebsham. On maps up to the early 1950s Long Avenue is shown at about twice its present-day length because it included that part of the present-day Martyns Way from Seabourne Road to Cuckfield Close. (Adopted by Borough of Bexhill 29th June 1970).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Lower Dorset Road</name>
 		<date>1899 to 1906</date>
 		<desc>This road ran from the present-day De La Warr Parade to De La Warr Road. (Please see Dorset Roads {1}, {2} and {3} as well as Upper Dorset Road).</desc>
@@ -2178,7 +2217,7 @@
 		<date>road before 1841; name 1899</date>
 		<desc>In about 1899 the original Sea Road {1} was divided into two parts; Sea Road {2} and Upper Sea Road. Sea Road {2} runs from the present-day De La Warr Parade to Station Road. Some street directories called this section of road Lower Sea Road from about 1899 to about 1917 although that name is rarely seen on maps. (Please see Sea Roads {1} and {2} and Upper Sea Road).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Lower Station Road</name>
 		<date>road c1850; name 1899 to 1930</date>
 		<desc>The road between Buckhurst Place and the crossroads with King Offa Way. It was previously known as Russells Lane then Station Roads {1} and {2} and is now part of London Road. (See also Upper Station Road and Station Roads {1} {2} {3}).</desc>
@@ -2187,11 +2226,6 @@
 		<name>Loxwood Close</name>
 		<date>1972</date>
 		<desc>Village in West Sussex, 5 miles north-west of Billingshurst. (Date of adoption by Borough of Bexhill or later by East Sussex County Council not known).</desc>
-	</street>
-	<street>
-		<name>Lucy Way</name>
-		<date>2003</date>
-		<desc>The origin of the name remains unknown. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
 	<street>
 		<name>Luffield Drive</name>
@@ -2215,11 +2249,6 @@
 	</street>
 	<!-- M -->
 	<street>
-		<name>Maberley Road</name>
-		<date>1899</date>
-		<desc>The origin of the name remains unknown. (Adopted by Borough of Bexhill 27th April 1955).</desc>
-	</street>
-	<street>
 		<name>Magdalen Road</name>
 		<date>1898</date>
 		<desc>St Mary Magdalene's clergy and school-house was established on the corner of this road and Sea Road in 1891; the present church opened in 1907. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
@@ -2229,7 +2258,7 @@
 		<date>after 1974 but before 1995</date>
 		<desc>Magpies are birds of the genus Pica and usually have long tails and predominately black and white markings. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Manor Lane</name>
 		<date>1905 to 1938</date>
 		<desc>Built in the grounds of the former Bexhill Manor House and Manor Farm. Probably had few properties built along this lane until it was developed as Chelsea Close. Old Manor Close and the former Manor Lane follow the route of an old drove road from Court Lodge Farm down to the former salt-marsh grazing fields near the sea.</desc>
@@ -2254,7 +2283,7 @@
 		<date>road 1936; name 1940</date>
 		<desc>Maple trees and shrubs belong to the Acer genus. The maple leaf is the most widely recognised national symbol of Canada. Canadian troops were stationed in Cooden during both World Wars. Previously known as Maple Drive. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Maple Drive</name>
 		<date>1936 to 1939</date>
 		<desc>Originally called a drive, maybe there was an intention to link Maple Avenue with Clavering Walk. However, this road's layout and name changed to a close in about 1940 although Maple Drive has been seen recorded on a town map as late as 1956.</desc>
@@ -2284,12 +2313,12 @@
 		<date>1950</date>
 		<desc>Descriptive name for a curving street built on a tract of grassland beside a stream. This development covers part of the fields to the south of the former Ingram's Farm. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Marine Parade</name>
 		<date>road c1890; name 1898 to 1923</date>
 		<desc>Descriptive name from the road's position on the seafront. Originally known as Park Crescent then Marine Crescent and now known as West Parade, it is that part of the road from the Marina roundabout along the seafront to Park Road.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Marine Promenade</name>
 		<date>road 1887; name 1903 to c1930</date>
 		<desc>See entry for Marine Parade.</desc>
@@ -2370,11 +2399,6 @@
 		<desc>The land to the east of the road built on rising land away from Mitten Road was called Mill Field. Before the 18th century there was a windmill on Belle Hill near the house now called Millfield. (Adopted by Borough of Bexhill 24th April 1963).</desc>
 	</street>
 	<street>
-		<name>Millham Close</name>
-		<date>1967</date>
-		<desc>The origin of the name remains unknown. (Adopted by Borough of Bexhill 20th December 1971).</desc>
-	</street>
-	<street>
 		<name>Millwood Road</name>
 		<date>1972</date>
 		<desc>Mill Wood just to the north of this road forms part of The Highlands. (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
@@ -2394,7 +2418,7 @@
 		<date>1898</date>
 		<desc>According to a tithe map / schedule of 1839 / 1843 there was a field called Mitten's Mead close to where this road was developed. Mead is another name for a meadow. (Adopted by Borough of Bexhill 23rd December 1907).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Modest Lane</name>
 		<date>c1890 to c1895</date>
 		<desc>Track in Sidley leading to Ingrams, Woods and Glovers Farms; now part of Glovers Lane.</desc>
@@ -2475,7 +2499,7 @@
 		<date>1965</date>
 		<desc>English county in East Anglia. (Suffolk Road is nearby and was built a few years before Norfolk Road). (Adopted by Borough of Bexhill, 1st part 11th March 1968 and last part 26th June 1972).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Norfolk Road</name>
 		<date>1902 to 1917</date>
 		<desc>Road linking the northern side of Preston Road to North Road. The road was never fully developed but its route was probably similar to the present-day Norfolk Close. However, Norfolk Road was open at both ends whereas the present-day Norfolk Close is a cul-de-sac.</desc>
@@ -2505,7 +2529,7 @@
 		<date>2013</date>
 		<desc>Alfred Charles William Harmsworth, 1st Viscount Northcliffe (1865 to 1922) was a British newspaper and publishing magnate. He did much to popularise motoring and was a competitor in the 1902 motor races held along East Parade. His brother, Sir Robert Leicester Harmsworth (1870 to 1937) and his family lived at the Manor House in Bexhill Old Town, although usually only for holidays, from 1912 until the death of Lady Harmsworth in 1963. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Northeye Close</name>
 		<date>1960 to 1971</date>
 		<desc>A former medieval farming village from 1229 to 1515, it stood on the northern part of Hooe Level between Norman's Bay and the higher ground of Barnhorn. Northeye became abandoned when a storm destroyed the villages' crops. Only the buried foundations of The Chapel of St James remain. A related Southeye can be seen close by, now called Rockhouse Bank.</desc>
@@ -2586,7 +2610,7 @@
 		<date>c1985</date>
 		<desc>Bishop Osbern of Exeter (1072 to 1103), is mentioned in Domesday Book as holding land in Bexhill from the Count Robert of Eu. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
-	<street>
+	<street style="bygone">
 		<name>Over Kiln Bank</name>
 		<date>road before 1841; name 1928</date>
 		<desc>The names Kiln Bank and Over Kiln Bank appear to be interchangeable in early street directories. This section of road from present-day Little Common roundabout to the crossroad with Turkey Road and Whydown Road is now known as Peartree Lane. Kiln Bank Cottage still stands at the corner of Ocklynge Close and Peartree Lane. The crossroad between Peartree Lane, Turkey Road and Whydown Road in some early street directories is called "Four Turnings". The outline of the road can be seen on an Ordnance Survey map 1795 to 1825.</desc>
@@ -2652,7 +2676,7 @@
 		<date>road 1896; name 1906</date>
 		<desc>Leading to Egerton Park from the seafront. This avenue has been referred to as Pier Road (1905). (Adopted by Borough of Bexhill 31st July 1902).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Park Crescent</name>
 		<date>c1890 to 1899</date>
 		<desc>Originally known as Park Crescent then Marine Crescent and now known as West Parade, it is that part of the road from the Marina roundabout along the seafront to Park Road. However, the name has been seen on a 1917 map.</desc>
@@ -2666,6 +2690,11 @@
 		<name>Park Road</name>
 		<date>1897</date>
 		<desc>Road adjacent to the eastern edge of Egerton Park. (Adopted by Borough of Bexhill 17th September 1900). (Road passage to east of Park Road linking Egerton Road and Wickham Avenue, serving Cornwall Road and Park Road residences, adopted by Borough of Bexhill 26th March 1906).</desc>
+	</street>
+	<street>
+		<name>Parkhurst Mews</name>
+		<date>1887</date>
+		<desc>The origin of the name remains unknown. Parkhurst is the name of a park and prison on the Isle of Wight.</desc>
 	</street>
 	<street>
 		<name>Parkhurst Road</name>
@@ -2712,12 +2741,12 @@
 		<date>after 1974 but before 1998</date>
 		<desc>The origin of the name remains uncertain. Maybe refers to the song released by the English rock band The Beatles in 1967. The song's title itself derives from the name of a street near John Lennon's childhood home during his first five years in Liverpool. James Penny was an 18th century slave trader in Liverpool. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Picknill Green Lane</name>
 		<date>before 1841 to 1896</date>
 		<desc>Old parish lane now known as Coneyburrow Lane. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. Picknill Green is the area at the junction of Sandhurst Lane and Coneyburrow Lane through which the Picknill Green Stream flows. The name may be derived from Pica's glind which would possibly be an enclosure belonging to Pica.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Pier View or Road East or Road West</name>
 		<date>1906 to c1950</date>
 		<desc>Approach road to a proposed pier which was never built. The road was later known as Pier Road East in the 1930s and is now known as Channel View East.</desc>
@@ -2839,7 +2868,7 @@
 		<date>1972</date>
 		<desc>Adjacent to St Peter's Church rectory. (Church Vale Road, Lychgates Close and St Peter's Crescent is nearby). (Date of adoption by Borough of Bexhill or later East Sussex County Council not known).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Redgrove</name>
 		<date>1969 to 1970</date>
 		<desc>Redgrove Wood lies nearby to the north-east. This road is now known as Carfax Close.</desc>
@@ -2849,12 +2878,7 @@
 		<date>2020</date>
 		<desc>Redgrove Wood lies nearby to the south.</desc>
 	</street>
-	<street>
-		<name>Redwell Avenue</name>
-		<date>1998</date>
-		<desc>The origin of the name remains unknown. (Adopted by East Sussex County Council on an unknown date).</desc>
-	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Reginald Place</name>
 		<date>road 1892; name 1899 to 1910</date>
 		<desc>The section of road from the present-day Sackville Road railway arch to about Reginald Road. This road was originally known as Sackville Road North before becoming Reginald Place which itself was incorporated into the present-day Terminus Road in 1910.</desc>
@@ -2954,7 +2978,7 @@
 		<date>1958</date>
 		<desc>The origin of the name remains unknown. There are three villages called Royston around the United Kingdom but none are in south-east England. (Adopted by Borough of Bexhill 28th September 1960).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Russells Lane</name>
 		<date>c1850 to c1880</date>
 		<desc>The road between Buckhurst Place and the crossroads with King Offa Way was originally known as Russells Lane. It was later recorded as Station Roads {1} and {2} and then Lower Station Road before becoming part of present-day London Road. The Russell family were long-established farmers around Bexhill by the 19th century.</desc>
@@ -2965,7 +2989,7 @@
 		<date>1970</date>
 		<desc>Herbrand de Sauqueville was a follower of William the Conqueror who came to Sussex in 1068. The Sackville family have been Lords of the Manor of Bexhill since 1570 when it was granted to Thomas Sackville by Queen Elizabeth I.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Sackville Road North</name>
 		<date>1892 to 1898</date>
 		<desc>The section of road from the present-day Sackville Road railway arch to about Reginald Road. This road then became known as Reginald Place in 1899 which itself was then incorporated into the present-day Terminus Road in 1915.</desc>
@@ -3000,12 +3024,12 @@
 		<date>~1841</date>
 		<desc>Old parish lane named after a village in Kent, 6 miles south-west of Tenterden. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. (Taken over as a Public Highway by the Local Board of Bexhill in 1884).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Sandhurst Road</name>
 		<date>1902 to 1930</date>
 		<desc>Section of the present-day London Road from Sedgewick Road to the junction with Holliers Hill.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Sandmere Lane</name>
 		<date>road before 1841; name 1922 to c1932</date>
 		<desc>In 1763 a piece of woodland called Sandmares or St Mary's Wood was purchased from Robert Sampson. The outline of the lane, which runs through this wood, can be seen on an Ordnance Survey map 1795 to 1825. Street directories consistently spelt the name as Sandmere. Now known as St Marys Lane. (Taken over as a Public Highway by the Local Board of Bexhill in 1884).</desc>
@@ -3040,17 +3064,17 @@
 		<date>c1977</date>
 		<desc>Road leads to Pebsham County Primary School, Glyne Gap School and Early Years Nursery. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Sea Lane</name>
 		<date>before 1841 to c1882</date>
 		<desc>Lane from Bexhill Old Town down to the sea. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. This lane became known as Sea Road from about 1882.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Sea Road {1}</name>
 		<date>road before 1841; name c1882 to 1898</date>
 		<desc>Previously known as Sea Lane, this road ran from Bexhill Old Town down to the sea. On legal documents until the late 1880s this road was referred to as St Peter's Road. Sea Road {1} was divided into present day Sea Road and Upper Sea Road in about 1899.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Sea Road {Cooden}</name>
 		<date>before 1841 to 1929</date>
 		<desc>Original name for the road from Little Common roundabout down to the sea at Cooden Beach. Now known as Cooden Sea Road.</desc>
@@ -3100,7 +3124,7 @@
 		<date>~1841</date>
 		<desc>Short and narrow section of a now traffic-free lane from the west front of St Peter's Church down the slope to Chantry Lane. On many maps this section is considered part of Church Street. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Shortwood Lane</name>
 		<date>before 1841 to c1930</date>
 		<desc>Shortwood is recorded as a residence on this lane in the 1841 census and the outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. Now known as Freezeland Lane.</desc>
@@ -3110,7 +3134,7 @@
 		<date>~1841</date>
 		<desc>The present-day road across the remains of the Green at Sidley. Originally called Sidelegh(e) meaning at the wide clearing, Sidley was a former hamlet on the high road inland from the ancient port of Bulverhythe towards Ninfield and beyond. The hamlet was in existence by the 15th century as a forge is recorded there and the name recorded as Sidlye Greene. The name has since been used for the whole village not just the centre of the village. The outline of the present-day road can be seen on an Ordnance Survey map 1795 to 1825. (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Sidley Road</name>
 		<date>road before 1841; name 1871 to 1898</date>
 		<desc>The former name of the section of road from the top of Holliers Hill to Sidley Green; now part of Ninfield Road.</desc>
@@ -3124,11 +3148,6 @@
 		<name>Silva Close</name>
 		<date>after 1974 but before 1995</date>
 		<desc>During the late 1940s and early 1950s a Miss Silva lived at a house called The Ridge and a Mrs Silva, unknown relationship, lived next door at Glengorse; both these houses were located on Pebsham Lane between Bishops Walk and Pebsham Drive. These two residents are thought to be the inspiration for the name of this nearby road. The reason for choosing their surname is uncertain but they may have owned the land upon which this development took place. (Adopted by East Sussex County Council on an unknown date).</desc>
-	</street>
-	<street>
-		<name>Silvester Road</name>
-		<date>1911</date>
-		<desc>The origin of the name remains unknown. (Adopted by Borough of Bexhill 23rd December 1929).</desc>
 	</street>
 	<street>
 		<name>Singleton Walk</name>
@@ -3150,7 +3169,7 @@
 		<date>1924</date>
 		<desc>The coastal cliffs and rock formations between the present-day Richmond Road and Veness Gap were previously known as West Cliff(s) but are now generally referred to as South Cliff. (Adopted by Borough of Bexhill 30th January 1939).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>South Cliff Drive</name>
 		<date>1927 to 1939</date>
 		<desc>This drive ran from Cooden Drive down to Winceby House School for girls which opened in 1927. Later, to prevent traffic congestion, a separate drive connected the school to the present-day South Cliff. Part of this second drive is now incorporated into Winceby Close.</desc>
@@ -3175,7 +3194,7 @@
 		<date>1929</date>
 		<desc>Descriptive name for land south of the main Ninfield Road. (Adopted by Borough of Bexhill 29th July 1953).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Spa Road</name>
 		<date>1901 to c1929</date>
 		<desc>Previous name for section of road which ran south from the junction of the present-day St Georges Road, London Road and Woodsgate Park. Now part of the present-day London Road. There was a chalybeate, ie containing iron compounds, spring here at that time and the water was considered to have healthy properties.</desc>
@@ -3266,7 +3285,7 @@
 		<desc>During World War Two Canadian troops from Le Regiment De La Chaudiere from the St Lawrence River area were stationed in Bexhill. (Calgary Road, Canada Way and Edmonton Road are nearby). (Constructed or taken over by Borough of Bexhill under special provisions, ie Council Housing Estates, by at least 1956).</desc>
 	</street>
 	<street>
-		<name>St Leonards Road</name>
+		<name>St. Leonards Road</name>
 		<date>1887</date>
 		<desc>St Leonards-on-Sea is part of the western side of Hastings, East Sussex, 4 miles east of Bexhill. (Adopted by Borough of Bexhill 16th December 1895).</desc>
 	</street>
@@ -3290,7 +3309,7 @@
 		<date>road 1932; name 1935</date>
 		<desc>Patron saint of Ireland. This crescent was previously known as Crowmere Crescent. (St Andrews Road, St Davids Avenue and St Georges Road are nearby). (Adopted by Borough of Bexhill 24th September 1934).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>St Patricks Road</name>
 		<date>1902 to 1917</date>
 		<desc>Part of the original Woodsgate Park Estate. Street directories only describe this road as building land. Location uncertain as it is simply described as left of St Georges Road, which at that time included the present-day Woodsgate Park, so was probably in the area of the present-day Beatrice Walk.</desc>
@@ -3305,12 +3324,17 @@
 		<date>before 1880</date>
 		<desc>This name, instead of Sea Road, is often found on legal documents until the late 1880s.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>St Stephens Road</name>
 		<date>1903 to 1917</date>
 		<desc>Although called Church Road on some maps, this road was part of the Woodsgate Park Estate near St Stephen's Church close to the present-day Park Lane.</desc>
 	</street>
-	<street style="old">
+	<street>
+		<name>Stable Mews</name>
+		<date>2021</date>
+		<desc>Formerly horse riding stables.</desc>
+	</street>
+	<street style="bygone">
 		<name>Station Road North</name>
 		<date>1889 to 1898</date>
 		<desc>The present-day London Road from King Offa's crossroads towards Sidley was originally called Station Road North. Later this road was renamed North Street before finally becoming part of a much longer present-day London Road. (Please see also Alexandra Road, North Street, Sandhurst Road and Spa Road).</desc>
@@ -3320,7 +3344,7 @@
 		<date>road c1850; name 1888</date>
 		<desc>The first Station Road, when the railway station was on the north side of the tracks close to the present-day Sainsbury's car park, ran from Sea Road along the present-day Station Road, through Buckhurst Place and along the present-day London Road to the King Offa Way crossroads. It incorporated the existing Russells Lane. In about 1888 Station Road {1} was then split into Station Road {2} and Upper Station Road.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Station Road {2}</name>
 		<date>road c1850; name 1889 to 1898</date>
 		<desc>From 1889, Station Road was the part of present-day London Road from Buckhurst Place to where King Offa Way crossroads is now. Later this road was called Lower Station Road before becoming part of London Road.</desc>
@@ -3330,7 +3354,7 @@
 		<date>road c1850; name 1910</date>
 		<desc>The present-day road runs from Sea Road to Buckhurst Place by the side of the railway station and line. It was previously known as Station Road then Upper Station Road. The section by the old railway goods yard, which is the present-day Sainsbury's car park, was called Depot Road until the late 1920s. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Station Square</name>
 		<date>1887 to 1910</date>
 		<desc>This square was originally known as Station Yard and then Station Square from about 1887. Interestingly the new railway station on the south side of the tracks which opened into this square was not completed until 1891, four years after this name was adopted. The square changed to Devonshire Place in 1910 but is now known as Devonshire Square.</desc>
@@ -3339,6 +3363,11 @@
 		<name>Stevens Close</name>
 		<date>c2000</date>
 		<desc>Councillor Allan Sidney John Stevens was Bexhill Borough Mayor (1964 to 1965) and Town Mayor of Bexhill (1984 to 1985). (Adopted by East Sussex County Council on an unknown date).</desc>
+	</street>
+	<street>
+		<name>Stirling Mews</name>
+		<date>2005</date>
+		<desc>Perhaps a link to Bexhill being the birthplace of motor racing the road was named after the Formula One driver, Sir Stirling Moss. Stirling is also the name of a city in central Scotland.</desc>
 	</street>
 	<street>
 		<name>Stowe Drive</name>
@@ -3441,7 +3470,7 @@
 		<date>1930</date>
 		<desc>Byeway means a secluded or private sideroad. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>The Common</name>
 		<date>1891 to 1917</date>
 		<desc>The present-day Little Common roundabout (A259) was previously a grassy village green. Early street directories list the properties as being around The Common.</desc>
@@ -3491,7 +3520,7 @@
 		<date>1925</date>
 		<desc>The Highlands is an area of high ground bordered by Turkey Road, Ninfield Road and Bexhill Cemetery. (Adopted by Borough of Bexhill 30th March 1960).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>The Honies</name>
 		<date>before 1886 to 1898</date>
 		<desc>Prince Albert of Saxe-Coburg and Gotha (1819 to 1861) was, as The Prince Consort, the husband of Queen Victoria. The original Albert Road and Victoria Road ran parallel to each other off Springfield Road and Alexandra Road (now part of London Road) on the former Honies estate. From 1899 this Albert Road has been known as Havelock Road. Curiously it appears that between about 1887 and 1898 there were two roads called Albert Road at the same time in Bexhill.</desc>
@@ -3506,7 +3535,7 @@
 		<date>2009</date>
 		<desc>Originally a mews was a street or yard of stables often converted into dwelling-houses or garages. The name is often used now for a small modern development of houses either as a terrace or around a court-yard. At present no past links to horses or livery stables in this part of the former Nazareth House site have been identified. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>The Newlands</name>
 		<date>1905 to 1929</date>
 		<desc>Described in the street directories as between the Down Hill and Gunters Lane. The road had become part of Gunters Lane by 1930.</desc>
@@ -3617,7 +3646,7 @@
 		<date>1954</date>
 		<desc>Uplands mean upper or high land and this close is on part of the higher ground of Glenleigh Park. (There is an interconnecting footpath with Homelands Close). (Adopted by Borough of Bexhill 24th May 1957).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Upper Dorset Road</name>
 		<date>1897 to 1906</date>
 		<desc>This road ran from the present-day De La Warr Road to Hastings Road. (Please see Dorset Roads {1}, {2} and {3}).</desc>
@@ -3627,7 +3656,7 @@
 		<date>road ~1841; name 1899</date>
 		<desc>In about 1899 the original Sea Road was divided into two parts; Sea Road and Upper Sea Road. Upper Sea Road runs from the present-day Station Road to High Street in Bexhill Old Town. This section of road has been referred to as Sea Hill in the past. (Please see Sea Road and Lower Sea Road). (Taken over as a Public Highway by the Local Board of Bexhill in 1884. Part adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act). (Foot passage between Upper Sea Road and Rotherfield Avenue adopted by Borough of Bexhill 24th March 1954).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Upper Station Road</name>
 		<date>road c1850; name 1889 to 1910</date>
 		<desc>Previously known as Station Road {1} this road from Sea Road to Buckhurst Place then became Upper Station Road. It is now known as Station Road {3}. (Please see also Lower Station Road and Station Roads {1} {2} {3}).</desc>
@@ -3643,7 +3672,7 @@
 		<date>c1975</date>
 		<desc>Road developed by Venture Estates Ltd. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Victoria Road {1}</name>
 		<date>before 1886 to 1898</date>
 		<desc>Named after Victoria (1819 to 1901) who was Queen of Great Britain and Ireland (1837 to 1901). The original Albert Road and Victoria Road ran parallel to each other off Springfield Road and Alexandra Road (now part of London Road) on the former Honies Estate. From 1899 this Victoria Road has been known as Cambridge Road. Curiously it appears that between about 1894 and 1898 there were two roads called Victoria Road at the same time in Bexhill. The Record Reign Cottages commemorating Queen Victoria's Diamond Jubilee in 1897 can still be seen in the present-day Cambridge Road.</desc>
@@ -3754,7 +3783,7 @@
 		<date>road 1886; name 1904</date>
 		<desc>On the western side of Bexhill's seafront. The part between Park Road and the Marina roundabout was originally known as Park Crescent then as Marine Crescent until about 1923. Early maps also record the whole length of the present-day West Parade as Lower Marine Parade (1893), Parade Extension (1896) and West Cliff Drive (1906). The part from Park Road to Richmond Road was usually called West Parade from about 1904. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act). ([1] Road passage south of Egerton Road linking Brockley Road and Park Avenue, serving Egerton Road and West Parade residences, adopted by Borough of Bexhill 24th November 1930. [2] Road passage south of Egerton Road and east of Park Road linking Park Road and Egerton Road, serving Egerton Road and West Parade residences and [3] Road passage south of Egerton Road and west of Park Road linking Park Road and Egerton Road, serving Egerton Road and West Parade residences, both adopted by Borough of Bexhill 22nd July 1935).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>West Station Approach</name>
 		<date>c1940 to after 1974</date>
 		<desc>Bexhill West Station, as the terminus for the railway branch line from Crowhurst to Bexhill, opened in 1902 and closed in 1964. This approach road off Terminus Road served the station as well as several local businesses and was still being recorded in local street directories at least 10 years after the station closed.</desc>
@@ -3789,7 +3818,7 @@
 		<date>1913</date>
 		<desc>Probably the name refers to a group of houses to the west of the town centre. It draws similarities to the French words ouest for west and ville for town. (Adopted by Borough of Bexhill 27th May 1935).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Whillier Street</name>
 		<date>1897 to 1898</date>
 		<desc>The original name of Edinburgh Road. Ralph Whillier, carpenter, is recorded as living at 4, Edinburgh Road in 1899 but not any earlier.</desc>
@@ -3804,7 +3833,7 @@
 		<date>1928</date>
 		<desc>The origin of the name White Hill is uncertain but one suggestion is that the salt recovered from the inflow of tidal salt water over Pevensey Levels would be carried inland on carts and some of the salt could have spilt onto the ground as the carts travelled over this rising land towards the Old Town. (Adopted by Borough of Bexhill 28th June 1961).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Whitehill Lane</name>
 		<date>before 1841 to 1926</date>
 		<desc>Early street directories make a distinction between Whitehill and Whitehill Lane but without clearly stating the differences in location. The lane is an old parish lane of which part is now called Ellerslie Lane. The outline of the lane can be seen on an Ordnance Survey map 1795 to 1825.</desc>
@@ -3859,7 +3888,7 @@
 		<date>1958</date>
 		<desc>Road along a former old track leading from Sidley to the Down or Hoad's Mill on Gunters Lane. (Adopted by Borough of Bexhill, 1st part 29th October 1958 and last part 15th March 1965).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Windsor Crescent</name>
 		<date>before 1886 to 1887</date>
 		<desc>Previous name for the section of road which ran from the former Castle Hotel, now The Town House, on the corner of present-day Buckhurst Place and London Road, up Windsor Road and then along the present-day Victoria Road towards London Road. In 1887 it was renamed Windsor Terrace.</desc>
@@ -3869,7 +3898,7 @@
 		<date>~1886</date>
 		<desc>Reginald Windsor Sackville (1817 to 1896) was the 7th Earl De La Warr. (Reginald Road is nearby). (Adopted by Borough of Bexhill, 1st part 1st June 1894, 2nd part 21st November 1898 and last part 17th September 1900). ([1] Foot passage to west of London Road and south of Victoria Road running from Victoria Road towards Buckhurst Place (but not a thoroughfare), serving Windsor Road and London Road residences. [2] Foot passage to west of Windsor Road and south of Victoria Road linking Victoria Road to Terminus Road, serving Windsor Road and Reginald Road residences. [3] Foot passage to west of Windsor Road and north of Victoria Road linking Victoria Road to the present-day Phoenix Works off Windsor Road, serving Windsor Road and Reginald Road residences, all three passages adopted by Borough of Bexhill 20th December 1909).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Windsor Terrace</name>
 		<date>1887 to 1898</date>
 		<desc>Previously called Windsor Crescent.</desc>
@@ -3904,17 +3933,17 @@
 		<date>2006</date>
 		<desc>Descriptive name for land covered with wood; this road is located near the bottom of High Woods. (Adopted by East Sussex County Council on an unknown date).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Woodsgate Avenue East</name>
 		<date>c1908 to c1934</date>
 		<desc>This avenue was generally to the east of the present-day London Road and probably includes most of the present-day Woodsgate Avenue.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Woodsgate Avenue Road</name>
 		<date>1901 to c1910</date>
 		<desc>This avenue ran parallel of the present-day Woodsgate Park. The road joined Gunters Lane approximately along the present-day entrance to Charters Ancaster School.</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Woodsgate Avenue West</name>
 		<date>c1908 to c1934</date>
 		<desc>This avenue was generally to the west of the present-day London Road and ran parallel and to the north of the present-day Woodsgate Park. The road joined Gunters Lane approximately along the present-day entrance to Charters Ancaster School.</desc>
@@ -3924,7 +3953,7 @@
 		<date>road 1901; name c1935</date>
 		<desc>The estate first appears in local street directories in 1894 when Woodsgate House and Park were completed. Thereafter there is a confusing list of road names in the street directories and on maps as the estate is developed on both sides of the Bexhill to Crowhurst railway branch line which opened in 1902. Often there were a number of years between a road being laid out and named and properties being built on that road. (This road had not been adopted by East Sussex County Council by January 2014).</desc>
 	</street>
-	<street style="old">
+	<street style="bygone">
 		<name>Woodsgate Park Road</name>
 		<date>1901 to c1910</date>
 		<desc>This avenue ran parallel of the present-day Woodsgate Park. The road joined Gunters Lane approximately along the present-day entrance to Charters Ancaster School.</desc>
@@ -3965,6 +3994,11 @@
 		<desc>Named after the former Wrest Wood which itself was previously called Rist Wood. In 1327 a Robert de Reste had a home nearby. More recently the British diplomat Sir Edward Malet (1837 to 1908) owned the house and gardens called Wrest Wood; the site is now St Mary's School and College. (Adopted by Borough of Bexhill 27th September 1961).</desc>
 	</street>
 	<street>
+		<name>Wrestwood Parade</name>
+		<date>2024</date>
+		<desc>Named after the former Wrest Wood which itself was previously called Rist Wood. In 1327 a Robert de Reste had a home nearby.</desc>
+	</street>
+	<street>
 		<name>Wrestwood Road</name>
 		<date>road ~1841; name 1919</date>
 		<desc>Named after the former Wrest Wood which itself was previously called Rist Wood. In 1327 a Robert de Reste had a home nearby. More recently the British diplomat Sir Edward Malet (1837 to 1908) owned the house and gardens called Wrest Wood; the site is now St Mary's School and College. Originally described as the road from the junction with Chantry Avenue to the junction with Hastings Road, the present-day road runs from the junction with Ninfield Road to Hastings Road. The section between Ninfield Road and Chantry Avenue was previously known as Biggs Hill and then Haddocks Hill. (Adopted at an unknown date as a publicly maintainable highway under the 1835 Highways Act).</desc>
@@ -3982,30 +4016,109 @@
 	</street>
 	
 	<!-- work in progress, by date -->
-	<newstreet>
-		<name>Clarence Gardens</name>
-		<date>2014</date>
-		<desc></desc>
-	</newstreet>
-	<newstreet>
-		<name>Pelton Close</name>
-		<date>2019</date>
-		<desc></desc>
-	</newstreet>
-	<newstreet>
-		<name>Whitefield Way</name>
-		<date>2021</date>
-		<desc></desc>
-	</newstreet>
-	<newstreet>
+	<street-wip>
 		<name>Millers Corner</name>
 		<date>2022</date>
 		<desc></desc>
-	</newstreet>
-	<newstreet>
-		<name>Wrestwood Parade</name>
-		<date>construction</date>
-		<desc>Named after the former Wrest Wood which itself was previously called Rist Wood. In 1327 a Robert de Reste had a home nearby.</desc>
-	</newstreet>
-</streetNames>
+	</street-wip>
+	<street-wip>
+		<name>Whitefield Way</name>
+		<date>2021</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Pelton Close</name>
+		<date>2019</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Clarence Gardens</name>
+		<date>2014</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Bramlea Close</name>
+		<date>2006</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Lucy Way</name>
+		<date>2003</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Glenburn Close</name>
+		<date>2000</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Redwell Avenue</name>
+		<date>1998</date>
+		<desc></desc>
+		<adopted>unknown</adopted>
+	</street-wip>
+	<street-wip>
+		<name>Kingscott Close</name>
+		<date>1996</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Chelgates</name>
+		<date>1991</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Chalden Place</name>
+		<date>1972</date>
+		<desc></desc>
+		<adopted>1967-02-15</adopted>
+	</street-wip>
+	<street-wip>
+		<name>Millham Close</name>
+		<date>1967</date>
+		<desc></desc>
+		<adopted>1971-12-20</adopted>
+	</street-wip>
+	<street-wip>
+		<name>Gordon Place</name>
+		<date>1961</date>
+		<desc></desc>
+		<adopted>1961-03-01</adopted>
+	</street-wip>
+	<street-wip>
+		<name>Dalehurst Road</name>
+		<date>1937</date>
+		<desc></desc>
+		<adopted>1953-02-25</adopted>
+	</street-wip>
+	<street-wip>
+		<name>Bidwell Avenue</name>
+		<date>1936</date>
+		<desc></desc>
+		<adopted>1937-06-28;1958-03-26</adopted>
+	</street-wip>
+	<street-wip>
+		<name>Glenthorn Road</name>
+		<date>1935</date>
+		<desc></desc>
+	</street-wip>
+	<street-wip>
+		<name>Silvester Road</name>
+		<date>1911</date>
+		<desc></desc>
+		<adopted>1929-12-23</adopted>
+	</street-wip>
+	<street-wip>
+		<name>Bancroft Road</name>
+		<date>1901</date>
+		<desc></desc>
+		<adopted>1958-04-30</adopted>
+	</street-wip>
+	<street-wip>
+		<name>Maberley Road</name>
+		<date>1899</date>
+		<desc></desc>
+		<adopted>1955-04-27</adopted>
+	</street-wip>
+ </street-names>
 </book>
