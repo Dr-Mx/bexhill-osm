@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v8.1.0
+
+**Date:** 23/04/2024
+
+Updated
+ - fontawesome 6.5.2
+ - L.Control.Locate.min.js 0.81.0
+
+Site changes
+ - Tidy up map change feed
+ - Tutorial modals better positioning
+ - Map icons for public bookcases and chess tables
+ - Confirm dialogue shows url when navigating to external website
+ - Opening hours show sunset/sunrise times properly now
+ - Create a generic website parser for popups
+ - More of the usual bug fixes and code improvements
+
+
 ## v8.0.0
 
 **Date:** 17/02/2024

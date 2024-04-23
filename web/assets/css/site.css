@@ -238,32 +238,28 @@ input[type=text], input[type=date], input[type=number] {
 }
 #home-new-feed li {
 	font-family: monospace;
+	margin: 2px 0;
 }
 #home-new-feed .fa-ul {
 	margin-left: 1.5em;
 }
-#home-new-feed a:link, #home-new-feed a:hover, #home-new-feed a:visited {
+#home-new-feed a:hover, #home-new-feed a:link, #home-new-feed a:visited {
 	color: inherit;
 }
-#home-new-feed li .co{
-	font-family: monospace;
+#home-new-feed li:hover, #home-osm-feed li:hover .comment {
+	color: var(--text-color);
 }
 #home-osm-feed {
 	display: none;
 }
 #home-osm-feed li .comment {
 	display: block;
-	width: 70%;
+	width: 80%;
 	text-overflow: ellipsis;
 	overflow-x: hidden;
 	text-align: left;
 	white-space: nowrap;
-	opacity: 0.75;
-}
-#home-osm-feed li:hover .comment {
-	width: 100%;
-	white-space: normal;
-	opacity: 1;
+	opacity: 75%;
 }
 footer {
 	position: absolute;
@@ -507,7 +503,7 @@ h3 {
 	padding: 15px;
 	min-height: 20px;
 }
-@media (max-height: 350px) {
+@media (max-height: 350px), (max-width: 375px) {
 	.leaflet-control-zoom {
 		display: none;
 	}
@@ -1213,6 +1209,11 @@ input:indeterminate + .slider::before {
 		display: none !important;
 	}
 }
+@media (max-width: 511px) {
+	.popup-img-item {
+		max-height: 150px !important;
+	}
+}
 .leaflet-control-layers {
 	border-radius: 10px;
 }
@@ -1310,7 +1311,6 @@ a.control-layers-title {
 .popup-fhrs > a > img {
 	white-space: nowrap;
 	border-radius: 5px;
-	border: 1px solid #000000;
 	filter: saturate(50%);
 }
 .popup-body {
@@ -1369,6 +1369,7 @@ a.control-layers-title {
 	text-align: right;
 	color: #666666;
 	font-style: italic;
+	opacity: 60%;
 }
 .popup-openhrs .popup-tag-value {
 	width: 100%;
@@ -1466,6 +1467,7 @@ a.control-layers-title {
 	justify-content: center;
 	text-align: center;
 	font-size: 6pt;
+	margin-left: 2px;
 }
 .popup-img-attrib, .popup-img-attrib a, .popup-navigate {
 	color: #808080;

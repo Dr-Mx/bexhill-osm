@@ -1,4 +1,5 @@
-// enter your personal api keys here, get your own (free) keys by using the links below, rename to config.js
+// enter your personal api keys here, get your own (free) keys by using the links below, then rename to config.js
+// feel free to find and delete any references to these apis if you don't need them
 
 window.BOSM = {
 	osmchaTok: '',					// Get latest map changes			https://osmcha.mapbox.com/user			

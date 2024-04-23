@@ -1,7 +1,7 @@
 {
     "data_format": 1,
     "data_url": "https://bexhill-osm.org.uk/assets/data/taginfo.json",
-	"data_updated": "20240121T200000Z",
+	"data_updated": "20240420T200000Z",
     "project": {
         "name": "Bexhill OpenStreetMap",
         "description": "A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.",
@@ -13,71 +13,64 @@
     },
     "tags": [{
             "key": "dog",
-            "description": "Displays an icon in an elements popup, showing dog friendly establishments."
+            "description": "Dog friendly establishments, displayed as an icon in a map popup"
         }, {
             "key": "drinking_water:refill",
-            "description": "Displays an icon in an elements popup, showing where the public can refill water bottles."
+            "description": "Where the public can refill water bottles, displayed as an icon in a map popup."
         }, {
             "key": "shop",
 			"value": "vacant",
-            "description": "Keeps track of empty shops for display on the map."
+            "description": "Keeps track of empty shops, displayed as a map marker."
         }, {
             "key": "wikimedia_commons",
-            "description": "Link to a photo, displayed in an elements popup."
+            "description": "A related photo, displayed in a map popup."
         }, {
             "key": "wikimedia_commons:1",
-            "description": "Links to multiple photos when separated by semicolons, displayed in an elements popup."
+            "description": "Multiple related photos when separated by semicolons, displayed in a map popup."
         }, {
             "key": "wikimedia_commons:pano",
-            "description": "Links to a 360 panoramic image, or multiple panoramas when separated by semicolons, linked in an elements popup."
+            "description": "A related 360 panoramic image, or multiple panoramas when separated by semicolons, linked in a map popup."
         }, {
             "key": "wikimedia_commons:video",
-            "description": "Links to a video, or multiple videos when separated by semicolons, linked in an elements popup."
+            "description": "A related video, or multiple videos when separated by semicolons, linked in a map popup."
         }, {
             "key": "image",
-            "description": "Direct url link to a photo, displayed in an elements popup."
+            "description": "Full URL to a related photo, displayed in a map popup."
         }, {
             "key": "image:1",
-            "description": "Direct url links to multiple photos when separated by semicolons, displayed in an elements popup."
+            "description": "Full URL to multiple related photos when separated by semicolons, displayed in a map popup."
         }, {
             "key": "image:source",
-            "description": "Attribution for 'image' tag, for displaying under the image."
+            "description": "Attribution for 'image' tag, for displaying under the image in a map popup."
         }, {
             "key": "ref:planningapp",
-            "description": "Planning reference number from Rother District Council, linked in an elements popup."
+            "description": "Planning reference number from Rother District Council, linked in a map popup."
         }, {
             "key": "ref:historicplanningapp",
-            "description": "Historic planning reference number from Rother District Council, linked in an elements popup."
+            "description": "Historic planning reference number from Rother District Council, linked in a map popup."
         }, {
             "key": "ref:esher",
-            "description": "East Sussex Historic Environment Record reference, linked in an elements popup."
+            "description": "East Sussex Historic Environment Record reference, linked in a map popup."
         }, {
             "key": "ref:publicsculpturesofsussex",
-            "description": "Public Sculptures of Sussex object ID, linked in an elements popup."
+            "description": "Public Sculptures of Sussex object ID, linked in a map popup."
         }, {
             "key": "ref:iwm",
-            "description": "Imperial War Museum: War Memorials Register reference, linked in an elements popup."
+            "description": "Imperial War Museum: War Memorials Register reference, linked in a map popup."
         }, {
             "key": "url:bexhillhistorytrail",
-            "description": "URL path to an article on The Bexhill History Trail website, linked in an elements popup."
+            "description": "URL path to an article on The Bexhill History Trail website, linked in a map popup."
         }, {
             "key": "url:bexhillnature",
-            "description": "URL path to an article on Bexhill Nature website, linked in an elements popup."
-        }, {
-            "key": "website:booking",
-            "description": "Full URL to accommodation on Booking.com, linked in an elements popup."
-        }, {
-            "key": "website:orders",
-            "description": "Full URL to online food ordering for restaurants, linked in an elements popup."
+            "description": "URL path to an article on Bexhill Nature website, linked in a map popup."
         }, {
             "key": "naptan:AtcoCode",
-			"description": "Used to access real-time information on bus-stops, displayed in a table."
+			"description": "Used to access real-time information on bus-stops, displayed in a map popup."
         }, {
             "key": "fhrs:id",
-			"description": "Used to access information on food hygiene ratings, shown in an elements popup."
+			"description": "Used to access information on food hygiene ratings, displayed in a map popup."
         }, {
-            "key": "builder",
-			"description": "Displays the person who was responsible for constructing the building, shown in an elements popup."
+            "key": "manufacturer"
         }, {
             "key": "architect"
         }, {
@@ -107,11 +100,17 @@
         }, {
             "key": "beer_garden"
         }, {
+            "key": "membership"
+        }, {
             "key": "reservation"
         }, {
             "key": "opening_hours"
         }, {
             "key": "collection_times"
+        }, {
+            "key": "website:booking"
+        }, {
+            "key": "website:orders"
         }
     ]
 }

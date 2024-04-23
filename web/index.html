@@ -29,7 +29,7 @@
 	<meta name="theme-color" content="#a04900">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.5.1">
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.5.2">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.9.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
@@ -38,8 +38,8 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=8.0.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=8.0.0" id="darkcss" disabled>
+	<link rel="stylesheet" href="assets/css/site.css?v=8.1.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=8.1.0" id="darkcss" disabled>
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -232,6 +232,7 @@
 								<option value="dark">Dark theme</option>
 							</select></p>
 						<p class="settings-label switch"><label for="settings-unit">Metric for measurements</label><input id="settings-unit" data-cache type="checkbox"><label for="settings-unit" class="slider"></label></p>
+						<p class="settings-label switch"><label for="settings-controlzoom">Show zoom buttons on smaller screens</label><input id="settings-controlzoom" data-cache type="checkbox"><label for="settings-controlzoom" class="slider"></label></p>
 						<p class="settings-label switch"><label for="settings-mapillary">Mapillary street-level imagery</label><input id="settings-mapillary" data-cache type="checkbox"><label for="settings-mapillary" class="slider"></label></p>
 						<p class="settings-label switch"><label for="settings-autozoom">Auto-zoom History Tour overlays</label><input id="settings-autozoom" data-cache type="checkbox" checked><label for="settings-autozoom" class="slider"></label></p>
 						<p class="settings-label"><label for="settings-cleardata">Clear locally stored data</label><button id="settings-cleardata" type="button"><i class="fa-solid fa-rotate-left"></i></button></p>
@@ -299,7 +300,8 @@
 						<div id="info-profile">
 							<img alt="Alexis Markwick" title="Receiving the 'Freedom of Bexhill' award, May 2022." src="assets/img/info-me.jpg" onclick="popupWindow('youtube', 'xdhRKsva-Pg');" loading="lazy">
 							<p>Web-development and the underlying map data is maintained by <i>Alexis Markwick</i>. I hope you enjoy using it as much as I do creating it.</p>
-							If you're involved with a local group, I'll be happy to come and speak at one of your events about the project and give a demonstration.
+							<p>If you're involved with a local group, I'll be happy to come and speak at one of your events about the project and give a demonstration.</p>
+							I also love digitising old maps and books on Bexhill's history, so please get in touch if you have items you wish to share.
 						</div>
 						<p class="info-links">
 							<a href="#" onclick="this.href='mailto:' + email;" title="Email me"><img src="assets/img/info-email.svg" loading="lazy"></a>
@@ -379,17 +381,17 @@
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v=1.5.1"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v=3.2.5"></script>
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v=2.4.0"></script>
-	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.79.0"></script>
+	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.81.0"></script>
 	<script src="assets/js/plugins/bouncemarker.min.js?v=1.2.3"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.7.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=8.0.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=8.0.0"></script>
-	<script src="assets/js/tags-parsers.js?v=8.0.0"></script>
-	<script src="assets/js/pois-type.js?v=8.0.0"></script>
-	<script src="tour/tour.js?v=8.0.0"></script>
-	<script src="assets/js/site.js?v=8.0.0"></script>
+	<script src="assets/js/config.js?v=8.1.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=8.1.0"></script>
+	<script src="assets/js/tags-parsers.js?v=8.1.0"></script>
+	<script src="assets/js/pois-type.js?v=8.1.0"></script>
+	<script src="tour/tour.js?v=8.1.0"></script>
+	<script src="assets/js/site.js?v=8.1.0"></script>
  </body>
 </html>

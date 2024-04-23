@@ -3,7 +3,7 @@
 let eleCache = [], queryBbox = '', queryCustom = false;
 function show_overpass_layer(query, cacheId, options) {
 	if (!query || query === '();') { setMsgStatus('fa-solid fa-circle-info', 'No Query', 'The OverpassAPI query string was empty.', 4); return; }
-	else if ($('#settings-bbox').val() === 'screen' && !options.forceBbox && map.getZoom() < 15) { setMsgStatus('fa-solid fa-circle-info', 'Query Area Too Large', 'Please try zooming in to at least level 15.', 4); return; }
+	else if ($('#settings-bbox').val() === 'screen' && (options && !options.forceBbox) && map.getZoom() < 15) { setMsgStatus('fa-solid fa-circle-info', 'Query Area Too Large', 'Please try zooming in to at least level 15.', 4); return; }
 	else {
 		// show spinner, disable poi checkboxes
 		$('.spinner').show();

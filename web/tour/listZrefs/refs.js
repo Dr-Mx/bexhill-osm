@@ -245,6 +245,11 @@ var tourRefs = {
 		2: {
 			name: 'Bexhill-on-Sea Observer, 25 December 1909, p.4',
 			media: 'Newspaper'
+		},
+		3: {
+			name: 'Bexhill Boundary Stones survey',
+			url: 'https://umap.openstreetmap.fr/en/map/bexhill-boundary-stones_202791',
+			media: 'Website'
 		}
 	},
 	
