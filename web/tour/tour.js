@@ -163,45 +163,51 @@ function tour(tName, tID, fromPermalink) {
 				mimeType: 'application/json',
 				cache: true,
 				success: function(json) {
-					L.geoJSON(json, {
-						onEachFeature: function(feature, layer) {
-							const fp = feature.properties;
-							fp.custom = '';
-							$.each(fp.comments, function(c) {
-								if (fp.comments[c].text) fp.custom += L.Util.template(tagTmpl, {
-									key: (fp.comments[c].user ? '<a href="' + fp.comments[c].user_url + '" target="_blank" rel="noopener" title="User">' + fp.comments[c].user + '</a>' : 'Anonymous'),
-									keyVal: '<span title="' + fp.comments[c].date + '">' + fp.comments[c].text + '</span>',
-									iconName: 'fa-regular fa-comment'
-								});
-							});
-							fp.custom += '</span><span class="popup-notes comment"><i class="fa-solid fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + dateFormat(fp.closed_at.split(' ')[0], 'short') : 'times"></i> Currently unresolved') + '</span> | ' +
-								'<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
-								'osm.org/note/' + fp.id + '</a><span class="popup-tag-long theme-scroll">';
-							setJsonPopup(feature, layer, [titleCase(fp.status + ' note'), dateFormat(fp.date_created.split(' ')[0], 'long')]);
-						},
-						pointToLayer: function(feature, latlng) {
-							const marker = setMarker(latlng, true, {
-								iconUrl: '/../../assets/img/leaflet/' + feature.properties.status + '_note_marker',
-								iconSize: [25, 41],
-								iconAnchor: [12, 41],
-								shadowUrl: '/../../assets/img/leaflet/marker-shadow',
-								shadowAnchor: [12, 41],
-								popupAnchor: [0, -26]
-							}, true);
-							marker.ohState = (feature.properties.status === 'open' ? 'false' : 'true');
-							marker._leaflet_id = feature.properties.id;
-							poiList.push(marker);
-							imageOverlay.addLayer(marker);
-							return marker;
-						}
-					});
-					if ($('#settings-debug').is(':checked')) console.debug('OSM Notes:', json);
-					setTimeout(function() { pushPoiList('feature.properties.id'); }, 250);
 					setPageTitle('OSM Notes');
-					if (autoZoom) zoom_area();
-					else map.fireEvent('zoomend');
-					if (tID) imageOverlay.getLayer(tID).openPopup().stopBounce();
-					$('.spinner').fadeOut('fast');
+					if (json.features.length) {
+						L.geoJSON(json, {
+							onEachFeature: function(feature, layer) {
+								const fp = feature.properties;
+								fp.custom = '';
+								$.each(fp.comments, function(c) {
+									if (fp.comments[c].text) fp.custom += L.Util.template(tagTmpl, {
+										key: (fp.comments[c].user ? '<a href="' + fp.comments[c].user_url + '" target="_blank" rel="noopener" title="User">' + fp.comments[c].user + '</a>' : 'Anonymous'),
+										keyVal: '<span title="' + fp.comments[c].date + '">' + fp.comments[c].text + '</span>',
+										iconName: 'fa-regular fa-comment'
+									});
+								});
+								fp.custom += '</span><span class="popup-notes comment"><i class="fa-solid fa-' + (fp.closed_at ? 'check"></i> Resolved: ' + dateFormat(fp.closed_at.split(' ')[0], 'short') : 'times"></i> Currently unresolved') + '</span> | ' +
+									'<a onclick="improveMap({\'latlng\': { \'lat\':\'' + feature.geometry.coordinates[1] + '\', \'lng\':\'' + feature.geometry.coordinates[0] + '\' }}, \'' + fp.id + '\');">' +
+									'osm.org/note/' + fp.id + '</a><span class="popup-tag-long theme-scroll">';
+								setJsonPopup(feature, layer, [titleCase(fp.status + ' note'), dateFormat(fp.date_created.split(' ')[0], 'long')]);
+							},
+							pointToLayer: function(feature, latlng) {
+								const marker = setMarker(latlng, true, {
+									iconUrl: '/../../assets/img/leaflet/' + feature.properties.status + '_note_marker',
+									iconSize: [25, 41],
+									iconAnchor: [12, 41],
+									shadowUrl: '/../../assets/img/leaflet/marker-shadow',
+									shadowAnchor: [12, 41],
+									popupAnchor: [0, -26]
+								}, true);
+								marker.ohState = (feature.properties.status === 'open' ? 'false' : 'true');
+								marker._leaflet_id = feature.properties.id;
+								poiList.push(marker);
+								imageOverlay.addLayer(marker);
+								return marker;
+							}
+						});
+						setTimeout(function() { pushPoiList('feature.properties.id'); }, 250);
+						if (autoZoom) zoom_area();
+						else map.fireEvent('zoomend');
+						if (tID) imageOverlay.getLayer(tID).openPopup().stopBounce();
+						$('.spinner').fadeOut('fast');
+					}
+					else {
+						setMsgStatus('fa-solid fa-circle-info', 'No OSM notes found', 'All pending map notes in this area have been resolved.');
+						$('.spinner').fadeOut('fast');
+					}
+					if ($('#settings-debug').is(':checked')) console.debug('OSM Notes:', json);
 				},
 				error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR OSM-NOTES:', encodeURI(this.url)); }
 			});
@@ -452,7 +458,7 @@ function tour(tName, tID, fromPermalink) {
 						}
 					});
 					setTimeout(function() { pushPoiList('feature.properties.id'); }, 250);
-					setPageTitle('Bores and wells');
+					setPageTitle('Boreholes');
 					if (autoZoom) zoom_area();
 					else map.fireEvent('zoomend');
 					if (tID) imageOverlay.getLayer(tID).openPopup();

@@ -3,6 +3,22 @@
 	"features": [{
 		"type": "Feature",
 		"properties": {
+			"id": "kincardine",
+			"date": "1960",
+			"imgcaption": {
+				"1": "Kincardine, Brassey Road",
+				"2": "Now in 2024",
+				"3": "Then in 1960 | Bexhill Museum"
+			},
+			"desc": "This Victorian house still has many of its period features and can easily be missed today as it has become an extension of the Normanhurst Care Home."
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [0.47839, 50.83874]
+		}
+	}, {
+		"type": "Feature",
+		"properties": {
 			"id": "stgeorge",
 			"date": "1920",
 			"imgcaption": {
@@ -220,7 +236,7 @@
 				"2": "Now in 2019",
 				"3": "Then in 1965 | Bexhill Museum"
 			},
-			"desc": "Designed by Paul Hoffman and built by Mr Gold, it was used for residential apartments with letting for shops between the years of 1901-1970. One of the first places in Bexhill to have hydraulic lifts and electric lighting. Today demolished and used as an extension to the De La Warr Pavilion car park."
+			"desc": "Designed by Paul Hoffman and built by Charles Henry Gold, it was used for residential apartments with letting for shops between the years of 1901-1970. One of the first places in Bexhill to have hydraulic lifts and electric lighting. Today demolished and used as an extension to the De La Warr Pavilion car park."
 		},
 		"geometry": {
 			"type": "Point",

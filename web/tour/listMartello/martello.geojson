@@ -10,11 +10,13 @@
 				"img": {
 					"0": "listMartello/img/mt55(0)",
 					"1": "listMartello/img/mt55(1)",
-					"2": "File:Martello Tower No 55, Coast Road, Normans Bay.jpg"
+					"2": "listMartello/img/mt55(2)",
+					"3": "File:Martello Tower No 55, Coast Road, Normans Bay.jpg"
 				},
 				"imgattrib": {
-					"0": "1999 | &copy; Bexhill Museum",
-					"1": "2002 | &copy; Anthony Sherwin Architects"
+					"0": "1929 | &copy; Bexhill Museum",
+					"1": "1999 | &copy; Bexhill Museum",
+					"2": "2002 | &copy; Anthony Sherwin Architects"
 				}
 			},
 			"geometry": {

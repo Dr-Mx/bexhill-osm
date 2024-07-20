@@ -43,7 +43,7 @@
 @media (min-width: 1024px) {
 	.sidebar.collapsed .sidebar-tabs {
 		background-color: transparent !important;
-		backdrop-filter: blur(1px) saturate(40%);
+		backdrop-filter: blur(1px);
 		transition: background-color 400ms ease-out; } }
 .sidebar-left {
 	left: 0; }
@@ -54,7 +54,8 @@
 	top: 0;
 	bottom: 0;
 	height: 100%;
-	background-color: #e5e5e5 }
+	background-color: #e5e5e5;
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent); }
 .sidebar-left .sidebar-tabs {
 	left: 0; }
 .sidebar-tabs, .sidebar-tabs > ul {

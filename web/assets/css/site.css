@@ -1,6 +1,6 @@
 :root {
-	--main-color: #a04900;
-	--second-color: #ba5500;
+	--main-color: #bb5500;
+	--second-color: #cc5c00;
 	--text-color: #000000;
 	--bg-hover-color: #f4f4f4;
 	--scr-thumb: #cdcdcd;
@@ -261,6 +261,10 @@ input[type=text], input[type=date], input[type=number] {
 	white-space: nowrap;
 	opacity: 75%;
 }
+#home-osm-feed li .comment-expanded {
+	white-space: unset;
+	opacity: 100%;
+}
 footer {
 	position: absolute;
 	bottom: 0;
@@ -309,7 +313,6 @@ h3 {
 .sidebar-anchor {
 	display: block;
 	position: sticky;
-	position: -webkit-sticky;
 	bottom: 10px;
 	margin-left: calc(100% - 13px);
 	padding: 5px;
@@ -478,8 +481,9 @@ h3 {
 	box-shadow: 0 1px 5px rgb(0 0 0 / 40%);
 	font-size: 10pt;
 	min-width: 250px;
-	max-width: calc(80vw - 50px);
+	max-width: 450px;
 	border-radius: 10px;
+	margin-left: 30px;
 	margin-bottom: 15vh;
 	transition: margin-bottom 400ms ease-out;
 }
@@ -503,11 +507,16 @@ h3 {
 	padding: 15px;
 	min-height: 20px;
 }
+#modal-body table { width: 100%; }
+#osm-details table { font-size: 90%; }
+#edit-details img { height: 25px; }
+
 @media (max-height: 350px), (max-width: 375px) {
 	.leaflet-control-zoom {
 		display: none;
 	}
 }
+
 .leaflet-control-attribution {
 	max-width: 60vw;
 	padding: 2px 5px;
@@ -535,8 +544,6 @@ h3 {
 }
 .leaflet-fade-anim .leaflet-popup {
 	opacity: 0;
-	-webkit-transition: opacity 0.1s linear;
-	-moz-transition: opacity 0.1s linear;
 	transition: opacity 0.1s linear;
 }
 
@@ -608,8 +615,9 @@ button.tutorial-button:nth-of-type(2) {
 	width: 145px;
 	text-align: center;
 	border-radius: 10px;
-	background-color: #ffffff;
+	background-color: rgba(240, 240, 240, 0.8);
 	margin-top: 30px;
+	backdrop-filter: blur(7px);
 }
 #control-opacity input[type=range] {
 	background-image: linear-gradient(to right, #eee, #bbb);
@@ -781,7 +789,6 @@ button:disabled ~ label {
 #pois-results button {
 	display: block;
 	position: sticky;
-	position: -webkit-sticky;
 	float: right;
 	margin: -25px 0 5px 5px;
 	top: 5px;
@@ -1085,10 +1092,10 @@ input:not(:checked):hover + .slider {
 	background-color: #999999;
 }
 input:checked + .slider {
-	background-color: var(--second-color);
+	background-color: var(--main-color);
 }
 input:checked:hover + .slider {
-	background-color: var(--main-color);
+	background-color: var(--second-color);
 }
 input:checked + .slider::before {
 	transform: translateX(26px);
@@ -1352,7 +1359,6 @@ a.control-layers-title {
 }
 .popup-tag-long .popup-tag-icon {
 	position: sticky;
-	position: -webkit-sticky;
 	top: 2px;
 	display: block;
 }
@@ -1445,7 +1451,6 @@ a.control-layers-title {
 	height: inherit;
 	max-height: inherit;
 	width: 100%;
-	object-position: center 75%;
 	object-fit: cover;
 	transition: transform 250ms ease-in-out;
 }

@@ -132,7 +132,7 @@ L.Map.addInitHook(function() {
 			// drop marker and reverse lookup on single click
 			h = setTimeout(function() {
 				clickOutline.clearLayers().addLayer(L.circleMarker(e.latlng, {
-					className: 'circleMarker layer-visualclick',
+					className: 'circleMarker',
 					radius: 10,
 					weight: 2,
 					opacity: 1,
@@ -397,9 +397,73 @@ const map = new L.map('map', {
 			}
 		});
 	}
-	// edit on osm.org
+	// wikidata
+	$('.popup-wikidata').off('click').on('click', function() {
+		const wikidata = JSON.parse(decodeURI($('.popup-wikidata').data('wikidata')));
+		let wikidataLinks = '<table>';
+		Object.keys(wikidata).forEach(key => {
+			wikidataLinks += '<tr><td>' + key + ':</td>' +
+			'<td><a onclick="popupWindow(\'popup\', \'https://www.wikidata.org/wiki/' + wikidata[key] + '\', \'wikidataWindow\')">' + wikidata[key] + '</a></td></tr>';
+		});
+		wikidataLinks += '</table>';
+		setMsgStatus('fa-solid fa-barcode', '<span>Wikidata</span>', wikidataLinks);
+	});
+	// editing options
 	$('.popup-edit').off('click').on('click', function() {
-		popupWindow('popup', 'https://www.openstreetmap.org/edit?' + elementType(osmId) + '=' + osmId.slice(1) + '#map=19/' + e.popup._latlng.lat + '/' + e.popup._latlng.lng, 'editWindow');
+		popupEditor = function(type, value) {
+			let urlEditor = 'https://www.openstreetmap.org/';
+			switch (type) {
+				case 'user':
+					urlEditor += type + '/' + value;
+					break;
+				case 'viewer':
+					urlEditor += elementType(osmId) + '/' + osmId.slice(1) + (value ? '/history' : '');
+					break;
+				case 'id':
+					urlEditor += 'edit?editor=id&' + elementType(osmId) + '=' + osmId.slice(1);
+					break;
+				case 'remote':
+					urlEditor = '';
+					$.ajax({
+						url: 'http://127.0.0.1:8111/load_and_zoom?left=' + map.getBounds()._southWest.lng + '&top=' + map.getBounds()._northEast.lat + '&right=' + map.getBounds()._northEast.lng + '&bottom=' + map.getBounds()._southWest.lat + '&select=' + elementType(osmId) + osmId.slice(1),
+						type: 'GET',
+						error: function() { window.alert('Editing failed - make sure JOSM is loaded and that the remote control option is enabled.'); }
+					});				
+					break;
+			}
+			if (urlEditor) popupWindow('popup', urlEditor, 'editWindow');
+		};
+		$.ajax({
+			url: 'https://www.openstreetmap.org/api/0.6/' + elementType(osmId) + '/' + osmId.slice(1) + '.json',
+			dataType: 'json',
+			success: function(json) {
+				e = json.elements[0];
+				const infoTags =
+					(e.tags.comment ? '<tr><td>Comment:</td><td><i>' + e.tags.comment + '</i></td></tr>' : '') +
+					(e.tags.note ? '<tr><td>Note:</td><td><i>' + e.tags.note + '</i></td></tr>' : '') +
+					(e.tags.fixme ? '<tr><td>Fixme:</td><td><i>' + e.tags.fixme + '</i></td></tr>' : '') +
+					(e.tags.source ? '<tr><td>Source:</td><td><i>' + e.tags.source + '</i></td></tr>' : '') +
+					(e.tags.check_date ? '<tr><td>Check date:</td><td><i>' + dateFormat(e.tags.check_date, 'short') + '</i></td></tr>' : '');
+				if ($('#osm-details:visible').length) {
+					$('#osm-details').html('<table>' +
+					'<tr><td>Last change:</td><td title="' + dateFormat(e.timestamp, 'short') + '"><a onclick="popupEditor(\'viewer\', \'history\');">' + timeSince(e.timestamp) + '</a></td></tr>' +
+					'<tr><td>User:</td><td title="UserID: ' + e.uid + '"><a onclick="popupEditor(\'user\', \'' + e.user + '\');">' + e.user + '</a></td></tr>' +
+					'</table><hr>' + (infoTags ? '<table>' + infoTags + '</table><hr>' : ''));
+					$('#modal-head span').append(' | Ver. ' + e.version);
+				}
+			},
+			error: function() { if ($('#inputDebug').is(':checked')) console.debug('ERROR OSM-API: ' + this.url); }
+		});
+		setMsgStatus(
+			'fa-solid fa-pen-to-square',
+			'<span>' + titleCase(elementType(osmId) + ' ' + osmId.slice(1)) + '</span>',
+			'<span id="osm-details"></span>' +
+			'<span id="edit-details"><table>' +
+			'<tr><td><img src="assets/img/edit-id.svg"></td><td><a onclick="popupEditor(\'id\');">Edit with iD (in-browser editor)</a></td></tr>' +
+			'<tr><td><img src="assets/img/edit-josm.svg"></td><td><a onclick="popupEditor(\'remote\');">Edit with Remote Control (JOSM)</a></td></tr>' +
+			'<tr><td><img src="assets/img/edit-osm.svg"></td><td><a onclick="popupEditor(\'viewer\',);">View on openstreetmap.org</a></td></tr>' +
+			'</table></span>'
+		);
 	});
 	popupThis.find($('.popup-header > a, .popup-facilities i, .popup-navigate [title]')).tooltip(tooltipDef);
 	// opening-hours accordion
@@ -464,7 +528,7 @@ const map = new L.map('map', {
 						'<td>' + (departTimer === -1 ? 'Due' : (departTimer + ' (' + new Date(departTime).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + ')')) + '</td></tr>'
 					);
 				}
-				popupThis.find($('.popup-bustime-table')).after('<div class="popup-comment">- <a href="https://www.travelinedata.org.uk/" target="_blank" rel="noopener">Traveline NextBuses</div>');
+				popupThis.find($('.popup-bustime-table')).after('<div class="popup-comment"><a href="https://www.travelinedata.org.uk/" target="_blank" rel="noopener">Traveline NextBuses</div>');
 				if (e.popup.options.autoPan) e.popup._adjustPan();
 			}
 			else popupThis.find($('.popup-bustime-table')).html('<span class="comment">No buses due at this time.</span>');
@@ -672,7 +736,7 @@ let rQuery = false;
 function reverseQuery(e, singlemapclick) {
 	const geoServer = $('#settings-reverse-server').val();
 	let geocoder, geoMarker;
-	if (singlemapclick) setMsgStatus('fa-solid fa-spinner fa-spin-pulse', '', '');
+	if (singlemapclick) setMsgStatus('fa-solid fa-spinner fa-spin-pulse', 'Searching...', '');
 	else $('.spinner').show();
 	if (geoServer === 'nominatim') geocoder = L.Control.Geocoder.nominatim({ reverseQueryParams: { format: 'jsonv2', namedetails: 1, email: email } });
 	else if (geoServer === 'opencage') geocoder = L.Control.Geocoder.opencage({ apiKey: window.BOSM.ocKey, reverseQueryParams: { limit: 1, roadinfo: (map.getZoom() < 17 ? 1 : 0) } });
@@ -711,8 +775,14 @@ function reverseQuery(e, singlemapclick) {
 				setMsgStatus('fa-solid fa-magnifying-glass-location', msgStatusHead, msgStatusBody);
 				// move click location to address location on hover
 				$('#modal .modal-body-addr')
-					.on('mouseenter', function() { if (clickOutline.getLayers()[0]) clickOutline.getLayers()[0].setLatLng(results[0].center); })
-					.on('mouseleave', function() { if (clickOutline.getLayers()[0]) clickOutline.getLayers()[0].setLatLng(e.latlng); });
+					.on('mouseenter', function() { if (clickOutline.getLayers()[0]) {
+						$(clickOutline.getLayers()[0]._path).addClass('layer-visualclick');
+						clickOutline.getLayers()[0].setLatLng(results[0].center);
+					}})
+					.on('mouseleave', function() { if (clickOutline.getLayers()[0]) {
+						clickOutline.getLayers()[0].setLatLng(e.latlng);
+						setTimeout(function() { $(clickOutline.getLayers()[0]._path).removeClass('layer-visualclick'); }, 350);
+					}});
 			}
 			else reverseQueryOP(geoMarker.osm_type || geoMarker.source_id.charAt(0), geoMarker.osm_id || geoMarker.source_id.split('/')[1]);
 		}
@@ -1673,7 +1743,7 @@ function popupWindow(type, url, pTitle, iCap, iAni) {
 	// The Story of Bexhill Street Names book
 	if (type === 'streetbook') {
 		type = 'auto';
-		url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/tour/itemStreetNames/streetnames.xml#' + (darkMode ? 'darkMode' : 'lightMode');
+		url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/tour/itemStreetNames/streetnames.html#' + (darkMode ? 'darkMode' : 'lightMode');
 		pTitle = 'bookWindow';
 		iCap = '<a href="https://bexhill-osm.org.uk/streetnames" target="_blank">https://bexhill-osm.org.uk/streetnames</a>';
 		iAni = 'fade';
@@ -1933,7 +2003,8 @@ function zoom_area(closeTab, layer) {
 	if ($(window).width() < 768 && closeTab) $('.sidebar-close:visible').trigger('click');
 	else if ($(window).width() >= 1024 && !$('.sidebar.collapsed').length) offset = Math.round(sidebar.width());
 	map.closePopup();
-	map.flyToBounds(layers, { paddingTopLeft: [offset, 0] } );
+	if (map.getBoundsZoom(layers) > 18) map.flyTo(layers.getCenter(), 18);
+	else map.flyToBounds(layers, { paddingTopLeft: [offset, 0] } );
 }
 
 function poi_changed(newcheckbox) {
@@ -2154,23 +2225,6 @@ function showWeather() {
 // https://github.com/OSMCha/osmcha-frontend/wiki/API
 // display latest osm changesets
 function showEditFeed() {
-	const timeSince = function(date) {
-		const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-		let str;
-		if (seconds / 31536000 > 1 && seconds / 31536000 < 2) str = 'One year ago';
-		if (seconds / 31536000 > 1) str = Math.floor(seconds / 31536000) + ' years ago';
-		else if (seconds / 2592000 > 1 && seconds / 2592000 < 2) str = 'One month ago';
-		else if (seconds / 2592000 > 1) str = Math.floor(seconds / 2592000) + ' months ago';
-		else if (seconds / 604800 > 1 && seconds / 604800 < 2) str = 'One week ago';
-		else if (seconds / 604800 > 1) str = Math.floor(seconds / 604800) + ' weeks ago';
-		else if (seconds / 86400 > 1 && seconds / 86400 < 2) str = 'One day ago';
-		else if (seconds / 86400 > 1) str = Math.floor(seconds / 86400) + ' days ago';
-		else if (seconds / 3600 > 1 && seconds / 3600 < 2) str = 'One hour ago';
-		else if (seconds / 3600 > 1) str = Math.floor(seconds / 3600) + ' hours ago';
-		else if (seconds / 60 > 2) str = Math.floor(seconds / 60) + ' minutes ago';
-		else str = 'Just now';
-		return str;
-	};
 	$.ajax({
 		url: 'https://osmcha.org/api/v1/changesets/',
 		headers: { 'Authorization': 'Token ' + window.BOSM.osmchaTok },
@@ -2190,7 +2244,7 @@ function showEditFeed() {
 					'<a href="https://overpass-api.de/achavi/?changeset=' + encodeURI(itm.id) + '&layers=B0FTTFT" title="' + dateFormat(itm.properties.date, 'short') + '\n' +
 					itm.properties.create + ' created\n' + itm.properties.modify + ' modified\n' + itm.properties.delete + ' deleted\n' + itm.properties.comments_count + ' comments">' + timeSince(itm.properties.date) + '</a>' +
 					' - <a href="https://www.openstreetmap.org/user/' + encodeURI(itm.properties.user) + '" title="Source: ' + itm.properties.source + '\nEditor: ' + itm.properties.editor + '">' + itm.properties.user + '</a>' +
-					'<span class="comment" title="' + itm.properties.comment + '">' + itm.properties.comment + '</span></li>';
+					'<span onclick="$(this).toggleClass(\'comment-expanded\');" class="comment">' + itm.properties.comment + '</span></li>';
 				});
 				$('#home-osm-feed')
 					.html('Recent map edits:<ul class="fa-ul">' + s + '</ul>')

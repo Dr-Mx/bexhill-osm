@@ -1,50 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:output method="html" doctype-system="about:legacy-compat"/>
-<xsl:template match="book">
+<!DOCTYPE html>
 <html lang="en-GB">
  <head>
 	<!-- Display, social network, search index info -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<meta name="description" content="An etymology of Bexhill-on-Sea's street and road names."/>
-	<meta name="author" content="Bexhill Museum Local History Study Group"/>
-	<meta name="color-scheme" content="only light"/>
-	<meta name="twitter:site" content="@BexhillOSM"/>
-	<meta name="twitter:creator" content="@BexhillOSM"/>
-	<meta name="twitter:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg"/>
-	<meta property="og:url" content="https://bexhill-osm.org.uk/streetnames"/>
-	<meta property="og:title" content="The Story of Bexhill Street Names | Bexhill-OSM"/>
-	<meta property="og:description" content="An etymology of Bexhill-on-Sea's street and road names."/>
-	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg"/>
-	<meta property="og:type" content="website"/>
-	<meta property="og:locale" content="en_GB"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="An etymology of Bexhill-on-Sea's street and road names.">
+	<meta name="author" content="Bexhill Museum Local History Study Group">
+	<meta name="color-scheme" content="only light">
+	<meta name="twitter:site" content="@BexhillOSM">
+	<meta name="twitter:creator" content="@BexhillOSM">
+	<meta name="twitter:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg">
+	<meta property="og:url" content="https://bexhill-osm.org.uk/streetnames">
+	<meta property="og:title" content="The Story of Bexhill Street Names | Bexhill-OSM">
+	<meta property="og:description" content="An etymology of Bexhill-on-Sea's street and road names.">
+	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg">
+	<meta property="og:type" content="website">
+	<meta property="og:locale" content="en_GB">
 
 	<!-- https://realfavicongenerator.net/ -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#a04900"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
-	<meta name="theme-color" content="#a04900"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#bb5500">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<meta name="theme-color" content="#bb5500">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="streetnames.css"/>
+	<link rel="stylesheet" href="streetnames.css">
 
-	<title><xsl:value-of select="info/title"/> | Bexhill-OSM</title>
+	<title>The Story of Bexhill Street Names | Bexhill-OSM</title>
  </head>
 
  <body>
-	<img id="header" alt="Street scenes in Bexhill-on-Sea." onclick="setHeaderImg();"/>
+	<img id="header" alt="Street scenes in Bexhill-on-Sea." onclick="setHeaderImg();">
 	<button id="button-theme" title="Dark/Light Theme">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="m12.5,3.33c-2.98,1.92 -5,5.3 -5,9.17c0,3.87 2.02,7.25 5.05,9.17c-5.12,0 -9.22,-4.1 -9.22,-9.17c0,-5.06 4.11,-9.17 9.17,-9.17m19.29,2.5l2.44,2.44l-26.02,25.9l-2.38,-2.38l25.96,-25.96m-10.31,4.05l-2.46,-1.55l-2.4,1.67l0.7,-2.83l-2.32,-1.77l2.92,-0.2l0.96,-2.75l1.12,2.72l2.88,0.04l-2.25,1.89l0.85,2.78m-5.5,6.02l-1.93,-1.22l-1.87,1.3l0.57,-2.19l-1.82,-1.39l2.27,-0.15l0.75,-2.15l0.85,2.11l2.27,0.06l-1.75,1.44l0.66,2.19m15.69,6.6c0,5.06 -4.11,9.17 -9.17,9.17c-2.04,0 -3.92,-0.67 -5.43,-1.79l12.81,-12.81c1.12,1.51 1.79,3.39 1.79,5.43m-7.34,10.96l4.62,-1.91l-0.4,5.58l-4.22,-3.67m7.22,-4.5l1.91,-4.61l3.67,4.23l-5.58,0.38m1.91,-8.26l-1.89,-4.63l5.56,0.39l-3.67,4.24m-17.41,10.85l4.62,1.91l-4.22,3.66l-0.4,-5.57zm0,0"/></svg>
 	</button>
-	<h1><xsl:value-of select="info/title"/></h1>
+	<h1>The Story of Bexhill Street Names</h1>
 	<div id="intro">
-		<p>In 1996 the Bexhill Museum Association published the first-ever attempt to explain how Bexhill-on-Sea’s street and road names had been acquired. That work was carried out by the Museum’s Local History Forum led by Alan Beecher.</p>
-		<p>The 2014 second edition was put together by the Museum’s Local History Study Group led by Dr. Paul Wright. It started to include details of street names which no longer existed and some place names often found on maps. Dates of when a street first appears and adoption dates (where available) are now recorded.</p>
+		<p>In 1996 the Bexhill Museum Association published the first-ever attempt to explain how Bexhill-on-Sea's street and road names had been acquired. That work was carried out by the Museum's Local History Forum led by Alan Beecher.</p>
+		<p>The 2014 second edition was put together by the Museum's Local History Study Group led by Dr. Paul Wright. It started to include details of street names which no longer existed and some place names often found on maps. Dates of when a street first appears and adoption dates (where available) are now recorded.</p>
 		<p>This online edition is being updated regularly with all new roads and streets. If you have any additional information, suggestions or corrections, please email <a href="mailto:info@bexhill-osm.org.uk">info@bexhill-osm.org.uk</a>.</p>
 		<p>Please note, many of these street names are neologisms, in other words they have simply been made up by the builder or developer. These can be difficult to identify or locate official documentation for - we accept we may have missed some or misinterpreted others.</p>
-		<p class="credit">Alan Beecher, Bexhill Museum’s Local History Forum, 1996</p>
+		<p class="credit">Alan Beecher, Bexhill Museum's Local History Forum, 1996</p>
 		<p class="credit">Dr. Paul Wright, Bexhill Museum's Local History Study Group, 2014</p>
 		<p class="credit">Alexis Markwick, Bexhill OpenStreetMap</p>
 	</div>
@@ -53,23 +50,17 @@
 		<li><a href="#appendix">Appendix</a></li>
 		<li><a href="#sources">Sources</a></li>
 	</ul>
-	<div id="street-index"><a>B</a><a>C</a><a>D</a><a>E</a><a>F</a><a>G</a><a>H</a><a>I</a><a>J</a><a>K</a><a>L</a><a>M</a><a>N</a><a>O</a><a>P</a><a>Q</a><a>R</a><a>S</a><a>T</a><a>U</a><a>V</a><a>W</a><a>X</a><a>Y</a><a>Z</a></div>
+	<div id="street-index"><a>A</a><a>B</a><a>C</a><a>D</a><a>E</a><a>F</a><a>G</a><a>H</a><a>I</a><a>J</a><a>K</a><a>L</a><a>M</a><a>N</a><a>O</a><a>P</a><a>Q</a><a>R</a><a>S</a><a>T</a><a>U</a><a>V</a><a>W</a><a>X</a><a>Y</a><a>Z</a></div>
 	<div id="street-filter">
-		<input id="street-filter-input" type="text" placeholder="Enter a street name or year"/><span id="street-filter-close"></span>
+		<input id="street-filter-input" type="text" placeholder="Enter a street name or year"><span id="street-filter-close"></span>
 		<p id="street-filter-text"></p>
 	</div>
-	<div id="street-results"><xsl:for-each select="street-names/street"><xsl:sort select="name"/>
-		<xsl:element name="p"><xsl:attribute name="class"><xsl:value-of select="normalize-space(concat('street', ' ', substring(name,1,1), ' ', @style))"/></xsl:attribute>
-		<strong><xsl:value-of select="name"/> (<xsl:value-of select="date"/>)</strong><br/>
-		<xsl:value-of select="desc"/></xsl:element>
-	</xsl:for-each></div>
+	<div id="street-results">Loading...</div>
 	<p id="street-results-end">END</p>
 	<div id="outro">
 		<h2 id="research">Requiring further research</h2>
 		<p>Please email us if you can offer help with any of the following:</p>
-		<p id="rsrchdesc"><xsl:for-each select="street-names/street-wip"><xsl:sort select="date"/>
-			<xsl:element name="span"><xsl:value-of select="name"/> (<xsl:value-of select="date"/>)</xsl:element>
-		</xsl:for-each></p>
+		<p id="rsrchdesc">Loading...</p>
 		<h2 id="appendix">Appendix</h2>
 		<p><a href="https://www.bexhillmuseum.org.uk/access-centre/research/street-directories/" target="_blank" rel="noopener">Bexhill Museum Street Directories</a> (website)</p>
 		<p><a href="https://www.rother.gov.uk/SNN" target="_blank" rel="noopener">Rother District Council - Street Naming and Numbering</a> (website)</p>
@@ -139,5 +130,3 @@
 	<script src="streetnames.js"></script>
  </body>
 </html>
-</xsl:template>
-</xsl:stylesheet>

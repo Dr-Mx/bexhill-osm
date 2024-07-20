@@ -4,7 +4,7 @@ let spinner = 0, markerId, ohState, ctState, poiList = [];
 function parse_tags(element, titlePopup, poiParser) {
 	let eName = element.tags.name || element.tags['addr:housename'] || undefined;
 	if (eName && element.tags.ref) eName += ' (' + element.tags.ref + ')';
-	let markerPopup = '';
+	let markerPopup = '', wikidata = {};
 	// global callback parsers
 	const address_parser = function(tags) {
 		markerPopup = '';
@@ -33,7 +33,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['building:architecture']) siteVal += '<span title="Architecture">' + titleCase(tags['building:architecture']) + '</span>; ';
 		if (tags.architect) siteVal += '<span title="Architect">Arch. ' + tags.architect + '</span>; ';
 		if (tags.artist_name) siteVal += '<span title="Artist">Artst. ' + tags.artist_name + '</span>; ';
-		if (tags.manufacturer) siteVal += '<span title="Manufacturer">Mfr. ' + tags.manufacturer + '</span>; ';
+		if (tags.manufacturer) siteVal += '<span title="Manufacturer/Builder">Mfr. ' + tags.manufacturer + '</span>; ';
 		if (tags.display) siteVal += '<span title="Clock display">' + tags.display + '</span>; ';
 		if (tags.support) siteVal += '<span title="Clock support">' + tags.support + '</span>; ';
 		if (tags.faces) siteVal += '<span title="Clock faces">' + ((tags.faces >= 2) ? tags.faces + ' faces' : '1 face') + '</span>; ';
@@ -49,9 +49,14 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (planningVal) siteVal += '<span class="theme-nowrap" title="Planning application">' + planningVal + '</span>; ';
 		if (tags.HE_ref) siteVal += '<a class="theme-nowrap" href="https://historicengland.org.uk/listing/the-list/list-entry/' + encodeURI(tags.HE_ref) + '?section=official-list-entry" title="Historic England Listing" target="_blank" rel="noopener">Listed ' + (tags.listed_status || tags.HE_ref) + '</a>; ';
 		if (tags.disused) siteVal += '<span title="Disused">Currently disused</span>; ';
+		if (tags['damage:type']) {
+			siteVal += '<span title="Damage">Damaged by ' + (tags['damage:event'] ? tags['damage:event'] + ' (' + tags['damage:type'] + ')' : '"' + tags['damage:type'] + '"') +
+				(tags['damage:date'] ? ' during ' + dateFormat(tags['damage:date'], 'short') : '')  + '</span>; ';
+		}
+		else if (tags.abandoned) siteVal += '<span title="Abandoned">Currently abandoned</span>; ';
 		if (tags.building) {
 			if (tags.building === 'garage') siteType = ['Garage', 'warehouse'];
-			else if (tags.building === 'house' || tags.building === 'bungalow' || tags.building === 'detached') siteType = ['House', 'house-chimney'];
+			else if (tags.building === 'house' || tags.building === 'farm' || tags.building === 'bungalow' || tags.building === 'detached' || tags.building === 'semidetached_house') siteType = ['House', 'house-chimney'];
 			else if (tags.building === 'hut') siteType = ['Structure', 'person-shelter'];
 			else if (tags.building === 'warehouse') siteType = ['Warehouse', 'warehouse'];
 			else siteType = ['Building', 'building'];
@@ -85,21 +90,19 @@ function parse_tags(element, titlePopup, poiParser) {
 		let streetVal = '';
 		markerPopup = '';
 		if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) {
-			// get street history through xml file lookup
+			// get street history through json file lookup
 			$.ajax({
 				async: false,
-				url: 'tour/itemStreetNames/streetnames.xml',
-				dataType: 'xml',
+				url: 'tour/itemStreetNames/streetnames.json',
+				dataType: 'json',
 				cache: true,
-				success: function(xml) {
-					const street = $(xml).find('name').filter(function() { return $(this).text() === tags.name; }).closest('street');
-					const streetDate = $('date', street).text();
-					const streetDesc = $('desc', street).text();
-					if (streetDate && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { key: 'Start date', keyVal: streetDate, iconName: 'fa-solid fa-calendar' });
-					if (streetDesc) markerPopup += '<span class="popup-tag-long theme-scroll">' + L.Util.template(tagTmpl, { key: 'Etymology', keyVal: '<i>' + streetDesc + '</i>', iconName: 'fa-solid fa-book' }) +
-						'<span class="popup-comment"><a onclick="popupWindow(\'streetbook\');" title="' + $(xml).find('url').text() + '">' + $(xml).find('title').text() + '</a></span>' +
+				success: function(json) {
+					const street = json.streetNames.street.find(street => street.name === tags.name);
+					if (street.date && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { key: 'Start date', keyVal: street.date, iconName: 'fa-solid fa-calendar-day' });
+					if (street.desc) markerPopup += '<span class="popup-tag-long theme-scroll">' + L.Util.template(tagTmpl, { key: 'Etymology', keyVal: '<i>' + street.desc + '</i>', iconName: 'fa-solid fa-book' }) +
+						'<span class="popup-comment"><a onclick="popupWindow(\'streetbook\');" title="The Story of Bexhill Street Names">The Story of Bexhill Street Names</a></span>' +
 					'</span>';
-					if ($('#settings-debug').is(':checked')) console.debug('Street-names:', xml);
+					if ($('#settings-debug').is(':checked')) console.debug('Street-names:', json);
 				},
 				error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }
 			});
@@ -123,13 +126,24 @@ function parse_tags(element, titlePopup, poiParser) {
 	};
 	const furtherreading_parser = function(tags) {
 		const streetDirs = 'https://www.bexhillmuseum.org.uk/access-centre/bexhill-street-directories/?wdt_column_filter[road]=';
-		let readingVal = '';
+		const planningApp = 'https://planweb01.rother.gov.uk/OcellaWeb/planningSearch?action=Search&location=';
+		const historicPlanningApp = 'https://planweb01.rother.gov.uk/OcellaWeb/historySearch?action=Search&location=';
+		let readingVal = '', planningVal = '';
 		markerPopup = '';
-		if ((tags.building === 'apartments' || tags.building === 'bungalow' || tags.building === 'house') && tags['addr:street'] && LBounds.contains(element.center)) {
+		if ((tags.building === 'apartments' || tags.building === 'detached' || tags.building === 'bungalow' || tags.building === 'farm' || tags.building === 'house' || tags.building === 'semidetached_house') && tags['addr:street'] && LBounds.contains(element.center)) {
 			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ';
 			readingVal += '<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories 1886-1931" target="_blank" rel="noopener">Street directories</a>; ';
+			if (tags.building === 'apartments' && tags['addr:housename']) planningVal += tags['addr:housename'];
+			else if (tags['addr:housenumber']) planningVal += tags['addr:housenumber'] + ' ' + tags['addr:street'];
+			else planningVal += tags['addr:street'];
+			if (tags['addr:postcode']) planningVal += '&OcellaPlanningSearch.postcode=' + tags['addr:postcode'];
+			readingVal += '<a href="' + planningApp + encodeURI(planningVal.replace('\'', '')) + '" title="Planning Application Search" target="_blank" rel="noopener">Planning applications</a>; ';
 		}
-		if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) readingVal += '<a href="' + streetDirs + encodeURI(eName.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
+		if (tags.highway && tags.name && element.type === 'way' && LBounds.contains(element.center)) {
+			readingVal += '<a href="' + streetDirs + encodeURI(tags.name.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
+			readingVal += '<a href="' + planningApp + encodeURI(tags.name.replace('\'', '')) + '&receivedFrom=01-01-' + (new Date().getFullYear() - 2010) + '" title="Planning Application Search" target="_blank" rel="noopener">Planning applications</a> ';
+			readingVal += '(<a href="' + historicPlanningApp + encodeURI(tags.name.replace('\'', '')) + '" title="Historic Planning Application Search" target="_blank" rel="noopener">Historic</a>); ';
+		}
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			const w = tags.wikipedia || tags['site:wikipedia'];
 			readingVal += '<a href="https://' + encodeURI(w.split(':')[0]) + '.wikipedia.org/wiki/' + encodeURI(w.split(':')[1]) + '" title="The Free Encyclopaedia" target="_blank" rel="noopener">Wikipedia</a>; ';
@@ -148,11 +162,13 @@ function parse_tags(element, titlePopup, poiParser) {
 			readingVal += '<a class="theme-nowrap" href="https://get-information-schools.service.gov.uk/Establishments/Establishment/Details/' + encodeURI(tags['ref:edubase']) + '" title="Department for Education" target="_blank" rel="noopener">URN ' + tags['ref:edubase'] + '</a>; ';
 		if (tags['ref:charity'])
 			readingVal += '<a class="theme-nowrap" href="https://register-of-charities.charitycommission.gov.uk/charity-details/?regId=' + encodeURI(tags['ref:charity']) + '&subId=0" title="Charity Commission" target="_blank" rel="noopener">Charity ' + tags['ref:charity'] + '</a>; ';
+		if (tags['ref:dove'])
+			readingVal += '<a class="theme-nowrap" href="https://dove.cccbr.org.uk/tower/' + encodeURI(tags['ref:dove']) + '" title="Dove\'s Guide for Church Bell Ringers" target="_blank" rel="noopener">Church Bell Guide</a>; ';
 		if (tags.tpuk_ref)
 			readingVal += '<a class="theme-nowrap" href="http://trigpointing.uk/trig/' + encodeURI(tags.tpuk_ref.split('TP')[1]) + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
 		if (readingVal) {
 			readingVal = readingVal.substring(0, readingVal.length - 2);
-			markerPopup = L.Util.template(tagTmpl, { key: 'Further reading', keyVal: readingVal, iconName: 'fa-solid fa-book' });
+			markerPopup = L.Util.template(tagTmpl, { key: 'Further information', keyVal: readingVal, iconName: 'fa-solid fa-link' });
 		}
 		return markerPopup;
 	};
@@ -168,16 +184,19 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['tactile_writing:braille'] === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-braille fa-fw" title="braille"></i>';
 		if (tags.dog === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-dog fa-fw" title="dogs allowed"></i>';
 		else if (tags.dog === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-dog fa-fw" title="no dogs allowed"></i>';
-		else if (tags.dog === 'leashed') facVal += '<i class="popup-tag-value-limited fa-solid fa-dog-leashed fa-fw" title="leashed dogs only"></i>';
+		else if (tags.dog === 'leashed') facVal += '<i class="popup-tag-value-limited fa-solid fa-dog fa-fw" title="leashed dogs only"></i>';
 		if (tags.internet_access === 'wlan') facVal += '<i class="popup-tag-value-yes fa-solid fa-wifi fa-fw" title="wireless internet"></i>';
 		else if (tags.internet_access === 'terminal') facVal += '<i class="popup-tag-value-yes fa-solid fa-desktop fa-fw" title="internet terminal"></i>';
+		if (tags.lit === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-lightbulb fa-fw" title="lighting"></i>';
+		else if (tags.lit === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-lightbulb fa-fw" title="no lighting"></i>';
+		if (tags.lockable === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-unlock-keyhole fa-fw" title="lockable"></i>';
 		if (tags['drinking_water:refill'] === 'yes') facVal += '<i class="fa-solid fa-bottle-droplet fa-fw" style="color:#0082ff;" title="free drinking water refills"></i>';
 		if (tags.membership === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-id-card fa-fw" title="membership available"></i>';
 		if (tags.membership === 'required') facVal += '<i class="popup-tag-value-no fa-solid fa-id-card fa-fw" title="membership required"></i>';
 		if (tags.live_music === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-music fa-fw" title="live music"></i>';
 		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') facVal += '<i class="popup-tag-value-yes fa-solid fa-umbrella fa-fw" title="sheltered"></i>';
-		if (tags.highway === 'bus_stop') {
-			if (tags.bench === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-chair fa-fw" title="seating"></i>';
+		if (tags.amenity === 'shelter' || tags.highway === 'bus_stop') {
+			if (tags.bench === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-chair fa-fw" title="seating' + (tags.seats ? ' for ' + tags.seats : '') + '"></i>';
 			if (tags.bin === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-trash-can fa-fw" title="rubbish bin"></i>';
 		}
 		if (tags.amenity === 'telephone') {
@@ -409,7 +428,7 @@ function parse_tags(element, titlePopup, poiParser) {
 	};
 	const image_parser = function(tags) {
 		// get images
-		let imgCount = 0, multiPano = [], multiVid = [];
+		let imgCount = 0, multiPano = [], multiVid = [], model3d;
 		markerPopup = '';
 		if (tags.image) {
 			// support semicolon separated images
@@ -443,7 +462,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					cache: true,
 					data: { action: 'query', list: 'categorymembers', cmtype: 'file', cmtitle: multiCommons[0], format: 'json' },
 					success: function(result) {
-						if (!result.query.categorymembers[-1]) for (x = 0; x < result.query.categorymembers.length; x++) if (result.query.categorymembers[x].title.startsWith('File:')) {
+						if (!result.query.categorymembers[-1]) for (x = 0; x < result.query.categorymembers.length; x++) if (result.query.categorymembers[x].title.startsWith('File')) {
 							markerPopup += generic_img_parser(result.query.categorymembers[x].title, imgCount, '');
 							imgCount++;
 						}
@@ -452,7 +471,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR WIKIMEDIA-CATEGORIES:', encodeURI(this.url)); }
 				});
 			} else */
-			for (let x = 0; x < multiCommons.length; x++) if (multiCommons[x].startsWith('File:')) {
+			for (let x = 0; x < multiCommons.length; x++) if (multiCommons[x].startsWith('File')) {
 				markerPopup += generic_img_parser(multiCommons[x], imgCount, '');
 				imgCount++;
 			}
@@ -471,7 +490,8 @@ function parse_tags(element, titlePopup, poiParser) {
 				(tags['wikimedia_commons:video_2'] ? ';' + tags['wikimedia_commons:video_2'] : '')
 			).split(';');
 		}
-		if (imgCount > 1 || multiPano.length || multiVid.length) markerPopup += show_img_controls(imgCount, multiPano, multiVid);
+		if (tags['3dmr']) model3d = tags['3dmr'];
+		if (imgCount > 1 || multiPano.length || multiVid.length || model3d) markerPopup += show_img_controls(imgCount, multiPano, multiVid, model3d);
 		if (imgCount > 0) markerPopup = '<div class="popup-img">' + markerPopup + '</div>';
 		return markerPopup;
 	};
@@ -505,6 +525,19 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (data.tag && data.label) markerPopup += data.callback(element.tags, data.tag, data.label, (data.iconName || 'fa-solid fa-tag'));
 		else markerPopup += data.callback(element.tags);
 	}
+	// wikidata
+	if (element.tags.wikidata) wikidata[element.tags.name ? element.tags.name : (element.tags['addr:housename'] ? element.tags['addr:housename'] : 'Main-item')] = element.tags.wikidata;
+	for (let wikidataKey in element.tags) {
+		if (wikidataKey.endsWith(':wikidata')) {
+			let wikidataName = wikidataKey.split(':wikidata')[0];
+			if (wikidataName === 'artist') wikidataName = 'artist_name';
+			// split semicolon separated entries
+			const wikidataKeyArray = element.tags[wikidataKey].split(';'), wikidataNameArray = element.tags[wikidataName] ? element.tags[wikidataName].split(';') : [];
+			for (let c = 0; c < wikidataKeyArray.length; c++) {
+				wikidata[wikidataNameArray[c] ? wikidataNameArray[c] + ' (' + listTidy(wikidataName) + ')' : titleCase(wikidataName)] = wikidataKeyArray[c];
+			}
+		}
+	}
 	// display all tags if poi has no callback
 	if (!markerPopup) {
 		if (titlePopup === '&hellip;') {
@@ -514,7 +547,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		$.each(element.tags, function(e) { markerPopup += generic_tag_parser(element.tags, e, e, 'fa-solid fa-tag'); });
 		markerPopup = '<i>' + markerPopup + '</i>';
 	}
-	return generic_header_parser((eName || element.tags.ref), titlePopup, element.tags['fhrs:id'], true, element.tags.wikidata) + '<div class="popup-body">' + markerPopup + '</div>';
+	return generic_header_parser((eName || element.tags.ref), titlePopup, element.tags['fhrs:id'], true, wikidata) + '<div class="popup-body">' + markerPopup + '</div>';
 }
 
 function callback(data) {
@@ -737,6 +770,7 @@ function callback(data) {
 				case 'moat': iconName = 'lake2'; break;
 				case 'railway_station': iconName = 'steamtrain'; break;
 				case 'street_lamp': iconName = 'streetlamp'; break;
+				case 'wall': iconName = 'citywalls'; break;
 				case 'wreck': iconName = 'shipwreck'; break;
 				case 'watering_place': iconName = 'wateringplace'; break;
 			}
@@ -745,6 +779,11 @@ function callback(data) {
 			if (!title) title = e.tags.man_made;
 			if (!type) type = e.tags.man_made;
 			if (type === 'water_tap') type = 'drinking_water';
+			if (type === 'surveillance') {
+				if (!type) type = e.tags.surveillance;
+				if (e.tags.surveillance === 'webcam') title = type = 'webcam';
+				if (type !== 'webcam') title = e.tags.surveillance + ' ' + e.tags['surveillance:type'];
+			}
 			if (type === 'survey_point') {
 				title = e.tags['survey_point:structure'];
 				switch (e.tags['survey_point:structure']) {
@@ -806,7 +845,12 @@ function callback(data) {
 			if (!type) type = e.tags.tourism;
 			switch (e.tags.tourism) {
 				case 'apartment': type = 'guest_house'; iconName = 'villa'; break;
-				case 'artwork': if (e.tags.artwork_type) title = e.tags.artwork_type + ' ' + e.tags.tourism; break;
+				case 'artwork':
+					if (e.tags.artwork_type) {
+						title = e.tags.artwork_type + ' ' + e.tags.tourism;
+						if (e.tags.artwork_type === 'mural') iconName = 'mural';
+					}
+					break;
 				case 'caravan_site': type = 'guest_house'; iconName = 'campingcar'; break;
 				case 'camp_site': type = 'guest_house'; iconName = 'tents'; break;
 				case 'gallery': type = 'artwork'; iconName = 'museum_paintings'; break;
@@ -821,8 +865,11 @@ function callback(data) {
 								break;
 							case 'guidepost': iconName = 'signpost-3'; title = e.tags.tourism + ' ' + e.tags.information; break; // [ascii 255] force to bottom of results
 							case 'map':
-								if (e.tags.map_size) title = e.tags.map_size + ' ' + title;
-								if (e.tags.map_type && e.tags.map_type === 'toposcope') type = 'artwork';
+								if (e.tags.map_type && e.tags.map_type === 'toposcope') {
+									title = e.tags.map_type + ' ' + e.tags.information;
+									type = 'artwork';
+								}
+								else if (e.tags.map_size) title = e.tags.map_size + ' ' + title;
 								iconName = 'map';
 								break;
 							case 'office': title = ' ' + title; break; // [ascii 32] force to top of results
@@ -853,6 +900,7 @@ function callback(data) {
 				case 'boules': iconName = 'boccia'; break;
 				case 'bowls': iconName = 'bowls'; break;
 				case 'boxing': iconName = 'boxing'; break;
+				case 'chess': iconName = 'chess'; break;
 				case 'cricket': iconName = 'cricket'; break;
 				case 'fishing': iconName = 'fishing'; break;
 				case 'martial_arts': iconName = 'karate'; break;
@@ -872,11 +920,6 @@ function callback(data) {
 			if (!type) type = e.tags.natural;
 			if (type === 'peak') iconName = 'hill';
 			if (type === 'wood') iconName = 'forest2';
-		}
-		if (e.tags.surveillance) {
-			if (!type) type = e.tags.surveillance;
-			if (e.tags.surveillance === 'webcam') title = type = 'webcam';
-			if (type !== 'webcam') title = e.tags.surveillance + ' ' + e.tags['surveillance:type'];
 		}
 		if (e.tags.emergency) {
 			if (!title) title = e.tags.emergency;
@@ -1008,8 +1051,9 @@ function callback(data) {
 			const imgIcon = ((e.tags.image && e.tags.wikimedia_commons) || (e.tags.image && e.tags.image.indexOf(';') > -1) || (e.tags.wikimedia_commons && e.tags.wikimedia_commons.indexOf(';') > -1)) ? 'images' : 'image';
 			toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
 		}
-		if (e.tags['wikimedia_commons:video']) toolTip += ' <i class="tooltip-icons fa fa-film fa-fw" title="Video"></i>';
 		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Photosphere view"></i>';
+		if (e.tags['wikimedia_commons:video']) toolTip += ' <i class="tooltip-icons fa fa-film fa-fw" title="Video"></i>';
+		if (e.tags['3dmr']) toolTip += ' <i class="tooltip-icons fa fa-cube fa-fw" title="3D Model"></i>';
 		// popup and tooltip
 		const customPOptions = {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
@@ -1131,8 +1175,8 @@ function pushPoiList(customSort) {
 function generic_header_parser(header, subheader, fhrs, osmId, wikidata) {
 	let markerPopup = '<div class="popup-header">';
 	if (osmId && !$('#settings-overpass-attic').val()) {
-		markerPopup += '<a class="popup-edit popup-header-button" title="Edit on OpenStreetMap"><i class="fa-solid fa-pen-to-square fa-fw"></i></a>';
-		if (wikidata) markerPopup += '<a class="popup-header-button" title="Edit Wikidata" href="https://www.wikidata.org/wiki/' + encodeURI(wikidata) + '" target="_blank" rel="noopener"><i class="fa-solid fa-barcode fa-fw"></i></a>';
+		markerPopup += '<a class="popup-edit popup-header-button" title="Show Editing Options"><i class="fa-solid fa-pen-to-square fa-fw"></i></a>';
+		if (Object.keys(wikidata).length) markerPopup += '<a class="popup-wikidata popup-header-button" title="Show Wikidata" data-wikidata="' + encodeURI(JSON.stringify(wikidata)) + '"><i class="fa-solid fa-barcode fa-fw"></i></a>';
 		if (noIframe && localStorageAvail()) markerPopup += '<a class="popup-bookmark popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark fa-fw"></i></a>';
 		if (fhrs) markerPopup += '<span class="popup-fhrs notloaded" data-fhrs="' + fhrs + '"><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>';
 	}
@@ -1170,8 +1214,8 @@ function generic_website_parser(tags, key, label, iconName) {
 function generic_img_parser(img, id, attrib) {
 	let url, imgTmpl;
 	// if (img.startsWith('Category:')) imgTmpl = '<div class="popup-img-item">' + img + '</div>'; else
-	if (img.startsWith('File:')) {
-		url = img;
+	if (img.startsWith('File')) {
+		url = encodeURIComponent(img);
 		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(img);
 		imgTmpl = '<div id="img{id}" class="popup-img-item' + (+id === 0 ? ' notloaded' : '') + '">' +
 			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=2560 1280w, {img}&width=1280 800w, {img}&width=800 640w"><img data-url="{url}"></a>' +
@@ -1440,19 +1484,19 @@ function worship_parser(tags, titlePopup) {
 function getWikiAttrib(element) {
 	// https://commons.wikimedia.org/wiki/Commons:API
 	// get image attribution
-	if (element.find('img').data('url') && element.find('img').data('url').startsWith('File:')) {
+	if (element.find('img').data('url') && element.find('img').data('url').startsWith('File')) {
 		const img = element.find('img').data('url');
 		$.ajax({
 			url: 'https://commons.wikimedia.org/w/api.php',
 			dataType: 'jsonp',
 			cache: true,
-			data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata', titles: img, format: 'json' },
+			data: { action: 'query', prop: 'imageinfo', iiprop: 'extmetadata', titles: decodeURIComponent(img), format: 'json' },
 			success: function(result) {
 				if (!result.query.pages[-1]) {
 					const imgAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
 					const imgArtist = $('<span>' + imgAttrib.Artist.value + '</span>').text();
 					const imgDate = new Date(imgAttrib.DateTimeOriginal ? imgAttrib.DateTimeOriginal.value : imgAttrib.DateTime.value).getFullYear();
-					const imgAttribUrl = '<a href="https://commons.wikimedia.org/wiki/' + encodeURI(img) + '" title="Wikimedia Commons" target="_blank" rel="noopener">' +
+					const imgAttribUrl = '<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank" rel="noopener">' +
 						(imgDate ? imgDate + ' | ' : '') + '&copy; ' + imgArtist + ' | ';
 					element.find($('.popup-img-attrib')).html(imgAttribUrl + imgAttrib.LicenseShortName.value + '</a>');
 					element.find('a').data('caption', 'Wikimedia Commons: ' + imgAttribUrl + imgAttrib.UsageTerms.value + '</a>');
@@ -1467,20 +1511,24 @@ function getWikiAttrib(element) {
 		});
 	}
 }
-function show_img_controls(imgMax, img360, vid) {
+function show_img_controls(imgMax, img360, vid, model3d) {
 	// add image navigation controls to popup
 	// check if user has already seen bouncing icons
 	const bouncedicon = (localStorageAvail() && window.localStorage.tutorial.indexOf('bouncedicon') === -1) ? ' fa-bounce' : '';
 	let ctrlTmpl = '<div class="popup-navigate">', x;
+	if (model3d) ctrlTmpl +=
+		'<a title="3D Model" onclick="popupWindow(\'iframe\', \'https://3dmr.eu/model/' + model3d + '\');"' +
+			'<i style="min-width:25px;" class="fa-solid fa-cube fa-fw"></i>' +
+		'</a>';
 	if (vid && vid.length) for (x = 0; x < vid.length; x++) {
-		if (vid[x].startsWith('File:') && vid[x].endsWith('webm')) ctrlTmpl +=
+		if (vid[x].startsWith('File') && vid[x].endsWith('webm')) ctrlTmpl +=
 			'<a class="vid notloaded" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-base-class="noslideshow" data-loop="false"' +
 				'data-type="iframe" data-animation-effect="circular" href="https://commons.wikimedia.org/wiki/' + encodeURIComponent(vid[x]) + '?embedplayer=yes">' +
 				'<i style="min-width:25px;" class="fa-solid fa-film fa-fw' + bouncedicon + '"></i>' +
 			'</a>';
 	}
 	if (img360 && img360.length) for (x = 0; x < img360.length; x++) {
-		if (img360[x].startsWith('File:')) ctrlTmpl +=
+		if (img360[x].startsWith('File')) ctrlTmpl +=
 			'<a class="pano notloaded" title="Photosphere" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-fancybox="pano" data-base-class="noslideshow" data-loop="false"' +
 				'data-type="iframe" data-animation-effect="circular" data-src="assets/pannellum/pannellum.htm#config=config.json&panorama=' + encodeURIComponent(img360[x]) + '" href="javascript:;">' +
 				'<i style="min-width:25px;" class="fa-solid fa-street-view fa-fw' + bouncedicon + '"></i>' +
@@ -1555,6 +1603,18 @@ function minToTime(tmStr) {
 	const h = (tmStr - m) / 60;
 	if (h < 1 && m < 1) return -1;
 	return (h) ? pad(h) + ':' + pad(m) + ' h:m' : m + ' m';
+}
+function timeSince(date) {
+	const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+	let str;
+	if (seconds / 31536000 > 2) str = Math.floor(seconds / 31536000) + ' years ago';
+	else if (seconds / 2592000 > 2) str = Math.floor(seconds / 2592000) + ' months ago';
+	else if (seconds / 604800 > 2) str = Math.floor(seconds / 604800) + ' weeks ago';
+	else if (seconds / 86400 > 2) str = Math.floor(seconds / 86400) + ' days ago';
+	else if (seconds / 3600 > 2) str = Math.floor(seconds / 3600) + ' hours ago';
+	else if (seconds / 60 > 2) str = Math.floor(seconds / 60) + ' minutes ago';
+	else str = 'Just now';
+	return str;
 }
 function pad(n) {
 	// pad single number with a leading zero

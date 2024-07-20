@@ -44,8 +44,8 @@ var tourRefs = {
 		},
 		4: {
 			name: 'The Charter Trustees of Bexhill - Civic Handbook',
-			url: 'https://bexhillheritage.com/wp-content/uploads/docs/CIVIC_HANDBOOK_rev_2017_website.pdf#page=5',
-			media: 'PDF'
+			url: 'https://archive.org/details/charter-trustees-bexhill-civic-handbook-rev-2017/page/5/',
+			media: 'Book'
 		}
 	},
 	

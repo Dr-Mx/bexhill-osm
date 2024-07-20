@@ -98,7 +98,7 @@ const pois = {
 
 	playground: {
 		name: 'Playgrounds',
-		query: 'nwr[leisure=playground][name];',
+		query: 'nwr[leisure=playground][access!~"^private$"];',
 		iconName: 'playground',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['playground', 'park', 'open-space', 'kids', 'children']
@@ -106,7 +106,7 @@ const pois = {
 
 	picnic_table: {
 		name: 'Picnic Tables',
-		query: 'node[leisure=picnic_table];',
+		query: 'node[leisure=picnic_table][access!~"^private$"];',
 		iconName: 'picnic-2',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['picnic']
@@ -114,7 +114,7 @@ const pois = {
 
 	shelter: {
 		name: 'Shelters',
-		query: 'nwr[amenity=shelter];',
+		query: 'nwr[amenity=shelter][access!~"^private$"];',
 		iconName: 'shelter',
 		catName: 'Leisure-Tourism',
 		tagKeyword: ['picnic', 'shelter']
@@ -1046,7 +1046,7 @@ const pois = {
 
 	clock: {
 		name: 'Public Clocks',
-		query: 'node[amenity=clock];',
+		query: 'node[amenity=clock];way["tower:type"=clock];',
 		iconName: 'clock'
 	},
 	

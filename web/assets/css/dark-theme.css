@@ -1,10 +1,10 @@
 :root {
-	--text-color: #aaaaaa;
+	--text-color: #bbbbbb;
 	--hover-color: #999999;
-	--bg-color: #111111;
-	--bg-color2: rgba(35, 35, 39, 0.9);
+	--bg-color: #2d2d2d;
+	--bg-color2: rgba(50, 50, 50, 0.9);
 	--scr-thumb: #555555;
-	--scr-track: #111111;
+	--scr-track: #2d2d2d;
 	--scroll-shadow: 0, 0, 0;
 	--scroll-shadow-popup: 0, 0, 0;
 }

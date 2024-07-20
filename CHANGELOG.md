@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v8.2.0
+
+**Date:** 20/07/2024
+
+Updated
+ - fontawesome 6.6.0
+
+Site changes
+ - Expand popup editing options into a modal, detailed information on an elements last change and editor options
+ - Expand popup wikidata information into a modal, links tags to wikidata pages
+ - Convert streetnames book to use json rather than xml
+ - Link house addresses to planning applications in popup
+ - Adjust theme and dark mode colours for easier reading
+ - More of the usual bug fixes and code improvements
+
+
 ## v8.1.0
 
 **Date:** 23/04/2024

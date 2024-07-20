@@ -1,5 +1,5 @@
 :root {
-	--main-color: #974500;
+	--main-color: #bb5500;
 }
 html {
 	scroll-behavior: smooth;
@@ -12,22 +12,22 @@ body {
 	margin: auto 5%;
 	font-size: 90%;
 }
-html.darkMode body {	
+html.darkMode body {
 	background-color: #111111;
-	color: #777777;
+	color: #aaaaaa;
 }
 html.darkMode button svg path {
 	fill: #000000;
 }
 html.darkMode #street-filter-input {
 	background-color: #000000;
-	color: #777777;
+	color: #aaaaaa;
 }
 html.darkMode #street-index a {
 	background-color: #222222;
 }
 html.darkMode #intro, html.darkMode #outro {
-	color: #666666;
+	color: #999999;
 }
 a {
 	text-decoration: none;
@@ -87,7 +87,6 @@ button svg path {
 #button-anchor {
 	display: none;
 	position: sticky;
-	position: -webkit-sticky;
 	bottom: 20px;
 	margin-left: 110%;
 }
@@ -110,10 +109,9 @@ button svg path {
 	background-position: center;
 	background-size: contain;
 	text-align: center;
-	font-size: 2.5em;
+	font-size: 1.6em;
 	font-weight: bold;
 	color: var(--main-color);
-	opacity: 75%;
 	user-select: none;
 }
 #street-results-end {
@@ -121,7 +119,6 @@ button svg path {
 	text-align: center;
 	color: var(--main-color);
 	font-weight: bold;
-	opacity: 75%;
 }
 #street-results-end::before, #street-results-end::after {
 	content: '\26AC';
@@ -141,6 +138,10 @@ button svg path {
 	border-radius: 5px;
 	background-color: #dddddd;
 	width: 3.5%;
+}
+#street-index a.disable {
+	opacity: 0.5;
+	pointer-events: none;
 }
 #street-filter {
 	position: relative;
@@ -216,7 +217,7 @@ button svg path {
 		background-color: #333333;
 	}
 	html.darkMode body {
-		box-shadow: 0 2px 10px #000000;
+		box-shadow: none;
 	}
 	#header {
 		width: 110%;
