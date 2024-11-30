@@ -1757,7 +1757,7 @@
 		}, {
 			"type": "Feature",
 			"properties": {
-				"name": "Coniston, 7 Hartfield Road",
+				"name": "Coniston, 10 Hartfield Road",
 				"date": "1944-08-12",
 				"description": "V-1 flying bomb. Gunner William Lines 1085602 of the 150/71 Field Regiment Royal artillery killed in an adjoining property.",
 				"type": "V-1",
@@ -1767,7 +1767,7 @@
 			},
 			"geometry": {
 				"type": "Point",
-				"coordinates": [0.44248, 50.83443]
+				"coordinates": [0.44218, 50.83503]
 			}
 		}, {
 			"type": "Feature",

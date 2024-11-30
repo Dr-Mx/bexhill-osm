@@ -13,6 +13,7 @@ function setHeaderImg() {
 setHeaderImg();
 
 $('.credit').last().append(', ' + new Date().getFullYear());
+$('#street-filter-close').hide();
 
 // darkmode
 if (window.location.hash === '#darkMode' || window.location.hash === '#lightMode') $('#button-theme').hide();

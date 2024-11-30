@@ -282,7 +282,7 @@ const map = new L.map('map', {
 		// window competition
 		$('#home-box').after('<div id="holiday-xmas-msg" title="Show on map" onclick="tour(\'xmas\');">' +
 			'<div id="xmasTitle">~ <span>Christmas Window Display Competition</span> ~</div>' +
-			'<div class="comment">2023\'s theme is \'Christmas Celebrations\', in association with Bexhill Community Events Group</div>' +
+			'<div class="comment">2024\'s theme is \'Pantomime\', in association with Bexhill Community Events Group</div>' +
 		'</div>');
 	}
 	// prevent click-through on map controls
@@ -359,7 +359,8 @@ const map = new L.map('map', {
 	}, 1000); }
 }).on('contextmenu.show', function(e) {
 	$('#contextmenu-item-copygeos').html(L.Util.formatNum(e.latlng.lat, 3) + ', ' + L.Util.formatNum(e.latlng.lng, 3) + ' | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 3) + '<span class="ele"></span>');
-	// https://www.opentopodata.org
+	// elevation data
+	// https://www.opentopodata.org/api/
 	$.ajax({
 		url: 'https://bexhill-osm.opentopodata.org/v1/eudem25m?locations=' + e.latlng.lat + ',' + e.latlng.lng,
 		dataType: 'json',
@@ -403,36 +404,16 @@ const map = new L.map('map', {
 		let wikidataLinks = '<table>';
 		Object.keys(wikidata).forEach(key => {
 			wikidataLinks += '<tr><td>' + key + ':</td>' +
-			'<td><a onclick="popupWindow(\'popup\', \'https://www.wikidata.org/wiki/' + wikidata[key] + '\', \'wikidataWindow\')">' + wikidata[key] + '</a></td></tr>';
+			'<td><a href="https://www.wikidata.org/wiki/' + wikidata[key] + '" target="_blank" rel="noopener">' + wikidata[key] + '</a></td></tr>';
 		});
 		wikidataLinks += '</table>';
 		setMsgStatus('fa-solid fa-barcode', '<span>Wikidata</span>', wikidataLinks);
 	});
 	// editing options
 	$('.popup-edit').off('click').on('click', function() {
-		popupEditor = function(type, value) {
-			let urlEditor = 'https://www.openstreetmap.org/';
-			switch (type) {
-				case 'user':
-					urlEditor += type + '/' + value;
-					break;
-				case 'viewer':
-					urlEditor += elementType(osmId) + '/' + osmId.slice(1) + (value ? '/history' : '');
-					break;
-				case 'id':
-					urlEditor += 'edit?editor=id&' + elementType(osmId) + '=' + osmId.slice(1);
-					break;
-				case 'remote':
-					urlEditor = '';
-					$.ajax({
-						url: 'http://127.0.0.1:8111/load_and_zoom?left=' + map.getBounds()._southWest.lng + '&top=' + map.getBounds()._northEast.lat + '&right=' + map.getBounds()._northEast.lng + '&bottom=' + map.getBounds()._southWest.lat + '&select=' + elementType(osmId) + osmId.slice(1),
-						type: 'GET',
-						error: function() { window.alert('Editing failed - make sure JOSM is loaded and that the remote control option is enabled.'); }
-					});				
-					break;
-			}
-			if (urlEditor) popupWindow('popup', urlEditor, 'editWindow');
-		};
+		// element edit history
+		// https://wiki.openstreetmap.org/wiki/API_v0.6
+		const urlEditor = 'https://www.openstreetmap.org/';
 		$.ajax({
 			url: 'https://www.openstreetmap.org/api/0.6/' + elementType(osmId) + '/' + osmId.slice(1) + '.json',
 			dataType: 'json',
@@ -446,8 +427,8 @@ const map = new L.map('map', {
 					(e.tags.check_date ? '<tr><td>Check date:</td><td><i>' + dateFormat(e.tags.check_date, 'short') + '</i></td></tr>' : '');
 				if ($('#osm-details:visible').length) {
 					$('#osm-details').html('<table>' +
-					'<tr><td>Last change:</td><td title="' + dateFormat(e.timestamp, 'short') + '"><a onclick="popupEditor(\'viewer\', \'history\');">' + timeSince(e.timestamp) + '</a></td></tr>' +
-					'<tr><td>User:</td><td title="UserID: ' + e.uid + '"><a onclick="popupEditor(\'user\', \'' + e.user + '\');">' + e.user + '</a></td></tr>' +
+					'<tr><td>Last edit:</td><td title="' + dateFormat(e.timestamp, 'short') + '"><a href="https://pewu.github.io/osm-history/#/' + elementType(osmId) + '/' + osmId.slice(1) + '" target="_blank" rel="noopener">' + timeSince(e.timestamp) + '</a></td></tr>' +
+					'<tr><td>Edited by:</td><td title="UserID: ' + e.uid + '"><a href="' + urlEditor + 'user/' + e.user + '" target="_blank" rel="noopener">' + e.user + '</a></td></tr>' +
 					'</table><hr>' + (infoTags ? '<table>' + infoTags + '</table><hr>' : ''));
 					$('#modal-head span').append(' | Ver. ' + e.version);
 				}
@@ -459,9 +440,9 @@ const map = new L.map('map', {
 			'<span>' + titleCase(elementType(osmId) + ' ' + osmId.slice(1)) + '</span>',
 			'<span id="osm-details"></span>' +
 			'<span id="edit-details"><table>' +
-			'<tr><td><img src="assets/img/edit-id.svg"></td><td><a onclick="popupEditor(\'id\');">Edit with iD (in-browser editor)</a></td></tr>' +
-			'<tr><td><img src="assets/img/edit-josm.svg"></td><td><a onclick="popupEditor(\'remote\');">Edit with Remote Control (JOSM)</a></td></tr>' +
-			'<tr><td><img src="assets/img/edit-osm.svg"></td><td><a onclick="popupEditor(\'viewer\',);">View on openstreetmap.org</a></td></tr>' +
+			'<tr><td><img src="assets/img/edit-id.svg"></td><td><a href="' + urlEditor + 'edit?editor=id&' + elementType(osmId) + '=' + osmId.slice(1) + '" target="_blank" rel="noopener">Edit with iD (in-browser editor)</a></td></tr>' +
+			'<tr><td><img src="assets/img/edit-josm.svg"></td><td><a onclick="josmEditor(\'' + osmId + '\');">Edit with Remote Control (JOSM)</a></td></tr>' +
+			'<tr><td><img src="assets/img/edit-osm.svg"></td><td><a href="' + urlEditor + elementType(osmId) + '/' + osmId.slice(1) + '" target="_blank" rel="noopener">View on openstreetmap.org</a></td></tr>' +
 			'</table></span>'
 		);
 	});
@@ -473,18 +454,19 @@ const map = new L.map('map', {
 		collapsible: true,
 		active: false
 	});
-	// https://ratings.food.gov.uk/open-data
 	// show food hygiene ratings
+	// https://ratings.food.gov.uk/open-data
 	if (popupThis.find($('.popup-fhrs.notloaded')).length) $.ajax({
 		url: 'https://api.ratings.food.gov.uk/establishments/' + encodeURI(popupThis.find($('.popup-fhrs')).data('fhrs')),
 		headers: { 'x-api-version': 2 },
 		dataType: 'json',
 		cache: true,
 		success: function(result) {
-			const RatingDate = (result.RatingValue.length === 1) ? ' (' + new Date(result.RatingDate).toLocaleDateString(lang) + ')' : '';
+			const ratingDate = (result.RatingValue.length === 1) ? ' (' + new Date(result.RatingDate).toLocaleDateString(lang) + ')' : '';
+			const ratingValue = (result.RatingValue.length === 1) ? result.RatingValue : 'question';
 			popupThis.find($('.popup-fhrs')).html(
-				'<a href="https://ratings.food.gov.uk/business/' + encodeURI(result.FHRSID) + '" title="Food Hygiene Rating\n' + result.BusinessName + RatingDate + '" target="_blank" rel="noopener">' +
-				'<img alt="Hygiene: ' + result.RatingValue + '" src="assets/img/fhrs/' + result.RatingKey + '.png"></a>'
+				'<a href="https://ratings.food.gov.uk/business/' + encodeURI(result.FHRSID) + '" title="Food Hygiene Rating\n' + result.BusinessName + ratingDate + '" target="_blank" rel="noopener">' +
+				'<span class="fa-stack"><i class="fa-solid fa-circle fa-stack-1x fa-xl"></i><i class="fanum fa-solid fa-' + ratingValue + ' fa-stack-1x"></i></span></a>'
 			).removeClass('notloaded');
 			if ($('#settings-debug').is(':checked')) console.debug('Food Hygiene Rating:', result);
 		},
@@ -493,8 +475,8 @@ const map = new L.map('map', {
 			if ($('#settings-debug').is(':checked')) console.debug('ERROR FHRS:', encodeURI(this.url));
 		}
 	});
-	// https://www.travelinedata.org.uk/traveline-open-data/nextbuses-api
 	// show bus times
+	// https://www.travelinedata.org.uk/traveline-open-data/nextbuses-api
 	if (popupThis.find($('.popup-bustime-table')).length) $.ajax({
 		type: 'POST',
 		url: 'https://cors.bridged.cc/' + 'https://nextbus.mxdata.co.uk/nextbuses/1.0/1',
@@ -830,6 +812,7 @@ function fixMyStreet(e) {
 }
 function panoView(e, fromSequence) {
 	// tries to find photospheres from Mapillary, if none use Google
+	// https://www.mapillary.com/developer/api-documentation#image
 	$('.spinner').show();
 	$.ajax({
 		url: 'https://graph.mapillary.com/images?access_token=' + window.BOSM.mpllryKey + '&fields=id,camera_type&bbox=' + (e.latlng.lng-0.00015) + ',' + (e.latlng.lat-0.0001) + ',' + (e.latlng.lng+0.00015) + ',' + (e.latlng.lat+0.0001),
@@ -991,47 +974,45 @@ function setLeaflet() {
 		osmstd: {
 			name: 'OpenStreetMap',
 			url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-			maxNativeZoom: 19,
-			className: 'theme-invert'
+			maxNativeZoom: 19
 		},
 		bosm: {
 			name: 'OSM Bexhill',
 			url: 'https://api.mapbox.com/styles/v1/drmx/cjyfrglvo1v3c1cqqlcvzyd07/tiles/256/{z}/{x}/{y}@2x?access_token=' + window.BOSM.mapboxKey,
-			attribution: attribution + ', <a href="https://mapbox.com/" target="_blank" rel="noopener">MapBox</a>',
-			className: 'theme-invert'
+			attribution: attribution + ', <a href="https://mapbox.com/" target="_blank" rel="noopener">MapBox</a>'
 		},
 		osmtopo: {
 			name: 'OSM Topo',
 			url: 'https://tile.tracestrack.com/topo__/{z}/{x}/{y}.png?key=' + window.BOSM.tracestrackKey,
 			attribution: attribution + ', <a href="https://www.tracestrack.com/" target="_blank" rel="noopener">Tracestrack</a>',
-			maxNativeZoom: 19,
-			className: 'theme-invert'
+			maxNativeZoom: 19
+		},
+		osmnolab: {
+			name: 'OSM (no labels)',
+			url: 'https://tile.openstreetmap.bzh/eu/{z}/{x}/{y}.png',
+			hide: 1
 		},
 		osmuk: {
 			name: 'OSM UK',
 			url: 'https://map.atownsend.org.uk/hot/{z}/{x}/{y}.png',
 			attribution: attribution + ', <a href="https://map.atownsend.org.uk/maps/map/map.html" target="_blank" rel="noopener">Andy Townsend</a>',
-			className: 'theme-invert',
 			hide: 1
 		},
 		general: {
 			name: 'OSM Humanitarian',
 			url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 			attribution: attribution + ', <a href="https://www.hotosm.org/" target="_blank" rel="noopener">HOTOSM</a>',
-			maxNativeZoom: 20,
-			className: 'theme-invert'
+			maxNativeZoom: 20
 		},
 		cycle: {
 			name: 'OSM OpenCycleMap',
 			url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
-			attribution: attribution + ', <a href="https://thunderforest.com/maps/opencyclemap/" target="_blank" rel="noopener">ThunderForest</a>',
-			className: 'theme-invert'
+			attribution: attribution + ', <a href="https://thunderforest.com/maps/opencyclemap/" target="_blank" rel="noopener">ThunderForest</a>'
 		},
 		trnsprt: {
 			name: 'OSM Public Transport',
 			url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
-			attribution: attribution + ', <a href="https://thunderforest.com/maps/transport/" target="_blank" rel="noopener">ThunderForest</a>',
-			className: 'theme-invert'
+			attribution: attribution + ', <a href="https://thunderforest.com/maps/transport/" target="_blank" rel="noopener">ThunderForest</a>'
 		},
 		bing: {
 			name: 'Bing Aerial',
@@ -1099,7 +1080,7 @@ function setLeaflet() {
 			url: 'https://map.fosm.org/default/{z}/{x}/{y}.png',
 			opacity: 1,
 			hide: 1,
-			className: 'layer-noclick theme-invert'
+			className: 'layer-noclick'
 		},
 		osmlabels: {
 			name: 'OSM Labels',
@@ -1113,7 +1094,7 @@ function setLeaflet() {
 			attribution: '<a href="https://row.eastsussex.gov.uk/standardmap.aspx" target="_blank" rel="noopener">East Sussex County Council</a>',
 			opacity: 1,
 			maxNativeZoom: 18,
-			className: 'theme-invert theme-dropshadow'
+			className: 'theme-dropshadow'
 		},
 		xmas: {
 			name: 'Xmas Snow',
@@ -1333,7 +1314,7 @@ function setLeaflet() {
 		},
 		os1873: {
 			name: '1873 Ordnance Survey',
-			url: 'https://geo.nls.uk/mapdata2/os/six-inch-sussex/{z}/{x}/{y}.png',
+			url: 'https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-sussex/{z}/{x}/{y}.png',
 			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
@@ -1344,7 +1325,8 @@ function setLeaflet() {
 		bt1839: {
 			name: '1839 Bexhill Tithe',
 			url: 'https://tiles.bexhillheritage.com/bt1839/{z}/{x}/{y}.png',
-			attribution: '<a href="https://apps.eastsussex.gov.uk/leisureandtourism/localandfamilyhistory/tithemaps/map/artefact/112769" target="_blank" rel="noopener">ESRO TDE 141</a>',
+			attribution: '<a href="https://apps.eastsussex.gov.uk/leisureandtourism/localandfamilyhistory/tithemaps/map/artefact/112769" target="_blank" rel="noopener">ESRO TDE 141</a>, ' +
+				'<b><a href="https://apps.eastsussex.gov.uk/leisureandtourism/localandfamilyhistory/tithemaps/apportionment/artefact/112769" target="_blank" rel="noopener">Apportionment</a></b>',
 			bounds: L.latLngBounds([50.815, 0.351], [50.890, 0.536]),
 			opacity: 1,
 			maxNativeZoom: 18,
@@ -1713,7 +1695,7 @@ function populatePoiTab() {
 		);
 		checkboxContent += '</div>';
 	}
-	$('#pois-icons').append(checkboxContent + '<a class="theme-color anchor"></a>');
+	$('#pois-icons').append(checkboxContent + '<a class="theme-color sidebar-anchor"></a>');
 }
 populatePoiTab();
 
@@ -1923,16 +1905,6 @@ $('#settings-overpass-download').on('click', function() {
 	$(this).prop('disabled', true);
 	setTimeout(function() { $('#settings-overpass-download').prop('disabled', false); }, 20000);
 });
-$('#settings-overpass-cache').on('change', function() {
-	if ($(this).val() > 720) $(this).val(720);
-	else if ($(this).val() < 0) $(this).val(0);
-	else if ($(this).val() === '') $(this).val(120);
-	if (window.localStorage) window.localStorage.OPLCacheDur = $(this).val();
-	eleCache = [];
-});
-$('#settings-overpass-query').on('keydown', function(e) {
-	if (e.keyCode == $.ui.keyCode.ENTER && $(this).val()) customQuery($(this).val(), true);
-});
 function customQuery(q, fromInput) {
 	spinner++;
 	if (fromInput) clear_map('all');
@@ -1949,8 +1921,26 @@ function customQuery(q, fromInput) {
 	else setMsgStatus('fa-solid fa-circle-info', 'Incorrect Query', 'Enclose queries with [ ] for tags,<br>and ( ) for element ids.', 4);
 	if (spinner > 0 && fromInput) spinner--;
 }
-$('#settings-reverse-server').on('change', function() { if (window.localStorage) window.localStorage.RevServer = $(this).prop('selectedIndex'); });
-$('#settings-overpass-server').on('change', function() { if (window.localStorage) window.localStorage.OPServer = $(this).prop('selectedIndex'); });
+$('#settings-overpass-query').on('keydown', function(e) {
+	if (e.keyCode == $.ui.keyCode.ENTER && $(this).val()) customQuery($(this).val(), true);
+});
+$('#settings-overpass-cache').on('change', function() {
+	if ($(this).val() > 720) $(this).val(720);
+	else if ($(this).val() < 0) $(this).val(0);
+	else if ($(this).val() === '') $(this).val(120);
+	if (window.localStorage) window.localStorage.opCacheDur = $(this).val();
+	eleCache = [];
+});
+$('#settings-overpass-server').on('change', function() { if (window.localStorage) {
+	window.localStorage.opServer = $(this).prop('selectedIndex');
+	// server support for attic data
+	$('#settings-overpass-attic').prop('disabled', $('#settings-overpass-server option:selected').data('attic') ? false : true);
+	// delete cached overpass queries on server change
+	eleCache = [];
+	Object.keys(window.localStorage).forEach((key) => { if (key.startsWith('op_')) window.localStorage.removeItem(key); });
+	if ($('#settings-debug').is(':checked')) console.debug('Cached Overpass queries have been cleared.');
+} });
+$('#settings-reverse-server').on('change', function() { if (window.localStorage) window.localStorage.revServer = $(this).prop('selectedIndex'); });
 $('#settings-debug').on('change', function(e, init) {
 	if ($(this).is(':checked')) {
 		console.debug('%cDEBUG MODE ON%c\nAPI requests output to console, map bounds unlocked.', 'color:' + $('html').css('--main-color') + ';font-weight:bold;');
@@ -2141,9 +2131,9 @@ function getTips(tip) {
 
 function showWeather() {
 	// get tides
+	// https://developer.admiralty.co.uk/api-details#api=uk-tidal-api&operation=Stations_GetStation
 	let tideData = '', wtooltip = '';
 	$.ajax({
-		// downloaded twice weekly via cron job from https://admiraltyapi.portal.azure-api.net/
 		url: 'assets/data/tides.json',
 		dataType: 'json',
 		mimeType: 'application/json',
@@ -2165,6 +2155,7 @@ function showWeather() {
 		error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR TIDES:', encodeURI(this.url)); }
 	});
 	// get weather
+	// https://openweathermap.org/current
 	$.ajax({
 		url: 'https://api.openweathermap.org/data/2.5/weather',
 		dataType: 'json',
@@ -2222,8 +2213,8 @@ function showWeather() {
 	});
 }
 
-// https://github.com/OSMCha/osmcha-frontend/wiki/API
 // display latest osm changesets
+// https://github.com/OSMCha/osmcha-frontend/wiki/API
 function showEditFeed() {
 	$.ajax({
 		url: 'https://osmcha.org/api/v1/changesets/',
@@ -2318,11 +2309,12 @@ function permalinkReturn() {
 		// set basemap if none specified
 		if (window.localStorage.baseLayer) actBaseTileLayer = window.localStorage.baseLayer;
 		// set cache duration
-		if (parseInt(window.localStorage.OPLCacheDur) >= 0 && parseInt(window.localStorage.OPLCacheDur) <= 240)	$('#settings-overpass-cache').val(parseInt(window.localStorage.OPLCacheDur));
+		if (parseInt(window.localStorage.opCacheDur) >= 0 && parseInt(window.localStorage.opCacheDur) <= 240)	$('#settings-overpass-cache').val(parseInt(window.localStorage.opCacheDur));
 		else $('#settings-overpass-cache').val($('#settings-overpass-cache').attr('value'));
 		// set servers
-		if (parseInt(window.localStorage.RevServer) >= 0 && parseInt(window.localStorage.RevServer) < $('#settings-reverse-server option').length) $('#settings-reverse-server').prop('selectedIndex', window.localStorage.RevServer);
-		if (parseInt(window.localStorage.OPServer) >= 0 && parseInt(window.localStorage.OPServer) < $('#settings-overpass-server option').length) $('#settings-overpass-server').prop('selectedIndex', window.localStorage.OPServer);
+		if (parseInt(window.localStorage.revServer) >= 0 && parseInt(window.localStorage.revServer) < $('#settings-reverse-server option').length) $('#settings-reverse-server').prop('selectedIndex', window.localStorage.revServer);
+		if (parseInt(window.localStorage.opServer) >= 0 && parseInt(window.localStorage.opServer) < $('#settings-overpass-server option').length) $('#settings-overpass-server').prop('selectedIndex', window.localStorage.opServer);
+		$('#settings-overpass-attic').prop('disabled', $('#settings-overpass-server option:selected').data('attic') ? false : true);
 	}
 	else if (!noIframe) $('#settings-theme').val('light');
 	$('#settings-theme, #settings-unit, #settings-mapillary, #settings-controlzoom').trigger('change');

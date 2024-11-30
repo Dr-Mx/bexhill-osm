@@ -426,7 +426,11 @@
 			"id": "store1",
 			"name": "Store",
 			"timeline": "preriot",
-			"type": "building"
+			"type": "building",
+			"img": {
+				"0": "listNortheye/img/prison_store1(0)",
+				"1": "listNortheye/img/prison_store1(1)"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -469,8 +473,13 @@
 	}, {
 		"type": "Feature",
 		"properties": {
+			"id": "store3",
+			"name": "Store",
 			"type": "building",
-			"timeline": "preriot"
+			"timeline": "preriot",
+			"img": {
+				"0": "listNortheye/img/prison_store3(0)"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -507,7 +516,7 @@
 		"type": "Feature",
 		"properties": {
 			"id": "store2",
-			"name": "Storage",
+			"name": "Store",
 			"type": "building"
 		},
 		"geometry": {
@@ -788,7 +797,7 @@
 		"type": "Feature",
 		"properties": {
 			"id": "store3",
-			"name": "Storage",
+			"name": "Store",
 			"type": "building"
 		},
 		"geometry": {
@@ -1024,7 +1033,10 @@
 		"properties": {
 			"id": "gate",
 			"name": "Gate House",
-			"type": "building"
+			"type": "building",
+			"img": {
+				"0": "listNortheye/img/prison_gate(0)"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -1084,7 +1096,8 @@
 			"name": "Kitchen",
 			"type": "building",
 			"img": {
-				"0": "listNortheye/img/prison_kitchen(0)"
+				"0": "listNortheye/img/prison_kitchen(0)",
+				"1": "listNortheye/img/prison_kitchen(1)"
 			}
 		},
 		"geometry": {
@@ -1413,7 +1426,11 @@
 			"id": "workshop2",
 			 "timeline": "preriot",
 			"name": "Workshop",
-			"type": "building"
+			"type": "building",
+			"img": {
+				"0": "listNortheye/img/prison_workshop2(0)",
+				"1": "listNortheye/img/prison_workshop2(1)"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",

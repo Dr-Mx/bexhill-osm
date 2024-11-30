@@ -34,7 +34,7 @@ function show_overpass_layer(query, cacheId, options) {
 		query: queryBbox + 'out geom qt ' + maxOpResults + ';',
 		endpoint: 'https://' + $('#settings-overpass-server').val() + '/api/interpreter',
 		callback: callback,
-		cacheId: cacheId ? 'OPL' + cacheId : '',
+		cacheId: cacheId ? 'op_' + cacheId : '',
 		zoomTo: (options && options.zoomTo) || false
 	});
 	iconLayer.addLayer(opl);
@@ -104,12 +104,14 @@ L.OverPassLayer = L.FeatureGroup.extend({
 						case 504:
 							// retry on timeout
 							if (e.status === 504 && this.retryTimeout) {
+								if ($('#settings-debug').is(':checked')) console.debug('Overpass server retry:', this.retryTimeout+1);
 								this.retryTimeout--;
 								$.ajax(this);
 								return;
 							}
 							// fallback to main overpass server if failed on alternative
 							if ($('#settings-overpass-server').val() !== $('#settings-overpass-server option').eq(0).val()) {
+								if ($('#settings-debug').is(':checked')) console.debug('Overpass server fallback to:', $('#settings-overpass-server option').eq(0).val());
 								const that = this;
 								that.url = this.url.replace($('#settings-overpass-server').val(), $('#settings-overpass-server option').eq(0).val());
 								$.ajax(that);

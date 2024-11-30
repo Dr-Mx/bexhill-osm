@@ -55,7 +55,7 @@
 	bottom: 0;
 	height: 100%;
 	background-color: #e5e5e5;
-	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent); }
+	background-image: linear-gradient(to right, rgba(0, 0, 64, 0.15), transparent); }
 .sidebar-left .sidebar-tabs {
 	left: 0; }
 .sidebar-tabs, .sidebar-tabs > ul {
@@ -102,7 +102,7 @@
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	background-color: rgba(240, 240, 240, 0.8);
+	background-color: rgba(240, 240, 245, 0.8);
 	overflow: hidden;
 	backdrop-filter: blur(7px); }
 .sidebar-left .sidebar-content {

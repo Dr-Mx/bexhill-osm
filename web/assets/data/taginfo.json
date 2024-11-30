@@ -1,7 +1,7 @@
 {
     "data_format": 1,
     "data_url": "https://bexhill-osm.org.uk/assets/data/taginfo.json",
-	"data_updated": "20240420T200000Z",
+	"data_updated": "20241018T200000Z",
     "project": {
         "name": "Bexhill OpenStreetMap",
         "description": "A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.",
@@ -51,9 +51,6 @@
         }, {
             "key": "ref:esher",
             "description": "East Sussex Historic Environment Record reference, linked in a map popup."
-        }, {
-            "key": "ref:publicsculpturesofsussex",
-            "description": "Public Sculptures of Sussex object ID, linked in a map popup."
         }, {
             "key": "ref:iwm",
             "description": "Imperial War Museum: War Memorials Register reference, linked in a map popup."

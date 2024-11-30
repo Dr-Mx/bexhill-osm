@@ -134,7 +134,7 @@ const pois = {
 		query: 'nwr[leisure~"^pitch$|^track$|^golf_course$|^sports_centre$|^horse_riding$|^fitness"][access!~"^private$"];node[amenity=table][sport][access!~"^private$"];',
 		iconName: 'recreation',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['sport', 'football', 'golf', 'cricket', 'swimming-pool', 'horse-riding', 'equestrian', 'basketball', 'tennis', 'skate', 'bmx', 'gym', 'fitness', 'chess']
+		tagKeyword: ['sport', 'football', 'golf', 'cricket', 'swimming-pool', 'horse-riding', 'equestrian', 'basketball', 'tennis', 'skate', 'bmx', 'gym', 'fitness', 'chess', 'pitch']
 	},
 	
 	club: {

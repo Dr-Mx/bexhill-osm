@@ -6,28 +6,28 @@ html {
 	overflow-x: hidden;
 }
 body {
-	background-color: #eeeeee;
+	background-color: #eeeef3;
 	font: 11pt Helvetica, Arial, sans-serif;
 	text-align: justify;
 	margin: auto 5%;
 	font-size: 90%;
 }
 html.darkMode body {
-	background-color: #111111;
-	color: #aaaaaa;
+	background-color: #111116;
+	color: #bbbbbb;
 }
 html.darkMode button svg path {
 	fill: #000000;
 }
 html.darkMode #street-filter-input {
 	background-color: #000000;
-	color: #aaaaaa;
+	color: #bbbbbb;
 }
 html.darkMode #street-index a {
 	background-color: #222222;
 }
 html.darkMode #intro, html.darkMode #outro {
-	color: #999999;
+	color: #aaaaaa;
 }
 a {
 	text-decoration: none;
@@ -205,7 +205,7 @@ button svg path {
 }
 @media (min-width: 900px) {
 	html {
-		background-color: #cccccc;
+		background-color: #ccccd6;
 	}
 	body {
 		margin: 20px 10%;
@@ -214,7 +214,7 @@ button svg path {
 		font-size: 100%;
 	}
 	html.darkMode {
-		background-color: #333333;
+		background-color: #33333d;
 	}
 	html.darkMode body {
 		box-shadow: none;

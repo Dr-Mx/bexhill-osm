@@ -1,15 +1,15 @@
 :root {
-	--text-color: #bbbbbb;
+	--text-color: #cccccc;
 	--hover-color: #999999;
 	--bg-color: #2d2d2d;
-	--bg-color2: rgba(50, 50, 50, 0.9);
+	--bg-color2: rgba(25, 30, 45, 0.85);
 	--scr-thumb: #555555;
 	--scr-track: #2d2d2d;
 	--scroll-shadow: 0, 0, 0;
 	--scroll-shadow-popup: 0, 0, 0;
 }
 body {
-	background-color: #111111;
+	background-color: #333333;
 }
 .spinner svg circle {
 	fill: rgba(0, 0, 0, 0.75);
@@ -26,7 +26,7 @@ body {
 }
 .sidebar-tabs, footer, #home-box, #holiday-xmas-msg, .sidebar-anchor, input:not([type="range"]), hr, select, button, .leaflet-control-geocoder input, .slider::before,
 .leaflet-control-geocoder, .leaflet-contextmenu, #modal-head, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected, .fancybox-bg,
-#pois-results-list tr:hover, .pois-checkbox-selected, .pois-checkbox > label:hover, .leaflet-touch .leaflet-bar:not(#control-ww2, #control-opacity), #walking a img {
+#pois-results-list tr:hover, .pois-checkbox-selected, .pois-checkbox > label:hover, .leaflet-touch .leaflet-bar:not(#control-ww2, #control-opacity) {
 	background-color: var(--bg-color) !important;
 }
 #modal, #control-opacity, .leaflet-bar > a, .leaflet-bar button, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded, .leaflet-control-layers,
@@ -34,10 +34,10 @@ body {
 	background-color: var(--bg-color2) !important;
 }
 .leaflet-control-layers-list input + span:before {
-	color: #444444;
+	color: var(--scr-thumb);
 }
 #home-weather, #home-new-feed ul {
-	color: #688c81;
+	color: #a5bdb6;
 }
 .leaflet-bar a, .leaflet-bar a:hover, .settings-label {
 	border-bottom: 1px solid var(--bg-color);
@@ -57,8 +57,8 @@ input[type=range] {
 .theme-scroll {
 	scrollbar-color: var(--scr-thumb) var(--scr-track) !important;
 }
-.theme-invert {
-	filter: invert(90%) hue-rotate(180deg) contrast(80%);
+.leaflet-tile-pane {
+	filter: brightness(0.8) contrast(1.1);
 }
 .sidebar-header-text, .sidebar-close {
 	color: #dddddd;
@@ -76,6 +76,9 @@ input[type=range]:hover::-moz-range-thumb { background-color: var(--hover-color)
 #pois-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li:not(:last-child) {
 	border-bottom: 2px solid var(--bg-color) !important;
 }
+#walking a img {
+	background-color: var(--text-color);
+}
 .leaflet-control-scale-line, .pois-result-selected {
 	background-color: rgba(0, 0, 0, 0.5);
 }
@@ -90,10 +93,10 @@ input[type=range]:hover::-moz-range-thumb { background-color: var(--hover-color)
 	border-color: #666666;
 }
 button:disabled, button:disabled:hover, button:disabled::after, button:disabled:hover::after {
-	color: #555555 !important;
+	color: var(--scr-thumb) !important;
 }
 input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet-tooltip {
-	border: 1px solid #333 !important;
+	border: 1px solid var(--scr-thumb) !important;
 }
 .leaflet-control-geocoder input, .leaflet-control-geocoder-alternatives a, .fancybox-button, .tutorial-button {
 	border: none !important;
@@ -105,7 +108,7 @@ input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet
 	background: none repeat scroll 0 0 #000000;
 }
 .sidebar-tabs > ul > li:hover, .slider {
-	background-color: #444444;
+	background-color: var(--scr-thumb);
 }
 .slider:hover {
 	background-color: #666666;
@@ -113,8 +116,11 @@ input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet
 .popup-header {
 	background-color: rgba(12, 12, 13, 0.5) !important;
 }
-.popup-fhrs > a > img {
-	opacity: 75%;
+.popup-fhrs .fa-stack {
+	border: 4px solid #222222;
+}
+.popup-tag-icon {
+	color: #777777;
 }
 .leaflet-container a.leaflet-popup-close-button {
 	border: 3px solid #333333;
@@ -146,10 +152,8 @@ input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet
 .sidebar-close:hover { color: #bbbbbb; }
 .sidebar-notif { border-color: var(--bg-color); }
 .xmasMapTree { filter: drop-shadow(0px 10px 9px #000000); }
-.circleMarker { fill: #000000; }
-.pois-results-circleMarker { color: #000000; }
 .popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #holiday-xmas-msg {
-	background-blend-mode: lighten;
+	background-blend-mode: difference;
 }
 
 .theme-scroll::-webkit-scrollbar {
@@ -164,5 +168,5 @@ input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet
 	background-color: var(--bg-color);
 }
 .popup-comment, .comment, figcaption {
-	color: #888888;
+	color: var(--hover-color);
 }

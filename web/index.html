@@ -29,7 +29,7 @@
 	<meta name="theme-color" content="#bb5500">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.6.0">
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.7.1">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.9.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
@@ -38,8 +38,8 @@
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=8.2.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=8.2.0" id="darkcss" disabled>
+	<link rel="stylesheet" href="assets/css/site.css?v=8.3.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=8.3.0" id="darkcss" disabled>
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -62,11 +62,11 @@
 				<li><a href="#home" title="Home" role="tab"><img alt="Home" src="assets/img/sb-home.png"></a></li>
 				<li><a href="#pois" title="Find Places" role="tab"><span class="sidebar-notif">0</span><img alt="Find Places" src="assets/img/sb-pois.png"></a></li>
 				<li><a href="#walking" title="Walking Routes" role="tab"><span class="sidebar-notif">0</span><img alt="Walking Routes" src="assets/img/sb-walking.png"></a></li>
-				<li><a href="#tour" title="History Tour" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-glasses"></i></span><img alt="History Tour" src="assets/img/sb-tour.png"></a></li>
+				<li><a href="#tour" title="History Tour" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-sm fa-info"></i></span><img alt="History Tour" src="assets/img/sb-tour.png"></a></li>
 				<li><a href="#thennow" title="Then and Now" role="tab"><img alt="Then and Now" src="assets/img/sb-thennow.png"></a></li>
 			</ul>
 			<ul role="tablist">
-				<li><a href="#settings" title="Settings" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-terminal"></i></span><img alt="Settings" src="assets/img/sb-settings.png"></a></li>
+				<li><a href="#settings" title="Settings" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-sm fa-terminal"></i></span><img alt="Settings" src="assets/img/sb-settings.png"></a></li>
 				<li><a href="#info" title="Information" role="tab"><img alt="Information" src="assets/img/sb-information.png"></a></li>
 			</ul>
 		</div>
@@ -108,9 +108,9 @@
 					<div id="home-new-feed">
 						<div>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 24 - <a onclick="switchTab('', '', '', 'xmas');">Xmas Window Display Competition 2024</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>May 24 - Extended editing and Wikidata info in popups</li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 23 - <a onclick="switchTab('tour', 'overlays', '', '');">RAF aerial overlays</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Oct 23 - <a onclick="switchTab('', '', '', 'xmas');">Xmas Window Display Competition 2023</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Oct 23 - <a onclick="switchTab('walking', '#walk-container-pdf');">PDF walking guides</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Sep 23 - Public Rights-of-Way overlay</li>
 							</ul>
@@ -165,6 +165,7 @@
 					<p style="text-align:center;"><a href="https://www.bexhillmuseum.org.uk/events" target="_blank" rel="noopener" title="Guided walks by Bexhill Museum (summer)"><img src="assets/img/walking-bexhillmuseum.png" alt="Bexhill Museum" loading="lazy"></a></p>
 					<p>You are welcome to download a number of guides created for these events below. If you found them useful please consider <a href="https://www.bexhillmuseum.org.uk/about/donate-to-bexhill-museum/" target="_blank" rel="noopener" >donating to Bexhill Museum</a>.</p>
 					<ul id="walk-container-pdf" class="theme-color fa-ul">
+						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/Walk_Artworks_Memorials_(2024).pdf" rel="nofollow">Artwork and Memorials (2024)</a></li>
 						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/Walk_Filming_Locations_(2023).pdf" rel="nofollow">Filming Locations (2023)</a></li>
 						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/Walk_Shelters_Bandstands_(2022).pdf" rel="nofollow">Shelters &amp; Bandstands (2022)</a></li>
 						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/Walk_Combe_Valley_(2019).pdf" rel="nofollow">Combe Valley Countryside Park (2019)</a></li>
@@ -266,10 +267,11 @@
 								<input id="settings-overpass-attic" type="date" min="2016-01-01"></p>
 							<p class="settings-label"><label for="settings-overpass-server">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<select id="settings-overpass-server" class="theme-color">
-									<option value="overpass-api.de">overpass-api.de</option>
-									<option value="overpass.openstreetmap.ru">overpass.openstreetmap.ru</option>
-									<option value="overpass.kumi.systems">overpass.kumi.systems</option>
-									<option selected value="maps.mail.ru/osm/tools/overpass">maps.mail.ru</option>
+									<option value="overpass-api.de" data-attic="1">overpass-api.de</option>
+									<option value="maps.mail.ru/osm/tools/overpass" data-attic="1">maps.mail.ru</option>
+									<option value="overpass.openstreetmap.ru" data-attic="0">overpass.openstreetmap.ru</option>
+									<option selected value="overpass.private.coffee" data-attic="1">overpass.private.coffee</option>
+									<option value="overpass.osm.jp" data-attic="0">overpass.osm.jp</option>
 								</select></p>
 							<p class="settings-label"><label for="settings-reverse-server">Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<select id="settings-reverse-server" class="theme-color">
@@ -387,11 +389,11 @@
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=8.2.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=8.2.0"></script>
-	<script src="assets/js/tags-parsers.js?v=8.2.0"></script>
-	<script src="assets/js/pois-type.js?v=8.2.0"></script>
-	<script src="tour/tour.js?v=8.2.0"></script>
-	<script src="assets/js/site.js?v=8.2.0"></script>
+	<script src="assets/js/config.js?v=8.3.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=8.3.0"></script>
+	<script src="assets/js/tags-parsers.js?v=8.3.0"></script>
+	<script src="assets/js/pois-type.js?v=8.3.0"></script>
+	<script src="tour/tour.js?v=8.3.0"></script>
+	<script src="assets/js/site.js?v=8.3.0"></script>
  </body>
 </html>

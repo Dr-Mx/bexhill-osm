@@ -120,8 +120,8 @@ function tour(tName, tID, fromPermalink) {
 	// timeout hack to stop iframe breaking on ff
 	setTimeout(function() { switch (tName) {
 		case 'pano':
+			// ARCHIVED - get mapillary sequences
 			// https://www.mapillary.com/developer/api-documentation/#search-sequences
-			// get mapillary sequences
 			$('.spinner').show();
 			fcnStLvl.state('control-mapillary-on');
 			$.ajax({
@@ -220,8 +220,9 @@ function tour(tName, tID, fromPermalink) {
 		case 'xmas2021': /* fall through */
 		case 'xmas2022': /* fall through */
 		case 'xmas2023': /* fall through */
+		case 'xmas2024': /* fall through */
 		case 'xmas':
-			const xmasYear = (tName.length > 4) ? tName.split('xmas')[1] : '2023';
+			const xmasYear = (tName.length > 4) ? tName.split('xmas')[1] : '2024';
 			$('.spinner').show();
 			if (actOverlayLayer === undefined && $('#xmasTitle').length) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
@@ -799,15 +800,15 @@ function tour(tName, tID, fromPermalink) {
 								postriot: 'After \'86 riot'
 							};
 							setJsonPopup(feature, layer, [feature.properties.name, feature.properties.timeline ? pSubtitle[feature.properties.timeline] : '', ''], '&copy; Bexhill Observer');
-							layer._leaflet_id = feature.properties.id;
+							if (feature.properties.id) layer._leaflet_id = feature.properties.id;
 							if (feature.properties.name) poiList.push(layer);
 						},
 						style: function(feature) {
-							const buildingCol = feature.properties.timeline === 'preriot' ?  'orange' : '#b22222';
+							const buildingCol = feature.properties.timeline === 'preriot' ? 'orange' : '#b22222';
 							const pStyle = {
 								boundary: [ '#000000', '#9dcdbb', 1, 2, 0.8 ],
 								building: [ '#000000', buildingCol, 0.75, 2, 0.5 ],
-								fence: [ '#000000', '#000000', 1, 2, 0 ],
+								fence: [ '#000000', '#000000', 1, 2, 0, 4 ],
 								pitch: [ '#000000', '#90ee90', 0.75, 2, 0.5 ],
 								road: [ '#ffffff', '#ffffff', 1, 5, 0 ]
 							};
@@ -817,7 +818,9 @@ function tour(tName, tID, fromPermalink) {
 								fillColor: pStyle[feature.properties.type][1],
 								opacity: pStyle[feature.properties.type][2],
 								weight: pStyle[feature.properties.type][3],
-								fillOpacity: pStyle[feature.properties.type][4]
+								fillOpacity: pStyle[feature.properties.type][4],
+								dashArray: pStyle[feature.properties.type][5],
+								dashOffset: pStyle[feature.properties.type][5]
 							};
 						}
 					}));

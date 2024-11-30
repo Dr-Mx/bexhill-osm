@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v8.3.0
+
+**Date:** 30/11/2024
+
+Updated
+ - fontawesome 6.7.1
+
+Site changes
+ - Adjust brightness rather than invert map tiles for darkmode
+ - FHRS ratings use a compact FontAwesome style instead of PNG's
+ - Check if OverPass server supports attic data
+ - Better localStorage variable naming
+ - Xmas updates
+ - More of the usual bug fixes and code improvements
+
+
 ## v8.2.0
 
 **Date:** 20/07/2024

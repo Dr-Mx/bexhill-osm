@@ -7,7 +7,7 @@
 			"title": "Dining Room",
 			"name": "Court Lodge",
 			"type": "building",
-			"description": "Bishops of Chichester, before 1570."
+			"description": "Sackville Family, post-1662."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -25,7 +25,7 @@
 		"type": "Feature",
 		"properties": {
 			"title": "Butler's Pantry",
-			"description": "Neven du Mont Family, early C20.",
+			"description": "Earl and Countess De La Warr, post-1891.",
 			"name": "Court Lodge",
 			"type": "building",
 			"id": "pantry"
@@ -49,7 +49,7 @@
 			"name": "Manor House (grounds)",
 			"title": "Cow Shed",
 			"type": "building",
-			"description": "Also later used as an aviary."
+			"description": "Post-1839.<br/>Used later as an aviary and now a gardeners' shed."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -70,7 +70,7 @@
 			"name": "Court Lodge",
 			"title": "Dining Hall",
 			"type": "building",
-			"description": "Brook Family, early C19.",
+			"description": "Brook Family, 1800s.",
 			"img": {
 				"0": "listManor/img/dininghll(0)",
 				"1": "listManor/img/dininghll(1)",
@@ -103,7 +103,7 @@
 			"name": "Court Lodge",
 			"title": "Inner Hall",
 			"type": "building",
-			"description": "Bishops of Chichester, before 1570."
+			"description": "Sackville Family, post-1662."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -130,7 +130,7 @@
 			"name": "Court Lodge",
 			"title": "Hall",
 			"type": "building",
-			"description": "Harmsworth Family, mid 1930s."
+			"description": "Harmsworth Family, post-1912."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -153,13 +153,16 @@
 			"name": "Court Lodge",
 			"title": "Study",
 			"type": "building",
-			"description": "North end: Brook Family, early C19.<br/>South end: Neven du Mont Family, early C20.",
+			"description": "North end: Brook Family, 1800s.<br/>South end: Harmsworth Family, post-1912.",
 			"img": {
 				"0": "listManor/img/study(0)",
-				"1": "listManor/img/study(1)"
+				"1": "listManor/img/study(1)",
+				"2": "listManor/img/study(2)"
 			},
 			"imgattrib": {
-				"0": "1965 | &copy; Historic England BB65/3563"
+				"0": "1904 | &copy; BOTPS",
+				"1": "1965 | &copy; Historic England BB65/3563",
+				"2": "1965 | &copy; Historic England BB65/3563"
 			}
 		},
 		"geometry": {
@@ -186,7 +189,7 @@
 			"title": "Cloak Room",
 			"name": "Court Lodge",
 			"type": "building",
-			"description": "Harmsworth Family, mid 1930s.",
+			"description": "Harmsworth Family, mid post-1912.",
 			"img": {
 				"0": "listManor/img/cloak(0)"
 			},
@@ -213,12 +216,14 @@
 			"name": "Court Lodge",
 			"title": "Servants Quarters",
 			"type": "building",
-			"description": "Neven du Mont Family, early C20.",
+			"description": "Harmsworth Family, post-1912.",
 			"img": {
-				"0": "listManor/img/servantquarter(0)"
+				"0": "listManor/img/servants(0)",
+				"1": "listManor/img/servantquarter(0)"
 			},
 			"imgattrib": {
-				"0": "1965 | &copy; Historic England BB65/3573"
+				"0": "1968 | &copy; Bexhill Museum",
+				"1": "1965 | &copy; Historic England BB65/3573"
 			}
 		},
 		"geometry": {
@@ -267,7 +272,7 @@
 			"name": "Court Lodge",
 			"title": "Drawing Room",
 			"type": "building",
-			"description": "North end: Sackville/Dorsets, C17.<br/>South end: Harmsworth Family, mid 1930s.",
+			"description": "North end: Sackville Family, post-1662.<br/>South end: Harmsworth Family, post-1912.",
 			"img": {
 				"0": "listManor/img/drawing(0)"
 			}
@@ -354,7 +359,7 @@
 			"name": "Court Lodge",
 			"title": "Larder",
 			"type": "building",
-			"description": "Earl and Countess De La Warr, late C19."
+			"description": "Earl and Countess De La Warr, post-1891."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -375,9 +380,9 @@
 		"properties": {
 			"id": "nursery",
 			"name": "Manor House (grounds)",
-			"title": "Children's Nursery",
+			"title": "Childrens' Playroom",
 			"type": "building",
-			"description": "A place for nannies and children as to not disturb the manor."
+			"description": "Post-1912: A place for nannies and children away from the manor. Pre-1805: A farm auxiliary building."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -401,7 +406,13 @@
 			"name": "Manor House (grounds)",
 			"title": "Barn",
 			"type": "building",
-			"description": "Uses include kennels for the Neven du Mont family's foxhounds, and an aviary."
+			"description": "Uses include kennels for the Neven du Mont family's foxhounds.",
+			"img": {
+				"0": "listManor/img/barn(0)"
+			},
+			"imgattrib": {
+				"0": "1907 | &copy; Bexhill Museum"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -422,7 +433,7 @@
 			"name": "Separate Dwelling",
 			"title": "2 The Cottage",
 			"type": "building",
-			"description": "Brook Family, early C19. Gardeners quarters."
+			"description": "Brook Family, 1800s. Gardeners quarters."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -476,7 +487,7 @@
 			"name": "Court Lodge",
 			"title": "Porch",
 			"type": "building",
-			"description": "Earl and Countess De La Warr, late C19."
+			"description": "Earl and Countess De La Warr, post-1891."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -497,7 +508,7 @@
 			"title": "Kitchen and Scullery",
 			"name": "Court Lodge",
 			"type": "building",
-			"description": "Neven du Mont Family, early C20.",
+			"description": "Earl and Countess De La Warr, post-1891.",
 			"img": {
 				"0": "listManor/img/kitchen(0)"
 			}
@@ -527,7 +538,13 @@
 			"name": "Manor House (grounds)",
 			"title": "Ballroom",
 			"type": "building",
-			"description": "Originally a barn for storing grain and hay. Converted into a pavilion in the late C19 by the 8th Earl De La Warr to host aristocratic parties."
+			"description": "Originally a barn for storing grain and hay. Converted into a pavilion after 1891 by the 8th Earl De La Warr to host aristocratic parties. Used as a library by the Harmsworth Family.",
+			"img": {
+				"0": "listManor/img/ballroom(0)"
+			},
+			"imgattrib": {
+				"0": "1965 | &copy; Bexhill Museum"
+			}
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -549,7 +566,7 @@
 			"name": "Court Lodge",
 			"title": "Servants Dining Room",
 			"type": "building",
-			"description": "Earl and Countess De La Warr, late C19."
+			"description": "Earl and Countess De La Warr, post-1891."
 		},
 		"geometry": {
 			"type": "Polygon",
@@ -568,9 +585,9 @@
 		"properties": {
 			"id": "boots",
 			"name": "Court Lodge",
-			"title": "Boots and Cloaks",
+			"title": "Watercloset",
 			"type": "building",
-			"description": "Bishops of Chichester, before 1570.",
+			"description": "Bishops of Chichester, pre-1561.",
 			"img": {
 				"0": "listManor/img/boots(0)",
 				"1": "listManor/img/boots(1)"
@@ -601,7 +618,7 @@
 			"name": "Court Lodge",
 			"title": "Morning Room",
 			"type": "building",
-			"description": "Harmsworth Family, mid 1930s.",
+			"description": "Harmsworth Family, post-1912.",
 			"img": {
 				"0": "listManor/img/morning(0)"
 			},
@@ -627,13 +644,15 @@
 			"id": "servantsitting",
 			"name": "Court Lodge",
 			"title": "Servants Sitting Room",
-			"description": "Neven du Mont Family, early C20.",
+			"description": "Harmsworth Family, post-1912.",
 			"type": "building",
 			"img": {
-				"0": "listManor/img/servantsitting(0)"
+				"0": "listManor/img/servants(0)",
+				"1": "listManor/img/servantsitting(0)"
 			},
 			"imgattrib": {
-				"0": "1965 | &copy; Historic England BB65/3561"
+				"0": "1968 | &copy; Bexhill Museum",
+				"1": "1965 | &copy; Historic England BB65/3561"
 			}
 		},
 		"geometry": {
@@ -655,7 +674,7 @@
 			"name": "Court Lodge",
 			"title": "Stairs to 1st floor",
 			"type": "building",
-			"description": "Bishops of Chichester, before 1570."
+			"description": "Bishops of Chichester, pre-1561."
 		},
 		"geometry": {
 			"type": "Polygon",

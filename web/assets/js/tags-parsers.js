@@ -51,12 +51,12 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags.disused) siteVal += '<span title="Disused">Currently disused</span>; ';
 		if (tags['damage:type']) {
 			siteVal += '<span title="Damage">Damaged by ' + (tags['damage:event'] ? tags['damage:event'] + ' (' + tags['damage:type'] + ')' : '"' + tags['damage:type'] + '"') +
-				(tags['damage:date'] ? ' during ' + dateFormat(tags['damage:date'], 'short') : '')  + '</span>; ';
+				(tags['damage:date'] ? ' during ' + dateFormat(tags['damage:date'], 'short') : '') + '</span>; ';
 		}
 		else if (tags.abandoned) siteVal += '<span title="Abandoned">Currently abandoned</span>; ';
 		if (tags.building) {
 			if (tags.building === 'garage') siteType = ['Garage', 'warehouse'];
-			else if (tags.building === 'house' || tags.building === 'farm' || tags.building === 'bungalow' || tags.building === 'detached' || tags.building === 'semidetached_house') siteType = ['House', 'house-chimney'];
+			else if (tags.building === 'house' || tags.building === 'farm' || tags.building === 'bungalow' || tags.building === 'detached' || tags.building === 'semidetached_house' || tags.building === 'static_caravan') siteType = ['House', 'house-chimney'];
 			else if (tags.building === 'hut') siteType = ['Structure', 'person-shelter'];
 			else if (tags.building === 'warehouse') siteType = ['Warehouse', 'warehouse'];
 			else siteType = ['Building', 'building'];
@@ -130,7 +130,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		const historicPlanningApp = 'https://planweb01.rother.gov.uk/OcellaWeb/historySearch?action=Search&location=';
 		let readingVal = '', planningVal = '';
 		markerPopup = '';
-		if ((tags.building === 'apartments' || tags.building === 'detached' || tags.building === 'bungalow' || tags.building === 'farm' || tags.building === 'house' || tags.building === 'semidetached_house') && tags['addr:street'] && LBounds.contains(element.center)) {
+		if ((tags.building === 'apartments' || tags.building === 'detached' || tags.building === 'bungalow' || tags.building === 'farm' || tags.building === 'house' || tags.building === 'semidetached_house' || tags.building === 'static_caravan') && tags['addr:street'] && LBounds.contains(element.center)) {
 			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ';
 			readingVal += '<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories 1886-1931" target="_blank" rel="noopener">Street directories</a>; ';
 			if (tags.building === 'apartments' && tags['addr:housename']) planningVal += tags['addr:housename'];
@@ -141,8 +141,9 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		if (tags.highway && tags.name && element.type === 'way' && LBounds.contains(element.center)) {
 			readingVal += '<a href="' + streetDirs + encodeURI(tags.name.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
-			readingVal += '<a href="' + planningApp + encodeURI(tags.name.replace('\'', '')) + '&receivedFrom=01-01-' + (new Date().getFullYear() - 2010) + '" title="Planning Application Search" target="_blank" rel="noopener">Planning applications</a> ';
-			readingVal += '(<a href="' + historicPlanningApp + encodeURI(tags.name.replace('\'', '')) + '" title="Historic Planning Application Search" target="_blank" rel="noopener">Historic</a>); ';
+			readingVal += 'Planning: ' +
+				'<a href="' + planningApp + encodeURI(tags.name.replace('\'', '')) + '&receivedFrom=01-01-' + (new Date().getFullYear() - 2010) + '" title="Planning Application Search" target="_blank" rel="noopener">Current</a> | ' +
+				'<a href="' + historicPlanningApp + encodeURI(tags.name.replace('\'', '')) + '" title="Historic Planning Application Search" target="_blank" rel="noopener">Historic</a>; ';
 		}
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			const w = tags.wikipedia || tags['site:wikipedia'];
@@ -150,8 +151,6 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		if (tags['ref:esher'])
 			readingVal += '<a class="theme-nowrap" href="https://www.heritagegateway.org.uk/Gateway/Results_Single.aspx?uid=' + encodeURI(tags['ref:esher']) + '&resourceID=1026#content" title="East Sussex Historic Environment Record" target="_blank" rel="noopener">ESHER</a>; ';
-		if (tags['ref:publicsculpturesofsussex'])
-			readingVal += '<a class="theme-nowrap" href="https://publicsculpturesofsussex.co.uk/index.php/object?id=' + encodeURI(tags['ref:publicsculpturesofsussex']) + '" title="Public Sculptures of Sussex" target="_blank" rel="noopener">Public Sculptures</a>; ';
 		if (tags['ref:iwm'])
 			readingVal += '<a class="theme-nowrap" href="https://www.iwm.org.uk/memorials/item/memorial/' + encodeURI(tags['ref:iwm']) + '" title="Imperial War Museum: War Memorials Register" target="_blank" rel="noopener">IWM</a>; ';
 		if (tags['url:bexhillhistorytrail'])
@@ -188,7 +187,6 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags.internet_access === 'wlan') facVal += '<i class="popup-tag-value-yes fa-solid fa-wifi fa-fw" title="wireless internet"></i>';
 		else if (tags.internet_access === 'terminal') facVal += '<i class="popup-tag-value-yes fa-solid fa-desktop fa-fw" title="internet terminal"></i>';
 		if (tags.lit === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-lightbulb fa-fw" title="lighting"></i>';
-		else if (tags.lit === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-lightbulb fa-fw" title="no lighting"></i>';
 		if (tags.lockable === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-unlock-keyhole fa-fw" title="lockable"></i>';
 		if (tags['drinking_water:refill'] === 'yes') facVal += '<i class="fa-solid fa-bottle-droplet fa-fw" style="color:#0082ff;" title="free drinking water refills"></i>';
 		if (tags.membership === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-id-card fa-fw" title="membership available"></i>';
@@ -653,7 +651,7 @@ function callback(data) {
 				case 'fire_station': type = 'police'; iconName = 'firetruck'; break;
 				case 'place_of_worship':
 					if (e.tags.religion) {
-						title = e.tags.religion + (e.tags.denomination ? ' ' +  e.tags.denomination : '');
+						title = e.tags.religion + (e.tags.denomination ? ' ' + e.tags.denomination : '');
 						switch (e.tags.religion) {
 							case 'christian': iconName = 'church-2'; break;
 							case 'buddhist': iconName = 'bouddha'; break;
@@ -989,7 +987,7 @@ function callback(data) {
 			if (poi) iconName = poi.iconName;
 			else if (e.tags.shop) iconName = 'shop';
 			else if (e.tags.building) {
-				if (e.tags.building === 'house' || e.tags.building === 'bungalow') iconName = 'bighouse';
+				if (e.tags.building === 'house' || e.tags.building === 'bungalow' || e.tags.building === 'detatched' || e.tags.building === 'semidetached_house' || e.tags.building === 'static_caravan') iconName = 'bighouse';
 				else if (e.tags.building === 'hut') iconName = 'hut';
 				else iconName = 'apartment-3';
 			}
@@ -1482,8 +1480,8 @@ function worship_parser(tags, titlePopup) {
 
 // popup image elements
 function getWikiAttrib(element) {
-	// https://commons.wikimedia.org/wiki/Commons:API
 	// get image attribution
+	// https://commons.wikimedia.org/wiki/Commons:API
 	if (element.find('img').data('url') && element.find('img').data('url').startsWith('File')) {
 		const img = element.find('img').data('url');
 		$.ajax({
@@ -1626,6 +1624,14 @@ function elementType(e) {
 		w: 'way',
 		r: 'relation'
 	}[e.toLowerCase().slice(0, 1)];
+}
+function josmEditor(osmId) {
+	// https://josm.openstreetmap.de/
+	if (osmId) $.ajax({
+		url: 'http://127.0.0.1:8111/load_and_zoom?left=' + map.getBounds()._southWest.lng + '&top=' + map.getBounds()._northEast.lat + '&right=' + map.getBounds()._northEast.lng + '&bottom=' + map.getBounds()._southWest.lat + '&select=' + elementType(osmId) + osmId.slice(1),
+		type: 'GET',
+		error: function() { window.alert('Editing failed - make sure JOSM is loaded and that the remote control option is enabled.'); }
+	});
 }
 function confirmDialog(e) {
 	return window.confirm('This will open an external website:\n\n' + $(e).attr('href'));
