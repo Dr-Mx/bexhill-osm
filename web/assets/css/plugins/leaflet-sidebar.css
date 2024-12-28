@@ -65,10 +65,7 @@
 	margin: 0;
 	padding: 0;
 	z-index: 2; }
-.sidebar-tabs img {
-	width: 30px;
-	padding: 8px 0; }
-@media (max-height: 350px) {
+@media (max-height: 315px) {
 	.sidebar-tabs > ul:last-child > li:nth-child(n+2) {
 		display: none; } }
 .sidebar-tabs > li, .sidebar-tabs > ul > li {
@@ -92,7 +89,7 @@
 	cursor: default; }
 .sidebar-tabs > li > a, .sidebar-tabs > ul > li > a {
 	display: block;
-	height: 100%;
+	height: 45px;
 	color: inherit;
 	font-size: 11pt; }
 .sidebar-tabs > ul + ul {

@@ -1,8 +1,13 @@
 .leaflet-control-geocoder {
   border-radius: 10px;
   background: white;
-  min-width: 30px;
+  width: 30px;
   min-height: 30px;
+  transition: width 300ms;
+}
+
+.leaflet-control-geocoder-expanded {
+	width: 272px;
 }
 
 .leaflet-control-geocoder a,
@@ -28,18 +33,13 @@
 }
 .leaflet-control-geocoder-expanded .leaflet-control-geocoder-form {
   display: inline-block;
-  margin-left: 5px;
+  width: calc(100% - 30px);
 }
 .leaflet-control-geocoder-form input {
   border: 0;
   background-color: transparent;
-  width: 185px;
+  width: 100%;
   height: 24px !important;
-}
-
-.leaflet-touch .leaflet-control-geocoder-icon {
-  width: 30px;
-  height: 30px;
 }
 
 .leaflet-control-geocoder-throbber > .leaflet-control-geocoder-icon > .fa-solid:first-child {
@@ -68,7 +68,7 @@
 }
 .leaflet-control-geocoder-alternatives {
   display: block;
-  width: 272px;
+  width: 100%;
   list-style: none;
   padding: 0;
   margin: 1px 0 0 0;

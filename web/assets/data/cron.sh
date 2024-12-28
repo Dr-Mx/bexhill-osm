@@ -20,4 +20,5 @@
 # Internet Archive
 /usr/bin/wget -O /home/bexhillo/public_html/assets/img/info-archive.svg "https://img.shields.io/badge/dynamic/json?logo=internetarchive&logoColor=white&style=flat&labelColor=rgba(0,0,0,0.4)&color=black&label=Internet%20Archive&query=%24.response.numFound&url=https%3A%2F%2Farchive.org%2Fadvancedsearch.php%3Fq%3Duploader%253A%28Dr-Mx%29%26fl%3Dname%26rows%3D0%26output%3Djson"
 # Github
-# /usr/bin/wget -O /home/bexhillo/public_html/assets/img/info-archive.svg "https://img.shields.io/github/license/Dr-Mx/Bexhill-OSM?logo=github&logoColor=white&color=%23a04900&label=Github&labelColor=rgba(0,0,0,0.4)&style=flat"
+# /usr/bin/wget -O /home/bexhillo/public_html/assets/img/info-github.svg "https://img.shields.io/github/license/Dr-Mx/bexhill-osm?logo=github&logoColor=white&color=%23a04900&label=Github&labelColor=rgba(0,0,0,0.4)&style=flat"
+/usr/bin/wget -O /home/bexhillo/public_html/assets/img/info-commit.svg "https://img.shields.io/github/last-commit/Dr-Mx/bexhill-osm?logo=github&logoColor=white&color=%23a04900&labelColor=rgba(0,0,0,0.4)&style=flat"

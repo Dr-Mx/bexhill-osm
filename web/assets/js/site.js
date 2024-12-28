@@ -108,6 +108,7 @@ $('.sidebar-tabs li').on('click', function() {
 // no sidebar-tab
 $('.sidebar-close').on('click', function() {
 	actTab = 'closing';
+	$(this).removeClass('fa-fade');
 	$('.sidebar-tabs li.active').trigger('click');
 });
 
@@ -125,9 +126,9 @@ L.Map.addInitHook(function() {
 			clickOutline.clearLayers();
 			$('#modal').hide();
 		}
-		// ignore map click if... low zoom / dragging walk markers / layer-noclick / overlay control is open / spinner is shown / popup is open on screen
-		else if (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .layer-noclick').length && ($('.leaflet-control-layers').outerWidth() <= 44) && !imageOverlay.getLayers().length &&
-		 !$('.spinner:visible').length && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) {
+		// ignore map click if... low zoom / measuring / dragging walk markers / layer-noclick / overlay control is open / spinner is shown / popup is open on screen
+		else if (map.getZoom() >= 15 && !measure._measuring && !$('.leaflet-marker-draggable, .layer-noclick').length && ($('.leaflet-control-layers').outerWidth() <= 44) && !imageOverlay.getLayers().length &&
+		 !$('.spinner:visible').length && ($('.leaflet-control-geocoder').width() < 40) && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) {
 			that.fire('visualclick', L.Util.extend(e, { type: 'visualclick' }));
 			// drop marker and reverse lookup on single click
 			h = setTimeout(function() {
@@ -207,22 +208,16 @@ const map = new L.map('map', {
 }).whenReady(function() {
 	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'#info-software\');" title="Attribution"><i class="fa-solid fa-circle-info fa-fw"></i></a>');
 	if (!noIframe) {
-		$('#settings-devtools').hide();
-		$('.leaflet-control-locate').hide();
-		$('#control-bookmarks').parent().hide();
+		$('#control-bookmarks').parent().add('#settings-devtools, .leaflet-control-locate').hide();
 		map.attributionControl.addAttribution('<a href="/" target="_blank">Bexhill-OSM</a>');
 	}
-	if (!localStorageAvail()) {
-		$('#settings-devtools').hide();
-		$('#settings-cleardata').parent().hide();
-		$('#control-bookmarks').parent().hide();
-	}
+	if (!localStorageAvail()) $('#settings-cleardata, #control-bookmarks').parent().add('#settings-devtools').hide();
 	// sidebar information
 	sidebar.fadeIn();
 	$('body').removeClass('preload');
 	$('.sidebar-tabs, .sidebar-close, .leaflet-bar a, button, #settings-options .settings-label').tooltip(tooltipDef);
 	getTips('random');
-	if (actTab === defTab && noIframe) { showWeather(); showEditFeed(); }
+	if (actTab === defTab && noIframe) { setTimeout(showWeather, 10); showEditFeed(); }
 	else $('#home-weather').hide();
 	$('footer > span').append(new Date().getFullYear() + ' | <a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/CHANGELOG.md" title="Changelog" target="_blank" rel="noopener">v' + version + '</a>');
 	$('#walk-list, #tour-controls-list').trigger('change');
@@ -263,20 +258,20 @@ const map = new L.map('map', {
 	}).trigger('scroll');
 	setTimeout(setOverlayLabel, 10);
 	// easter holiday decorations
-	if (new Date().getMonth() === 2 && new Date().getDate() >= 29 && new Date().getDate() <= 31) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Easter!">&#x1FABA</span>'));
+	if (new Date().getMonth() === 3 && new Date().getDate() >= 18 && new Date().getDate() <= 21) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Easter!">&#x1FABA</span>'));
 	// bexhill day holiday decorations
 	else if (new Date().getMonth() === 7 && new Date().getDate() === 22) sidebar.append('<img id="holiday-bexhillday" alt="" title="It\'s Bexhill Day!" src="assets/img/holidays/bexhilldaySb.png">');
 	// halloween holiday decorations
-	else if (new Date().getMonth() === 9 && new Date().getDate() >= 15 ) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Halloween!">&#x1F383;</span>'));
+	else if (new Date().getMonth() === 9 && new Date().getDate() >= 15) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Halloween!">&#x1F383;</span>'));
 	// xmas holiday decorations
 	else if ((new Date().getMonth() === 10 && new Date().getDate() >= 30) || new Date().getMonth() === 11) {
 		$('html').css({ '--main-color': '#ca3535', '--second-color': '#a23030' });
 		// central
 		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84090, 0.47320], [50.84055, 0.47370]], { className: 'holiday-xmas-tree' }).addTo(map);
 		// little common
-		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84545, 0.43400], [50.84510, 0.43350]], { className: 'holiday-xmas-tree' }).addTo(map);
+		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.84545, 0.43350], [50.84510, 0.43400]], { className: 'holiday-xmas-tree' }).addTo(map);
 		// sidley
-		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.85600, 0.47330], [50.85570, 0.47280]], { className: 'holiday-xmas-tree' }).addTo(map);
+		L.imageOverlay('assets/img/holidays/xmasMapTree.svg', [[50.85600, 0.47280], [50.85565, 0.47330]], { className: 'holiday-xmas-tree' }).addTo(map);
 		// santa hat
 		sidebar.append('<img id="holiday-xmas-hat" title="Merry Christmas!" alt="" src="assets/img/holidays/xmasSb.png" tabindex="0">');
 		// window competition
@@ -465,7 +460,7 @@ const map = new L.map('map', {
 			const ratingDate = (result.RatingValue.length === 1) ? ' (' + new Date(result.RatingDate).toLocaleDateString(lang) + ')' : '';
 			const ratingValue = (result.RatingValue.length === 1) ? result.RatingValue : 'question';
 			popupThis.find($('.popup-fhrs')).html(
-				'<a href="https://ratings.food.gov.uk/business/' + encodeURI(result.FHRSID) + '" title="Food Hygiene Rating\n' + result.BusinessName + ratingDate + '" target="_blank" rel="noopener">' +
+				'<a href="https://ratings.food.gov.uk/business/' + encodeURI(result.FHRSID) + '" title="Food Hygiene Rating\n' + result.BusinessName + ratingDate + (ratingValue.length > 1 ? '\n' + result.RatingValue : '') + '" target="_blank" rel="noopener">' +
 				'<span class="fa-stack"><i class="fa-solid fa-circle fa-stack-1x fa-xl"></i><i class="fanum fa-solid fa-' + ratingValue + ' fa-stack-1x"></i></span></a>'
 			).removeClass('notloaded');
 			if ($('#settings-debug').is(':checked')) console.debug('Food Hygiene Rating:', result);
@@ -1449,6 +1444,21 @@ const lc = L.control.locate({
 	}
 }).addTo(map);
 
+// https://github.com/ppete2/Leaflet.PolylineMeasure
+// BUTTON measurement control
+const measure = L.control.polylineMeasure({
+	unit: 'landmiles',
+	tooltipTextDelete: 'Press <kbd>SHIFT</kbd> and click to <b>delete point</b>',
+	tooltipTextMove: 'Click and drag to <b>move point</b><br>',
+	tooltipTextResume: '<br>Press <kbd>CTRL</kbd> and click to <b>resume line</b>',
+	tooltipTextAdd: 'Press <kbd>CTRL</kbd> and click to <b>add point</b>',
+	measureControlTitleOn: 'Enable measurement',
+	measureControlTitleOff: 'Disable measurement',
+	measureControlLabel: '<i class="fa-solid fa-ruler"></i>',
+	fixedLine: { color: '#00f', weight: 2 },
+	arrow: { color: '#006' }
+}).addTo(map);
+
 // https://github.com/perliedman/leaflet-control-geocoder
 // BUTTON search
 const geocode = L.Control.geocoder({
@@ -1458,7 +1468,7 @@ const geocode = L.Control.geocoder({
 			viewbox: [mapBounds.west, mapBounds.south, mapBounds.east, mapBounds.north].join(','),
 			limit: maxNomResults,
 			email: email
-	}
+		}
 	}),
 	expand: 'click',
 	defaultMarkGeocode: false,
@@ -1779,7 +1789,7 @@ $('html').on('keydown', function(e) {
 	}
 }).on('keyup', function(e) {
 	// CTRL down: switch overlay transparency on
-	if (e.keyCode === 17 && actOverlayLayer) {
+	if (e.keyCode === 17 && actOverlayLayer && !measure._measuring) {
 		if ($('#control-opacity input').val() >= 0.5) oInterval = setInterval(() => {
 			$('#control-opacity input').val(+$('#control-opacity input').val() - 0.05).trigger('input');
 			if ($('#control-opacity input').val() == 0.05) {
@@ -1862,11 +1872,13 @@ $('#settings input').not('#settings-debug').on('change', function() {
 			scaleControl = L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
 			setRoutingControl('metric');
 			lc.options.metric = true;
+			measure.options.unit = 'kilometres';
 		}
 		else {
 			scaleControl = L.control.scale({ metric: false, position: 'bottomleft' }).addTo(map);
 			setRoutingControl('imperial');
 			lc.options.metric = false;
+			measure.options.unit = 'landmiles';
 		}
 	}
 	else if ($(this).attr('id') === 'settings-mapillary') {
@@ -1982,8 +1994,7 @@ function clear_map(layer) {
 	if (layer === 'all' && $('#pois-filter-in').val().length) $('#pois-filter-in').val('').trigger('input');
 	if (layer === 'walk' || layer === 'all') routingControl.setWaypoints([]);
 	spinner = 0;
-	$('.spinner').hide();
-	$('#modal').hide();
+	$('.spinner, #modal').hide();
 	permalinkSet();
 }
 
@@ -1994,7 +2005,7 @@ function zoom_area(closeTab, layer) {
 	else if ($(window).width() >= 1024 && !$('.sidebar.collapsed').length) offset = Math.round(sidebar.width());
 	map.closePopup();
 	if (map.getBoundsZoom(layers) > 18) map.flyTo(layers.getCenter(), 18);
-	else map.flyToBounds(layers, { paddingTopLeft: [offset, 0] } );
+	else map.flyToBounds(layers, { paddingTopLeft: [offset, 0] });
 }
 
 function poi_changed(newcheckbox) {
@@ -2041,8 +2052,8 @@ function poi_changed(newcheckbox) {
 		}
 	}
 	else if (poiChk.length > maxPOICheckbox) {
-		// flash selected pois when max number reached
-		poiChk.parent().fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
+		// flash selected pois and clear layers when max number reached
+		poiChk.parent().add('#pois-results button .fa-trash, #control-clearlayers .fa-trash').fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
 		$('#' + newcheckbox).prop('checked', false);
 	}
 	$('.pois-checkbox input').trigger('change');
@@ -2097,17 +2108,18 @@ function getTips(tip) {
 		titleCase(interactDesc[0]) + ' an area of the above minimap to quickly <i class="fa-solid fa-magnifying-glass-plus fa-sm"></i> to that location.',
 		'Zoom into the map and ' + interactDesc[0] + ' almost any place to see more details.',
 		'Find any address by entering part of it into Search <i class="fa-solid fa-magnifying-glass fa-sm"></i> and pressing enter.',
-		'Almost every street in Bexhill has a history behind its name, Search <i class="fa-solid fa-magnifying-glass fa-sm"></i> for a road to learn more.',
+		'Almost every street has a history behind its name, search for a road to learn more.',
 		'Zoom into the map and ' + interactDesc[0] + ' a bus-stop <i class="fa-solid fa-bus fa-sm"></i> to see real-time information on arrivals.',
 		titleCase(interactDesc[3]) + ' to see the next image in a pop-up. ' + titleCase(interactDesc[0]) + ' an image to see it full-screen.',
 		titleCase(interactDesc[0]) + ' <i class="fa-solid fa-location-arrow fa-sm"></i> to turn on your location to see place results ordered by distance.',
+		titleCase(interactDesc[0]) + ' <i class="fa-solid fa-ruler fa-sm"></i> to measure simple distances. Units can be changed in <a onclick="switchTab(\'settings\');">Settings <i class="fa-solid fa-gear fa-sm"></i></a>.',
 		'Quickly create walking <i class="fa-solid fa-person-walking fa-sm"></i> directions by turning on <i class="fa-solid fa-location-arrow fa-sm"></i> and ' + interactDesc[2] + 'ing the map.',
 		'Choose between miles or kilometres in <a onclick="switchTab(\'settings\');">Settings <i class="fa-solid fa-gear fa-sm"></i></a>.',
 		'Dark theme can be enabled/disabled in <a onclick="switchTab(\'settings\');">Settings <i class="fa-solid fa-gear fa-sm"></i></a>.',
 		titleCase(interactDesc[0]) + ' <i class="fa-solid fa-trash fa-sm"></i> to clear all layers from the map.',
 		'Touch screen users can quickly close the sidebar by swiping <i class="fa-solid fa-hand-point-up fa-sm"></i> the sidebar title.',
-		'Personally bookmark any place by ' + interactDesc[1] + ' <i class="fa-regular fa-bookmark fa-sm"></i> in a popup, ' + interactDesc[0] + ' it again to remove.',
-		'We have a number of historical map overlays, select them using the top-right layer control <i class="fa-solid fa-layer-group fa-sm"></i> .',
+		'Bookmark any place by ' + interactDesc[1] + ' <i class="fa-regular fa-bookmark fa-sm"></i> in a popup, ' + interactDesc[0] + ' it again to remove.',
+		'Discover a number of historical overlays using the top-right layer control <i class="fa-solid fa-layer-group fa-sm"></i>.',
 		'Results in Places are coloured to show currently open (green) or closed (red).',
 		'Zoom into the map and ' + interactDesc[0] + ' a postbox <i class="fa-solid fa-envelope fa-sm"></i> to see the next post collection.',
 		'You can find booking information on accommodation under <a onclick="switchTab(\'pois\', \'#pois-leisure-tourism\');">Leisure-Tourism</a>.',
@@ -2115,10 +2127,10 @@ function getTips(tip) {
 		'Find your closest <i class="fa-solid fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'#pois-amenities\');">Amenities</a>.',
 		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', \'ww2\', \'\', \'bombmap\');">History <i class="fa-solid fa-book fa-sm"></i></a>.',
 		'Some places have a photosphere view, ' + interactDesc[0] + ' <i class="fa-solid fa-street-view fa-fw"></i> in a popup to view it.',
-		'View superimposed and colourised images of Bexhill past and present under <a onclick="switchTab(\'thennow\');">Then and Now <i class="fa-regular fa-image fa-sm"></i></a>.',
-		'Notice something wrong or missing on the map? ' + titleCase(interactDesc[2]) + ' the area and <i class="fa-regular fa-sticky-note fa-sm"></i> Leave a note.',
-		'<i class="fa-solid fa-map-pin fa-sm"></i> Over 1,100 photos, 20,000 buildings and 250 miles of roads/paths within 15 miles&sup2; have been mapped thus far!',
-		'The data behind Bexhill-OSM is open-source and can be used by anyone however they wish!',
+		'View superimposed and colourised photographs under <a onclick="switchTab(\'thennow\');">Then and Now <i class="fa-regular fa-image fa-sm"></i></a>.',
+		'Something wrong or missing on the map? ' + titleCase(interactDesc[2]) + ' the area and <i class="fa-regular fa-sticky-note fa-sm"></i> Leave a note.',
+		'1,500 photos, 22,000 buildings and 250 miles of roads have been mapped so far!',
+		'This website is open-source and can be used by anyone however they wish!',
 		'For a mobile, offline version of this map - give <a href="https://organicmaps.app" target="_blank" rel="noopener">Organic Maps</a> a try.',
 		'Anyone can help with building the <i class="fa-regular fa-map fa-sm"></i>, visit <a href="https://osm.org" target="_blank" rel="noopener">OpenStreetMap.org</a> on how to get started.'
 	];
@@ -2231,7 +2243,7 @@ function showEditFeed() {
 			if (data.features) {
 				let s = '';
 				$.each(data.features, function(e, itm) {
-					s += '<li><span class="fa-li"><i class="fa-solid fa-circle-check"></i></span>' +
+					s += '<li><span class="fa-li"><i class="fa-solid fa-circle-' + ( itm.properties.is_suspect ? 'question' : 'check') + '"></i></span>' +
 					'<a href="https://overpass-api.de/achavi/?changeset=' + encodeURI(itm.id) + '&layers=B0FTTFT" title="' + dateFormat(itm.properties.date, 'short') + '\n' +
 					itm.properties.create + ' created\n' + itm.properties.modify + ' modified\n' + itm.properties.delete + ' deleted\n' + itm.properties.comments_count + ' comments">' + timeSince(itm.properties.date) + '</a>' +
 					' - <a href="https://www.openstreetmap.org/user/' + encodeURI(itm.properties.user) + '" title="Source: ' + itm.properties.source + '\nEditor: ' + itm.properties.editor + '">' + itm.properties.user + '</a>' +
@@ -2397,7 +2409,7 @@ function permalinkReturn() {
 	else actTab = 'none';
 	// animate sidebar close button on smaller devices if layers underneath
 	if ($('.sidebar-pane#' + actTab).length && $(window).width() < 768 && (uri.has('o') || uri.has('g') || uri.has('p') || uri.has('i') || uri.has('w')))
-		$('.sidebar-close').addClass('fa-fade');
+		$('#' + actTab + ' .sidebar-close').addClass('fa-fade');
 }
 permalinkReturn();
 

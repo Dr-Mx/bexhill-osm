@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## v8.4.0
+
+**Date:** 28/12/2024
+
+Added
+- Leaflet.PolylineMeasure.js
+
+Updated
+ - fontawesome 6.7.2
+
+Site changes
+ - New line measuring tool
+ - Geocoder search button animation
+ - Sidebar icons 2x resolution consolidated into single png
+ - Improve layout of tips
+ - Cleaner noscript page
+ - Add GitHub last-commit badge under information
+ - Split streetnames book A-Z indexes on small devices
+ - Highlight 'suspect' changes in edit feed
+ - More of the usual bug fixes and code improvements
+
+
 ## v8.3.0
 
 **Date:** 30/11/2024

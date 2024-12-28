@@ -6,28 +6,28 @@ html {
 	overflow-x: hidden;
 }
 body {
-	background-color: #eeeef3;
+	background-color: #eeeeee;
 	font: 11pt Helvetica, Arial, sans-serif;
 	text-align: justify;
 	margin: auto 5%;
 	font-size: 90%;
 }
 html.darkMode body {
-	background-color: #111116;
-	color: #bbbbbb;
+	background-color: #111111;
+	color: #aaaaaa;
 }
 html.darkMode button svg path {
 	fill: #000000;
 }
 html.darkMode #street-filter-input {
 	background-color: #000000;
-	color: #bbbbbb;
+	color: #aaaaaa;
 }
 html.darkMode #street-index a {
 	background-color: #222222;
 }
 html.darkMode #intro, html.darkMode #outro {
-	color: #aaaaaa;
+	color: #999999;
 }
 a {
 	text-decoration: none;
@@ -100,11 +100,11 @@ button svg path {
 	font-size: 8pt;
 }
 .credit::before {
-	content: "\00a9";
+	content: '\00a9';
 	margin-right: 5px;
 }
 .divider {
-	margin: 20px 30% -10px 30%;
+	margin: 20px 30%;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
@@ -126,20 +126,22 @@ button svg path {
 }
 #street-index {
 	display: flex;
+	flex-wrap: nowrap;
+	gap: 5px;
 	margin-bottom: 20px;
 	text-align: center;
 	font-family: monospace;
 	font-size: 16pt;
 	font-weight: bold;
 	line-height: 30px;
+	
 }
 #street-index a {
-	margin: 5px auto;
 	border-radius: 5px;
 	background-color: #dddddd;
-	width: 3.5%;
+	flex: 1 1 calc((100% / 13) - 5px);
 }
-#street-index a.disable {
+#street-index a.disable, .permDisable {
 	opacity: 0.5;
 	pointer-events: none;
 }
@@ -173,7 +175,7 @@ button svg path {
 	top: 5px;
 	font-size: 18px;
 	font-weight: bold;
-	content: "\00d7";
+	content: '\00d7';
 	text-align: center;
 	color: var(--main-color);
 	padding-bottom: 20px;
@@ -186,26 +188,25 @@ button svg path {
 }
 .street {
 	line-height: 1.3;
-	padding-top: 20px;
-	margin: 0;
+	margin: 20px 0;
 }
 .street:first-child {
 	padding: 0;
 }
-.bygone {
+.lost {
 	opacity: 0.5;
 }
 #rsrchdesc span {
 	display: inline-block;
 }
 #rsrchdesc span:not(:last-child)::after {
-	content: "\26AC";
+	content: '\26AC';
 	padding: 0 5px;
 	opacity: 0.5;
 }
 @media (min-width: 900px) {
 	html {
-		background-color: #ccccd6;
+		background-color: #cccccc;
 	}
 	body {
 		margin: 20px 10%;
@@ -214,10 +215,10 @@ button svg path {
 		font-size: 100%;
 	}
 	html.darkMode {
-		background-color: #33333d;
+		background-color: #333333;
 	}
 	html.darkMode body {
-		box-shadow: none;
+		box-shadow: 0 0 5px #444444;
 	}
 	#header {
 		width: 110%;
@@ -271,6 +272,9 @@ button svg path {
 	}
 	h1 {
 		font-size: 8.5vw;
+	}
+	#street-index {
+		flex-wrap: wrap;
 	}
 }
 @media (min-width: 2000px) {

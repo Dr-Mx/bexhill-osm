@@ -1,14 +1,19 @@
 // the story of bexhill street names
 
 // open with random header image
-const imgPath = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/img', imgCount = 17;
-let imgCurrent = Math.round(Math.random() * imgCount);
+const imgPath = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/img', imgDesc = [
+	'Galley Hill', 'Marina', 'Sea Road', 'Church Street', 'West Parade',
+	'Chantry Lane', 'Ninfield Road', 'High Street', 'Little Common Road', 'Collington Avenue',
+	'Cooden Drive', 'Buckhurst Place', 'Marina', 'Sea Road', 'Central Parade',
+	'East Parade', 'Belle Hill', 'St Leonards Road', 'Marina Arcade', 'Sluice Road'
+];
+let imgCurrent = Math.floor(Math.random() * imgDesc.length)+1;
 function setHeaderImg() {
 	$('#header').attr({
-		src: imgPath + '/street' + imgCurrent + '.jpg',
-		title: 'Image ' + (imgCurrent+1) + ' of ' + (imgCount+1)
+		src: imgPath + '/street' + (imgCurrent < 10 ? '0' + imgCurrent : imgCurrent) + '.jpg',
+		title: imgDesc[imgCurrent-1] + '\nImage ' + imgCurrent + ' of ' + (imgDesc.length)
 	});
-	imgCurrent = (imgCurrent === imgCount) ? 0 : imgCurrent+1;
+	imgCurrent = (imgCurrent === imgDesc.length) ? 1 : imgCurrent+1;
 }
 setHeaderImg();
 
@@ -38,7 +43,7 @@ $(document).ready(function() {
 		success: function(json) {
 			let streetDetail = '', streetWip = '', className;
 			$.each(json.streetNames.street, function(i, street) {
-				className = street.name.charAt(0) + (street.status ? ' ' + street.status : '');
+				className = street.name.charAt(0) + (street.lost ? ' lost' : '');
 				streetDetail += '<p class="street ' + className + '"><strong>' + street.name + ' (' + street.date + ')</strong><br>' + street.desc + '</p>';
 			});
 			$.each(json.streetNames.streetWip, function(i, street) {
@@ -50,19 +55,13 @@ $(document).ready(function() {
 			// index links and alphabetic dividers
 			$('#street-index a').each(function() {
 				const recs = $('.street.' + $(this).text()).length;
-				if (!recs) $(this).remove();
+				if (!recs) $(this).addClass('permDisable');
 				else {
 					$('.street.' + $(this).text()).first().before('<div id="' + $(this).text() +'" class="divider" title="' + recs + ' record(s)">' + $(this).text() + '</div>');
 					$(this).attr({ 'href': '#' + $(this).text(), 'title': recs + ' record(s)' });
 				}
 			});
-			$('#street-filter-input').trigger('input');
 			$('.divider').css('background-image', 'url(' + imgPath + '/div.png)');
-			// cleaner url
-			if (window.location.host === 'bexhill-osm.org.uk') {
-				history.replaceState(null, null, '/streetnames' + window.location.hash);
-				$('a').each(function() { if ($(this).attr('href').startsWith('#')) $(this).attr('href', '/streetnames' + $(this).attr('href')); });
-			}
 			// jump to anchor using hash
 			if (window.location.hash.startsWith('#') && !window.location.hash.endsWith('Mode')) $(window.location.hash)[0].scrollIntoView({ behavior: 'instant' });
 			// text filter
@@ -83,7 +82,13 @@ $(document).ready(function() {
 					$('.divider').show();
 				}
 			});
+			$('#street-filter-input').trigger('input');
 			$('#street-filter-close').on('click', function() { $('#street-filter-input').val('').trigger('input').trigger('focus'); });
+			// cleaner url
+			if (window.location.host === 'bexhill-osm.org.uk') {
+				history.replaceState(null, null, '/streetnames' + window.location.hash);
+				$('a[href*="#"]').each(function() { $(this).attr('href', '/streetnames' + $(this).attr('href')); });
+			}
 		}
 	});
 });

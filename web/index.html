@@ -10,7 +10,7 @@
 	<meta name="twitter:site" content="@BexhillOSM">
 	<meta name="twitter:creator" content="@BexhillOSM">
 	<meta name="twitter:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg">
-	<meta property="og:url" content="https://bexhill-osm.org.uk/">
+	<meta property="og:url" content="https://bexhill-osm.org.uk">
 	<meta property="og:title" content="Bexhill OpenStreetMap">
 	<meta property="og:description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
 	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg">
@@ -29,7 +29,7 @@
 	<meta name="theme-color" content="#bb5500">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.7.1">
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=6.7.2">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.9.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
@@ -37,16 +37,17 @@
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v=1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5">
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
+
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=8.3.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=8.3.0" id="darkcss" disabled>
+	<link rel="stylesheet" href="assets/css/site.css??v=8.4.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css??v=8.4.0" id="darkcss" disabled>
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
 
  <body class="preload">
 	<!-- Loading items -->
-	<noscript><div id="noscript">Sorry, you need a modern JavaScript enabled browser to view the map.</div></noscript>
+	<noscript><div id="noscript"><div><img src="assets/img/og-image.jpg"><p>You need to enable JavaScript to see the map.</p></div></div></noscript>
 	<div class="spinner" title="Loading...">
 		<svg width="96" height="96" viewBox="0 0 128 128">
 			<circle cx="70" cy="70" r="60"/>
@@ -59,15 +60,15 @@
 		<!-- Navigation tabs -->
 		<div class="sidebar-tabs">
 			<ul role="tablist">
-				<li><a href="#home" title="Home" role="tab"><img alt="Home" src="assets/img/sb-home.png"></a></li>
-				<li><a href="#pois" title="Find Places" role="tab"><span class="sidebar-notif">0</span><img alt="Find Places" src="assets/img/sb-pois.png"></a></li>
-				<li><a href="#walking" title="Walking Routes" role="tab"><span class="sidebar-notif">0</span><img alt="Walking Routes" src="assets/img/sb-walking.png"></a></li>
-				<li><a href="#tour" title="History Tour" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-sm fa-info"></i></span><img alt="History Tour" src="assets/img/sb-tour.png"></a></li>
-				<li><a href="#thennow" title="Then and Now" role="tab"><img alt="Then and Now" src="assets/img/sb-thennow.png"></a></li>
+				<li><a href="#home" title="Home" role="tab"></a></li>
+				<li><a href="#pois" title="Find Places" role="tab"><span class="sidebar-notif">0</span></a></li>
+				<li><a href="#walking" title="Walking Routes" role="tab"><span class="sidebar-notif">0</span></a></li>
+				<li><a href="#tour" title="History Tour" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-sm fa-info"></i></span></a></li>
+				<li><a href="#thennow" title="Then and Now" role="tab"></a></li>
 			</ul>
 			<ul role="tablist">
-				<li><a href="#settings" title="Settings" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-sm fa-terminal"></i></span><img alt="Settings" src="assets/img/sb-settings.png"></a></li>
-				<li><a href="#info" title="Information" role="tab"><img alt="Information" src="assets/img/sb-information.png"></a></li>
+				<li><a href="#settings" title="Settings" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-sm fa-terminal"></i></span></a></li>
+				<li><a href="#info" title="Information" role="tab"></a></li>
 			</ul>
 		</div>
 		<!-- Tab panes -->
@@ -98,6 +99,7 @@
 							</map>
 						</div>
 						<div id="home-tips" class="comment">
+							<div id="home-tips-icon"><i class="fa-solid fa-lightbulb fa-lg fa-fw"></i></div>
 							<div id="home-tips-text"></div><!-- div auto-populated -->
 							<span id="home-tips-button" class="theme-color"><a onclick="getTips();"><i class="fa-solid fa-square-caret-right"></i></a></span>
 						</div>
@@ -108,17 +110,17 @@
 					<div id="home-new-feed">
 						<div>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Dec 24 - New line measurement tool <i class="fa-solid fa-ruler"></i></a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 24 - <a onclick="switchTab('', '', '', 'xmas');">Xmas Window Display Competition 2024</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>May 24 - Extended editing and Wikidata info in popups</li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 23 - <a onclick="switchTab('tour', 'overlays', '', '');">RAF aerial overlays</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Oct 23 - <a onclick="switchTab('walking', '#walk-container-pdf');">PDF walking guides</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Sep 23 - Public Rights-of-Way overlay</li>
 							</ul>
 						</div>
 						<div id="home-osm-feed"></div><!-- div auto-populated -->
 					</div>
 				</div>
-				<footer><span><a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE" target="_blank" rel="noopener" title="Copyright and Licence"><i class="fa-regular fa-copyright"></i> Bexhill-OSM</a> 2016-</span></footer>
+				<footer><span><a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE/" target="_blank" rel="noopener" title="Copyright and Licence"><i class="fa-regular fa-copyright"></i> Bexhill-OSM</a> 2016-</span></footer>
 			</div>
 			<div class="sidebar-pane" id="pois">
 				<div class="sidebar-header"><span class="sidebar-header-text">Find Places</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
@@ -140,8 +142,8 @@
 					Use the map context-menu, or type an address:
 					<div id="routing-control"></div>
 					<div class="comment">
-						Directions courtesy of <a href="https://www.mapbox.com/navigation" target="_blank" rel="noopener">Mapbox</a><br>
-						For more advanced routing, try <a href="https://brouter.de/brouter-web" target="_blank" rel="noopener">BRouter <i class="theme-color fa-solid fa-up-right-from-square fa-sm"></i></a>
+						Directions courtesy of <a href="https://www.mapbox.com/navigation/" target="_blank" rel="noopener">Mapbox</a><br>
+						For more advanced routing, try <a href="https://brouter.de/brouter-web/" target="_blank" rel="noopener">BRouter <i class="theme-color fa-solid fa-up-right-from-square fa-sm"></i></a>
 					</div>
 					<hr>
 					<h3>Suggested leisure walks</h3>
@@ -157,7 +159,7 @@
 						</select>
 						<button type="button" id="walk-select" title="Display walk on map"><i class="fa-solid fa-map-location-dot"></i></button>
 						<div id="walk-desc"></div>
-						<p class="comment">For navigation offline and on your mobile, try <a href="https://organicmaps.app/" target="_blank" rel="noopener">Organic Maps <i class="theme-color fa-solid fa-up-right-from-square fa-sm"></i></a>.</p>
+						<p class="comment">For navigation offline and on your mobile, try <a href="https://organicmaps.app" target="_blank" rel="noopener">Organic Maps <i class="theme-color fa-solid fa-up-right-from-square fa-sm"></i></a>.</p>
 					</div>
 					<hr>
 					<h3>Stepping Out with Bexhill Museum</h3>
@@ -243,7 +245,7 @@
 							<p class="settings-label"><label for="settings-notes">Display OSM map notes</label><button id="settings-notes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button></p>
 							<p class="settings-label"><label for="settings-overpass-export">Export current query to Overpass Turbo</label><button disabled id="settings-overpass-export" type="button"><i class="fa-solid fa-upload"></i></button></p>
 							<p class="settings-label"><label for="settings-overpass-download">Download all OSM data within map bounds (xml)</label><button id="settings-overpass-download" type="button"><i class="fa-solid fa-download"></i></button></p>
-							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></p>
+							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL/" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></p>
 							<div class="settings-label" style="text-align:right;display:block;">
 								<input id="settings-overpass-query" list="settings-overpass-list" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="customQuery($(this).prev().val(), true);"></span>
 								<datalist id="settings-overpass-list">
@@ -263,9 +265,9 @@
 								</select></p>
 							<p class="settings-label"><label for="settings-overpass-cache">OverpassAPI localStorage cache hours</label>
 								<input id="settings-overpass-cache" value="120" min="0" max="720" step="10" type="number"></p>
-							<p class="settings-label"><label for="settings-overpass-attic">OverpassAPI Attic Data <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener" title="Display data from a specific date"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
+							<p class="settings-label"><label for="settings-overpass-attic">OverpassAPI Attic Data <a href="https://wiki.openstreetmap.org/wiki/Attic_Data/" target="_blank" rel="noopener" title="Display data from a specific date"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<input id="settings-overpass-attic" type="date" min="2016-01-01"></p>
-							<p class="settings-label"><label for="settings-overpass-server">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
+							<p class="settings-label"><label for="settings-overpass-server">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances/" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<select id="settings-overpass-server" class="theme-color">
 									<option value="overpass-api.de" data-attic="1">overpass-api.de</option>
 									<option value="maps.mail.ru/osm/tools/overpass" data-attic="1">maps.mail.ru</option>
@@ -305,52 +307,56 @@
 							I also love digitising old maps and books on Bexhill's history, so please get in touch if you have items you wish to share.
 						</div>
 						<p class="info-links">
-							<a href="https://www.buymeacoffee.com/alexjm" target="_blank" title="Buy Me A Coffee"><img src="assets/img/info-coffee.png" loading="lazy"></a><br><br>
+							<a href="https://www.buymeacoffee.com/alexjm/" target="_blank" title="Buy Me A Coffee"><img src="assets/img/info-coffee.png" loading="lazy"></a><br><br>
 							<a href="#" onclick="this.href='mailto:' + email;" title="Email me"><img src="assets/img/info-email.svg" loading="lazy"></a>
 						</p>
 					</div>
 					<div id="info-software"><hr>
 					<h3>Software</h3>
 						<p>Bexhill-OSM is completely open-source. The project is freely available for anyone to inspect, modify and enhance.</p>
-						<p class="info-links"><a title="Github repository" href="https://github.com/Dr-Mx/bexhill-osm" target="_blank" rel="noopener"><img src="assets/img/info-github.svg" loading="lazy"></a></p>
+						<p class="info-links">
+							<a title="Github repository" href="https://github.com/Dr-Mx/bexhill-osm/" target="_blank" rel="noopener"><img src="assets/img/info-github.svg" loading="lazy"></a><br>
+							<a title="Github last commit" href="https://github.com/Dr-Mx/bexhill-osm/commits/master/" target="_blank" rel="noopener"><img src="assets/img/info-commit.svg" loading="lazy"></a>
+						</p>
 						Thanks to these developers:
 						<ul>
-							<li><a href="https://github.com/pawelczak/EasyAutocomplete" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
-							<li><a href="https://github.com/fancyapps/fancybox" target="_blank" rel="noopener">fancyBox</a> &copy; Jānis Skarnelis</li>
+							<li><a href="https://github.com/pawelczak/EasyAutocomplete/" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
+							<li><a href="https://github.com/fancyapps/fancybox/" target="_blank" rel="noopener">fancyBox</a> &copy; Jānis Skarnelis</li>
 							<li><a href="https://realfavicongenerator.net" target="_blank" rel="noopener">Favicon Generator</a> &copy; Philippe Bernard</li>
 							<li><a href="https://fontawesome.com" target="_blank" rel="noopener">Font Awesome</a> &copy; Dave Gandy</li>
 							<li><a href="https://www.nearby.org.uk/tests/GeoTools.html" target="_blank" rel="noopener">GeoTools WGS84/OSGB36 Converter</a> &copy; Paul Dixon</li>
-							<li><a href="https://github.com/davidjbradshaw/image-map-resizer" target="_blank" rel="noopener">image-map-resizer</a> &copy; David J. Bradshaw</li>
+							<li><a href="https://github.com/davidjbradshaw/image-map-resizer/" target="_blank" rel="noopener">image-map-resizer</a> &copy; David J. Bradshaw</li>
 							<li><a href="https://jquery.com" target="_blank" rel="noopener">jQuery</a> &copy; The jQuery Foundation</li>
-							<li><a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a> &copy; Vladimir Agafonkin</li>
+							<li><a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a> &copy; Vladimir Agafonkin</li>
 							<li><ul>
-								<li><a href="https://github.com/maximeh/leaflet.bouncemarker" target="_blank" rel="noopener">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
-								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu" target="_blank" rel="noopener">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
-								<li><a href="https://github.com/perliedman/leaflet-control-geocoder" target="_blank" rel="noopener">leaflet-control-geocoder</a> &copy; Per Liedman</li>
-								<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton" target="_blank" rel="noopener">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
-								<li><a href="https://github.com/mlevans/leaflet-hash" target="_blank" rel="noopener">leaflet-hash</a> &copy; Michael L. Evans</li>
-								<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass" target="_blank" rel="noopener">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
-								<li><a href="https://github.com/ebrelsford/Leaflet.loading" target="_blank" rel="noopener">Leaflet.loading</a> &copy; Eric Brelsford</li>
-								<li><a href="https://github.com/domoritz/leaflet-locatecontrol" target="_blank" rel="noopener">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
-								<li><a href="https://github.com/perliedman/leaflet-routing-machine" target="_blank" rel="noopener">leaflet-routing-machine</a> &copy; Per Liedman</li>
-								<li><a href="https://github.com/MazeMap/Leaflet.VisualClick" target="_blank" rel="noopener">Leaflet.VisualClick</a> &copy; Dag Jomar Mersland</li>
-								<li><a href="https://github.com/heigeo/leaflet.wms" target="_blank" rel="noopener">leaflet-wms</a> &copy; hei geo</li>
-								<li><a href="https://github.com/Turbo87/sidebar-v2" target="_blank" rel="noopener">sidebar-v2</a> &copy; Tobias Bieniek</li>
+								<li><a href="https://github.com/maximeh/leaflet.bouncemarker/" target="_blank" rel="noopener">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
+								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu/" target="_blank" rel="noopener">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
+								<li><a href="https://github.com/perliedman/leaflet-control-geocoder/" target="_blank" rel="noopener">leaflet-control-geocoder</a> &copy; Per Liedman</li>
+								<li><a href="https://github.com/cliffcloud/Leaflet.EasyButton/" target="_blank" rel="noopener">Leaflet.EasyButton</a> &copy; Daniel Montague</li>
+								<li><a href="https://github.com/mlevans/leaflet-hash/" target="_blank" rel="noopener">leaflet-hash</a> &copy; Michael L. Evans</li>
+								<li><a href="https://github.com/kartenkarsten/leaflet-layer-overpass/" target="_blank" rel="noopener">leaflet-layer-overpass</a> &copy; Karsten Hinz</li>
+								<li><a href="https://github.com/ebrelsford/Leaflet.loading/" target="_blank" rel="noopener">Leaflet.loading</a> &copy; Eric Brelsford</li>
+								<li><a href="https://github.com/domoritz/leaflet-locatecontrol/" target="_blank" rel="noopener">leaflet-locatecontrol</a> &copy; Dominik Moritz</li>
+								<li><a href="https://github.com/ppete2/Leaflet.PolylineMeasure/" target="_blank" rel="noopener">Leaflet.PolylineMeasure</a> &copy; PPete</li>
+								<li><a href="https://github.com/perliedman/leaflet-routing-machine/" target="_blank" rel="noopener">leaflet-routing-machine</a> &copy; Per Liedman</li>
+								<li><a href="https://github.com/MazeMap/Leaflet.VisualClick/" target="_blank" rel="noopener">Leaflet.VisualClick</a> &copy; Dag Jomar Mersland</li>
+								<li><a href="https://github.com/heigeo/leaflet.wms/" target="_blank" rel="noopener">leaflet-wms</a> &copy; hei geo</li>
+								<li><a href="https://github.com/Turbo87/sidebar-v2/" target="_blank" rel="noopener">sidebar-v2</a> &copy; Tobias Bieniek</li>
 							</ul></li>
 							<li><a href="https://mapicons.mapsmarker.com" target="_blank" rel="noopener">Map Icons Collection</a> &copy; Nicolas Mollet</li>
 							<li><a href="https://github.com/opening-hours/opening_hours.js" target="_blank" rel="noopener">opening_hours.js</a> &copy; Robin Schneider</li>
 							<li><a href="https://github.com/humitos/osm-pois/" target="_blank" rel="noopener">osm-pois</a> &copy; Manuel Kaufmann</li>
-							<li><a href="https://github.com/mpetroff/pannellum" target="_blank" rel="noopener">Pannellum</a> &copy; Matthew Petroff</li>
+							<li><a href="https://github.com/mpetroff/pannellum/" target="_blank" rel="noopener">Pannellum</a> &copy; Matthew Petroff</li>
 						</ul>
 						<ul>
 							<li><a href="https://docs.mapbox.com/help/glossary/directions-api/" target="_blank" rel="noopener">Directions API</a> &copy; Mapbox</li>
 							<li><a href="https://www.mediawiki.org/wiki/API:Main_page" target="_blank" rel="noopener">MediaWiki Action API</a> &copy; Wikimedia Foundation</li>
 							<li><a href="https://www.travelinedata.org.uk/traveline-open-data/nextbuses-api/" target="_blank" rel="noopener">NextBuses API</a> &copy; Traveline</li>
-							<li><a href="https://www.opentopodata.org/" target="_blank" rel="noopener">Open Topo Data API</a> &copy; Andrew Nisbet</li>
-							<li><a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeather API</a> &copy; OpenWeather</li>
+							<li><a href="https://www.opentopodata.org" target="_blank" rel="noopener">Open Topo Data API</a> &copy; Andrew Nisbet</li>
+							<li><a href="https://openweathermap.org" target="_blank" rel="noopener">OpenWeather API</a> &copy; OpenWeather</li>
 							<li><a href="https://osmcha.org" target="_blank" rel="noopener">OSM Changeset Analyser API</a> &copy; OSMCha</li>
-							<li><a href="https://ratings.food.gov.uk/open-data" target="_blank" rel="noopener">UK Food Hygiene API</a> &copy; Food Standards Agency</li>
-							<li><a href="https://admiraltyapi.portal.azure-api.net/" target="_blank" rel="noopener">UK Tidal API</a> &copy; UK Hydrographic Office</li>
+							<li><a href="https://ratings.food.gov.uk/open-data/" target="_blank" rel="noopener">UK Food Hygiene API</a> &copy; Food Standards Agency</li>
+							<li><a href="https://developer.admiralty.co.uk/product#product=uk-tidal-api" target="_blank" rel="noopener">UK Tidal API</a> &copy; UK Hydrographic Office</li>
 						</ul>
 					</div>
 					<div id="info-privacy"><hr>
@@ -384,16 +390,18 @@
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v=3.2.5"></script>
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v=2.4.0"></script>
 	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.81.0"></script>
+	<script src="assets/js/plugins/Leaflet.PolylineMeasure.min.js?v=231107"></script>
 	<script src="assets/js/plugins/bouncemarker.min.js?v=1.2.3"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.7.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
+
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=8.3.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=8.3.0"></script>
-	<script src="assets/js/tags-parsers.js?v=8.3.0"></script>
-	<script src="assets/js/pois-type.js?v=8.3.0"></script>
-	<script src="tour/tour.js?v=8.3.0"></script>
-	<script src="assets/js/site.js?v=8.3.0"></script>
+	<script src="assets/js/config.js??v=8.4.0"></script>
+	<script src="assets/js/OverPassLayer.js??v=8.4.0"></script>
+	<script src="assets/js/tags-parsers.js??v=8.4.0"></script>
+	<script src="assets/js/pois-type.js??v=8.4.0"></script>
+	<script src="tour/tour.js??v=8.4.0"></script>
+	<script src="assets/js/site.js??v=8.4.0"></script>
  </body>
 </html>

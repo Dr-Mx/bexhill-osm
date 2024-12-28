@@ -56,7 +56,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		else if (tags.abandoned) siteVal += '<span title="Abandoned">Currently abandoned</span>; ';
 		if (tags.building) {
 			if (tags.building === 'garage') siteType = ['Garage', 'warehouse'];
-			else if (tags.building === 'house' || tags.building === 'farm' || tags.building === 'bungalow' || tags.building === 'detached' || tags.building === 'semidetached_house' || tags.building === 'static_caravan') siteType = ['House', 'house-chimney'];
+			else if (tags.building === 'house' || tags.building === 'farm' || tags.building === 'bungalow' || tags.building === 'static_caravan') siteType = ['House', 'house-chimney'];
 			else if (tags.building === 'hut') siteType = ['Structure', 'person-shelter'];
 			else if (tags.building === 'warehouse') siteType = ['Warehouse', 'warehouse'];
 			else siteType = ['Building', 'building'];
@@ -748,6 +748,7 @@ function callback(data) {
 				case 'milestone':
 				case 'stone': iconName = pois.boundary_stone.iconName; break;
 				case 'cemetery': iconName = 'cemetery1'; break;
+				case 'charity_box': iconName = 'pedestal'; break;
 				case 'farm': iconName = 'farm-2'; break;
 				case 'folly': iconName = 'tower'; break;
 				case 'memorial':
@@ -938,9 +939,10 @@ function callback(data) {
 			}
 		}
 		if (e.tags.healthcare) {
-			if (!title && e.tags['healthcare:speciality']) title = e.tags['healthcare:speciality'];
+			if (e.tags['healthcare:speciality']) title = e.tags['healthcare:speciality'] + ' healthcare';
 			else if (!title) title = e.tags.healthcare;
 			if (!type) type = 'healthcare';
+			if (e.tags.healthcare === 'clinic') iconName = 'hospital-building';
 		}
 		if (e.tags.listed_status) {
 			if (!title || type === 'shelter') {
@@ -1308,7 +1310,6 @@ function defib_parser(tags, titlePopup) {
 function food_parser(tags, titlePopup) {
 	const cuisine_parser = function(tags) {
 		let markerPopup = '', cuisineVal = '';
-		if (tags.cuisine) cuisineVal += tags.cuisine + ', ';
 		if (tags.fair_trade === 'yes') cuisineVal += 'fairtrade, ';
 		if (tags.breakfast === 'yes') cuisineVal += 'breakfast, ';
 		if (tags.lunch === 'yes') cuisineVal += 'lunch, ';
@@ -1316,7 +1317,10 @@ function food_parser(tags, titlePopup) {
 		if (tags.real_ale === 'yes') cuisineVal += 'real ale, ';
 		if (tags.real_cider === 'yes') cuisineVal += 'real cider, ';
 		for (let cuisineKey in tags) if (cuisineKey.startsWith('diet:') && (tags[cuisineKey] === 'yes')) cuisineVal += cuisineKey.split(':')[1] + ' options, ';
-		if (cuisineVal) markerPopup += L.Util.template(tagTmpl, { key: 'Cuisine', keyVal: listTidy(cuisineVal, true), iconName: 'fa-solid fa-utensils' });
+		if (cuisineVal) {
+			if (tags.cuisine) cuisineVal = tags.cuisine + ', ' + cuisineVal;
+			markerPopup += L.Util.template(tagTmpl, { key: 'Cuisine', keyVal: listTidy(cuisineVal, true), iconName: 'fa-solid fa-utensils' });
+		}
 		return markerPopup;
 	};
 	const service_parser = function(tags) {
