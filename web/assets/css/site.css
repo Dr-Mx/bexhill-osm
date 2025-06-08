@@ -150,48 +150,41 @@ input[type=text], input[type=date], input[type=number] {
 	transition: box-shadow 200ms linear;
 }
 #home-weather {
-	display: table;
+	display: flex;
 	min-height: 45px;
 	width: 100%;
-	cursor: pointer;
 }
 #home-weather, #home-new-feed ul {
 	color: #51655f;
 }
-#home-weather > span {
-	display: table-cell;
-	vertical-align: middle;
+#home-weather > div {
+	display: inline-flex;
+	flex: max-content;
+	padding: 2px;
+	cursor: pointer;
 }
-#home-weather > span:nth-child(odd) {
-	text-align: center;
-	padding: 0 5px;
-}
-#home-weather > span:nth-child(even) {
-	text-align: left;
-	line-height: 1;
-	padding-top: 2px;
-}
-#home-weather > span.home-weather-wind > span {
-	white-space: nowrap;
-}
-#home-weather > span.home-weather-tide:last-child {
-	white-space: nowrap;
-	line-height: 1.5;
-	padding-right: 5px;
-}
-#home-weather > span:nth-child(1) {
-	color: #bbbbbb;
-}
-#home-weather > span:nth-child(3) {
-	color: #8795bd;
-}
-#home-weather > span .fa-water, #home-weather > span .fa-turn-up, #home-weather > span .fa-turn-down {
-	color: #61818a;
-}
+#home-weather > div:hover { background-color: white; }
+#home-weather > div:first-child:hover { border-radius: 10px 0 0 0; }
+#home-weather > div:last-child:hover { border-radius: 0 10px 0 0; }
+#home-weather > div > span { margin: auto; }
+#home-weather > div > span:first-child { text-align: center; }
+#home-weather > div > span:last-child { text-align: left; line-height: 1; }
+#home-weather > div.home-weather-temp > span:first-child { color: #bbbbbb; }
+#home-weather > div.home-weather-wind > span:first-child { color: #8795bd; }
+#home-weather > div.home-weather-wind > span:last-child > span { white-space: nowrap; }
+#home-weather > div.home-weather-tide > span > .fa-solid { color: #61818a; }
+#home-weather > div.home-weather-tide > span:last-child { white-space: nowrap; line-height: 1.5; }
 .weather-tooltip {
-	line-height: 1.5;
-	max-width: 150px !important;
+	line-height: 1.7;
+	max-width: 170px !important;
 }
+.weather-tooltip span, .weather-tooltip .fa-solid {
+	color: #cccccc;
+}
+.weather-tide-polygon {
+	fill-opacity: 0.8;
+}
+
 #home-minimap {
 	text-align: center;
 	padding: 2px 2px 0 2px;
@@ -236,12 +229,6 @@ input[type=text], input[type=date], input[type=number] {
 	content: '\f002';
 	top: 6px;
 }
-.popup-navigate-background {
-	background-color: rgba(255, 255, 255, 0.75);
-	border-radius: 5px;
-	backdrop-filter: blur(7px);
-	padding: 2px;
-}
 .popup-navigate {
 	display: none;
 	font-size: 10pt;
@@ -251,6 +238,11 @@ input[type=text], input[type=date], input[type=number] {
 }
 .popup-navigate a:hover {
 	color: #333333;
+}
+.popup-img-item:not(:has(.popup-img-attrib)) + .popup-navigate {
+	background-color: rgba(230, 230,230, 0.8);
+	border-radius: 5px;
+	backdrop-filter: blur(7px);
 }
 
 #home-new-feed {
@@ -488,8 +480,14 @@ h3 {
 .leaflet-contextmenu .fa-fw {
 	pointer-events: none;
 }
+.leaflet-contextmenu-item:first-child {
+	border-radius: 10px 10px 0 0;
+}
 .leaflet-contextmenu-item:last-child {
+	align-content: center;
+	border-radius: 0 0 10px 10px;
 	line-height: 12px !important;
+	min-height: 24px;
 	text-align: center;
 }
 #contextmenu-item-copygeos {
@@ -859,6 +857,13 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 	border-radius: 5px;
 	outline: 1px solid rgba(0, 0, 0, 0.2);
 	outline-offset: -1px;
+}
+.eac-category img.tour-category {
+	width: 26px;
+	height: fit-content;
+	clip-path: inset(120px 0);
+	top: -125px;
+	position: relative;
 }
 #pois-results-list td:first-child .fa-lg {
 	opacity: 0.75;
@@ -1363,6 +1368,7 @@ a.control-layers-title {
 	width: 100%;
 	vertical-align: bottom;
 	overflow: hidden;
+	padding-right: 2px;
 }
 .popup-fhrs {
 	position: relative;

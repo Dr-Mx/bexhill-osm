@@ -47,7 +47,10 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['ref:planningapp']) planningVal = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + encodeURI(tags['ref:planningapp']) + '" target="_blank" rel="noopener">' + tags['ref:planningapp'] + '</a>';
 		else if (tags['ref:historicplanningapp']) planningVal = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/historyDetails?reference=' + encodeURI(tags['ref:historicplanningapp']) + '" target="_blank" rel="noopener">' + tags['ref:historicplanningapp'] + '</a>';
 		if (planningVal) siteVal += '<span class="theme-nowrap" title="Planning application">' + planningVal + '</span>; ';
-		if (tags.HE_ref) siteVal += '<a class="theme-nowrap" href="https://historicengland.org.uk/listing/the-list/list-entry/' + encodeURI(tags.HE_ref) + '?section=official-list-entry" title="Historic England Listing" target="_blank" rel="noopener">Listed ' + (tags.listed_status || tags.HE_ref) + '</a>; ';
+		if (tags.listed_status) {
+			if (tags.HE_ref) siteVal += '<a class="theme-nowrap" href="https://historicengland.org.uk/listing/the-list/list-entry/' + encodeURI(tags.HE_ref) + '?section=official-list-entry" title="Historic England Listing" target="_blank" rel="noopener">Listed ' + (tags.listed_status || tags.HE_ref) + '</a>; ';
+			else if (tags['ref:locallist']) siteVal += '<a class="theme-nowrap" href="https://locallist.bexhillheritage.com/wiki/Special:Redirect/page/' + encodeURI(tags['ref:locallist']) + '" title="Local Listing" target="_blank" rel="noopener">Local Listing</a>; ';
+		}
 		if (tags.disused) siteVal += '<span title="Disused">Currently disused</span>; ';
 		if (tags['damage:type']) {
 			siteVal += '<span title="Damage">Damaged by ' + (tags['damage:event'] ? tags['damage:event'] + ' (' + tags['damage:type'] + ')' : '"' + tags['damage:type'] + '"') +
@@ -141,9 +144,10 @@ function parse_tags(element, titlePopup, poiParser) {
 		}
 		if (tags.highway && tags.name && element.type === 'way' && LBounds.contains(element.center)) {
 			readingVal += '<a href="' + streetDirs + encodeURI(tags.name.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
-			readingVal += 'Planning: ' +
+			readingVal += '<span class="theme-nowrap">Planning: ' +
 				'<a href="' + planningApp + encodeURI(tags.name.replace('\'', '')) + '&receivedFrom=01-01-' + (new Date().getFullYear() - 2010) + '" title="Planning Application Search" target="_blank" rel="noopener">Current</a> | ' +
-				'<a href="' + historicPlanningApp + encodeURI(tags.name.replace('\'', '')) + '" title="Historic Planning Application Search" target="_blank" rel="noopener">Historic</a>; ';
+				'<a href="' + historicPlanningApp + encodeURI(tags.name.replace('\'', '')) + '" title="Historic Planning Application Search" target="_blank" rel="noopener">Historic</a>' +
+			'</span>; ';
 		}
 		if (tags.wikipedia || tags['site:wikipedia']) {
 			const w = tags.wikipedia || tags['site:wikipedia'];
@@ -428,23 +432,6 @@ function parse_tags(element, titlePopup, poiParser) {
 		// get images
 		let imgCount = 0, multiPano = [], multiVid = [], model3d;
 		markerPopup = '';
-		if (tags.image) {
-			// support semicolon separated images
-			const multiImage =
-				(tags.image +
-				(tags['image:1'] ? ';' + tags['image:1'] : '') +
-				(tags['image:2'] ? ';' + tags['image:2'] : '')
-			).split(';');
-			const multiImageSource = tags['source:image'] ?
-				(tags['source:image'] +
-				(tags['source:image_1'] ? ';' + tags['source:image_1'] : '') +
-				(tags['source:image_2'] ? ';' + tags['source:image_2'] : '')
-			).split(';') : '';
-			for (let x = 0; x < multiImage.length; x++) if (multiImage[x].startsWith('http')) {
-				markerPopup += generic_img_parser(multiImage[x], imgCount, multiImageSource[x] ? '&copy; ' + multiImageSource[x] : '');
-				imgCount++;
-			}
-		}
 		if (tags.wikimedia_commons) {
 			// support semicolon separated commons images
 			const multiCommons =
@@ -471,6 +458,23 @@ function parse_tags(element, titlePopup, poiParser) {
 			} else */
 			for (let x = 0; x < multiCommons.length; x++) if (multiCommons[x].startsWith('File')) {
 				markerPopup += generic_img_parser(multiCommons[x], imgCount, '');
+				imgCount++;
+			}
+		}
+		if (tags.image) {
+			// support semicolon separated images
+			const multiImage =
+				(tags.image +
+				(tags['image:1'] ? ';' + tags['image:1'] : '') +
+				(tags['image:2'] ? ';' + tags['image:2'] : '')
+			).split(';');
+			const multiImageSource = tags['source:image'] ?
+				(tags['source:image'] +
+				(tags['source:image_1'] ? ';' + tags['source:image_1'] : '') +
+				(tags['source:image_2'] ? ';' + tags['source:image_2'] : '')
+			).split(';') : '';
+			for (let x = 0; x < multiImage.length; x++) if (multiImage[x].startsWith('http')) {
+				markerPopup += generic_img_parser(multiImage[x], imgCount, multiImageSource[x] ? '&copy; ' + multiImageSource[x] : '');
 				imgCount++;
 			}
 		}
@@ -595,7 +599,7 @@ function callback(data) {
 			}
 			outline._leaflet_id = 'o_' + e.type.slice(0, 1) + e.id;
 			e.center = outline.getBounds().getCenter();
-			areaOutline.addLayer(outline).addTo(map);
+			areaOutline.addLayer(outline);
 		}
 		let eName = e.tags['name:en'] || e.tags.name || undefined;
 		if (eName && e.tags.ref) eName += ' (' + e.tags.ref + ')';
@@ -671,7 +675,6 @@ function callback(data) {
 						if (e.tags.recycling_type === 'container') iconName = 'recyclecon';
 					}
 					break;
-				case 'retirement_home':
 				case 'social_facility':
 					type = 'social_facility';
 					title = e.tags.social_facility;
@@ -925,6 +928,7 @@ function callback(data) {
 			if (!type) type = e.tags.emergency;
 			switch (type) {
 				case 'ambulance_station': type = 'police'; iconName = 'ambulance'; break;
+				case 'bleed_control_kit': type = 'defibrillator'; iconName = 'bleedkit'; break;
 				case 'coast_guard': type = 'police'; iconName = 'helicopter'; break;
 				case 'lifeguard': type = 'police'; iconName = 'lifeguard-2'; break;
 			}
@@ -1233,7 +1237,7 @@ function generic_img_parser(img, id, attrib) {
 function allotment_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'user', label: 'Point of contact', iconName: 'fa-solid fa-circle-user'},
-		{callback: generic_tag_parser, tag: 'plots', label: 'Plots', iconName: 'fa-solid fa-table-cells-large'},
+		{callback: generic_tag_parser, tag: 'plots', label: 'Plots', iconName: 'fa-solid fa-table-cells-large'}
 	]);
 }
 function bike_parser(tags, titlePopup) {
@@ -1246,7 +1250,7 @@ function bike_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup,	[
 		{callback: bikeservices_parser},
 		{callback: generic_tag_parser, tag: 'bicycle_parking', label: 'Type', iconName: 'fa-solid fa-lock'},
-		{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'fa-solid fa-bicycle'},
+		{callback: generic_tag_parser, tag: 'capacity', label: 'Capacity', iconName: 'fa-solid fa-bicycle'}
 	]);
 }
 function busstop_parser(tags, titlePopup) {
@@ -1304,7 +1308,7 @@ function clothes_parser(tags, titlePopup) {
 }
 function defib_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'fa-solid fa-location-arrow'},
+		{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'fa-solid fa-location-arrow'}
 	]);
 }
 function food_parser(tags, titlePopup) {
@@ -1394,7 +1398,8 @@ function post_parser(tags, titlePopup) {
 			GR: 'George V (1910-1936)',
 			EVIIIR: 'Edward VIII (1936)',
 			GVIR: 'George VI (1936-1952)',
-			EIIR: 'Elizabeth II (1952+)',
+			EIIR: 'Elizabeth II (1952-2022)',
+			CIIIR: 'Charles III (2022+)',
 			no: 'none'
 		}[tags.royal_cypher];
 		if (royalcypher) markerPopup += L.Util.template(tagTmpl, { key: 'Royal cypher', keyVal: royalcypher, iconName: 'fa-solid fa-signature' });
@@ -1423,6 +1428,7 @@ function socialf_parser(tags, titlePopup) {
 	const socialfservices_parser = function(tags) {
 		let markerPopup = '', socialVal = '';
 		if (tags.capacity) socialVal += tags.capacity + ' capacity; ';
+		if (tags['ref:GB:cqc_location']) socialVal += '<a class="theme-nowrap" href="https://www.cqc.org.uk/location/' + encodeURI(tags['ref:GB:cqc_location']) + '" title="Care Quality Commission" target="_blank" rel="noopener">CQC ' +  tags['ref:GB:cqc_location'] + '</a>; ';
 		if (socialVal) {
 			socialVal = socialVal.replaceAll('_', ' ').substring(0, socialVal.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { key: 'Social facility', keyVal: socialVal, iconName: 'fa-solid fa-users' });
@@ -1456,7 +1462,7 @@ function taxi_parser(tags, titlePopup) {
 function vending_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'brand', label: 'Brand'},
-		{callback: generic_tag_parser, tag: 'biometric', label: 'Biometric', iconName: 'fa-solid fa-fingerprint'},
+		{callback: generic_tag_parser, tag: 'biometric', label: 'Biometric', iconName: 'fa-solid fa-fingerprint'}
 	]);
 }
 function education_parser(tags, titlePopup) {
@@ -1496,10 +1502,10 @@ function getWikiAttrib(element) {
 			success: function(result) {
 				if (!result.query.pages[-1]) {
 					const imgAttrib = result.query.pages[Object.keys(result.query.pages)[0]].imageinfo['0'].extmetadata;
-					const imgArtist = $('<span>' + imgAttrib.Artist.value + '</span>').text();
+					const imgArtist = imgAttrib.Artist ? $('<span>&copy; ' + imgAttrib.Artist.value + '</span>').text() : '';
 					const imgDate = new Date(imgAttrib.DateTimeOriginal ? imgAttrib.DateTimeOriginal.value : imgAttrib.DateTime.value).getFullYear();
 					const imgAttribUrl = '<a href="https://commons.wikimedia.org/wiki/' + img + '" title="Wikimedia Commons" target="_blank" rel="noopener">' +
-						(imgDate ? imgDate + ' | ' : '') + '&copy; ' + imgArtist + ' | ';
+						(imgDate ? imgDate + ' | ' : '') + (imgArtist ? imgArtist + ' | ' : '');
 					element.find($('.popup-img-attrib')).html(imgAttribUrl + imgAttrib.LicenseShortName.value + '</a>');
 					element.find('a').data('caption', 'Wikimedia Commons: ' + imgAttribUrl + imgAttrib.UsageTerms.value + '</a>');
 				}

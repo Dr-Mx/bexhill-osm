@@ -10,9 +10,10 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 Redirect /ext /?m=general&t=none#13/50.8470/0.4670
 Redirect /scarecrow /?m=general&t=none&g=scarecrow
-Redirect /streetnames /tour/itemStreetNames/streetnames.html
+Redirect /thennow /?t=thennow&m=bosm
 Redirect /manorhouse /?t=tour&m=osmtopo&g=manorHouse&u=manor
 Redirect /millifest /?t=none&g=milligan
+Redirect /streetnames /tour/itemStreetNames/streetnames.html
 Redirect /ww2 /?m=general&t=tour&g=bombmap&u=ww2
 Redirect /xmas /?m=bosm&t=none&g=xmas
 

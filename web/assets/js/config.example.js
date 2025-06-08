@@ -2,6 +2,7 @@
 // feel free to find and delete any references to these apis if you don't need them
 
 window.BOSM = {
+	bingKey: '',					// Bing Aerial						https://www.bingmapsportal.com
 	osmchaTok: '',					// Get latest map changes			https://osmcha.mapbox.com/user			
 	owmKey: '',						// Weather							https://home.openweathermap.org/api_keys		
 	ocKey: '',						// Reverse geocoding				https://opencagedata.com/dashboard#api-keys

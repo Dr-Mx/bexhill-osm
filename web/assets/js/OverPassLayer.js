@@ -3,7 +3,9 @@
 let eleCache = [], queryBbox = '', queryCustom = false;
 function show_overpass_layer(query, cacheId, options) {
 	if (!query || query === '();') { setMsgStatus('fa-solid fa-circle-info', 'No Query', 'The OverpassAPI query string was empty.', 4); return; }
-	else if ($('#settings-bbox').val() === 'screen' && (options && !options.forceBbox) && map.getZoom() < 15) { setMsgStatus('fa-solid fa-circle-info', 'Query Area Too Large', 'Please try zooming in to at least level 15.', 4); return; }
+	else if ($('#settings-bbox').val() === 'screen' && (options && !options.forceBbox) && map.getZoom() < 15) {
+		setMsgStatus('fa-solid fa-circle-info', 'Query Area Too Large', 'Please try zooming in to at least level 15.', 4); return;
+	}
 	else {
 		// show spinner, disable poi checkboxes
 		$('.spinner').show();
@@ -13,15 +15,31 @@ function show_overpass_layer(query, cacheId, options) {
 		// select within an area, bypassed for single poi
 		if (options && options.bound) {
 			if ($('#settings-bbox').val() === 'area_id' && !options.forceBbox) {
-				queryBbox += ';rel(' + osmRelation + ');map_to_area->.a';
+				// use default bbox even if using area for query speed
+				queryBbox += '[bbox:' + [
+					mapBounds.south,
+					mapBounds.west,
+					mapBounds.north,
+					mapBounds.east
+				].join(',') + '];rel(' + osmRelation + ');map_to_area->.a';
 				query = query.replaceAll('[', '(area.a)[');
 			}
 			else if ($('#settings-bbox').val() === 'bbox' || options.forceBbox) {
-				queryBbox += '[bbox:' + [mapBounds.south, mapBounds.west, mapBounds.north, mapBounds.east].join(',') + ']';
+				queryBbox += '[bbox:' + [
+					mapBounds.south,
+					mapBounds.west,
+					mapBounds.north,
+					mapBounds.east
+				].join(',') + ']';
 				cacheId += cacheId ? 'BB' : '';
 			}
 			else if ($('#settings-bbox').val() === 'screen' && !options.forceBbox) {
-				queryBbox += '[bbox:' + [map.getBounds()._southWest.lat, map.getBounds()._southWest.lng, map.getBounds()._northEast.lat, map.getBounds()._northEast.lng].join(',') + ']';
+				queryBbox += '[bbox:' + [
+					map.getBounds()._southWest.lat.toFixed(5),
+					map.getBounds()._southWest.lng.toFixed(5),
+					map.getBounds()._northEast.lat.toFixed(5),
+					map.getBounds()._northEast.lng.toFixed(5)
+				].join(',') + ']';
 				cacheId = '';
 			}
 		}
@@ -54,7 +72,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		this._ids = {};
 	},
 	onMoveEnd: function() {
-		const url = this.options.endpoint + '?data=' + this.options.query + '&contact=' + email;
+		const url = this.options.endpoint + '?data=' + this.options.query;
 		const self = this;
 		const reference = { instance: self };
 		if (self.options.debug) console.debug('Overpass query:', encodeURI(url));

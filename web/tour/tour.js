@@ -68,7 +68,7 @@ function tour(tName, tID, fromPermalink) {
 		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : dateFormat(header[2], 'long'))) + '<div class="popup-body">';
 		toolTip += '<b>' + header[0] + '</b><br><i>' + (header[1] ? header[1] : dateFormat(header[2], 'short')) + '</i>';
-		if (layer._latlng) markerPopup += '<span class="comment">' + L.Util.formatNum(layer._latlng.lat, 5) + '°N ' + L.Util.formatNum(layer._latlng.lng, 5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
+		if (layer._latlng) markerPopup += '<span class="comment">' + layer._latlng.lat.toFixed(5) + '°N ' + layer._latlng.lng.toFixed(5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
 		if (feature.properties.custom) markerPopup += feature.properties.custom;
 		else if (feature.properties.description) {
 			markerPopup += '<span class="popup-tag-long theme-scroll">' + feature.properties.description + '</span>';
@@ -119,6 +119,37 @@ function tour(tName, tID, fromPermalink) {
 	};
 	// timeout hack to stop iframe breaking on ff
 	setTimeout(function() { switch (tName) {
+		case 'tide':
+			// visualise current position of the tide
+			const tideData = $('.home-weather-tide').data('tide-percent').split(',');
+			const tidePercentFromLow = Math.abs((tideData[1] === 'Low-tide' ? 100 : 0) - tideData[0]);
+			const tideLow = [[50.83540, 0.47558], [50.83486, 0.46967]];
+			const tideHigh = [[50.83646, 0.46967], [50.83700, 0.47558]];
+			const tideNow = [[tideLow[0][0] + (Math.round(tidePercentFromLow * 1.6) / 100000), tideLow[0][1]], [tideLow[1][0] + (Math.round(tidePercentFromLow * 1.6) / 100000), tideLow[1][1]]];
+			L.polygon([[tideHigh[0], tideHigh[1], tideLow[0], tideLow[1]]], {
+				color: 'white',
+				stroke: false,
+				className: 'weather-tide-polygon'
+			}).bindTooltip('<b>Range of medium tides</b><br>' + tideData[0] + '% towards ' + tideData[1].toLowerCase() + ' <i class="fa-solid fa-sm ' + tideData[2] + '"></i>', {
+				sticky: true
+			}).addTo(imageOverlay);
+			L.polygon([tideNow[0], tideNow[1], tideLow[1], tideLow[0]], {
+				color: 'blue',
+				stroke: false,
+				opacity: 0.5,
+				interactive: false
+			}).addTo(imageOverlay);
+			L.polyline([tideNow[0], tideNow[1]], {
+				dashArray: '10 5',
+				color: 'blue',
+				opacity: 0.5,
+				weight: 3,
+				lineCap: 'butt',
+				interactive: false
+			}).addTo(imageOverlay);
+			if (autoZoom) zoom_area();
+			else map.fireEvent('zoomend');
+			break;
 		case 'pano':
 			// ARCHIVED - get mapillary sequences
 			// https://www.mapillary.com/developer/api-documentation/#search-sequences
@@ -130,7 +161,7 @@ function tour(tName, tID, fromPermalink) {
 				mimeType: 'application/json',
 				cache: false,
 				success: function(json) {
-					imageOverlay.clearLayers().addLayer(L.geoJSON(json, {
+					imageOverlay.addLayer(L.geoJSON(json, {
 						onEachFeature: function(feature, layer) {
 							layer.on('click', function(e) { panoView(e, true); });
 						},
@@ -222,7 +253,7 @@ function tour(tName, tID, fromPermalink) {
 		case 'xmas2023': /* fall through */
 		case 'xmas2024': /* fall through */
 		case 'xmas':
-			const xmasYear = (tName.length > 4) ? tName.split('xmas')[1] : '2024';
+			const xmasYear = (tName.length > 4) ? tName.slice(-4) : '2024';
 			$('.spinner').show();
 			if (actOverlayLayer === undefined && $('#xmasTitle').length) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
@@ -391,7 +422,8 @@ function tour(tName, tID, fromPermalink) {
 							return marker;
 						}
 					});
-					$('#thennow a')
+					// this is unbound when clear_map function is run
+					$('#thennow figure a')
 						.on('mouseenter', function() { imageOverlay.getLayer($(this).data('fancybox')).openTooltip(); highlightOutline($(this).data('fancybox'), 1); })
 						.on('mouseleave', function() { imageOverlay.getLayer($(this).data('fancybox')).closeTooltip(); highlightOutline($(this).data('fancybox'), 0); });
 					setPageTitle('Then and Now');
@@ -1018,6 +1050,7 @@ function tour(tName, tID, fromPermalink) {
 		case 'raf1941c': /* fall through */
 		case 'arp1942':  /* fall through */
 		case 'mc1925':   /* fall through */
+		case 'jd1887':   /* fall through */
 		case 'yg1795':   /* fall through */
 		case 'yg1778':
 			if (actOverlayLayer !== tName) {

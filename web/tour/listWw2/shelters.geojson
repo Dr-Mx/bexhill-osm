@@ -407,8 +407,9 @@
 				"date": "1939",
 				"description": "Surface. Capacity 40. Bunks 12.",
 				"img": {
-					"0": "File:Personnel Shelter, Chantry Avenue, Bexhill-on-Sea.jpg",
-					"1": "File:Personnel Shelter, Chantry Avenue, Bexhill (indoor).jpg"
+					"0": "listWw2/img/shelter/chantryavenue(0)",
+					"1": "File:Personnel Shelter, Chantry Avenue, Bexhill-on-Sea.jpg",
+					"2": "File:Personnel Shelter, Chantry Avenue, Bexhill (indoor).jpg"
 				}
 			},
 			"geometry": {

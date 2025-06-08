@@ -3,7 +3,7 @@
 // don't forget to create config.js with your api keys
 if (typeof window.BOSM === 'undefined') window.alert('Error: No API keys defined, please see config.example.js');
 // map area
-const osmRelation = '12710197'; // osm relation for area id overpass queries, if blank bbox will be used
+const osmRelation = '12710197'; // osm relation for area id overpass queries, if blank bbox (mapBounds) will be used
 const mapBounds = { south: 50.8020, west: 0.3720, north: 50.8780, east: 0.5250 };
 const LBounds = L.latLngBounds([mapBounds.south, mapBounds.west], [mapBounds.north, mapBounds.east]);
 const mapMinZoom = 10;
@@ -21,7 +21,7 @@ const imgSize = ($(window).width() < 512) ? 256 : 310;
 // maximum poi groups that can be selected
 const maxPOICheckbox = 3;
 // maximum overpass poi results
-const maxOpResults = 250;
+let maxOpResults = 250;
 // maximum nominatim search results
 const maxNomResults = 5;
 // website checks
@@ -126,10 +126,10 @@ L.Map.addInitHook(function() {
 			clickOutline.clearLayers();
 			$('#modal').hide();
 		}
-		// ignore map click if... low zoom / measuring / dragging walk markers / layer-noclick / overlay control is open / spinner is shown / popup is open on screen
-		else if (map.getZoom() >= 15 && !measure._measuring && !$('.leaflet-marker-draggable, .layer-noclick').length && ($('.leaflet-control-layers').outerWidth() <= 44) && !imageOverlay.getLayers().length &&
-		 !$('.spinner:visible').length && ($('.leaflet-control-geocoder').width() < 40) && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos)))) {
-			that.fire('visualclick', L.Util.extend(e, { type: 'visualclick' }));
+		// ignore map click if... measuring / low zoom / dragging walk markers / layer-noclick / overlay control is open / spinner is shown / popup is open on screen
+		else if (!measure._measuring && (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .layer-noclick').length && ($('.leaflet-control-layers').outerWidth() <= 44) && !imageOverlay.getLayers().length &&
+		 !$('.spinner:visible').length && ($('.leaflet-control-geocoder').width() < 40) && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos))))) {
+			that.fire('visualclick', $.extend(e, { type: 'visualclick' }));
 			// drop marker and reverse lookup on single click
 			h = setTimeout(function() {
 				clickOutline.clearLayers().addLayer(L.circleMarker(e.latlng, {
@@ -147,7 +147,7 @@ L.Map.addInitHook(function() {
 			}, 350);
 		}
 		// highlight action to enable map click again
-		else if (!$('.leaflet-popup, .leaflet-control-layers-expanded, .leaflet-marker-draggable').length) {
+		else if (!$('.leaflet-popup, .leaflet-control-layers-expanded, .leaflet-marker-draggable, .polyline-measure-controlOnBgColor').length) {
 			if (imageOverlay.getLayers().length) $('#control-clearlayers .fa-solid').addClass('fa-beat-fade');
 			else if ($('.layer-noclick').length) $('#control-opacity .fa-solid').addClass('fa-beat-fade');
 			else if (map.getZoom() < 15) $('.leaflet-control-zoom-in .fa-solid').addClass('fa-beat-fade');
@@ -201,14 +201,15 @@ const map = new L.map('map', {
 		index: 6,
 		callback: panoView
 	}, '-', {
-		text: '<span id="contextmenu-item-copygeos" class="comment" title="Copy to clipboard"></span>',
+		text: '<div id="contextmenu-item-copygeos" class="comment" title="Copy to clipboard"></div>',
 		index: 7,
 		callback: copyGeos
 	}]
 }).whenReady(function() {
 	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'#info-software\');" title="Attribution"><i class="fa-solid fa-circle-info fa-fw"></i></a>');
 	if (!noIframe) {
-		$('#control-bookmarks').parent().add('#settings-devtools, .leaflet-control-locate').hide();
+		$('#control-bookmarks').parent().add('.leaflet-control-locate').hide();
+		$('#settings-devtools').css('visibility', 'hidden');
 		map.attributionControl.addAttribution('<a href="/" target="_blank">Bexhill-OSM</a>');
 	}
 	if (!localStorageAvail()) $('#settings-cleardata, #control-bookmarks').parent().add('#settings-devtools').hide();
@@ -331,7 +332,10 @@ const map = new L.map('map', {
 				else window.localStorage.tutorial += 'modals;';
 			});
 			if (!sty.last) $('#tutorial' + sty.id + ' .tutorial-button').last().on('click', function() {
-				$(this).parent().fadeOut(100, function() { $('.tutorial').remove(); });
+				$(this).parent().fadeOut(100, function() {
+					$('.tutorial').remove();
+					window.localStorage.tutorial += 'modals;';
+				});
 			});
 			$('#tutorial' + sty.id).on('keydown', function(e) {
 				if (e.keyCode === 27) $('#tutorial' + sty.id + ' .tutorial-button').last().trigger('click');
@@ -353,7 +357,7 @@ const map = new L.map('map', {
 		$('#tutorial0 button').first().trigger('focus');
 	}, 1000); }
 }).on('contextmenu.show', function(e) {
-	$('#contextmenu-item-copygeos').html(L.Util.formatNum(e.latlng.lat, 3) + ', ' + L.Util.formatNum(e.latlng.lng, 3) + ' | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 3) + '<span class="ele"></span>');
+	$('#contextmenu-item-copygeos').html(e.latlng.lat.toFixed(3) + ', ' + e.latlng.lng.toFixed(3) + ' | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 3));
 	// elevation data
 	// https://www.opentopodata.org/api/
 	$.ajax({
@@ -361,7 +365,7 @@ const map = new L.map('map', {
 		dataType: 'json',
 		mimeType: 'application/json',
 		success: function(json) {
-			if (json.status === 'OK') $('#contextmenu-item-copygeos .ele').html('<br>Elevation: ' + ($('#settings-unit').is(':checked') ? L.Util.formatNum(json.results[0].elevation, 2) + ' m' : L.Util.formatNum(json.results[0].elevation*3.280839895, 2) + ' ft'));
+			if (json.status === 'OK') $('#contextmenu-item-copygeos').append('<br>Elevation: ' + ($('#settings-unit').is(':checked') ? json.results[0].elevation.toFixed(2) + ' m' : (json.results[0].elevation*3.280839895).toFixed(2) + ' ft'));
 			else this.error();
 		},
 		error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR OPENTOPODATA:', encodeURI(this.url)); }
@@ -370,9 +374,9 @@ const map = new L.map('map', {
 	if (lc._active && lc._event && map.options.maxBounds && map.options.maxBounds.contains(lc._event.latlng) && map.getZoom() >= 14 && lc._circle.getRadius() <= 100) $('.leaflet-contextmenu-item').eq(1).show();
 	else $('.leaflet-contextmenu-item').eq(1).hide();
 }).on('tooltipopen', function(e) {
-	highlightOutline(e.tooltip._source._leaflet_id, 1);
+	if (!e.tooltip._container.classList.value.includes('polyline-measure')) highlightOutline(e.tooltip._source._leaflet_id, 1);
 }).on('tooltipclose', function(e) {
-	if (!e.tooltip._source.isPopupOpen()) highlightOutline(e.tooltip._source._leaflet_id, 0);
+	if (!e.tooltip._source.isPopupOpen() && !e.tooltip._container.classList.value.includes('polyline-measure')) highlightOutline(e.tooltip._source._leaflet_id, 0);
 }).on('popupopen', function(e) {
 	const popupThis = $(e.popup.getElement());
 	const osmId = e.popup._source._leaflet_id;
@@ -561,10 +565,8 @@ const map = new L.map('map', {
 					if (popupThis.find($('.popup-img-item img')).attr('src').indexOf('000placehldr') >= 0) popupThis.find($('.popup-img').css('pointer-events', 'none'));
 					popupThis.find($('.popup-img-item img')).attr('alt', 'Image of ' + popupThis.find($('.popup-header h3')).text());
 					if (popupThis.find($('.popup-navigate')).length) {
-						// apply background to navigation buttons if no attribution
-						if (!popupThis.find($('.popup-img-attrib')).length && popupThis.find($('.popup-navigate')).length) popupThis.find($('.popup-navigate')).addClass('popup-navigate-background');
 						// add padding on attribution for navigation buttons
-						else popupThis.find($('.popup-img-attrib')).css('padding-right', Math.floor(popupThis.find($('.popup-navigate')).width()+5) + 'px');
+						popupThis.find($('.popup-img-attrib')).css('padding-right', Math.floor(popupThis.find($('.popup-navigate')).width()+5) + 'px');
 						if (!popupThis.find($('.popup-navigate:visible')).length) popupThis.find($('.popup-navigate')).fadeIn();
 					}
 					popupThis.find($('.popup-img-item')).removeClass('notloaded');
@@ -669,8 +671,8 @@ function setOverlayLabel() {
 	// adds titles and hides certain layers in control
 	if (!$('.control-layers-title').length) {
 		$('.leaflet-control-layers-overlays label').first().before('<div class="control-layers-title">Overlays</div>');
-		$('.leaflet-control-layers-overlays label:contains("Bing")').first().before('<div class="control-layers-title">Air photography</div>');
-		$('.leaflet-control-layers-overlays label:contains("Ordnance")').first().before('<div class="control-layers-title">Historical maps</div>');
+		$('.leaflet-control-layers-overlays label:contains("Bing Aerial")').first().before('<div class="control-layers-title">Air photography</div>');
+		$('.leaflet-control-layers-overlays label:contains("Ordnance Survey")').first().before('<div class="control-layers-title">Historical maps</div>');
 		$('.leaflet-control-layers-overlays label').last().after('<a class="control-layers-title" onclick="switchTab(\'tour\', \'overlays\');">More...</a>');
 	}
 	for (let tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').addClass('hideLayer');
@@ -709,6 +711,7 @@ $('#home-minimap > map > area').on('click', function() {
 	}
 });
 
+// https://github.com/perliedman/leaflet-control-geocoder
 let rQuery = false;
 function reverseQuery(e, singlemapclick) {
 	const geoServer = $('#settings-reverse-server').val();
@@ -726,6 +729,7 @@ function reverseQuery(e, singlemapclick) {
 		if (geoMarker.osm_id || (geoMarker.source_id && geoMarker.source_id.indexOf('/')) > 0) {
 			if (singlemapclick && $('#modal:visible').length) {
 				let msgStatusHead, msgStatusBody;
+				// https://nominatim.org/release-docs/develop/api/Reverse/
 				if (geoServer === 'nominatim') {
 					const geoName = geoMarker.namedetails ? geoMarker.namedetails.ref || geoMarker.namedetails.name || geoMarker.namedetails['addr:housename'] || '' : '';
 					const geoRoad = geoMarker.address ? geoMarker.address.road || geoMarker.address.footway || geoMarker.address.pedestrian || geoMarker.address.path || geoMarker.address.locality || '' : '';
@@ -734,15 +738,18 @@ function reverseQuery(e, singlemapclick) {
 						(geoMarker.address.house_number ? geoMarker.address.house_number + ' ' : '') + (geoRoad ? geoRoad + (geoMarker.address.postcode ? ', ' + geoMarker.address.postcode + '<br>' : '') : '') +
 						(geoMarker.address.retail ? geoMarker.address.retail : '') + '</a>';
 				}
+				// https://opencagedata.com/api
 				else if (geoServer === 'opencage') {
 					msgStatusHead = titleCase(geoMarker.type);
 					msgStatusBody = '<a class="modal-body-addr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');"><b>' + geoMarker.name.replace(',', '</b><br>').replace(', United Kingdom', '') + '</a>';
 				}
+				// https://photon.komoot.io/
 				else if (geoServer === 'photon') {
 					msgStatusHead = geoMarker.osm_value !== 'yes' ? titleCase(geoMarker.osm_value + ' ' + geoMarker.osm_key) : '';
 					msgStatusBody = '<a class="modal-body-addr" onclick="reverseQueryOP(\'' + geoMarker.osm_type + '\', \'' + geoMarker.osm_id + '\');">' + (geoMarker.name ? '<b>' + geoMarker.name + '</b><br>' : '') +
 						(geoMarker.housenumber ? geoMarker.housenumber + ' ' : '') + (geoMarker.street + (geoMarker.postcode ? ', ' + geoMarker.postcode : '') ? geoMarker.street : '') + '</a>';
 				}
+				// https://openrouteservice.org/dev/#/api-docs/geocode
 				else if (geoServer === 'openrouteservice') {
 					msgStatusHead = titleCase(geoMarker.layer);
 					msgStatusBody = '<a class="modal-body-addr" onclick="reverseQueryOP(\'' + geoMarker.source_id.charAt(0) + '\', \'' + geoMarker.source_id.split('/')[1] + '\');">' + '<b>' + geoMarker.name + '</b><br>' +
@@ -833,7 +840,7 @@ function panoView(e, fromSequence) {
 	});
 }
 function copyGeos(e) {
-	const geos = L.Util.formatNum(e.latlng.lat, 5) + '°N ' + L.Util.formatNum(e.latlng.lng, 5) + '°E | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 6);
+	const geos = e.latlng.lat.toFixed(5) + '°N ' + e.latlng.lng.toFixed(5) + '°E | ' + wgs84ToGridRef(e.latlng.lat, e.latlng.lng, 6);
 	navigator.clipboard.writeText(geos).then(
 		function() { setMsgStatus('fa-solid fa-copy', 'Clipboard', 'Coordinates copied successfully.<p class="comment">' + geos + '</p>', 4); },
 		function() { setMsgStatus('fa-solid fa-copy', 'Clipboard Error', 'Could not copy coordinates. Manually copy below <p class="comment">' + geos + '</p>'); }
@@ -938,31 +945,6 @@ function setLeaflet() {
 	map.addLayer(iconLayer).addLayer(clickOutline).addLayer(imageOverlay).addLayer(areaOutline);
 	// leaflet icon image path
 	L.Icon.Default.imagePath = 'assets/img/leaflet/';
-	// quadkey layers
-	L.TileLayer.QuadKeyTileLayer = L.TileLayer.extend({
-		getTileUrl: function(tilePoint) {
-			return L.Util.template(this._url, {
-				s: this._getSubdomain(tilePoint),
-				q: this._quadKey(tilePoint.x, tilePoint.y, this._getZoomForUrl())
-			});
-		},
-		_quadKey: function(x, y, z) {
-			const quadKey = [];
-			for (let i = z; i > 0; i--) {
-				let digit = '0';
-				let mask = 1 << (i - 1);
-				if ((x & mask) !== 0) {
-					digit++;
-				}
-				if ((y & mask) !== 0) {
-					digit++;
-					digit++;
-				}
-				quadKey.push(digit);
-			}
-			return quadKey.join('');
-		}
-	});
 	// baselayers
 	const attribution = '&copy; <a href="https://openstreetmap.org/copyright" title="Copyright and License" target="_blank" rel="noopener">OpenStreetMap</a>';
 	tileBaseLayer = {
@@ -1011,14 +993,15 @@ function setLeaflet() {
 		},
 		bing: {
 			name: 'Bing Aerial',
-			url: 'https://ecn.t{s}.tiles.virtualearth.net/tiles/a{q}?g=737&n=z',
-			attribution: '<a href="https://maps.bing.com/" target="_blank" rel="noopener">Microsoft Bing</a>',
-			subdomains: '0123',
 			maxNativeZoom: 19,
-			quadkey: true,
-			errorTileUrl: 'https://ecn.t0.tiles.virtualearth.net/tiles/a1202020223330?g=737&n=z',
 			offset: [-1, 1]
 		}
+		/*google: {
+			name: 'Google Aerial',
+			url: 'https://mt{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+			subdomains: '0123',
+			offset: [-1, 1]
+		}*/
 	};
 	for (let tile in tileBaseLayer) {
 		const tbl = tileBaseLayer[tile], bOptions = {
@@ -1029,7 +1012,7 @@ function setLeaflet() {
 			errorTileUrl: tbl.errorTileUrl,
 			className: tbl.className || ''
 		};
-		if (tbl.quadkey) tileBaseLayers[tbl.name] = new L.TileLayer.QuadKeyTileLayer(tbl.url, bOptions);
+		if (tile === 'bing') tileBaseLayers[tbl.name] = L.bingLayer(window.BOSM.bingKey, bOptions);
 		else tileBaseLayers[tbl.name] = L.tileLayer(tbl.url, bOptions);
 		// create object array for all basemap layers
 		baseTileList.name.push(tbl.name);
@@ -1101,14 +1084,17 @@ function setLeaflet() {
 		// air photography
 		bing: {
 			name: 'Bing Aerial',
-			url: 'https://ecn.t{s}.tiles.virtualearth.net/tiles/a{q}?g=737&n=z',
-			attribution: '<a href="https://maps.bing.com/" target="_blank" rel="noopener">Microsoft Bing</a>',
-			subdomains: '0123',
 			opacity: 0.5,
 			maxNativeZoom: 19,
-			quadkey: true,
 			offset: [-1, 1]
 		},
+		/*google: {
+			name: 'Google Aerial',
+			opacity: 0.5,
+			url: 'https://mt{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+			subdomains: '0123',
+			offset: [-1, 1]
+		},*/
 		bm1975: {
 			name: '1975 Aerial (coast)',
 			url: 'https://tiles.bexhillheritage.com/bm1975/{z}/{x}/{y}.png',
@@ -1150,7 +1136,7 @@ function setLeaflet() {
 		os1950: {
 			name: '1950 Aerial',
 			url: 'https://tiles.bexhillheritage.com/os1950/{z}/{x}/{y}.png',
-			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1181,7 +1167,7 @@ function setLeaflet() {
 		os1962: {
 			name: '1962 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/os/britain10knatgrid/{z}/{x}/{y}.png',
-			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 16,
@@ -1191,7 +1177,7 @@ function setLeaflet() {
 		os1955: {
 			name: '1955 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/london_1940s/{z}/{x}/{y}.png',
-			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 19,
@@ -1220,7 +1206,7 @@ function setLeaflet() {
 		arp1942: {
 			name: '1942 Air Raid Precautions',
 			url: 'https://tiles.bexhillheritage.com/arp1942/{z}/{x}/{y}.png',
-			attribution: '<a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
+			attribution: 'Ordnance Survey, <a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
 			bounds: L.latLngBounds([50.8292, 0.4157], [50.8713, 0.5098]),
 			opacity: 1,
 			maxNativeZoom: 18,
@@ -1240,7 +1226,7 @@ function setLeaflet() {
 		os1938: {
 			name: '1938 Ordnance Survey',
 			url: 'https://tiles.bexhillheritage.com/os1938/{z}/{x}/{y}.png',
-			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Crown Copyright Ordnance Survey</a>',
+			attribution: 'Ordnance Survey, <a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Crown Copyright Ordnance Survey</a>',
 			bounds: L.latLngBounds([50.874, 0.380], [50.833, 0.518]),
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1249,7 +1235,7 @@ function setLeaflet() {
 		os1930: {
 			name: '1930 Ordnance Survey',
 			url: 'https://tiles.bexhillheritage.com/os1930/{z}/{x}/{y}.png',
-			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Crown Copyright Ordnance Survey</a>',
+			attribution: 'Ordnance Survey, <a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Crown Copyright Ordnance Survey</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1279,7 +1265,7 @@ function setLeaflet() {
 		os1909: {
 			name: '1909 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/25_inch/holes_england/{z}/{x}/{y}.png',
-			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 18,
@@ -1300,17 +1286,27 @@ function setLeaflet() {
 		os1899: {
 			name: '1899 Ordnance Survey',
 			url: 'https://tiles.bexhillheritage.com/os1899/{z}/{x}/{y}.jpg',
-			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
 			offset: [7, 2],
 			className: 'layer-noclick'
 		},
+		jd1887: {
+			name: '1887 Downsborough',
+			url: 'https://tiles.bexhillheritage.com/jd1887/{z}/{x}/{y}.png',
+			attribution: '<a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
+			bounds: L.latLngBounds([50.8565, 0.454], [50.831, 0.505]),
+			opacity: 1,
+			maxNativeZoom: 17,
+			hide: 1,
+			className: 'layer-noclick'
+		},
 		os1873: {
 			name: '1873 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-sussex/{z}/{x}/{y}.png',
-			attribution: '<a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1369,7 +1365,7 @@ function setLeaflet() {
 			minNativeZoom: tol.minNativeZoom,
 			className: tol.className || ''
 		};
-		if (tol.quadkey) tileOverlayLayers[tol.name] = new L.TileLayer.QuadKeyTileLayer(tol.url, oOptions);
+		if (tile === 'bing') tileOverlayLayers[tol.name] = L.bingLayer(window.BOSM.bingKey, oOptions);
 		else if (tol.wms) tileOverlayLayers[tol.name] = L.tileLayer.wms(tol.url, $.extend(tol.wms, oOptions));
 		else if (tol.wmsOverlay) tileOverlayLayers[tol.name] = L.WMS.overlay(tol.url, $.extend(tol.wmsOverlay, oOptions));
 		else tileOverlayLayers[tol.name] = L.tileLayer(tol.url, oOptions);
@@ -1571,8 +1567,14 @@ function switchTab(tab, anchorTour, poi, actImgLayer) {
 	if (poi) {
 		if (!tab && $(window).width() < 768) $('.sidebar-close:visible').trigger('click');
 		clear_map('markers');
-		$('#' + poi).prop('checked', true);
-		poi_changed();
+		if (poi.charAt(0) === '[' && poi.charAt(poi.length-1) === ']') {
+			$('#settings-overpass-query').val(poi);
+			customQuery(poi, true);
+		}
+		else {
+			$('#' + poi).prop('checked', true);
+			poi_changed();
+		}
 	}
 	else if (actImgLayer) tour(actImgLayer);
 }
@@ -1654,7 +1656,7 @@ function populatePoiTab() {
 		if (categoryList.indexOf(pois[poi].catName) === -1) categoryList.push(pois[poi].catName);
 	}
 	for (c = 0; c < $('#tour-controls-list option').length - 1; c++) if ($('#tour-controls-list option:enabled').eq(c).data('keyword')) {
-		category.push({ listLocation: $('#tour-controls-list option').eq(c).text(), header: '<img data-key="' + $('#tour-controls-list option').eq(c).val() + '" src="assets/img/sb-tour.png">Tour - ' + $('#tour-controls-list option').eq(c).text() });
+		category.push({ listLocation: $('#tour-controls-list option').eq(c).text(), header: '<img class="tour-category" data-key="' + $('#tour-controls-list option').eq(c).val() + '" src="assets/img/sidebar-icons.png">Tour - ' + $('#tour-controls-list option').eq(c).text() });
 		poiTags[$('#tour-controls-list option').eq(c).text()] = $('#tour-controls-list option').eq(c).data('keyword').split(', ');
 	}
 	// https://github.com/pawelczak/EasyAutocomplete
@@ -1985,7 +1987,7 @@ function clear_map(layer) {
 		fcnStLvl.state('control-mapillary-off');
 		$('.sidebar-tabs ul li [href="#tour"] .sidebar-notif').hide();
 		actImgLayer = undefined;
-		$('#thennow img').off('mouseenter mouseleave');
+		$('#thennow figure a').off('mouseenter mouseleave');
 		$('#control-ww2').remove();
 		$('div[role="tooltip"]').remove();
 		if (actOverlayLayer && tileOverlayLayer[actOverlayLayer].hide) map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);
@@ -2144,23 +2146,33 @@ function getTips(tip) {
 function showWeather() {
 	// get tides
 	// https://developer.admiralty.co.uk/api-details#api=uk-tidal-api&operation=Stations_GetStation
-	let tideData = '', wtooltip = '';
+	let tideData = '', tideTooltip = '';
 	$.ajax({
+		async: false,
 		url: 'assets/data/tides.json',
 		dataType: 'json',
 		mimeType: 'application/json',
 		cache: false,
 		success: function(json) {
-			let nextTide = '';
-			const iconTide = { HighWater: 'up', LowWater: 'down' };
-			$.each(json, function(i, element) { if (new Date().getTime() > new Date(element.DateTime + 'Z').getTime()) nextTide = i+1; });
-			if (nextTide && nextTide < json.length-1) {
-				wtooltip += '<hr>' + json[nextTide].EventType + ': ' + L.Util.formatNum(json[nextTide].Height, 2) + 'm<br>' +
-					json[nextTide+1].EventType + ': ' + L.Util.formatNum(json[nextTide+1].Height, 2) + 'm';
+			let tideNext = '', tidePercent = '';
+			const tideInfo = { HighWater: ['High-tide', 'fa-caret-up'], LowWater: ['Low-tide', 'fa-caret-down'] };
+			$.each(json, function(i, element) { if (new Date().getTime() > new Date(element.DateTime + 'Z').getTime()) tideNext = i+1; });
+			const tideTimes = [ new Date(json[tideNext-1].DateTime + 'Z'), new Date(json[tideNext].DateTime + 'Z'), new Date(json[tideNext+1].DateTime + 'Z') ];
+			if (tideNext && tideNext < json.length-1) {
+				tideTooltip =
+					'<i class="fa-solid fa-sm ' + tideInfo[json[tideNext].EventType][1] + '"></i> ' + tideInfo[json[tideNext].EventType][0] + ': ' + json[tideNext].Height.toFixed(2) + 'm in ' + minToTime((new Date(tideTimes[1]) - new Date()) / 60000) + 'ins<br>' +
+					'<i class="fa-solid fa-sm ' + tideInfo[json[tideNext+1].EventType][1] + '"></i> ' + tideInfo[json[tideNext+1].EventType][0] + ': ' + json[tideNext+1].Height.toFixed(2) + 'm in ' + minToTime((new Date(tideTimes[2]) - new Date()) / 60000) + 'ins<br>' +
+					'<span class="comment">Click to visualise current tide</span>';
+				// find percentage of time from current tide to next tide
+				tidePercent = Math.round((new Date().getTime() - tideTimes[0].getTime()) / (tideTimes[1].getTime() - tideTimes[0].getTime()) * 100);
 				tideData =
-					'<span class="home-weather-tide"><i class="fa-solid fa-water fa-2x"></i></span><span class="home-weather-tide">' +
-					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide].EventType] + '"></i> ' + new Date(json[nextTide].DateTime + 'Z').toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<br>' +
-					'<i class="fa-solid fa-sm fa-turn-' + iconTide[json[nextTide+1].EventType] + '"></i> ' + new Date(json[nextTide+1].DateTime + 'Z').toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '</span>';
+					'<div class="home-weather-tide" data-tide-percent="' + tidePercent + ',' + tideInfo[json[tideNext].EventType][0] + ',' + tideInfo[json[tideNext].EventType][1] + '">' +
+						'<span><i class="fa-solid fa-water fa-2x"></i></span>' +
+						'<span>' +
+							'<i class="fa-solid fa-sm ' + tideInfo[json[tideNext].EventType][1] + '"></i> ' + tideTimes[1].toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<br>' +
+							'<i class="fa-solid fa-sm ' + tideInfo[json[tideNext+1].EventType][1] + '"></i> ' + tideTimes[2].toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) +
+						'</span>' +
+					'</div>';
 			}
 			else this.error();
 		},
@@ -2186,33 +2198,35 @@ function showWeather() {
 					'West',  'West-northwest', 'Northwest', 'North-northwest'
 				], getWinddir = json.wind.deg ? windDir[(Math.floor((json.wind.deg / 22.5) + 0.5)) % 16] : 'Calm';
 				$('#home-weather').html(
-					'<span class="home-weather-temp"><i class="fa-solid fa-' + tempIcon[json.weather[0].icon] + ' fa-2x"></i></span>' +
-					'<span class="home-weather-temp">' +
-						json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1) + '<br>' +
-						json.main.temp.toFixed(1) + '&deg;C' +
-					'</span>' +
-					'<span class="home-weather-wind"><i class="fa-solid fa-wind fa-2x"' + (json.wind.deg ? ' style="transform:rotate(' + (json.wind.deg + 90) + 'deg);"' : '') + '></i></span>' +
-					'<span class="home-weather-wind">' +
-						getWinddir + '<br>' +
-						'<span>' + (json.wind.speed * 2.236936).toFixed(1) + 'mph</span>' +
-					'</span>' +
+					'<div class="home-weather-temp">' +
+						'<span><i class="fa-solid fa-' + tempIcon[json.weather[0].icon] + ' fa-2x"></i></span>' +
+						'<span>' +
+							json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1) + '<br>' +
+							json.main.temp.toFixed(1) + '&deg;C' +
+						'</span>' +
+					'</div>' +
+					'<div class="home-weather-wind">' +
+						'<span><i class="fa-solid fa-wind fa-2x"' + (json.wind.deg ? ' style="transform:rotate(' + (json.wind.deg + 90) + 'deg);"' : '') + '></i></span>' +
+						'<span>' +
+							getWinddir + '<br>' +
+							'<span>' + (json.wind.speed * 2.236936).toFixed(1) + 'mph</span>' +
+						'</span>' +
+					'</div>' +
 					(tideData ? tideData : '')
-				).show().attr('onclick', 'popupWindow("popup", "https://openweathermap.org/city/' + json.id + '", "owWindow");');
-				wtooltip =
-						'Sunrise: ' + new Date(json.sys.sunrise * 1000).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<br>' +
-						'Sunset: ' + new Date(json.sys.sunset * 1000).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<hr>' +
-						'Gust: ' + (json.wind.gust * 2.236936).toFixed(1) + 'mph<br>' +
-						'Cloud: ' + json.clouds.all + '%<br>' +
-						'Humidity: ' + json.main.humidity + '%' + wtooltip;
-				$('#home-weather').attr('title', '').tooltip({
-					classes: { 'ui-tooltip': 'weather-wtooltip' },
-					position: tooltipDef.position,
-					content: wtooltip,
-					disabled: noTouch ? false : true,
-					hide: false,
-					show: tooltipDef.show,
-					track: true,
-				});
+				).show();
+				$('.home-weather-temp, .home-weather-wind').attr('title', '').tooltip($.extend({
+					classes: { 'ui-tooltip': 'weather-tooltip' },
+					content: '<i class="fa-solid fa-sm fa-cloud"></i> Cloud: ' + json.clouds.all + '%<br>' +
+						'<i class="fa-solid fa-sm fa-wind"></i> Gust: ' + (json.wind.gust * 2.236936).toFixed(1) + 'mph<br>' +
+						'<i class="fa-solid fa-sm fa-temperature-half"></i> Humidity: ' + json.main.humidity + '%<br>' +
+						'<i class="fa-solid fa-sm fa-sun"></i> Sunrise: ' + new Date(json.sys.sunrise * 1000).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<br>' +
+						'<i class="fa-solid fa-sm fa-moon"></i> Sunset: ' + new Date(json.sys.sunset * 1000).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) + '<br>' +
+						'<span class="comment">Data provided by OpenWeather</span>'
+				}, tooltipDef)).attr('onclick', 'popupWindow("popup", "https://openweathermap.org/city/' + json.id + '", "owWindow");');
+				if (tideData) $('.home-weather-tide').attr('title', '').tooltip($.extend({
+					classes: { 'ui-tooltip': 'weather-tooltip' },
+					content: tideTooltip
+				}, tooltipDef)).attr('onclick', 'tour("tide");');
 			}
 			else this.error();
 			if ($('#settings-debug').is(':checked')) console.debug('Openweather:', json);
@@ -2247,7 +2261,7 @@ function showEditFeed() {
 					'<a href="https://overpass-api.de/achavi/?changeset=' + encodeURI(itm.id) + '&layers=B0FTTFT" title="' + dateFormat(itm.properties.date, 'short') + '\n' +
 					itm.properties.create + ' created\n' + itm.properties.modify + ' modified\n' + itm.properties.delete + ' deleted\n' + itm.properties.comments_count + ' comments">' + timeSince(itm.properties.date) + '</a>' +
 					' - <a href="https://www.openstreetmap.org/user/' + encodeURI(itm.properties.user) + '" title="Source: ' + itm.properties.source + '\nEditor: ' + itm.properties.editor + '">' + itm.properties.user + '</a>' +
-					'<span onclick="$(this).toggleClass(\'comment-expanded\');" class="comment">' + itm.properties.comment + '</span></li>';
+					'<span onclick="$(this).toggleClass(\'comment-expanded\');" class="comment" title="' + itm.properties.comment + '">' + itm.properties.comment + '</span></li>';
 				});
 				$('#home-osm-feed')
 					.html('Recent map edits:<ul class="fa-ul">' + s + '</ul>')
@@ -2283,7 +2297,7 @@ function permalinkSet() {
 		if (overlayOpacity) uri.searchParams.set('op', overlayOpacity);
 	}
 	if (walkWayp) {
-		for (c = 0; c < walkWayp.length; c++) if (walkWayp[c].latLng) walkCoords += L.Util.formatNum(walkWayp[c].latLng.lat, 5) + 'x' + L.Util.formatNum(walkWayp[c].latLng.lng, 5) + '_';
+		for (c = 0; c < walkWayp.length; c++) if (walkWayp[c].latLng) walkCoords += walkWayp[c].latLng.lat.toFixed(5) + 'x' + walkWayp[c].latLng.lng.toFixed(5) + '_';
 		if (walkCoords) uri.searchParams.set('w', walkCoords.slice(0, -1));
 	}
 	if (actTab === 'tour' && $('#tour-controls-list option').eq(0).val() !== $('#tour-controls-list option:selected').eq(0).val()) uri.searchParams.set('u', $('#tour-controls-list option:selected').val());
@@ -2415,10 +2429,7 @@ permalinkReturn();
 
 // allow postMessage from these websites when in an iframe
 window.addEventListener('message', function(event) {
-	const iframeAccess = ['//www.discoverbexhill.com', '//bexhillheritage.com', '//www.bexhillmuseum.org.uk'];
-	if (!noIframe && iframeAccess.findIndex(x => x === event.origin.split(':')[1]) >= 0) {
-		clear_map('markers');
-		switchTab('none', '', event.data);
-	}
+	const iframeAccess = ['//www.discoverbexhill.com', '//locallist.bexhillheritage.com'];
+	if (!noIframe && iframeAccess.findIndex(x => x === event.origin.split(':')[1]) >= 0) switchTab('none', '', event.data);
 	else return;
 });

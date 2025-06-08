@@ -54,11 +54,12 @@ $(document).ready(function() {
 			else $('#rsrchdesc').text('Nothing - we are are up to date!');
 			// index links and alphabetic dividers
 			$('#street-index a').each(function() {
-				const recs = $('.street.' + $(this).text()).length;
+				let recs = $('.street.' + $(this).text()).length;
 				if (!recs) $(this).addClass('permDisable');
 				else {
-					$('.street.' + $(this).text()).first().before('<div id="' + $(this).text() +'" class="divider" title="' + recs + ' record(s)">' + $(this).text() + '</div>');
-					$(this).attr({ 'href': '#' + $(this).text(), 'title': recs + ' record(s)' });
+					recs = $(this).text() + ' - ' + recs + ' record(s)';
+					$('.street.' + $(this).text()).first().before('<div id="' + $(this).text() +'" class="divider" title="' + recs + '">' + $(this).text() + '</div>');
+					$(this).attr({ 'href': '#' + $(this).text(), 'title': recs });
 				}
 			});
 			$('.divider').css('background-image', 'url(' + imgPath + '/div.png)');

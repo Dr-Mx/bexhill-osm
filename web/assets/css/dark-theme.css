@@ -30,7 +30,7 @@ body {
 	background-color: var(--bg-color) !important;
 }
 #modal, #control-opacity, .leaflet-bar > a, .leaflet-bar button, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded, .leaflet-control-layers,
-.leaflet-control-geocoder, .leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-alternatives li:hover, .leaflet-tooltip, .popup-img-attrib, .popup-navigate-background {
+.leaflet-control-geocoder, .leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-alternatives li:hover, .leaflet-tooltip, .popup-img-attrib, .popup-navigate-background, #home-weather > div:hover {
 	background-color: var(--bg-color2) !important;
 }
 .leaflet-control-layers-list input + span:before {

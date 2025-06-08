@@ -39,8 +39,8 @@
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
 
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css??v=8.4.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css??v=8.4.0" id="darkcss" disabled>
+	<link rel="stylesheet" href="assets/css/site.css?v=8.5.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=8.5.0" id="darkcss" disabled>
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -110,11 +110,11 @@
 					<div id="home-new-feed">
 						<div>What's new:
 							<ul class="fa-ul">
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Dec 24 - New line measurement tool <i class="fa-solid fa-ruler"></i></a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jun 25 - <a onclick="switchTab('tour', 'overlays', '', 'jd1887');">Downsborough's (proposed) Map of Bexhill-on-Sea 1887</a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jan 25 - Visualise current tide by clicking the <a onclick="switchTab('', '', '', 'tide');"><i class="fa-solid fa-water"></i> widget</a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Dec 24 - New line measurement tool <i class="fa-solid fa-ruler"></i></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 24 - <a onclick="switchTab('', '', '', 'xmas');">Xmas Window Display Competition 2024</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>May 24 - Extended editing and Wikidata info in popups</li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 23 - <a onclick="switchTab('tour', 'overlays', '', '');">RAF aerial overlays</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Oct 23 - <a onclick="switchTab('walking', '#walk-container-pdf');">PDF walking guides</a></li>
 							</ul>
 						</div>
 						<div id="home-osm-feed"></div><!-- div auto-populated -->
@@ -245,7 +245,7 @@
 							<p class="settings-label"><label for="settings-notes">Display OSM map notes</label><button id="settings-notes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button></p>
 							<p class="settings-label"><label for="settings-overpass-export">Export current query to Overpass Turbo</label><button disabled id="settings-overpass-export" type="button"><i class="fa-solid fa-upload"></i></button></p>
 							<p class="settings-label"><label for="settings-overpass-download">Download all OSM data within map bounds (xml)</label><button id="settings-overpass-download" type="button"><i class="fa-solid fa-download"></i></button></p>
-							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL/" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></p>
+							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></p>
 							<div class="settings-label" style="text-align:right;display:block;">
 								<input id="settings-overpass-query" list="settings-overpass-list" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="customQuery($(this).prev().val(), true);"></span>
 								<datalist id="settings-overpass-list">
@@ -265,9 +265,9 @@
 								</select></p>
 							<p class="settings-label"><label for="settings-overpass-cache">OverpassAPI localStorage cache hours</label>
 								<input id="settings-overpass-cache" value="120" min="0" max="720" step="10" type="number"></p>
-							<p class="settings-label"><label for="settings-overpass-attic">OverpassAPI Attic Data <a href="https://wiki.openstreetmap.org/wiki/Attic_Data/" target="_blank" rel="noopener" title="Display data from a specific date"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
+							<p class="settings-label"><label for="settings-overpass-attic">OverpassAPI Attic Data <a href="https://wiki.openstreetmap.org/wiki/Attic_Data" target="_blank" rel="noopener" title="Display data from a specific date"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<input id="settings-overpass-attic" type="date" min="2016-01-01"></p>
-							<p class="settings-label"><label for="settings-overpass-server">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances/" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
+							<p class="settings-label"><label for="settings-overpass-server">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme-color fa-solid fa-circle-question fa-sm fa-fw"></i></a></label>
 								<select id="settings-overpass-server" class="theme-color">
 									<option value="overpass-api.de" data-attic="1">overpass-api.de</option>
 									<option value="maps.mail.ru/osm/tools/overpass" data-attic="1">maps.mail.ru</option>
@@ -313,7 +313,7 @@
 					</div>
 					<div id="info-software"><hr>
 					<h3>Software</h3>
-						<p>Bexhill-OSM is completely open-source. The project is freely available for anyone to inspect, modify and enhance.</p>
+						<p>The code behind Bexhill-OSM is completely open-source. The project is freely available for anyone to inspect, modify and enhance.</p>
 						<p class="info-links">
 							<a title="Github repository" href="https://github.com/Dr-Mx/bexhill-osm/" target="_blank" rel="noopener"><img src="assets/img/info-github.svg" loading="lazy"></a><br>
 							<a title="Github last commit" href="https://github.com/Dr-Mx/bexhill-osm/commits/master/" target="_blank" rel="noopener"><img src="assets/img/info-commit.svg" loading="lazy"></a>
@@ -329,6 +329,7 @@
 							<li><a href="https://jquery.com" target="_blank" rel="noopener">jQuery</a> &copy; The jQuery Foundation</li>
 							<li><a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a> &copy; Vladimir Agafonkin</li>
 							<li><ul>
+								<li><a href="https://github.com/shramov/leaflet-plugins/blob/master/layer/tile/Bing.md" target="_blank" rel="noopener">leaflet-plugins Bing.js</a> &copy;  Pavel Shramov</li>
 								<li><a href="https://github.com/maximeh/leaflet.bouncemarker/" target="_blank" rel="noopener">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
 								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu/" target="_blank" rel="noopener">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
 								<li><a href="https://github.com/perliedman/leaflet-control-geocoder/" target="_blank" rel="noopener">leaflet-control-geocoder</a> &copy; Per Liedman</li>
@@ -381,27 +382,28 @@
 	<script src="assets/js/plugins/imageMapResizer.min.js?v=1.0.10"></script>
 	<script src="assets/js/plugins/leaflet.js?v=1.9.4"></script>
 	<script src="assets/js/plugins/leaflet-hash.min.js?v=0.2.1"></script>
-	<script src="assets/js/plugins/L.VisualClick.js?v=1.1.0"></script>
 	<script src="assets/js/plugins/jquery-sidebar.min.js?v=0.4.0"></script>
 	<script src="assets/js/plugins/Control.Loading.min.js?v=0.1.24"></script>
-	<script src="assets/js/plugins/leaflet.wms.min.js?v=0.2.0"></script>
 	<script src="assets/js/plugins/easy-button.min.js?v=2.4.0"></script>
+	<script src="assets/js/plugins/Bing.min.js?v=3.4.0"></script>
+	<script src="assets/js/plugins/leaflet.wms.min.js?v=0.2.0"></script>
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v=1.5.1"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v=3.2.5"></script>
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v=2.4.0"></script>
 	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.81.0"></script>
 	<script src="assets/js/plugins/Leaflet.PolylineMeasure.min.js?v=231107"></script>
 	<script src="assets/js/plugins/bouncemarker.min.js?v=1.2.3"></script>
+	<script src="assets/js/plugins/L.VisualClick.js?v=1.1.0"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.7.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js??v=8.4.0"></script>
-	<script src="assets/js/OverPassLayer.js??v=8.4.0"></script>
-	<script src="assets/js/tags-parsers.js??v=8.4.0"></script>
-	<script src="assets/js/pois-type.js??v=8.4.0"></script>
-	<script src="tour/tour.js??v=8.4.0"></script>
-	<script src="assets/js/site.js??v=8.4.0"></script>
+	<script src="assets/js/config.js?v=8.5.0"></script>
+	<script src="assets/js/OverPassLayer.js?v=8.5.0"></script>
+	<script src="assets/js/tags-parsers.js?v=8.5.0"></script>
+	<script src="assets/js/pois-type.js?v=8.5.0"></script>
+	<script src="tour/tour.js?v=8.5.0"></script>
+	<script src="assets/js/site.js?v=8.5.0"></script>
  </body>
 </html>

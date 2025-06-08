@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v8.5.0
+
+**Date:** 08/06/2025
+
+Added
+- Bing.min.js
+
+Site changes
+ - Bing maps now use proper api credentials, quadkey functions depreciated
+ - Improved some Overpass queries and include BBOX even in area_id for query speed
+ - Include Bleed Control Kits in AED POIs
+ - Weather widget update
+ - Visualisation of current tide as overlay
+ - Downsborough's map of Bexhill-on-Sea 1887
+ - More of the usual bug fixes and code improvements
+
+
 ## v8.4.0
 
 **Date:** 28/12/2024

@@ -15,14 +15,14 @@ https://github.com/Dr-Mx/bexhill-osm/assets/20068052/219ff558-a94b-46af-8f66-8eb
 ~ Mobile and desktop friendly
 
 ~ Light/dark theme support
-<details><summary>Map display options (click for more)</summary>
-  
+<details><summary>Map display options <em>(click for more)</em></summary>
+
 - Switch between metric and imperial
 - Adjust overlay opacity
 - Set map layer offset
 </details>
 
-<details><summary>Detailed POI markers through Overpass API  (click for more)</summary>
+<details><summary>Detailed POI markers through Overpass API <em>(click for more)</em></summary>
 
 - Bookmark favourite POIs
 - Facility icons
@@ -58,7 +58,7 @@ https://github.com/Dr-Mx/bexhill-osm/assets/20068052/219ff558-a94b-46af-8f66-8eb
 - Fallback to main Overpass server on failure
 - Area outlines
 </details>
-  
+
 ~ Find an address by searching (Nominatim > Overpass)
 
 ~ Query any feature on map by clicking (Nominatim > Overpass)
@@ -81,7 +81,7 @@ https://github.com/Dr-Mx/bexhill-osm/assets/20068052/219ff558-a94b-46af-8f66-8eb
 
 ~ OpenWeatherMap API
 
-<details><summary>Development tools (click for more)</summary>
+<details><summary>Development tools <em>(click for more)</em></summary>
 
 - Display OSM notes
 - Export current query to Overpass Turbo
