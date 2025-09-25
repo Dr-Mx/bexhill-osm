@@ -1,5 +1,5 @@
 :root {
-	--main-color: #bb5500;
+	--main-color: #ca5b00;
 }
 html {
 	scroll-behavior: smooth;
@@ -13,21 +13,21 @@ body {
 	font-size: 90%;
 }
 html.darkMode body {
-	background-color: #111111;
-	color: #aaaaaa;
+	background-color: #1b1b1b;
+	color: #e3e3e3;
 }
 html.darkMode button svg path {
 	fill: #000000;
 }
 html.darkMode #street-filter-input {
 	background-color: #000000;
-	color: #aaaaaa;
+	color: #e3e3e3;
 }
 html.darkMode #street-index a {
-	background-color: #222222;
+	background-color: #000000;
 }
 html.darkMode #intro, html.darkMode #outro {
-	color: #999999;
+	color: #aaaaaa;
 }
 a {
 	text-decoration: none;
@@ -104,7 +104,7 @@ button svg path {
 	margin-right: 5px;
 }
 .divider {
-	margin: 20px 30%;
+	margin: 40px 30% 20px 30%;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
@@ -123,6 +123,7 @@ button svg path {
 #street-results-end::before, #street-results-end::after {
 	content: '\26AC';
 	padding: 0 2%;
+	font-weight: normal;
 }
 #street-index {
 	display: flex;
@@ -138,7 +139,7 @@ button svg path {
 }
 #street-index a {
 	border-radius: 5px;
-	background-color: #dddddd;
+	background-color: white;
 	flex: 1 1 calc((100% / 13) - 5px);
 }
 #street-index a.disable, .permDisable {
@@ -188,13 +189,30 @@ button svg path {
 }
 .street {
 	line-height: 1.3;
-	margin: 20px 0;
+	border-bottom: 1px solid rgba(128,128,128,15%);
+	padding: 15px 0;
+	margin: 0;
 }
 .street:first-child {
 	padding: 0;
 }
-.lost {
+.street.lost strong, .street.lost div {
 	opacity: 0.5;
+}
+.street strong {
+	font-weight: bold;
+}
+.street-map-link {
+	float: right;
+}
+.street-map-link svg {
+	width: 15px;
+	fill: var(--main-color);
+	opacity: 0;
+	transition: opacity linear 250ms;
+}
+.street:hover .street-map-link svg {
+	opacity: 1;
 }
 #rsrchdesc span {
 	display: inline-block;

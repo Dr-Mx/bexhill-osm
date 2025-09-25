@@ -38,7 +38,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags.support) siteVal += '<span title="Clock support">' + tags.support + '</span>; ';
 		if (tags.faces) siteVal += '<span title="Clock faces">' + ((tags.faces >= 2) ? tags.faces + ' faces' : '1 face') + '</span>; ';
 		if (tags.material) siteVal += '<span title="Material">Mtrl. ' + tags.material + '</span>; ';
-		if (tags.start_date) {
+		if (tags.start_date && !(tags.highway && eName && element.type === 'way')) {
 			siteVal += '<span title="Start date">' + dateFormat(tags.start_date, 'short') + '</span>';
 			if (tags.end_date) siteVal += ' to <span title="End date">' + dateFormat(tags.end_date, 'short') + '</span>';
 			siteVal += '; ';
@@ -81,11 +81,11 @@ function parse_tags(element, titlePopup, poiParser) {
 		let contactVal = '';
 		const tagMail = tags.email || tags['contact:email'], tagFb = tags.facebook || tags['contact:facebook'], tagTwit = tags.twitter || tags['contact:twitter'], tagInstg = tags['contact:instagram'], tagYtube = tags['contact:youtube'];
 		markerPopup = '';
-		if (tagMail) contactVal += '<a href="mailto:' + encodeURI(tagMail) + '"><i class="fa-solid fa-envelope fa-fw" title="E-mail: ' + tagMail + '"></i></a> ';
-		if (tagFb) contactVal += '<a href="' + encodeURI(tagFb) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-facebook fa-fw" title="Facebook: ' + tagFb + '" style="color:#3b5998;"></i></a> ';
-		if (tagTwit) contactVal += '<a href="https://twitter.com/' + encodeURI(tagTwit) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-x-twitter fa-fw" title="X-twitter: @' + tagTwit + '" style="color:#000000;"></i></a> ';
-		if (tagInstg) contactVal += '<a href="https://instagram.com/' + encodeURI(tagInstg) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-instagram fa-fw" title="Instagram: ' + tagInstg + '" style="color:#d93175;"></i></a> ';
-		if (tagYtube) contactVal += '<a href="' + encodeURI(tagYtube) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-youtube fa-fw" title="YouTube: ' + tagYtube + '" style="color:#ff0000;"></i></a> ';
+		if (tagMail) contactVal += '<a href="mailto:' + encodeURI(tagMail) + '"><i class="fa-solid fa-envelope" title="E-mail: ' + tagMail + '"></i></a> ';
+		if (tagFb) contactVal += '<a href="' + encodeURI(tagFb) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-facebook" title="Facebook: ' + tagFb + '" style="color:#3b5998;"></i></a> ';
+		if (tagTwit) contactVal += '<a href="https://twitter.com/' + encodeURI(tagTwit) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-x-twitter" title="X-twitter: @' + tagTwit + '" style="color:#000000;"></i></a> ';
+		if (tagInstg) contactVal += '<a href="https://instagram.com/' + encodeURI(tagInstg) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-instagram" title="Instagram: ' + tagInstg + '" style="color:#d93175;"></i></a> ';
+		if (tagYtube) contactVal += '<a href="' + encodeURI(tagYtube) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-youtube" title="YouTube: ' + tagYtube + '" style="color:#ff0000;"></i></a> ';
 		if (contactVal) markerPopup += L.Util.template(tagTmpl, { key: 'Contact', keyVal: contactVal, iconName: 'fa-solid fa-circle-user' });
 		return markerPopup;
 	};
@@ -93,22 +93,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		let streetVal = '';
 		markerPopup = '';
 		if (tags.highway && eName && element.type === 'way' && LBounds.contains(element.center)) {
-			// get street history through json file lookup
-			$.ajax({
-				async: false,
-				url: 'tour/itemStreetNames/streetnames.json',
-				dataType: 'json',
-				cache: true,
-				success: function(json) {
-					const street = json.streetNames.street.find(street => street.name === tags.name);
-					if (street.date && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { key: 'Start date', keyVal: street.date, iconName: 'fa-solid fa-calendar-day' });
-					if (street.desc) markerPopup += '<span class="popup-tag-long theme-scroll">' + L.Util.template(tagTmpl, { key: 'Etymology', keyVal: '<i>' + street.desc + '</i>', iconName: 'fa-solid fa-book' }) +
-						'<span class="popup-comment"><a onclick="popupWindow(\'streetbook\');" title="The Story of Bexhill Street Names">The Story of Bexhill Street Names</a></span>' +
-					'</span>';
-					if ($('#settings-debug').is(':checked')) console.debug('Street-names:', json);
-				},
-				error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }
-			});
+			if (tags.start_date) streetVal += tags.start_date + '; ';
 			if (tags.maxspeed) streetVal += tags.maxspeed + '; ';
 			if (tags.maxwidth) streetVal += tags.maxwidth + '; ';
 			if (tags.access === 'private') streetVal += 'private; ';
@@ -124,6 +109,23 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags.bridge === 'yes') streetVal += 'bridge; ';
 			if (streetVal) markerPopup += L.Util.template(tagTmpl, { key: 'Highway details', keyVal: listTidy(streetVal, true), iconName: 'fa-solid fa-road' });
 			if (tags.prow_ref) markerPopup += L.Util.template(tagTmpl, { key: 'Public Right of Way', keyVal: tags.prow_ref, iconName: 'fa-solid fa-person-hiking' });
+			// get street history through json file lookup
+			$.ajax({
+				async: false,
+				url: 'tour/itemStreetNames/streetnames.json',
+				dataType: 'json',
+				cache: true,
+				success: function(json) {
+					const street = json.streetNames.street.find(street => street.name === tags.name);
+					if (street.date && !tags.start_date) markerPopup += L.Util.template(tagTmpl, { key: 'Start date', keyVal: street.date, iconName: 'fa-solid fa-calendar-day' });
+					if (street.date && tags.start_date && $('#settings-debug').is(':checked')) console.debug('OSM date: ' + street.date + ' | Book date: ' + tags.start_date);
+					if (street.desc) markerPopup += '<span class="popup-tag-long theme-scroll">' + L.Util.template(tagTmpl, { key: 'Etymology', keyVal: '<i>' + street.desc + '</i>', iconName: 'fa-solid fa-book' }) +
+						'<span class="popup-comment"><a onclick="popupWindow(\'streetbook\');" title="The Story of Bexhill Street Names">The Story of Bexhill Street Names</a></span>' +
+					'</span>';
+					if ($('#settings-debug').is(':checked')) console.debug('Street-names:', json);
+				},
+				error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR STREET-NAMES:', encodeURI(this.url)); }
+			});
 		}
 		return markerPopup;
 	};
@@ -134,7 +136,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		let readingVal = '', planningVal = '';
 		markerPopup = '';
 		if ((tags.building === 'apartments' || tags.building === 'detached' || tags.building === 'bungalow' || tags.building === 'farm' || tags.building === 'house' || tags.building === 'semidetached_house' || tags.building === 'static_caravan') && tags['addr:street'] && LBounds.contains(element.center)) {
-			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ';
+			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '\\\'') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ';
 			readingVal += '<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories 1886-1931" target="_blank" rel="noopener">Street directories</a>; ';
 			if (tags.building === 'apartments' && tags['addr:housename']) planningVal += tags['addr:housename'];
 			else if (tags['addr:housenumber']) planningVal += tags['addr:housenumber'] + ' ' + tags['addr:street'];
@@ -178,38 +180,37 @@ function parse_tags(element, titlePopup, poiParser) {
 	const facility_parser = function(tags) {
 		let facVal = '';
 		markerPopup = '';
-		if (tags.indoor === 'yes') facVal += '<i class="popup-tag-value-limited fa-solid fa-door-closed fa-fw" title="place is indoors"></i>';
-		if (tags.wheelchair === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-wheelchair fa-fw" title="wheelchair access"></i>';
-		else if (tags.wheelchair === 'limited') facVal += '<i class="popup-tag-value-limited fa-solid fa-wheelchair fa-fw" title="limited wheelchair access"></i>';
-		else if (tags.wheelchair === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-wheelchair fa-fw" title="no wheelchair access"></i>';
-		if (tags.elevator === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-elevator fa-fw" title="lift access"></i>';
-		if (tags['hearing_impaired:induction_loop'] === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-ear-deaf fa-fw" title="induction loop"></i>';
-		if (tags['tactile_writing:braille'] === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-braille fa-fw" title="braille"></i>';
-		if (tags.dog === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-dog fa-fw" title="dogs allowed"></i>';
-		else if (tags.dog === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-dog fa-fw" title="no dogs allowed"></i>';
-		else if (tags.dog === 'leashed') facVal += '<i class="popup-tag-value-limited fa-solid fa-dog fa-fw" title="leashed dogs only"></i>';
-		if (tags.internet_access === 'wlan') facVal += '<i class="popup-tag-value-yes fa-solid fa-wifi fa-fw" title="wireless internet"></i>';
-		else if (tags.internet_access === 'terminal') facVal += '<i class="popup-tag-value-yes fa-solid fa-desktop fa-fw" title="internet terminal"></i>';
-		if (tags.lit === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-lightbulb fa-fw" title="lighting"></i>';
-		if (tags.lockable === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-unlock-keyhole fa-fw" title="lockable"></i>';
-		if (tags['drinking_water:refill'] === 'yes') facVal += '<i class="fa-solid fa-bottle-droplet fa-fw" style="color:#0082ff;" title="free drinking water refills"></i>';
-		if (tags.membership === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-id-card fa-fw" title="membership available"></i>';
-		if (tags.membership === 'required') facVal += '<i class="popup-tag-value-no fa-solid fa-id-card fa-fw" title="membership required"></i>';
-		if (tags.live_music === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-music fa-fw" title="live music"></i>';
-		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') facVal += '<i class="popup-tag-value-yes fa-solid fa-umbrella fa-fw" title="sheltered"></i>';
+		if (tags.indoor === 'yes') facVal += '<i class="popup-tag-value-limited fa-solid fa-door-closed" title="place is indoors"></i>';
+		if (tags.wheelchair === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-wheelchair" title="wheelchair access"></i>';
+		else if (tags.wheelchair === 'limited') facVal += '<i class="popup-tag-value-limited fa-solid fa-wheelchair" title="limited wheelchair access"></i>';
+		else if (tags.wheelchair === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-wheelchair" title="no wheelchair access"></i>';
+		if (tags.elevator === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-elevator" title="lift access"></i>';
+		if (tags['hearing_impaired:induction_loop'] === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-ear-deaf" title="induction loop"></i>';
+		if (tags['tactile_writing:braille'] === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-braille" title="braille"></i>';
+		if (tags.dog === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-dog" title="dogs allowed"></i>';
+		else if (tags.dog === 'no') facVal += '<i class="popup-tag-value-no fa-solid fa-dog" title="no dogs allowed"></i>';
+		else if (tags.dog === 'leashed') facVal += '<i class="popup-tag-value-limited fa-solid fa-dog" title="leashed dogs only"></i>';
+		if (tags.internet_access === 'wlan') facVal += '<i class="popup-tag-value-yes fa-solid fa-wifi" title="wireless internet"></i>';
+		else if (tags.internet_access === 'terminal') facVal += '<i class="popup-tag-value-yes fa-solid fa-desktop" title="internet terminal"></i>';
+		if (tags.lockable === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-unlock-keyhole" title="lockable"></i>';
+		if (tags['drinking_water:refill'] === 'yes') facVal += '<i class="fa-solid fa-bottle-droplet" style="color:#0082ff;" title="free drinking water refills"></i>';
+		if (tags.membership === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-id-card" title="membership available"></i>';
+		if (tags.membership === 'required') facVal += '<i class="popup-tag-value-no fa-solid fa-id-card" title="membership required"></i>';
+		if (tags.live_music === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-music" title="live music"></i>';
+		if (tags.shelter === 'yes' || tags.covered === 'yes' || tags.covered === 'booth') facVal += '<i class="popup-tag-value-yes fa-solid fa-umbrella" title="sheltered"></i>';
 		if (tags.amenity === 'shelter' || tags.highway === 'bus_stop') {
-			if (tags.bench === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-chair fa-fw" title="seating' + (tags.seats ? ' for ' + tags.seats : '') + '"></i>';
-			if (tags.bin === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-trash-can fa-fw" title="rubbish bin"></i>';
+			if (tags.bench === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-chair" title="seating' + (tags.seats ? ' for ' + tags.seats : '') + '"></i>';
+			if (tags.bin === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-trash-can" title="rubbish bin"></i>';
 		}
 		if (tags.amenity === 'telephone') {
-			if (tags.internet_access === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-at fa-fw" title="internet access"></i>';
-			if (tags.sms === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-comment-sms fa-fw" title="sms"></i>';
+			if (tags.internet_access === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-at" title="internet access"></i>';
+			if (tags.sms === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-comment-sms" title="sms"></i>';
 		}
 		if (tags.amenity === 'toilets') {
-			if (tags.unisex === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-restroom fa-fw" title="unisex"></i>';
-			if (tags.male === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-person fa-fw" title="male"></i>';
-			if (tags.female === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-person-dress fa-fw" title="female"></i>';
-			if (tags.changing_table === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-baby fa-fw" title="baby changing"></i>';
+			if (tags.unisex === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-restroom" title="unisex"></i>';
+			if (tags.male === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-person" title="male"></i>';
+			if (tags.female === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-person-dress" title="female"></i>';
+			if (tags.changing_table === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-baby" title="baby changing"></i>';
 		}
 		if (facVal) facVal = '<span class="popup-tag-value-facility">' + facVal + '</span>';
 		if (tags.amenity === 'recycling') {
@@ -259,7 +260,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					recyc = recycKey.split(':')[1];
 					recycList += recyc + ', ';
 				}
-				if (recycIcon[recyc]) recycTag += '<i class="' + recycIcon[recyc] + ' fa-fw" title="' + recyc + '"></i>';
+				if (recycIcon[recyc]) recycTag += '<i class="' + recycIcon[recyc] + '" title="' + recyc + '"></i>';
 			}
 			if (recycList) markerPopup += L.Util.template(tagTmpl, { key: 'Recycling options', keyVal: listTidy(recycList, true), iconName: 'fa-solid fa-recycle' });
 			if (recycTag) facVal += '<span class="popup-tag-value-recycling"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + recycTag + '</span>';
@@ -292,7 +293,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					pay = payKey.split(':')[1];
 					payList += pay + ', ';
 				}
-				if (payIcon[pay]) payTag += '<i class="' + payIcon[pay] + ' fa-fw" title="' + pay + '"></i>';
+				if (payIcon[pay]) payTag += '<i class="' + payIcon[pay] + '" title="' + pay + '"></i>';
 			}
 			if (payList) markerPopup += L.Util.template(tagTmpl, { key: 'Payment options', keyVal: listTidy(payList, true), iconName: 'fa-solid fa-cash-register' });
 			if (payTag) facVal += '<span class="popup-tag-value-payment"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + payTag + '</span>';
@@ -302,8 +303,8 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (tags['fee:conditional'] && tags.charge) feeTag = tags['fee:conditional'] + ': ' + tags.charge;
 			else {
 				feeTag = tags.charge || tags['fee:conditional'] || tags.fee;
-				if (feeTag === 'yes') feeTag = '<i class="fa-solid fa-check fa-fw"></i>';
-				else if (feeTag === 'no') feeTag = '<i class="fa-solid fa-xmark fa-fw"></i>';
+				if (feeTag === 'yes') feeTag = '<i class="fa-solid fa-check"></i>';
+				else if (feeTag === 'no') feeTag = '<i class="fa-solid fa-xmark"></i>';
 			}
 			markerPopup += L.Util.template(tagTmpl, { key: 'Fee', keyVal: listTidy(feeTag), iconName: 'fa-solid fa-sterling-sign' });
 		}
@@ -318,7 +319,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			for (let dietKey in tags) {
 				let diet = '';
 				if (dietKey.startsWith('diet:') && tags[dietKey] === 'yes') diet = dietKey.split(':')[1];
-				if (dietIcon[diet]) dietTag += '<i class="' + dietIcon[diet] + ' fa-fw" title="' + diet + ' options"></i>';
+				if (dietIcon[diet]) dietTag += '<i class="' + dietIcon[diet] + '" title="' + diet + ' options"></i>';
 			}
 			if (dietTag) facVal += '<span class="popup-tag-value-diet"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + dietTag + '</span>';
 		}
@@ -415,7 +416,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			if (openhrsState) {	markerPopup =
 				'<div style="min-width:' + (ohTable ? '270px;" class="popup-openhrs' : '100px;') + '">' +
 					'<span class="popup-tag" title="' + tags.opening_hours.replaceAll('"', '\'') + '">' +
-						'<i class="popup-tag-icon popup-openhrs-color-' + ohState + ' fa-solid fa-clock fa-fw"></i>' +
+						'<i class="popup-tag-icon popup-openhrs-color-' + ohState + ' fa-solid fa-clock"></i>' +
 						'<span class="popup-tag-value"><strong>' + openhrsState + ':</strong>' + strNextChange + '</span>' +
 					'</span>' +
 					'<div class="popup-openhrs-table">' + ohTable + '</div>' +
@@ -1053,11 +1054,11 @@ function callback(data) {
 		toolTip += '</div><i>' + title + '</i>';
 		if (e.tags.image || e.tags.wikimedia_commons) {
 			const imgIcon = ((e.tags.image && e.tags.wikimedia_commons) || (e.tags.image && e.tags.image.indexOf(';') > -1) || (e.tags.wikimedia_commons && e.tags.wikimedia_commons.indexOf(';') > -1)) ? 'images' : 'image';
-			toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
+			toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + '" title="' + titleCase(imgIcon) + '"></i>';
 		}
-		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view fa-fw" title="Photosphere view"></i>';
-		if (e.tags['wikimedia_commons:video']) toolTip += ' <i class="tooltip-icons fa fa-film fa-fw" title="Video"></i>';
-		if (e.tags['3dmr']) toolTip += ' <i class="tooltip-icons fa fa-cube fa-fw" title="3D Model"></i>';
+		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view" title="Photosphere view"></i>';
+		if (e.tags['wikimedia_commons:video']) toolTip += ' <i class="tooltip-icons fa fa-film" title="Video"></i>';
+		if (e.tags['3dmr']) toolTip += ' <i class="tooltip-icons fa fa-cube" title="3D Model"></i>';
 		// popup and tooltip
 		const customPOptions = {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
@@ -1115,9 +1116,9 @@ function pushPoiList(customSort) {
 		let poiIcon = '';
 		if (poiList[c]._icon) poiIcon = '<img alt="" src="' + poiList[c]._icon.src + '">';
 		else if (poiList[c].options.className === 'circleMarker')
-			poiIcon = '<i class="pois-results-circleMarker fa-solid fa-circle fa-lg fa-fw" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
+			poiIcon = '<i class="pois-results-circleMarker fa-solid fa-circle fa-lg" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		else if (poiList[c].options.color)
-			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fa-solid fa-circle fa-lg fa-fw" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
+			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fa-solid fa-circle fa-lg" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
 			'<td class="openhrs-color-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
 			'<td>' + poiList[c]._tooltip._content + '</td>' +
@@ -1166,7 +1167,7 @@ function pushPoiList(customSort) {
 	$('#pois-results h3').html(
 		poiList.length + ' result' + (poiList.length > 1 ? 's' : '') +
 			($('#settings-overpass-attic').val() ? ' from ' + dateFormat($('#settings-overpass-attic').val(), 'short') : '') +
-			((!customSort || poiList[0].distance) && poiList.length > 1 ? ' <i id="pois-results-sort" class="fa-solid fa-arrow-down-' + sortBy + ' fa-fw" title="Sort" onclick="poi_list_reverse(\'' + sortBy + '\')"></i>' : '')
+			((!customSort || poiList[0].distance) && poiList.length > 1 ? ' <i id="pois-results-sort" class="fa-solid fa-arrow-down-' + sortBy + '" title="Sort" onclick="poi_list_reverse(\'' + sortBy + '\')"></i>' : '')
 	);
 	if (poiList.length === maxOpResults) {
 		$('#pois-results h3').append('<br>(maximum number of results)');
@@ -1179,24 +1180,24 @@ function pushPoiList(customSort) {
 function generic_header_parser(header, subheader, fhrs, osmId, wikidata) {
 	let markerPopup = '<div class="popup-header">';
 	if (osmId && !$('#settings-overpass-attic').val()) {
-		markerPopup += '<a class="popup-edit popup-header-button" title="Show Editing Options"><i class="fa-solid fa-pen-to-square fa-fw"></i></a>';
-		if (Object.keys(wikidata).length) markerPopup += '<a class="popup-wikidata popup-header-button" title="Show Wikidata" data-wikidata="' + encodeURI(JSON.stringify(wikidata)) + '"><i class="fa-solid fa-barcode fa-fw"></i></a>';
-		if (noIframe && localStorageAvail()) markerPopup += '<a class="popup-bookmark popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark fa-fw"></i></a>';
+		markerPopup += '<a class="popup-edit popup-header-button" title="Show Editing Options"><i class="fa-solid fa-pen-to-square"></i></a>';
+		if (Object.keys(wikidata).length) markerPopup += '<a class="popup-wikidata popup-header-button" title="Show Wikidata" data-wikidata="' + encodeURI(JSON.stringify(wikidata)) + '"><i class="fa-solid fa-barcode"></i></a>';
+		if (noIframe && localStorageAvail()) markerPopup += '<a class="popup-bookmark popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark"></i></a>';
 		if (fhrs) markerPopup += '<span class="popup-fhrs notloaded" data-fhrs="' + fhrs + '"><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>';
 	}
 	if (header || fhrs) markerPopup += '<h3>' + (header !== undefined ? header : '&hellip;') + '</h3>';
 	if (subheader) markerPopup += '<span class="popup-header-sub">' + subheader + '</span>';
 	return markerPopup + '</div>';
 }
-const tagTmpl = '<div class="popup-tag"><i class="popup-tag-icon {iconName} fa-fw"></i><span class="popup-tag-value"><strong>{key}:</strong>{keyVal}</span></div>';
+const tagTmpl = '<div class="popup-tag"><i class="popup-tag-icon {iconName}"></i><span class="popup-tag-value"><strong>{key}:</strong>{keyVal}</span></div>';
 // tags | key | label | icon
 function generic_tag_parser(tags, key, label, iconName) {
 	let markerPopup = '', resultVal;
 	// ignore implied access
 	if (tags[key] && key === 'access' && tags[key] === 'yes') return markerPopup;
 	else if (tags[key]) {
-		if (tags[key] === 'yes') resultVal = '<i class="fa-solid fa-check fa-fw" title="yes"></i>';
-		else if (tags[key] === 'no') resultVal = '<i class="fa-solid fa-xmark fa-fw" title="no"></i>';
+		if (tags[key] === 'yes') resultVal = '<i class="fa-solid fa-check" title="yes"></i>';
+		else if (tags[key] === 'no') resultVal = '<i class="fa-solid fa-xmark" title="no"></i>';
 		else if (key.indexOf('_date') > -1 || key.indexOf('date_') > -1) resultVal = dateFormat(tags[key], 'long');
 		else resultVal = listTidy(tags[key]);
 		markerPopup += L.Util.template(tagTmpl, { key: label, keyVal: resultVal, iconName: iconName }).replaceAll('<strong> :</strong>', '');
@@ -1366,7 +1367,7 @@ function hotel_parser(tags, titlePopup) {
 		let markerPopup = '', hotelVal = '';
 		if (tags.stars) {
 			let result = '<a href="https://www.visitengland.com/plan-your-visit/quality-assessment-and-star-ratings/visitengland-star-ratings" title="' + tags.stars + ' stars" target="_blank" rel="noopener">';
-			for (let c = 0; c < tags.stars; c++) result += '<i class="fa-regular fa-star fa-fw"></i>';
+			for (let c = 0; c < tags.stars; c++) result += '<i class="fa-regular fa-star"></i>';
 			result += '</a>';
 			markerPopup += L.Util.template(tagTmpl, { key: 'VisitEngland rating', keyVal: result, iconName: 'fa-solid fa-star' });
 		}
@@ -1526,26 +1527,26 @@ function show_img_controls(imgMax, img360, vid, model3d) {
 	let ctrlTmpl = '<div class="popup-navigate">', x;
 	if (model3d) ctrlTmpl +=
 		'<a title="3D Model" onclick="popupWindow(\'iframe\', \'https://3dmr.eu/model/' + model3d + '\');"' +
-			'<i style="min-width:25px;" class="fa-solid fa-cube fa-fw"></i>' +
+			'<i style="min-width:25px;" class="fa-solid fa-cube"></i>' +
 		'</a>';
 	if (vid && vid.length) for (x = 0; x < vid.length; x++) {
 		if (vid[x].startsWith('File') && vid[x].endsWith('webm')) ctrlTmpl +=
 			'<a class="vid notloaded" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-base-class="noslideshow" data-loop="false"' +
 				'data-type="iframe" data-animation-effect="circular" href="https://commons.wikimedia.org/wiki/' + encodeURIComponent(vid[x]) + '?embedplayer=yes">' +
-				'<i style="min-width:25px;" class="fa-solid fa-film fa-fw' + bouncedicon + '"></i>' +
+				'<i style="min-width:25px;" class="fa-solid fa-film' + bouncedicon + '"></i>' +
 			'</a>';
 	}
 	if (img360 && img360.length) for (x = 0; x < img360.length; x++) {
 		if (img360[x].startsWith('File')) ctrlTmpl +=
 			'<a class="pano notloaded" title="Photosphere" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-fancybox="pano" data-base-class="noslideshow" data-loop="false"' +
 				'data-type="iframe" data-animation-effect="circular" data-src="assets/pannellum/pannellum.htm#config=config.json&panorama=' + encodeURIComponent(img360[x]) + '" href="javascript:;">' +
-				'<i style="min-width:25px;" class="fa-solid fa-street-view fa-fw' + bouncedicon + '"></i>' +
+				'<i style="min-width:25px;" class="fa-solid fa-street-view' + bouncedicon + '"></i>' +
 			'</a>';
 	}
 	if (imgMax > 1) ctrlTmpl +=
-		'<span class="theme-color"><a title="Previous image" onclick="navImg(0);"><i class="fa-solid fa-square-caret-left fa-fw"></i></a></span>' +
-		'<i class="popup-navigate-count fa-solid fa-1 fa-fw"></i>/<i class="fa-solid fa-' + imgMax + ' fa-fw"></i>' +
-		'<span class="theme-color"><a title="Next image" onclick="navImg(1);"><i class="fa-solid fa-square-caret-right fa-fw"></i></a></span>';
+		'<span class="theme-color"><a title="Previous image" onclick="navImg(0);"><i class="fa-solid fa-square-caret-left"></i></a></span>' +
+		'<i class="popup-navigate-count fa-solid fa-1"></i>/<i class="fa-solid fa-' + imgMax + '"></i>' +
+		'<span class="theme-color"><a title="Next image" onclick="navImg(1);"><i class="fa-solid fa-square-caret-right"></i></a></span>';
 	return ctrlTmpl + '</div>';
 }
 function navImg(direction) {
@@ -1556,7 +1557,7 @@ function navImg(direction) {
 		// get the next image
 		const swapImg = function(nID) {
 			$('.popup-img-item#img' + cID).fadeOut(200, function() { $('.popup-img-item#img' + nID).fadeIn(200); });
-			$('.popup-navigate-count').removeClass().addClass('popup-navigate-count fa-solid fa-fw fa-' + parseInt(nID+1));
+			$('.popup-navigate-count').removeClass().addClass('popup-navigate-count fa-solid fa-' + parseInt(nID+1));
 		};
 		// navigate through multiple images. 0 = previous, 1 = next
 		if (direction === 0 && cID > 0) swapImg(cID - 1);

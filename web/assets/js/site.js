@@ -25,6 +25,7 @@ let maxOpResults = 250;
 // maximum nominatim search results
 const maxNomResults = 5;
 // website checks
+var kioskMode = false;
 const noTouch = !L.Browser.mobile;
 const noIframe = window.top === window.self;
 let noPermalink = !new URL(window.location.href).searchParams.toString() || new URL(window.location.href).searchParams.toString() === 'T=none';
@@ -126,8 +127,8 @@ L.Map.addInitHook(function() {
 			clickOutline.clearLayers();
 			$('#modal').hide();
 		}
-		// ignore map click if... measuring / low zoom / dragging walk markers / layer-noclick / overlay control is open / spinner is shown / popup is open on screen
-		else if (!measure._measuring && (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .layer-noclick').length && ($('.leaflet-control-layers').outerWidth() <= 44) && !imageOverlay.getLayers().length &&
+		// ignore map click if... kiosk / measuring / low zoom / dragging walk markers / layer-noclick / overlay control is open / spinner is shown / popup is open on screen
+		else if (!kioskMode && !measure._measuring && (map.getZoom() >= 15 && !$('.leaflet-marker-draggable, .layer-noclick').length && ($('.leaflet-control-layers').outerWidth() <= 44) && !imageOverlay.getLayers().length &&
 		 !$('.spinner:visible').length && ($('.leaflet-control-geocoder').width() < 40) && !($('.leaflet-popup').length && map.getBounds().contains(map.layerPointToLatLng($('.leaflet-popup')[0]._leaflet_pos))))) {
 			that.fire('visualclick', $.extend(e, { type: 'visualclick' }));
 			// drop marker and reverse lookup on single click
@@ -170,34 +171,34 @@ const map = new L.map('map', {
 	maxZoom: 20,
 	bounceAtZoomLimits: false,
 	// https://github.com/aratcliffe/Leaflet.contextmenu
-	contextmenu: true,
+	contextmenu: !kioskMode,
 	contextmenuWidth: 140,
 	contextmenuItems: [{
-		text: '<i class="fa-solid fa-hand-pointer fa-fw"></i> Query feature',
+		text: '<i class="fa-solid fa-hand-pointer"></i> Query feature',
 		index: 0,
 		callback: reverseQuery
 	}, {
-		text: '<i class="fa-solid fa-person-walking fa-fw"></i> Walk to here',
+		text: '<i class="fa-solid fa-person-walking"></i> Walk to here',
 		index: 1,
 		callback: walkHere
 	}, {
-		text: '<i class="fa-solid fa-location-dot fa-fw"></i> Add a walk point',
+		text: '<i class="fa-solid fa-location-dot"></i> Add a walk point',
 		index: 2,
 		callback: walkPoint
 	}, {
-		text: '<i class="fa-solid fa-crosshairs fa-fw"></i> Centre map here',
+		text: '<i class="fa-solid fa-crosshairs"></i> Centre map here',
 		index: 3,
 		callback: centreMap
 	}, '-', {
-		text: '<i class="fa-regular fa-sticky-note fa-fw"></i> Leave a note here',
+		text: '<i class="fa-regular fa-sticky-note"></i> Leave a note here',
 		index: 4,
 		callback: improveMap
 	}, {
-		text: '<i class="fa-solid fa-wrench fa-fw"></i> FixMyStreet',
+		text: '<i class="fa-solid fa-wrench"></i> FixMyStreet',
 		index: 5,
 		callback: fixMyStreet
 	}, {
-		text: '<i class="fa-solid fa-street-view fa-fw"></i> Photosphere view',
+		text: '<i class="fa-solid fa-street-view"></i> Photosphere view',
 		index: 6,
 		callback: panoView
 	}, '-', {
@@ -206,7 +207,12 @@ const map = new L.map('map', {
 		callback: copyGeos
 	}]
 }).whenReady(function() {
-	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'#info-software\');" title="Attribution"><i class="fa-solid fa-circle-info fa-fw"></i></a>');
+	// kiosk mode
+	if (kioskMode === true) {
+		$('html').addClass('kiosk');
+		$('#map').after('<div id="kiosk-button-back" onclick="window.close()"><i class="fa-solid fa-right-to-bracket fa-flip-horizontal"></i> BACK</div>');
+	}
+	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'#info-software\');" title="Attribution"><i class="fa-solid fa-circle-info"></i></a>');
 	if (!noIframe) {
 		$('#control-bookmarks').parent().add('.leaflet-control-locate').hide();
 		$('#settings-devtools').css('visibility', 'hidden');
@@ -236,7 +242,7 @@ const map = new L.map('map', {
 	$('.leaflet-top.leaflet-right').append(
 		'<div id="control-opacity" class="leaflet-control leaflet-bar">' +
 			'<input type="range" min="0.05" max="1" step="0.05">' +
-			'<div class="leaflet-popup-close-button" title="Remove overlay" onclick="map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);"><i class="fa-solid fa-xmark fa-sm"></i></div>' +
+			'<div class="leaflet-popup-close-button" title="Remove overlay" onclick="map.removeLayer(tileOverlayLayers[tileOverlayLayer[actOverlayLayer].name]);"><i class="fa-solid fa-xmark fa-width-auto"></i></div>' +
 		'</div>'
 	);
 	$('.leaflet-bottom.leaflet-right').prepend('<div id="modal" class="leaflet-control"></div>');
@@ -671,14 +677,14 @@ function setOverlayLabel() {
 	// adds titles and hides certain layers in control
 	if (!$('.control-layers-title').length) {
 		$('.leaflet-control-layers-overlays label').first().before('<div class="control-layers-title">Overlays</div>');
-		$('.leaflet-control-layers-overlays label:contains("Bing Aerial")').first().before('<div class="control-layers-title">Air photography</div>');
+		$('.leaflet-control-layers-overlays label:contains("Bing")').first().before('<div class="control-layers-title">Air photography</div>');
 		$('.leaflet-control-layers-overlays label:contains("Ordnance Survey")').first().before('<div class="control-layers-title">Historical maps</div>');
 		$('.leaflet-control-layers-overlays label').last().after('<a class="control-layers-title" onclick="switchTab(\'tour\', \'overlays\');">More...</a>');
 	}
 	for (let tileBase in tileBaseLayer) if (tileBaseLayer[tileBase].hide) $('.leaflet-control-layers-base label:contains("' + tileBaseLayer[tileBase].name + '")').addClass('hideLayer');
 	for (let tileOverlay in tileOverlayLayer) if (tileOverlayLayer[tileOverlay].hide) $('.leaflet-control-layers-overlays label:contains("' + tileOverlayLayer[tileOverlay].name + '")').addClass('hideLayer');
 	if (!$('.leaflet-control-layers-list.theme-scroll').length) $('.leaflet-control-layers-list').addClass('theme-scroll');
-	if (!$('.leaflet-control-layers-toggle span').length) $('.leaflet-control-layers-toggle').html('<span style="margin:5px 4px;" class="fa fa-solid fa-layer-group fa-2x"></span>');
+	if (!$('.leaflet-control-layers-toggle span').length) $('.leaflet-control-layers-toggle').html('<span style="margin:5px 2px;" class="fa fa-solid fa-layer-group fa-2x"></span>');
 }
 function changeOffset(layer, container) {
 	// offset layer, metres to pixels
@@ -945,6 +951,31 @@ function setLeaflet() {
 	map.addLayer(iconLayer).addLayer(clickOutline).addLayer(imageOverlay).addLayer(areaOutline);
 	// leaflet icon image path
 	L.Icon.Default.imagePath = 'assets/img/leaflet/';
+	// quadkey layers
+	L.TileLayer.QuadKeyTileLayer = L.TileLayer.extend({
+		getTileUrl: function(tilePoint) {
+			return L.Util.template(this._url, {
+				s: this._getSubdomain(tilePoint),
+				q: this._quadKey(tilePoint.x, tilePoint.y, this._getZoomForUrl())
+			});
+		},
+		_quadKey: function(x, y, z) {
+			const quadKey = [];
+			for (let i = z; i > 0; i--) {
+				let digit = '0';
+				let mask = 1 << (i - 1);
+				if ((x & mask) !== 0) {
+					digit++;
+				}
+				if ((y & mask) !== 0) {
+					digit++;
+					digit++;
+				}
+				quadKey.push(digit);
+			}
+			return quadKey.join('');
+		}
+	});
 	// baselayers
 	const attribution = '&copy; <a href="https://openstreetmap.org/copyright" title="Copyright and License" target="_blank" rel="noopener">OpenStreetMap</a>';
 	tileBaseLayer = {
@@ -991,9 +1022,14 @@ function setLeaflet() {
 			url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=' + window.BOSM.thuforKey,
 			attribution: attribution + ', <a href="https://thunderforest.com/maps/transport/" target="_blank" rel="noopener">ThunderForest</a>'
 		},
-		bing: {
-			name: 'Bing Aerial',
+		aerial: {
+			name: '2018 Aerial (Bing)',
+			url: 'https://ecn.t{s}.tiles.virtualearth.net/tiles/a{q}?g=737&n=z',
+			attribution: 'Vexcel Imaging, Bing',
+			subdomains: '0123',
 			maxNativeZoom: 19,
+			quadkey: true,
+			errorTileUrl: 'https://ecn.t0.tiles.virtualearth.net/tiles/a1202020223330?g=737&n=z',
 			offset: [-1, 1]
 		}
 		/*google: {
@@ -1012,7 +1048,7 @@ function setLeaflet() {
 			errorTileUrl: tbl.errorTileUrl,
 			className: tbl.className || ''
 		};
-		if (tile === 'bing') tileBaseLayers[tbl.name] = L.bingLayer(window.BOSM.bingKey, bOptions);
+		if (tbl.quadkey) tileBaseLayers[tbl.name] = new L.TileLayer.QuadKeyTileLayer(tbl.url, bOptions);
 		else tileBaseLayers[tbl.name] = L.tileLayer(tbl.url, bOptions);
 		// create object array for all basemap layers
 		baseTileList.name.push(tbl.name);
@@ -1082,10 +1118,14 @@ function setLeaflet() {
 			className: 'layer-noclick'
 		},
 		// air photography
-		bing: {
-			name: 'Bing Aerial',
+		aerial: {
+			name: '2018 Aerial (Bing)',
+			url: 'https://ecn.t{s}.tiles.virtualearth.net/tiles/a{q}?g=737&n=z',
+			attribution: 'Vexcel Imaging, Bing',
+			subdomains: '0123',
 			opacity: 0.5,
 			maxNativeZoom: 19,
+			quadkey: true,
 			offset: [-1, 1]
 		},
 		/*google: {
@@ -1136,7 +1176,7 @@ function setLeaflet() {
 		os1950: {
 			name: '1950 Aerial',
 			url: 'https://tiles.bexhillheritage.com/os1950/{z}/{x}/{y}.png',
-			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1167,7 +1207,7 @@ function setLeaflet() {
 		os1962: {
 			name: '1962 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/os/britain10knatgrid/{z}/{x}/{y}.png',
-			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 16,
@@ -1177,7 +1217,7 @@ function setLeaflet() {
 		os1955: {
 			name: '1955 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/london_1940s/{z}/{x}/{y}.png',
-			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 19,
@@ -1206,7 +1246,7 @@ function setLeaflet() {
 		arp1942: {
 			name: '1942 Air Raid Precautions',
 			url: 'https://tiles.bexhillheritage.com/arp1942/{z}/{x}/{y}.png',
-			attribution: 'Ordnance Survey, <a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>, <a href="https://www.bexhillmuseum.org.uk" target="_blank" rel="noopener">Bexhill Museum</a>',
 			bounds: L.latLngBounds([50.8292, 0.4157], [50.8713, 0.5098]),
 			opacity: 1,
 			maxNativeZoom: 18,
@@ -1226,7 +1266,7 @@ function setLeaflet() {
 		os1938: {
 			name: '1938 Ordnance Survey',
 			url: 'https://tiles.bexhillheritage.com/os1938/{z}/{x}/{y}.png',
-			attribution: 'Ordnance Survey, <a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Crown Copyright Ordnance Survey</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>',
 			bounds: L.latLngBounds([50.874, 0.380], [50.833, 0.518]),
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1235,7 +1275,7 @@ function setLeaflet() {
 		os1930: {
 			name: '1930 Ordnance Survey',
 			url: 'https://tiles.bexhillheritage.com/os1930/{z}/{x}/{y}.png',
-			attribution: 'Ordnance Survey, <a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Crown Copyright Ordnance Survey</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1265,7 +1305,7 @@ function setLeaflet() {
 		os1909: {
 			name: '1909 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/25_inch/holes_england/{z}/{x}/{y}.png',
-			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 18,
@@ -1286,7 +1326,7 @@ function setLeaflet() {
 		os1899: {
 			name: '1899 Ordnance Survey',
 			url: 'https://tiles.bexhillheritage.com/os1899/{z}/{x}/{y}.jpg',
-			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1306,7 +1346,7 @@ function setLeaflet() {
 		os1873: {
 			name: '1873 Ordnance Survey',
 			url: 'https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-sussex/{z}/{x}/{y}.png',
-			attribution: 'Ordnance Survey, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
+			attribution: '<a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">Ordnance Survey</a>, <a href="https://maps.nls.uk/projects/api/" target="_blank" rel="noopener">NLS Maps API</a>',
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 17,
@@ -1365,7 +1405,7 @@ function setLeaflet() {
 			minNativeZoom: tol.minNativeZoom,
 			className: tol.className || ''
 		};
-		if (tile === 'bing') tileOverlayLayers[tol.name] = L.bingLayer(window.BOSM.bingKey, oOptions);
+		if (tol.quadkey) tileOverlayLayers[tol.name] = new L.TileLayer.QuadKeyTileLayer(tol.url, oOptions);
 		else if (tol.wms) tileOverlayLayers[tol.name] = L.tileLayer.wms(tol.url, $.extend(tol.wms, oOptions));
 		else if (tol.wmsOverlay) tileOverlayLayers[tol.name] = L.WMS.overlay(tol.url, $.extend(tol.wmsOverlay, oOptions));
 		else tileOverlayLayers[tol.name] = L.tileLayer(tol.url, oOptions);
@@ -1524,7 +1564,7 @@ L.easyButton({
 				$('#settings-overpass-query').val('(' + window.localStorage.favourites + ')');
 				customQuery('(' + window.localStorage.favourites + ')', true);
 			}
-			else setMsgStatus('fa-solid fa-circle-info', 'Bookmarks', 'Add your favourite places by ' + interactDesc[1] + ' <i class="fa-regular fa-bookmark fa-fw"></i> within a popup.', 4);
+			else setMsgStatus('fa-solid fa-circle-info', 'Bookmarks', 'Add your favourite places by ' + interactDesc[1] + ' <i class="fa-regular fa-bookmark"></i> within a popup.', 4);
 		}
 	}]
 }).addTo(map);
@@ -1656,7 +1696,7 @@ function populatePoiTab() {
 		if (categoryList.indexOf(pois[poi].catName) === -1) categoryList.push(pois[poi].catName);
 	}
 	for (c = 0; c < $('#tour-controls-list option').length - 1; c++) if ($('#tour-controls-list option:enabled').eq(c).data('keyword')) {
-		category.push({ listLocation: $('#tour-controls-list option').eq(c).text(), header: '<img class="tour-category" data-key="' + $('#tour-controls-list option').eq(c).val() + '" src="assets/img/sidebar-icons.png">Tour - ' + $('#tour-controls-list option').eq(c).text() });
+		category.push({ listLocation: $('#tour-controls-list option').eq(c).text(), header: '<img class="tour-category" data-key="' + $('#tour-controls-list option').eq(c).val() + '" src="assets/img/sidebar-icons.png"><span style="padding-left:30px;">Tour - ' + $('#tour-controls-list option').eq(c).text() + '</span>' });
 		poiTags[$('#tour-controls-list option').eq(c).text()] = $('#tour-controls-list option').eq(c).data('keyword').split(', ');
 	}
 	// https://github.com/pawelczak/EasyAutocomplete
@@ -2094,8 +2134,8 @@ function setPageTitle(subTitle) {
 function setMsgStatus(headerIco, headerTxt, msgBody, closeTime) {
 	$('#modal').stop(true).html(
 		'<div id="modal-head">' +
-			'<i class="' + headerIco + ' fa-lg fa-fw"></i> ' + headerTxt +
-			'<div class="leaflet-popup-close-button" onclick="clickOutline.clearLayers();$(\'#modal\').stop(true).hide();"><i class="fa-solid fa-xmark fa-sm"></i></div>' +
+			'<i class="' + headerIco + ' fa-lg"></i> ' + headerTxt +
+			'<div class="leaflet-popup-close-button" onclick="clickOutline.clearLayers();$(\'#modal\').stop(true).hide();"><i class="fa-solid fa-xmark fa-width-auto"></i></div>' +
 		'</div>' +
 		'<div id="modal-body">' + msgBody + '</div>'
 	).fadeIn(200);
@@ -2128,7 +2168,7 @@ function getTips(tip) {
 		'Get the latest food hygiene ratings on businesses under <a onclick="switchTab(\'pois\', \'#pois-amenities\');">Amenities</a>.',
 		'Find your closest <i class="fa-solid fa-recycle fa-sm"></i> container and the materials it recycles under <a onclick="switchTab(\'pois\', \'#pois-amenities\');">Amenities</a>.',
 		'Have a look at our WW2 Incident Map under <a onclick="switchTab(\'tour\', \'ww2\', \'\', \'bombmap\');">History <i class="fa-solid fa-book fa-sm"></i></a>.',
-		'Some places have a photosphere view, ' + interactDesc[0] + ' <i class="fa-solid fa-street-view fa-fw"></i> in a popup to view it.',
+		'Some places have a photosphere view, ' + interactDesc[0] + ' <i class="fa-solid fa-street-view"></i> in a popup to view it.',
 		'View superimposed and colourised photographs under <a onclick="switchTab(\'thennow\');">Then and Now <i class="fa-regular fa-image fa-sm"></i></a>.',
 		'Something wrong or missing on the map? ' + titleCase(interactDesc[2]) + ' the area and <i class="fa-regular fa-sticky-note fa-sm"></i> Leave a note.',
 		'1,500 photos, 22,000 buildings and 250 miles of roads have been mapped so far!',
@@ -2157,8 +2197,8 @@ function showWeather() {
 			let tideNext = '', tidePercent = '';
 			const tideInfo = { HighWater: ['High-tide', 'fa-caret-up'], LowWater: ['Low-tide', 'fa-caret-down'] };
 			$.each(json, function(i, element) { if (new Date().getTime() > new Date(element.DateTime + 'Z').getTime()) tideNext = i+1; });
-			const tideTimes = [ new Date(json[tideNext-1].DateTime + 'Z'), new Date(json[tideNext].DateTime + 'Z'), new Date(json[tideNext+1].DateTime + 'Z') ];
 			if (tideNext && tideNext < json.length-1) {
+				const tideTimes = [ new Date(json[tideNext-1].DateTime + 'Z'), new Date(json[tideNext].DateTime + 'Z'), new Date(json[tideNext+1].DateTime + 'Z') ];
 				tideTooltip =
 					'<i class="fa-solid fa-sm ' + tideInfo[json[tideNext].EventType][1] + '"></i> ' + tideInfo[json[tideNext].EventType][0] + ': ' + json[tideNext].Height.toFixed(2) + 'm in ' + minToTime((new Date(tideTimes[1]) - new Date()) / 60000) + 'ins<br>' +
 					'<i class="fa-solid fa-sm ' + tideInfo[json[tideNext+1].EventType][1] + '"></i> ' + tideInfo[json[tideNext+1].EventType][0] + ': ' + json[tideNext+1].Height.toFixed(2) + 'm in ' + minToTime((new Date(tideTimes[2]) - new Date()) / 60000) + 'ins<br>' +
@@ -2349,6 +2389,8 @@ function permalinkReturn() {
 		$('#settings-bbox option[value="bbox"]').prop('selected', true);
 	}
 	if (!noPermalink) {
+		if (uri.has('m') && uri.get('m') === 'bing') uri.set('m', 'aerial');
+		if (uri.has('o') && uri.get('o') === 'bing') uri.set('o', 'aerial');
 		if (uri.has('m') && tileBaseLayer[uri.get('m')]) actBaseTileLayer = uri.get('m');
 		if (uri.has('o') && tileOverlayLayer[uri.get('o')]) {
 			actOverlayLayer = uri.get('o');

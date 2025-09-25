@@ -311,7 +311,7 @@ if (document.body.id === 'reference') {
 	let list = '';
 	Object.entries(tourRefs).forEach(tour => {
 		const [tourKey, tourVal] = tour;
-		if (tourVal.title) list += '<a onclick="window.parent.switchTab(\'tour\', \'' + tourKey + '\');"><i class="fa-solid fa-chevron-left fa-fw"></i><b>' + tourVal.title + '</b></a>';
+		if (tourVal.title) list += '<a onclick="window.parent.switchTab(\'tour\', \'' + tourKey + '\');"><i class="fa-solid fa-chevron-left"></i><b>' + tourVal.title + '</b></a>';
 		list += '<ol id="reference-' + tourKey + '">';
 		Object.entries(tourVal).forEach(refs => {
 			const [refKey, refVal] = refs;

@@ -56,7 +56,7 @@ h3 {
 }
 
 sup {
-	font-size: 70%;
+	font-size: 75%;
 	background: var(--main-color);
 	border-radius: 3px;
 	color: var(--bg-color);
@@ -138,7 +138,9 @@ figcaption {
 	font: var(--fa-font-solid);
 	content: '\f5a0';
 	float: right;
+	transition: transform 100ms;
 }
+
 .link-map {
 	cursor: pointer;
 	padding: 5px;
@@ -147,7 +149,8 @@ figcaption {
 	margin-left: -5px;
 	text-align: left;
 	border-radius: 5px;
-	transition: background-color 100ms;
+	transition-property: background-color, color;
+	transition-duration: 100ms;
 	color: var(--main-color);
 }
 .link-map:hover {
@@ -170,9 +173,15 @@ figcaption {
 	font-size: 90%;
 	font-style: italic;
 	text-align: right;
+	text-wrap: balance;
 }
 .link::before {
+	display: inline-block;
 	font: var(--fa-font-solid);
+	padding-right: 5px;
+}
+a.link:hover::before {
+	text-decoration: none;
 }
 .vid.link::before {
 	font: var(--fa-font-brands);
@@ -197,4 +206,12 @@ a:link, a:visited, a:hover, a {
 }
 a:hover {
 	text-decoration: underline;
+}
+
+/* kiosk mode */
+.kiosk a[href*="http"] {
+	pointer-events: none;
+}
+.kiosk .link {
+	display: none;
 }

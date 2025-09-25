@@ -44,7 +44,19 @@ $(document).ready(function() {
 			let streetDetail = '', streetWip = '', className;
 			$.each(json.streetNames.street, function(i, street) {
 				className = street.name.charAt(0) + (street.lost ? ' lost' : '');
-				streetDetail += '<p class="street ' + className + '"><strong>' + street.name + ' (' + street.date + ')</strong><br>' + street.desc + '</p>';
+				streetDetail += '<div class="street ' + className + '"><strong>' + street.name + ' (' + street.date + ')</strong>' +
+				// overpass ultra link to map, check not in iframe and road exists
+				(window.top === window.self && !street.lost && !street.notroad ? '<a class="street-map-link" title="Locate on map" target="_blank" rel="noopener" href="https://ultra.trailsta.sh/#map&query=' +
+					encodeURIComponent(
+						'---\n' +
+						'options:\n' +
+						'fitBounds: true\n' +
+						'---\n' +
+						'[out:json][bbox:50.802,0.372,50.878,0.525];rel(12710197);map_to_area->.a;' +
+						'((nw(area.a)[highway](area.a)[name="' + street.name + '"];););(._;>;);out skel qt;'
+					) + '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16,1C9.925,1,5,5.925,5,12c0,10,10,19,11,19s11-9,11-19C27,5.925,22.075,1,16,1z M16,16 c-2.209,0-4-1.791-4-4c0-2.209,1.791-4,4-4s4,1.791,4,4C20,14.209,18.209,16,16,16z"/></svg>' +
+					'</a>' : '') +
+				'<div>' + street.desc + '</div></div>';
 			});
 			$.each(json.streetNames.streetWip, function(i, street) {
 				streetWip += '<span>' + street.name + ' (' + street.date + ')</span>';
@@ -88,7 +100,7 @@ $(document).ready(function() {
 			// cleaner url
 			if (window.location.host === 'bexhill-osm.org.uk') {
 				history.replaceState(null, null, '/streetnames' + window.location.hash);
-				$('a[href*="#"]').each(function() { $(this).attr('href', '/streetnames' + $(this).attr('href')); });
+				$('a[href*="#"]').not('.street-map-link').each(function() { $(this).attr('href', '/streetnames' + $(this).attr('href')); });
 			}
 		}
 	});

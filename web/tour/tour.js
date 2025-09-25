@@ -72,7 +72,7 @@ function tour(tName, tID, fromPermalink) {
 		if (feature.properties.custom) markerPopup += feature.properties.custom;
 		else if (feature.properties.description) {
 			markerPopup += '<span class="popup-tag-long theme-scroll">' + feature.properties.description + '</span>';
-			toolTip += ' <i class="tooltip-icons fa-solid fa-bars fa-fw" title="Notes"></i>';
+			toolTip += ' <i class="tooltip-icons fa-solid fa-bars" title="Notes"></i>';
 		}
 		if (feature.properties.link) {
 			markerPopup += '<span class="popup-tag-value"><a class="popup-tag-value-truncate" style="max-width:' + imgSize + 'px;" href="' +
@@ -97,7 +97,7 @@ function tour(tName, tID, fromPermalink) {
 				imgIcon += 's';
 			}
 			markerPopup += '</div>';
-			if (feature.properties.img[0].indexOf('000placehldr') === -1) toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + ' fa-fw" title="' + titleCase(imgIcon) + '"></i>';
+			if (feature.properties.img[0].indexOf('000placehldr') === -1) toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + '" title="' + titleCase(imgIcon) + '"></i>';
 		}
 		markerPopup += '</div>';
 		layer
@@ -470,7 +470,7 @@ function tour(tName, tID, fromPermalink) {
 							if (feature.properties.length > 0 && feature.properties.length <= 10) fillColor = '#9792fc';
 							else if (feature.properties.length > 10 && feature.properties.length <= 30) fillColor = '#5bff6e';
 							else if (feature.properties.length > 30) fillColor = '#ff6464';
-							else if (feature.properties.length === -2) fillColor = '#a93909';
+							else if (feature.properties.length <= 0) fillColor = '#a93909';
 							else fillColor = '#000';
 							return true;
 						},
@@ -478,8 +478,9 @@ function tour(tName, tID, fromPermalink) {
 							feature.properties.description =
 								generic_tag_parser({ ref: feature.properties.reference.toString() }, 'ref', 'Reference', 'fa-solid fa-hashtag') +
 								(feature.properties.year_known ? generic_tag_parser({ date: feature.properties.year_known.toString() }, 'date', 'Date', 'fa-solid fa-calendar-days') : '') +
-								'<a style="margin:5px;display:block;text-align:center;" onclick="popupWindow(\'popup\', \'https://' + feature.properties.scan_url + '\')"><i class="fa-solid fa-file fa-fw"></i>View borehole scan</a>';
-							setJsonPopup(feature, layer, [titleCase(feature.properties.name, 1), '', feature.properties.length + 'm length borehole']);
+								(feature.properties.length > 0 ? generic_tag_parser({ length: feature.properties.length + 'm' }, 'length', 'Length', 'fa-solid fa-bore-hole') : '') +
+								'<a style="margin:5px;display:block;text-align:center;" onclick="popupWindow(\'iframe\', \'https://' + feature.properties.scan_url + '\')"><i class="fa-solid fa-file-pdf"></i>View borehole scan</a>';
+							setJsonPopup(feature, layer, [titleCase(feature.properties.name, 1), '', 'Borehole record']);
 						},
 						pointToLayer: function(feature, latlng) {
 							if (feature.properties.length === -1) return;

@@ -42,7 +42,7 @@ body:has(#noscript) .spinner, body:has(#noscript) #map {
 }
 @font-face {
 	font-family: BerlinSans;
-	src: url('../font/berlinsans.woff2') format('woff2'), url('../font/berlinsans.ttf') format('truetype');
+	src: url('../font/berlinsans.woff2') format('woff2');
 }
 .spinner {
 	position: fixed;
@@ -477,7 +477,7 @@ h3 {
 	border-bottom: 1px solid #dddddd;
 	margin: 5px 0;
 }
-.leaflet-contextmenu .fa-fw {
+.leaflet-contextmenu > a > i[class*='fa-'] {
 	pointer-events: none;
 }
 .leaflet-contextmenu-item:first-child {
@@ -519,7 +519,7 @@ h3 {
 	color: #333333;
 	font-size: 12pt;
 }
-#modal-head .fa-fw {
+#modal-head > i[class*='fa-'] {
 	color: #555555;
 }
 #modal-body:not(:has(.modal-body-addr)) {
@@ -696,10 +696,8 @@ input[type=range]:-moz-focusring {
 #control-opacity .leaflet-popup-close-button, #modal .leaflet-popup-close-button {
 	position: absolute;
 	right: 5px;
-	top: 0;
+	top: 5px;
 	width: 15px;
-	font-weight: bold;
-	font: bold 17pt Helvetica, Arial, sans-serif;
 	cursor: pointer;
 	color: var(--main-color);
 }
@@ -728,7 +726,7 @@ input[type=range]:-moz-focusring {
 	max-width: 800px;
 	min-width: 300px;
 }
-#control-ww2 a {
+#control-ww2 > a {
 	position: absolute;
 	display: table;
 	margin: -10px;
@@ -737,7 +735,7 @@ input[type=range]:-moz-focusring {
 	width: 25px;
 	height: 25px;
 }
-#control-ww2 a i {
+#control-ww2 > a > i[class*='fa-'] {
 	display: table-cell;
 	vertical-align: middle;
 	font-size: 20px;
@@ -860,10 +858,10 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 }
 .eac-category img.tour-category {
 	width: 26px;
-	height: fit-content;
-	clip-path: inset(120px 0);
-	top: -125px;
-	position: relative;
+	height: auto;
+	position: absolute;
+	object-position: 0 -125px;
+	clip-path: inset(0 0 245px 0);
 }
 #pois-results-list td:first-child .fa-lg {
 	opacity: 0.75;
@@ -881,11 +879,11 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 	border-radius: 5px 0 0 5px;
 	width: 10px;
 }
-.popup-tag-value .fa-fw, #pois-results-list td:last-child .fa-fw {
-	font-size: 115%;
+.popup-tag-value i[class*='fa-'], #pois-results-list td:last-child i[class*='fa-'] {
+	font-size: 110%;
 	width: 1.4em;
 }
-#pois-results-list td:last-child .fa-fw {
+#pois-results-list td:last-child i[class*='fa-'] {
 	height: 1.4em;
 }
 #pois-results-list td span {
@@ -948,8 +946,9 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 	padding: 2px;
 }
 .pois-checkbox {
-	width: calc(50% - 4px);
 	display: inline-block;
+	width: calc(50% - 4px);
+	height: 30px;
 	margin: 2px;
 }
 @media (min-width: 600px) and (max-width: 767px) {
@@ -960,6 +959,7 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 .pois-checkbox > label {
 	display: inline-block;
 	width: 100%;
+	height: 30px;
 	border-radius: 5px;
 	white-space: nowrap;
 	cursor: pointer;
@@ -971,7 +971,7 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 .pois-checkbox > label > img {
 	float: left;
 	height: 24px;
-	margin: 3px 4px 3px 2px;
+	margin: 3px 4px 3px 0px;
 	width: 24px;
 	object-position: -4px -4px;
 	object-fit: none;
@@ -985,9 +985,9 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 .pois-checkbox > label > span {
 	display: inline-block;
 	overflow: hidden;
-	width: calc(100% - 40px);
-	height: 28px;
+	width: calc(100% - 28px);
 	line-height: 30px;
+	mask-image: linear-gradient(to right, var(--text-color) 75%, transparent 100%);
 }
 .pois-checkbox-selected {
 	background-color: rgba(255, 255, 255, 0.8);
@@ -1045,11 +1045,11 @@ select:hover:enabled, button:hover:enabled:not(.fancybox-button) {
 	font-size: 10pt;
 	white-space: nowrap;
 	height: 30px;
-	width: 100%;
-	padding: 8px 0;
+	width: 94%;
+	padding: 8px 3%;
 }
 #tour-controls-list {
-	width: calc(100% - 100px);
+	width: calc(100% - 80px);
 	margin: 0 5px;
 }
 #tour-frame {
@@ -1173,6 +1173,7 @@ input:indeterminate + .slider::before {
 .settings-label label:first-child {
 	margin: auto 5px auto 0;
 	flex: min-content;
+	text-wrap: balance;
 }
 .settings-label:last-child {
 	border-bottom: none;
@@ -1767,6 +1768,38 @@ kbd {
 	margin: 0 2px;
 	white-space: nowrap;
 }
+
+/* kiosk mode */
+.kiosk .leaflet-bar:has(#control-fullscreen),
+.kiosk .leaflet-bar.leaflet-control-geocoder,
+.kiosk .leaflet-bar.leaflet-control-locate,
+.kiosk li:has(a[href="#home"]),
+.kiosk li:has(a[href="#pois"]),
+.kiosk li:has(a[href="#walking"]), 
+.kiosk li:has(a[href="#settings"]),
+.kiosk .leaflet-popup .popup-edit {
+	display: none;
+}
+.kiosk a[href*="http"],
+.kiosk a[href*="tel"],
+.kiosk #info-about {
+	pointer-events: none;
+}
+.kiosk #kiosk-button-back {
+	position: fixed;
+	font: normal 20pt BerlinSans, "Helvetica Neue", Arial, Helvetica, sans-serif;
+	display: block;
+	z-index: 9999;
+	top: 10px;
+	left: 50%;
+	background-color: #fff;
+	padding: 5px 10px;
+	border-radius: 10px;
+	color: var(--main-color);
+	cursor: pointer;
+	border: 2px solid rgba(0,0,0,0.2);
+}
+.kiosk #kiosk-button-back:hover { color: #000; }
 
 /* Control.Loading.js */
 .leaflet-control-loading, .leaflet-control-layer-container {

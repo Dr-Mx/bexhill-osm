@@ -253,8 +253,8 @@ body.compensate-for-scrollbar {
     overflow: visible;
     padding: 0;
     width: 100%;
-	max-width: 1365px;
-	max-height: 768px;
+	max-width: 90%;
+	max-height: 90%;
 	border-radius: 10px;
 }
 

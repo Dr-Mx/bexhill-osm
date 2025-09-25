@@ -90,10 +90,10 @@ const pois = {
 
 	park: {
 		name: 'Parks/Recreation',
-		query: 'nwr[leisure~"park|nature_reserve"];nwr[landuse=recreation_ground][name][access!~private];',
+		query: 'nwr[leisure~"park|nature_reserve"];nwr[landuse=recreation_ground][name][access!~private];nwr[leisure=garden][access=yes];',
 		iconName: 'urbanpark',
 		catName: 'Leisure-Tourism',
-		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve', 'recreation']
+		tagKeyword: ['park', 'common', 'open-space', 'green', 'nature-reserve', 'recreation', 'gardens']
 	},
 
 	playground: {
@@ -843,7 +843,7 @@ const pois = {
 	},
 
 	florist: {
-		name: 'Florist/Garden',
+		name: 'Florist/Garden Centre',
 		query: 'nwr[shop~"florist|garden_centre"];',
 		iconName: 'garden',
 		catName: 'Shops',

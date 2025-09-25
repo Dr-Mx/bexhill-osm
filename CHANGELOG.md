@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v8.6.0
+
+**Date:** 25/09/2025
+
+Removed
+- Bing.min.js
+
+Updated
+ - fontawesome 7.0.1
+
+Site changes
+ - Reverted Bing maps changes due to discontinued api
+ - Kiosk mode for public touch screens; disables all external links, focuses mainly on maps and history tours
+ - Increase lightbox size to make use of bigger screens
+ - Removed depreciated truetype fonts
+ - Fixed borehole scan urls
+
+
 ## v8.5.0
 
 **Date:** 08/06/2025
@@ -269,7 +287,7 @@ Site changes
  - Highlight imageoverlay layers where possible on interact
  - New Manor House tour overlay (work in progress)
  - Two new overlays for Other Maps
- - Expand popupWindow function to cover fancybox iframes
+ - Expand popupWindow function to cover lightbox iframes
  - New POI for sports/fitness
  - Parks POI now covers recreation grounds
  - Use figure/figcaption tags in tour article images

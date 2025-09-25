@@ -8,4 +8,6 @@ else document.addEventListener('DOMContentLoaded', function() {
 		const scrollOpacity = scrollPos < 300 ? Math.round(scrollPos / 60) / 10 : 0.5;
 		this.style['background-image'] = 'linear-gradient(transparent, rgba(var(--scroll-shadow), ' + scrollOpacity + '))';
 	});
+	// kiosk mode
+	if (parent.kioskMode === true) document.getElementsByTagName('html')[0].classList.add('kiosk')
 });
