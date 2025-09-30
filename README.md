@@ -6,13 +6,15 @@
 
 Searchable OpenStreetMap data showing POIs, walking directions, overlays, history and other information for the town of Bexhill-on-Sea, UK
 
-## Video Demonstration
+## 🎞️ Video Demonstration
 
 https://github.com/Dr-Mx/bexhill-osm/assets/20068052/219ff558-a94b-46af-8f66-8eb8652f461c
 
-## Features
+## ⭐ Features
 
 ~ Mobile and desktop friendly
+
+~ Kiosk mode (minimum interface, external links disabled)
 
 ~ Light/dark theme support
 <details><summary>Map display options <em>(click for more)</em></summary>
@@ -91,7 +93,7 @@ https://github.com/Dr-Mx/bexhill-osm/assets/20068052/219ff558-a94b-46af-8f66-8eb
 - Output debug info to console
 </details>
 
-## Futher Reading on the Project
+## 📖 Futher Reading on the Project
 
 ~ https://wiki.openstreetmap.org/wiki/Bexhill-on-Sea
 
@@ -101,6 +103,6 @@ https://github.com/Dr-Mx/bexhill-osm/assets/20068052/219ff558-a94b-46af-8f66-8eb
 
 ~ https://taginfo.openstreetmap.org/projects/bexhillosm
 
-## Attribution
+## 🗒️ Attribution
 
 Originally forked from https://github.com/humitos/osm-pois (Humitos)
