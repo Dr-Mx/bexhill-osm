@@ -14,6 +14,7 @@
 	<meta property="og:title" content="Bexhill OpenStreetMap">
 	<meta property="og:description" content="A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.">
 	<meta property="og:image" content="https://bexhill-osm.org.uk/assets/img/og-image.jpg">
+	<meta property="og:video" content="https://bexhill-osm.org.uk/assets/img/og-video.mp4">
 	<meta property="og:type" content="website">
 	<meta property="og:locale" content="en_GB">
 
@@ -29,18 +30,17 @@
 	<meta name="theme-color" content="#bb5500">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=7.0.1">
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=7.1.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.9.4">
-	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=2.4.0">
+	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=3.3.1">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
-	<link rel="stylesheet" href="assets/css/plugins/easy-button.css?v=2.3.0">
 	<link rel="stylesheet" href="assets/css/plugins/easy-autocomplete.css?v=1.3.4">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-routing-machine.css?v=3.2.5">
-	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7">
+	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7a">
 
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=8.6.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=8.6.0" id="darkcss" disabled>
+	<link rel="stylesheet" href="assets/css/site.css?v=9.0.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css?v=9.0.0" id="darkcss" disabled>
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -83,19 +83,19 @@
 						<div id="home-minimap">
 							<img class="theme-invert" src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap" loading="lazy">
 							<map name="m_minimap">
-								<area title="Bexhill-on-Sea" shape="rect" coords="211,154,315,172">
-								<area title="Barnhorn" shape="rect" coords="0,141,74,174">
-								<area title="Central" shape="rect" coords="278,179,347,213">
-								<area title="Collington" shape="rect" coords="130,143,204,182">
-								<area title="Cooden" shape="rect" coords="45,177,115,219">
-								<area title="Glenleigh Park" shape="rect" coords="166,44,239,87">
-								<area title="Glyne Gap" shape="rect" coords="452,107,500,144">
-								<area title="The Highlands" shape="rect" coords="151,0,250,31">
-								<area title="Little Common" shape="rect" coords="43,98,140,139">
-								<area title="Normans Bay" shape="rect" coords="0,223,102,252">
-								<area title="Old Town" shape="rect" coords="287,123,364,152">
-								<area title="Pebsham" shape="rect" coords="411,74,481,104">
-								<area title="Sidley" shape="rect" coords="284,23,348,68">
+								<area title="Bexhill-on-Sea" coords="349,252,549,287" shape="rect">
+								<area title="Barnhorn" coords="121,255,1,219" shape="rect">
+								<area title="Central" coords="427,294,527,330" shape="rect">
+								<area title="Collington" coords="157,245,296,286" shape="rect">
+								<area title="Cooden" coords="71,305,162,342" shape="rect">
+								<area title="Glenleigh Park" coords="258,79,365,149" shape="rect">
+								<area title="Glyne Gap" coords="705,195,799,257" shape="rect">
+								<area title="Highlands" coords="396,38,248,0" shape="rect">
+								<area title="Little Common" coords="64,170,231,215" shape="rect">
+								<area title="Normans Bay" coords="164,364,1,399" shape="rect">
+								<area title="Old Town" coords="466,192,586,238" shape="rect">
+								<area title="Pebsham" coords="644,116,755,159" shape="rect">
+								<area title="Sidley" coords="543,99,460,55" shape="rect">
 							</map>
 						</div>
 						<div id="home-tips" class="comment">
@@ -110,11 +110,11 @@
 					<div id="home-new-feed">
 						<div>What's new:
 							<ul class="fa-ul">
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jan 26 - <a onclick="switchTab('tour', 'farming', '', 'farms1839');">History tour of Farming and Landowners in 1839</a></li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 25 - <a onclick="switchTab('', '', '', 'xmas');">Xmas Window Display Competition 2025</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jun 25 - <a onclick="switchTab('tour', 'overlays', '', 'jd1887');">Downsborough's (proposed) Map of Bexhill-on-Sea 1887</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Jan 25 - Visualise current tide by clicking the <a onclick="switchTab('', '', '', 'tide');"><i class="fa-solid fa-water"></i> widget</a></li>
 								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Dec 24 - New line measurement tool <i class="fa-solid fa-ruler"></i></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>Nov 24 - <a onclick="switchTab('', '', '', 'xmas');">Xmas Window Display Competition 2024</a></li>
-								<li><span class="fa-li"><i class="fa-solid fa-circle-plus"></i></span>May 24 - Extended editing and Wikidata info in popups</li>
 							</ul>
 						</div>
 						<div id="home-osm-feed"></div><!-- div auto-populated -->
@@ -126,11 +126,12 @@
 				<div class="sidebar-header"><span class="sidebar-header-text">Find Places</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body">
 					<div id="pois-results" class="theme-scroll">
-						<h3>Results</h3>
-						<button type="button" title="Clear results" onclick="clear_map('markers');"><i class="fa-solid fa-trash"></i></button>
-						<button type="button" title="Zoom to results" onclick="zoom_area(true);"><i class="fa-solid fa-eye"></i></button>
-						<button type="button" title="Jump to next item" onclick="poi_next();"><i class="fa-solid fa-turn-down"></i></button>
+						<h3>Nothing selected</h3>
+						<button disabled type="button" title="Clear results" onclick="clear_map('markers');"><i class="fa-solid fa-trash"></i></button>
+						<button disabled type="button" title="Zoom to results" onclick="zoom_area(true);"><i class="fa-solid fa-eye"></i></button>
+						<button disabled type="button" title="Jump to next item" onclick="poi_next();"><i class="fa-solid fa-turn-down"></i></button>
 						<div id="pois-results-list"></div><!-- div auto-populated -->
+					<a class="theme-color sidebar-anchor"></a>
 					</div>
 					<div id="pois-icons" class="theme-scroll"></div><!-- div auto-populated using pois-type.js as a reference -->
 				</div>
@@ -164,7 +165,7 @@
 					<hr>
 					<h3>Stepping Out with Bexhill Museum</h3>
 					Throughout the summer Bexhill Museum's Local History Study Group does a number of 'Stepping Out' guided walks around the town and the local area. You can find the event listings here:
-					<p style="text-align:center;"><a href="https://www.bexhillmuseum.org.uk/events/tag/guided-walks/" target="_blank" rel="noopener" title="Guided walks by Bexhill Museum (summer)"><img src="assets/img/walking-bexhillmuseum.png" alt="Bexhill Museum" loading="lazy"></a></p>
+					<p style="text-align:center;"><a href="https://www.bexhillmuseum.org.uk/events/tag/guided-walks/" target="_blank" rel="noopener" title="Guided walks by Bexhill Museum (summer)"><img class="theme-invert" src="assets/img/walking-bexhillmuseum.png" alt="Bexhill Museum" loading="lazy"></a></p>
 					<p>You are welcome to download a number of guides created for these events below. If you found them useful please consider <a href="https://www.bexhillmuseum.org.uk/about/donate-to-bexhill-museum/" target="_blank" rel="noopener" >donating to Bexhill Museum</a>.</p>
 					<ul id="walk-container-pdf" class="theme-color fa-ul">
 						<li><span class="fa-li"><i class="fa-solid fa-file-pdf"></i></span><a data-fancybox href="assets/img/walks/Walk_DeLaWarrEstate_(2025).pdf" rel="nofollow">De La Warr Estate (2025)</a></li>
@@ -185,13 +186,14 @@
 						<select id="tour-controls-list" class="theme-color" title="Select an article">
 							<option value="bexhill" data-keyword="bexhill, history, heraldry">&#x1F3D6;&#xFE0F; Bexhill-on-Sea</option>
 							<option value="prehistory" data-keyword="prehistory, geology, dinosaur, fossil">&#x1F996; Prehistory</option>
+							<option value="farming" data-keyword="farm, landowner, tithe">&#x1F33D; Farms &amp; Landowners [NEW]</option>
 							<option value="manor" data-keyword="old town manor house, manor gardens">&#x1F3E0; Old Town Manor</option>
 							<option value="amsterdam" data-keyword="amsterdam shipwreck">&#x2693; The Amsterdam Shipwreck</option>
 							<option value="smuggling" data-keyword="smuggling, sidley green">&#x1F4E6; Smuggling</option>
 							<option value="martello" data-keyword="martello, tower, fort">&#x1F9F1; Martello Towers</option>
 							<option value="racing" data-keyword="motor racing">&#x1F3C1; Motor Racing</option>
 							<option value="railways" data-keyword="railway, west branch line">&#x1F6E4;&#xFE0F; Railways</option>
-							<option value="trams" data-keyword="tram, trollybus">&#x1F68E; Tramway &amp; Trolleybuses</option>
+							<option value="trams" data-keyword="tramway, trollybus">&#x1F68E; Tramway &amp; Trolleybuses</option>
 							<option value="dlwp" data-keyword="de la warr pavilion, dlwp">&#x1F3AD; De La Warr Pavilion</option>
 							<option value="ww2" data-keyword="world war, ww2, wwii, bomb map, air-raid shelter, pillbox">&#x1FA96; World War II</option>
 							<option value="northeye" data-keyword="northeye prison, royal air force, raf">&#x26D3;&#xFE0F; Northeye Prison Site</option>
@@ -202,7 +204,7 @@
 							<option value="clocks" data-keyword="public street clock">&#x1F570;&#xFE0F; Public Clocks</option>
 							<option value="surveying" data-keyword="ordnance survey point, benchmark">&#x1F4D0; OS Surveying Points</option>
 							<option value="overlays" data-keyword="maps, aerial photographs">&#x1F5FA;&#xFE0F; Other Overlays</option>
-							<option value="zrefs">&#x3030;&#xFE0F; References &amp; further reading</option>
+							<option value="zrefs">&#x1F4D1; References &amp; further reading</option>
 						</select>
 						<button type="button" id="tour-controls-next" title="Next article"><i class="fa-solid fa-chevron-right"></i></button>
 					</div>
@@ -243,9 +245,9 @@
 					<div id="settings-devtools">
 						<h3>Development tools</h3>
 						<div>
-							<p class="settings-label"><label for="settings-notes">Display OSM map notes</label><button id="settings-notes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button></p>
+							<p class="settings-label"><label for="settings-notes">Display OSM notes</label><button id="settings-notes" onclick="tour('notes');" type="button"><i class="fa-solid fa-note-sticky"></i></button></p>
 							<p class="settings-label"><label for="settings-overpass-export">Export current query to Overpass Turbo</label><button disabled id="settings-overpass-export" type="button"><i class="fa-solid fa-upload"></i></button></p>
-							<p class="settings-label"><label for="settings-overpass-download">Download all OSM data within map bounds (xml)</label><button id="settings-overpass-download" type="button"><i class="fa-solid fa-download"></i></button></p>
+							<p class="settings-label"><label for="settings-overpass-download">Download all OSM data within map bbox (xml)</label><button id="settings-overpass-download" type="button"><i class="fa-solid fa-download"></i></button></p>
 							<p>Custom OverpassAPI query <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL" target="_blank" rel="noopener" title="Overpass Query Language"><i class="theme-color fa-solid fa-circle-question fa-sm"></i></a></p>
 							<div class="settings-label" style="text-align:right;display:block;">
 								<input id="settings-overpass-query" list="settings-overpass-list" placeholder="e.g. [shop=vacant], [fixme], (way(1234);)" type="text" autocapitalize="none" spellcheck="false"><span class="leaflet-routing-remove-waypoint" onclick="customQuery($(this).prev().val(), true);"></span>
@@ -271,17 +273,16 @@
 							<p class="settings-label"><label for="settings-overpass-server">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme-color fa-solid fa-circle-question fa-sm"></i></a></label>
 								<select id="settings-overpass-server" class="theme-color">
 									<option value="overpass-api.de" data-attic="1">overpass-api.de</option>
-									<option value="maps.mail.ru/osm/tools/overpass" data-attic="1">maps.mail.ru</option>
-									<option value="overpass.openstreetmap.ru" data-attic="0">overpass.openstreetmap.ru</option>
-									<option selected value="overpass.private.coffee" data-attic="1">overpass.private.coffee</option>
+									<option selected value="maps.mail.ru/osm/tools/overpass" data-attic="1">maps.mail.ru</option>
+									<option value="overpass.private.coffee" data-attic="1">overpass.private.coffee</option>
 									<option value="overpass.osm.jp" data-attic="0">overpass.osm.jp</option>
 								</select></p>
-							<p class="settings-label"><label for="settings-reverse-server">Reverse query server <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme-color fa-solid fa-circle-question fa-sm"></i></a></label>
-								<select id="settings-reverse-server" class="theme-color">
-									<option selected value="nominatim">nominatim.openstreetmap.org</option>
-									<option disabled value="opencage">api.opencagedata.com</option>
-									<option value="photon">photon.komoot.io</option>
-									<option value="openrouteservice">api.openrouteservice.org</option>
+							<p class="settings-label"><label for="settings-reverse-provider">Reverse data provider <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme-color fa-solid fa-circle-question fa-sm"></i></a></label>
+								<select id="settings-reverse-provider" class="theme-color">
+									<option selected value="nominatim">Nominatim</option>
+									<option value="photon">Photon Komoot</option>
+									<option value="openrouteservice">Openrouteservice</option>
+									<option disabled value="overpass">Overpass</option>
 								</select></p>
 							<p class="settings-label switch"><label for="settings-debug">Debug</label><input id="settings-debug" type="checkbox"><label for="settings-debug" class="slider"></label></p>
 						</div>
@@ -322,7 +323,7 @@
 						Thanks to these developers:
 						<ul>
 							<li><a href="https://github.com/pawelczak/EasyAutocomplete/" target="_blank" rel="noopener">EasyAutocomplete</a> &copy; Lukasz Pawelczak</li>
-							<li><a href="https://github.com/fancyapps/fancybox/" target="_blank" rel="noopener">fancyBox</a> &copy; Jānis Skarnelis</li>
+							<li><a href="https://github.com/fancyapps/fancybox/" target="_blank" rel="noopener">Fancybox v3</a> &copy; Jānis Skarnelis</li>
 							<li><a href="https://realfavicongenerator.net" target="_blank" rel="noopener">Favicon Generator</a> &copy; Philippe Bernard</li>
 							<li><a href="https://fontawesome.com" target="_blank" rel="noopener">Font Awesome</a> &copy; Dave Gandy</li>
 							<li><a href="https://www.nearby.org.uk/tests/GeoTools.html" target="_blank" rel="noopener">GeoTools WGS84/OSGB36 Converter</a> &copy; Paul Dixon</li>
@@ -376,8 +377,8 @@
 	<div id="map" class="sidebar-map leaflet-touch"></div>
 
 	<!-- JavaScript | site plugins -->
-	<script src="assets/js/plugins/jquery.min.js?v=3.7.1"></script>
-	<script src="assets/js/plugins/jquery-ui.min.js?v=1.13.2"></script>
+	<script src="assets/js/plugins/jquery.min.js?v=4.0.0"></script>
+	<script src="assets/js/plugins/jquery-ui.min.js?v=1.14.1"></script>
 	<script src="assets/js/plugins/jquery.mobile.custom.min.js?v=1.5.0rc1"></script>
 	<script src="assets/js/plugins/jquery.easy-autocomplete.min.js?v=1.3.4"></script>
 	<script src="assets/js/plugins/imageMapResizer.min.js?v=1.0.10"></script>
@@ -389,21 +390,21 @@
 	<script src="assets/js/plugins/leaflet.wms.min.js?v=0.2.0"></script>
 	<script src="assets/js/plugins/leaflet.contextmenu.min.js?v=1.5.1"></script>
 	<script src="assets/js/plugins/leaflet-routing-machine.min.js?v=3.2.5"></script>
-	<script src="assets/js/plugins/Control.Geocoder.min.js?v=2.4.0"></script>
+	<script src="assets/js/plugins/Control.Geocoder.min.js?v=3.3.1"></script>
 	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.81.0"></script>
 	<script src="assets/js/plugins/Leaflet.PolylineMeasure.min.js?v=231107"></script>
 	<script src="assets/js/plugins/bouncemarker.min.js?v=1.2.3"></script>
 	<script src="assets/js/plugins/L.VisualClick.js?v=1.1.0"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.7.0"></script>
-	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7"></script>
+	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7a"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=8.6.0"></script>
-	<script src="assets/js/OverPassLayer.js?v=8.6.0"></script>
-	<script src="assets/js/tags-parsers.js?v=8.6.0"></script>
-	<script src="assets/js/pois-type.js?v=8.6.0"></script>
-	<script src="tour/tour.js?v=8.6.0"></script>
-	<script src="assets/js/site.js?v=8.6.0"></script>
+	<script src="assets/js/config.js?v=9.0.0"></script>
+	<script src="assets/js/overpass-layer.js?v=9.0.0"></script>
+	<script src="assets/js/tags-parsers.js?v=9.0.0"></script>
+	<script src="assets/js/pois-type.js?v=9.0.0"></script>
+	<script src="tour/tour.js?v=9.0.0"></script>
+	<script src="assets/js/site.js?v=9.0.0"></script>
  </body>
 </html>

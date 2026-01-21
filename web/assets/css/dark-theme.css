@@ -1,10 +1,11 @@
 :root {
 	--text-color: #e3e3e3;
 	--hover-color: #999999;
-	--bg-color: #2d2d2d;
+	--bg-color: #222222;
 	--bg-color2: rgba(25, 30, 45, 0.85);
+	--bg-color3: rgba(255, 255, 255, 0.1);
 	--scr-thumb: #555555;
-	--scr-track: #2d2d2d;
+	--scr-track: #222222;
 	--scroll-shadow: 0, 0, 0;
 	--scroll-shadow-popup: 0, 0, 0;
 }
@@ -15,23 +16,27 @@ body {
 	fill: rgba(0, 0, 0, 0.75);
 }
 .leaflet-control-layers-expanded, #modal-head, .leaflet-control-attribution, .leaflet-tooltip, .leaflet-contextmenu a.leaflet-contextmenu-item,
-.leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line, .leaflet-routing-remove-waypoint:hover::after {
+.leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line, .ui-tooltip {
 	color: var(--text-color) !important;
 }
-.sidebar-anchor:hover, select:hover:enabled, #home .sidebar-body a i:hover, #control-ww2 div, .leaflet-control-attribution .fa-circle-info:hover, button:hover:enabled:not(.fancybox-button),
-.leaflet-bar a:hover, .popup-navigate a:hover, .leaflet-container a.leaflet-popup-close-button:hover, #modal div.leaflet-popup-close-button:hover,
+.sidebar-anchor:hover, select:hover:enabled, #home .sidebar-body a i:hover, .leaflet-control-attribution .fa-circle-info:hover, button:hover:enabled:not(.fancybox-button),
+.leaflet-bar > a:hover, .popup-navigate a:hover, .popup-img-item > a:hover, .leaflet-container a.leaflet-popup-close-button:hover, #modal div.leaflet-popup-close-button:hover,
 #control-opacity div.leaflet-popup-close-button:hover, .popup-header-button:hover, .leaflet-routing-geocoders button:hover::after, #settings-devtools h3:hover::after,
-.popup-openhrs .popup-tag-value:hover::after, .leaflet-control-layers-list input:not(:checked,:disabled) + span:hover:before {
+.popup-openhrs .popup-tag-value:hover::after, .leaflet-control-layers-list input:not(:checked,:disabled) + span:hover:before, .leaflet-routing-remove-waypoint:hover::after,
+.kiosk #kiosk-button-back:hover {
 	color: var(--hover-color) !important;
 }
-.sidebar-tabs, footer, #home-box, #holiday-xmas-msg, .sidebar-anchor, input:not([type="range"]), hr, select, button, .leaflet-control-geocoder input, .slider::before,
-.leaflet-control-geocoder, .leaflet-contextmenu, #modal-head, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected, .fancybox-bg,
-#pois-results-list tr:hover, .pois-checkbox-selected, .pois-checkbox > label:hover, .leaflet-touch .leaflet-bar:not(#control-ww2, #control-opacity) {
+.sidebar-tabs, footer, #home-box, #holiday-xmas-msg, hr, .leaflet-control-geocoder input, .slider::before, .sidebar-body button:hover:enabled, select:hover:enabled,
+.leaflet-control-geocoder-expanded, .leaflet-contextmenu, #modal-head, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected, .fancybox-bg,
+#pois-results-list tr:hover, .pois-checkbox-selected, .pois-checkbox > label:hover, .leaflet-bar > a:hover {
 	background-color: var(--bg-color) !important;
 }
-#modal, #control-opacity, .leaflet-bar > a, .leaflet-bar button, .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content, .leaflet-control-layers-expanded, .leaflet-control-layers,
-.leaflet-control-geocoder, .leaflet-control-geocoder-alternatives, .leaflet-control-geocoder-alternatives li:hover, .leaflet-tooltip, .popup-img-attrib, .popup-navigate-background, #home-weather > div:hover {
+#modal, #control-opacity, .sidebar-anchor, .leaflet-bar > a, .sidebar-body button, select, input:not([type="range"]), .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content,
+.leaflet-control-layers-expanded, .leaflet-control-layers, .leaflet-tooltip, .popup-img-attrib, .popup-navigate-background, .ui-tooltip, .kiosk #kiosk-button-back {
 	background-color: var(--bg-color2) !important;
+}
+#home-weather > div:hover, .sidebar-tabs > ul > li:hover, .slider, .leaflet-control-geocoder-alternatives li:hover {
+	background-color: var(--bg-color3);
 }
 .leaflet-control-layers-list input + span:before {
 	color: var(--scr-thumb);
@@ -39,7 +44,7 @@ body {
 #home-weather, #home-new-feed ul {
 	color: #a5bdb6;
 }
-.leaflet-bar a, .leaflet-bar a:hover, .settings-label {
+.leaflet-bar > a, .settings-label {
 	border-bottom: 1px solid var(--bg-color);
 }
 .leaflet-bar a:last-child {
@@ -48,14 +53,18 @@ body {
 #settings-devtools {
 	border-top: 1px solid var(--bg-color);
 }
-#control-opacity input[type=range] {
+#control-opacity input[type="range"] {
 	background-image: linear-gradient(to right, #333, #666);
 }
-input[type=range] {
+input[type="range"] {
 	background-color: #666666;
+	box-shadow: inset 0 0 1px #555555;
 }
 .theme-scroll {
 	scrollbar-color: var(--scr-thumb) var(--scr-track) !important;
+}
+.theme-invert {
+	filter: invert(90%) hue-rotate(180deg) contrast(80%);
 }
 .leaflet-tile-pane {
 	filter: brightness(0.8) contrast(1.1);
@@ -66,18 +75,18 @@ input[type=range] {
 .leaflet-control-layers-separator {
 	border-top: 2px solid var(--bg-color);
 }
-#pois-results, #walk-desc img, #thennow img, #info-profile img, .popup-img, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar:not(#control-ww2) {
-	border: 2px solid var(--bg-color);
+#pois-results, #walk-desc img, #thennow img, #info-profile img, .popup-img {
+	outline: 2px solid var(--bg-color);
 }
-input[type=range]::-webkit-slider-thumb { border-color: var(--bg-color); }
-input[type=range]:hover::-webkit-slider-thumb {	background-color: var(--hover-color); }
-input[type=range]::-moz-range-thumb { border-color: var(--bg-color); }
-input[type=range]:hover::-moz-range-thumb { background-color: var(--hover-color); }
+#pois-results {
+	background-color: rgba(0, 0, 0, 0.25);
+}
+input[type="range"]::-webkit-slider-thumb { border-color: var(--bg-color); }
+input[type="range"]:hover::-webkit-slider-thumb {	background-color: var(--hover-color); }
+input[type="range"]::-moz-range-thumb { border-color: var(--bg-color); }
+input[type="range"]:hover::-moz-range-thumb { background-color: var(--hover-color); }
 #pois-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li:not(:last-child) {
 	border-bottom: 2px solid var(--bg-color) !important;
-}
-#walking a img {
-	background-color: var(--text-color);
 }
 .leaflet-control-scale-line, .pois-result-selected {
 	background-color: rgba(0, 0, 0, 0.5);
@@ -85,17 +94,19 @@ input[type=range]:hover::-moz-range-thumb { background-color: var(--hover-color)
 .leaflet-control-scale-line {
 	border: 2px solid #000000;
 	border-top: none;
+	color: #aaaaaa !important;
 }
 .leaflet-container .leaflet-control-attribution {
 	background: rgba(0, 0, 0, 0.7);
+	color: #aaaaaa !important;
 }
-.sidebar-anchor, .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
+.sidebar-anchor, .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category, .ui-tooltip {
 	border-color: #666666;
 }
 button:disabled, button:disabled:hover, button:disabled::after, button:disabled:hover::after {
 	color: var(--scr-thumb) !important;
 }
-input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet-tooltip {
+input:not([type="range"]), select, #sidebar button:not(.tutorial-button), .leaflet-tooltip {
 	border: 1px solid var(--scr-thumb) !important;
 }
 .leaflet-control-geocoder input, .leaflet-control-geocoder-alternatives a, .fancybox-button, .tutorial-button {
@@ -106,9 +117,6 @@ input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet
 }
 .easy-autocomplete-container ul li.selected {
 	background: none repeat scroll 0 0 #000000;
-}
-.sidebar-tabs > ul > li:hover, .slider {
-	background-color: var(--scr-thumb);
 }
 .slider:hover {
 	background-color: #666666;
@@ -126,14 +134,14 @@ input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet
 	border: 3px solid #333333;
 }
 .leaflet-popup .competition-award {
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 15px black;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 15px #000000;
 }
 .leaflet-tooltip-right::before { border-right-color: var(--bg-color2); }
 .leaflet-tooltip-left::before { border-left-color: var(--bg-color2); }
 .leaflet-tooltip-top::before { border-top-color: var(--bg-color2); }
 .leaflet-tooltip-bottom::before { border-bottom-color: var(--bg-color2); }
 .tutorial-button {
-	background-color: #222 !important;
+	background-color: #222222 !important;
 }
 .leaflet-contextmenu a.leaflet-contextmenu-item.over {
 	background-color: #222222;
@@ -144,7 +152,7 @@ input:not([type=range]), select, #sidebar button:not(.tutorial-button), .leaflet
 	border-bottom: 1px solid #333333;
 }
 .popup-img { background-color: #333333; }
-.popup-openhrs-table tr, .popup-bustime-table tr { border: 1px solid black; }
+.popup-openhrs-table tr, .popup-bustime-table tr { border: 1px solid #000000; }
 .popup-bustime-table tr, .popup-openhrs-table td.times { background-color: #222222; }
 .popup-bustime-table tr:nth-child(1) { color: #eeeeee; }
 .popup-openhrs-table td.workday { background-color: #333333; }

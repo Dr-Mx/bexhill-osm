@@ -33,7 +33,7 @@ function tour(tName, tID, fromPermalink) {
 				interactive: interactive,
 				radius: 20,
 				weight: 2,
-				color: '#000',
+				color: '#000000',
 				opacity: 1,
 				fillColor: icon.fillColor,
 				fillOpacity: 0.5
@@ -57,7 +57,7 @@ function tour(tName, tID, fromPermalink) {
 	// tooltip and pop-up
 	// data | layer | [main header, subheader, date subheader] | image attribution | marker popup class
 	const setJsonPopup = function(feature, layer, header, dfltAttrib, pClass) {
-		let toolTip = '', markerPopup = '';
+		let toolTip = '', toolTipIcons = '', markerPopup = '';
 		const customPOptions = {
 			className: pClass,
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
@@ -69,12 +69,12 @@ function tour(tName, tID, fromPermalink) {
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : dateFormat(header[2], 'long'))) + '<div class="popup-body">';
 		toolTip += '<b>' + header[0] + '</b><br><i>' + (header[1] ? header[1] : dateFormat(header[2], 'short')) + '</i>';
 		if (layer._latlng) markerPopup += '<span class="comment">' + layer._latlng.lat.toFixed(5) + '°N ' + layer._latlng.lng.toFixed(5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
-		if (feature.properties.custom) markerPopup += feature.properties.custom;
-		else if (feature.properties.description) {
-			markerPopup += '<span class="popup-tag-long theme-scroll">' + feature.properties.description + '</span>';
-			toolTip += ' <i class="tooltip-icons fa-solid fa-bars" title="Notes"></i>';
+		if (feature.properties.custom) {
+			markerPopup += feature.properties.custom;
+			toolTipIcons += '<i class="tooltip-icons fa-solid fa-' + (feature.properties.custom.includes('popup-file') ? 'file" title="has attachment"' : 'bars" title="has notes"') + '></i>';
 		}
-		if (feature.properties.link) {
+		else if (feature.properties.description) markerPopup += '<span class="popup-tag-long theme-scroll">' + feature.properties.description + '</span>';
+ 		if (feature.properties.link) {
 			markerPopup += '<span class="popup-tag-value"><a class="popup-tag-value-truncate" style="max-width:' + imgSize + 'px;" href="' +
 				(feature.properties.link.startsWith('http') ? feature.properties.link : 'tel:' + feature.properties.link) +
 				'" target="_blank" rel="noopener" title="' + feature.properties.link + '">' + feature.properties.link + '</a></span>';
@@ -97,8 +97,9 @@ function tour(tName, tID, fromPermalink) {
 				imgIcon += 's';
 			}
 			markerPopup += '</div>';
-			if (feature.properties.img[0].indexOf('000placehldr') === -1) toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + '" title="' + titleCase(imgIcon) + '"></i>';
+			if (feature.properties.img[0].indexOf('000-placehldr') === -1) toolTipIcons += '<i class="tooltip-icons fa-solid fa-' + imgIcon + '" title="has ' + imgIcon + '"></i>';
 		}
+		toolTip += '<span class="tooltip-icons">' + (toolTipIcons ? toolTipIcons : '') + '</span>';
 		markerPopup += '</div>';
 		layer
 			.bindPopup(markerPopup, customPOptions)
@@ -106,7 +107,8 @@ function tour(tName, tID, fromPermalink) {
 				className: pClass,
 				direction: 'top',
 				offset: [0, (pClass === 'popup-xmas' ? -35 : -8)],
-				opacity: noTouch ? 1 : 0
+				opacity: noTouch ? 1 : 0,
+				sticky: true
 			});
 	};
 	// set active tour and notify sidebar if sidebar closed
@@ -121,7 +123,7 @@ function tour(tName, tID, fromPermalink) {
 	setTimeout(function() { switch (tName) {
 		case 'tide':
 			// visualise current position of the tide
-			const tideData = $('.home-weather-tide').data('tide-percent').split(',');
+			const tideData = $('.home-weather-tide').data('tide-info').split(',');
 			const tidePercentFromLow = Math.abs((tideData[1] === 'Low-tide' ? 100 : 0) - tideData[0]);
 			const tideLow = [[50.83540, 0.47558], [50.83486, 0.46967]];
 			const tideHigh = [[50.83646, 0.46967], [50.83700, 0.47558]];
@@ -130,8 +132,10 @@ function tour(tName, tID, fromPermalink) {
 				color: 'white',
 				stroke: false,
 				className: 'weather-tide-polygon'
-			}).bindTooltip('<b>Range of medium tides</b><br>' + tideData[0] + '% towards ' + tideData[1].toLowerCase() + ' <i class="fa-solid fa-sm ' + tideData[2] + '"></i>', {
-				sticky: true
+			}).bindTooltip(
+				'<b>Range of medium tides at ' + pad(new Date(+tideData[3]).getHours()) + ':' + pad(new Date(+tideData[3]).getMinutes()) + '</b><br>' +
+				tideData[0] + '% ' + (+tideData[0] > 50 ? 'towards ' + tideData[1].toLowerCase() : 'past ' + tideData[2].toLowerCase()), {
+					sticky: true
 			}).addTo(imageOverlay);
 			L.polygon([tideNow[0], tideNow[1], tideLow[1], tideLow[0]], {
 				color: 'blue',
@@ -244,16 +248,13 @@ function tour(tName, tID, fromPermalink) {
 			});
 			actImgLayer = tName;
 			break;
-		case 'xmas2017': /* fall through */
-		case 'xmas2018': /* fall through */
-		case 'xmas2019': /* fall through */
-		case 'xmas2020': /* fall through */
-		case 'xmas2021': /* fall through */
-		case 'xmas2022': /* fall through */
-		case 'xmas2023': /* fall through */
-		case 'xmas2024': /* fall through */
+		case 'xmas2017': /* fall through */ case 'xmas2018': /* fall through */
+		case 'xmas2019': /* fall through */ case 'xmas2020': /* fall through */
+		case 'xmas2021': /* fall through */ case 'xmas2022': /* fall through */
+		case 'xmas2023': /* fall through */ case 'xmas2024': /* fall through */
+		case 'xmas2025': /* fall through */
 		case 'xmas':
-			const xmasYear = (tName.length > 4) ? tName.slice(-4) : '2024';
+			const xmasYear = (tName.length > 4) ? tName.slice(-4) : '2025';
 			$('.spinner').show();
 			if (actOverlayLayer === undefined && $('#xmasTitle').length) map.addLayer(tileOverlayLayers[tileOverlayLayer.xmas.name]);
 			$.ajax({
@@ -268,7 +269,7 @@ function tour(tName, tID, fromPermalink) {
 								winnerIco = ['award', 'trophy', 'medal', 'medal', 'medal', 'medal', 'medal'];
 							let winnerEle = '';
 							if (winner >= 0) winnerEle = '<i class="competition-award competition-commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner];
-							if (!feature.properties.img) feature.properties.img = { '0': 'itemXmas/img/000placehldr' };
+							if (!feature.properties.img) feature.properties.img = { '0': 'itemXmas/img/000-placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, winnerEle, ''], '', 'popup-xmas');
 							feature.properties.sortby = winner > 0 ? winner : winner === 0 ? 9 : 99;
 						},
@@ -278,7 +279,7 @@ function tour(tName, tID, fromPermalink) {
 								iconSize: [32, 37],
 								iconAnchor: [16, 37],
 								iconNoBounce: true,
-								shadowUrl: '/../../assets/img/icons/000shadow',
+								shadowUrl: '/../../assets/img/icons/000-shadow',
 								shadowAnchor: [16, 27],
 								popupAnchor: [0, -24],
 								tooltipAnchor: [0, 0]
@@ -322,17 +323,17 @@ function tour(tName, tID, fromPermalink) {
 								winnerIco = ['', 'trophy', 'medal'];
 							let subtitleEle = feature.properties.ward;
 							if (winner > 0) subtitleEle = '<i class="competition-award competition-commended' + winner + ' fa-solid fa-' + winnerIco[winner] + '" title="' + winnerTxt[winner] + '"></i> ' + winnerTxt[winner] + ' - ' + subtitleEle;
-							if (!feature.properties.img) feature.properties.img = { '0': 'itemScarecrow/img/000placehldr' };
+							if (!feature.properties.img) feature.properties.img = { '0': 'itemScarecrow/img/000-placehldr' };
 							setJsonPopup(feature, layer, [feature.properties.name, subtitleEle], '', 'popup-scarecrow');
 							feature.properties.sortby = feature.properties.winner ? feature.properties.ward + feature.properties.winner : feature.properties.ward + '9';
 						},
 						pointToLayer: function(feature, latlng) {
 							const marker = setMarker(latlng, true, {
-								iconUrl: 'itemScarecrow/img/scarecrow' + (feature.properties.winner === 1 ? 'Win' : ''),
+								iconUrl: 'itemScarecrow/img/scarecrow' + (feature.properties.winner === 1 ? '-win' : ''),
 								iconSize: [35, 37],
 								iconAnchor: [17, 37],
 								iconNoBounce: true,
-								shadowUrl: '/../../assets/img/icons/000shadow',
+								shadowUrl: '/../../assets/img/icons/000-shadow',
 								shadowAnchor: [20, 33],
 								popupAnchor: [0, -23]
 							}, true);
@@ -475,11 +476,11 @@ function tour(tName, tID, fromPermalink) {
 							return true;
 						},
 						onEachFeature: function(feature, layer) {
-							feature.properties.description =
+							feature.properties.custom =
 								generic_tag_parser({ ref: feature.properties.reference.toString() }, 'ref', 'Reference', 'fa-solid fa-hashtag') +
 								(feature.properties.year_known ? generic_tag_parser({ date: feature.properties.year_known.toString() }, 'date', 'Date', 'fa-solid fa-calendar-days') : '') +
 								(feature.properties.length > 0 ? generic_tag_parser({ length: feature.properties.length + 'm' }, 'length', 'Length', 'fa-solid fa-bore-hole') : '') +
-								'<a style="margin:5px;display:block;text-align:center;" onclick="popupWindow(\'iframe\', \'https://' + feature.properties.scan_url + '\')"><i class="fa-solid fa-file-pdf"></i>View borehole scan</a>';
+								'<a class="popup-file" onclick="popupWindow(\'iframe\', \'https://' + feature.properties.scan_url + '\')"><i class="fa-solid fa-file-pdf"></i>View borehole scan</a>';
 							setJsonPopup(feature, layer, [titleCase(feature.properties.name, 1), '', 'Borehole record']);
 						},
 						pointToLayer: function(feature, latlng) {
@@ -531,6 +532,54 @@ function tour(tName, tID, fromPermalink) {
 			});
 			setTour('prehistory');
 			break;
+		case 'farms1839':
+			$('.spinner').show();
+			$.ajax({
+				url: dfltDir + 'listFarming/farms.geojson',
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: false,
+				success: function(json) {
+					L.geoJSON(json, {
+						onEachFeature: function(feature, layer) {
+							const eachFarm = feature.properties, farmStatus = [
+								'No longer a farm, no original buildings remain.',
+								'No longer a farm, some original buildings remain.',
+								'Still a working farm, no original buildings remain.',
+								'Still a working farm, some original buildings remain.'
+							];
+							feature.properties.custom = generic_tag_parser({ owner: eachFarm.owner }, 'owner', 'Owner 1839', 'fa-solid fa-user') +
+								(eachFarm.tenant ? generic_tag_parser({ tenant: eachFarm.tenant }, 'tenant', 'Tenant 1839', 'fa-solid fa-person-shelter') : '') +
+								generic_tag_parser({ status: farmStatus[eachFarm.status] }, 'status', 'Status 2026', 'fa-solid fa-wheat-awn') +
+								(eachFarm.description ? generic_tag_parser({ description: eachFarm.description }, 'description', ' ', 'fa-solid fa-clipboard') : '') +
+								(!eachFarm.nofile ? '<a class="popup-file" onclick="popupWindow(\'iframe\', \'' + dfltDir + 'listFarming/pdf/' + eachFarm.name + '.pdf\')"><i class="fa-solid fa-file-pdf"></i>View farm history</a>' : '');
+							setJsonPopup(feature, layer, [eachFarm.title, eachFarm.section ? 'Section ' + eachFarm.section : '', ''], '&copy; Bexhill Museum');
+							layer._leaflet_id = eachFarm.name + (eachFarm.section ? eachFarm.section.charAt(0) : '');
+							imageOverlay.addLayer(layer);
+							poiList.push(layer);
+						},
+						style: function(feature) {
+							// set farm hue and lightness based on id
+							const colourFarm = [Math.floor(+feature.properties.id * 7.2), +feature.properties.id % 3 * 5 + 25];
+							return {
+								color: 'hsl(' + colourFarm[0] + ', 50%, 35%)',
+								fillColor: 'hsl(' + colourFarm[0] + ', 75%, ' + colourFarm[1] + '%)',
+								opacity: 0.75,
+								weight: 2,
+								fillOpacity: 0.5
+							};
+						}
+					});
+					setTimeout(pushPoiList, 250);
+					setPageTitle('Farms & Landowners (1839)');
+					if (autoZoom) zoom_area();
+					else map.fireEvent('zoomend');
+					if (tID) imageOverlay.getLayer(tID).openPopup();
+					$('.spinner').fadeOut('fast');
+				}
+			});
+			setTour('farming');
+			break;
 		case 'manorHouse':
 			$('.spinner').show();
 			$.ajax({
@@ -539,10 +588,11 @@ function tour(tName, tID, fromPermalink) {
 				mimeType: 'application/json',
 				cache: false,
 				success: function(json) {
-					imageOverlay.clearLayers().addLayer(L.geoJSON(json, {
+					L.geoJSON(json, {
 						onEachFeature: function(feature, layer) {
 							setJsonPopup(feature, layer, [feature.properties.title, feature.properties.name, ''], '&copy; Bexhill Museum');
 							layer._leaflet_id = feature.properties.id;
+							imageOverlay.addLayer(layer);
 							if (feature.properties.name) poiList.push(layer);
 						},
 						style: function(feature) {
@@ -555,12 +605,12 @@ function tour(tName, tID, fromPermalink) {
 								fillOpacity: 0.5
 							};
 						}
-					}));
+					});
 					setTimeout(pushPoiList, 250);
 					setPageTitle('Former Manor House');
 					if (autoZoom) zoom_area();
 					else map.fireEvent('zoomend');
-					if (tID) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]].getLayer(tID).openPopup();
+					if (tID) imageOverlay.getLayer(tID).openPopup();
 					$('.spinner').fadeOut('fast');
 				}
 			});
@@ -826,7 +876,7 @@ function tour(tName, tID, fromPermalink) {
 				mimeType: 'application/json',
 				cache: false,
 				success: function(json) {
-					imageOverlay.clearLayers().addLayer(L.geoJSON(json, {
+					L.geoJSON(json, {
 						onEachFeature: function(feature, layer) {
 							const pSubtitle = {
 								preriot: 'Destroyed by \'86 riot',
@@ -834,6 +884,7 @@ function tour(tName, tID, fromPermalink) {
 							};
 							setJsonPopup(feature, layer, [feature.properties.name, feature.properties.timeline ? pSubtitle[feature.properties.timeline] : '', ''], '&copy; Bexhill Observer');
 							if (feature.properties.id) layer._leaflet_id = feature.properties.id;
+							imageOverlay.addLayer(layer);
 							if (feature.properties.name) poiList.push(layer);
 						},
 						style: function(feature) {
@@ -856,12 +907,12 @@ function tour(tName, tID, fromPermalink) {
 								dashOffset: pStyle[feature.properties.type][5]
 							};
 						}
-					}));
+					});
 					setTimeout(pushPoiList, 250);
 					setPageTitle('HMP Northeye');
 					if (autoZoom) zoom_area();
 					else map.fireEvent('zoomend');
-					if (tID) imageOverlay._layers[Object.keys(imageOverlay._layers)[0]].getLayer(tID).openPopup();
+					if (tID) imageOverlay.getLayer(tID).openPopup();
 					$('.spinner').fadeOut('fast');
 				}
 			});
@@ -1025,11 +1076,11 @@ function tour(tName, tID, fromPermalink) {
 								opacity: noTouch ? 1 : 0
 							});
 							imgs.push({
-								src: dfltDir + 'listOverlays/img/ch1983/C69600(' + feature.properties.id + ').jpg',
+								src: dfltDir + 'listOverlays/img/ch1983/C69600(' + pad(feature.properties.id) + ').jpg',
 								opts: { caption: feature.properties.name + ' | 1983 | Bexhill Museum' }
 							});
 							marker.on('click', function() {
-								$.fancybox.open(imgs, { protect: true, loop: false, buttons: ['close'] }, parseInt(feature.properties.id));
+								$.fancybox.open(imgs, { protect: true, loop: false, buttons: ['close'] }, feature.properties.id);
 							});
 							imageOverlay.addLayer(marker);
 							return marker;
@@ -1043,17 +1094,12 @@ function tour(tName, tID, fromPermalink) {
 			setPageTitle('1983 Chorley Handford');
 			setTour('overlays');
 			break;
-		case 'wl1950':   /* fall through */
-		case 'wl1940':   /* fall through */
-		case 'wl1911':   /* fall through */
-		case 'raf1959':  /* fall through */
-		case 'raf1946':  /* fall through */
-		case 'raf1941c': /* fall through */
-		case 'arp1942':  /* fall through */
-		case 'mc1925':   /* fall through */
-		case 'jd1887':   /* fall through */
-		case 'yg1795':   /* fall through */
-		case 'yg1778':
+		case 'wl1950':   /* fall through */ case 'wl1940':   /* fall through */
+		case 'wl1911':   /* fall through */ case 'raf1959':  /* fall through */
+		case 'raf1946':  /* fall through */ case 'raf1941c': /* fall through */
+		case 'arp1942':  /* fall through */ case 'mc1925':   /* fall through */
+		case 'jd1887':   /* fall through */ case 'bt1839':   /* fall through */
+		case 'yg1795':   /* fall through */ case 'yg1778':
 			if (actOverlayLayer !== tName) {
 				map.addLayer(tileOverlayLayers[tileOverlayLayer[tName].name]);
 				if (autoZoom) zoom_area(false, tileOverlayLayer[tName].bounds);

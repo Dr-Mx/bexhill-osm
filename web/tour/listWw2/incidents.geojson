@@ -1073,7 +1073,7 @@
 			"properties": {
 				"name": "27-31 Devonshire Road",
 				"date": "1940-12-11 12:25",
-				"description": "Mid day raid. 6 bombs. Three buildings destroyed. 3 Killed, 22 injured. Shops destroyed: Perrett & Co chemist, Hilton & Sons boot makers, Flinn & Sons dyers and cleaners and H. Carter butcher. Alfred V. Barker (19) delivery boy, Violet B. Rose (27) shop assistant at Flinn's and Frederick G. Kerley (70), a passer-by, were killed.",
+				"description": "Midday raid. 6 bombs. Three buildings destroyed. 3 Killed, 22 injured. Shops destroyed: Perrett & Co chemist, Hilton & Sons boot makers, Flinn & Sons dyers and cleaners and H. Carter butcher. Alfred V. Barker (19) delivery boy, Violet B. Rose (27) shop assistant at Flinn's and Frederick G. Kerley (70), a passer-by, were killed.",
 				"img": {
 					"0": "listWw2/img/bomb/27-31devonshireroad(0)",
 					"1": "listWw2/img/bomb/27-31devonshireroad(1)"
@@ -3362,7 +3362,7 @@
 			"properties": {
 				"name": "B-17 Flying Fortress",
 				"date": "1943-09-06",
-				"description": "In sea south of Clock tower. B-17 ditched due to lack of petrol. Crew of 10 rescued from the sea.",
+				"description": "In sea south of Clock Tower. B-17 ditched due to lack of petrol. Crew of 10 rescued from the sea.",
 				"type": "aircraft",
 				"img": {
 					"0": "listWw2/img/aircraft/b17(0)",
@@ -3398,7 +3398,7 @@
 			"properties": {
 				"name": "Spitfire P9550 Mark I (converted to PR III)",
 				"date": "1940-12-27 15:45",
-				"description": "100 yards east of Freezelands Farm building. Serving with 1 Photographic Reconnaissance Unit, it force landed in bad visibility due to lack of petrol whilst returning from a sortie to Rennes, France. Went through a hedge and ended up on its nose, Sergeant Pilot Mills injured.",
+				"description": "100 yards east of Freezelands Farmhouse. Serving with 1 Photographic Reconnaissance Unit, it force landed in bad visibility due to lack of petrol whilst returning from a sortie to Rennes, France. Went through a hedge and ended up on its nose, Sergeant Pilot Mills injured.",
 				"type": "aircraft",
 				"img": {
 					"0": "listWw2/img/aircraft/p9550(0)"
@@ -3434,7 +3434,7 @@
 			"properties": {
 				"name": "B-24 Liberator",
 				"date": "1943-12-31",
-				"description": "Recreation ground, Bulverhythe. B-24 crashed on return from mission. Crew believed safe, no other details.",
+				"description": "Recreation ground, Bulverhythe. B-24 crashed on return from mission. Crew believed to be safe, no other details.",
 				"type": "aircraft"
 			},
 			"geometry": {

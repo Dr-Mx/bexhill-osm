@@ -27,13 +27,15 @@ function parse_tags(element, titlePopup, poiParser) {
 		return markerPopup;
 	};
 	const site_parser = function(tags) {
-		let siteVal = '', planningVal = '', siteType = [];
+		let siteVal = '', siteType = [];
 		markerPopup = '';
 		if (tags.bunker_type) siteVal += '<span title="Bunker type">' + tags.bunker_type + '</span>; ';
 		if (tags['building:architecture']) siteVal += '<span title="Architecture">' + titleCase(tags['building:architecture']) + '</span>; ';
+		if (tags.developer) siteVal += '<span title="Developer">Dvlpr. ' + tags.developer + '</span>; ';
 		if (tags.architect) siteVal += '<span title="Architect">Arch. ' + tags.architect + '</span>; ';
 		if (tags.artist_name) siteVal += '<span title="Artist">Artst. ' + tags.artist_name + '</span>; ';
-		if (tags.manufacturer) siteVal += '<span title="Manufacturer/Builder">Mfr. ' + tags.manufacturer + '</span>; ';
+		if (tags.builder) siteVal += '<span title="Builder">Bldr. ' + tags.builder + '</span>; ';
+		else if (tags.manufacturer) siteVal += '<span title="Manufacturer">Mfr. ' + tags.manufacturer + '</span>; ';
 		if (tags.display) siteVal += '<span title="Clock display">' + tags.display + '</span>; ';
 		if (tags.support) siteVal += '<span title="Clock support">' + tags.support + '</span>; ';
 		if (tags.faces) siteVal += '<span title="Clock faces">' + ((tags.faces >= 2) ? tags.faces + ' faces' : '1 face') + '</span>; ';
@@ -44,18 +46,11 @@ function parse_tags(element, titlePopup, poiParser) {
 			siteVal += '; ';
 		}
 		if (tags['wreck:date_sunk']) siteVal += '<span title="Date sunk">Sunk: ' + dateFormat(tags['wreck:date_sunk'], 'short') + '</span>; ';
-		if (tags['ref:planningapp']) planningVal = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/planningDetails?reference=' + encodeURI(tags['ref:planningapp']) + '" target="_blank" rel="noopener">' + tags['ref:planningapp'] + '</a>';
-		else if (tags['ref:historicplanningapp']) planningVal = '<a href="https://planweb01.rother.gov.uk/OcellaWeb/historyDetails?reference=' + encodeURI(tags['ref:historicplanningapp']) + '" target="_blank" rel="noopener">' + tags['ref:historicplanningapp'] + '</a>';
-		if (planningVal) siteVal += '<span class="theme-nowrap" title="Planning application">' + planningVal + '</span>; ';
-		if (tags.listed_status) {
-			if (tags.HE_ref) siteVal += '<a class="theme-nowrap" href="https://historicengland.org.uk/listing/the-list/list-entry/' + encodeURI(tags.HE_ref) + '?section=official-list-entry" title="Historic England Listing" target="_blank" rel="noopener">Listed ' + (tags.listed_status || tags.HE_ref) + '</a>; ';
-			else if (tags['ref:locallist']) siteVal += '<a class="theme-nowrap" href="https://locallist.bexhillheritage.com/wiki/Special:Redirect/page/' + encodeURI(tags['ref:locallist']) + '" title="Local Listing" target="_blank" rel="noopener">Local Listing</a>; ';
-		}
+		if (tags['ref:planningapp']) siteVal += '<span class="theme-nowrap" title="Planning application"><a href="https://online.rother.gov.uk/planning/index.html?fa=getApplication&reference=' + encodeURI(tags['ref:planningapp']) + '" target="_blank" rel="noopener">' + tags['ref:planningapp'] + '</a></span>; ';
+		if (tags.listed_status && tags.HE_ref) siteVal += '<a class="theme-nowrap" href="https://historicengland.org.uk/listing/the-list/list-entry/' + encodeURI(tags.HE_ref) + '?section=official-list-entry" title="Historic England Listing" target="_blank" rel="noopener">Listed ' + (tags.listed_status || tags.HE_ref) + '</a>; ';
+		else if (tags['proposed:listed_status'] && tags['ref:locallist']) siteVal += '<a class="theme-nowrap" href="https://locallist.bexhillheritage.com/wiki/Special:Redirect/page/' + encodeURI(tags['ref:locallist']) + '" title="Local Listing" target="_blank" rel="noopener">Local Listing (proposed)</a>; ';
 		if (tags.disused) siteVal += '<span title="Disused">Currently disused</span>; ';
-		if (tags['damage:type']) {
-			siteVal += '<span title="Damage">Damaged by ' + (tags['damage:event'] ? tags['damage:event'] + ' (' + tags['damage:type'] + ')' : '"' + tags['damage:type'] + '"') +
-				(tags['damage:date'] ? ' during ' + dateFormat(tags['damage:date'], 'short') : '') + '</span>; ';
-		}
+		if (tags['damage:type']) siteVal += '<span title="Damage">Damaged by ' + (tags['damage:event'] ? tags['damage:event'] + ' (' + tags['damage:type'] + ')' : '"' + tags['damage:type'] + '"') + (tags['damage:date'] ? ' during ' + dateFormat(tags['damage:date'], 'short') : '') + '</span>; ';
 		else if (tags.abandoned) siteVal += '<span title="Abandoned">Currently abandoned</span>; ';
 		if (tags.building) {
 			if (tags.building === 'garage') siteType = ['Garage', 'warehouse'];
@@ -86,7 +81,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tagTwit) contactVal += '<a href="https://twitter.com/' + encodeURI(tagTwit) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-x-twitter" title="X-twitter: @' + tagTwit + '" style="color:#000000;"></i></a> ';
 		if (tagInstg) contactVal += '<a href="https://instagram.com/' + encodeURI(tagInstg) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-instagram" title="Instagram: ' + tagInstg + '" style="color:#d93175;"></i></a> ';
 		if (tagYtube) contactVal += '<a href="' + encodeURI(tagYtube) + '" target="_blank" rel="noopener nofollow"><i class="fa-brands fa-youtube" title="YouTube: ' + tagYtube + '" style="color:#ff0000;"></i></a> ';
-		if (contactVal) markerPopup += L.Util.template(tagTmpl, { key: 'Contact', keyVal: contactVal, iconName: 'fa-solid fa-circle-user' });
+		if (contactVal) markerPopup += L.Util.template(tagTmpl, { key: 'Contact', keyVal: '<span class="popup-tag-value-contact">' + contactVal + '</span>', iconName: 'fa-solid fa-circle-user' });
 		return markerPopup;
 	};
 	const street_parser = function(tags) {
@@ -131,30 +126,27 @@ function parse_tags(element, titlePopup, poiParser) {
 	};
 	const furtherreading_parser = function(tags) {
 		const streetDirs = 'https://www.bexhillmuseum.org.uk/access-centre/bexhill-street-directories/?wdt_column_filter[road]=';
-		const planningApp = 'https://planweb01.rother.gov.uk/OcellaWeb/planningSearch?action=Search&location=';
-		const historicPlanningApp = 'https://planweb01.rother.gov.uk/OcellaWeb/historySearch?action=Search&location=';
+		const planningApp = 'https://online.rother.gov.uk/planning/index.html?fa=search&submitted=true&community_id=19&';
 		let readingVal = '', planningVal = '';
 		markerPopup = '';
 		if ((tags.building === 'apartments' || tags.building === 'detached' || tags.building === 'bungalow' || tags.building === 'farm' || tags.building === 'house' || tags.building === 'semidetached_house' || tags.building === 'static_caravan') && tags['addr:street'] && LBounds.contains(element.center)) {
 			readingVal += '<a onclick="searchAddr(\'' + tags['addr:street'].replace('\'', '\\\'') + '\');" title="The Story of Bexhill Street Names">Street history</a>; ';
 			readingVal += '<a href="' + streetDirs + encodeURI(tags['addr:street'].replace('\'', '')) + '#main" title="Bexhill Museum Street Directories 1886-1931" target="_blank" rel="noopener">Street directories</a>; ';
-			if (tags.building === 'apartments' && tags['addr:housename']) planningVal += tags['addr:housename'];
-			else if (tags['addr:housenumber']) planningVal += tags['addr:housenumber'] + ' ' + tags['addr:street'];
-			else planningVal += tags['addr:street'];
-			if (tags['addr:postcode']) planningVal += '&OcellaPlanningSearch.postcode=' + tags['addr:postcode'];
+			if (tags.building === 'apartments' && tags['addr:housename']) planningVal += '&SiteAddress[magic]=' + tags['addr:housename'];
+			else if (tags['addr:housenumber']) planningVal += '&SiteAddress[magic]=' + tags['addr:housenumber'] + ' ' + tags['addr:street'];
+			else planningVal += '&SiteAddress[magic]=' + tags['addr:street'];
+			if (tags['addr:postcode']) planningVal += '&SiteAddress[postcode]=' + tags['addr:postcode'];
 			readingVal += '<a href="' + planningApp + encodeURI(planningVal.replace('\'', '')) + '" title="Planning Application Search" target="_blank" rel="noopener">Planning applications</a>; ';
 		}
 		if (tags.highway && tags.name && element.type === 'way' && LBounds.contains(element.center)) {
 			readingVal += '<a href="' + streetDirs + encodeURI(tags.name.replace('\'', '')) + '#main" title="Bexhill Museum Street Directories" target="_blank" rel="noopener">Street directories</a>; ';
-			readingVal += '<span class="theme-nowrap">Planning: ' +
-				'<a href="' + planningApp + encodeURI(tags.name.replace('\'', '')) + '&receivedFrom=01-01-' + (new Date().getFullYear() - 2010) + '" title="Planning Application Search" target="_blank" rel="noopener">Current</a> | ' +
-				'<a href="' + historicPlanningApp + encodeURI(tags.name.replace('\'', '')) + '" title="Historic Planning Application Search" target="_blank" rel="noopener">Historic</a>' +
-			'</span>; ';
+			readingVal += '<span class="theme-nowrap" title="Planning Applications">' +
+				'<a href="' + planningApp + 'SiteAddress[Street][street_description]=' + encodeURI(tags.name.replace('\'', '')) + '" target="_blank" rel="noopener">Current</a>' +
+				(tags.start_date >= 1974 ? '' : ' / <a href="' + planningApp + 'application_reference_number=B&SiteAddress[Street][street_description]=' + encodeURI(tags.name.replace('\'', '')) + '" target="_blank" rel="noopener">Historic</a>') +
+			' planning</span>; ';
 		}
-		if (tags.wikipedia || tags['site:wikipedia']) {
-			const w = tags.wikipedia || tags['site:wikipedia'];
-			readingVal += '<a href="https://' + encodeURI(w.split(':')[0]) + '.wikipedia.org/wiki/' + encodeURI(w.split(':')[1]) + '" title="The Free Encyclopaedia" target="_blank" rel="noopener">Wikipedia</a>; ';
-		}
+		if (tags.wikipedia)
+			readingVal += '<a href="https://' + encodeURI(tags.wikipedia.split(':')[0]) + '.wikipedia.org/wiki/' + encodeURI(tags.wikipedia.split(':')[1]) + '" title="The Free Encyclopaedia" target="_blank" rel="noopener">Wikipedia</a>; ';
 		if (tags['ref:esher'])
 			readingVal += '<a class="theme-nowrap" href="https://www.heritagegateway.org.uk/Gateway/Results_Single.aspx?uid=' + encodeURI(tags['ref:esher']) + '&resourceID=1026#content" title="East Sussex Historic Environment Record" target="_blank" rel="noopener">ESHER</a>; ';
 		if (tags['ref:iwm'])
@@ -173,7 +165,7 @@ function parse_tags(element, titlePopup, poiParser) {
 			readingVal += '<a class="theme-nowrap" href="http://trigpointing.uk/trig/' + encodeURI(tags.tpuk_ref.split('TP')[1]) + '" title="TrigpointingUK" target="_blank" rel="noopener">TrigpointingUK</a>; ';
 		if (readingVal) {
 			readingVal = readingVal.substring(0, readingVal.length - 2);
-			markerPopup = L.Util.template(tagTmpl, { key: 'Further information', keyVal: readingVal, iconName: 'fa-solid fa-link' });
+			markerPopup = L.Util.template(tagTmpl, { key: 'Further info', keyVal: readingVal, iconName: 'fa-solid fa-link' });
 		}
 		return markerPopup;
 	};
@@ -216,43 +208,43 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags.amenity === 'recycling') {
 			let recycTag = '', recycList = '';
 			const recycIcon = {
-				aerosol_cans: 'fa-solid fa-spray-can',
-				animal_waste: 'fa-solid fa-poop',
-				batteries: 'fa-solid fa-battery-full',
-				bicycles: 'fa-solid fa-bicycles',
-				books: 'fa-solid fa-book',
-				cans: 'fa-solid fa-prescription-bottle',
-				car_batteries: 'fa-solid fa-car-battery',
-				cardboard: 'fa-solid fa-box',
-				cds: 'fa-solid fa-compact-disc',
-				clothes: 'fa-solid fa-shirt',
-				cooking_oil: 'fa-solid fa-bottle-droplet',
-				computers: 'fa-solid fa-laptop',
-				tv_monitor: 'fa-solid fa-tv',
-				electrical_appliances: 'fa-solid fa-tv',
-				engine_oil: 'fa-solid fa-oil-can',
-				furniture: 'fa-solid fa-couch',
-				glass: 'fa-solid fa-wine-glass',
-				glass_bottles: 'fa-solid fa-wine-bottle',
-				green_waste: 'fa-solid fa-leaf',
-				christmas_trees: 'fa-solid fa-tree',
-				wood: 'fa-solid fa-tree',
-				hazardous_waste: 'fa-solid fa-biohazard',
-				low_energy_bulbs: 'fa-solid fa-lightbulb',
-				mobile_phones: 'fa-solid fa-mobile-screen-button',
-				organic: 'fa-solid fa-drumstick-bite',
-				paint: 'fa-solid fa-fill-drip',
-				pallets: 'fa-solid fa-pallet',
-				magazines: 'fa-solid fa-newspaper',
-				newspaper: 'fa-solid fa-newspaper',
-				paper: 'fa-solid fa-newspaper',
-				pens: 'fa-solid fa-pen-clip',
-				plastic_bottles: 'fa-solid fa-bottle-water',
-				printer_cartridges: 'fa-solid fa-print',
-				scrap_metal: 'fa-solid fa-gear',
-				shoes: 'fa-solid fa-shoe-prints',
-				small_appliances: 'fa-solid fa-blender',
-				waste: 'fa-solid fa-dumpster'
+				aerosol_cans: 'fa-spray-can',
+				animal_waste: 'fa-poop',
+				batteries: 'fa-battery-full',
+				bicycles: 'fa-bicycles',
+				books: 'fa-book',
+				cans: 'fa-prescription-bottle',
+				car_batteries: 'fa-car-battery',
+				cardboard: 'fa-box',
+				cds: 'fa-compact-disc',
+				clothes: 'fa-shirt',
+				cooking_oil: 'fa-bottle-droplet',
+				computers: 'fa-laptop',
+				tv_monitor: 'fa-tv',
+				electrical_appliances: 'fa-tv',
+				engine_oil: 'fa-oil-can',
+				furniture: 'fa-couch',
+				glass: 'fa-wine-glass',
+				glass_bottles: 'fa-wine-bottle',
+				green_waste: 'fa-leaf',
+				christmas_trees: 'fa-tree',
+				wood: 'fa-tree',
+				hazardous_waste: 'fa-biohazard',
+				low_energy_bulbs: 'fa-lightbulb',
+				mobile_phones: 'fa-mobile-screen-button',
+				organic: 'fa-drumstick-bite',
+				paint: 'fa-fill-drip',
+				pallets: 'fa-pallet',
+				magazines: 'fa-newspaper',
+				newspaper: 'fa-newspaper',
+				paper: 'fa-newspaper',
+				pens: 'fa-pen-clip',
+				plastic_bottles: 'fa-bottle-water',
+				printer_cartridges: 'fa-print',
+				scrap_metal: 'fa-gear',
+				shoes: 'fa-shoe-prints',
+				small_appliances: 'fa-blender',
+				waste: 'fa-dumpster'
 			};
 			for (let recycKey in tags) {
 				let recyc = '';
@@ -260,7 +252,7 @@ function parse_tags(element, titlePopup, poiParser) {
 					recyc = recycKey.split(':')[1];
 					recycList += recyc + ', ';
 				}
-				if (recycIcon[recyc]) recycTag += '<i class="' + recycIcon[recyc] + '" title="' + recyc + '"></i>';
+				if (recycIcon[recyc]) recycTag += '<i class="fa-solid ' + recycIcon[recyc] + '" title="' + recyc + '"></i>';
 			}
 			if (recycList) markerPopup += L.Util.template(tagTmpl, { key: 'Recycling options', keyVal: listTidy(recycList, true), iconName: 'fa-solid fa-recycle' });
 			if (recycTag) facVal += '<span class="popup-tag-value-recycling"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + recycTag + '</span>';
@@ -311,15 +303,15 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (Object.keys(tags).some(function(k){ return ~k.indexOf('diet:'); })) {
 			let dietTag = '';
 			const dietIcon = {
-				pescetarian: 'fa-solid fa-fish',
-				vegetarian: 'fa-solid fa-carrot',
-				vegan: 'fa-solid fa-leaf',
-				fruitarian: 'fa-solid fa-apple'
+				pescetarian: 'fa-fish',
+				vegetarian: 'fa-carrot',
+				vegan: 'fa-leaf',
+				fruitarian: 'fa-apple'
 			};
 			for (let dietKey in tags) {
 				let diet = '';
 				if (dietKey.startsWith('diet:') && tags[dietKey] === 'yes') diet = dietKey.split(':')[1];
-				if (dietIcon[diet]) dietTag += '<i class="' + dietIcon[diet] + '" title="' + diet + ' options"></i>';
+				if (dietIcon[diet]) dietTag += '<i class="fa-solid ' + dietIcon[diet] + '" title="' + diet + ' options"></i>';
 			}
 			if (dietTag) facVal += '<span class="popup-tag-value-diet"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + dietTag + '</span>';
 		}
@@ -431,70 +423,67 @@ function parse_tags(element, titlePopup, poiParser) {
 	};
 	const image_parser = function(tags) {
 		// get images
-		let imgCount = 0, multiPano = [], multiVid = [], model3d;
+		let imgCount = 0, multiPano = [], multiVid = [], model3d, category;
 		markerPopup = '';
+		// wikimedia commons images
 		if (tags.wikimedia_commons) {
-			// support semicolon separated commons images
 			const multiCommons =
 				(tags.wikimedia_commons +
+				(tags['wikimedia_commons:0'] ? ';' + tags['wikimedia_commons:0'] : '') +
 				(tags['wikimedia_commons:1'] ? ';' + tags['wikimedia_commons:1'] : '') +
 				(tags['wikimedia_commons:2'] ? ';' + tags['wikimedia_commons:2'] : '')
 			).split(';');
-			/* CATEGORIES SUPPORT TODO
-			if (multiCommons[0].startsWith('Category:')) {
-				$.ajax({
-					url: 'https://commons.wikimedia.org/w/api.php',
-					dataType: 'jsonp',
-					cache: true,
-					data: { action: 'query', list: 'categorymembers', cmtype: 'file', cmtitle: multiCommons[0], format: 'json' },
-					success: function(result) {
-						if (!result.query.categorymembers[-1]) for (x = 0; x < result.query.categorymembers.length; x++) if (result.query.categorymembers[x].title.startsWith('File')) {
-							markerPopup += generic_img_parser(result.query.categorymembers[x].title, imgCount, '');
-							imgCount++;
-						}
-						if ($('#settings-debug').is(':checked')) console.debug('Wikimedia-categories:', result);
-					},
-					error: function() { if ($('#settings-debug').is(':checked')) console.debug('ERROR WIKIMEDIA-CATEGORIES:', encodeURI(this.url)); }
-				});
-			} else */
 			for (let x = 0; x < multiCommons.length; x++) if (multiCommons[x].startsWith('File')) {
 				markerPopup += generic_img_parser(multiCommons[x], imgCount, '');
 				imgCount++;
 			}
 		}
+		// self hosted images
 		if (tags.image) {
-			// support semicolon separated images
 			const multiImage =
 				(tags.image +
+				(tags['image:0'] ? ';' + tags['image:0'] : '') +
 				(tags['image:1'] ? ';' + tags['image:1'] : '') +
 				(tags['image:2'] ? ';' + tags['image:2'] : '')
 			).split(';');
 			const multiImageSource = tags['source:image'] ?
 				(tags['source:image'] +
+				(tags['source:image_0'] ? ';' + tags['source:image_0'] : '') +
 				(tags['source:image_1'] ? ';' + tags['source:image_1'] : '') +
 				(tags['source:image_2'] ? ';' + tags['source:image_2'] : '')
 			).split(';') : '';
-			for (let x = 0; x < multiImage.length; x++) if (multiImage[x].startsWith('http')) {
+			for (let x = 0; x < multiImage.length; x++) if (multiImage[x].startsWith('https')) {
 				markerPopup += generic_img_parser(multiImage[x], imgCount, multiImageSource[x] ? '&copy; ' + multiImageSource[x] : '');
 				imgCount++;
 			}
 		}
+		// wikimedia commons videos
+		if (tags['wikimedia_commons:video']) {
+			multiVid =
+				(tags['wikimedia_commons:video'] +
+				(tags['wikimedia_commons:video_0'] ? ';' + tags['wikimedia_commons:video_0'] : '') +
+				(tags['wikimedia_commons:video_1'] ? ';' + tags['wikimedia_commons:video_1'] : '') +
+				(tags['wikimedia_commons:video_2'] ? ';' + tags['wikimedia_commons:video_2'] : '')
+			).split(';');
+			for (let x = 0; x < multiVid.length; x++) if (multiVid[x].startsWith('File') && multiVid[x].endsWith('.webm')) {
+				markerPopup += generic_img_parser(multiVid[x], imgCount, '');
+				imgCount++;
+			}
+		}
+		// wikimedia commons panoramas
 		if (tags['wikimedia_commons:pano']) {
 			multiPano =
 				(tags['wikimedia_commons:pano'] +
+				(tags['wikimedia_commons:pano_0'] ? ';' + tags['wikimedia_commons:pano_0'] : '') +
 				(tags['wikimedia_commons:pano_1'] ? ';' + tags['wikimedia_commons:pano_1'] : '') +
 				(tags['wikimedia_commons:pano_2'] ? ';' + tags['wikimedia_commons:pano_2'] : '')
 			).split(';');
 		}
-		if (tags['wikimedia_commons:video']) {
-			multiVid =
-				(tags['wikimedia_commons:video'] +
-				(tags['wikimedia_commons:video_1'] ? ';' + tags['wikimedia_commons:video_1'] : '') +
-				(tags['wikimedia_commons:video_2'] ? ';' + tags['wikimedia_commons:video_2'] : '')
-			).split(';');
-		}
+		// wikimedia commons categories
+		if (tags.wikimedia_commons && tags.wikimedia_commons.startsWith('Category')) category = tags.wikimedia_commons;
+		// 
 		if (tags['3dmr']) model3d = tags['3dmr'];
-		if (imgCount > 1 || multiPano.length || multiVid.length || model3d) markerPopup += show_img_controls(imgCount, multiPano, multiVid, model3d);
+		if (imgCount > 1 || multiPano.length || multiVid.length || model3d || category) markerPopup += show_img_controls(imgCount, multiPano, multiVid, model3d, category);
 		if (imgCount > 0) markerPopup = '<div class="popup-img">' + markerPopup + '</div>';
 		return markerPopup;
 	};
@@ -514,8 +503,6 @@ function parse_tags(element, titlePopup, poiParser) {
 		{callback: street_parser},
 		{callback: furtherreading_parser},
 		{callback: facility_parser},
-		{callback: generic_tag_parser, tag: 'substance', label: 'Substance', iconName: 'fa-solid fa-droplet'},
-		{callback: generic_tag_parser, tag: 'artwork_subject', label: ' ', iconName: 'fa-solid fa-palette'},
 		{callback: generic_tag_parser, tag: 'inscription', label: ' ', iconName: 'fa-solid fa-quote-left'},
 		{callback: generic_tag_parser, tag: 'description', label: ' ', iconName: 'fa-solid fa-clipboard'}
 	].concat(
@@ -555,7 +542,7 @@ function parse_tags(element, titlePopup, poiParser) {
 
 function callback(data) {
 	if ($('#settings-debug').is(':checked') && data.elements.length) console.debug('Overpass callback:', data);
-	let title, type, iconName, markerPopup;
+	let title, type, iconName, iconType, markerPopup;
 	// define poi elements
 	for (let c = 0; c < data.elements.length; c++) {
 		const e = data.elements[c];
@@ -611,69 +598,70 @@ function callback(data) {
 			if (!eName) eName = e.tags['ref:planningapp'];
 		}
 		if (e.tags.amenity) {
+			iconType = 'amenity-';
 			if (!title) title = e.tags.amenity;
 			if (!type) type = e.tags.amenity;
 			switch (e.tags.amenity) {
 				case 'animal_boarding': type = 'animal_shelter'; break;
-				case 'arts_centre': type = 'attraction'; iconName = 'theater'; break;
+				case 'arts_centre': iconName = iconType + e.tags.amenity; type = 'attraction'; break;
 				case 'bicycle_repair_station': type = 'bicycle'; break;
 				case 'cafe':
 				case 'fast_food':
 				case 'restaurant':
+					iconName = iconType + e.tags.amenity;
 					if (e.tags.cuisine) {
 						title = e.tags.cuisine;
 						title += (e.tags.amenity === 'restaurant' && e.tags.takeaway === 'only') ? ' takeaway' : ' ' + e.tags.amenity;
 						switch (e.tags.cuisine) {
-							case 'chinese': iconName = 'restaurant_chinese'; break;
-							case 'fish_and_chips': iconName = 'fishchips'; break;
-							case 'greek': iconName = 'restaurant_greek'; break;
-							case 'ice_cream': iconName = 'icecream'; break;
-							case 'indian': iconName = 'restaurant_indian'; break;
-							case 'italian': iconName = 'restaurant_italian'; break;
-							case 'kebab': iconName = 'kebab'; break;
-							case 'latin_american':
-							case 'mexican': iconName = 'restaurant_mexican'; break;
-							case 'pizza': iconName = 'pizzaria'; break;
-							case 'sandwich': iconName = 'sandwich'; break;
-							case 'seafood': iconName = 'restaurant_fish'; break;
-							case 'spanish': iconName = 'restaurant_tapas'; break;
-							case 'steak_house': iconName = 'restaurant_steakhouse'; break;
-							case 'thai': iconName = 'restaurant_thai'; break;
-							case 'turkish': iconName = 'restaurant_turkish'; break;
-							case 'vegetarian': iconName = 'restaurant_vegetarian'; break;
+							case 'chinese': 	case 'fish_and_chips':
+							case 'greek': 		case 'ice_cream':
+							case 'indian': 		case 'italian':
+							case 'kebab': 		case 'mexican':
+							case 'pizza': 		case 'sandwich':
+							case 'seafood': 	case 'spanish':
+							case 'steak_house': case 'thai':
+							case 'turkish': 	case 'vegetarian':
+								iconName = 'cuisine-' + e.tags.cuisine;
+								break;
 						}
 					}
 					break;
 				case 'clock':
 					type = 'clock';
 					if (e.tags.display === 'sundial') {
+						iconName = iconType + e.tags.amenity + '_' + e.tags.display;
 						title = e.tags.display;
-						iconName = 'sundial';
 					}
 					else if (e.tags.display) title = e.tags.display + ' ' + e.tags.amenity;
 					break;
 				case 'college': type = 'school'; break;
-				case 'fire_station': type = 'police'; iconName = 'firetruck'; break;
+				case 'fire_station': type = 'police'; iconName = iconType + e.tags.amenity; break;
 				case 'place_of_worship':
 					if (e.tags.religion) {
+						iconName = iconType + e.tags.amenity;
 						title = e.tags.religion + (e.tags.denomination ? ' ' + e.tags.denomination : '');
 						switch (e.tags.religion) {
-							case 'christian': iconName = 'church-2'; break;
-							case 'buddhist': iconName = 'bouddha'; break;
-							case 'muslim': iconName = 'mosquee'; break;
+							case 'christian': 	case 'buddhist':
+							case 'muslim':
+								iconName += '_' + e.tags.religion;
+								break;
 						}
 					}
 					break;
-				case 'public_bookcase': type = 'library'; iconName = 'bookcase'; break;
+				case 'public_bookcase': type = 'library'; iconName = iconType + e.tags.amenity; break;
 				case 'nightclub': type = 'bar'; break;
 				case 'post_box': title = (e.tags['post_box:type'] || '') + ' ' + title; break;
 				case 'post_depot':
-				case 'post_office': title = ' ' + e.tags.amenity; type = 'post_box'; iconName = 'postoffice'; break; // [ascii 32] force to top of results
+				case 'post_office':
+					iconName = iconType + 'post_office';
+					type = 'post_box';
+					title = ' ' + e.tags.amenity; // [ascii 32] force to top of results
+					break;
 				case 'pub': if (e.tags.microbrewery) title = 'Microbrewery'; break;
 				case 'recycling':
 					if (e.tags.recycling_type) {
+						if (e.tags.recycling_type === 'container') iconName = iconType +  e.tags.amenity + '_' + e.tags.recycling_type;
 						title = e.tags.amenity + ' ' + e.tags.recycling_type;
-						if (e.tags.recycling_type === 'container') iconName = 'recyclecon';
 					}
 					break;
 				case 'social_facility':
@@ -692,91 +680,86 @@ function callback(data) {
 					}
 					break;
 				case 'table':
-					if (e.tags.sport) {
-						title = e.tags.sport + ' table';
+					if (e.tags.sport === 'chess') {
+						iconName = 'leisure-' + e.tags.sport;
+						title = e.tags.sport + ' ' + e.tags.amenity;
 						type = 'sport';
-						iconName = 'chess';
 					}
 					break;
 				case 'taxi':
 					if (!e.tags.building) {
+						iconName = iconType + e.tags.amenity + '_rank';
 						title = e.tags.amenity + ' rank';
-						iconName = 'taxirank';
 					}
 					break;
 				case 'training':
 					if (e.tags.training) {
+						iconName = iconType + e.tags.amenity;
 						title = e.tags.training + ' ' + e.tags.amenity;
-						iconName = 'presentation';
 					}
 					break;
 			}
 		}
 		if (e.tags.highway) {
-			iconName = 'roadtype_tar';
+			iconName = 'highway';
 			switch (e.tags.highway) {
-				case 'bus_stop': iconName = 'busstop'; type = 'bus_stop'; break;
+				case 'bus_stop': type = e.tags.highway; break;
 				case 'footway':
 				case 'path':
 				case 'track':
-				case 'pedestrian': iconName = 'roadtype_track'; break;
+				case 'pedestrian': iconName += '-' + 'track'; break;
 				case 'speed_camera':
 					type = 'surveillance';
 					title = e.tags.highway;
-					iconName = 'trafficcamera';
+					iconName += '-' + e.tags.highway;
 					break;
 			}
 		}
 		if (e.tags.historic || e.tags['historic:railway']) {
+			iconName = pois.historic.iconName;
 			if (e.tags['historic:railway']) e.tags.historic = 'railway_station';
-			if (!title) title = 'historic ' + e.tags.historic;
+			if (!title) title = 'historic ' + e.tags.historic + (e.tags.ruins ? ' ruins' : '');
 			if (!type) type = 'historic';
-			if (e.tags.ruins) {
-				iconName = 'ruins-2';
-				title = title + ' ruins';
-			}
 			if (e.tags.military) {
-				iconName = 'war';
+				iconName += '-war';
 				switch (e.tags.military) {
-					case 'bunker': iconName = 'bunker-2-2'; break;
+					case 'bunker':
 					case 'barrier':
-						iconName = 'tanktrap';
-						title = 'historic ' + e.tags.barrier;
+						iconName += '-' + e.tags.military;
 						break;
 				}
 			}
 			switch (e.tags.historic) {
-				case 'anchor': iconName = 'anchor'; break;
-				case 'beacon': iconName = 'landmark'; break;
 				case 'boundary_stone':
 				case 'milestone':
-				case 'stone': iconName = pois.boundary_stone.iconName; break;
-				case 'cemetery': iconName = 'cemetery1'; break;
-				case 'charity_box': iconName = 'pedestal'; break;
-				case 'farm': iconName = 'farm-2'; break;
-				case 'folly': iconName = 'tower'; break;
-				case 'memorial':
-					if (e.tags.memorial) {
-						title = 'memorial ' + e.tags.memorial;
-						if (!iconName) {
-							switch (e.tags.memorial) {
-								case 'plaque': iconName = 'plaque'; break;
-								case 'clock': iconName = 'clock'; break;
-								case 'statue': iconName = 'statue-2'; break;
-								case 'war_memorial': title = 'war memorial'; iconName = 'war_memorial'; break;
-							}
-						}
-					}
-					if (!iconName) iconName = 'memorial';
+				case 'stone':
+					iconName = pois.boundary_stone.iconName;
 					break;
-				case 'mill': iconName = 'windmill-2'; break;
-				case 'moat': iconName = 'lake2'; break;
-				case 'railway_station': iconName = 'steamtrain'; break;
-				case 'street_lamp': iconName = 'streetlamp'; break;
-				case 'wall': iconName = 'citywalls'; break;
-				case 'wreck': iconName = 'shipwreck'; break;
-				case 'watering_place': iconName = 'wateringplace'; break;
+				case 'memorial':
+					iconName += '-memorial';
+					title = (e.tags.memorial === 'war_memorial' ? 'war ' : '') + 'memorial ' + e.tags.memorial;
+					switch (e.tags.memorial) {
+						case 'clock':
+							iconName = 'amenity-' + e.tags.memorial;
+							break;
+						case 'plaque':
+						case 'statue':
+						case 'war_memorial':
+							iconName += '-' + e.tags.memorial;
+							break;
+					}
+					break;
+				case 'anchor':					case 'beacon':
+				case 'cemetery':				case 'charity_box':
+				case 'farm':					case 'folly':
+				case 'mill':					case 'moat':
+				case 'railway_station':			case 'street_lamp':
+				case 'wall':					case 'wreck':
+				case 'watering_place':
+					iconName += '-' + e.tags.historic;
+					break;
 			}
+			if (iconName === pois.boundary_stone.iconName && e.tags.ruins) iconName += '-ruins';
 		}
 		if (e.tags.man_made) {
 			if (!title) title = e.tags.man_made;
@@ -788,21 +771,26 @@ function callback(data) {
 				if (type !== 'webcam') title = e.tags.surveillance + ' ' + e.tags['surveillance:type'];
 			}
 			if (type === 'survey_point') {
-				title = e.tags['survey_point:structure'];
+				iconType = 'man_made-' + type + '-';
+				title = e.tags['survey_point:structure'] + ' ' + type;
 				switch (e.tags['survey_point:structure']) {
-					case 'block': iconName = 'sppillar'; break;
-					case 'bracket': iconName = 'spbracket'; break;
+					case 'block':
+					case 'bracket':
+					case 'pin':
+						iconName = iconType + e.tags['survey_point:structure'];
+						break;
 					case 'indented_pin':
-					case 'pin': iconName = 'sprivet'; break;
+						iconName = iconType + 'pin';
+						break;
 				}
 			}
-			if (type === 'outfall') iconName = 'outfall';
 		}
 		if (e.tags.power) {
+			iconName = 'power';
 			title = 'power ' + e.tags.power;
-			iconName = 'powersubstation';
 		}
 		if (e.tags.shop) {
+			iconType = 'shop-';
 			if (e.tags.shop === 'yes') title = 'shop';
 			if (!title) title = e.tags.shop;
 			if (!type) type = e.tags.shop;
@@ -812,9 +800,9 @@ function callback(data) {
 				case 'bathroom_furnishing':
 				case 'interior_decoration':
 				case 'kitchen': type = 'houseware'; break;
-				case 'butcher': type = 'deli'; iconName = 'butcher-2'; break;
+				case 'butcher': type = 'deli'; iconName = iconType + e.tags.shop; break;
 				case 'car_parts': type = 'car_repair'; break;
-				case 'department_store': iconName = 'departmentstore';
+				case 'department_store': iconName = iconType + e.tags.shop;
 					/* fall through */
 				case 'clothes': title = (e.tags.clothes && e.tags.clothes.indexOf(';') === -1 ? e.tags.clothes + ' ' : '') + title; break;
 				case 'collector': type = 'games'; break;
@@ -824,18 +812,19 @@ function callback(data) {
 				case 'furniture': title = (e.tags.furniture ? e.tags.furniture + ' ' : '') + title; break;
 				case 'garden_centre': type = 'florist'; break;
 				case 'hairdresser':
-					if (e.tags.male === 'yes') { title = 'male barber'; iconName = 'hairmale'; }
-					else if (e.tags.female === 'yes') { title = 'female hairdresser'; iconName = 'hairfemale'; }
+					type = 'hairdresser';
+					if (e.tags.male === 'yes') { title = 'male barber'; iconName = iconType + e.tags.shop + '-male'; }
+					else if (e.tags.female === 'yes') { title = 'female hairdresser'; iconName = iconType + e.tags.shop + '-female'; }
 					else if (e.tags.unisex === 'yes') title = 'unisex hairdresser';
 					break;
 				case 'hardware': type = 'doityourself'; break;
-				case 'hearing_aids': type = 'mobility'; iconName = 'hoergeraeteakustiker_22px'; break;
+				case 'hearing_aids': type = 'mobility'; iconName = iconType + e.tags.shop; break;
 				case 'laundry': type = 'dry_cleaning'; break;
 				case 'pet_grooming': type = 'pet'; break;
 				case 'signs': type = 'copyshop'; break;
 				case 'trade': if (e.tags.trade) title = e.tags.trade + ' ' + title; break;
 				case 'window_blind': type = 'curtain'; break;
-				case 'vacant': title = title + ' shop'; type = ''; break;
+				case 'vacant': type = ''; title = title + ' shop'; break;
 			}
 			if (e.tags['service:bicycle:retail'] === 'yes') type = 'bicycle';
 		}
@@ -844,44 +833,56 @@ function callback(data) {
 			if (!type) type = e.tags.craft;
 		}
 		if (e.tags.tourism) {
+			iconType = 'tourism-';
 			if (!title) title = e.tags.tourism;
 			if (!type) type = e.tags.tourism;
 			switch (e.tags.tourism) {
-				case 'apartment': type = 'guest_house'; iconName = 'villa'; break;
 				case 'artwork':
 					if (e.tags.artwork_type) {
 						title = e.tags.artwork_type + ' ' + e.tags.tourism;
-						if (e.tags.artwork_type === 'mural') iconName = 'mural';
+						if (e.tags.artwork_type === 'mural') iconName = iconType + e.tags.tourism;
 					}
 					break;
-				case 'caravan_site': type = 'guest_house'; iconName = 'campingcar'; break;
-				case 'camp_site': type = 'guest_house'; iconName = 'tents'; break;
-				case 'gallery': type = 'artwork'; iconName = 'museum_paintings'; break;
-				case 'hotel': type = 'guest_house'; iconName = 'hotel_0star'; break;
+				case 'gallery':
+					iconName = 'shop-art';
+					type = 'artwork';
+					break;
+				case 'apartment':				case 'caravan_site':
+				case 'camp_site':				case 'hotel':
+					iconName = iconType + e.tags.tourism;
+					type = 'guest_house';
+					break;
 				case 'information':
+					iconType += e.tags.tourism + '_';
 					if (e.tags.information) {
 						title = e.tags.tourism + ' ' + e.tags.information;
 						switch (e.tags.information) {
 							case 'board':
+								iconName = iconType + e.tags.information;
 								if (e.tags.board_type) title = e.tags.board_type + ' ' + title;
-								iconName = 'board';
 								break;
-							case 'guidepost': iconName = 'signpost-3'; title = e.tags.tourism + ' ' + e.tags.information; break; // [ascii 255] force to bottom of results
+							case 'guidepost':
+								iconName = iconType + e.tags.information;
+								title = e.tags.tourism + ' ' + e.tags.information; // [ascii 255] force to bottom of results
+								break;
 							case 'map':
+								iconName = iconType + e.tags.information;
 								if (e.tags.map_type && e.tags.map_type === 'toposcope') {
 									title = e.tags.map_type + ' ' + e.tags.information;
 									type = 'artwork';
 								}
 								else if (e.tags.map_size) title = e.tags.map_size + ' ' + title;
-								iconName = 'map';
 								break;
-							case 'office': title = ' ' + title; break; // [ascii 32] force to top of results
+							case 'office':
+								title = ' ' + title; // [ascii 32] force to top of results
+								break;
 						}
 					}
 					break;
 			}
 		}
 		if (e.tags.leisure) {
+			iconType = 'leisure-';
 			if (!title) title = e.tags.leisure;
 			if (!type) type = e.tags.leisure;
 			if (e.tags.sport) {
@@ -889,49 +890,52 @@ function callback(data) {
 				title = e.tags.sport + ' ' + e.tags.leisure;
 			}
 			switch (type) {
-				case 'fitness_centre':
-				case 'fitness_station': iconName = 'weights'; break;
-				case 'garden': iconName = 'urbanpark'; break;
-				case 'golf_course': iconName = 'golfing'; break;
-				case 'horse_riding': iconName = 'horseriding'; break;
+				case 'garden':
 				case 'nature_reserve': type = 'park'; break;
+				case 'fitness_centre': iconName = iconType + 'fitness_station'; break;
+				case 'fitness_station':
+				case 'golf_course':
+				case 'horse_riding':
+					iconName = iconType + type;
+					break;
 			}
 			switch (e.tags.sport) {
-				case 'basketball': iconName = 'basketballfield'; break;
-				case 'billiards': iconName = 'billiard-2'; break;
-				case 'bmx': iconName = 'bike_rising'; break;
-				case 'boules': iconName = 'boccia'; break;
-				case 'bowls': iconName = 'bowls'; break;
-				case 'boxing': iconName = 'boxing'; break;
-				case 'chess': iconName = 'chess'; break;
-				case 'cricket': iconName = 'cricket'; break;
-				case 'fishing': iconName = 'fishing'; break;
-				case 'martial_arts': iconName = 'karate'; break;
-				case 'model_aerodrome':
-				case 'rc_car': iconName = 'videogames'; break;
-				case 'rowing': iconName = 'rowboat'; break;
-				case 'sailing': iconName = 'sailing'; break;
-				case 'skateboard': iconName = 'rollerskate'; break;
-				case 'soccer': iconName = 'soccerfield'; break;
-				case 'swimming': iconName = 'swimming2'; break;
-				case 'racquet':
-				case 'tennis': iconName = 'tenniscourt'; break;
+				case 'model_aerodrome': iconName = iconType + 'sport-rc_car'; break;
+				case 'racquet': iconName = iconType + 'sport-tennis'; break;
+				case 'basketball':				case 'billiards':
+				case 'bmx':						case 'boules':
+				case 'bowls':					case 'boxing':
+				case 'chess':					case 'cricket':
+				case 'fishing':					case 'martial_arts':
+				case 'rc_car':					case 'rowing':
+				case 'sailing':					case 'skateboard':
+				case 'soccer':					case 'swimming':
+				case 'tennis':
+					iconName = iconType + 'sport-' + e.tags.sport;
+					break;
 			}
 		}
 		if (e.tags.natural) {
 			if (!title) title = e.tags.natural;
 			if (!type) type = e.tags.natural;
-			if (type === 'peak') iconName = 'hill';
-			if (type === 'wood') iconName = 'forest2';
+			if (type === 'peak' || type === 'wood') iconName += 'natural-' + e.tags.natural;
 		}
 		if (e.tags.emergency) {
+			iconType = 'emergency-';
 			if (!title) title = e.tags.emergency;
+			if (e.tags.emergency === 'no' && e.tags.healthcare) title += ' <span style="text-transform:lowercase">(non emergency)</span>';
 			if (!type) type = e.tags.emergency;
 			switch (type) {
-				case 'ambulance_station': type = 'police'; iconName = 'ambulance'; break;
-				case 'bleed_control_kit': type = 'defibrillator'; iconName = 'bleedkit'; break;
-				case 'coast_guard': type = 'police'; iconName = 'helicopter'; break;
-				case 'lifeguard': type = 'police'; iconName = 'lifeguard-2'; break;
+				case 'bleed_control_kit':
+					iconName = iconType + type;
+					type = 'defibrillator';
+					break;
+				case 'ambulance_station':
+				case 'coast_guard':
+				case 'lifeguard':
+					iconName = iconType + type;
+					type = 'police';
+					break;
 			}
 		}
 		if (e.tags.office) {
@@ -947,7 +951,7 @@ function callback(data) {
 			if (e.tags['healthcare:speciality']) title = e.tags['healthcare:speciality'] + ' healthcare';
 			else if (!title) title = e.tags.healthcare;
 			if (!type) type = 'healthcare';
-			if (e.tags.healthcare === 'clinic') iconName = 'hospital-building';
+			if (e.tags.healthcare === 'clinic') iconName = 'amenity-hospital';
 		}
 		if (e.tags.listed_status) {
 			if (!title || type === 'shelter') {
@@ -965,28 +969,28 @@ function callback(data) {
 			if (!title) title = e.tags.landuse;
 			if (!type) type = e.tags.landuse;
 			switch (e.tags.landuse) {
-				case 'cemetery': iconName = 'cemetery'; break;
-				case 'recreation_ground': type = 'park'; iconName = 'recreation'; break;
+				case 'cemetery': iconName = e.tags.landuse; break;
+				case 'recreation_ground': type = 'park'; iconName = 'leisure'; break;
 			}
 		}
 		if (e.tags.cemetery) {
 			if (!title) title = e.tags.cemetery;
 			switch (e.tags.cemetery) {
-				case 'grave': if (!iconName) iconName = 'headstone-2'; break;
-				case 'sector': iconName = 'administrativeboundary'; break;
+				case 'grave': if (!iconName) iconName = 'cemetery-' + e.tags.cemetery; break;
+				case 'sector': iconName = 'boundary-political'; break;
 			}
 		}
 		if (e.tags.boundary) {
 			if (!title) title = e.tags.protection_title;
 			if (!type) type = e.tags.boundary;
 			if (type === 'historic') {
-				iconName = 'administrativeboundary';
+				iconName = 'boundary-political';
 				title = 'historic boundary';
 			}
 		}
 		if (e.tags.place) {
 			title = e.tags.place;
-			iconName = 'smallcity';
+			iconName = 'place';
 		}
 		// set marker options
 		const poi = pois[type];
@@ -994,12 +998,13 @@ function callback(data) {
 			if (poi) iconName = poi.iconName;
 			else if (e.tags.shop) iconName = 'shop';
 			else if (e.tags.building) {
-				if (e.tags.building === 'house' || e.tags.building === 'bungalow' || e.tags.building === 'detatched' || e.tags.building === 'semidetached_house' || e.tags.building === 'static_caravan') iconName = 'bighouse';
-				else if (e.tags.building === 'hut') iconName = 'hut';
-				else iconName = 'apartment-3';
+				iconName = 'building-';
+				if (e.tags.building === 'house' || e.tags.building === 'bungalow' || e.tags.building === 'detatched' || e.tags.building === 'semidetached_house' || e.tags.building === 'static_caravan') iconName += 'house';
+				else if (e.tags.building === 'hut') iconName += 'hut';
+				else iconName += 'apartment';
 			}
 			else if (e.tags.entrance) iconName = 'entrance';
-			else iconName = '000blank';
+			else iconName = '000-blank';
 		}
 		const marker = L.marker((e.type === 'node') ? new L.LatLng(e.lat, e.lon) : new L.LatLng(e.center.lat, e.center.lng), {
 			// do not bounce marker: when single poi, in debug mode, over 50 markers
@@ -1008,7 +1013,7 @@ function callback(data) {
 				iconUrl: 'assets/img/icons/' + iconName + '.png',
 				iconSize: [32, 37],
 				iconAnchor: [16, 37],
-				shadowUrl: 'assets/img/icons/000shadow.png',
+				shadowUrl: 'assets/img/icons/000-shadow.png',
 				shadowAnchor: [16, 27],
 				popupAnchor: [0, -24]
 			}),
@@ -1052,13 +1057,15 @@ function callback(data) {
 		else if (e.tags.ref) toolTip += e.tags.ref;
 		else if (e.tags.operator) toolTip += e.tags.operator;
 		toolTip += '</div><i>' + title + '</i>';
+		let toolTipIcons = '';
 		if (e.tags.image || e.tags.wikimedia_commons) {
 			const imgIcon = ((e.tags.image && e.tags.wikimedia_commons) || (e.tags.image && e.tags.image.indexOf(';') > -1) || (e.tags.wikimedia_commons && e.tags.wikimedia_commons.indexOf(';') > -1)) ? 'images' : 'image';
-			toolTip += ' <i class="tooltip-icons fa-solid fa-' + imgIcon + '" title="' + titleCase(imgIcon) + '"></i>';
+			toolTipIcons += '<i class="fa-solid fa-' + imgIcon + '" title="has ' + imgIcon + '"></i>';
 		}
-		if (e.tags['wikimedia_commons:pano']) toolTip += ' <i class="tooltip-icons fa fa-street-view" title="Photosphere view"></i>';
-		if (e.tags['wikimedia_commons:video']) toolTip += ' <i class="tooltip-icons fa fa-film" title="Video"></i>';
-		if (e.tags['3dmr']) toolTip += ' <i class="tooltip-icons fa fa-cube" title="3D Model"></i>';
+		if (e.tags['wikimedia_commons:pano']) toolTipIcons += '<i class="fa-solid fa-street-view" title="has photosphere"></i>';
+		if (e.tags['wikimedia_commons:video']) toolTipIcons += '<i class="fa-solid fa-film" title="has video"></i>';
+		if (e.tags['3dmr']) toolTipIcons += '<i class="fa-solid fa-cube" title="has 3D model"></i>';
+		toolTip += '<span class="tooltip-icons">' + (toolTipIcons ? toolTipIcons : '') + '</span>';
 		// popup and tooltip
 		const customPOptions = {
 			maxWidth: $(window).width() >= 512 ? imgSize + 30 : imgSize,
@@ -1102,7 +1109,7 @@ function callback(data) {
 function pushPoiList(customSort) {
 	let c;
 	// check if location active and get distance
-	if (lc._active && lc._event) for (c = 0; c < poiList.length; c++) poiList[c].distance = map.distance(lc._event.latlng, poiList[c]._origLatlng || poiList[c]._latlng);
+	if (lc._active && lc._event) for (c = 0; c < poiList.length; c++) { poiList[c].distance = map.distance(lc._event.latlng, poiList[c]._origLatlng || poiList[c]._latlng || poiList[c].getCenter()); }
 	// sort by distance / custom / name
 	poiList.sort(function(a, b) {
 		if (a.distance) return (a.distance > b.distance) ? 1 : -1;
@@ -1121,8 +1128,7 @@ function pushPoiList(customSort) {
 			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fa-solid fa-circle fa-lg" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
 			'<td class="openhrs-color-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
-			'<td>' + poiList[c]._tooltip._content + '</td>' +
-			'<td>' + (poiList[c].facilities ? poiList[c].facilities : '') + '</td>';
+			'<td>' + poiList[c]._tooltip._content + '</td>';
 		if (poiList[c].distance) {
 			if ($('#settings-unit').is(':checked')) {
 				if (poiList[c].distance < 1000) poiResultsList += '<td>' + Math.round(poiList[c].distance) + ' m</td>';
@@ -1133,18 +1139,21 @@ function pushPoiList(customSort) {
 				else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1609.34) * 100) / 100 + ' mi</td>';
 			}
 		}
-		poiResultsList += '</tr>';
+		poiResultsList += '<td class="tooltip-icons">' + $('<div>' + poiList[c]._tooltip._content + '</div>').find('.tooltip-icons').html() + '</td>' +
+			'<td>' + (poiList[c].facilities ? poiList[c].facilities : '') + '</td></tr>';
 	}
 	poiResultsList += '</table>';
 	$('#pois-results-list').html(poiResultsList).show();
+	$('#pois-results-list span.tooltip-icons').remove();
 	$('#pois-results').slideDown(400, function() {
+		$('#pois-results').css('min-height', '92px');
 		$('#pois-results-list').css('opacity', 1);
 		$('#pois-results button').prop('disabled', false);
 		$(this).css('pointer-events', 'auto').trigger('scroll');
 		// keep checkbox in view
 		if ($('.pois-checkbox input:checked').length === 1) $('.pois-checkbox input:checked').parent()[0].scrollIntoView({ block: 'center' });
 	});
-	$('#pois-results-list td:nth-child(3) i').tooltip(tooltipDef);
+	$('#pois-results-list td i[class*="fa-"]').tooltip(tooltipDef);
 	$('.sidebar-tabs ul li [href="#pois"] .sidebar-notif').text(poiList.length).show();
 	// interact with map
 	$('#pois-results-list tr')
@@ -1154,12 +1163,14 @@ function pushPoiList(customSort) {
 		if ($('#control-ww2').length) $('#control-ww2 input').val($('#control-ww2 input')[0].max).trigger('change');
 		map._layers[this.id].openPopup();
 		if ($(window).width() < 768) $('.sidebar-close:visible').trigger('click');
-		else if (map._layers[this.id]._latlng) {
-			// get bounds of area, focus 150px above marker and find sidebar-width to allow room for popup
-			let zm = areaOutline.getLayer('o_' + this.id) ? map.getBoundsZoom(areaOutline.getLayer('o_' + this.id)._bounds.pad(0.5)) : map.getZoom();
+		else if (map._layers[this.id]._latlng || map._layers[this.id]._latlngs) {
+			// get bounds of area, focus 100px above marker and find sidebar-width to allow room for popup
+			let zm = map.getZoom();
+			if (areaOutline.getLayer('o_' + this.id)) zm = map.getBoundsZoom(areaOutline.getLayer('o_' + this.id)._bounds.pad(0.5));
+			else if (imageOverlay.getLayer(this.id)) zm = map.getBoundsZoom(imageOverlay.getLayer(this.id)._bounds.pad(0.5));
 			if (zm > 18) zm = 18;
-			const px = map.project(map._layers[this.id]._latlng, zm);
-			map.stop().flyTo(map.unproject([px.x -= ($(window).width() >= 1024 ? Math.round(sidebar.width()/2) : 0), px.y -= 150], zm), zm);
+			const px = map.project(map._layers[this.id]._latlng || map._layers[this.id].getCenter(), zm);
+			map.stop().flyTo(map.unproject([px.x -= ($(window).width() >= 1024 ? Math.round(sidebar.width()/2) : 0), px.y -= 100], zm), zm);
 		}
 	});
 	// results table header
@@ -1180,7 +1191,7 @@ function pushPoiList(customSort) {
 function generic_header_parser(header, subheader, fhrs, osmId, wikidata) {
 	let markerPopup = '<div class="popup-header">';
 	if (osmId && !$('#settings-overpass-attic').val()) {
-		markerPopup += '<a class="popup-edit popup-header-button" title="Show Editing Options"><i class="fa-solid fa-pen-to-square"></i></a>';
+		markerPopup += '<a class="popup-edit popup-header-button" title="Show editing options"><i class="fa-solid fa-pen-to-square"></i></a>';
 		if (Object.keys(wikidata).length) markerPopup += '<a class="popup-wikidata popup-header-button" title="Show Wikidata" data-wikidata="' + encodeURI(JSON.stringify(wikidata)) + '"><i class="fa-solid fa-barcode"></i></a>';
 		if (noIframe && localStorageAvail()) markerPopup += '<a class="popup-bookmark popup-header-button" title="Bookmark"><i class="fa-regular fa-bookmark"></i></a>';
 		if (fhrs) markerPopup += '<span class="popup-fhrs notloaded" data-fhrs="' + fhrs + '"><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>';
@@ -1217,17 +1228,26 @@ function generic_website_parser(tags, key, label, iconName) {
 }
 // image name | image number | attribution
 function generic_img_parser(img, id, attrib) {
-	let url, imgTmpl;
-	// if (img.startsWith('Category:')) imgTmpl = '<div class="popup-img-item">' + img + '</div>'; else
-	if (img.startsWith('File')) {
-		url = encodeURIComponent(img);
-		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + encodeURIComponent(img);
+	let url = encodeURIComponent(img), imgTmpl;
+	// wikimedia commons videos
+	if (img.startsWith('File') && img.endsWith('.webm')) {
+		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + url;
+		imgTmpl = '<div id="img{id}" class="popup-img-item popup-img-vid' + (+id === 0 ? ' notloaded' : '') + '">' +
+			'<a data-fancybox="gallery" data-type="iframe" href="https://commons.wikimedia.org/wiki/{url}?embedplayer=yes"><img data-url="{url}" data-srcset="{img}"></a>' +
+			'<div class="popup-img-attrib notloaded"><span>Image loading...</span></div>' +
+		'</div>';
+	}
+	// wikimedia commons images
+	else if (img.startsWith('File')) {
+		img = 'https://commons.wikimedia.org/wiki/Special:Redirect/file?wptype=file&wpvalue=' + url;
 		imgTmpl = '<div id="img{id}" class="popup-img-item' + (+id === 0 ? ' notloaded' : '') + '">' +
 			'<a data-fancybox="gallery" href="{img}" data-srcset="{img}&width=2560 1280w, {img}&width=1280 800w, {img}&width=800 640w"><img data-url="{url}"></a>' +
 			'<div class="popup-img-attrib notloaded"><span>Image loading...</span></div>' +
 		'</div>';
 	}
-	else imgTmpl = '<div id="img{id}" class="popup-img-item' + (+id === 0 ? ' notloaded' : '') + '">' +
+	// self hosted images
+	else
+		imgTmpl = '<div id="img{id}" class="popup-img-item' + (+id === 0 ? ' notloaded' : '') + '">' +
 			'<a data-fancybox="gallery" data-caption="' + $('<span>' + attrib + '</span>').text() + '" href="{img}"><img></a>' +
 			(attrib ? '<div class="popup-img-attrib"><span>{attrib}</span></div>' : '') +
 		'</div>';
@@ -1312,6 +1332,23 @@ function defib_parser(tags, titlePopup) {
 		{callback: generic_tag_parser, tag: 'defibrillator:location', label: 'Location', iconName: 'fa-solid fa-location-arrow'}
 	]);
 }
+function education_parser(tags, titlePopup) {
+	const eduinfo_parser = function(tags) {
+		let markerPopup = '', eduVal = '';
+		if (tags.min_age && tags.max_age) eduVal += 'Ages ' + tags.min_age + '-' + tags.max_age + ', ';
+		if (tags.capacity) eduVal += 'Capacity ' + tags.capacity + ', ';
+		if (tags["school:type"]) eduVal += titleCase(tags["school:type"]) + ', ';
+		if (tags.denomination) eduVal += titleCase(tags.denomination) + ', ';
+		if (eduVal) {
+			eduVal = eduVal.substring(0, eduVal.length - 2);
+			markerPopup += L.Util.template(tagTmpl, { key: 'Education details', keyVal: eduVal, iconName: 'fa-solid fa-school' });
+		}
+		return markerPopup;
+	};
+	return parse_tags(tags, titlePopup, [
+		{callback: eduinfo_parser}
+	]);
+}
 function food_parser(tags, titlePopup) {
 	const cuisine_parser = function(tags) {
 		let markerPopup = '', cuisineVal = '';
@@ -1385,9 +1422,9 @@ function hotel_parser(tags, titlePopup) {
 		{callback: hotelservices_parser}
 	]);
 }
-function hospital_parser(tags, titlePopup) {
+function outfall_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
-		{callback: generic_tag_parser, tag: 'emergency', label: 'Emergency', iconName: 'fa-solid fa-truck-medical'}
+		{callback: generic_tag_parser, tag: 'substance', label: 'Substance', iconName: 'fa-solid fa-droplet'}
 	]);
 }
 function post_parser(tags, titlePopup) {
@@ -1466,23 +1503,6 @@ function vending_parser(tags, titlePopup) {
 		{callback: generic_tag_parser, tag: 'biometric', label: 'Biometric', iconName: 'fa-solid fa-fingerprint'}
 	]);
 }
-function education_parser(tags, titlePopup) {
-	const eduinfo_parser = function(tags) {
-		let markerPopup = '', eduVal = '';
-		if (tags.min_age && tags.max_age) eduVal += 'Ages ' + tags.min_age + '-' + tags.max_age + ', ';
-		if (tags.capacity) eduVal += 'Capacity ' + tags.capacity + ', ';
-		if (tags["school:type"]) eduVal += titleCase(tags["school:type"]) + ', ';
-		if (tags.denomination) eduVal += titleCase(tags.denomination) + ', ';
-		if (eduVal) {
-			eduVal = eduVal.substring(0, eduVal.length - 2);
-			markerPopup += L.Util.template(tagTmpl, { key: 'Education details', keyVal: eduVal, iconName: 'fa-solid fa-school' });
-		}
-		return markerPopup;
-	};
-	return parse_tags(tags, titlePopup, [
-		{callback: eduinfo_parser}
-	]);
-}
 function worship_parser(tags, titlePopup) {
 	return parse_tags(tags, titlePopup, [
 		{callback: generic_tag_parser, tag: 'service_times', label: 'Service times', iconName: 'fa-solid fa-clock'}
@@ -1512,7 +1532,7 @@ function getWikiAttrib(element) {
 				}
 				else element.find($('.popup-img-attrib')).html('Error: Attribution not found');
 				element.find($('.popup-img-attrib')).removeClass('notloaded');
-				// set the popup content so it includes dynamically loaded content
+				// save popup content
 				if (markerId && !element.find($('.notloaded')).length) map._layers[markerId].setPopupContent();
 				if ($('#settings-debug').is(':checked')) console.debug('Wikimedia-attrib:', result);
 			},
@@ -1520,29 +1540,27 @@ function getWikiAttrib(element) {
 		});
 	}
 }
-function show_img_controls(imgMax, img360, vid, model3d) {
+function show_img_controls(imgMax, img360, vid, model3d, category) {
 	// add image navigation controls to popup
-	// check if user has already seen bouncing icons
-	const bouncedicon = (localStorageAvail() && window.localStorage.tutorial.indexOf('bouncedicon') === -1) ? ' fa-bounce' : '';
 	let ctrlTmpl = '<div class="popup-navigate">', x;
-	if (model3d) ctrlTmpl +=
-		'<a title="3D Model" onclick="popupWindow(\'iframe\', \'https://3dmr.eu/model/' + model3d + '\');"' +
-			'<i style="min-width:25px;" class="fa-solid fa-cube"></i>' +
+	// button - wikimedia commons categories
+	if (category) ctrlTmpl +=
+		'<a title="Wikimedia Commons" onclick="popupWindow(\'iframe\', \'https://commons.wikimedia.org/wiki/' + category + '?gsAutoPlay=1&gsDelay=' + $.fancybox.defaults.slideShow.speed +
+			'&gsDir=desc&gsAutoStart=1&withJS=MediaWiki:Gadget-GallerySlideshow.js&withCSS=MediaWiki:Gadget-GallerySlideshow.css\', \'\', \'Wikimedia Commons\');"' +
+			'<i class="fa-solid fa-photo-film"></i>' +
 		'</a>';
-	if (vid && vid.length) for (x = 0; x < vid.length; x++) {
-		if (vid[x].startsWith('File') && vid[x].endsWith('webm')) ctrlTmpl +=
-			'<a class="vid notloaded" title="Video" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + vid[x] + '" data-fancybox="vid" data-base-class="noslideshow" data-loop="false"' +
-				'data-type="iframe" data-animation-effect="circular" href="https://commons.wikimedia.org/wiki/' + encodeURIComponent(vid[x]) + '?embedplayer=yes">' +
-				'<i style="min-width:25px;" class="fa-solid fa-film' + bouncedicon + '"></i>' +
-			'</a>';
-	}
-	if (img360 && img360.length) for (x = 0; x < img360.length; x++) {
-		if (img360[x].startsWith('File')) ctrlTmpl +=
-			'<a class="pano notloaded" title="Photosphere" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-fancybox="pano" data-base-class="noslideshow" data-loop="false"' +
-				'data-type="iframe" data-animation-effect="circular" data-src="assets/pannellum/pannellum.htm#config=config.json&panorama=' + encodeURIComponent(img360[x]) + '" href="javascript:;">' +
-				'<i style="min-width:25px;" class="fa-solid fa-street-view' + bouncedicon + '"></i>' +
-			'</a>';
-	}
+	// button - 3d model repository (fixme, non-working in iframe)
+	if (model3d) ctrlTmpl +=
+		'<a title="3D Model" onclick="popupWindow(\'iframe\', \'https://3dmr.eu/model/' + model3d + '\', \'\', \'3D Model Repository\');"' +
+			'<i class="fa-solid fa-cube"></i>' +
+		'</a>';
+	// button - wikimedia commons panoramas
+	if (img360 && img360.length) for (x = 0; x < img360.length; x++) if (img360[x].startsWith('File')) ctrlTmpl +=
+		'<a class="pano notloaded" title="Photosphere" style="display:' + ((x === 0) ? 'initial' : 'none') + ';" data-caption="' + img360[x] + '" data-fancybox="pano" data-base-class="noslideshow" data-loop="false"' +
+			'data-type="iframe" data-animation-effect="circular" data-src="assets/pannellum/pannellum.htm#config=config.json&panorama=' + encodeURIComponent(img360[x]) + '" href="javascript:;">' +
+			'<i class="fa-solid fa-street-view"></i>' +
+		'</a>';
+	// gallery - wikimedia commons images and videos
 	if (imgMax > 1) ctrlTmpl +=
 		'<span class="theme-color"><a title="Previous image" onclick="navImg(0);"><i class="fa-solid fa-square-caret-left"></i></a></span>' +
 		'<i class="popup-navigate-count fa-solid fa-1"></i>/<i class="fa-solid fa-' + imgMax + '"></i>' +

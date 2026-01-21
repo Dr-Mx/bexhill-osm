@@ -36,12 +36,14 @@ $(window).on('scrollend', function() {
 }).trigger('scrollend');
 
 $(document).ready(function() {
+	// kiosk mode hides certain elements
+	if (parent.kioskMode === true) document.getElementsByTagName('html')[0].classList.add('kiosk')
 	$.ajax({
 		url: 'streetnames.json',
 		dataType: 'json',
 		mimeType: 'application/json',
 		success: function(json) {
-			let streetDetail = '', streetWip = '', className;
+			let streetDetail = '', streetResearch = '', streetConstruction = '', className;
 			$.each(json.streetNames.street, function(i, street) {
 				className = street.name.charAt(0) + (street.lost ? ' lost' : '');
 				streetDetail += '<div class="street ' + className + '"><strong>' + street.name + ' (' + street.date + ')</strong>' +
@@ -59,11 +61,23 @@ $(document).ready(function() {
 				'<div>' + street.desc + '</div></div>';
 			});
 			$.each(json.streetNames.streetWip, function(i, street) {
-				streetWip += '<span>' + street.name + ' (' + street.date + ')</span>';
+				if (street.date === 'construction') streetConstruction += '<span>' + street.name + '</span>';
+				else streetResearch += '<span>' + street.name + ' (' + street.date + ')</span>';
 			});
 			$('#street-results').html(streetDetail);
-			if (streetWip) $('#rsrchdesc').html(streetWip);
-			else $('#rsrchdesc').text('Nothing - we are are up to date!');
+			if (streetConstruction) {
+				$('#construction-body').html(streetConstruction);
+				$('#construction').append(' (' + $('#construction-body span').length + ')');
+			}
+			else {
+				$('[href="#construction"]').parent().hide();
+				$('#construction, #construction-body').hide();
+			}
+			if (streetResearch) {
+				$('#research-body').html(streetResearch);
+				$('#research').append(' (' + $('#research-body span').length + ')');
+			}
+			else $('#research-body').text('Nothing - we are all up to date!');
 			// index links and alphabetic dividers
 			$('#street-index a').each(function() {
 				let recs = $('.street.' + $(this).text()).length;

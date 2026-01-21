@@ -62,6 +62,20 @@ var tourRefs = {
 		}
 	},
 	
+	farming: {
+		title: 'Farms & Landowners',
+		1: {
+			name: 'East Sussex County Council: Tithe Map Apportionments',
+			url: 'https://apps.eastsussex.gov.uk/leisureandtourism/localandfamilyhistory/tithemaps/apportionment/artefact/112769',
+			media: 'Website'
+		},
+		2: {
+			name: 'Bexhill Museum: Bexhill Farms',
+			url: 'https://www.bexhillmuseum.org.uk/access-centre/research/bexhill-farms-2/',
+			media: 'Website'
+		}
+	},
+
 	manor: {
 		title: 'Old Town Manor',
 		1: {
@@ -75,7 +89,7 @@ var tourRefs = {
 		title: 'The Amsterdam Shipwreck',
 		1: {
 			name: 'De VOCsite (Dutch)',
-			url: 'https://www.vocsite.nl/schepen/detail.html?id=10038',
+			url: 'https://www.vocsite.nl/schepen/10038/',
 			media: 'Website'
 		},
 		2: {
@@ -167,8 +181,8 @@ var tourRefs = {
 			media: 'Website'
 		},
 		2: {
-			name: 'Open University - History & The Arts',
-			url: 'https://www.open.edu/openlearn/history-the-arts/history/heritage/the-de-la-warr-pavilion',
+			name: 'Back to the future | De La Warr Pavilion | The Guardian',
+			url: 'https://www.theguardian.com/artanddesign/2005/apr/24/architecture.regeneration',
 			media: 'Website'
 		}
 	},
@@ -182,7 +196,7 @@ var tourRefs = {
 		},
 		2: {
 			name: 'Bexhill-on-Sea Observer, 21 October 1944',
-			url: 'https://twitter.com/bexhillmuseum/status/709482254767165440',
+			url: 'https://x.com/bexhillmuseum/status/709482254767165440',
 			media: 'Newspaper'
 		}
 	},
@@ -200,8 +214,8 @@ var tourRefs = {
 			media: 'Website'
 		},
 		3: {
-			name: 'Bexhill News, 29 March 2023',
-			url: 'https://bexhill.news/holding-centre-for-asylum-seekers-will-be-sited-in-bexhill/',
+			name: 'Bexhill News, April 2023',
+			url: 'https://issuu.com/regionalmediagroup/docs/bexhill_news_0423/2',
 			media: 'Newspaper'
 		}
 	},
@@ -276,7 +290,7 @@ var tourRefs = {
 		title: 'Filming Locations',
 		1: {
 			name: 'Bexhill-on-Sea Observer, 15 June 1912',
-			url: 'https://twitter.com/bexhillmuseum/status/601708758083960832',
+			url: 'https://x.com/bexhillmuseum/status/601708758083960832',
 			media: 'Newspaper'
 		}
 	},
@@ -284,8 +298,8 @@ var tourRefs = {
 	clocks: {
 		title: 'Street Clocks',
 		1: {
-			name: 'Public Sculptures of Sussex: Clock Tower',
-			url: 'http://www.publicsculpturesofsussex.co.uk/object?id=115',
+			name: 'Public Sculptures of Sussex: Clock Tower (archived)',
+			url: 'https://web.archive.org/web/20240519232839/http://publicsculpturesofsussex.co.uk/object?id=115',
 			media: 'Website'
 		},
 		2: {
@@ -298,8 +312,8 @@ var tourRefs = {
 	surveying: {
 		title: 'OS Surveying Points',
 		1: {
-			name: 'Ordnance Survey: Benchmark locator',
-			url: 'https://www.ordnancesurvey.co.uk/benchmarks/',
+			name: 'Ordnance Survey: Search for benchmarks',
+			url: 'https://www.ordnancesurvey.co.uk/geodesy-positioning/legacy-data/benchmark-search',
 			media: 'Website'
 		}
 	}

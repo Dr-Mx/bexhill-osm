@@ -10,7 +10,7 @@ function show_overpass_layer(query, cacheId, options) {
 		// show spinner, disable poi checkboxes
 		$('.spinner').show();
 		$('.pois-checkbox').addClass('pois-loading');
-		queryBbox = '[out:json]';
+		queryBbox = '[timeout:10][out:json]';
 		if ($('#settings-overpass-attic').val()) queryBbox += '[date:"' + new Date($('#settings-overpass-attic').val()).toISOString() + '"]';
 		// select within an area, bypassed for single poi
 		if (options && options.bound) {
@@ -93,11 +93,11 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		// get from overpass
 		else $.ajax({
 			url: url,
-			datatype: 'xml',
+			datatype: 'json',
 			retryTimeout: 2,
-			success: function(xml) {
-				if (xml.elements) {
-					self.options.callback.call(reference, xml);
+			success: function(json) {
+				if (json.elements) {
+					self.options.callback.call(reference, json);
 					if (self.options.zoomTo) zoom_area();
 					if (poiList.length === 0 && !rQuery) self.options.statusMsg(
 						'circle-info',
@@ -107,8 +107,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 					);
 					// if not in iframe, cache to local storage
 					if (self.options.cacheId && poiList.length && !$('#settings-overpass-attic').val()) {
-						eleCache[self.options.cacheId] = xml;
-						if (noIframe && localStorageAvail()) window.localStorage[self.options.cacheId] = JSON.stringify(xml);
+						eleCache[self.options.cacheId] = json;
+						if (noIframe && localStorageAvail()) window.localStorage[self.options.cacheId] = JSON.stringify(json);
 					}
 					if (self.options.debug) console.debug('Query received from server ' + $('#settings-overpass-server option:selected').text());
 				}
@@ -170,3 +170,21 @@ L.OverPassLayer = L.FeatureGroup.extend({
 		this._map = null;
 	}
 });
+
+function reverse_overpass_query(latlng, zoom) {
+	let revQuery = 'https://' + $('#settings-overpass-server').val() + '/api/interpreter?data=' +
+		'[out:json];(' +
+		'nwr(around:15,' + latlng.lat.toFixed(6) + ',' + latlng.lng.toFixed(6) + ')[name]' + (zoom > 16 ? '[!highway];' : '[highway];') +
+		'nwr(around:15,' + latlng.lat.toFixed(6) + ',' + latlng.lng.toFixed(6) + ')[building]["addr:street"];' +
+		');out tags;';
+	$.ajax({
+		url: revQuery,
+		datatype: 'json',
+		retryTimeout: 2,
+		success: function(json) {
+			if (json.elements) {
+				console.log(json.elements);
+			}
+		}
+	});
+}

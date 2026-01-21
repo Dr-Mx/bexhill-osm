@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## v9.0.0
+
+**Date:** 21/01/2026
+
+Updated
+ - jquery.js 4.0.0
+ - jquery-ui.js 1.14.1
+ - Control.Geocoder.min.js 3.3.1
+ - fontawesome 7.1.0
+
+Site changes
+ - New Farms and Landowners history tour
+ - Food Hygiene Rating detailed tooltip on hover within popups
+ - Renamed all map icons to align with osm tagging
+ - Places tagged with 'wikimedia_commons:video' are now integrated into the image gallery
+ - Places tagged with 'wikimedia_commons=Category:...' link to a Commons gallery in an iframe
+ - Improve Kiosk mode to no longer need any code adjustments other than setting kioskMode = true
+ - Redesign sidebar minimap
+ - Fix coordinates in .geojson files to 6 decimal places
+ - Fancybox v3 compatibility with jQuery v4
+ - Added 'published/revision' dates to historic OS maps
+ - Planning applications link to new council planning portal
+ - The POI results list now show icons relating to available media (photos, videos, files)
+ - Lots of bug fixes and code improvements
+
+
 ## v8.6.0
 
 **Date:** 25/09/2025
@@ -322,7 +348,7 @@ Updated
  - fontawesome 6.1.1
  - jquery-ui.min.js 1.13.1
  - easy-button.min.js 2.4.0
- - Control.Geocoder.min.js 2.4.0 
+ - Control.Geocoder.min.js 2.4.0
  - L.Control.Locate.min.js 0.76.0
 
 Site changes

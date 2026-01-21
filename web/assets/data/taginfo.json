@@ -1,7 +1,7 @@
 {
     "data_format": 1,
     "data_url": "https://bexhill-osm.org.uk/assets/data/taginfo.json",
-	"data_updated": "20241018T200000Z",
+	"data_updated": "20251103T200000Z",
     "project": {
         "name": "Bexhill OpenStreetMap",
         "description": "A highly detailed map of Bexhill-on-Sea, England. Discover art, shops, walks, history and a wealth of other information.",
@@ -46,9 +46,6 @@
             "key": "ref:planningapp",
             "description": "Planning reference number from Rother District Council, linked in a map popup."
         }, {
-            "key": "ref:historicplanningapp",
-            "description": "Historic planning reference number from Rother District Council, linked in a map popup."
-        }, {
             "key": "ref:esher",
             "description": "East Sussex Historic Environment Record reference, linked in a map popup."
         }, {
@@ -67,7 +64,11 @@
             "key": "fhrs:id",
 			"description": "Used to access information on food hygiene ratings, displayed in a map popup."
         }, {
+            "key": "developer"
+        }, {
             "key": "manufacturer"
+        }, {
+            "key": "builder"
         }, {
             "key": "architect"
         }, {

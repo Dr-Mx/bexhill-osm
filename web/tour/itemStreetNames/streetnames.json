@@ -1414,6 +1414,10 @@
 				"desc": "An old parish lane; the outline of the lane can be seen on an Ordnance Survey map 1795 to 1825. There was a small tenement called Gunters at the corner of present-day Gunters Lane and Turkey Road; it was owned by John Gunter in the 17th century. (Taken over as a Public Highway by the Local Board of Bexhill in 1884).",
 				"adop": "1884"
 			}, {
+				"name": "Gutsell Grove",
+				"date": "2025",
+				"desc": "This area was once part of a military camp established at the start of the First World War. Frank Gutsell, Private SD/4182 Royal Sussex Regiment. From Mayfield. Serving with 4 Company 3rd Southdown Battalion 1915."
+			}, {
 				"name": "Gwyneth Grove",
 				"date": "1967",
 				"desc": "Family forename of one of the developers surnames, Davey-Casselden Limited. (Allen Way, Amanda Close, Angela Close, Christine Close, Diana Close, Ian Close and Lesley Close are nearby). (Adopted by Borough of Bexhill 7th February 1972).",
@@ -3585,10 +3589,25 @@
 			}
 		],
 		"streetWip": [{
+				"name": "Waddingham Way",
+				"date": "construction"
+			}, {
+				"name": "Merchants Road",
+				"date": "construction"
+			}, {
+				"name": "Foundry Crescent",
+				"date": "construction"
+			}, {
+				"name": "Merlin Place",
+				"date": "construction"
+			}, {
 				"name": "Alpine Close",
 				"date": "construction"
 			}, {
 				"name": "Caspian Place",
+				"date": "construction"
+			}, {
+				"name": "Chaffinch Place",
 				"date": "construction"
 			}, {
 				"name": "Cuckoo Close",
@@ -3600,6 +3619,9 @@
 				"name": "Dove Close",
 				"date": "construction"
 			}, {
+				"name": "Falcon Road",
+				"date": "construction"
+			}, {
 				"name": "Goldfinch Close",
 				"date": "construction"
 			}, {
@@ -3607,6 +3629,9 @@
 				"date": "construction"
 			}, {
 				"name": "Kitty Hawk View",
+				"date": "construction"
+			}, {
+				"name": "Jay Walk",
 				"date": "construction"
 			}, {
 				"name": "Lapwing Place",
@@ -3651,19 +3676,19 @@
 				"name": "Swan Gardens",
 				"date": "construction"
 			}, {
+				"name": "Butler Place",
+				"date": "construction"
+			}, {
+				"name": "Lowthers Field",
+				"date": "construction"
+			}, {
 				"name": "Bramley Green",
 				"date": "construction"
 			}, {
 				"name": "Buchanan Close",
 				"date": "construction"
 			}, {
-				"name": "Butler Place",
-				"date": "construction"
-			}, {
-				"name": "Gutsell Grove",
-				"date": "construction"
-			}, {
-				"name": "Lowthers Field",
+				"name": "Southdowners Avenue",
 				"date": "construction"
 			}, {
 				"name": "Mount View Gardens",

@@ -1,740 +1,434 @@
 {
 	"type": "FeatureCollection",
 	"features": [{
-		"type": "Feature",
-		"properties": {
-			"id": "diningrm",
-			"title": "Dining Room",
-			"name": "Court Lodge",
-			"type": "building",
-			"description": "Sackville Family, post-1662."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47917125513, 50.8451462667],
-					[0.47926048753, 50.84514972806],
-					[0.47925561059, 50.84519985347],
-					[0.47916637819, 50.84519639211],
-					[0.47917125513, 50.8451462667]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"title": "Butler's Pantry",
-			"description": "Earl and Countess De La Warr, post-1891.",
-			"name": "Court Lodge",
-			"type": "building",
-			"id": "pantry"
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47925324479, 50.84522416917],
-					[0.47932334751, 50.84522688848],
-					[0.47932062344, 50.84525488656],
-					[0.47925052072, 50.84525216725],
-					[0.47925324479, 50.84522416917]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "cowshed",
-			"name": "Manor House (grounds)",
-			"title": "Cow Shed",
-			"type": "building",
-			"description": "Post-1839.<br/>Used later as an aviary and now a gardeners' shed."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47997325592, 50.84479086042],
-					[0.47997526757, 50.84473624148],
-					[0.48028103941, 50.84472015217],
-					[0.48029042713, 50.8447713839],
-					[0.47997325592, 50.84479086042]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "dininghll",
-			"name": "Court Lodge",
-			"title": "Dining Hall",
-			"type": "building",
-			"description": "Brook Family, 1800s.",
-			"img": {
-				"0": "listManor/img/dininghll(0)",
-				"1": "listManor/img/dininghll(1)",
-				"2": "listManor/img/dininghll(2)"
+			"geometry": {
+				"coordinates": [[[0.479171, 50.845146], [0.479260, 50.845149], [0.479255, 50.845199], [0.479166, 50.845196], [0.479171, 50.845146]]],
+				"type": "Polygon"
 			},
-			"imgattrib": {
-				"0": "1965 | &copy; Historic England CC65/361",
-				"1": "1965 | &copy; Historic England BB65/3571"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47916637819, 50.84519639211],
-					[0.47925561059, 50.84519985347],
-					[0.47925324479, 50.84522416917],
-					[0.47925052072, 50.84525216725],
-					[0.47924952783, 50.8452623722],
-					[0.47924897022, 50.84526810337],
-					[0.47915973781, 50.84526464202],
-					[0.47916637819, 50.84519639211]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "inner",
-			"name": "Court Lodge",
-			"title": "Inner Hall",
-			"type": "building",
-			"description": "Sackville Family, post-1662."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47926048753, 50.84514972806],
-					[0.47930701045, 50.8451515327],
-					[0.47930909956, 50.84513006075],
-					[0.47933885686, 50.84513121504],
-					[0.47937152128, 50.84513248211],
-					[0.47936940544, 50.84515422875],
-					[0.47935674491, 50.84515373764],
-					[0.47935189469, 50.84520358836],
-					[0.47932507025, 50.84520254783],
-					[0.47925561059, 50.84519985347],
-					[0.47926048753, 50.84514972806]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "hall",
-			"name": "Court Lodge",
-			"title": "Hall",
-			"type": "building",
-			"description": "Harmsworth Family, post-1912."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47940516448, 50.84519802817],
-					[0.47940987485, 50.84514961482],
-					[0.47946913341, 50.84515191348],
-					[0.47947058698, 50.84513697359],
-					[0.47949124799, 50.84513777504],
-					[0.47948508405, 50.84520112828],
-					[0.47940516448, 50.84519802817]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "study",
-			"name": "Court Lodge",
-			"title": "Study",
-			"type": "building",
-			"description": "North end: Brook Family, 1800s.<br/>South end: Harmsworth Family, post-1912.",
-			"img": {
-				"0": "listManor/img/study(0)",
-				"1": "listManor/img/study(1)",
-				"2": "listManor/img/study(2)"
+			"properties": {
+				"description": "Sackville Family, post-1662.",
+				"id": "diningrm",
+				"name": "Court Lodge",
+				"title": "Dining Room",
+				"type": "building"
 			},
-			"imgattrib": {
-				"0": "1904 | &copy; BOTPS",
-				"1": "1965 | &copy; Historic England BB65/3563",
-				"2": "1965 | &copy; Historic England BB65/3563"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47917334424, 50.84512479474],
-					[0.47918264134, 50.84502923862],
-					[0.47920020335, 50.84502991986],
-					[0.47920119286, 50.8450197496],
-					[0.47925870547, 50.84502198054],
-					[0.47925768509, 50.84503246813],
-					[0.47927415955, 50.84503310719],
-					[0.47926835294, 50.84509278783],
-					[0.47926489332, 50.84512834597],
-					[0.47917334424, 50.84512479474]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "cloak",
-			"title": "Cloak Room",
-			"name": "Court Lodge",
-			"type": "building",
-			"description": "Harmsworth Family, mid post-1912.",
-			"img": {
-				"0": "listManor/img/cloak(0)"
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479253, 50.845224], [0.479323, 50.845226], [0.479320, 50.845254], [0.479250, 50.845252], [0.479253, 50.845224]]],
+				"type": "Polygon"
 			},
-			"imgattrib": {
-				"0": "1965 | &copy; Historic England BB65/3565"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47934232498, 50.84509556949],
-					[0.4793749894, 50.84509683656],
-					[0.47937152128, 50.84513248211],
-					[0.47933885686, 50.84513121504],
-					[0.47934232498, 50.84509556949]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "servantquarter",
-			"name": "Court Lodge",
-			"title": "Servants Quarters",
-			"type": "building",
-			"description": "Harmsworth Family, post-1912.",
-			"img": {
-				"0": "listManor/img/servants(0)",
-				"1": "listManor/img/servantquarter(0)"
+			"properties": {
+				"description": "Earl and Countess De La Warr, post-1891.",
+				"id": "pantry",
+				"name": "Court Lodge",
+				"title": "Butler's Pantry",
+				"type": "building"
 			},
-			"imgattrib": {
-				"0": "1968 | &copy; Bexhill Museum",
-				"1": "1965 | &copy; Historic England BB65/3573"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47952330668, 50.8453207008],
-					[0.47949509599, 50.84537672848],
-					[0.47938882853, 50.84535599097],
-					[0.47939171787, 50.84533184715],
-					[0.47939625156, 50.84529396281],
-					[0.47952330668, 50.8453207008]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "coach",
-			"name": "Manor House (grounds)",
-			"title": "Coach House",
-			"type": "building",
-			"description": "Built 1887.",
-			"img": {
-				"0": "listManor/img/coach(0)"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47926708117, 50.84462535141],
-					[0.47921823216, 50.84457660601],
-					[0.47949344709, 50.84446103904],
-					[0.47951157727, 50.8444778136],
-					[0.47953061395, 50.84447050026],
-					[0.47957155871, 50.8445094574],
-					[0.47926708117, 50.84462535141]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "drawing",
-			"name": "Court Lodge",
-			"title": "Drawing Room",
-			"type": "building",
-			"description": "North end: Sackville Family, post-1662.<br/>South end: Harmsworth Family, post-1912.",
-			"img": {
-				"0": "listManor/img/drawing(0)"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47947058698, 50.84513697359],
-					[0.47946913341, 50.84515191348],
-					[0.47940987485, 50.84514961482],
-					[0.4794113913, 50.84513402868],
-					[0.47937152128, 50.84513248211],
-					[0.4793749894, 50.84509683656],
-					[0.4793803006, 50.84504224776],
-					[0.47940410333, 50.84504317108],
-					[0.47940538743, 50.84502997298],
-					[0.47945857121, 50.84503203601],
-					[0.47945738863, 50.84504419068],
-					[0.4794795307, 50.84504504958],
-					[0.47947058698, 50.84513697359]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "cottage1",
-			"name": "Separate Dwelling",
-			"title": "1 The Cottage",
-			"type": "building",
-			"description": "Used as servants quarters before the north-east wing was built.",
-			"img": {
-				"0": "listManor/img/cottage1(0)"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47982241409, 50.84536069806],
-					[0.47988113276, 50.84537369907],
-					[0.47985163249, 50.84542681872],
-					[0.47993023524, 50.84544422228],
-					[0.47992025646, 50.84546219054],
-					[0.47974494839, 50.84542337532],
-					[0.47975429039, 50.84540655366],
-					[0.47974020692, 50.84540343541],
-					[0.47977034396, 50.84534916912],
-					[0.47982241409, 50.84536069806]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "slodge",
-			"name": "Separate Dwelling",
-			"title": "South Lodge",
-			"type": "building",
-			"description": "Also used for the servants living quarters.",
-			"img": {
-				"0": "listManor/img/southlodge(0)"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47877497837, 50.84495598745],
-					[0.47882392868, 50.84495471725],
-					[0.47882258758, 50.8449318536],
-					[0.47888293728, 50.8449335472],
-					[0.47888561949, 50.84507369273],
-					[0.47879576549, 50.84507877352],
-					[0.47877497837, 50.84495598745]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "larder",
-			"name": "Court Lodge",
-			"title": "Larder",
-			"type": "building",
-			"description": "Earl and Countess De La Warr, post-1891."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.4792687578, 50.84533081399],
-					[0.47928996367, 50.84528666158],
-					[0.47929348407, 50.84529110725],
-					[0.4793015307, 50.84529290669],
-					[0.47931599641, 50.84528854364],
-					[0.47930739753, 50.84534085678],
-					[0.4792687578, 50.84533081399]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "nursery",
-			"name": "Manor House (grounds)",
-			"title": "Childrens' Playroom",
-			"type": "building",
-			"description": "Post-1912: A place for nannies and children away from the manor. Pre-1805: A farm auxiliary building."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47972582147, 50.84439264926],
-					[0.47987669572, 50.84440175249],
-					[0.47987669572, 50.84442186426],
-					[0.47970604017, 50.84446272289],
-					[0.47971722904, 50.84442308726],
-					[0.47955667533, 50.84440704464],
-					[0.4795732715, 50.84437931155],
-					[0.47972582147, 50.84439264926]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "barn",
-			"name": "Manor House (grounds)",
-			"title": "Barn",
-			"type": "building",
-			"description": "Uses include kennels for the Neven du Mont family's foxhounds.",
-			"img": {
-				"0": "listManor/img/barn(0)"
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479973, 50.844790], [0.479975, 50.844736], [0.480281, 50.844720], [0.480290, 50.844771], [0.479973, 50.844790]]],
+				"type": "Polygon"
 			},
-			"imgattrib": {
-				"0": "1907 | &copy; Bexhill Museum"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47961391921, 50.84502140413],
-					[0.47962083566, 50.84498243582],
-					[0.47989013797, 50.84500149257],
-					[0.47988322153, 50.84504046087],
-					[0.47961391921, 50.84502140413]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "cottage2",
-			"name": "Separate Dwelling",
-			"title": "2 The Cottage",
-			"type": "building",
-			"description": "Brook Family, 1800s. Gardeners quarters."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47988113276, 50.84537369907],
-					[0.47982241409, 50.84536069806],
-					[0.47983579271, 50.84533111864],
-					[0.47982104056, 50.84532688467],
-					[0.47981634669, 50.84529724684],
-					[0.47985322706, 50.84529512985],
-					[0.47985255651, 50.84528200452],
-					[0.47989815407, 50.84528031092],
-					[0.47991022401, 50.84535440549],
-					[0.47989077799, 50.84535567569],
-					[0.47988113276, 50.84537369907]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "stables",
-			"name": "Manor House (grounds)",
-			"title": "Horse Stables",
-			"type": "building",
-			"description": "The now demolished west section housed the horse carts."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47947414531, 50.8446272567],
-					[0.47949230005, 50.84465856651],
-					[0.47945311473, 50.84466762544],
-					[0.47946866111, 50.84469443682],
-					[0.47902225529, 50.84479763752],
-					[0.47898083858, 50.84486791957],
-					[0.47890372507, 50.84485352392],
-					[0.47893188827, 50.8447874732],
-					[0.4789990693, 50.84475765092],
-					[0.47898855416, 50.84473951647],
-					[0.47947414531, 50.8446272567]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "porch",
-			"name": "Court Lodge",
-			"title": "Porch",
-			"type": "building",
-			"description": "Earl and Countess De La Warr, post-1891."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47926489332, 50.84512834597],
-					[0.47926835294, 50.84509278783],
-					[0.4792975967, 50.84509392221],
-					[0.47929413708, 50.84512948034],
-					[0.47926489332, 50.84512834597]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "kitchen",
-			"title": "Kitchen and Scullery",
-			"name": "Court Lodge",
-			"type": "building",
-			"description": "Earl and Countess De La Warr, post-1891.",
-			"img": {
-				"0": "listManor/img/kitchen(0)"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47928996367, 50.84528666158],
-					[0.4792687578, 50.84533081399],
-					[0.47915518216, 50.84530253931],
-					[0.47915973781, 50.84526464202],
-					[0.47924897022, 50.84526810337],
-					[0.47924952783, 50.8452623722],
-					[0.47931963055, 50.84526509151],
-					[0.47931745614, 50.84527967561],
-					[0.47929951904, 50.84527872287],
-					[0.47929147242, 50.8452820042],
-					[0.47928996367, 50.84528666158]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "ballroom",
-			"name": "Manor House (grounds)",
-			"title": "Ballroom",
-			"type": "building",
-			"description": "Originally a barn for storing grain and hay. Converted into a pavilion after 1891 by the 8th Earl De La Warr to host aristocratic parties. Used as a library by the Harmsworth Family.",
-			"img": {
-				"0": "listManor/img/ballroom(0)"
+			"properties": {
+				"description": "Post-1839.<br/>Used later as an aviary and now a gardeners' shed.",
+				"id": "cowshed",
+				"name": "Manor House (grounds)",
+				"title": "Cow Shed",
+				"type": "building"
 			},
-			"imgattrib": {
-				"0": "1965 | &copy; Bexhill Museum"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47962083566, 50.84498243582],
-					[0.47961391921, 50.84502140413],
-					[0.47947102238, 50.84501129227],
-					[0.4795186745, 50.8447428122],
-					[0.47966157134, 50.84475292412],
-					[0.47962083566, 50.84498243582]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "servantdining",
-			"name": "Court Lodge",
-			"title": "Servants Dining Room",
-			"type": "building",
-			"description": "Earl and Countess De La Warr, post-1891."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47939171787, 50.84533184715],
-					[0.4793309061, 50.84532857074],
-					[0.47933600671, 50.84529071345],
-					[0.47939625156, 50.84529396281],
-					[0.47939171787, 50.84533184715]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "boots",
-			"name": "Court Lodge",
-			"title": "Watercloset",
-			"type": "building",
-			"description": "Bishops of Chichester, pre-1561.",
-			"img": {
-				"0": "listManor/img/boots(0)",
-				"1": "listManor/img/boots(1)"
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479166, 50.845196], [0.479255, 50.845199], [0.479253, 50.845224], [0.479250, 50.845252], [0.479249, 50.845262], [0.479248, 50.845268], [0.479159, 50.845264], [0.479166, 50.845196]]],
+				"type": "Polygon"
 			},
-			"imgattrib": {
-				"0": "1965 | &copy; Historic England BB65/3572",
-				"1": "1965 | &copy; Historic England BB65/3566"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47939752236, 50.84528301476],
-					[0.47933879606, 50.84528101159],
-					[0.47934054109, 50.8452606153],
-					[0.47934970195, 50.84526092778],
-					[0.47935266741, 50.84522626697],
-					[0.47940223285, 50.84522795766],
-					[0.47939752236, 50.84528301476]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "morning",
-			"name": "Court Lodge",
-			"title": "Morning Room",
-			"type": "building",
-			"description": "Harmsworth Family, post-1912.",
-			"img": {
-				"0": "listManor/img/morning(0)"
+			"properties": {
+				"description": "Brook Family, 1800s.",
+				"id": "dininghll",
+				"img": {
+					"0": "listManor/img/dininghll(0)",
+					"1": "listManor/img/dininghll(1)",
+					"2": "listManor/img/dininghll(2)"
+				},
+				"imgattrib": {
+					"0": "1965 | &copy; Historic England CC65/361",
+					"1": "1965 | &copy; Historic England BB65/3571"
+				},
+				"name": "Court Lodge",
+				"title": "Dining Hall",
+				"type": "building"
 			},
-			"imgattrib": {
-				"0": "1965 | &copy; Historic England BB65/3562"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47948508405, 50.84520112828],
-					[0.47949124799, 50.84513777504],
-					[0.47960286236, 50.84514210461],
-					[0.47959669841, 50.84520545784],
-					[0.47948508405, 50.84520112828]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "servantsitting",
-			"name": "Court Lodge",
-			"title": "Servants Sitting Room",
-			"description": "Harmsworth Family, post-1912.",
-			"type": "building",
-			"img": {
-				"0": "listManor/img/servants(0)",
-				"1": "listManor/img/servantsitting(0)"
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479260, 50.845149], [0.479307, 50.845151], [0.479309, 50.845130], [0.479338, 50.845131], [0.479371, 50.845132], [0.479369, 50.845154], [0.479356, 50.845153], [0.479351, 50.845203], [0.479325, 50.845202], [0.479255, 50.845199], [0.479260, 50.845149]]],
+				"type": "Polygon"
 			},
-			"imgattrib": {
-				"0": "1968 | &copy; Bexhill Museum",
-				"1": "1965 | &copy; Historic England BB65/3561"
-			}
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47949509599, 50.84537672848],
-					[0.47952330668, 50.8453207008],
-					[0.4795777834, 50.84533163667],
-					[0.47954957271, 50.84538766433],
-					[0.47949509599, 50.84537672848]
-				]
-			]
+			"properties": {
+				"description": "Sackville Family, post-1662.",
+				"id": "inner",
+				"name": "Court Lodge",
+				"title": "Inner Hall",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479405, 50.845198], [0.479409, 50.845149], [0.479469, 50.845151], [0.479470, 50.845136], [0.479491, 50.845137], [0.479485, 50.845201], [0.479405, 50.845198]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Harmsworth Family, post-1912.",
+				"id": "hall",
+				"name": "Court Lodge",
+				"title": "Hall",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479173, 50.845124], [0.479182, 50.845029], [0.479200, 50.845029], [0.479201, 50.845019], [0.479258, 50.845021], [0.479257, 50.845032], [0.479274, 50.845033], [0.479268, 50.845092], [0.479264, 50.845128], [0.479173, 50.845124]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "North end: Brook Family, 1800s.<br/>South end: Harmsworth Family, post-1912.",
+				"id": "study",
+				"img": {
+					"0": "listManor/img/study(0)",
+					"1": "listManor/img/study(1)",
+					"2": "listManor/img/study(2)"
+				},
+				"imgattrib": {
+					"0": "1904 | &copy; BOTPS",
+					"1": "1965 | &copy; Historic England BB65/3563",
+					"2": "1965 | &copy; Historic England BB65/3563"
+				},
+				"name": "Court Lodge",
+				"title": "Study",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479342, 50.845095], [0.479374, 50.845096], [0.479371, 50.845132], [0.479338, 50.845131], [0.479342, 50.845095]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Harmsworth Family, mid post-1912.",
+				"id": "cloak",
+				"img": {
+					"0": "listManor/img/cloak(0)"
+				},
+				"imgattrib": {
+					"0": "1965 | &copy; Historic England BB65/3565"
+				},
+				"name": "Court Lodge",
+				"title": "Cloak Room",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479523, 50.845320], [0.479495, 50.845376], [0.479388, 50.845355], [0.479391, 50.845331], [0.479396, 50.845293], [0.479523, 50.845320]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Harmsworth Family, post-1912.",
+				"id": "servantquarter",
+				"img": {
+					"0": "listManor/img/servants(0)",
+					"1": "listManor/img/servantquarter(0)"
+				},
+				"imgattrib": {
+					"0": "1968 | &copy; Bexhill Museum",
+					"1": "1965 | &copy; Historic England BB65/3573"
+				},
+				"name": "Court Lodge",
+				"title": "Servants Quarters",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479267, 50.844625], [0.479218, 50.844576], [0.479493, 50.844461], [0.479511, 50.844477], [0.479530, 50.844470], [0.479571, 50.844509], [0.479267, 50.844625]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Built 1887.",
+				"id": "coach",
+				"img": {
+					"0": "listManor/img/coach(0)"
+				},
+				"name": "Manor House (grounds)",
+				"title": "Coach House",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479470, 50.845136], [0.479469, 50.845151], [0.479409, 50.845149], [0.479411, 50.845134], [0.479371, 50.845132], [0.479374, 50.845096], [0.479380, 50.845042], [0.479404, 50.845043], [0.479405, 50.845029], [0.479458, 50.845032], [0.479457, 50.845044], [0.479479, 50.845045], [0.479470, 50.845136]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "North end: Sackville Family, post-1662.<br/>South end: Harmsworth Family, post-1912.",
+				"id": "drawing",
+				"img": {
+					"0": "listManor/img/drawing(0)"
+				},
+				"name": "Court Lodge",
+				"title": "Drawing Room",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479822, 50.845360], [0.479881, 50.845373], [0.479851, 50.845426], [0.479930, 50.845444], [0.479920, 50.845462], [0.479744, 50.845423], [0.479754, 50.845406], [0.479740, 50.845403], [0.479770, 50.845349], [0.479822, 50.845360]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Used as servants quarters before the north-east wing was built.",
+				"id": "cottage1",
+				"img": {
+					"0": "listManor/img/cottage1(0)"
+				},
+				"name": "Separate Dwelling",
+				"title": "1 The Cottage",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.478774, 50.844955], [0.478823, 50.844954], [0.478822, 50.844931], [0.478882, 50.844933], [0.478885, 50.845073], [0.478795, 50.845078], [0.478774, 50.844955]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Also used for the servants living quarters.",
+				"id": "slodge",
+				"img": {
+					"0": "listManor/img/southlodge(0)"
+				},
+				"name": "Separate Dwelling",
+				"title": "South Lodge",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479268, 50.845330], [0.479289, 50.845286], [0.479293, 50.845291], [0.479301, 50.845292], [0.479315, 50.845288], [0.479307, 50.845340], [0.479268, 50.845330]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Earl and Countess De La Warr, post-1891.",
+				"id": "larder",
+				"name": "Court Lodge",
+				"title": "Larder",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479725, 50.844392], [0.479876, 50.844401], [0.479876, 50.844421], [0.479706, 50.844462], [0.479717, 50.844423], [0.479556, 50.844407], [0.479573, 50.844379], [0.479725, 50.844392]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Post-1912: A place for nannies and children away from the manor. Pre-1805: A farm auxiliary building.",
+				"id": "nursery",
+				"name": "Manor House (grounds)",
+				"title": "Childrens' Playroom",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479613, 50.845021], [0.479620, 50.844982], [0.479890, 50.845001], [0.479883, 50.845040], [0.479613, 50.845021]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Uses include kennels for the Neven du Mont family's foxhounds.",
+				"id": "barn",
+				"img": {
+					"0": "listManor/img/barn(0)"
+				},
+				"imgattrib": {
+					"0": "1907 | &copy; Bexhill Museum"
+				},
+				"name": "Manor House (grounds)",
+				"title": "Barn",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479881, 50.845373], [0.479822, 50.845360], [0.479835, 50.845331], [0.479821, 50.845326], [0.479816, 50.845297], [0.479853, 50.845295], [0.479852, 50.845282], [0.479898, 50.845280], [0.479910, 50.845354], [0.479890, 50.845355], [0.479881, 50.845373]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Brook Family, 1800s. Gardeners quarters.",
+				"id": "cottage2",
+				"name": "Separate Dwelling",
+				"title": "2 The Cottage",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479474, 50.844627], [0.479492, 50.844658], [0.479453, 50.844667], [0.479468, 50.844694], [0.479022, 50.844797], [0.478980, 50.844867], [0.478903, 50.844853], [0.478931, 50.844787], [0.478999, 50.844757], [0.478988, 50.844739], [0.479474, 50.844627]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "The now demolished west section housed the horse carts.",
+				"id": "stables",
+				"name": "Manor House (grounds)",
+				"title": "Horse Stables",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479264, 50.845128], [0.479268, 50.845092], [0.479297, 50.845093], [0.479294, 50.845129], [0.479264, 50.845128]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Earl and Countess De La Warr, post-1891.",
+				"id": "porch",
+				"name": "Court Lodge",
+				"title": "Porch",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479289, 50.845286], [0.479268, 50.845330], [0.479155, 50.845302], [0.479159, 50.845264], [0.479248, 50.845268], [0.479249, 50.845262], [0.479319, 50.845265], [0.479317, 50.845279], [0.479299, 50.845278], [0.479291, 50.845282], [0.479289, 50.845286]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Earl and Countess De La Warr, post-1891.",
+				"id": "kitchen",
+				"img": {
+					"0": "listManor/img/kitchen(0)"
+				},
+				"name": "Court Lodge",
+				"title": "Kitchen and Scullery",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479620, 50.844982], [0.479613, 50.845021], [0.479471, 50.845011], [0.479518, 50.844742], [0.479661, 50.844752], [0.479620, 50.844982]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Originally a barn for storing grain and hay. Converted into a pavilion after 1891 by the 8th Earl De La Warr to host aristocratic parties. Used as a library by the Harmsworth Family.",
+				"id": "ballroom",
+				"img": {
+					"0": "listManor/img/ballroom(0)"
+				},
+				"imgattrib": {
+					"0": "1965 | &copy; Bexhill Museum"
+				},
+				"name": "Manor House (grounds)",
+				"title": "Ballroom",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479391, 50.845331], [0.479330, 50.845328], [0.479336, 50.845290], [0.479396, 50.845293], [0.479391, 50.845331]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Earl and Countess De La Warr, post-1891.",
+				"id": "servantdining",
+				"name": "Court Lodge",
+				"title": "Servants Dining Room",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479397, 50.845283], [0.479338, 50.845281], [0.479340, 50.845260], [0.479349, 50.845260], [0.479352, 50.845226], [0.479402, 50.845227], [0.479397, 50.845283]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Bishops of Chichester, pre-1561.",
+				"id": "boots",
+				"img": {
+					"0": "listManor/img/boots(0)",
+					"1": "listManor/img/boots(1)"
+				},
+				"imgattrib": {
+					"0": "1965 | &copy; Historic England BB65/3572",
+					"1": "1965 | &copy; Historic England BB65/3566"
+				},
+				"name": "Court Lodge",
+				"title": "Watercloset",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479485, 50.845201], [0.479491, 50.845137], [0.479602, 50.845142], [0.479596, 50.845205], [0.479485, 50.845201]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Harmsworth Family, post-1912.",
+				"id": "morning",
+				"img": {
+					"0": "listManor/img/morning(0)"
+				},
+				"imgattrib": {
+					"0": "1965 | &copy; Historic England BB65/3562"
+				},
+				"name": "Court Lodge",
+				"title": "Morning Room",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479495, 50.845376], [0.479523, 50.845320], [0.479577, 50.845331], [0.479549, 50.845387], [0.479495, 50.845376]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Harmsworth Family, post-1912.",
+				"id": "servantsitting",
+				"img": {
+					"0": "listManor/img/servants(0)",
+					"1": "listManor/img/servantsitting(0)"
+				},
+				"imgattrib": {
+					"0": "1968 | &copy; Bexhill Museum",
+					"1": "1965 | &copy; Historic England BB65/3561"
+				},
+				"name": "Court Lodge",
+				"title": "Servants Sitting Room",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479171, 50.845146], [0.479173, 50.845124], [0.479264, 50.845128], [0.479294, 50.845129], [0.479309, 50.845130], [0.479307, 50.845151], [0.479260, 50.845149], [0.479171, 50.845146]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"description": "Bishops of Chichester, pre-1561.",
+				"id": "stairs",
+				"name": "Court Lodge",
+				"title": "Stairs to 1st floor",
+				"type": "building"
+			},
+			"type": "Feature"
+		}, {
+			"geometry": {
+				"coordinates": [[[0.479330, 50.845328], [0.479391, 50.845331], [0.479388, 50.845355], [0.479307, 50.845340], [0.479315, 50.845288], [0.479301, 50.845292], [0.479293, 50.845291], [0.479289, 50.845286], [0.479291, 50.845282], [0.479299, 50.845278], [0.479317, 50.845279], [0.479319, 50.845265], [0.479249, 50.845262], [0.479250, 50.845252], [0.479320, 50.845254], [0.479323, 50.845226], [0.479325, 50.845202], [0.479351, 50.845203], [0.479356, 50.845153], [0.479369, 50.845154], [0.479371, 50.845132], [0.479411, 50.845134], [0.479409, 50.845149], [0.479405, 50.845198], [0.479402, 50.845227], [0.479352, 50.845226], [0.479349, 50.845260], [0.479340, 50.845260], [0.479338, 50.845281], [0.479397, 50.845283], [0.479396, 50.845293], [0.479336, 50.845290], [0.479330, 50.845328]]],
+				"type": "Polygon"
+			},
+			"properties": {
+				"type": "building"
+			},
+			"type": "Feature"
 		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"id": "stairs",
-			"name": "Court Lodge",
-			"title": "Stairs to 1st floor",
-			"type": "building",
-			"description": "Bishops of Chichester, pre-1561."
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.47917125513, 50.8451462667],
-					[0.47917334424, 50.84512479474],
-					[0.47926489332, 50.84512834597],
-					[0.47929413708, 50.84512948034],
-					[0.47930909956, 50.84513006075],
-					[0.47930701045, 50.8451515327],
-					[0.47926048753, 50.84514972806],
-					[0.47917125513, 50.8451462667]
-				]
-			]
-		}
-	}, {
-		"type": "Feature",
-		"properties": {
-			"type": "building"
-		},
-		"geometry": {
-			"type": "Polygon",
-			"coordinates": [
-				[
-					[0.4793309061, 50.84532857074],
-					[0.47939171787, 50.84533184715],
-					[0.47938882853, 50.84535599097],
-					[0.47930739753, 50.84534085678],
-					[0.47931599641, 50.84528854364],
-					[0.4793015307, 50.84529290669],
-					[0.47929348407, 50.84529110725],
-					[0.47928996367, 50.84528666158],
-					[0.47929147242, 50.8452820042],
-					[0.47929951904, 50.84527872287],
-					[0.47931745614, 50.84527967561],
-					[0.47931963055, 50.84526509151],
-					[0.47924952783, 50.8452623722],
-					[0.47925052072, 50.84525216725],
-					[0.47932062344, 50.84525488656],
-					[0.47932334751, 50.84522688848],
-					[0.47932507025, 50.84520254783],
-					[0.47935189469, 50.84520358836],
-					[0.47935674491, 50.84515373764],
-					[0.47936940544, 50.84515422875],
-					[0.47937152128, 50.84513248211],
-					[0.4794113913, 50.84513402868],
-					[0.47940987485, 50.84514961482],
-					[0.47940516448, 50.84519802817],
-					[0.47940223285, 50.84522795766],
-					[0.47935266741, 50.84522626697],
-					[0.47934970195, 50.84526092778],
-					[0.47934054109, 50.8452606153],
-					[0.47933879606, 50.84528101159],
-					[0.47939752236, 50.84528301476],
-					[0.47939625156, 50.84529396281],
-					[0.47933600671, 50.84529071345],
-					[0.4793309061, 50.84532857074]
-				]
-			]
-		}
-	}]
+	]
 }

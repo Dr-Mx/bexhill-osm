@@ -5,79 +5,83 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=bexhill</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=bexhill</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=prehistory</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=prehistory</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=manor</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=farming</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=amsterdam</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=manor</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=smuggling</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=amsterdam</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=martello</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=smuggling</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=racing</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=martello</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=railways</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=racing</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=trams</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=railways</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=dlwp</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=trams</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=ww2</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=dlwp</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=northeye</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=ww2</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=heritage</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=northeye</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=boundary</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=heritage</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=people</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=boundary</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=film</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=people</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=clocks</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=film</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=surveying</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=clocks</loc>
 		<changefreq>never</changefreq>
 	</url>
 	<url>
-		<loc>https://bexhill-osm.org.uk/?T=tour&amp;U=overlays</loc>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=surveying</loc>
+		<changefreq>never</changefreq>
+	</url>
+	<url>
+		<loc>https://bexhill-osm.org.uk/?t=tour&amp;u=overlays</loc>
 		<changefreq>monthly</changefreq>
 	</url>
 	<url>

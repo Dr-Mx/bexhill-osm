@@ -1,0 +1,250 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+			"type": "Feature",
+			"properties": {
+				"id": "activedaysm",
+				"name": "Active Days Mobility",
+				"link": "https://activedaysmobility.co.uk/",
+				"img": {
+					"0": "itemXmas/img/2025/acivedaysm(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47145, 50.84007]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "activedaysr",
+				"name": "Active Days Recliners",
+				"link": "https://www.activedaysmobility.co.uk/ourshop/cat_1835492-Furniture.html",
+				"img": {
+					"0": "itemXmas/img/2025/acivedaysr(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.471036, 50.840029]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "barbykeel",
+				"name": "Barby Keel",
+				"link": "https://www.facebook.com/BarbyKeelAnimalSanctuary",
+				"img": {
+					"0": "itemXmas/img/2025/barbykeel(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47455, 50.83991]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "bflorist",
+				"name": "The Bexhill Florist",
+				"link": "https://www.thebexhillflorist.co.uk",
+				"img": {
+					"0": "itemXmas/img/2025/bflorist(0)",
+					"1": "itemXmas/img/2025/bflorist(1)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47680, 50.83973]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "bycc",
+				"name": "Bexhill Youth and Community Centre",
+				"link": "https://www.bexhillyouthandcommunitycentre.co.uk/",
+				"img": {
+					"0": "itemXmas/img/2025/bycc(0)",
+					"1": "itemXmas/img/2025/bycc(1)"
+				},
+				"winner": 2
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47426, 50.84116]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "ecohub",
+				"name": "Eco Hub",
+				"link": "https://www.communitysupporters.org.uk",
+				"img": {
+					"0": "itemXmas/img/2025/ecohub(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47160, 50.84032]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "essu",
+				"name": "Pass it on, East Sussex School Uniform",
+				"link": "https://www.facebook.com/groups/2306020989709261",
+				"img": {
+					"0": "itemXmas/img/2025/essu(0)",
+					"1": "itemXmas/img/2025/essu(1)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47390, 50.83931]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "jfs",
+				"name": "JFS Properites",
+				"link": "https://jfsproperties.co",
+				"img": {
+					"0": "itemXmas/img/2025/jfs(0)",
+					"1": "itemXmas/img/2025/jfs(1)"
+				},
+				"winner": 4
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.46977, 50.84086]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "mummery",
+				"name": "Mummery Funeralcare",
+				"link": "https://www.coop.co.uk/funeralcare/funeral-directors/bexhill-on-sea/TN40-1AH/mummery-funeralcare/29-31-devonshire-road",
+				"img": {
+					"0": "itemXmas/img/2025/mummery(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47391, 50.83925]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "naturallycrafted",
+				"name": "Naturally Crafted",
+				"link": "https://www.facebook.com/100087161167873",
+				"img": {
+					"0": "itemXmas/img/2025/naturallycrafted(0)",
+					"1": "itemXmas/img/2025/naturallycrafted(1)"
+				},
+				"winner": 3
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47174, 50.84023]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "rspca",
+				"name": "RSPCA",
+				"link": "https://www.bluebellridge.org",
+				"img": {
+					"0": "itemXmas/img/2025/rspca(0)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47240, 50.84028]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "thesalon",
+				"name": "The Salon",
+				"link": "https://www.instagram.com/thesalon_bexhill",
+				"img": {
+					"0": "itemXmas/img/2025/thesalon(0)"
+				}
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.469991, 50.841562]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "specsavers",
+				"name": "Specsavers",
+				"link": "https://www.specsavers.co.uk/stores/bexhill",
+				"img": {
+					"0": "itemXmas/img/2025/specsavers(0)",
+					"1": "itemXmas/img/2025/specsavers(1)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47281, 50.84032]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "veena",
+				"name": "Veena &amp; The Moon",
+				"link": "https://www.veenaandthemoon.com/",
+				"img": {
+					"0": "itemXmas/img/2025/veena(0)",
+					"1": "itemXmas/img/2025/veena(1)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47590, 50.83967]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "warburtons",
+				"name": "Warburtons",
+				"link": "https://www.facebook.com/61553722323806",
+				"img": {
+					"0": "itemXmas/img/2025/warburtons(0)",
+					"1": "itemXmas/img/2025/warburtons(1)"
+				},
+				"winner": 0
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.471522, 50.841268]
+			}
+		}, {
+			"type": "Feature",
+			"properties": {
+				"id": "wuth",
+				"name": "Warming Up The Homeless",
+				"link": "https://wuth.org/",
+				"img": {
+					"0": "itemXmas/img/2025/wuth(0)",
+					"1": "itemXmas/img/2025/wuth(1)"
+				},
+				"winner": 1
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [0.47376, 50.83856]
+			}
+		}
+	]
+}
