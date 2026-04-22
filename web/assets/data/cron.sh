@@ -1,5 +1,5 @@
 #!/bin/sh
-# Cron Jobs, executed daily
+# Cron Jobs, executed weekly
 
 # ARCHIVED - Mapillary sequences
 # /usr/bin/wget -O /home/bexhillo/public_html/assets/data/panoramas.geojson "https://a.mapillary.com/v3/sequences?bbox=0.3724,50.8025,0.529,50.8785&usernames=bexhill_osm&client_id=dm4wZ3R0VEl0ano1aVdiZXpEdkUwZzplNTdhOTY2N2ZkNjgxZDE3"

@@ -30,7 +30,7 @@
 	<meta name="theme-color" content="#bb5500">
 
 	<!-- CSS | site plugins -->
-	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=7.1.0">
+	<link rel="stylesheet" href="assets/font/fontawesome/css/all.min.css?v=7.2.0">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet.css?v=1.9.4">
 	<link rel="stylesheet" href="assets/css/plugins/Control.Geocoder.css?v=3.3.1">
 	<link rel="stylesheet" href="assets/css/plugins/leaflet-sidebar.css?v=0.4.0">
@@ -39,8 +39,8 @@
 	<link rel="stylesheet" href="assets/css/plugins/jquery.fancybox.css?v=3.5.7a">
 
 	<!-- CSS | site code -->
-	<link rel="stylesheet" href="assets/css/site.css?v=9.0.0">
-	<link rel="stylesheet" href="assets/css/dark-theme.css?v=9.0.0" id="darkcss" disabled>
+	<link rel="stylesheet" href="assets/css/site.css??v=9.1.0">
+	<link rel="stylesheet" href="assets/css/dark-theme.css??v=9.1.0" id="darkcss" disabled>
 
 	<title>Bexhill OpenStreetMap</title>
  </head>
@@ -61,7 +61,7 @@
 		<div class="sidebar-tabs">
 			<ul role="tablist">
 				<li><a href="#home" title="Home" role="tab"></a></li>
-				<li><a href="#pois" title="Find Places" role="tab"><span class="sidebar-notif">0</span></a></li>
+				<li><a href="#pois" title="Places of Interest" role="tab"><span class="sidebar-notif">0</span></a></li>
 				<li><a href="#walking" title="Walking Routes" role="tab"><span class="sidebar-notif">0</span></a></li>
 				<li><a href="#tour" title="History Tour" role="tab"><span class="sidebar-notif"><i class="fa-solid fa-sm fa-info"></i></span></a></li>
 				<li><a href="#thennow" title="Then and Now" role="tab"></a></li>
@@ -84,18 +84,18 @@
 							<img class="theme-invert" src="assets/img/home-minimap.png" alt="Minimap" usemap="#m_minimap" loading="lazy">
 							<map name="m_minimap">
 								<area title="Bexhill-on-Sea" coords="349,252,549,287" shape="rect">
-								<area title="Barnhorn" coords="121,255,1,219" shape="rect">
+								<area title="Barnhorn" coords="1,219,121,255" shape="rect">
 								<area title="Central" coords="427,294,527,330" shape="rect">
 								<area title="Collington" coords="157,245,296,286" shape="rect">
 								<area title="Cooden" coords="71,305,162,342" shape="rect">
 								<area title="Glenleigh Park" coords="258,79,365,149" shape="rect">
 								<area title="Glyne Gap" coords="705,195,799,257" shape="rect">
-								<area title="Highlands" coords="396,38,248,0" shape="rect">
+								<area title="Highlands" coords="248,0,396,38" shape="rect">
 								<area title="Little Common" coords="64,170,231,215" shape="rect">
-								<area title="Normans Bay" coords="164,364,1,399" shape="rect">
+								<area title="Normans Bay" coords="1,364,164,399" shape="rect">
 								<area title="Old Town" coords="466,192,586,238" shape="rect">
 								<area title="Pebsham" coords="644,116,755,159" shape="rect">
-								<area title="Sidley" coords="543,99,460,55" shape="rect">
+								<area title="Sidley" coords="460,55,543,99" shape="rect">
 							</map>
 						</div>
 						<div id="home-tips" class="comment">
@@ -123,7 +123,7 @@
 				<footer><span><a href="https://github.com/Dr-Mx/bexhill-osm/blob/master/LICENSE/" target="_blank" rel="noopener" title="Copyright and Licence"><i class="fa-regular fa-copyright"></i> Bexhill-OSM</a> 2016-</span></footer>
 			</div>
 			<div class="sidebar-pane" id="pois">
-				<div class="sidebar-header"><span class="sidebar-header-text">Find Places</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
+				<div class="sidebar-header"><span class="sidebar-header-text">Places of Interest</span><span class="sidebar-close" title="Collapse sidebar"></span></div>
 				<div class="sidebar-body">
 					<div id="pois-results" class="theme-scroll">
 						<h3>Nothing selected</h3>
@@ -186,10 +186,10 @@
 						<select id="tour-controls-list" class="theme-color" title="Select an article">
 							<option value="bexhill" data-keyword="bexhill, history, heraldry">&#x1F3D6;&#xFE0F; Bexhill-on-Sea</option>
 							<option value="prehistory" data-keyword="prehistory, geology, dinosaur, fossil">&#x1F996; Prehistory</option>
-							<option value="farming" data-keyword="farm, landowner, tithe">&#x1F33D; Farms &amp; Landowners [NEW]</option>
+							<option value="farming" data-keyword="farm, landowner, tithe">&#x1F33D; Farms &amp; Landowners</option>
 							<option value="manor" data-keyword="old town manor house, manor gardens">&#x1F3E0; Old Town Manor</option>
 							<option value="amsterdam" data-keyword="amsterdam shipwreck">&#x2693; The Amsterdam Shipwreck</option>
-							<option value="smuggling" data-keyword="smuggling, sidley green">&#x1F4E6; Smuggling</option>
+							<option value="smuggling" data-keyword="smuggling, sidley green">&#x2694;&#xFE0F; Smuggling</option>
 							<option value="martello" data-keyword="martello, tower, fort">&#x1F9F1; Martello Towers</option>
 							<option value="racing" data-keyword="motor racing">&#x1F3C1; Motor Racing</option>
 							<option value="railways" data-keyword="railway, west branch line">&#x1F6E4;&#xFE0F; Railways</option>
@@ -203,7 +203,7 @@
 							<option value="film" data-keyword="filming locations, television, cinema">&#x1F3A5; Filming Locations</option>
 							<option value="clocks" data-keyword="public street clock">&#x1F570;&#xFE0F; Public Clocks</option>
 							<option value="surveying" data-keyword="ordnance survey point, benchmark">&#x1F4D0; OS Surveying Points</option>
-							<option value="overlays" data-keyword="maps, aerial photographs">&#x1F5FA;&#xFE0F; Other Overlays</option>
+							<option value="overlays" data-keyword="maps, air/aerial photographs">&#x1F5FA;&#xFE0F; Other Overlays</option>
 							<option value="zrefs">&#x1F4D1; References &amp; further reading</option>
 						</select>
 						<button type="button" id="tour-controls-next" title="Next article"><i class="fa-solid fa-chevron-right"></i></button>
@@ -273,9 +273,9 @@
 							<p class="settings-label"><label for="settings-overpass-server">OverpassAPI server <a href="https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances" target="_blank" rel="noopener" title="Public OverpassAPI instances"><i class="theme-color fa-solid fa-circle-question fa-sm"></i></a></label>
 								<select id="settings-overpass-server" class="theme-color">
 									<option value="overpass-api.de" data-attic="1">overpass-api.de</option>
-									<option selected value="maps.mail.ru/osm/tools/overpass" data-attic="1">maps.mail.ru</option>
+									<option value="maps.mail.ru/osm/tools/overpass" data-attic="1">maps.mail.ru</option>
 									<option value="overpass.private.coffee" data-attic="1">overpass.private.coffee</option>
-									<option value="overpass.osm.jp" data-attic="0">overpass.osm.jp</option>
+									<option selected value="overpass.atownsend.org.uk" data-attic="0">overpass.atownsend.org.uk</option>
 								</select></p>
 							<p class="settings-label"><label for="settings-reverse-provider">Reverse data provider <a href="https://github.com/perliedman/leaflet-control-geocoder#leaflet-control-geocoder--" target="_blank" rel="noopener" title="Geocoder data providers"><i class="theme-color fa-solid fa-circle-question fa-sm"></i></a></label>
 								<select id="settings-reverse-provider" class="theme-color">
@@ -331,7 +331,6 @@
 							<li><a href="https://jquery.com" target="_blank" rel="noopener">jQuery</a> &copy; The jQuery Foundation</li>
 							<li><a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a> &copy; Vladimir Agafonkin</li>
 							<li><ul>
-								<li><a href="https://github.com/shramov/leaflet-plugins/blob/master/layer/tile/Bing.md" target="_blank" rel="noopener">leaflet-plugins Bing.js</a> &copy;  Pavel Shramov</li>
 								<li><a href="https://github.com/maximeh/leaflet.bouncemarker/" target="_blank" rel="noopener">leaflet.bouncemarker</a> &copy; Maxime Hadjinlian</li>
 								<li><a href="https://github.com/aratcliffe/Leaflet.contextmenu/" target="_blank" rel="noopener">Leaflet.contextmenu</a> &copy; Adam Ratcliffe</li>
 								<li><a href="https://github.com/perliedman/leaflet-control-geocoder/" target="_blank" rel="noopener">leaflet-control-geocoder</a> &copy; Per Liedman</li>
@@ -393,18 +392,18 @@
 	<script src="assets/js/plugins/Control.Geocoder.min.js?v=3.3.1"></script>
 	<script src="assets/js/plugins/L.Control.Locate.min.js?v=0.81.0"></script>
 	<script src="assets/js/plugins/Leaflet.PolylineMeasure.min.js?v=231107"></script>
-	<script src="assets/js/plugins/bouncemarker.min.js?v=1.2.3"></script>
+	<script src="assets/js/plugins/bouncemarker.min.js?v=3.0.0"></script>
 	<script src="assets/js/plugins/L.VisualClick.js?v=1.1.0"></script>
 	<script src="assets/js/plugins/opening_hours+deps.min.js?v=3.7.0"></script>
 	<script src="assets/js/plugins/jquery.fancybox.min.js?v=3.5.7a"></script>
 	<script src="assets/js/plugins/geotools.min.js?v=1.0.0"></script>
 
 	<!-- JavaScript | site code -->
-	<script src="assets/js/config.js?v=9.0.0"></script>
-	<script src="assets/js/overpass-layer.js?v=9.0.0"></script>
-	<script src="assets/js/tags-parsers.js?v=9.0.0"></script>
-	<script src="assets/js/pois-type.js?v=9.0.0"></script>
-	<script src="tour/tour.js?v=9.0.0"></script>
-	<script src="assets/js/site.js?v=9.0.0"></script>
+	<script src="assets/js/config.js??v=9.1.0"></script>
+	<script src="assets/js/overpass-layer.js??v=9.1.0"></script>
+	<script src="assets/js/tags-parsers.js??v=9.1.0"></script>
+	<script src="assets/js/pois-type.js??v=9.1.0"></script>
+	<script src="tour/tour.js??v=9.1.0"></script>
+	<script src="assets/js/site.js??v=9.1.0"></script>
  </body>
 </html>

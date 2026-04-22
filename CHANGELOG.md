@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v9.1.0
+
+**Date:** 22/04/2026
+
+Updated
+ - bouncemarker.js 3.0.0
+ - Pannellum 2.5.7
+ - fontawesome 7.2.0
+
+Site changes
+ - Cleaner background gradients on sidebar
+ - Rename Find Places > Places of Interest
+ - Default to atownsend.org.uk for Overpass server
+ - Tutorial modals now use position-anchors
+ - Lots of bug fixes and code improvements
+
+
 ## v9.0.0
 
 **Date:** 21/01/2026

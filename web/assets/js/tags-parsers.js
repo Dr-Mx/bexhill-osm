@@ -193,6 +193,7 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags.amenity === 'shelter' || tags.highway === 'bus_stop') {
 			if (tags.bench === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-chair" title="seating' + (tags.seats ? ' for ' + tags.seats : '') + '"></i>';
 			if (tags.bin === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-trash-can" title="rubbish bin"></i>';
+			if (tags.passenger_information_display === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-sign-hanging" title="information display"></i>';
 		}
 		if (tags.amenity === 'telephone') {
 			if (tags.internet_access === 'yes') facVal += '<i class="popup-tag-value-yes fa-solid fa-at" title="internet access"></i>';
@@ -255,7 +256,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				if (recycIcon[recyc]) recycTag += '<i class="fa-solid ' + recycIcon[recyc] + '" title="' + recyc + '"></i>';
 			}
 			if (recycList) markerPopup += L.Util.template(tagTmpl, { key: 'Recycling options', keyVal: listTidy(recycList, true), iconName: 'fa-solid fa-recycle' });
-			if (recycTag) facVal += '<span class="popup-tag-value-recycling"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + recycTag + '</span>';
+			if (recycTag) facVal += '<span class="popup-tag-value-recycling">' + recycTag + '</span>';
 		}
 		if (Object.keys(tags).some(function(k){ return ~k.indexOf('payment:'); })) {
 			let payTag = '', payList = '';
@@ -288,7 +289,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				if (payIcon[pay]) payTag += '<i class="' + payIcon[pay] + '" title="' + pay + '"></i>';
 			}
 			if (payList) markerPopup += L.Util.template(tagTmpl, { key: 'Payment options', keyVal: listTidy(payList, true), iconName: 'fa-solid fa-cash-register' });
-			if (payTag) facVal += '<span class="popup-tag-value-payment"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + payTag + '</span>';
+			if (payTag) facVal += '<span class="popup-tag-value-payment">' + payTag + '</span>';
 		}
 		if (tags.fee) {
 			let feeTag = '';
@@ -313,7 +314,7 @@ function parse_tags(element, titlePopup, poiParser) {
 				if (dietKey.startsWith('diet:') && tags[dietKey] === 'yes') diet = dietKey.split(':')[1];
 				if (dietIcon[diet]) dietTag += '<i class="fa-solid ' + dietIcon[diet] + '" title="' + diet + ' options"></i>';
 			}
-			if (dietTag) facVal += '<span class="popup-tag-value-diet"' + (facVal ? ' style="padding-left:10px;"' : '') + '>' + dietTag + '</span>';
+			if (dietTag) facVal += '<span class="popup-tag-value-diet">' + dietTag + '</span>';
 		}
 		if (facVal) markerPopup += L.Util.template(tagTmpl, { key: 'Facilities', keyVal: '<span class="popup-facilities">' + facVal + '</span>', iconName: 'fa-solid fa-circle-info' });
 		return markerPopup;
@@ -448,9 +449,9 @@ function parse_tags(element, titlePopup, poiParser) {
 			).split(';');
 			const multiImageSource = tags['source:image'] ?
 				(tags['source:image'] +
-				(tags['source:image_0'] ? ';' + tags['source:image_0'] : '') +
-				(tags['source:image_1'] ? ';' + tags['source:image_1'] : '') +
-				(tags['source:image_2'] ? ';' + tags['source:image_2'] : '')
+				(tags['source:image:0'] ? ';' + tags['source:image:0'] : '') +
+				(tags['source:image:1'] ? ';' + tags['source:image:1'] : '') +
+				(tags['source:image:2'] ? ';' + tags['source:image:2'] : '')
 			).split(';') : '';
 			for (let x = 0; x < multiImage.length; x++) if (multiImage[x].startsWith('https')) {
 				markerPopup += generic_img_parser(multiImage[x], imgCount, multiImageSource[x] ? '&copy; ' + multiImageSource[x] : '');
@@ -461,9 +462,9 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['wikimedia_commons:video']) {
 			multiVid =
 				(tags['wikimedia_commons:video'] +
-				(tags['wikimedia_commons:video_0'] ? ';' + tags['wikimedia_commons:video_0'] : '') +
-				(tags['wikimedia_commons:video_1'] ? ';' + tags['wikimedia_commons:video_1'] : '') +
-				(tags['wikimedia_commons:video_2'] ? ';' + tags['wikimedia_commons:video_2'] : '')
+				(tags['wikimedia_commons:video:0'] ? ';' + tags['wikimedia_commons:video:0'] : '') +
+				(tags['wikimedia_commons:video:1'] ? ';' + tags['wikimedia_commons:video:1'] : '') +
+				(tags['wikimedia_commons:video:2'] ? ';' + tags['wikimedia_commons:video:2'] : '')
 			).split(';');
 			for (let x = 0; x < multiVid.length; x++) if (multiVid[x].startsWith('File') && multiVid[x].endsWith('.webm')) {
 				markerPopup += generic_img_parser(multiVid[x], imgCount, '');
@@ -474,14 +475,13 @@ function parse_tags(element, titlePopup, poiParser) {
 		if (tags['wikimedia_commons:pano']) {
 			multiPano =
 				(tags['wikimedia_commons:pano'] +
-				(tags['wikimedia_commons:pano_0'] ? ';' + tags['wikimedia_commons:pano_0'] : '') +
-				(tags['wikimedia_commons:pano_1'] ? ';' + tags['wikimedia_commons:pano_1'] : '') +
-				(tags['wikimedia_commons:pano_2'] ? ';' + tags['wikimedia_commons:pano_2'] : '')
+				(tags['wikimedia_commons:pano:0'] ? ';' + tags['wikimedia_commons:pano:0'] : '') +
+				(tags['wikimedia_commons:pano:1'] ? ';' + tags['wikimedia_commons:pano:1'] : '') +
+				(tags['wikimedia_commons:pano:2'] ? ';' + tags['wikimedia_commons:pano:2'] : '')
 			).split(';');
 		}
 		// wikimedia commons categories
 		if (tags.wikimedia_commons && tags.wikimedia_commons.startsWith('Category')) category = tags.wikimedia_commons;
-		// 
 		if (tags['3dmr']) model3d = tags['3dmr'];
 		if (imgCount > 1 || multiPano.length || multiVid.length || model3d || category) markerPopup += show_img_controls(imgCount, multiPano, multiVid, model3d, category);
 		if (imgCount > 0) markerPopup = '<div class="popup-img">' + markerPopup + '</div>';
@@ -546,8 +546,8 @@ function callback(data) {
 	// define poi elements
 	for (let c = 0; c < data.elements.length; c++) {
 		const e = data.elements[c];
-		// check tags exist
-		if (!e.tags || e.id in this.instance._ids) continue;
+		// check tags exist and has more that one tag
+		if (!e.tags || (!rQuery && Object.keys(e.tags).length === 1) || e.id in this.instance._ids) continue;
 		this.instance._ids[e.id] = true;
 		// get geometry outlines
 		if (e.type !== 'node') {
@@ -660,7 +660,7 @@ function callback(data) {
 				case 'pub': if (e.tags.microbrewery) title = 'Microbrewery'; break;
 				case 'recycling':
 					if (e.tags.recycling_type) {
-						if (e.tags.recycling_type === 'container') iconName = iconType +  e.tags.amenity + '_' + e.tags.recycling_type;
+						if (e.tags.recycling_type === 'container') iconName = iconType + e.tags.amenity + '_' + e.tags.recycling_type;
 						title = e.tags.amenity + ' ' + e.tags.recycling_type;
 					}
 					break;
@@ -716,9 +716,10 @@ function callback(data) {
 			}
 		}
 		if (e.tags.historic || e.tags['historic:railway']) {
+			let iconHistoric = (e.tags.historic === 'ruins' && e.tags.ruins !== 'yes' ? e.tags.ruins : e.tags.historic);
 			iconName = pois.historic.iconName;
 			if (e.tags['historic:railway']) e.tags.historic = 'railway_station';
-			if (!title) title = 'historic ' + e.tags.historic + (e.tags.ruins ? ' ruins' : '');
+			if (!title) title = 'historic ' + iconHistoric + (iconHistoric !== 'ruins' && e.tags.ruins ? ' ruins' : '');
 			if (!type) type = 'historic';
 			if (e.tags.military) {
 				iconName += '-war';
@@ -729,7 +730,7 @@ function callback(data) {
 						break;
 				}
 			}
-			switch (e.tags.historic) {
+			switch (iconHistoric) {
 				case 'boundary_stone':
 				case 'milestone':
 				case 'stone':
@@ -749,17 +750,17 @@ function callback(data) {
 							break;
 					}
 					break;
-				case 'anchor':					case 'beacon':
-				case 'cemetery':				case 'charity_box':
-				case 'farm':					case 'folly':
-				case 'mill':					case 'moat':
-				case 'railway_station':			case 'street_lamp':
-				case 'wall':					case 'wreck':
-				case 'watering_place':
-					iconName += '-' + e.tags.historic;
+				case 'anchor':			case 'beacon':
+				case 'cemetery':		case 'chapel':
+				case 'charity_box':		case 'farm':
+				case 'folly':			case 'mill':
+				case 'moat':			case 'railway_station':
+				case 'street_lamp':		case 'wall':
+				case 'wreck':			case 'watering_place':
+					iconName += '-' + iconHistoric;
 					break;
 			}
-			if (iconName === pois.boundary_stone.iconName && e.tags.ruins) iconName += '-ruins';
+			if (iconName === pois.historic.iconName && e.tags.ruins) iconName += '-ruins';
 		}
 		if (e.tags.man_made) {
 			if (!title) title = e.tags.man_made;
@@ -820,6 +821,7 @@ function callback(data) {
 				case 'hardware': type = 'doityourself'; break;
 				case 'hearing_aids': type = 'mobility'; iconName = iconType + e.tags.shop; break;
 				case 'laundry': type = 'dry_cleaning'; break;
+				case 'pastry': iconName = iconType + e.tags.shop; break;
 				case 'pet_grooming': type = 'pet'; break;
 				case 'signs': type = 'copyshop'; break;
 				case 'trade': if (e.tags.trade) title = e.tags.trade + ' ' + title; break;
@@ -918,7 +920,7 @@ function callback(data) {
 		if (e.tags.natural) {
 			if (!title) title = e.tags.natural;
 			if (!type) type = e.tags.natural;
-			if (type === 'peak' || type === 'wood') iconName += 'natural-' + e.tags.natural;
+			if (type === 'peak' || type === 'wood') iconName = 'natural-' + e.tags.natural;
 		}
 		if (e.tags.emergency) {
 			iconType = 'emergency-';
@@ -1021,8 +1023,8 @@ function callback(data) {
 			riseOnHover: true
 		}).on('click', function(e) {
 			// enable autopan after initial permalink popup, check if sidebar is open
-			e.sourceTarget._popup.options.autoPan = true;
-			e.sourceTarget._popup.options.autoPanPaddingTopLeft = ($(window).width() < 1024) ? [20, 40] : [sidebar.width() + 50, 5];
+			e.sourceTarget.getPopup().options.autoPan = true;
+			e.sourceTarget.getPopup().options.autoPanPaddingTopLeft = ($(window).width() < 1024) ? [20, 40] : [sidebar.width() + 50, 5];
 		});
 		// find alternative poi name
 		if (!title || (poi && title === poi.name.toLowerCase())) {
@@ -1084,7 +1086,7 @@ function callback(data) {
 			if ($(window).width() < 768 && !$('.sidebar.collapsed').length) $('.sidebar-close:visible').trigger('click');
 			marker.openPopup();
 			markerId = marker._leaflet_id;
-			setPageTitle($(marker._popup._container).find($('.popup-header h3')).text());
+			setPageTitle($(marker.getPopup()._container).find($('.popup-header h3')).text());
 		}
 		else if (marker._leaflet_id === markerId) marker.openPopup().stopBounce();
 		// push data to results list
@@ -1114,21 +1116,21 @@ function pushPoiList(customSort) {
 	poiList.sort(function(a, b) {
 		if (a.distance) return (a.distance > b.distance) ? 1 : -1;
 		else if (customSort) return (eval('a.' + customSort) > eval('b.' + customSort)) ? 1 : -1;
-		else return (a._tooltip._content > b._tooltip._content) ? 1 : -1;
+		else return (a.getTooltip()._content > b.getTooltip()._content) ? 1 : -1;
 	});
 	let poiResultsList = '<table>';
 	for (c = 0; c < poiList.length; c++) {
 		const state = (poiList[c].ohState !== undefined) ? poiList[c].ohState : poiList[c].ctState;
 		const openColorTitle = (state === true || state === false) ? ' title="' + (state === true ? 'Open' : 'Closed') + '"' : '';
 		let poiIcon = '';
-		if (poiList[c]._icon) poiIcon = '<img alt="" src="' + poiList[c]._icon.src + '">';
+		if (poiList[c]._icon) poiIcon = '<img alt="" src="' + poiList[c].getIcon().options.iconUrl + '">';
 		else if (poiList[c].options.className === 'circleMarker')
 			poiIcon = '<i class="pois-results-circleMarker fa-solid fa-circle fa-lg" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		else if (poiList[c].options.color)
 			poiIcon = '<i style="-webkit-text-stroke:2px ' + poiList[c].options.color + ';color:' + poiList[c].options.fillColor + ';" class="fa-solid fa-circle fa-lg" title=' + (poiList[c].desc ? poiList[c].desc : '') + '></i>';
 		poiResultsList += '<tr id="' + poiList[c]._leaflet_id + '">' +
 			'<td class="openhrs-color-' + state + '"' + openColorTitle + '>' + poiIcon + '</td>' +
-			'<td>' + poiList[c]._tooltip._content + '</td>';
+			'<td>' + poiList[c].getTooltip()._content + '</td>';
 		if (poiList[c].distance) {
 			if ($('#settings-unit').is(':checked')) {
 				if (poiList[c].distance < 1000) poiResultsList += '<td>' + Math.round(poiList[c].distance) + ' m</td>';
@@ -1139,7 +1141,7 @@ function pushPoiList(customSort) {
 				else poiResultsList += '<td>' + Math.round((poiList[c].distance / 1609.34) * 100) / 100 + ' mi</td>';
 			}
 		}
-		poiResultsList += '<td class="tooltip-icons">' + $('<div>' + poiList[c]._tooltip._content + '</div>').find('.tooltip-icons').html() + '</td>' +
+		poiResultsList += '<td class="tooltip-icons">' + $('<div>' + poiList[c].getTooltip()._content + '</div>').find('.tooltip-icons').html() + '</td>' +
 			'<td>' + (poiList[c].facilities ? poiList[c].facilities : '') + '</td></tr>';
 	}
 	poiResultsList += '</table>';
@@ -1158,7 +1160,7 @@ function pushPoiList(customSort) {
 	// interact with map
 	$('#pois-results-list tr')
 		.on('mouseenter', function() { map._layers[this.id].openTooltip(); })
-		.on('mouseleave', function() { if (!map._layers[this.id]._tooltip.options.permanent) map._layers[this.id].closeTooltip(); });
+		.on('mouseleave', function() { if (!map._layers[this.id].getTooltip().options.permanent) map._layers[this.id].closeTooltip(); });
 	$('#pois-results-list tr').on('click', function() {
 		if ($('#control-ww2').length) $('#control-ww2 input').val($('#control-ww2 input')[0].max).trigger('change');
 		map._layers[this.id].openPopup();
@@ -1166,8 +1168,8 @@ function pushPoiList(customSort) {
 		else if (map._layers[this.id]._latlng || map._layers[this.id]._latlngs) {
 			// get bounds of area, focus 100px above marker and find sidebar-width to allow room for popup
 			let zm = map.getZoom();
-			if (areaOutline.getLayer('o_' + this.id)) zm = map.getBoundsZoom(areaOutline.getLayer('o_' + this.id)._bounds.pad(0.5));
-			else if (imageOverlay.getLayer(this.id)) zm = map.getBoundsZoom(imageOverlay.getLayer(this.id)._bounds.pad(0.5));
+			if (areaOutline.getLayer('o_' + this.id)) zm = map.getBoundsZoom(areaOutline.getLayer('o_' + this.id).getBounds().pad(0.5));
+			else if (imageOverlay.getLayer(this.id)) zm = map.getBoundsZoom(imageOverlay.getLayer(this.id).getBounds().pad(0.5));
 			if (zm > 18) zm = 18;
 			const px = map.project(map._layers[this.id]._latlng || map._layers[this.id].getCenter(), zm);
 			map.stop().flyTo(map.unproject([px.x -= ($(window).width() >= 1024 ? Math.round(sidebar.width()/2) : 0), px.y -= 100], zm), zm);
@@ -1466,7 +1468,7 @@ function socialf_parser(tags, titlePopup) {
 	const socialfservices_parser = function(tags) {
 		let markerPopup = '', socialVal = '';
 		if (tags.capacity) socialVal += tags.capacity + ' capacity; ';
-		if (tags['ref:GB:cqc_location']) socialVal += '<a class="theme-nowrap" href="https://www.cqc.org.uk/location/' + encodeURI(tags['ref:GB:cqc_location']) + '" title="Care Quality Commission" target="_blank" rel="noopener">CQC ' +  tags['ref:GB:cqc_location'] + '</a>; ';
+		if (tags['ref:GB:cqc_location']) socialVal += '<a class="theme-nowrap" href="https://www.cqc.org.uk/location/' + encodeURI(tags['ref:GB:cqc_location']) + '" title="Care Quality Commission" target="_blank" rel="noopener">CQC ' + tags['ref:GB:cqc_location'] + '</a>; ';
 		if (socialVal) {
 			socialVal = socialVal.replaceAll('_', ' ').substring(0, socialVal.length - 2);
 			markerPopup += L.Util.template(tagTmpl, { key: 'Social facility', keyVal: socialVal, iconName: 'fa-solid fa-users' });
@@ -1546,12 +1548,12 @@ function show_img_controls(imgMax, img360, vid, model3d, category) {
 	// button - wikimedia commons categories
 	if (category) ctrlTmpl +=
 		'<a title="Wikimedia Commons" onclick="popupWindow(\'iframe\', \'https://commons.wikimedia.org/wiki/' + category + '?gsAutoPlay=1&gsDelay=' + $.fancybox.defaults.slideShow.speed +
-			'&gsDir=desc&gsAutoStart=1&withJS=MediaWiki:Gadget-GallerySlideshow.js&withCSS=MediaWiki:Gadget-GallerySlideshow.css\', \'\', \'Wikimedia Commons\');"' +
+			'&gsDir=desc&gsAutoStart=1&withJS=MediaWiki:Gadget-GallerySlideshow.js&withCSS=MediaWiki:Gadget-GallerySlideshow.css\', \'\', \'Wikimedia Commons\');">' +
 			'<i class="fa-solid fa-photo-film"></i>' +
 		'</a>';
 	// button - 3d model repository (fixme, non-working in iframe)
 	if (model3d) ctrlTmpl +=
-		'<a title="3D Model" onclick="popupWindow(\'iframe\', \'https://3dmr.eu/model/' + model3d + '\', \'\', \'3D Model Repository\');"' +
+		'<a title="3D Model" onclick="popupWindow(\'iframe\', \'https://3dmr.eu/model/' + model3d + '\', \'\', \'3D Model Repository\');">' +
 			'<i class="fa-solid fa-cube"></i>' +
 		'</a>';
 	// button - wikimedia commons panoramas

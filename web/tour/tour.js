@@ -49,8 +49,8 @@ function tour(tName, tID, fromPermalink) {
 		});
 		if (popup) marker.on('click', function(e) {
 			// enable autopan after initial permalink popup, check if sidebar is open
-			e.sourceTarget._popup.options.autoPan = true;
-			e.sourceTarget._popup.options.autoPanPaddingTopLeft = ($(window).width() < 1024) ? [20, 40] : [sidebar.width() + 50, 5];
+			e.sourceTarget.getPopup().options.autoPan = true;
+			e.sourceTarget.getPopup().options.autoPanPaddingTopLeft = ($(window).width() < 1024) ? [20, 40] : [sidebar.width() + 50, 5];
 		});
 		return marker;
 	};
@@ -68,7 +68,7 @@ function tour(tName, tID, fromPermalink) {
 		};
 		markerPopup += generic_header_parser(header[0], (header[1] ? header[1] : dateFormat(header[2], 'long'))) + '<div class="popup-body">';
 		toolTip += '<b>' + header[0] + '</b><br><i>' + (header[1] ? header[1] : dateFormat(header[2], 'short')) + '</i>';
-		if (layer._latlng) markerPopup += '<span class="comment">' + layer._latlng.lat.toFixed(5) + '°N ' + layer._latlng.lng.toFixed(5) + '°E | ' + wgs84ToGridRef(layer._latlng.lat, layer._latlng.lng, 6) + '</span>';
+		if (layer._latlng) markerPopup += '<span class="comment">' + layer.getLatLng().lat.toFixed(5) + '°N ' + layer.getLatLng().lng.toFixed(5) + '°E | ' + wgs84ToGridRef(layer.getLatLng().lat, layer.getLatLng().lng, 6) + '</span>';
 		if (feature.properties.custom) {
 			markerPopup += feature.properties.custom;
 			toolTipIcons += '<i class="tooltip-icons fa-solid fa-' + (feature.properties.custom.includes('popup-file') ? 'file" title="has attachment"' : 'bars" title="has notes"') + '></i>';

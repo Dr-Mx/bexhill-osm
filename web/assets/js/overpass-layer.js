@@ -35,10 +35,10 @@ function show_overpass_layer(query, cacheId, options) {
 			}
 			else if ($('#settings-bbox').val() === 'screen' && !options.forceBbox) {
 				queryBbox += '[bbox:' + [
-					map.getBounds()._southWest.lat.toFixed(5),
-					map.getBounds()._southWest.lng.toFixed(5),
-					map.getBounds()._northEast.lat.toFixed(5),
-					map.getBounds()._northEast.lng.toFixed(5)
+					map.getBounds().getSouth().toFixed(5),
+					map.getBounds().getWest().toFixed(5),
+					map.getBounds().getNorth().toFixed(5),
+					map.getBounds().getEast().toFixed(5)
 				].join(',') + ']';
 				cacheId = '';
 			}
@@ -118,7 +118,8 @@ L.OverPassLayer = L.FeatureGroup.extend({
 				if (e.status === 0 || (e.status >= 400 && e.status <= 504)) {
 					let erMsg = 'Something went wrong. Please try again later.';
 					switch (e.status) {
-						case 0: /* fall through */
+						case 0:   /* fall through */
+						case 403: /* fall through */
 						case 504:
 							// retry on timeout
 							if (e.status === 504 && this.retryTimeout) {
@@ -171,6 +172,7 @@ L.OverPassLayer = L.FeatureGroup.extend({
 	}
 });
 
+// wip test
 function reverse_overpass_query(latlng, zoom) {
 	let revQuery = 'https://' + $('#settings-overpass-server').val() + '/api/interpreter?data=' +
 		'[out:json];(' +

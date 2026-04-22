@@ -1,8 +1,11 @@
 :root {
 	--text-color: #e3e3e3;
-	--hover-color: #999999;
+	--text-hover-color: #999999;
+	--button-color: #000000;
+	--button-hover-color: #222222;
+	--bg-gradient: linear-gradient(to bottom right,rgba(5, 10, 0, 0.8) 0%,rgba(0, 0, 0, 0.6) 100%);
 	--bg-color: #222222;
-	--bg-color2: rgba(25, 30, 45, 0.85);
+	--bg-color2: rgba(15, 10, 0, 0.85);
 	--bg-color3: rgba(255, 255, 255, 0.1);
 	--scr-thumb: #555555;
 	--scr-track: #222222;
@@ -10,7 +13,7 @@
 	--scroll-shadow-popup: 0, 0, 0;
 }
 body {
-	background-color: #333333;
+	background-color: #555555;
 }
 .spinner svg circle {
 	fill: rgba(0, 0, 0, 0.75);
@@ -19,20 +22,13 @@ body {
 .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-control-scale-line, .ui-tooltip {
 	color: var(--text-color) !important;
 }
-.sidebar-anchor:hover, select:hover:enabled, #home .sidebar-body a i:hover, .leaflet-control-attribution .fa-circle-info:hover, button:hover:enabled:not(.fancybox-button),
-.leaflet-bar > a:hover, .popup-navigate a:hover, .popup-img-item > a:hover, .leaflet-container a.leaflet-popup-close-button:hover, #modal div.leaflet-popup-close-button:hover,
-#control-opacity div.leaflet-popup-close-button:hover, .popup-header-button:hover, .leaflet-routing-geocoders button:hover::after, #settings-devtools h3:hover::after,
-.popup-openhrs .popup-tag-value:hover::after, .leaflet-control-layers-list input:not(:checked,:disabled) + span:hover:before, .leaflet-routing-remove-waypoint:hover::after,
-.kiosk #kiosk-button-back:hover {
-	color: var(--hover-color) !important;
-}
-.sidebar-tabs, footer, #home-box, #holiday-xmas-msg, hr, .leaflet-control-geocoder input, .slider::before, .sidebar-body button:hover:enabled, select:hover:enabled,
-.leaflet-control-geocoder-expanded, .leaflet-contextmenu, #modal-head, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected, .fancybox-bg,
+hr, .slider::before, .sidebar-body button:hover:enabled, select:hover:enabled,
+.leaflet-contextmenu, #modal-head, .leaflet-container a.leaflet-popup-close-button, .leaflet-control-geocoder-selected, .fancybox-bg,
 #pois-results-list tr:hover, .pois-checkbox-selected, .pois-checkbox > label:hover, .leaflet-bar > a:hover {
 	background-color: var(--bg-color) !important;
 }
-#modal, #control-opacity, .sidebar-anchor, .leaflet-bar > a, .sidebar-body button, select, input:not([type="range"]), .leaflet-popup-content-wrapper, .leaflet-popup-tip, .sidebar-content,
-.leaflet-control-layers-expanded, .leaflet-control-layers, .leaflet-tooltip, .popup-img-attrib, .popup-navigate-background, .ui-tooltip, .kiosk #kiosk-button-back {
+#holiday-xmas-msg, .leaflet-control-layers:not(.leaflet-control-layers-expanded), .sidebar-anchor, .leaflet-bar > a, .sidebar-body button, select, .popup-img-item:not(:has(.popup-img-attrib)) + .popup-navigate,
+input:not([type="range"], .leaflet-control-geocoder input), .leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-tooltip, .popup-img-attrib, .popup-navigate-background, .ui-tooltip, .kiosk #kiosk-button-back {
 	background-color: var(--bg-color2) !important;
 }
 #home-weather > div:hover, .sidebar-tabs > ul > li:hover, .slider, .leaflet-control-geocoder-alternatives li:hover {
@@ -82,9 +78,9 @@ input[type="range"] {
 	background-color: rgba(0, 0, 0, 0.25);
 }
 input[type="range"]::-webkit-slider-thumb { border-color: var(--bg-color); }
-input[type="range"]:hover::-webkit-slider-thumb {	background-color: var(--hover-color); }
+input[type="range"]:hover::-webkit-slider-thumb {	background-color: var(--text-hover-color); }
 input[type="range"]::-moz-range-thumb { border-color: var(--bg-color); }
-input[type="range"]:hover::-moz-range-thumb { background-color: var(--hover-color); }
+input[type="range"]:hover::-moz-range-thumb { background-color: var(--text-hover-color); }
 #pois-results-list tr, .popup-header, .leaflet-control-geocoder-alternatives li:not(:last-child) {
 	border-bottom: 2px solid var(--bg-color) !important;
 }
@@ -124,8 +120,8 @@ input:not([type="range"]), select, #sidebar button:not(.tutorial-button), .leafl
 .popup-header {
 	background-color: rgba(12, 12, 13, 0.5) !important;
 }
-.popup-fhrs .fa-stack {
-	border: 4px solid #222222;
+.popup-fhrs {
+	outline: 2px solid #222222;
 }
 .popup-tag-icon {
 	color: #777777;
@@ -175,6 +171,6 @@ input:not([type="range"]), select, #sidebar button:not(.tutorial-button), .leafl
 	border-radius: 5px;
 	background-color: var(--bg-color);
 }
-.popup-comment, .comment, figcaption {
-	color: var(--hover-color);
+.popup-tag-value-facility, .popup-tag-value-recycling, .popup-tag-value-payment, .popup-tag-value-diet {
+	background-color: rgba(0,0,0,35%);
 }

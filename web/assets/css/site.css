@@ -1,7 +1,10 @@
 :root {
 	--main-color: #bb5500;
 	--second-color: #cc5c00;
+	--bg-gradient: linear-gradient(to bottom right,rgba(255, 250, 240, 0.7) 0%,rgba(255, 255, 255, 0.5) 100%);
 	--text-color: #000000;
+	--text-hover-color: #555555;
+	--button-color: #ffffff;
 	--button-hover-color: #f4f4f4;
 	--scr-thumb: #cdcdcd;
 	--scr-track: #f0f0f0;
@@ -106,7 +109,10 @@ html, body, #map {
 	#home-weather .fa-2x { font-size: 1.8em; }
 }
 @media (min-width: 768px) and (max-width: 1023px), (max-width: 400px) {
-	#map { transition: margin-left 400ms ease-out; }
+	#map {
+		transition: margin-left 400ms ease-out;
+		outline: none;
+	}
 }
 
 input, select {
@@ -117,9 +123,6 @@ input[type="text"], input[type="date"], input[type="number"] {
 	height: 28px;
 }
 
-#sidebar {
-	display: none;
-}
 .sidebar-notif {
 	position: absolute;
 	width: 20px;
@@ -138,15 +141,15 @@ input[type="text"], input[type="date"], input[type="number"] {
 	border-right: 0;
 	border-bottom: 0;
 }
-
 #home .sidebar-body {
 	height: calc(100% - 70px);
 }
 #home-box, #holiday-xmas-msg {
 	margin: 0 auto;
-	background-color: rgba(255, 255, 255, 0.6);
+	background: var(--bg-gradient);
 	border-radius: 10px;
 	transition: box-shadow 200ms linear;
+	box-shadow: 0 0 4px rgba(0,0,0,15%);
 }
 #home-weather {
 	display: flex;
@@ -221,7 +224,7 @@ input[type="text"], input[type="date"], input[type="number"] {
 	padding: 10px 2px;
 }
 #home .sidebar-body a i:hover, #settings-devtools h3:hover::after, .popup-openhrs .popup-tag-value:hover::after {
-	color: black !important;
+	color: var(--text-hover-color);
 }
 .easy-autocomplete + .leaflet-routing-remove-waypoint::after, #settings-overpass-query + .leaflet-routing-remove-waypoint::after {
 	font: var(--fa-font-solid);
@@ -235,10 +238,10 @@ input[type="text"], input[type="date"], input[type="number"] {
 	position: absolute;
 	right: 25px;
 	bottom: 14px;
-	line-height: 26px;
+	line-height: 24px;
 }
 .popup-navigate a:hover, .popup-img-item > a:hover {
-	color: #333333;
+	color: var(--text-hover-color);
 	text-decoration: none;
 }
 .popup-navigate > a > i {
@@ -248,6 +251,8 @@ input[type="text"], input[type="date"], input[type="number"] {
 	background-color: rgba(230, 230,230, 0.8);
 	border-radius: 5px;
 	backdrop-filter: blur(7px);
+	padding: 0 5px;
+	right: 20px;
 }
 
 #home-new-feed {
@@ -293,15 +298,13 @@ footer {
 	position: absolute;
 	bottom: 0;
 	line-height: 15px;
-	background-color: #e5e5e5;
-	width: 100%;
-	min-width: 250px;
+	background: rgba(128,128,128,5%);
 	text-align: center;
 	white-space: nowrap;
+	width: 100%;
 }
 footer > span {
 	font: normal 10pt BerlinSans, Helvetica, Arial, sans-serif;
-	color: #666666;
 	padding: 5px 0;
 	display: inline-block;
 	vertical-align: middle;
@@ -351,14 +354,14 @@ h3 {
 }
 .sidebar-anchor:hover {
 	text-decoration: none;
-	color: black !important;
+	color: var(--text-hover-color);
 }
 
 .comment, figcaption {
 	text-align: center;
 	font-style: italic;
 	font-size: 90%;
-	color: #666666;
+	color: var(--text-hover-color);
 }
 .comment:hover {
 	text-decoration: none;
@@ -404,7 +407,7 @@ h3 {
 .leaflet-bar > a i {
 	line-height: inherit;
 }
-.leaflet-bar > a, .leaflet-control-geocoder-expanded {
+.leaflet-bar > a {
 	background-color: #fff;
 }
 .leaflet-touch .leaflet-bar > a:first-child {
@@ -442,7 +445,7 @@ h3 {
 .leaflet-control-layers-list input { display: none; }
 .leaflet-control-layers-list input:checked + span:before { color: var(--main-color); }
 .leaflet-control-layers-list input:checked:not(:disabled) + span:hover:before { color: var(--second-color); }
-.leaflet-control-layers-list input:not(:checked,:disabled) + span:hover:before { color: #999999; }
+.leaflet-control-layers-list input:not(:checked,:disabled) + span:hover:before { color: var(--text-hover-color); }
 .leaflet-control-layers-base input[type="radio"] + span:before { content: '\f111'; }
 .leaflet-control-layers-base input[type="radio"]:checked + span:before { content: '\f058'; }
 .leaflet-control-layers-overlays input[type="checkbox"] + span:before { content: '\f0c8'; }
@@ -559,14 +562,16 @@ h3 {
 	font-size: 9pt;
 	line-height: unset;
 }
-@media (max-width: 767px) { .leaflet-container .leaflet-control-attribution,
-.leaflet-container .leaflet-control-scale { font-size: 8pt; } }
+@media (max-width: 767px) {
+	.leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
+	font-size: 8pt;
+} }
 .leaflet-control-attribution .fa-circle-info:hover {
-	color: #333333;
+	color: var(--text-hover-color);
 }
 select:hover:enabled, .leaflet-bar > a:hover {
 	background-color: var(--button-hover-color);
-	color: black;
+	color: var(--text-hover-color);
 	text-decoration: none;
 }
 .leaflet-left .leaflet-control-scale {
@@ -605,8 +610,6 @@ select:hover:enabled, .leaflet-bar > a:hover {
 	box-shadow: 0 1px 5px rgb(0 0 0 / 75%);
 	font-size: 90%;
 	text-align: center;
-	z-index: 1200;
-	position: absolute;
 }
 .tutorial-arrow {
 	top: 6px;
@@ -618,6 +621,9 @@ select:hover:enabled, .leaflet-bar > a:hover {
 }
 .tutorial-text {
 	text-align: left;
+}
+.tutorial-text p {
+	margin: 5px 0;
 }
 .tutorial-text > span {
 	opacity: 0.6;
@@ -641,14 +647,20 @@ button.tutorial-button:hover {
 button.tutorial-button:nth-of-type(2) {
 	width: 26px !important;
 }
+.leaflet-control-layers 					{ anchor-name: --tutorial0; }
+.sidebar-tabs > ul > li > a[href="#tour"] 	{ anchor-name: --tutorial1; }
+#control-clearlayers 						{ anchor-name: --tutorial2; }
+#tutorial0 { position: absolute; position-anchor: --tutorial0; position-area: span-bottom left ;  z-index: 1000; }
+#tutorial1 { position: fixed;    position-anchor: --tutorial1; position-area: span-bottom right; z-index: 1200; }
+#tutorial2 { position: absolute; position-anchor: --tutorial2; position-area: span-bottom right; z-index: 1000; }
 
 #control-opacity {
 	display: none;
 	text-align: center;
 	border-radius: 10px;
-	background-color: rgba(240, 240, 245, 0.8);
+	background: var(--bg-gradient);
 	margin-top: 30px;
-	backdrop-filter: blur(7px);
+	backdrop-filter: blur(14px);
 }
 #control-opacity input[type="range"] {
 	background-image: linear-gradient(to right, #eee, #bbb);
@@ -736,17 +748,13 @@ input[type="range"]:-moz-focusring {
 }
 #control-ww2 > a {
 	position: absolute;
-	display: table;
-	margin: -10px;
-	border: none;
+	display: block;
+	margin: -13px;
+	border: 2px solid rgba(0,0,0,0.2);
 	border-radius: 100%;
-	width: 25px;
-	height: 25px;
-}
-#control-ww2 > a > i[class*="fa-"] {
-	display: table-cell;
-	vertical-align: middle;
-	font-size: 20px;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
 }
 #control-ww2 div {
 	font-size: 90%;
@@ -775,7 +783,6 @@ input[type="range"]:-moz-focusring {
 .sidebar-body button:hover:enabled {
 	background-color: var(--button-hover-color);
 	cursor: pointer;
-	color: black;
 	border: 1px solid #cccccc;
 	height: 30px;
 }
@@ -784,6 +791,9 @@ button:disabled:not(.fancybox-button), button:disabled:not(.fancybox-button):hov
 	cursor: default;
 	pointer-events: none;
 	color: #aaaaaa;
+}
+button:hover:enabled:not(.fancybox-button) {
+	color: var(--text-hover-color);
 }
 button:disabled::after, button:disabled:hover::after {
 	color: #aaaaaa;
@@ -826,6 +836,7 @@ button:disabled ~ label {
 	outline: 2px solid #cccccc;
 	background-color: rgba(0, 0, 0, 0.1);
 	pointer-events: none;
+	z-index: 1;
 }
 #pois-results button {
 	display: block;
@@ -854,7 +865,7 @@ select {
 	display: block;
 	object-fit: none;
 	width: 24px;
-	object-position: -4px -4px;
+	object-position: center -4px;
 	border-radius: 5px;
 	outline: 1px solid rgba(0, 0, 0, 0.2);
 	outline-offset: -1px;
@@ -972,7 +983,7 @@ select {
 	height: 24px;
 	margin: 3px 4px 3px 0px;
 	width: 24px;
-	object-position: -4px -4px;
+	object-position: center -4px;
 	object-fit: none;
 	border-radius: 5px;
 	outline: 2px solid rgba(0, 0, 0, 0.2);
@@ -1118,7 +1129,7 @@ select {
 	text-align: left;
 }
 #settings-options {
-	margin: 0 3%;
+	padding: 0 3%;
 	font-size: 90%;
 }
 .switch {
@@ -1132,6 +1143,7 @@ select {
 	position: relative;
 	background-color: #bbbbbb;
 	border-radius: 24px;
+	outline: 1px solid rgba(0,0,0,25%);
 	width: 50px;
 	cursor: pointer;
 }
@@ -1151,6 +1163,7 @@ input:not(:checked):hover + .slider {
 }
 input:checked + .slider {
 	background-color: var(--main-color);
+	outline-color: var(--second-color);
 }
 input:checked:hover + .slider {
 	background-color: var(--second-color);
@@ -1211,7 +1224,7 @@ input:indeterminate + .slider::before {
 	border-top: 1px solid rgba(255, 255, 255, 0.6);
 }
 #settings-devtools > div {
-	margin: 0 3%;
+	padding: 0 3%;
 	font-size: 90%;
 }
 #settings-devtools > div p {
@@ -1286,9 +1299,9 @@ input:indeterminate + .slider::before {
 	box-shadow: 0 1px 5px rgb(0 0 0 / 40%) !important;
 }
 .leaflet-control-layers-expanded, #modal {
-	background-color: rgba(240, 240, 245, 0.8);
+	background: var(--bg-gradient);
 	border: none !important;
-	backdrop-filter: blur(7px);
+	backdrop-filter: blur(14px);
 }
 .leaflet-control-layers .control-layers-hide {
 	display: none;
@@ -1333,7 +1346,7 @@ a.control-layers-title {
 	font-weight: bold;
 }
 .leaflet-container a.leaflet-popup-close-button:hover, #modal div.leaflet-popup-close-button:hover, #control-opacity div.leaflet-popup-close-button:hover, .popup-header-button:hover {
-	color: #333333;
+	color: var(--text-hover-color);
 }
 .popup-header-button {
 	top: -2px;
@@ -1404,8 +1417,7 @@ a.control-layers-title {
 }
 .popup-tag-value {
 	display: table-cell;
-	text-indent: -5px;
-	padding-left: 5px;
+	text-indent: hanging 0.5em;
 }
 .popup-tag-value strong {
 	margin-right: 4px;
@@ -1441,9 +1453,9 @@ a.control-layers-title {
 .popup-notes .fa-check { color: green; }
 .popup-comment {
 	display: block;
+	color: var(--text-hover-color);
 	font-size: 80%;
 	text-align: right;
-	color: #666666;
 	font-style: italic;
 	opacity: 60%;
 }
@@ -1572,10 +1584,17 @@ a.control-layers-title {
 .popup-tag-value-yes, .popup-tag-icon.popup-openhrs-color-true { color: #006400; }
 .popup-tag-value-limited, .popup-tag-icon.popup-openhrs-color-depends { color: #808000; }
 .popup-tag-value-no, .popup-tag-icon.popup-openhrs-color-false { color: #8b0000; }
-.popup-tag-value-facility { display:inline-block; padding-left: 5px; white-space: nowrap; }
-.popup-tag-value-recycling { display:inline-block; padding-left: 5px; color: #62745f; }
-.popup-tag-value-payment { display:inline-block; padding-left: 5px; white-space: nowrap; color: #714b83; }
-.popup-tag-value-diet { display:inline-block; padding-left: 5px; white-space: nowrap; color: #00a275; }
+.popup-tag-value-facility, .popup-tag-value-recycling, .popup-tag-value-payment, .popup-tag-value-diet {
+	display:inline-block;
+	background-color: rgba(255,255,255,35%);
+	border-radius: 10px;
+	padding: 2px;
+	margin: 1px;
+	white-space: nowrap;
+}
+.popup-tag-value-recycling { color: #62745f; white-space: wrap; }
+.popup-tag-value-payment { color: #714b83; }
+.popup-tag-value-diet { color: #00a275; }
 .openhrs-color-true { background: linear-gradient(to right, rgba(0, 100, 0, 0.4), transparent); }
 .openhrs-color-false { background: linear-gradient(to right, rgba(139, 0, 0, 0.4), transparent); }
 
@@ -1609,12 +1628,11 @@ a.control-layers-title {
 	pointer-events: all;
 	cursor: pointer;
 }
-.leaflet-tooltip .tooltip-icons i {
-	padding-left: 2px;
+.leaflet-tooltip .tooltip-icons {
+	padding-left: 5px;
 }
 .tooltip-icons {
 	color: #777777;
-	min-width: 16px;
 }
 
 .ui-tooltip {
@@ -1674,7 +1692,7 @@ a.control-layers-title {
 	cursor: pointer;
 	background-image: url('../../tour/itemXmas/img/popup-bg.png');
 	background-repeat: repeat-y;
-	background-color: rgba(255, 255, 255, 0.6);
+	background-color: rgba(255, 255, 255, 0.5);
 	animation: holiday-xmas-msg-anim 15s linear infinite paused;
 }
 .popup-xmas .leaflet-popup-content-wrapper, .leaflet-tooltip.popup-xmas, #holiday-xmas-msg {
@@ -1826,7 +1844,7 @@ kbd {
 	cursor: pointer;
 	outline: 2px solid rgba(0,0,0,0.2);
 }
-.kiosk #kiosk-button-back:hover { color: #000; }
+.kiosk #kiosk-button-back:hover { color: var(--text-hover-color); }
 
 /* Control.Loading.js */
 .leaflet-control-loading, .leaflet-control-layer-container {

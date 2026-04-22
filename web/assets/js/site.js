@@ -31,7 +31,7 @@ let maxOpResults = 250;
 const maxNomResults = 5;
 // title tag tooltip defaults
 const tooltipDef = {
-	disabled: noTouch ? false : true,
+	disabled: (!noTouch || kioskMode),
 	hide: false,
 	show: { delay: 150, duration: 100 },
 	track: true,
@@ -211,6 +211,7 @@ const map = new L.map('map', {
 	if (kioskMode === true) {
 		$('html').addClass('kiosk');
 		$('#map').after('<div id="kiosk-button-back" onclick="window.close()"><i class="fa-solid fa-right-to-bracket fa-flip-horizontal fa-lg"></i> BACK</div>');
+		$('#settings-overpass-cache').val($('#settings-overpass-cache').attr('max'));
 	}
 	map.attributionControl.setPrefix('<a onclick="switchTab(\'info\', \'#info-software\');" title="Attribution"><i class="fa-solid fa-circle-info"></i></a>');
 	if (!noIframe) {
@@ -265,7 +266,7 @@ const map = new L.map('map', {
 	}).trigger('scroll');
 	setTimeout(setOverlayLabel, 10);
 	// easter holiday decorations
-	if (new Date().getMonth() === 3 && new Date().getDate() >= 18 && new Date().getDate() <= 21) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Easter!">&#x1FABA</span>'));
+	if (new Date().getMonth() === 2 && new Date().getDate() >= 26 && new Date().getDate() <= 29) $('#home .sidebar-header-text').html($('#home .sidebar-header-text').html().replace('O', '<span title="Happy Easter!">&#x1FABA</span>'));
 	// bexhill day holiday decorations
 	else if (new Date().getMonth() === 7 && new Date().getDate() === 22) sidebar.append('<img id="holiday-bexhillday" alt="" title="It\'s Bexhill Day!" src="assets/img/holidays/sidebar-bexhillday.png">');
 	// halloween holiday decorations
@@ -292,6 +293,7 @@ const map = new L.map('map', {
 	L.DomEvent.disableClickPropagation($('#modal')[0]).disableScrollPropagation($('#modal')[0]);
 	$('.leaflet-control, .leaflet-popup').on('contextmenu', function(e) { e.stopPropagation(); });
 	$('.leaflet-control-geocoder-form').on('click', function(e) { e.stopPropagation(); });
+	if (!noTouch || kioskMode) $('.leaflet-control-layers-toggle').on('mouseover', function(e) { e.stopPropagation(); });
 	// refocus status message on mouseover
 	$('#modal').on('mouseenter tap', function() { if ($(this).is(':animated')) $(this).stop(true).css('opacity', 1); });
 	// add delay after load for sidebar to animate open
@@ -322,8 +324,8 @@ const map = new L.map('map', {
 	if (localStorageAvail() && !window.localStorage.tutorial) window.localStorage.tutorial = '';
 	if (!kioskMode && noPermalink && noIframe && localStorageAvail() && window.localStorage.tutorial.indexOf('modals') === -1) { setTimeout(function() {
 		const showModalTutor = function(txt, sty) {
-			$('#sidebar').before(
-				'<div id="tutorial' + sty.id + '" class="tutorial leaflet-control" style="top:' + sty.pos[0] + 'px;' + sty.dir + ':' + (sty.dir === 'left' ? 30 + sty.pos[1] : $(window).width() - sty.pos[1]) + 'px;">' +
+			$('#map').after(
+				'<div id="tutorial' + sty.id + '" class="tutorial leaflet-control">' +
 					'<div class="tutorial-arrow" style="' + sty.dir + ':-5px;"></div>' +
 					'<div class="tutorial-text"><span>' + (sty.id+1) + '/<span>0</span>:</span> ' + txt + '</div>' +
 					'<button type="button" class="tutorial-button theme-color">' + (!sty.last ? 'Next' : 'Got it') + '</button>' +
@@ -348,16 +350,16 @@ const map = new L.map('map', {
 			});
 		};
 		showModalTutor(
-			'Choose from a growing number of modern and historical maps.' + (noTouch ? '<br>Tapping <kbd>CTRL</kbd> will fade loaded overlays in and out.' : ''),
-			{ id: 0, pos: Object.values($('.leaflet-control-layers').offset()), dir: 'right' }
+			'Choose from a growing number of modern, historical maps and aerial photographs.' + (noTouch ? '<p>Tapping <kbd>CTRL</kbd> will fade loaded overlays in and out.</p>' : ''),
+			{ id: 0, dir: 'right' }
 		);
 		showModalTutor(
-			'Display articles on Bexhill\'s history; from dinosaurs, to Martello towers, to WWII incidents.',
-			{ id: 1, pos: Object.values($('.sidebar-tabs ul li [href="#tour"]').offset()), dir: 'left' }
+			'Display articles on Bexhill\'s history; from dinosaurs, farms, smuggling, to WWII incidents.',
+			{ id: 1, dir: 'left' }
 		);
 		showModalTutor(
-			'This button will clear any map markers.<br>Zoom in and ' + interactDesc[0] + ' on the map to find information on almost any place.',
-			{ id: 2, pos: Object.values($('#control-clearlayers').offset()), dir: 'left', last: true }
+			'This button will clear any map markers.<p>Zoom in and ' + interactDesc[0] + ' on the map to query almost any place.</p>',
+			{ id: 2, dir: 'left', last: true }
 		);
 		$('#tutorial0').fadeIn(500);
 		$('#tutorial0 button').first().trigger('focus');
@@ -1250,7 +1252,7 @@ function setLeaflet() {
 			bounds: LBounds,
 			opacity: 1,
 			maxNativeZoom: 19,
-			offset: [1, 1],
+			offset: [1.5, 1.5],
 			className: 'layer-noclick'
 		},
 		wl1950: {
@@ -1635,7 +1637,7 @@ function switchTab(tab, anchorTour, poi, actImgLayer) {
 				$('#' + (tab === 'pois' ? tab + ' #pois-icons,' : tab) + ' .sidebar-body').scrollTop(0);
 			}
 		}
-		if (anchorTour) { 
+		if (anchorTour) {
 			if (tab === 'tour') {
 				$('#tour-controls-list').val(anchorTour).trigger('change');
 				if (tab !== actTab) $('a[href="#tour"]').trigger('click');
@@ -1944,7 +1946,11 @@ $('#settings-theme').on('change', function() {
 	if ((window.matchMedia('(prefers-color-scheme: dark)').matches && $(this).val() === 'auto') || $(this).val() === 'dark') {
 		$('#darkcss').prop('disabled', false);
 		$('#tour-frame').contents().find('html').css({
+			'--bg-gradient': cssVar.getPropertyValue('--bg-gradient'),
 			'--text-color': cssVar.getPropertyValue('--text-color'),
+			'--text-hover-color': cssVar.getPropertyValue('--text-hover-color'),
+			'--button-color': cssVar.getPropertyValue('--button-color'),
+			'--button-hover-color': cssVar.getPropertyValue('--button-hover-color'),
 			'--bg-color': cssVar.getPropertyValue('--bg-color'),
 			'--bg-color2': cssVar.getPropertyValue('--bg-color2')
 		});
@@ -2433,7 +2439,7 @@ function permalinkReturn() {
 		// set basemap if none specified
 		if (window.localStorage.baseLayer && !kioskMode) actBaseTileLayer = window.localStorage.baseLayer;
 		// set cache duration
-		if (parseInt(window.localStorage.opCacheDur) >= 0 && parseInt(window.localStorage.opCacheDur) <= 240)	$('#settings-overpass-cache').val(parseInt(window.localStorage.opCacheDur));
+		if (parseInt(window.localStorage.opCacheDur) >= 0 && parseInt(window.localStorage.opCacheDur) <= $('#settings-overpass-cache').attr('max'))	$('#settings-overpass-cache').val(parseInt(window.localStorage.opCacheDur));
 		else $('#settings-overpass-cache').val($('#settings-overpass-cache').attr('value'));
 		// set servers
 		if (parseInt(window.localStorage.revServer) >= 0 && parseInt(window.localStorage.revServer) < $('#settings-reverse-provider option').length) $('#settings-reverse-provider').prop('selectedIndex', window.localStorage.revServer);

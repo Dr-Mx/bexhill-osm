@@ -966,7 +966,8 @@
 			"type": "Feature",
 			"properties": {
 				"name": "11-13 St Davids Avenue",
-				"date": "1940-11-24"
+				"date": "1940-11-24",
+				"description": "A lady who lived at number 7 mentioned her house was rebuilt after the war having being bombed."
 			},
 			"geometry": {
 				"type": "Point",

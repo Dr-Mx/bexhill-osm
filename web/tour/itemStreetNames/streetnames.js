@@ -48,7 +48,7 @@ $(document).ready(function() {
 				className = street.name.charAt(0) + (street.lost ? ' lost' : '');
 				streetDetail += '<div class="street ' + className + '"><strong>' + street.name + ' (' + street.date + ')</strong>' +
 				// overpass ultra link to map, check not in iframe and road exists
-				(window.top === window.self && !street.lost && !street.notroad ? '<a class="street-map-link" title="Locate on map" target="_blank" rel="noopener" href="https://ultra.trailsta.sh/#map&query=' +
+				(window.top === window.self && !street.lost && !street.notroad ? '<a class="street-map-link" title="Locate on map" target="_blank" rel="noopener" aria-hidden="true" href="https://ultra.trailsta.sh/#map&query=' +
 					encodeURIComponent(
 						'---\n' +
 						'options:\n' +
@@ -84,7 +84,7 @@ $(document).ready(function() {
 				if (!recs) $(this).addClass('permDisable');
 				else {
 					recs = $(this).text() + ' - ' + recs + ' record(s)';
-					$('.street.' + $(this).text()).first().before('<div id="' + $(this).text() +'" class="divider" title="' + recs + '">' + $(this).text() + '</div>');
+					$('.street.' + $(this).text()).first().before('<div id="' + $(this).text() +'" class="divider" title="' + recs + '" aria-hidden="true">' + $(this).text() + '</div>');
 					$(this).attr({ 'href': '#' + $(this).text(), 'title': recs });
 				}
 			});

@@ -617,11 +617,11 @@ const pois = {
 	},
 
 	confectionery: {
-		name: 'Confectioners',
-		query: 'nwr[shop=confectionery];',
+		name: 'Confectioners/Cakes',
+		query: 'nwr[shop~"confectionery|pastry"];',
 		iconName: 'shop-confectionery',
 		catName: 'Shops',
-		tagKeyword: ['sugar', 'sweets', 'candy', 'confectionery']
+		tagKeyword: ['sweets', 'candy', 'confectionery', 'cake', 'pastry']
 	},
 
 	alcohol: {

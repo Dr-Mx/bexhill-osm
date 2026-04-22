@@ -129,7 +129,7 @@
 }
 
 .leaflet-routing-geocoders button:hover::after {
-	color: black;
+	color: var(--text-hover-color);
 }
 
 .leaflet-routing-delete-waypoints, .leaflet-routing-reverse-waypoints, .leaflet-routing-add-waypoint {
@@ -203,7 +203,7 @@
 }
 
 .leaflet-routing-remove-waypoint:hover::after {
-    color: black;
+    color: var(--text-hover-color);
 }
 
 .leaflet-routing-instruction-distance {
